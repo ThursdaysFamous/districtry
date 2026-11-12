@@ -1,0 +1,123 @@
+{
+  "1": {
+    "name": "Andy Harris",
+    "party": "Republican",
+    "url": "https://harris.house.gov",
+    "capitolOffice": [
+      "1536 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5311"
+    ],
+    "districtOffice": [
+      "15 E. Churchville Rd., Suite 102B",
+      "Bel Air, MD 21014",
+      "Phone: 410-588-5670"
+    ]
+  },
+  "2": {
+    "name": "Johnny Olszewski, Jr.",
+    "party": "Democrat",
+    "url": "https://olszewski.house.gov",
+    "capitolOffice": [
+      "1339 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3061"
+    ],
+    "districtOffice": [
+      "110 West Rd, Suite 420",
+      "Towson, MD 21204",
+      "Phone: 410-427-5725"
+    ]
+  },
+  "3": {
+    "name": "Sarah Elfreth",
+    "party": "Democrat",
+    "url": "https://elfreth.house.gov",
+    "capitolOffice": [
+      "1213 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4016"
+    ],
+    "districtOffice": [
+      "10440 Little Patuxent Pkwy, Suite 550",
+      "Columbia, MD 21044",
+      "Phone: 410-832-8890"
+    ]
+  },
+  "4": {
+    "name": "Glenn Ivey",
+    "party": "Democrat",
+    "url": "https://ivey.house.gov",
+    "capitolOffice": [
+      "1610 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8699"
+    ],
+    "districtOffice": [
+      "4301 Garden City Dr., Suite 405",
+      "Landover, MD 20785",
+      "Phone: 240-906-6262"
+    ]
+  },
+  "5": {
+    "name": "Steny H. Hoyer",
+    "party": "Democrat",
+    "url": "https://hoyer.house.gov",
+    "capitolOffice": [
+      "1705 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4131"
+    ],
+    "districtOffice": [
+      "6500 Cherrywood Ln., Suite 310",
+      "U.S. District Courthouse",
+      "Greenbelt, MD 20770",
+      "Phone: 301-474-0119"
+    ]
+  },
+  "6": {
+    "name": "April McClain Delaney",
+    "party": "Democrat",
+    "url": "https://mcclaindelaney.house.gov",
+    "capitolOffice": [
+      "1130 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2721"
+    ],
+    "districtOffice": [
+      "30 W. Patrick St., Suite 505",
+      "Frederick, MD 21701",
+      "Phone: 301-926-0300"
+    ]
+  },
+  "7": {
+    "name": "Kweisi Mfume",
+    "party": "Democrat",
+    "url": "https://mfume.house.gov",
+    "capitolOffice": [
+      "2263 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4741"
+    ],
+    "districtOffice": [
+      "1010 Park Avenue, Suite 105",
+      "Baltimore, MD 21201",
+      "Phone: 410-685-9199"
+    ]
+  },
+  "8": {
+    "name": "Jamie Raskin",
+    "party": "Democrat",
+    "url": "https://raskin.house.gov",
+    "capitolOffice": [
+      "2242 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5341"
+    ],
+    "districtOffice": [
+      "51 Monroe St., Suite 503",
+      "Rockville, MD 20850",
+      "Phone: 301-354-1000"
+    ]
+  }
+}

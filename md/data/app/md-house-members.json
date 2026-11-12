@@ -1,0 +1,2001 @@
+{
+  "1A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Hinebaugh Jr.",
+        "party": "Republican",
+        "capitolOffice": [
+          "323 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3435"
+        ],
+        "email": "jim.hinebaugh@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hinebaugh01"
+      }
+    ]
+  },
+  "1B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jason C. Buckel",
+        "party": "Republican",
+        "capitolOffice": [
+          "201 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3404"
+        ],
+        "email": "Jason.Buckel@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/buckel01"
+      }
+    ]
+  },
+  "1C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Terry L. Baker",
+        "party": "Republican",
+        "capitolOffice": [
+          "323 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3321"
+        ],
+        "email": "terry.baker@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/baker04"
+      }
+    ]
+  },
+  "2A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "William Valentine",
+        "party": "Republican",
+        "capitolOffice": [
+          "324 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3636"
+        ],
+        "email": "william.valentine@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/valentine01"
+      },
+      {
+        "name": "William J. Wivell",
+        "party": "Republican",
+        "capitolOffice": [
+          "324 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "william.wivell@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wivell01"
+      }
+    ]
+  },
+  "2B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matthew J. Schindler",
+        "party": "Democratic",
+        "capitolOffice": [
+          "221 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3125"
+        ],
+        "email": "matthew.schindler@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/schindler01"
+      }
+    ]
+  },
+  "7A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ryan Nawrocki",
+        "party": "Republican",
+        "capitolOffice": [
+          "322 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3289"
+        ],
+        "email": "ryan.nawrocki@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/nawrocki01"
+      },
+      {
+        "name": "Kathy Szeliga",
+        "party": "Republican",
+        "capitolOffice": [
+          "322 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "kathy.szeliga@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/szeliga"
+      }
+    ]
+  },
+  "7B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lauren Arikan",
+        "party": "Republican",
+        "capitolOffice": [
+          "414 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "lauren.arikan@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/arikan01"
+      }
+    ]
+  },
+  "9A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chao Wu",
+        "party": "Democratic",
+        "capitolOffice": [
+          "217 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3556"
+        ],
+        "email": "chao.wu@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wu01"
+      },
+      {
+        "name": "Natalie Ziegler",
+        "party": "Democratic",
+        "capitolOffice": [
+          "214 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3352"
+        ],
+        "email": "natalie.ziegler@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ziegler01"
+      }
+    ]
+  },
+  "9B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Courtney Watson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "214 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3077"
+        ],
+        "email": "courtney.watson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/watson02"
+      }
+    ]
+  },
+  "11A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cheryl E. Pasteur",
+        "party": "Democratic",
+        "capitolOffice": [
+          "306 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3448"
+        ],
+        "email": "cheryl.pasteur@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/pasteur01"
+      }
+    ]
+  },
+  "11B": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jon S. Cardin",
+        "party": "Democratic",
+        "capitolOffice": [
+          "426 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3054"
+        ],
+        "email": "jon.cardin@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/cardin01"
+      },
+      {
+        "name": "Dana Stein",
+        "party": "Democratic",
+        "capitolOffice": [
+          "301 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "dana.stein@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/stein"
+      }
+    ]
+  },
+  "12A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jessica Feldmark",
+        "party": "Democratic",
+        "capitolOffice": [
+          "131 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3205"
+        ],
+        "email": "jessica.feldmark@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/feldmark01"
+      },
+      {
+        "name": "Terri L. Hill",
+        "party": "Democratic",
+        "capitolOffice": [
+          "404 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3378"
+        ],
+        "email": "Terri.Hill@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hill02"
+      }
+    ]
+  },
+  "12B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Gary Simmons",
+        "party": "Democratic",
+        "capitolOffice": [
+          "152 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3581"
+        ],
+        "email": "gary.simmons@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/simmons01"
+      }
+    ]
+  },
+  "27A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Darrell Odom",
+        "party": "Democratic",
+        "capitolOffice": [
+          "206 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3257"
+        ],
+        "email": "darrell.odom@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/odom01"
+      }
+    ]
+  },
+  "27B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeffrie E. Long Jr.",
+        "party": "Democratic",
+        "capitolOffice": [
+          "209 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3398"
+        ],
+        "email": "jeffrie.long@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/long02"
+      }
+    ]
+  },
+  "27C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mark N. Fisher",
+        "party": "Republican",
+        "capitolOffice": [
+          "422 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3231"
+        ],
+        "email": "mark.fisher@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/fisher"
+      }
+    ]
+  },
+  "29A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matthew Morgan",
+        "party": "Republican",
+        "capitolOffice": [
+          "310 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3170"
+        ],
+        "email": "Matt.Morgan@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/morgan02"
+      }
+    ]
+  },
+  "29B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brian M. Crosby",
+        "party": "Democratic",
+        "capitolOffice": [
+          "220 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3227"
+        ],
+        "email": "brian.crosby@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/crosby01"
+      }
+    ]
+  },
+  "29C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Todd B. Morgan",
+        "party": "Republican",
+        "capitolOffice": [
+          "215 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3319"
+        ],
+        "email": "todd.morgan@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/morgan03"
+      }
+    ]
+  },
+  "30A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dylan Behler",
+        "party": "Democratic",
+        "capitolOffice": [
+          "154 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3045"
+        ],
+        "email": "dylan.behler@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/behler01"
+      },
+      {
+        "name": "Dana Jones",
+        "party": "Democratic",
+        "capitolOffice": [
+          "161 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "dana.jones@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/jones01"
+      }
+    ]
+  },
+  "30B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Seth A. Howard",
+        "party": "Republican",
+        "capitolOffice": [
+          "159 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3439"
+        ],
+        "email": "Seth.Howard@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/howard01"
+      }
+    ]
+  },
+  "33A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Andrew C. Pruski",
+        "party": "Democratic",
+        "capitolOffice": [
+          "164 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3340"
+        ],
+        "email": "andrew.pruski@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/pruski01"
+      }
+    ]
+  },
+  "33B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Stuart Michael Schmidt Jr.",
+        "party": "Republican",
+        "capitolOffice": [
+          "157 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3110"
+        ],
+        "email": "stuart.schmidt@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/schmidt01"
+      }
+    ]
+  },
+  "33C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Heather Bagnall",
+        "party": "Democratic",
+        "capitolOffice": [
+          "241 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "heather.bagnall@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/bagnall01"
+      }
+    ]
+  },
+  "34A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Steve Johnson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "311 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3280"
+        ],
+        "email": "steve.johnson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/johnson01"
+      },
+      {
+        "name": "Andre V. Johnson Jr.",
+        "party": "Democratic",
+        "capitolOffice": [
+          "311 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3801"
+        ],
+        "email": "andre.johnson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/johnson02"
+      }
+    ]
+  },
+  "34B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Susan K. McComas",
+        "party": "Republican",
+        "capitolOffice": [
+          "411 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "susan.mccomas@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mccomas"
+      }
+    ]
+  },
+  "35A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Griffith",
+        "party": "Republican",
+        "capitolOffice": [
+          "423 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3444"
+        ],
+        "email": "mike.griffith@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/griffith02"
+      },
+      {
+        "name": "Teresa E. Reilly",
+        "party": "Republican",
+        "capitolOffice": [
+          "325 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "Teresa.Reilly@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/reilly01"
+      }
+    ]
+  },
+  "35B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kevin B. Hornberger",
+        "party": "Republican",
+        "capitolOffice": [
+          "325 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3284"
+        ],
+        "email": "Kevin.Hornberger@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hornberger01"
+      }
+    ]
+  },
+  "37A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sheree Sample-Hughes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "313 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3427"
+        ],
+        "email": "Sheree.Sample.Hughes@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/sample01"
+      }
+    ]
+  },
+  "37B": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Christopher T. Adams",
+        "party": "Republican",
+        "capitolOffice": [
+          "405 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "christopher.adams@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/adams01"
+      },
+      {
+        "name": "Thomas S. Hutchinson",
+        "party": "Republican",
+        "capitolOffice": [
+          "308 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3582"
+        ],
+        "email": "tom.hutchinson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hutchinson01"
+      }
+    ]
+  },
+  "38A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "H. Kevin Anderson",
+        "party": "Republican",
+        "capitolOffice": [
+          "309 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3433"
+        ],
+        "email": "H.Kevin.Anderson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/anderson01"
+      }
+    ]
+  },
+  "38B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Barry Beauchamp",
+        "party": "Republican",
+        "capitolOffice": [
+          "310 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3431"
+        ],
+        "email": "barry.beauchamp@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/beauchamp01"
+      }
+    ]
+  },
+  "38C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Wayne A. Hartman",
+        "party": "Republican",
+        "capitolOffice": [
+          "213 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "wayne.hartman@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hartman01"
+      }
+    ]
+  },
+  "42A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alexander M. Harlan",
+        "party": "Republican",
+        "capitolOffice": [
+          "320 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3258"
+        ],
+        "email": "Alexander.Harlan@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/harlan01"
+      }
+    ]
+  },
+  "42B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michele Guyton",
+        "party": "Democratic",
+        "capitolOffice": [
+          "251 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3793"
+        ],
+        "email": "michele.guyton@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/guyton01"
+      }
+    ]
+  },
+  "42C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joshua J. Stonko",
+        "party": "Republican",
+        "capitolOffice": [
+          "215 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3833"
+        ],
+        "email": "joshua.stonko@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/stonko01"
+      }
+    ]
+  },
+  "43A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Regina T. Boyce",
+        "party": "Democratic",
+        "capitolOffice": [
+          "304 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "regina.boyce@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/boyce01"
+      },
+      {
+        "name": "Elizabeth Embry",
+        "party": "Democratic",
+        "capitolOffice": [
+          "316 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3638"
+        ],
+        "email": "elizabeth.embry@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/embry01"
+      }
+    ]
+  },
+  "43B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Catherine M. Forbes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "304 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3487"
+        ],
+        "email": "catherine.forbes@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/forbes01"
+      }
+    ]
+  },
+  "44A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Eric Ebersole",
+        "party": "Democratic",
+        "capitolOffice": [
+          "305 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3328"
+        ],
+        "email": "Eric.Ebersole@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ebersole01"
+      }
+    ]
+  },
+  "44B": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Aletheia McCaskill",
+        "party": "Democratic",
+        "capitolOffice": [
+          "326 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3692"
+        ],
+        "email": "aletheia.mccaskill@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mccaskill01"
+      },
+      {
+        "name": "Sheila Ruth",
+        "party": "Democratic",
+        "capitolOffice": [
+          "326 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "sheila.ruth@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ruth01"
+      }
+    ]
+  },
+  "47A": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Diana M. Fennell",
+        "party": "Democratic",
+        "capitolOffice": [
+          "410 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3478"
+        ],
+        "email": "Diana.Fennell@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/fennell01"
+      },
+      {
+        "name": "Julian Ivey",
+        "party": "Democratic",
+        "capitolOffice": [
+          "205 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3326"
+        ],
+        "email": "julian.ivey@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ivey01"
+      }
+    ]
+  },
+  "47B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Deni Taveras",
+        "party": "Democratic",
+        "capitolOffice": [
+          "206 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3101"
+        ],
+        "email": "deni.taveras@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/taveras01"
+      }
+    ]
+  },
+  "3": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Kris Fair",
+        "party": "Democratic",
+        "capitolOffice": [
+          "306 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3472"
+        ],
+        "email": "kris.fair@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/fair01"
+      },
+      {
+        "name": "Kenneth Kerr",
+        "party": "Democratic",
+        "capitolOffice": [
+          "209 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "ken.kerr@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kerr01"
+      },
+      {
+        "name": "Karen Simpson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "221 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3436"
+        ],
+        "email": "karen.simpson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/simpson01"
+      }
+    ]
+  },
+  "4": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Barrie S. Ciliberti",
+        "party": "Republican",
+        "capitolOffice": [
+          "226 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "Barrie.Ciliberti@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ciliberti01"
+      },
+      {
+        "name": "April Miller",
+        "party": "Republican",
+        "capitolOffice": [
+          "226 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3288"
+        ],
+        "email": "april.miller@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/miller03"
+      },
+      {
+        "name": "Jesse T. Pippy",
+        "party": "Republican",
+        "capitolOffice": [
+          "212 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "jesse.pippy@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/pippy01"
+      }
+    ]
+  },
+  "5": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Christopher Eric Bouchat",
+        "party": "Republican",
+        "capitolOffice": [
+          "321 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3200"
+        ],
+        "email": "christopher.bouchat@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/bouchat01"
+      },
+      {
+        "name": "April Rose",
+        "party": "Republican",
+        "capitolOffice": [
+          "213 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3070"
+        ],
+        "email": "April.Rose@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/rose01"
+      },
+      {
+        "name": "Chris Tomlinson",
+        "party": "Republican",
+        "capitolOffice": [
+          "321 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3359"
+        ],
+        "email": "chris.tomlinson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/tomlinson01"
+      }
+    ]
+  },
+  "6": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Robin L. Grammer Jr.",
+        "party": "Republican",
+        "capitolOffice": [
+          "416 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3298"
+        ],
+        "email": "Robin.Grammer@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/grammer01"
+      },
+      {
+        "name": "Robert B. Long",
+        "party": "Republican",
+        "capitolOffice": [
+          "320 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3458"
+        ],
+        "email": "Bob.Long@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/long01"
+      },
+      {
+        "name": "Ric Metzgar",
+        "party": "Republican",
+        "capitolOffice": [
+          "413 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3332"
+        ],
+        "email": "Ric.Metzgar@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/metzgar01"
+      }
+    ]
+  },
+  "8": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Nick Allen",
+        "party": "Democratic",
+        "capitolOffice": [
+          "305 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3365"
+        ],
+        "email": "nick.allen@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/allen01"
+      },
+      {
+        "name": "Harry Bhandari",
+        "party": "Democratic",
+        "capitolOffice": [
+          "303 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3526"
+        ],
+        "email": "harry.bhandari@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/bhandari01"
+      },
+      {
+        "name": "Kim Ross",
+        "party": "Democratic",
+        "capitolOffice": [
+          "303 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3766"
+        ],
+        "email": "kim.ross@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ross01"
+      }
+    ]
+  },
+  "10": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Jennifer White Holland",
+        "party": "Democratic",
+        "capitolOffice": [
+          "319 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3744"
+        ],
+        "email": "jennifer.white@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/white01"
+      },
+      {
+        "name": "Adrienne A. Jones",
+        "party": "Democratic",
+        "capitolOffice": [
+          "350 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3237"
+        ],
+        "email": "adrienne.jones@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/jones"
+      },
+      {
+        "name": "N. Scott Phillips",
+        "party": "Democratic",
+        "capitolOffice": [
+          "319 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3358"
+        ],
+        "email": "n.scott.phillips@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/phillips02"
+      }
+    ]
+  },
+  "13": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Pam Lanman Guzzone",
+        "party": "Democratic",
+        "capitolOffice": [
+          "216 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3083"
+        ],
+        "email": "pam.guzzone@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/guzzone01"
+      },
+      {
+        "name": "Gabriel M. Moreno",
+        "party": "Democratic",
+        "capitolOffice": [
+          "225 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3471"
+        ],
+        "email": "gabriel.moreno@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/moreno01"
+      },
+      {
+        "name": "Jen Terrasa",
+        "party": "Democratic",
+        "capitolOffice": [
+          "217 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3246"
+        ],
+        "email": "jen.terrasa@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/terrasa01"
+      }
+    ]
+  },
+  "14": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Anne R. Kaiser",
+        "party": "Democratic",
+        "capitolOffice": [
+          "121 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3036"
+        ],
+        "email": "anne.kaiser@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kaiser"
+      },
+      {
+        "name": "Bernice Mireku-North",
+        "party": "Democratic",
+        "capitolOffice": [
+          "222 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3539"
+        ],
+        "email": "bernice.mireku-north@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mireku01"
+      },
+      {
+        "name": "Pam Queen",
+        "party": "Democratic",
+        "capitolOffice": [
+          "427 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "pam.queen@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/queen01"
+      }
+    ]
+  },
+  "15": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Linda Foley",
+        "party": "Democratic",
+        "capitolOffice": [
+          "220 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3052"
+        ],
+        "email": "linda.foley@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/foley01"
+      },
+      {
+        "name": "David Fraser-Hidalgo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "350 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "david.fraser.hidalgo@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/fraser01"
+      },
+      {
+        "name": "Lily Qi",
+        "party": "Democratic",
+        "capitolOffice": [
+          "223 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "lily.qi@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/qi01"
+      }
+    ]
+  },
+  "16": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Marc Korman",
+        "party": "Democratic",
+        "capitolOffice": [
+          "251 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "Marc.Korman@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/korman01"
+      },
+      {
+        "name": "Sarah Wolek",
+        "party": "Democratic",
+        "capitolOffice": [
+          "222 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3642"
+        ],
+        "email": "sarah.wolek@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wolek01"
+      },
+      {
+        "name": "Teresa Woorman",
+        "party": "Democratic",
+        "capitolOffice": [
+          "210 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3454"
+        ],
+        "email": "teresa.woorman@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/woorman01"
+      }
+    ]
+  },
+  "17": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Julie Palakovich Carr",
+        "party": "Democratic",
+        "capitolOffice": [
+          "202 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "julie.palakovichcarr@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/palakovich01"
+      },
+      {
+        "name": "Ryan Spiegel",
+        "party": "Democratic",
+        "capitolOffice": [
+          "223 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3792"
+        ],
+        "email": "ryan.spiegel@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/spiegel01"
+      },
+      {
+        "name": "Joe Vogel",
+        "party": "Democratic",
+        "capitolOffice": [
+          "224 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3103"
+        ],
+        "email": "joe.vogel@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/vogel01"
+      }
+    ]
+  },
+  "18": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Aaron M. Kaufman",
+        "party": "Democratic",
+        "capitolOffice": [
+          "363 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3314"
+        ],
+        "email": "aaron.kaufman@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kaufman01"
+      },
+      {
+        "name": "Emily Shetty",
+        "party": "Democratic",
+        "capitolOffice": [
+          "350 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3181"
+        ],
+        "email": "emily.shetty@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/shetty01"
+      },
+      {
+        "name": "Jared Solomon",
+        "party": "Democratic",
+        "capitolOffice": [
+          "312 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "jared.solomon@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/solomon01"
+      }
+    ]
+  },
+  "19": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Charlotte Crutchfield",
+        "party": "Democratic",
+        "capitolOffice": [
+          "403 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "charlotte.crutchfield@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/crutchfield01"
+      },
+      {
+        "name": "Bonnie Cullison",
+        "party": "Democratic",
+        "capitolOffice": [
+          "241 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "bonnie.cullison@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/cullison"
+      },
+      {
+        "name": "Vaughn Stewart",
+        "party": "Democratic",
+        "capitolOffice": [
+          "151 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3528"
+        ],
+        "email": "vaughn.stewart@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/stewart01"
+      }
+    ]
+  },
+  "20": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Lorig Charkoudian",
+        "party": "Democratic",
+        "capitolOffice": [
+          "231 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "lorig.charkoudian@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/charkoudian01"
+      },
+      {
+        "name": "David Moon",
+        "party": "Democratic",
+        "capitolOffice": [
+          "350 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3474"
+        ],
+        "email": "David.Moon@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/moon01"
+      },
+      {
+        "name": "Jheanelle K. Wilkins",
+        "party": "Democratic",
+        "capitolOffice": [
+          "131 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "jheanelle.wilkins@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wilkins01"
+      }
+    ]
+  },
+  "21": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Ben Barnes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "121 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "ben.barnes@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/barnes"
+      },
+      {
+        "name": "Mary A. Lehman",
+        "party": "Democratic",
+        "capitolOffice": [
+          "163 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3114"
+        ],
+        "email": "mary.lehman@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/lehman01"
+      },
+      {
+        "name": "Joseline A. Peña-Melnyk",
+        "party": "Democratic",
+        "capitolOffice": [
+          "H-101 State House",
+          "100 State Circle",
+          "Annapolis, MD 21401",
+          "410-841-3800"
+        ],
+        "email": "joseline.pena.melnyk@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/pena"
+      }
+    ]
+  },
+  "22": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Anne Healey",
+        "party": "Democratic",
+        "capitolOffice": [
+          "361 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "anne.healey@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/healey"
+      },
+      {
+        "name": "Ashanti Martinez",
+        "party": "Democratic",
+        "capitolOffice": [
+          "151 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3652"
+        ],
+        "email": "ashanti.martinez@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/martinez01"
+      },
+      {
+        "name": "Nicole A. Williams",
+        "party": "Democratic",
+        "capitolOffice": [
+          "207 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3058"
+        ],
+        "email": "nicole.williams@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/williams01"
+      }
+    ]
+  },
+  "23": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Adrian Boafo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "225 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3047"
+        ],
+        "email": "adrian.boafo@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/boafo01"
+      },
+      {
+        "name": "Marvin E. Holmes Jr.",
+        "party": "Democratic",
+        "capitolOffice": [
+          "364 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3310"
+        ],
+        "email": "marvin.holmes@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/holmes"
+      },
+      {
+        "name": "Kym Taylor",
+        "party": "Democratic",
+        "capitolOffice": [
+          "203 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3331"
+        ],
+        "email": "kym.taylor@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/taylor03"
+      }
+    ]
+  },
+  "24": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Tiffany T. Alston",
+        "party": "Democratic",
+        "capitolOffice": [
+          "219 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3139"
+        ],
+        "email": "tiffany.alston@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/alston01"
+      },
+      {
+        "name": "Derrick Coley",
+        "party": "Democratic",
+        "capitolOffice": [
+          "317 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3691"
+        ],
+        "email": "derrick.coley@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/coley01"
+      },
+      {
+        "name": "Andrea Fletcher Harrison",
+        "party": "Democratic",
+        "capitolOffice": [
+          "207 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "andreafletcher.harrison@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/harrison01"
+      }
+    ]
+  },
+  "25": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Kent Roberson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "219 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3557"
+        ],
+        "email": "kent.roberson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/roberson01"
+      },
+      {
+        "name": "Denise Roberts",
+        "party": "Democratic",
+        "capitolOffice": [
+          "204 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3707"
+        ],
+        "email": "denise.roberts@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/roberts01"
+      },
+      {
+        "name": "Karen Toles",
+        "party": "Democratic",
+        "capitolOffice": [
+          "203 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3524"
+        ],
+        "email": "karen.toles@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/toles01"
+      }
+    ]
+  },
+  "26": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Veronica Turner",
+        "party": "Democratic",
+        "capitolOffice": [
+          "205 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3212"
+        ],
+        "email": "veronica.turner@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/turner01"
+      },
+      {
+        "name": "Kriselda Valderrama",
+        "party": "Democratic",
+        "capitolOffice": [
+          "231 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "kris.valderrama@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/valderrama"
+      },
+      {
+        "name": "Jamila J. Woods",
+        "party": "Democratic",
+        "capitolOffice": [
+          "206 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3544"
+        ],
+        "email": "jamila.woods@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/woods01"
+      }
+    ]
+  },
+  "28": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Debra Davis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "101 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "debra.davis@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/davis02"
+      },
+      {
+        "name": "Edith J. Patterson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "429 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3247"
+        ],
+        "email": "Edith.Patterson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/patterson02"
+      },
+      {
+        "name": "C. T. Wilson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "425 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3325"
+        ],
+        "email": "ct.wilson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wilson"
+      }
+    ]
+  },
+  "31": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Brian Chisholm",
+        "party": "Republican",
+        "capitolOffice": [
+          "412 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3206"
+        ],
+        "email": "brian.chisholm@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/chisholm01"
+      },
+      {
+        "name": "Nicholaus R. Kipke",
+        "party": "Republican",
+        "capitolOffice": [
+          "165 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "nicholaus.kipke@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kipke"
+      },
+      {
+        "name": "LaToya Nkongolo",
+        "party": "Republican",
+        "capitolOffice": [
+          "156 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3510"
+        ],
+        "email": "latoya.nkongolo@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/nkongolo01"
+      }
+    ]
+  },
+  "32": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "J. Sandy Bartlett",
+        "party": "Democratic",
+        "capitolOffice": [
+          "101 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "sandy.bartlett@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/bartlett02"
+      },
+      {
+        "name": "Mark S. Chang",
+        "party": "Democratic",
+        "capitolOffice": [
+          "160 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3511"
+        ],
+        "email": "Mark.Chang@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/chang01"
+      },
+      {
+        "name": "Mike Rogers",
+        "party": "Democratic",
+        "capitolOffice": [
+          "162 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3372"
+        ],
+        "email": "mike.rogers@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/rogers01"
+      }
+    ]
+  },
+  "36": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Steven J. Arentz",
+        "party": "Republican",
+        "capitolOffice": [
+          "308 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "steven.arentz@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/arentz01"
+      },
+      {
+        "name": "Jefferson L. Ghrist",
+        "party": "Republican",
+        "capitolOffice": [
+          "430 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "Jeff.Ghrist@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ghrist01"
+      }
+    ],
+    "asOf": "2026-11-12"
+  },
+  "39": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Gabriel Acevero",
+        "party": "Democratic",
+        "capitolOffice": [
+          "415 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "gabriel.acevero@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/acevero01"
+      },
+      {
+        "name": "Lesley J. Lopez",
+        "party": "Democratic",
+        "capitolOffice": [
+          "210 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3021"
+        ],
+        "email": "lesley.lopez@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/lopez01"
+      },
+      {
+        "name": "Greg Wims",
+        "party": "Democratic",
+        "capitolOffice": [
+          "224 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3039"
+        ],
+        "email": "greg.wims@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wims01"
+      }
+    ]
+  },
+  "40": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Marlon Amprey",
+        "party": "Democratic",
+        "capitolOffice": [
+          "314 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3520"
+        ],
+        "email": "marlon.amprey@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/amprey01"
+      },
+      {
+        "name": "Frank M. Conaway Jr.",
+        "party": "Democratic",
+        "capitolOffice": [
+          "315 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "frank.conaway@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/conaway"
+      },
+      {
+        "name": "Melissa Wells",
+        "party": "Democratic",
+        "capitolOffice": [
+          "142 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401"
+        ],
+        "email": "melissa.wells@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/wells02"
+      }
+    ]
+  },
+  "41": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Samuel I. Rosenberg",
+        "party": "Democratic",
+        "capitolOffice": [
+          "365 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3297"
+        ],
+        "email": "samuel.rosenberg@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/rosenberg"
+      },
+      {
+        "name": "Malcolm P. Ruff",
+        "party": "Democratic",
+        "capitolOffice": [
+          "314 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3283"
+        ],
+        "email": "malcolm.ruff@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ruff01"
+      },
+      {
+        "name": "Sean A. Stinnett",
+        "party": "Democratic",
+        "capitolOffice": [
+          "350 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3268"
+        ],
+        "email": "sean.stinnett@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/stinnett01"
+      }
+    ]
+  },
+  "45": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Jackie Addison",
+        "party": "Democratic",
+        "capitolOffice": [
+          "216 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3551"
+        ],
+        "email": "jackie.addison@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/addison01"
+      },
+      {
+        "name": "Stephanie Smith",
+        "party": "Democratic",
+        "capitolOffice": [
+          "307 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3486"
+        ],
+        "email": "stephanie.smith@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/smith03"
+      },
+      {
+        "name": "Caylin Young",
+        "party": "Democratic",
+        "capitolOffice": [
+          "317 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3429"
+        ],
+        "email": "caylin.young@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/young05"
+      }
+    ]
+  },
+  "46": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Luke Clippinger",
+        "party": "Democratic",
+        "capitolOffice": [
+          "362 Taylor House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3303"
+        ],
+        "email": "luke.clippinger@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/clippinger"
+      },
+      {
+        "name": "Mark Edelson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "316 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3291"
+        ],
+        "email": "mark.edelson@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/edelson01"
+      },
+      {
+        "name": "Robbyn Lewis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "424 Lowe House Office Building",
+          "6 Bladen Street",
+          "Annapolis, MD 21401",
+          "410-841-3772"
+        ],
+        "email": "robbyn.lewis@house.maryland.gov",
+        "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/lewis01"
+      }
+    ]
+  }
+}

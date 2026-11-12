@@ -1,0 +1,302 @@
+{
+  "A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bert Stedman",
+        "party": "Republican",
+        "email": "Senator.Bert.Stedman@akleg.gov",
+        "phone": "907-465-3873",
+        "phonesExtra": [
+          "toll-free 877-463-3873"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=smn"
+      }
+    ]
+  },
+  "B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jesse Kiehl",
+        "party": "Democratic",
+        "email": "Senator.Jesse.Kiehl@akleg.gov",
+        "phone": "907-465-4947",
+        "phonesExtra": [
+          "toll-free 855-465-4947"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=kie"
+      }
+    ]
+  },
+  "C": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Gary Stevens",
+        "party": "Republican",
+        "email": "Senator.Gary.Stevens@akleg.gov",
+        "phone": "907-465-4925",
+        "phonesExtra": [
+          "toll-free 800-821-4925"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=stg"
+      }
+    ]
+  },
+  "D": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jesse Bjorkman",
+        "party": "Republican",
+        "email": "Senator.Jesse.Bjorkman@akleg.gov",
+        "phone": "907-465-2828",
+        "phonesExtra": [
+          "toll-free 800-964-5733"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=bjk"
+      }
+    ]
+  },
+  "E": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cathy Giessel",
+        "party": "Republican",
+        "email": "Senator.Cathy.Giessel@akleg.gov",
+        "phone": "907-465-4843",
+        "phonesExtra": [
+          "toll-free 800-892-4843"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=gie"
+      }
+    ]
+  },
+  "F": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Kaufman",
+        "party": "Republican",
+        "email": "Senator.James.Kaufman@akleg.gov",
+        "phone": "907-465-4949",
+        "phonesExtra": [
+          "toll-free 800-478-4950"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=kau"
+      }
+    ]
+  },
+  "G": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Elvi Gray-Jackson",
+        "party": "Democratic",
+        "email": "Senator.Elvi.Gray-Jackson@akleg.gov",
+        "phone": "907-465-4930",
+        "phonesExtra": [
+          "toll-free 800-331-4930"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=gra"
+      }
+    ]
+  },
+  "H": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matt Claman",
+        "party": "Democratic",
+        "email": "Senator.Matt.Claman@akleg.gov",
+        "phone": "907-465-4919",
+        "phonesExtra": [
+          "toll-free 888-465-4919"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=cla"
+      }
+    ]
+  },
+  "I": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Loki Tobin",
+        "party": "Democratic",
+        "email": "Senator.Loki.Tobin@akleg.gov",
+        "phone": "907-465-3704",
+        "phonesExtra": [
+          "toll-free 888-330-3704"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=tob"
+      }
+    ]
+  },
+  "J": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Forrest Dunbar",
+        "party": "Democratic",
+        "email": "Senator.Forrest.Dunbar@akleg.gov",
+        "phone": "907-465-6944",
+        "phonesExtra": [
+          "toll-free 800-770-3822"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=dnb"
+      }
+    ]
+  },
+  "K": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bill Wielechowski",
+        "party": "Democratic",
+        "email": "Senator.Bill.Wielechowski@akleg.gov",
+        "phone": "907-465-2435",
+        "phonesExtra": [
+          "toll-free 800-550-2435"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=wie"
+      }
+    ]
+  },
+  "L": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kelly Merrick",
+        "party": "Republican",
+        "email": "Senator.Kelly.Merrick@akleg.gov",
+        "phone": "907-465-3777",
+        "phonesExtra": [
+          "toll-free 800-861-5688"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=mrr"
+      }
+    ]
+  },
+  "M": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cathy Tilton",
+        "party": "Republican",
+        "email": "Senator.Cathy.Tilton@akleg.gov",
+        "phone": "907-465-2199",
+        "phonesExtra": [
+          "toll-free 800-342-2199"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=TTN"
+      }
+    ]
+  },
+  "N": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Robert Yundt",
+        "party": "Republican",
+        "email": "Senator.Robert.Yundt@akleg.gov",
+        "phone": "907-465-3878",
+        "phonesExtra": [
+          "toll-free 800-862-3878"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=yun"
+      }
+    ]
+  },
+  "O": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "George Rauscher",
+        "party": "Republican",
+        "email": "Senator.George.Rauscher@akleg.gov",
+        "phone": "907-465-4859",
+        "phonesExtra": [
+          "toll-free 888-465-4859"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=rac"
+      }
+    ]
+  },
+  "P": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Scott Kawasaki",
+        "party": "Democratic",
+        "email": "Senator.Scott.Kawasaki@akleg.gov",
+        "phone": "907-465-3466",
+        "phonesExtra": [
+          "toll-free 866-465-3466"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=kaw"
+      }
+    ]
+  },
+  "Q": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Robert Myers",
+        "party": "Republican",
+        "email": "Senator.Robert.Myers@akleg.gov",
+        "phone": "907-465-3719",
+        "phonesExtra": [
+          "toll-free 877-465-3719"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=mye"
+      }
+    ]
+  },
+  "R": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Cronk",
+        "party": "Republican",
+        "email": "Senator.Mike.Cronk@akleg.gov",
+        "phone": "907-465-4527",
+        "phonesExtra": [
+          "toll-free 800-491-4527"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=crn"
+      }
+    ]
+  },
+  "S": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lyman Hoffman",
+        "party": "Democratic",
+        "email": "Senator.Lyman.Hoffman@akleg.gov",
+        "phone": "907-465-4453",
+        "phonesExtra": [
+          "toll-free 866-465-4453"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=hof"
+      }
+    ]
+  },
+  "T": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Donny Olson",
+        "party": "Democratic",
+        "email": "Senator.Donald.Olson@akleg.gov",
+        "phone": "907-465-3707",
+        "phonesExtra": [
+          "toll-free 800-597-3707"
+        ],
+        "url": "http://www.akleg.gov/basis/Member/Detail/34?code=ols"
+      }
+    ]
+  }
+}

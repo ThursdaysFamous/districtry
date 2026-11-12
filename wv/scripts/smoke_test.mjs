@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "38.33650,-81.61230"; // West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County
 const OFFLINE = ["county", "us-house", "wv-senate", "wv-house"];
 const EXPECT_DISTRICT = { "county": "Kanawha County", "us-house": "1", "wv-senate": "8", "wv-house": "54" };
-const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. Re-measured 2026-11-10 at West Virginia's go-live: still in no outline in fleet-outlines.json, Virginia's included. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky and Virginia are live already, and Maryland, Pennsylvania and Ohio are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.
+const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), and none of the state's shipped boundary files contains it. MARYLAND'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED MARYLAND (batch 3 of the state-level launch, written 2026-11-12), AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because Kentucky, Virginia, Ohio, Pennsylvania and Maryland are all served. It is still outside West Virginia and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Maryland routing case in the same change, as Kentucky's and Tennessee's did.
 const APP_NAME = "districtry West Virginia";
 const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
@@ -395,26 +395,40 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     WEST VIRGINIA HAS FIVE NEIGHBOURS, AND THE FLEET SERVES ONE OF THEM.
-  //     A click a little way inside Kentucky must open Kentucky's app:
+  //     WEST VIRGINIA HAS FIVE NEIGHBOURS. A click a little way inside
+  //     Kentucky must open Kentucky's app:
   //     Ashland and Pikeville, measured against fleet-outlines.json on
   //     2026-10-29, each inside Kentucky's outline and no other, about 6 and
   //     26 km from this app's outline. This instance answers its own side from
   //     the state outline the wash retained, with no fetch. Chicago proves the
   //     file is still read for ground far from here.
   //
-  //     OHIO, PENNSYLVANIA, MARYLAND AND VIRGINIA ARE DELIBERATELY NOT CASES.
-  //     Nobody serves them today, so a click there stays here; but the fleet
-  //     is meant to reach every state, and a "stays here" case in any of them
-  //     would start failing the day it goes live, in a change that is about
-  //     another state. The negative point carries that half instead (1a2-ii),
-  //     and it is the one thing in this file that must move when Maryland
-  //     goes live (WATCH.md).
+  //     EVERY ONE OF WEST VIRGINIA'S FIVE NEIGHBOURS IS SERVED since
+  //     Maryland's go-live (batch 3 of the state-level launch), so the cases
+  //     below cover all five: Athens, Ohio; Waynesburg, Pennsylvania;
+  //     Winchester, Virginia; and the Garrett County, Maryland point that was
+  //     this app's negative point until that change put it inside Maryland's
+  //     outline. Measured against fleet-outlines.json on 2026-11-12, each lies
+  //     inside its own state's outline and no other, about 34, 20, 14 and 17
+  //     km from this app's outline (Marietta, Ohio was not used: it is 0.7 km
+  //     from this app's outline across the Ohio River, so the case would be
+  //     deciding a rounding question). Until that day this comment said Ohio,
+  //     Pennsylvania, Maryland and Virginia were deliberately not cases
+  //     because nobody served them, which was already false of three of the
+  //     four. THE CLICK-STAYS-HERE CHECK (1a2-ii) WENT IN THE SAME CHANGE:
+  //     measured on a 0.05-degree grid, no ground in this app's gate lies
+  //     more than 2 km from every outline, as Kentucky's had found once Ohio
+  //     was live. The negative point stays in Maryland, since every check
+  //     that uses it boots or selects it here and none clicks it.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Ashland, Kentucky", lat: 38.4784, lng: -82.6379, want: "https://districtry.com/ky/" },
       { name: "Pikeville, Kentucky", lat: 37.4793, lng: -82.5185, want: "https://districtry.com/ky/" },
+      { name: "Athens, Ohio", lat: 39.3292, lng: -82.1013, want: "https://districtry.com/oh/" },
+      { name: "Waynesburg, Pennsylvania", lat: 39.8965, lng: -80.1792, want: "https://districtry.com/pa/" },
+      { name: "Winchester, Virginia", lat: 39.1857, lng: -78.1633, want: "https://districtry.com/va/" },
+      { name: "Garrett County, Maryland", lat: 39.55, lng: -79.25, want: "https://districtry.com/md/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -430,32 +444,6 @@ try {
       check(`a click on ${c.name} from West Virginia opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-  }
-
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Garrett
-  //     County, Maryland, about 20 km east of the West Virginia line, is
-  //     outside every outline in the fleet, so the click must stay HERE. A
-  //     route to a sibling would be the same lie pointing the other way, and
-  //     the stub makes it visible: if the app navigated, the URL would be the
-  //     stubbed sibling rather than this app.
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("https://districtry.com/**", (route) =>
-        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
-    });
-    await page.evaluate(({ n, pt }) => {
-      const [la, ln] = pt.split(",").map(Number);
-      window[n].map.fire("click", { latlng: window.L.latLng(la, ln) });
-    }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
-    await page.waitForTimeout(3000);
-    const url = page.url();
-    // Still under BASE means still this app. Asking instead for the URL NOT to
-    // name one of a list of sibling tags needs a new entry each time a state
-    // goes live, and the one it lacked would read as staying here.
-    check("a click in Maryland, outside every app's outline, stays in this app",
-      url.startsWith(BASE), url);
-    await context.close();
   }
 
   // 1b. The search box retries a zero-result query with the unit fragment

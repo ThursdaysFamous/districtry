@@ -1,0 +1,1413 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Davina Duerr",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "322 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7928"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/davina-duerr"
+      },
+      {
+        "name": "Shelley Kloba",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7900"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/shelley-kloba"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Andrew Barkis",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "427A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7824"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/andrew-barkis"
+      },
+      {
+        "name": "Matt Marshall",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "226A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7912"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/matt-marshall"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Natasha Hill",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "325A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7888"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/natasha-hill"
+      },
+      {
+        "name": "Timm Ormsby",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "315 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7946"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/timm-ormsby"
+      }
+    ]
+  },
+  "4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Suzanne Schmidt",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "233A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7820"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/suzanne-schmidt"
+      },
+      {
+        "name": "Rob Chase",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "434 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7984"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/rob-chase"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Zach Hall",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "203A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7852"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/zach-hall"
+      },
+      {
+        "name": "Lisa Callan",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "201A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7876"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/lisa-callan"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Volz",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "232A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7922"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mike-volz"
+      },
+      {
+        "name": "Jenny Graham",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "230A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7962"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/jenny-graham"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Andrew Engell",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122C Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7908"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/andrew-engell"
+      },
+      {
+        "name": "Hunter Abell",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7988"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/hunter-abell"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Stephanie Barnard",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "431 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7986"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/stephanie-barnard"
+      },
+      {
+        "name": "April Connors",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "426A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7882"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/april-connors"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mary Dye",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "432 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7942"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mary-dye"
+      },
+      {
+        "name": "Joe Schmick",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "426B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7844"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/joe-schmick"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Clyde Shavers",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "311 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7884"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/clyde-shavers"
+      },
+      {
+        "name": "Dave Paul",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "424 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7914"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/dave-paul"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "David Hackney",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "313A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7956"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/david-hackney"
+      },
+      {
+        "name": "Steve Bergquist",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "438B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7862"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/steve-bergquist"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brian Burnett",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "219A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7954"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/brian-burnett"
+      },
+      {
+        "name": "Mike Steele",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "425A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7832"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mike-steele"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tom Dent",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "437 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7932"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/tom-dent"
+      },
+      {
+        "name": "Alex Ybarra",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "228A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7808"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/alex-ybarra"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Gloria Mendoza",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "229A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7960"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/gloria-mendoza"
+      },
+      {
+        "name": "Deb Manjarrez",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122F Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7856"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/deb-manjarrez"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chris Corry",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "335A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7810"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/chris-corry"
+      },
+      {
+        "name": "Jeremie Dufault",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122E Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7874"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/jeremie-dufault"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mark Klicker",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122H Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7836"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mark-klicker"
+      }
+    ],
+    "asOf": "2026-11-11",
+    "sourceUrl": "https://leg.wa.gov/legislators/"
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Kevin Waters",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "223A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7994"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/kevin-waters"
+      },
+      {
+        "name": "David Stuebe",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "227A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7976"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/david-stuebe"
+      }
+    ]
+  },
+  "18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Stephanie McClintock",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "466 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7850"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/stephanie-mcclintock"
+      },
+      {
+        "name": "John Ley",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "225A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7812"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/john-ley"
+      }
+    ]
+  },
+  "19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jim Walsh",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "428 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7806"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/jim-walsh"
+      },
+      {
+        "name": "Joel McEntire",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "409 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7870"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/joel-mcentire"
+      }
+    ]
+  },
+  "20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Peter Abbarno",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "425B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7896"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/peter-abbarno"
+      },
+      {
+        "name": "Ed Orcutt",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "408 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7990"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/ed-orcutt"
+      }
+    ]
+  },
+  "21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Strom Peterson",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "324 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7950"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/strom-peterson"
+      },
+      {
+        "name": "Lillian Ortiz-Self",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "434B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7972"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/lillian-ortiz-self"
+      }
+    ]
+  },
+  "22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Beth Doglio",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "209A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7940"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/beth-doglio"
+      },
+      {
+        "name": "Lisa Parshley",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "207A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7992"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/lisa-parshley"
+      }
+    ]
+  },
+  "23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tarra Simmons",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "429A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7934"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/tarra-simmons"
+      },
+      {
+        "name": "Greg Nance",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "426 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7842"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/greg-nance"
+      }
+    ]
+  },
+  "24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Adam Bernbaum",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "309A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7916"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/adam-bernbaum"
+      },
+      {
+        "name": "Steve Tharinger",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "314 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7904"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/steve-tharinger"
+      }
+    ]
+  },
+  "25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Michael Keaton",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "405 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7948"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/michael-keaton"
+      },
+      {
+        "name": "Cyndy Jacobsen",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7968"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/cyndy-jacobsen"
+      }
+    ]
+  },
+  "26": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Adison Richards",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "335 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7964"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/adison-richards"
+      },
+      {
+        "name": "Michelle Valdez",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "427B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7802"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/michelle-valdez"
+      }
+    ]
+  },
+  "27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Laurie Jinkins",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "339C Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7930"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/laurie-jinkins"
+      },
+      {
+        "name": "Jake Fey",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "303A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7974"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/jake-fey"
+      }
+    ]
+  },
+  "28": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mari Leavitt",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "315A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7890"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mari-leavitt"
+      },
+      {
+        "name": "Dan Bronoske",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132D Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7958"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/dan-bronoske"
+      }
+    ]
+  },
+  "29": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Melanie Morgan",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132E Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7906"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/melanie-morgan"
+      },
+      {
+        "name": "Sharlett Mena",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "319 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7996"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/sharlett-mena"
+      }
+    ]
+  },
+  "30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jamila Taylor",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "370 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7898"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/jamila-taylor"
+      },
+      {
+        "name": "Kristine Reeves",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132F Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7830"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/kristine-reeves"
+      }
+    ]
+  },
+  "31": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Drew Stokesbary",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "335C Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7846"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/drew-stokesbary"
+      },
+      {
+        "name": "Joshua Penner",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "469 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7866"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/joshua-penner"
+      }
+    ]
+  },
+  "32": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Cindy Ryu",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "303 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7880"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/cindy-ryu"
+      },
+      {
+        "name": "Lauren Davis",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "331 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7910"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/lauren-davis"
+      }
+    ]
+  },
+  "33": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Edwin Obras",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "215A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7834"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/edwin-obras"
+      },
+      {
+        "name": "Mia Gregerson",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "321 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7868"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mia-gregerson"
+      }
+    ]
+  },
+  "34": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brianna Thomas",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "331A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7978"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/brianna-thomas"
+      },
+      {
+        "name": "Joe Fitzgibbon",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "339A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7952"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/joe-fitzgibbon"
+      }
+    ]
+  },
+  "35": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dan Griffey",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "403 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7966"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/dan-griffey"
+      },
+      {
+        "name": "Travis Couture",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "404 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7902"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/travis-couture"
+      }
+    ]
+  },
+  "36": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Julia Reed",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "307A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7814"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/julia-reed"
+      },
+      {
+        "name": "Liz Berry",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7860"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/liz-berry"
+      }
+    ]
+  },
+  "37": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sharon Tomiko Santos",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "317A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7944"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/sharon-tomiko-santos"
+      },
+      {
+        "name": "Chipalo Street",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "310 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7838"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/chipalo-street"
+      }
+    ]
+  },
+  "38": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Julio Cortes",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "323A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7840"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/julio-cortes"
+      },
+      {
+        "name": "Mary Fosse",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "368 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7864"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/mary-fosse"
+      }
+    ]
+  },
+  "39": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sam Low",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "122D Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7967"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/sam-low"
+      },
+      {
+        "name": "Carolyn Eslick",
+        "party": "Republican",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "231A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7816"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/carolyn-eslick"
+      }
+    ]
+  },
+  "40": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Debra Lekanoff",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "422 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7800"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/debra-lekanoff"
+      },
+      {
+        "name": "Alex Ramel",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "434A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7970"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/alex-ramel"
+      }
+    ]
+  },
+  "41": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Janice Zahn",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "213A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7894"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/janice-zahn"
+      },
+      {
+        "name": "My-Linh Thai",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "421 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7926"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/my-linh-thai"
+      }
+    ]
+  },
+  "42": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Alicia Rule",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "334 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7980"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/alicia-rule"
+      },
+      {
+        "name": "Joe Timmons",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "425 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7854"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/joe-timmons"
+      }
+    ]
+  },
+  "43": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Nicole Macri",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "336 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7826"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/nicole-macri"
+      },
+      {
+        "name": "Shaun Scott",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "326A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7920"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/shaun-scott"
+      }
+    ]
+  },
+  "44": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brandy Donaghy",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "301A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7804"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/brandy-donaghy"
+      },
+      {
+        "name": "April Berg",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "132C Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7892"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/april-berg"
+      }
+    ]
+  },
+  "45": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Roger Goodman",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "436B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7878"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/roger-goodman"
+      },
+      {
+        "name": "Larry Springer",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "437A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7822"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/larry-springer"
+      }
+    ]
+  },
+  "46": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Gerry Pollet",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "438A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7886"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/gerry-pollet"
+      },
+      {
+        "name": "Darya Farivar",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "324A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7818"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/darya-farivar"
+      }
+    ]
+  },
+  "47": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Debra Entenman",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "319A Joel Pritchard Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7918"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/debra-entenman"
+      },
+      {
+        "name": "Chris Stearns",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "430 Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7858"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/chris-stearns"
+      }
+    ]
+  },
+  "48": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Osman Salahuddin",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "328 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7936"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/osman-salahuddin"
+      },
+      {
+        "name": "Amy Walen",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "437B Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7848"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/amy-walen"
+      }
+    ]
+  },
+  "49": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sharon Wylie",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "414 John L. O'Brien Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7924"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/sharon-wylie"
+      },
+      {
+        "name": "Monica Jurado Stonier",
+        "party": "Democrat",
+        "capitolOffice": [
+          "Washington House of Representatives",
+          "436A Legislative Building",
+          "PO Box 40600",
+          "Olympia, WA 98504",
+          "(360) 786-7872"
+        ],
+        "url": "https://leg.wa.gov/legislators/member/monica-jurado-stonier"
+      }
+    ]
+  }
+}

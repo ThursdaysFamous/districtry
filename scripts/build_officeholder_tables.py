@@ -608,6 +608,50 @@ def multi_member_districts(data):
     return rows
 
 
+_ORDINAL_WORDS = {
+    "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6,
+    "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10, "eleventh": 11,
+    "twelfth": 12, "thirteenth": 13, "fourteenth": 14, "fifteenth": 15,
+    "sixteenth": 16, "seventeenth": 17, "eighteenth": 18, "nineteenth": 19,
+}
+
+
+def _ordinal_name_key(name):
+    """'10th Bristol' -> ('bristol', 10) and 'Third Middlesex' -> ('middlesex',
+    3), so a county's districts sort together and in number order; a name with
+    no leading ordinal ('Cape and Islands') sorts by itself, at 0."""
+    first, _, rest = name.partition(" ")
+    low = first.lower()
+    digits = low.rstrip("stndrh")
+    if rest and digits.isdigit() and low[len(digits):] in ("st", "nd", "rd", "th"):
+        return (rest.lower(), int(digits))
+    if rest and low in _ORDINAL_WORDS:
+        return (rest.lower(), _ORDINAL_WORDS[low])
+    return (name.lower(), 0)
+
+
+def named_districts(data):
+    """Massachusetts: every district of both chambers is NAMED for the
+    counties it lies in rather than numbered ("10th Bristol", "Third
+    Middlesex", "Cape and Islands"), each record carrying its full name as
+    `title` and its one member as {"seats": 1, "members": [...]}. One row per
+    seat, labelled with the district's own name and the word District, as the
+    Commonwealth writes it, in county and number order; a seat the roster
+    names nobody for is carried as unnamed."""
+    rows = []
+    for k in sorted(data, key=lambda k: _ordinal_name_key(
+            str((data[k] or {}).get("title") or k) if isinstance(data[k], dict) else k)):
+        rec = data[k] if isinstance(data[k], dict) else {}
+        title = str(rec.get("title") or k)
+        people = [m for m in rec.get("members") or [] if isinstance(m, dict)]
+        seats = int(rec.get("seats", len(people) or 1))
+        if len(people) > seats:
+            fail("District %s lists %d members for %d seats" % (k, len(people), seats))
+        for person in people + [{}] * (seats - len(people)):
+            rows.append(("%s District" % title, person))
+    return rows
+
+
 def _named_district_key(name):
     """'Belknap 9' -> ('belknap', 9), so Belknap 2 sorts before Belknap 10."""
     county, _, number = name.rpartition(" ")
@@ -658,9 +702,54 @@ def nh_house_districts(data):
     return rows
 
 
+def _hyphen_name_key(name):
+    """'Chittenden-2' -> ('chittenden', 2), so Chittenden-2 sorts before
+    Chittenden-10 and before Chittenden-Franklin, a district named for two
+    counties."""
+    return tuple((0, int(p), "") if p.isdigit() else (1, 0, p.lower())
+                 for p in name.replace(" ", "-").split("-"))
+
+
+def hyphen_named_districts(data):
+    """Vermont: both chambers' districts are NAMED rather than numbered, for
+    the county or counties they lie in ("Addison", "Chittenden Central") in the
+    Senate and for a county and a number or a run of counties
+    ("Chittenden-2", "Orange-Washington-Addison") in the House, and most elect
+    more than one member, as {"seats": n, "members": [...]}. One row per seat,
+    labelled with the district's own name as the Legislature writes it, in
+    county and number order; a seat the roster names nobody for is carried as
+    unnamed, so the table never shows a smaller chamber than the one elected."""
+    rows = []
+    for k in sorted(data, key=_hyphen_name_key):
+        rec = data[k] if isinstance(data[k], dict) else {}
+        people = [m for m in rec.get("members") or [] if isinstance(m, dict)]
+        seats = int(rec.get("seats", len(people) or 1))
+        if len(people) > seats:
+            fail("%s lists %d members for %d seats" % (k, len(people), seats))
+        for person in people + [{}] * (seats - len(people)):
+            rows.append((k, person))
+    return rows
+
+
+def at_large_seat(data):
+    """A state with ONE seat in the U.S. House (Alaska, Delaware, North Dakota,
+    South Dakota, Vermont, Wyoming): the roster keys it "0", the Census
+    Bureau's number for an at-large district, and the row says "At large"
+    rather than "District 0", a district nobody calls by that number. More
+    than one entry means the state has been drawn into districts and this
+    adapter, and the page's at-large wording, no longer apply."""
+    if list(data) != ["0"]:
+        fail("an at-large congress roster must hold exactly one seat keyed "
+             "\"0\", and this one holds %s" % sorted(data)[:5])
+    return [("At large", data["0"] if isinstance(data["0"], dict) else {})]
+
+
 ADAPTERS = {
     "nh_house_districts": nh_house_districts,
+    "hyphen_named_districts": hyphen_named_districts,
+    "at_large_seat": at_large_seat,
     "multi_member_districts": multi_member_districts,
+    "named_districts": named_districts,
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
     "appellate_justices": appellate_justices,
@@ -985,9 +1074,14 @@ def legislator_tables():
                                **({"adapter": ch["adapter"]} if ch.get("adapter") else {}))
                           for ch in spec["chambers"]]))
         cong = inst["congress"]
+        # A STATE WITH ONE SEAT has no districts to list, so its section names
+        # the at-large seat and says so in its heading; the adapter refuses a
+        # roster holding more than one seat, which is the day the state is
+        # drawn into districts and this wording stops being true.
+        at_large = bool(cong.get("at_large"))
         out.append(dict(
             tag=tag, page=cong["file"], worksheet=inst["worksheet"],
-            sections=[dict(roster="data/app/" + cong["roster"],
+            sections=[dict(dict(roster="data/app/" + cong["roster"],
                            seat="District", holder="Representative",
                            office_label="District office",
                            body="%s's delegation to the U.S. House of Representatives"
@@ -998,8 +1092,11 @@ def legislator_tables():
                            org="%s delegation to the U.S. House of Representatives"
                                % cong["state"],
                            parent_org="United States House of Representatives",
-                           heading="Who represents each %s congressional district"
-                                   % cong["state"])]))
+                           heading=("Who represents %s in the U.S. House" % cong["state"]
+                                    if at_large else
+                                    "Who represents each %s congressional district"
+                                    % cong["state"])),
+                           **({"adapter": "at_large_seat"} if at_large else {}))]))
     return out
 
 
@@ -1036,8 +1133,18 @@ def load(path):
 
 
 def district_key(k):
-    """Sort 1, 2, 10 rather than 1, 10, 2 — and never crash on a lettered one."""
-    return (0, int(k), "") if k.isdigit() else (1, 0, k)
+    """Sort 1, 2, 10 rather than 1, 10, 2 — and never crash on a lettered one.
+
+    A numbered district split into lettered halves (North Dakota's 4A and 4B,
+    South Dakota's 26A and 26B, Maryland's 1A to 1C) sorts beside its number
+    rather than after the last numbered district, where a reader scanning for
+    26 would not look for it."""
+    if k.isdigit():
+        return (0, int(k), "")
+    m = re.match(r"^(\d+)([A-Za-z]+)$", k)
+    if m:
+        return (0, int(m.group(1)), m.group(2).upper())
+    return (1, 0, k)
 
 
 def section_rows(tag, section):
@@ -1216,7 +1323,7 @@ def render_section(tag, section, verified):
 
     return """  <section>
     <h2>%(heading)s</h2>
-    <p>All %(n)d %(unit)s %(prep)s %(body)s, as this site had them on <strong>%(verified)s</strong>.
+    <p>%(lead)s, as this site had %(them)s on <strong>%(verified)s</strong>.
       %(agreement)s Where the roster names nobody it says so rather than guessing.
       <a href="sources.html">Where these names come from</a>.</p>
     <div class="flow-table-wrap">
@@ -1231,13 +1338,20 @@ def render_section(tag, section, verified):
 
 """ % {
         "heading": html.escape(section["heading"]),
-        "n": len(rows_in),
+        # ONE SEAT reads "The one seat on Delaware's delegation", never "All 1
+        # seats": the six states with one seat in the U.S. House are the
+        # first sections here with a single row.
+        "lead": ("The one seat %s %s" % (html.escape(section.get("prep", "on")),
+                                         html.escape(section["body"]))
+                 if len(rows_in) == 1 and section.get("unit", "seats") == "seats" else
+                 "All %d %s %s %s" % (len(rows_in), html.escape(section.get("unit", "seats")),
+                                      html.escape(section.get("prep", "on")),
+                                      html.escape(section["body"]))),
+        "them": "it" if len(rows_in) == 1 else "them",
         # "seats on the Illinois House" is right for eleven of the twelve
         # entries and wrong for the one whose holders are appointed, so both
-        # words are stated with the elected reading as the default.
-        "unit": html.escape(section.get("unit", "seats")),
-        "prep": html.escape(section.get("prep", "on")),
-        "body": html.escape(section["body"]),
+        # words are stated (in `lead` above) with the elected reading as the
+        # default.
         "verified": html.escape(verified),
         "head": "".join(head),
         "agreement": agreement,

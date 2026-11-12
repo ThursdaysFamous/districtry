@@ -68,7 +68,7 @@ IDS = {
     "Q1546": "Iowa",
     "Q1166": "Michigan",
     "Q1384": "New York",
-    "Q62": "San Francisco",
+    "Q99": "California",
     "Q1527": "Minnesota",
     "Q1603": "Kentucky",
     "Q1415": "Indiana",
@@ -88,6 +88,31 @@ IDS = {
     "Q816": "Arizona",
     "Q1408": "New Jersey",
     "Q759": "New Hampshire",
+    "Q1439": "Texas",
+    "Q812": "Florida",
+    "Q1397": "Ohio",
+    "Q1223": "Washington",
+    "Q771": "Massachusetts",
+    "Q1261": "Colorado",
+    "Q1391": "Maryland",
+    "Q173": "Alabama",
+    "Q824": "Oregon",
+    "Q779": "Connecticut",
+    "Q829": "Utah",
+    "Q1558": "Kansas",
+    "Q1522": "New Mexico",
+    "Q1553": "Nebraska",
+    "Q1221": "Idaho",
+    "Q782": "Hawaii",
+    "Q724": "Maine",
+    "Q1212": "Montana",
+    "Q1387": "Rhode Island",
+    "Q1211": "South Dakota",
+    "Q1207": "North Dakota",
+    "Q797": "Alaska",
+    "Q16551": "Vermont",
+    "Q1214": "Wyoming",
+    "Q1393": "Delaware",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -207,6 +232,11 @@ IDS = {
 # same day, P31 = Q35657, P300 = "US-GA", P131 = Q30, and its own P47 carries
 # Q1456, Q1454 and Q1509, which match this table's sc, nc and tn entries. Its
 # English label is the bare string "Georgia".
+# ca moved from Q62 (San Francisco) to Q99 (California) on 2026-11-11, when
+# its app grew from the city to the whole state. Read from Special:EntityData
+# that day, Q99 has P31 = Q35657, P300 = "US-CA", P131 = Q30, and its own
+# P47 carries Q816 and Q1227, which match this table's az and nv entries. Its
+# English label is the bare string "California".
 # pa, nv, az, nj and nh were added at the batch 1 go-live by the same route.
 # Read from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 =
 # Q30 and its own ISO code in P300 (US-PA, US-NV, US-AZ, US-NJ, US-NH), and
@@ -214,14 +244,54 @@ IDS = {
 # (this table's ny, nj and wv), Q1408's carries Q1384 and Q1400, and Q1227's
 # and Q816's carry each other. Q759's P47 names no instance here; its P300
 # and its label settle it. Each English label is the bare state name.
+# tx, fl, oh and wa were added at the batch 2 go-live by the same route. Read
+# from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 = Q30 and
+# its own ISO code in P300 (US-TX, US-FL, US-OH, US-WA), and the borders
+# cross-check: Q1439's own P47 carries Q1649, Q1612 and Q1588 (this table's
+# ok, ar and la), Q812's carries Q1428 (ga), and Q1397's carries Q1166,
+# Q1415, Q1603, Q1371 and Q1400 (mi, in, ky, wv and pa). Q1223's P47 names no
+# instance here; its P300 and its label settle it. Each English label is the
+# bare state name.
+# ma, co, md, al, or, ct, ut and ks were added at the batch 3 go-live by the
+# same route. Read from Special:EntityData on 2026-11-12, each has P31 =
+# Q35657, P131 = Q30 and its own ISO code in P300 (US-MA, US-CO, US-MD,
+# US-AL, US-OR, US-CT, US-UT, US-KS), and the borders cross-check: Q771's own
+# P47 carries Q779, Q1384 and Q759 (this table's ct, ny and nh), Q1261's
+# carries Q1558, Q1649, Q829 and Q816 (ks, ok, ut and az), Q1391's carries
+# Q1370, Q1371 and Q1400 (va, wv and pa), Q173's carries Q812, Q1428, Q1509
+# and Q1494 (fl, ga, tn and ms), Q824's carries Q99, Q1227 and Q1223 (ca, nv
+# and wa), and Q1558's carries Q1649, Q1261 and Q1581 (ok, co and mo). Each
+# English label is the bare state name.
+# nm, ne, id, hi, me, mt, ri, sd, nd, ak, vt, wy and de were added at the
+# batch 4 go-live by the same route. Read from Special:EntityData on
+# 2026-11-12, each has P31 = Q35657, P131 = Q30 and its own ISO code in P300
+# (US-NM, US-NE, US-ID, US-HI, US-ME, US-MT, US-RI, US-SD, US-ND, US-AK,
+# US-VT, US-WY, US-DE), and the borders cross-check: Q1522's own P47 carries
+# Q816, Q1261, Q1649, Q1439 and Q829 (this table's az, co, ok, tx and ut),
+# Q1553's carries Q1211, Q1581, Q1261, Q1546, Q1558 and Q1214 (sd, mo, co, ia,
+# ks and wy), Q1221's carries Q1212, Q1214, Q829, Q1227, Q824 and Q1223 (mt,
+# wy, ut, nv, or and wa), Q1387's carries Q771 and Q779 (ma and ct), Q1207's
+# carries Q1527, Q1211 and Q1212 (mn, sd and mt), Q16551's carries Q759, Q771
+# and Q1384 (nh, ma and ny), and Q1393's carries Q1408, Q1400 and Q1391 (nj,
+# pa and md); Q724's carries Q759 (nh), Q1212's carries Q1207, Q1211, Q1214
+# and Q1221 (nd, sd, wy and id), Q1211's carries Q1527, Q1546 and Q1553 (mn,
+# ia and ne), and Q1214's carries Q1261 and Q829 (co and ut). Q782's P47 is
+# empty, Hawaii
+# having no land border, and Q797's names no instance here; their P300 and
+# their labels settle them. Each English label is the bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
-    "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
+    "ny": "Q1384", "ca": "Q99", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
     "mo": "Q1581", "va": "Q1370", "wv": "Q1371", "ga": "Q1428",
     "pa": "Q1400", "nv": "Q1227", "az": "Q816", "nj": "Q1408",
-    "nh": "Q759",
+    "nh": "Q759", "tx": "Q1439", "fl": "Q812", "oh": "Q1397",
+    "wa": "Q1223", "ma": "Q771", "co": "Q1261", "md": "Q1391",
+    "al": "Q173", "or": "Q824", "ct": "Q779", "ut": "Q829", "ks": "Q1558",
+    "nm": "Q1522", "ne": "Q1553", "id": "Q1221", "hi": "Q782", "me": "Q724",
+    "mt": "Q1212", "ri": "Q1387", "sd": "Q1211", "nd": "Q1207", "ak": "Q797",
+    "vt": "Q16551", "wy": "Q1214", "de": "Q1393",
 }
 
 

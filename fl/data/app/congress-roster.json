@@ -1,0 +1,415 @@
+{
+  "1": {
+    "name": "Jimmy Patronis",
+    "party": "Republican",
+    "url": "https://patronis.house.gov",
+    "capitolOffice": [
+      "2021 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4136"
+    ],
+    "districtOffice": [
+      "805 E. James Lee Blvd.",
+      "Crestview, FL 32539",
+      "Phone: 850-603-6690"
+    ]
+  },
+  "2": {
+    "name": "Neal P. Dunn",
+    "party": "Republican",
+    "url": "https://dunn.house.gov",
+    "capitolOffice": [
+      "466 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5235"
+    ],
+    "districtOffice": [
+      "840 W. 11th St., Suite 2250",
+      "Panama City, FL 32401",
+      "Phone: 850-785-0812"
+    ]
+  },
+  "3": {
+    "name": "Kat Cammack",
+    "party": "Republican",
+    "url": "https://cammack.house.gov",
+    "capitolOffice": [
+      "2421 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5744"
+    ],
+    "districtOffice": [
+      "5550 NW 111th Boulevard, Suite A",
+      "Gainesville, FL 32653",
+      "Phone: 352-505-0838"
+    ]
+  },
+  "4": {
+    "name": "Aaron Bean",
+    "party": "Republican",
+    "url": "https://bean.house.gov",
+    "capitolOffice": [
+      "2459 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-0123"
+    ],
+    "districtOffice": [
+      "4465-6 US Highway 17",
+      "Fleming Island, FL 32003",
+      "Phone: 904-830-3933"
+    ]
+  },
+  "5": {
+    "name": "John H. Rutherford",
+    "party": "Republican",
+    "url": "https://rutherford.house.gov",
+    "capitolOffice": [
+      "1711 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2501"
+    ],
+    "districtOffice": [
+      "4130 Salisbury Road, Suite 2500",
+      "Jacksonville, FL 32216",
+      "Phone: 904-831-5205"
+    ]
+  },
+  "6": {
+    "name": "Randy Fine",
+    "party": "Republican",
+    "url": "https://fine.house.gov",
+    "capitolOffice": [
+      "244 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2706"
+    ],
+    "districtOffice": [
+      "31 Lupi Court, Suite 130",
+      "Palm Coast, FL 32137-4761",
+      "Phone: 386-302-0442"
+    ]
+  },
+  "7": {
+    "name": "Cory Mills",
+    "party": "Republican",
+    "url": "https://mills.house.gov",
+    "capitolOffice": [
+      "346 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4035"
+    ],
+    "districtOffice": [
+      "1000 City Center Circle",
+      "Port Orange, FL 32129",
+      "Phone: 386-238-9711"
+    ]
+  },
+  "8": {
+    "name": "Mike Haridopolos",
+    "party": "Republican",
+    "url": "https://haridopolos.house.gov",
+    "capitolOffice": [
+      "1039 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3671"
+    ],
+    "districtOffice": [
+      "2725 Judge Fran Jamieson Way",
+      "Building C",
+      "Melbourne, FL 32940",
+      "Phone: 321-632-1776"
+    ]
+  },
+  "9": {
+    "name": "Darren Soto",
+    "party": "Democrat",
+    "url": "https://soto.house.gov",
+    "capitolOffice": [
+      "2353 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9889"
+    ],
+    "districtOffice": [
+      "804 Bryan St.",
+      "Kissimmee, FL 34741",
+      "Phone: 407-452-1171"
+    ]
+  },
+  "10": {
+    "name": "Maxwell Frost",
+    "party": "Democrat",
+    "url": "https://frost.house.gov",
+    "capitolOffice": [
+      "1224 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2176"
+    ],
+    "districtOffice": [
+      "617 N. Magnolia Ave.",
+      "Orlando, FL 32801",
+      "Phone: 321-388-9808"
+    ]
+  },
+  "11": {
+    "name": "Daniel Webster",
+    "party": "Republican",
+    "url": "https://webster.house.gov",
+    "capitolOffice": [
+      "2184 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1002"
+    ],
+    "districtOffice": [
+      "8015 E County Rd 466, Suite B",
+      "The Villages, FL 32162",
+      "Phone: 352-383-3552"
+    ]
+  },
+  "12": {
+    "name": "Gus M. Bilirakis",
+    "party": "Republican",
+    "url": "https://bilirakis.house.gov",
+    "capitolOffice": [
+      "2306 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5755"
+    ],
+    "districtOffice": [
+      "212 W Main Street, Suite 208A",
+      "Inverness, FL 34450",
+      "Phone: 352-654-1004"
+    ]
+  },
+  "13": {
+    "name": "Anna Paulina Luna",
+    "party": "Republican",
+    "url": "https://luna.house.gov",
+    "capitolOffice": [
+      "226 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5961"
+    ],
+    "districtOffice": [
+      "9200 113th St. N., Suite 305",
+      "Seminole, FL 33772",
+      "Phone: 727-610-3980"
+    ]
+  },
+  "14": {
+    "name": "Kathy Castor",
+    "party": "Democrat",
+    "url": "https://castor.house.gov",
+    "capitolOffice": [
+      "2188 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3376"
+    ],
+    "districtOffice": [
+      "4144 N. Armenia Ave., Suite 300",
+      "Tampa, FL 33607",
+      "Phone: 813-871-2817"
+    ]
+  },
+  "15": {
+    "name": "Laurel M. Lee",
+    "party": "Republican",
+    "url": "https://laurellee.house.gov",
+    "capitolOffice": [
+      "2464 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5626"
+    ],
+    "districtOffice": [
+      "17425 Bridge Hill Court, Suite 203",
+      "Tampa, FL 33647",
+      "Phone: 813-393-5077"
+    ]
+  },
+  "16": {
+    "name": "Vern Buchanan",
+    "party": "Republican",
+    "url": "https://buchanan.house.gov",
+    "capitolOffice": [
+      "2409 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5015"
+    ],
+    "districtOffice": [
+      "510 Vonderburg Drive, Suite 303",
+      "Brandon, FL 33511",
+      "Phone: 813-657-1013"
+    ]
+  },
+  "17": {
+    "name": "W. Gregory Steube",
+    "party": "Republican",
+    "url": "https://steube.house.gov",
+    "capitolOffice": [
+      "2457 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5792"
+    ],
+    "districtOffice": [
+      "226 Taylor St, Suite 230",
+      "Punta Gorda, FL 33950-4457",
+      "Phone: 941-575-9101"
+    ]
+  },
+  "18": {
+    "name": "Scott Franklin",
+    "party": "Republican",
+    "url": "https://franklin.house.gov",
+    "capitolOffice": [
+      "2301 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1252"
+    ],
+    "districtOffice": [
+      "124 S. Florida Avenue, Suite 304",
+      "Lakeland, FL 33801",
+      "Phone: 863-644-8215"
+    ]
+  },
+  "19": {
+    "name": "Byron Donalds",
+    "party": "Republican",
+    "url": "https://donalds.house.gov",
+    "capitolOffice": [
+      "1710 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2536"
+    ],
+    "districtOffice": [
+      "1039 SE 9th Ave, Suite 308",
+      "Cape Coral, FL 33990",
+      "Phone: 239-599-6033"
+    ]
+  },
+  "20": {
+    "vacant": true,
+    "vacantWhy": "The Clerk of the House lists this seat as vacant: its member resigned on April 21, 2026.",
+    "sourceUrl": "https://clerk.house.gov/Members/ViewVacancies",
+    "asOf": "2026-11-11"
+  },
+  "21": {
+    "name": "Brian J. Mast",
+    "party": "Republican",
+    "url": "https://mast.house.gov",
+    "capitolOffice": [
+      "2182 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3026"
+    ],
+    "districtOffice": [
+      "121 SW. Port St. Lucie Blvd.",
+      "Port St. Lucie, FL 34984",
+      "Phone: 772-336-2877"
+    ]
+  },
+  "22": {
+    "name": "Lois Frankel",
+    "party": "Democrat",
+    "url": "https://frankel.house.gov",
+    "capitolOffice": [
+      "2305 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9890"
+    ],
+    "districtOffice": [
+      "7499 West Atlantic Ave, Unit 206",
+      "Delray Beach, FL 33446",
+      "Phone: 561-998-9045"
+    ]
+  },
+  "23": {
+    "name": "Jared Moskowitz",
+    "party": "Democrat",
+    "url": "https://moskowitz.house.gov",
+    "capitolOffice": [
+      "242 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3001"
+    ],
+    "districtOffice": [
+      "9500 W. Sample Road, Suite 201",
+      "Coral Springs, FL 33065",
+      "Phone: 754-240-6330"
+    ]
+  },
+  "24": {
+    "name": "Frederica S. Wilson",
+    "party": "Democrat",
+    "url": "https://wilson.house.gov",
+    "capitolOffice": [
+      "2080 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4506"
+    ],
+    "districtOffice": [
+      "1965 South State Road 7",
+      "West Park City Hall",
+      "West Park, FL 33023",
+      "Phone: 954-989-2688"
+    ]
+  },
+  "25": {
+    "name": "Debbie Wasserman Schultz",
+    "party": "Democrat",
+    "url": "https://wassermanschultz.house.gov",
+    "capitolOffice": [
+      "270 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7931"
+    ],
+    "districtOffice": [
+      "777 Sawgrass Corporate Parkway",
+      "Sunrise, FL 33325",
+      "Phone: 954-845-1179"
+    ]
+  },
+  "26": {
+    "name": "Mario Diaz-Balart",
+    "party": "Republican",
+    "url": "https://mariodiazbalart.house.gov",
+    "capitolOffice": [
+      "374 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4211"
+    ],
+    "districtOffice": [
+      "8669 NW. 36th St., Suite 100",
+      "Doral, FL 33166",
+      "Phone: 305-470-8555"
+    ]
+  },
+  "27": {
+    "name": "Maria Elvira Salazar",
+    "party": "Republican",
+    "url": "https://salazar.house.gov",
+    "capitolOffice": [
+      "2162 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3931"
+    ],
+    "districtOffice": [
+      "5725 SW 8th St, Suite 200",
+      "Miami, FL 33144",
+      "Phone: 305-668-2285"
+    ]
+  },
+  "28": {
+    "name": "Carlos A. Gimenez",
+    "party": "Republican",
+    "url": "https://gimenez.house.gov",
+    "capitolOffice": [
+      "448 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2778"
+    ],
+    "districtOffice": [
+      "1100 Simonton St., Room 1-213",
+      "Key West, FL 33040",
+      "Phone: 305-292-4485"
+    ]
+  }
+}

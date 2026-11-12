@@ -76,7 +76,7 @@ END = "  /* ==== TRAFFIC-DATA:END ==== */"
 # every gate green. Minnesota went live on 2026-09-30 with no entry, which is
 # how this was found. check_instance_names() below now FAILS on a metros.json
 # tag this table does not spell.
-INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
+INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "California",
                   "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan",
                   "mn": "Minnesota", "ky": "Kentucky", "in": "Indiana",
                   "nc": "North Carolina", "ok": "Oklahoma",
@@ -94,6 +94,31 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "az": "Arizona",
                   "nj": "New Jersey",
                   "nh": "New Hampshire",
+                  "tx": "Texas",
+                  "fl": "Florida",
+                  "oh": "Ohio",
+                  "wa": "Washington",
+                  "ma": "Massachusetts",
+                  "co": "Colorado",
+                  "md": "Maryland",
+                  "al": "Alabama",
+                  "or": "Oregon",
+                  "ct": "Connecticut",
+                  "ut": "Utah",
+                  "ks": "Kansas",
+                  "nm": "New Mexico",
+                  "ne": "Nebraska",
+                  "id": "Idaho",
+                  "hi": "Hawaii",
+                  "me": "Maine",
+                  "mt": "Montana",
+                  "ri": "Rhode Island",
+                  "de": "Delaware",
+                  "sd": "South Dakota",
+                  "nd": "North Dakota",
+                  "ak": "Alaska",
+                  "vt": "Vermont",
+                  "wy": "Wyoming",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -122,7 +147,19 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 # Batch 1 of the state-level launch went live in one change; if
                 # it merges on a later day, that change moves these five too.
                 "pa": "2026-11-11", "nv": "2026-11-11", "az": "2026-11-11",
-                "nj": "2026-11-11", "nh": "2026-11-11"}
+                "nj": "2026-11-11", "nh": "2026-11-11",
+                # Batch 2 likewise; a later merge day moves these four too.
+                "tx": "2026-11-11", "fl": "2026-11-11", "oh": "2026-11-11",
+                "wa": "2026-11-11",
+                # Batch 3 likewise; a later merge day moves these eight too.
+                "ma": "2026-11-12", "co": "2026-11-12", "md": "2026-11-12",
+                "al": "2026-11-12", "or": "2026-11-12", "ct": "2026-11-12",
+                "ut": "2026-11-12", "ks": "2026-11-12",
+                # Batch 4 likewise; a later merge day moves these thirteen too.
+                "nm": "2026-11-12", "ne": "2026-11-12", "id": "2026-11-12", "hi": "2026-11-12",
+                "me": "2026-11-12", "mt": "2026-11-12", "ri": "2026-11-12", "de": "2026-11-12",
+                "sd": "2026-11-12", "nd": "2026-11-12", "ak": "2026-11-12", "vt": "2026-11-12",
+                "wy": "2026-11-12"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",

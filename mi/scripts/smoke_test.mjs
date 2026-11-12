@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "42.73370,-84.55530"; // the Michigan State Capitol, downtown Lansing (Ingham County)
 const OFFLINE = ["county", "us-house", "mi-senate", "mi-house", "county-commissioner", "mi-court-of-appeals", "mi-circuit-court", "mi-isd"];
 const EXPECT_DISTRICT = { "county": "Ingham County", "us-house": "7", "mi-senate": "21", "mi-house": "77", "county-commissioner": "9", "mi-court-of-appeals": "Court of Appeals District 4", "mi-circuit-court": "30th Circuit Court", "mi-isd": "Ingham ISD" };
-const NEGATIVE_POINT = "41.65280,-83.53790"; // downtown Toledo, Ohio — south of the Michigan line and inside permalink_gate's minLat (41.55), so the point is still selectable; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable)
+const NEGATIVE_POINT = "42.40480,-82.19100"; // Chatham, ONTARIO, about 35 km east of the Michigan line through Lake St. Clair — outside Michigan and outside every other instance in the fleet, and inside permalink_gate (maxLng -81.95) so the app answers the click and every shipped layer correctly returns nothing; measured to miss all eight ANCHOR layers (phase 3's four live TIGERweb fabric layers are deliberately not anchors — anchors are pre-built and election-stable). Measured 2026-11-11: TIGERweb's state layer names no state here (control: the State Capitol in Lansing returns Michigan), and no outline in fleet-outlines.json contains it, the nearest being Michigan's, 35.3 km away. THIS POINT WAS IN DOWNTOWN TOLEDO, OHIO (41.6528, -83.5379) until the change that published Ohio (batch 2 of the state-level launch, written 2026-11-11), which put it inside Ohio's outline. CANADA BECAUSE NO INSTANCE WILL EVER SERVE IT: the gate also reaches Wisconsin, Indiana and Ohio, all served, so ground in the United States would only be another point to move.
 const APP_NAME = "districtry Michigan";
 const EXPECT_LAYERS = 19;
 // ==== GENERATED:END smoke-config ====
@@ -384,11 +384,16 @@ try {
   //     rule it held Chicago, Milwaukee and Madison and none of them handed
   //     off from here. Decided by state outlines now (ENGINE metro-portal +
   //     fleet-outlines.json); the sibling apps are stubbed so a wrong route
-  //     cannot leave for the real site.
+  //     cannot leave for the real site. Toledo joined in the change that
+  //     published Ohio (batch 2 of the state-level launch, written
+  //     2026-11-11): it was this instance's negative point until then, and
+  //     lies inside Ohio's outline in fleet-outlines.json and no other,
+  //     measured that day.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
+      { name: "Toledo, Ohio", lat: 41.6528, lng: -83.5379, want: "https://districtry.com/oh/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

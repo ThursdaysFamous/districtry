@@ -3,7 +3,7 @@
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix?,
-    // seatsLabel?, seatsNote? }. Member rows are { name, party?, url?, phone?,
+    // namedDistricts?, seatsLabel?, seatsNote? }. Member rows are { name, party?, url?, phone?,
     // phonesExtra?, email?, districtOffice?, capitolOffice? }; office fields
     // only render when the roster supplies them (empty placeholder -> just the
     // link). A chamber that elects several members from each district keys
@@ -17,8 +17,16 @@
     // "IL‑14" where the concept is state-qualified (districtPrefix), plain
     // "District 14" otherwise — one string shared by the header pill and the
     // roster-less card body so the two can never disagree.
+    //
+    // A CHAMBER WHOSE DISTRICTS ARE NAMED. Massachusetts names every Senate and
+    // House district ("Third Middlesex", "19th Suffolk") and numbers none, so
+    // "District Third Middlesex" would be a name nobody uses. With
+    // namedDistricts the label is the district's own name as its boundary file
+    // carries it (TIGER's NAME, "Third Middlesex District"), and the join to
+    // the roster stays the districtFields value (TIGER's BASENAME).
     function districtLabel(result) {
       if (!result || !result.district) return null;
+      if (opts.namedDistricts) return String(result.districtName || result.district);
       return opts.districtPrefix
         ? opts.districtPrefix + String(result.district)
         : "District " + String(result.district);
@@ -120,6 +128,18 @@
       if (!seat || !Array.isArray(seat.members)) return null;
       return seat.members.filter(isMember);
     }
+    // A ONE-SEAT RECORD IN THE SEVERAL-MEMBER SHAPE IS ONE MEMBER. A chamber
+    // whose districts are named states every district as { seats, members }
+    // whatever it elects (scripts/validate_chamber_rosters.py holds that), and
+    // Maryland's House elects one delegate from some subdistricts and two or
+    // three from others. A district electing one is read as a one-member
+    // record, so its card is the ordinary member card rather than a list of
+    // one under "This district elects 1 members"; a one-seat record naming
+    // nobody keeps its vacant flag and date, and reads exactly as a nameless
+    // flat record does.
+    function singleSeat(seat) {
+      return !!(seat && Array.isArray(seat.members) && Number(seat.seats) === 1);
+    }
     // "A", "A and B", "A, B and C": the hover names everyone the card names.
     function joinNames(names) {
       if (names.length < 2) return names.join("");
@@ -192,6 +212,10 @@
       // hover popup: same district extraction the card's query uses (chamber-
       // specific TIGERweb fields + the name-field regex fallback).
       hoverName: function (feature) {
+        if (opts.namedDistricts) {
+          var named = findPropCI(feature.properties || {}, ["name"]);
+          if (named != null && String(named) !== "") return String(named);
+        }
         return extractDistrictNumber(feature.properties || {}, opts.districtFields);
       },
       overlay: { load: loadChamber, style: opts.style },
@@ -209,11 +233,17 @@
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
           var members = seatMembers(member);
+          var single = null;
+          if (singleSeat(member)) {
+            single = members.length ? members[0] : null;
+            members = null;
+          }
           // A nameless record is NOT a member and must not reach the person
           // row, which would render the string "undefined" as somebody's name.
           // It is carried separately so the card can say which kind it is.
           return { seq: seq, district: district,
-                   member: !members && isMember(member) ? member : null,
+                   districtName: opts.namedDistricts ? findPropCI(props, ["name"]) : undefined,
+                   member: single || (!members && isMember(member) ? member : null),
                    members: members,
                    seat: member || null };
         });
@@ -306,6 +336,10 @@
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
           var members = seatMembers(member);
+          if (singleSeat(member)) {
+            if (members.length) return String(members[0].name);
+            return member.vacant ? "Vacant" : null;
+          }
           if (members) {
             return members.length ? joinNames(members.map(function (m) { return String(m.name); })) : null;
           }
