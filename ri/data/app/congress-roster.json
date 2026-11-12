@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Gabe Amo",
+    "party": "Democrat",
+    "url": "https://amo.house.gov",
+    "capitolOffice": [
+      "1119 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4911"
+    ],
+    "districtOffice": [
+      "1070 Main Street, Suite 300",
+      "Pawtucket, RI 02860",
+      "Phone: 401-729-5600"
+    ]
+  },
+  "2": {
+    "name": "Seth Magaziner",
+    "party": "Democrat",
+    "url": "https://magaziner.house.gov",
+    "capitolOffice": [
+      "252 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2735"
+    ],
+    "districtOffice": [
+      "935 Jefferson Blvd., Suite 3003",
+      "Warwick, RI 02886",
+      "Phone: 401-244-1201"
+    ]
+  }
+}

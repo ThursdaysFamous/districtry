@@ -161,12 +161,13 @@ was struck in Harkenrider v. Hochul and replaced by special-master (Cervas) line
 Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map was signed Feb 28,
 2024. Redistricting is emphatically not only decennial.
 
-### SF (17 layers)
+### CA (22 layers; San Francisco only until 2026-11-11)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
-| US Congress (CA) | Decennial + mid-decade (Prop 50 precedent) | CA Citizens Redistricting Commission | geometry (pre-built SF-clip rebuild), roster join |
-| CA Senate / Assembly | Decennial | CA Citizens Redistricting Commission | geometry, roster join |
+| US Congress (CA) | Decennial + mid-decade (Proposition 50, adopted November 2025) | CA Citizens Redistricting Commission; the voters for Proposition 50's map | geometry (pre-built statewide rebuild, `ca/scripts/build_legislative_boundaries.py`, then `scripts/mirror_tiger_tiles.py --refresh --only ca:congress`), roster join. The app draws TIGERweb layer 4 (the 119th Congress's map) until 3 January 2027 and layer 0 (Proposition 50's) from then: a dated `ca/WATCH.md` row |
+| CA Senate / Assembly | Decennial | CA Citizens Redistricting Commission | geometry (statewide rebuild), roster join |
+| Counties, cities and towns, school districts | Rare (a city incorporating or annexing, a district unifying) | the county, LAFCO, the voters | nothing to edit: the weekly `update-tiger-tiles.yml` pull request carries a new Census vintage |
 | Supervisor districts (11) | Decennial-municipal | SF Redistricting Task Force (charter) | geometry, anchor, roster join |
 | Election precincts | Same cycle as supervisors | SF Dept. of Elections | new Socrata dataset id ("Defined <year>" title) |
 | Election results | Every election, and the precincts under them | SF Dept. of Elections | the join on `prec_2022`: `ca/scripts/build_sf_election_results.py` fails when a precinct on the Statement of the Vote is not on the Election Precinct layer, and when a district contest is not in its `DISTRICT_BEYOND` table |
@@ -175,8 +176,8 @@ Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map wa
 | SFUSD attendance areas | Annual | SFUSD | dataset id every school year |
 | Neighborhood / ZIP | Rarely / USPS-driven | DataSF / USPS | occasional |
 
-SF's per-date calendar lives in the SF fork's `WATCH.md` (per-metro file); this master runbook
-holds the response procedure.
+California's per-date calendar lives in `ca/WATCH.md`; this master runbook holds the
+response procedure.
 
 ### WI (13 layers)
 

@@ -12,7 +12,8 @@ silently supersedes with a new one:
     hardcoded in index.html keeps returning last year's boundaries long after a
     newer one exists. Nothing errors; the data just quietly goes stale.
   * The pre-built boundary layers (supervisor districts, analysis neighborhoods,
-    police districts, and the three legislative chambers) are built once into
+    police districts, the three statewide legislative chambers and the 58
+    counties) are built once into
     same-origin data/app files with no runtime API — from DataSF datasets and
     Census TIGERweb. They change ~once a decade, so the check there is
     provenance: is the source we cite still reachable, plus a reminder to
@@ -133,16 +134,20 @@ PROVENANCE = [
      "note": "DataSF Current Police Districts (d4vc-q76h). Revised rarely."},
     {"layer": "U.S. House districts (CA)",
      "app_file": "congress-districts.json",
-     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0?f=json",
-     "note": "TIGERweb Legislative layer 0 (STATE=06), SF-clipped, pre-built by build_legislative_boundaries.py. Redrawn ~once a decade. Built against TIGERweb's 120th-Congress layer (field CD120, Jan 1 2026 vintage); the retired CD119 field is gone and a query naming it returns an HTTP-200 JSON error envelope with no features key, so a rebuild on the old name fails as no-features."},
+     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4?f=json",
+     "note": "TIGERweb Legislative layer 4 (the 119th Congress, field CD119, STATE=06), statewide, 52 districts, pre-built by build_legislative_boundaries.py. Those are the districts the sitting members were elected from; layer 0 (field CD120) is the Proposition 50 map the 2026 election used, and the builder moves to it on 2027-01-03 per WATCH.md. Until 2026-11-11 this file was SF-clipped and drawn from layer 0."},
     {"layer": "CA State Senate districts",
      "app_file": "ca-senate-districts.json",
      "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1?f=json",
-     "note": "TIGERweb Legislative layer 1 (Upper, STATE=06), SF-clipped, pre-built. Redrawn ~once a decade."},
+     "note": "TIGERweb Legislative layer 1 (Upper, STATE=06), statewide, 40 districts, pre-built. Redrawn ~once a decade."},
     {"layer": "CA State Assembly districts",
      "app_file": "ca-assembly-districts.json",
      "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2?f=json",
-     "note": "TIGERweb Legislative layer 2 (Lower, STATE=06), SF-clipped, pre-built. Redrawn ~once a decade."},
+     "note": "TIGERweb Legislative layer 2 (Lower, STATE=06), statewide, 80 districts, pre-built. Redrawn ~once a decade."},
+    {"layer": "California counties",
+     "app_file": "state-counties.json",
+     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1?f=json",
+     "note": "TIGERweb State_County layer 1 (STATE=06), 58 counties, pre-built by build_state_counties.py; ca-state-outline.json is their dissolve (build_state_outline.py). A county line rarely moves."},
     {"layer": "Voting center & ballot drop-off sites (SF Dept of Elections)",
      "app_file": "early-voting-sites.json",
      "source_url": "https://www.sf.gov/return-your-ballot",
@@ -163,6 +168,10 @@ PROVENANCE = [
 ENDPOINTS = [
     {"layer": "Census TIGERweb ZCTAs (statewide ZIP Code layer)",
      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer?f=json"},
+    {"layer": "Census TIGERweb incorporated places (City or Town, layer 4; the app draws the mirrored archive and reads this only if the archive fails)",
+     "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4?f=json"},
+    {"layer": "Census TIGERweb school districts (unified, secondary and elementary; mirrored archives, live only if an archive fails)",
+     "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer?f=json"},
     {"layer": "USGS National Map structures — post offices (layer 38)",
      "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38?f=json"},
     {"layer": "BART Director districts (BART's ArcGIS org, 2022 Plan E2)",

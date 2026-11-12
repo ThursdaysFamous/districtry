@@ -1,0 +1,137 @@
+{
+  "1": {
+    "name": "Richard E. Neal",
+    "party": "Democrat",
+    "url": "https://neal.house.gov",
+    "capitolOffice": [
+      "372 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5601"
+    ],
+    "districtOffice": [
+      "78 Center St.",
+      "Pittsfield, MA 01201",
+      "Phone: 413-442-0946"
+    ]
+  },
+  "2": {
+    "name": "James P. McGovern",
+    "party": "Democrat",
+    "url": "https://mcgovern.house.gov",
+    "capitolOffice": [
+      "370 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6101"
+    ],
+    "districtOffice": [
+      "24 Church St., Room 27",
+      "Leominster, MA 01453",
+      "Phone: 978-466-3552"
+    ]
+  },
+  "3": {
+    "name": "Lori Trahan",
+    "party": "Democrat",
+    "url": "https://trahan.house.gov",
+    "capitolOffice": [
+      "2233 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3411"
+    ],
+    "districtOffice": [
+      "126 John St, Suite 12",
+      "Lowell, MA 01852-1152",
+      "Phone: 978-459-0101"
+    ]
+  },
+  "4": {
+    "name": "Jake Auchincloss",
+    "party": "Democrat",
+    "url": "https://auchincloss.house.gov",
+    "capitolOffice": [
+      "1524 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5931"
+    ],
+    "districtOffice": [
+      "29 Crafts St., Suite 375",
+      "Newton, MA 02458",
+      "Phone: 617-332-3333"
+    ]
+  },
+  "5": {
+    "name": "Katherine M. Clark",
+    "party": "Democrat",
+    "url": "https://katherineclark.house.gov",
+    "capitolOffice": [
+      "2368 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2836"
+    ],
+    "districtOffice": [
+      "157 Pleasant St, Suite 4",
+      "Malden, MA 02148",
+      "Phone: 617-354-0292"
+    ]
+  },
+  "6": {
+    "name": "Seth Moulton",
+    "party": "Democrat",
+    "url": "https://moulton.house.gov",
+    "capitolOffice": [
+      "1126 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8020"
+    ],
+    "districtOffice": [
+      "21 Front St.",
+      "Salem, MA 01970",
+      "Phone: 978-531-1669"
+    ]
+  },
+  "7": {
+    "name": "Ayanna Pressley",
+    "party": "Democrat",
+    "url": "https://pressley.house.gov",
+    "capitolOffice": [
+      "402 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5111"
+    ],
+    "districtOffice": [
+      "50 Redfield Street, Suite 302",
+      "Boston, MA 02122",
+      "Phone: 617-850-0040"
+    ]
+  },
+  "8": {
+    "name": "Stephen F. Lynch",
+    "party": "Democrat",
+    "url": "https://lynch.house.gov",
+    "capitolOffice": [
+      "2109 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8273"
+    ],
+    "districtOffice": [
+      "37 Belmont Street, 2nd Floor, Suite 3",
+      "Brockton, MA 02301",
+      "Phone: 508-586-5555"
+    ]
+  },
+  "9": {
+    "name": "William R. Keating",
+    "party": "Democrat",
+    "url": "https://keating.house.gov",
+    "capitolOffice": [
+      "2372 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3111"
+    ],
+    "districtOffice": [
+      "128 Union Street, Suite 103",
+      "New Bedford, MA 02740",
+      "Phone: 508-999-6462"
+    ]
+  }
+}

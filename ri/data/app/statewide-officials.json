@@ -1,0 +1,54 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ri/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Rhode Island",
+ "usSenate": [
+  {
+   "name": "Jack Reed",
+   "party": "Democratic",
+   "url": "https://www.reed.senate.gov/",
+   "office": "728 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4642"
+  },
+  {
+   "name": "Sheldon Whitehouse",
+   "party": "Democratic",
+   "url": "https://www.whitehouse.senate.gov/",
+   "office": "530 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2921"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Dan McKee",
+   "url": "https://governor.ri.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Sabina Matos",
+   "url": "https://ltgov.ri.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Gregg Amore",
+   "url": "https://www.sos.ri.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Peter Neronha",
+   "url": "https://riag.ri.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "General Treasurer",
+   "name": "James Diossa",
+   "url": "https://treasury.ri.gov/",
+   "verified": "2026-11-12"
+  }
+ ]
+}

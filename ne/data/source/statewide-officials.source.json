@@ -1,0 +1,37 @@
+{
+ "state": "Nebraska",
+ "usps": "NE",
+ "officersNote": "Nebraska's Public Service Commission, Board of Regents and State Board of Education are elected by district, not statewide, so they are not listed.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Jim Pillen",
+   "url": "https://governor.nebraska.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Joe Kelly",
+   "url": "https://ltgov.nebraska.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Mike Hilgers",
+   "url": "https://ago.nebraska.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Robert B. Evnen",
+   "url": "https://sos.nebraska.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Tom Briese",
+   "url": "https://treasurer.nebraska.gov/"
+  },
+  {
+   "office": "Auditor of Public Accounts",
+   "name": "Mike Foley",
+   "url": "https://auditors.nebraska.gov/"
+  }
+ ]
+}

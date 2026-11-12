@@ -1,0 +1,232 @@
+{
+  "Addison": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ruth Hardy",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/30978"
+      },
+      {
+        "name": "Steven Heffernan",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/40387"
+      }
+    ]
+  },
+  "Bennington": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Seth Bongartz",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/40388"
+      },
+      {
+        "name": "Robert Plunkett",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/40389"
+      }
+    ]
+  },
+  "Caledonia": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Scott Beck",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/40390"
+      }
+    ]
+  },
+  "Chittenden Central": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Philip Baruth",
+        "party": "Democrat/Progressive",
+        "url": "https://legislature.vermont.gov/people/single/2026/15791"
+      },
+      {
+        "name": "Martine Larocque Gulick",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/37408"
+      },
+      {
+        "name": "Tanya Vyhovsky",
+        "party": "Progressive/Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/37410"
+      }
+    ]
+  },
+  "Chittenden North": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christopher Mattos",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/40391"
+      }
+    ]
+  },
+  "Chittenden South East": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Thomas Chittenden",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/34724"
+      },
+      {
+        "name": "Virginia \"Ginny\" Lyons",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/14616"
+      },
+      {
+        "name": "Kesha Ram Hinsdale",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/34727"
+      }
+    ]
+  },
+  "Essex": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Russ Ingalls",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/34725"
+      }
+    ]
+  },
+  "Franklin": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Randy Brock",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/29338"
+      },
+      {
+        "name": "Robert Norris",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/37409"
+      }
+    ]
+  },
+  "Grand Isle": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patrick \"Pat\" Brennan",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/40392"
+      }
+    ]
+  },
+  "Lamoille": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Richard Westman",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/15796"
+      }
+    ]
+  },
+  "Orange": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Benson",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/41940"
+      }
+    ]
+  },
+  "Orleans": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Morley III",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/41884"
+      }
+    ]
+  },
+  "Rutland": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Brian Collamore",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/24031"
+      },
+      {
+        "name": "David Weeks",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/37412"
+      },
+      {
+        "name": "Terry Williams",
+        "party": "Republican",
+        "url": "https://legislature.vermont.gov/people/single/2026/37413"
+      }
+    ]
+  },
+  "Washington": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Ann Cummings",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/14604"
+      },
+      {
+        "name": "Andrew Perchlik",
+        "party": "Democrat/Progressive",
+        "url": "https://legislature.vermont.gov/people/single/2026/30982"
+      },
+      {
+        "name": "Anne Watson",
+        "party": "Democrat/Progressive",
+        "url": "https://legislature.vermont.gov/people/single/2026/37411"
+      }
+    ]
+  },
+  "Windham": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Wendy Harrison",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/37406"
+      },
+      {
+        "name": "Nader Hashim",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/37407"
+      }
+    ]
+  },
+  "Windsor": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Alison Clarkson",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/27152"
+      },
+      {
+        "name": "Joseph \"Joe\" Major",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/40395"
+      },
+      {
+        "name": "Rebecca \"Becca\" White",
+        "party": "Democrat",
+        "url": "https://legislature.vermont.gov/people/single/2026/37414"
+      }
+    ]
+  }
+}

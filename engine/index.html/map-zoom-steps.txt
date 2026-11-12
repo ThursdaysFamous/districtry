@@ -39,8 +39,8 @@
   // phone pinch settle within an eighth of a level of where the fingers let go
   // (a half step could jump a quarter), and keeps every zoom an exact binary
   // fraction, so a shared link carries z=13.25 and never a float tail. It must
-  // divide every boot zoom (7.5 statewide, 11 in San Francisco), or Leaflet
-  // rounds the opening view.
+  // divide the boot zoom every app sets (each a whole or half level), or
+  // Leaflet rounds the opening view.
   //
   // zoomSnap 0, which would follow a pinch exactly, was measured too and not
   // taken: a half-second touchpad pinch then moved 0.04 to 0.17 of a level,

@@ -1,0 +1,61 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from mt/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Montana",
+ "usSenate": [
+  {
+   "name": "Steve Daines",
+   "party": "Republican",
+   "url": "https://www.daines.senate.gov",
+   "office": "320 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2651"
+  },
+  {
+   "name": "Tim Sheehy",
+   "party": "Republican",
+   "url": "https://www.sheehy.senate.gov/",
+   "office": "124 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2644"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Greg Gianforte",
+   "url": "https://gov.mt.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Kristen Juras",
+   "url": "https://gov.mt.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Austin Knudsen",
+   "url": "https://dojmt.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Christi Jacobsen",
+   "url": "https://sosmt.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "James Brown",
+   "url": "https://csimt.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Susie Hedalen",
+   "url": "https://opi.mt.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Montana's voters also elect the Clerk of the Supreme Court and the Supreme Court's justices statewide, and the Public Service Commission by district. They are not listed here."
+}

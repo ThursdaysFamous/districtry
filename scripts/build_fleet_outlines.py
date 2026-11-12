@@ -27,9 +27,10 @@ whole file is about 18 KB gzipped, and an app fetches it only when a selection
 falls outside its own outline.
 
 WHICH OUTLINE is the ground where an instance answers ANYTHING, which is its
-widest band: the state outline for Illinois, New York and Wisconsin (their
-statewide layers answer across it), the statewide coverage ring for Iowa and
-Michigan, and the city for San Francisco. `SOURCES` is keyed by the instance's
+widest band: the state outline for Illinois, New York, Wisconsin and, since
+it grew from San Francisco on 2026-11-11, California (their statewide layers
+answer across it), and the statewide coverage ring for Iowa, Michigan and the
+states after them. `SOURCES` is keyed by the instance's
 tag and FAILS when metros.json names an instance it does not know, so a new
 state cannot go live with no outline to be handed off to.
 
@@ -58,7 +59,11 @@ METROS = os.path.join(REPO, "metros.json")
 SOURCES = {
     "il": "il/data/app/il-state-outline.json",
     "ny": "ny/data/app/ny-state-outline.json",
-    "ca": "ca/data/app/san-francisco-county-outline.json",
+    # California's widest ground is the state since it grew from San
+    # Francisco on 2026-11-11: the statewide layers answer over the dissolve
+    # of its 58 counties, while the city's own layers answer in San Francisco
+    # alone.
+    "ca": "ca/data/app/ca-state-outline.json",
     "wi": "wi/data/app/wi-state-outline.json",
     "ia": "ia/data/app/metro-outline.json",
     "mi": "mi/data/app/metro-outline.json",
@@ -131,6 +136,40 @@ SOURCES = {
     "az": "az/data/app/metro-outline.json",
     "nj": "nj/data/app/metro-outline.json",
     "nh": "nh/data/app/metro-outline.json",
+    # Batch 2 (Texas, Florida, Ohio, Washington), the same shape.
+    "tx": "tx/data/app/metro-outline.json",
+    "fl": "fl/data/app/metro-outline.json",
+    "oh": "oh/data/app/metro-outline.json",
+    "wa": "wa/data/app/metro-outline.json",
+    # Batch 3 (Massachusetts, Colorado, Maryland, Alabama, Oregon,
+    # Connecticut, Utah, Kansas), the same shape. Connecticut's is the
+    # dissolve of its nine planning regions, which the Census draws where
+    # counties were until 2022.
+    "ma": "ma/data/app/metro-outline.json",
+    "co": "co/data/app/metro-outline.json",
+    "md": "md/data/app/metro-outline.json",
+    "al": "al/data/app/metro-outline.json",
+    "or": "or/data/app/metro-outline.json",
+    "ct": "ct/data/app/metro-outline.json",
+    "ut": "ut/data/app/metro-outline.json",
+    "ks": "ks/data/app/metro-outline.json",
+    # Batch 4, the last thirteen states, the same shape. Alaska's is clipped
+    # at the 180th meridian, so the Near Islands beyond it are not in it, and
+    # Hawaii's leaves off the Northwestern Hawaiian Islands past Kauai and
+    # Niihau, as its county file does.
+    "nm": "nm/data/app/metro-outline.json",
+    "ne": "ne/data/app/metro-outline.json",
+    "id": "id/data/app/metro-outline.json",
+    "hi": "hi/data/app/metro-outline.json",
+    "me": "me/data/app/metro-outline.json",
+    "mt": "mt/data/app/metro-outline.json",
+    "ri": "ri/data/app/metro-outline.json",
+    "de": "de/data/app/metro-outline.json",
+    "sd": "sd/data/app/metro-outline.json",
+    "nd": "nd/data/app/metro-outline.json",
+    "ak": "ak/data/app/metro-outline.json",
+    "vt": "vt/data/app/metro-outline.json",
+    "wy": "wy/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

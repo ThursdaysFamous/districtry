@@ -1,0 +1,988 @@
+{
+  "1": {
+    "name": "Michelle Salzman",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5001"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4763&LegislativeTermId=92"
+  },
+  "2": {
+    "name": "Jon Fay",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5076&LegislativeTermId=92"
+  },
+  "3": {
+    "name": "Nathan Boyles",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5003"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5063&LegislativeTermId=92"
+  },
+  "4": {
+    "name": "Patt Maney",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5004"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4764&LegislativeTermId=92"
+  },
+  "5": {
+    "name": "Shane G. Abbott",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5005"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4864&LegislativeTermId=92"
+  },
+  "6": {
+    "name": "Tricia E. Berry",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5081&LegislativeTermId=92"
+  },
+  "7": {
+    "name": "Jason Shoaf",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5007"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4756&LegislativeTermId=92"
+  },
+  "8": {
+    "name": "Gallop Franklin II",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5008"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4863&LegislativeTermId=92"
+  },
+  "9": {
+    "name": "Allison Tant",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5009"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4765&LegislativeTermId=92"
+  },
+  "10": {
+    "name": "Marshall Rawson",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5089&LegislativeTermId=92"
+  },
+  "11": {
+    "name": "Sam Garrison",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5011"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4767&LegislativeTermId=92"
+  },
+  "12": {
+    "name": "Terrance Freeman",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5083&LegislativeTermId=92"
+  },
+  "13": {
+    "name": "Audrey Gibson",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4263&LegislativeTermId=92"
+  },
+  "14": {
+    "name": "Kimberly Daniels",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5014"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4652&LegislativeTermId=92"
+  },
+  "15": {
+    "name": "Dean Black",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5015"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4865&LegislativeTermId=92"
+  },
+  "16": {
+    "name": "Kiyan Michael",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5016"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4869&LegislativeTermId=92"
+  },
+  "17": {
+    "name": "Jessica Baker",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5017"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4866&LegislativeTermId=92"
+  },
+  "18": {
+    "name": "Kim Kendall",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5018"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4905&LegislativeTermId=92"
+  },
+  "19": {
+    "name": "Sam Greco",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5019"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4906&LegislativeTermId=92"
+  },
+  "20": {
+    "name": "Judson Sapp",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5020"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4907&LegislativeTermId=92"
+  },
+  "21": {
+    "name": "Jacquelyn Randall",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5088&LegislativeTermId=92"
+  },
+  "22": {
+    "name": "Amy Trask",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5090&LegislativeTermId=92"
+  },
+  "23": {
+    "name": "J.J. Grow",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5023"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4909&LegislativeTermId=92"
+  },
+  "24": {
+    "name": "Ryan Chamberlin",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5024"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4901&LegislativeTermId=92"
+  },
+  "25": {
+    "name": "Taylor Michael Yarkosky",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5025"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4868&LegislativeTermId=92"
+  },
+  "26": {
+    "name": "Nan Cobb",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5026"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4910&LegislativeTermId=92"
+  },
+  "27": {
+    "name": "Richard Gentry",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5027"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4911&LegislativeTermId=92"
+  },
+  "28": {
+    "name": "Bill Partington",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5028"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4912&LegislativeTermId=92"
+  },
+  "29": {
+    "name": "Webster Barnaby",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5029"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4770&LegislativeTermId=92"
+  },
+  "30": {
+    "name": "Chase Tramont",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5030"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4867&LegislativeTermId=92"
+  },
+  "31": {
+    "name": "Matt Woodside",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5087&LegislativeTermId=92"
+  },
+  "32": {
+    "name": "Brian Hodgers",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5032"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5064&LegislativeTermId=92"
+  },
+  "33": {
+    "name": "Daniel McDow",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5120&LegislativeTermId=92"
+  },
+  "34": {
+    "name": "Robert A. \"Robbie\" Brackett",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5034"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4870&LegislativeTermId=92"
+  },
+  "35": {
+    "name": "Eric Gray",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5093&LegislativeTermId=92"
+  },
+  "36": {
+    "name": "Darryl Block",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5095&LegislativeTermId=92"
+  },
+  "37": {
+    "name": "Dr. Jane Aman",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5097&LegislativeTermId=92"
+  },
+  "38": {
+    "name": "Nik Dean",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5104&LegislativeTermId=92"
+  },
+  "39": {
+    "name": "Jarod Fox",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5106&LegislativeTermId=92"
+  },
+  "40": {
+    "name": "RaShon Young",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5040"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5065&LegislativeTermId=92"
+  },
+  "41": {
+    "name": "Bruce Hadley Antone",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5041"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4269&LegislativeTermId=92"
+  },
+  "42": {
+    "name": "Felipe Sousa Lazaballet",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5119&LegislativeTermId=92"
+  },
+  "43": {
+    "name": "Samuel Vilchez Santiago",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5109&LegislativeTermId=92"
+  },
+  "44": {
+    "name": "Jennifer \"Rita\" Harris",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5044"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4877&LegislativeTermId=92"
+  },
+  "45": {
+    "name": "Leonard Spencer",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5045"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4915&LegislativeTermId=92"
+  },
+  "46": {
+    "name": "Jose Alvarez",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5046"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4916&LegislativeTermId=92"
+  },
+  "47": {
+    "name": "Anthony Nieves",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5085&LegislativeTermId=92"
+  },
+  "48": {
+    "name": "Jon Albert",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5048"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4917&LegislativeTermId=92"
+  },
+  "49": {
+    "name": "Jennifer Kincart Jonsson",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5049"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4918&LegislativeTermId=92"
+  },
+  "50": {
+    "name": "Jennifer Canady",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5050"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4879&LegislativeTermId=92"
+  },
+  "51": {
+    "name": "Octavio Hernandez",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5110&LegislativeTermId=92"
+  },
+  "52": {
+    "name": "Samantha Scott",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5052"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5070&LegislativeTermId=92"
+  },
+  "53": {
+    "name": "Brian Hawkins",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5108&LegislativeTermId=92"
+  },
+  "54": {
+    "name": "Randall Scott \"Randy\" Maggard",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe St",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5054"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4758&LegislativeTermId=92"
+  },
+  "55": {
+    "name": "Walter Price",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5075&LegislativeTermId=92"
+  },
+  "56": {
+    "name": "Bradford Troy \"Brad\" Yeager",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5056"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4882&LegislativeTermId=92"
+  },
+  "57": {
+    "name": "Adam Anderson",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5057"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4885&LegislativeTermId=92"
+  },
+  "58": {
+    "name": "Kimberly Berfield",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5058"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4210&LegislativeTermId=92"
+  },
+  "59": {
+    "name": "Berny Jacques",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5059"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4886&LegislativeTermId=92"
+  },
+  "60": {
+    "name": "Lindsay Polega-Quigley",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5107&LegislativeTermId=92"
+  },
+  "61": {
+    "name": "Linda Chaney",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5061"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4778&LegislativeTermId=92"
+  },
+  "62": {
+    "name": "Kyandra Darling",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5084&LegislativeTermId=92"
+  },
+  "63": {
+    "name": "Jacqueline Coffie-Leeks",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5082&LegislativeTermId=92"
+  },
+  "64": {
+    "name": "Luis Salazar",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5073&LegislativeTermId=92"
+  },
+  "65": {
+    "name": "Karen Gonzalez Pittman",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5065"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4888&LegislativeTermId=92"
+  },
+  "66": {
+    "name": "Traci Koster",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5066"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4779&LegislativeTermId=92"
+  },
+  "67": {
+    "name": "Luis Viera",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5074&LegislativeTermId=92"
+  },
+  "68": {
+    "name": "Ryan Gill",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5077&LegislativeTermId=92"
+  },
+  "69": {
+    "name": "Ashley Elizabeth Herrmann",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5100&LegislativeTermId=92"
+  },
+  "70": {
+    "name": "Michael Owen",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5070"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4919&LegislativeTermId=92"
+  },
+  "71": {
+    "name": "Jordan G. Varnadore",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5078&LegislativeTermId=92"
+  },
+  "72": {
+    "name": "William \"Bill\" Conerly",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5072"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4920&LegislativeTermId=92"
+  },
+  "73": {
+    "name": "Fiona McFarland",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5073"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4780&LegislativeTermId=92"
+  },
+  "74": {
+    "name": "Nick Pachota",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5079&LegislativeTermId=92"
+  },
+  "75": {
+    "name": "Danny Nix Jr.",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5075"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4921&LegislativeTermId=92"
+  },
+  "76": {
+    "name": "Vanessa Oliver",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5076"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4922&LegislativeTermId=92"
+  },
+  "77": {
+    "name": "Tiffany Esposito",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5077"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4892&LegislativeTermId=92"
+  },
+  "78": {
+    "name": "Susan Frantz",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5080&LegislativeTermId=92"
+  },
+  "79": {
+    "name": "Mike Giallombardo",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5079"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4783&LegislativeTermId=92"
+  },
+  "80": {
+    "name": "Adam Botana",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5080"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4782&LegislativeTermId=92"
+  },
+  "81": {
+    "name": "Yvette Benarroch",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5081"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4923&LegislativeTermId=92"
+  },
+  "82": {
+    "name": "Liesa Priddy",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5091&LegislativeTermId=92"
+  },
+  "83": {
+    "name": "Kaylee Tuck",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5083"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4776&LegislativeTermId=92"
+  },
+  "84": {
+    "name": "Dana Trabulsy",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5084"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4788&LegislativeTermId=92"
+  },
+  "85": {
+    "name": "Anthony Bonna",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5092&LegislativeTermId=92"
+  },
+  "86": {
+    "name": "John Snyder",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5086"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4787&LegislativeTermId=92"
+  },
+  "87": {
+    "name": "Jon Maples",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5094&LegislativeTermId=92"
+  },
+  "88": {
+    "name": "Jervonte \"Tae\" Edmonds",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5088"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4842&LegislativeTermId=92"
+  },
+  "89": {
+    "name": "Debra Tendrich",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5089"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4924&LegislativeTermId=92"
+  },
+  "90": {
+    "name": "Rob Long",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5090"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5067&LegislativeTermId=92"
+  },
+  "91": {
+    "name": "Peggy Gossett-Seidman",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5091"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4891&LegislativeTermId=92"
+  },
+  "92": {
+    "name": "Kelly Skidmore",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5092"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4786&LegislativeTermId=92"
+  },
+  "93": {
+    "name": "August Mangeney",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5096&LegislativeTermId=92"
+  },
+  "94": {
+    "name": "Elizabeth Holmes",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5101&LegislativeTermId=92"
+  },
+  "95": {
+    "name": "Christine Hunschofsky",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5095"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4799&LegislativeTermId=92"
+  },
+  "96": {
+    "name": "Dan Daley",
+    "party": "Democratic",
+    "capitolOffice": [
+      "403 House Office Building",
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5096"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4757&LegislativeTermId=92"
+  },
+  "97": {
+    "name": "Lisa Dunkley",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5097"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4893&LegislativeTermId=92"
+  },
+  "98": {
+    "name": "Mitch Rosenwald",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5098"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4927&LegislativeTermId=92"
+  },
+  "99": {
+    "name": "Daryl Campbell",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5099"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4843&LegislativeTermId=92"
+  },
+  "100": {
+    "name": "Michael Terence Ferguson",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5103&LegislativeTermId=92"
+  },
+  "101": {
+    "name": "Todd Delmay",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5102&LegislativeTermId=92"
+  },
+  "102": {
+    "name": "Mike Friend",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5099&LegislativeTermId=92"
+  },
+  "103": {
+    "name": "Robin Bartleman",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5103"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4793&LegislativeTermId=92"
+  },
+  "104": {
+    "name": "Felicia Simone Robinson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5104"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4791&LegislativeTermId=92"
+  },
+  "105": {
+    "name": "Marie Paule Woodson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5105"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4789&LegislativeTermId=92"
+  },
+  "106": {
+    "name": "Lucia Baez-Geller",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5098&LegislativeTermId=92"
+  },
+  "107": {
+    "name": "Wallace Aristide",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5107"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4928&LegislativeTermId=92"
+  },
+  "108": {
+    "name": "Daphne D. Campbell",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4522&LegislativeTermId=92"
+  },
+  "109": {
+    "name": "Dr. James Bush III",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4011&LegislativeTermId=92"
+  },
+  "110": {
+    "name": "Tom Fabricio",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5110"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4792&LegislativeTermId=92"
+  },
+  "111": {
+    "name": "David Borrero",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5111"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4794&LegislativeTermId=92"
+  },
+  "112": {
+    "name": "Alex Rizo",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5112"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4796&LegislativeTermId=92"
+  },
+  "113": {
+    "name": "Gloria Romero Roses",
+    "party": "Democratic",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5105&LegislativeTermId=92"
+  },
+  "114": {
+    "name": "Demi Busatta",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5114"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4800&LegislativeTermId=92"
+  },
+  "115": {
+    "name": "Omar Blanco",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5115"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4929&LegislativeTermId=92"
+  },
+  "116": {
+    "name": "Ashley Perez-Biliskov",
+    "party": "Republican",
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=5086&LegislativeTermId=92"
+  },
+  "117": {
+    "name": "Kevin D. Chambliss",
+    "party": "Democratic",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5117"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4798&LegislativeTermId=92"
+  },
+  "118": {
+    "name": "Mike Redondo",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5118"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4902&LegislativeTermId=92"
+  },
+  "119": {
+    "name": "Juan Carlos Porras",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5119"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4898&LegislativeTermId=92"
+  },
+  "120": {
+    "name": "James Vernon \"Jim\" Mooney Jr.",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 South Monroe Street",
+      "Tallahassee, FL 32399-1300",
+      "(850) 717-5120"
+    ],
+    "url": "https://www.flhouse.gov/Sections/Representatives/details.aspx?MemberId=4797&LegislativeTermId=92"
+  }
+}

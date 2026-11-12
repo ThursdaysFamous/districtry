@@ -1,0 +1,42 @@
+{
+ "state": "South Dakota",
+ "usps": "SD",
+ "officersNote": "South Dakota's voters also elect the three members of the Public Utilities Commission statewide. They are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Larry Rhoden",
+   "url": "https://governor.sd.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Tony Venhuizen",
+   "url": "https://governor.sd.gov/office/team.aspx"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Marty Jackley",
+   "url": "https://atg.sd.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Monae Johnson",
+   "url": "https://sdsos.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Josh Haeder",
+   "url": "https://sdtreasurer.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Rich Sattgast",
+   "url": "https://sdauditor.sd.gov/"
+  },
+  {
+   "office": "Commissioner of School and Public Lands",
+   "name": "Brock L. Greenfield",
+   "url": "https://sdpubliclands.sd.gov/"
+  }
+ ]
+}

@@ -59,9 +59,9 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "37.77927,-122.41924"; // SF City Hall (Civic Center)
 const OFFLINE = ["supervisor-district", "neighborhood", "police-district"];
 const EXPECT_DISTRICT = { "supervisor-district": "5", "neighborhood": "Tenderloin", "police-district": "NORTHERN" };
-const NEGATIVE_POINT = "37.74000,-122.59000"; // Open Pacific west of Ocean Beach, beyond CA state waters - outside every layer, including the water-inclusive TIGERweb legislative chambers
-const APP_NAME = "districtry San Francisco";
-const EXPECT_LAYERS = 17; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17
+const NEGATIVE_POINT = "32.40000,-115.60000"; // The Mexicali Valley in Mexico, about 15 km south of the border at Calexico — outside California and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11 against TIGERweb's state layer (controls: San Francisco City Hall returns California, and Mexicali, Baja California, returns no state). IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
+const APP_NAME = "districtry California";
+const EXPECT_LAYERS = 22; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17; + county, municipality and the three school district tilings when the app grew to the whole state (2026-11) = 22
 // ==== GENERATED:END smoke-config ====
 const EXPORTS_NAME = "SFExplorer"; // the fork's window debug namespace
 const BOOT_TIMEOUT = 45000; // Leaflet + first paint on a cold CI runner
@@ -249,60 +249,68 @@ try {
         /template=source-submission\.yml/.test(h) && /[?&]gap_id=/.test(h)),
       `${cold.hrefs.length} links -> ${repoIssues}`);
 
-    // This fork ships no county outlines, so no gap can be location-matched.
-    // Selecting a point must therefore leave the list WHOLE and single-sectioned —
-    // that is the correct degradation, and the thing a naive filter would break.
+    // Until 2026-11-11 this app shipped no county outlines, so no gap could be
+    // matched to a point and selecting one left the list single-sectioned. Since
+    // it grew to the whole state it ships San Francisco's outline, so the gaps
+    // that name San Francisco lead under "Where you clicked" at City Hall and
+    // every other gap is still listed below them: the count is derived from the
+    // shipped file, never a constant.
+    const sfGaps = Object.values(shipped).filter((g) => (g.counties || []).includes("san-francisco")).length;
     await page.evaluate((p) => window.SFExplorer.setSelectedPoint(p[0], p[1]),
       POINT.split(",").map(Number));
     const warm = await openGaps();
-    check("selecting a point leaves the gap list whole (no outlines to match on)",
-      warm.items === expected && warm.sections.length === 1,
+    check("selecting City Hall leads with the gaps recorded for San Francisco, and lists the rest",
+      sfGaps > 0 && warm.items === expected && warm.sections.length >= 2 &&
+        warm.sections[0] === "Where you clicked" + sfGaps,
       `${warm.items}/${expected} items, sections=${JSON.stringify(warm.sections)}`);
 
     // ==== TEMPLATE:BEGIN smoke-coverage-band ====
-    // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
-    // The gaps lede answers three ways since 2026-09-26 — inside the covered
-    // area, inside a wider region whose own key says what still answers there,
-    // or outside both — and the middle answer exists only where the app hands
-    // drawOutOfScopeMask a region geometry. This one hands it none (its coverage
-    // IS the city), so the wash has two bands and the lede must keep saying
-    // "nothing there can be answered yet" beyond the covered area. Asserted
-    // rather than assumed because the engine block is one shared copy: a change
-    // that started retaining a region unconditionally would have this app
-    // claiming something answers in Oakland, and nothing static could see it.
+    // THIS INSTANCE PAINTS THREE BANDS SINCE 2026-11-11, AND THAT IS THE CLAIM
+    // ASSERTED HERE. Until that day its coverage was the city and it handed
+    // drawOutOfScopeMask no region, so the wash had two bands and this block
+    // asserted the lede said "nothing there can be answered yet" beyond the city.
+    // Since the app grew to the whole state it hands the state outline as its
+    // region: San Francisco is the full coverage, the rest of California is the
+    // middle band where the statewide layers answer, and the lede must say so
+    // in Sacramento and must not say so in Mexico. Both points are asserted,
+    // because the second keeps the first honest.
     //
-    // IT WAITS FOR THE WASH FIRST. A null coverage test correctly falls through
-    // to wording that claims neither, so a point selected before the wash has
-    // loaded asserts against the app's "we cannot tell yet" state — which is
-    // what CI caught on this check's first draft.
+    // IT WAITS FOR THE WASH FIRST, and for `dst-glow`, which is created only in
+    // the branch that also retains the region. A null coverage test correctly
+    // falls through to wording that claims neither, so a point selected before
+    // the wash has loaded asserts against the app's "we cannot tell yet" state —
+    // which is what CI caught on this check's first draft.
     async function washPainted() {
       return page.waitForFunction(() => {
         const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
-        return !!(pane && pane.querySelector("path"));
+        return !!(pane && pane.querySelector("path.dst-glow"));
       }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
     if (await washPainted()) {
-      // THE PURPLE EDGE (2026-10-13). This app's coverage is its whole ground,
-      // so the glowing line is drawn along the coverage itself, as the apps
-      // with a wider region band always drew theirs. Until that day this one
-      // drew no line at all. The coverage key names it.
+      // THE PURPLE EDGE runs along the state line, and the key names it from
+      // the worksheet's coverage_key.region.edge.
       const edge = await page.evaluate(() => {
-        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
         const sw = document.querySelector(".districtry-map-legend .dml-items .dml-glow");
         const label = sw && sw.parentElement.querySelector(".dml-label");
-        return { line: !!(pane && pane.querySelector("path.dst-glow")), label: label ? label.textContent : null };
+        return { label: label ? label.textContent : null };
       });
-      check("the wash draws the purple edge along the coverage, and the key names it",
-        edge.line && !!edge.label, JSON.stringify(edge));
+      check("the wash draws the purple edge along the state line, and the key names it",
+        edge.label === "California", JSON.stringify(edge));
+      await page.evaluate(() => window.SFExplorer.setSelectedPoint(38.5766, -121.4932));
+      const band = await openGaps();
+      check("gaps lede names the coverage band in Sacramento (statewide layers answer, city layers do not)",
+        /inside California, outside the area this app covers in full/.test(band.lede) &&
+        band.lede.indexOf("Statewide layers only") !== -1 &&
+        !/nothing there can be answered yet/.test(band.lede), JSON.stringify(band.lede));
       await page.evaluate((p) => window.SFExplorer.setSelectedPoint(p[0], p[1]),
         NEGATIVE_POINT.split(",").map(Number));
       const beyond = await openGaps();
-      check("gaps lede claims no coverage band at the negative point",
+      check("gaps lede claims no coverage band at the negative point in Mexico",
         /nothing there can be answered yet/.test(beyond.lede) &&
         !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
     } else {
-      check("gaps lede claims no coverage band at the negative point", false,
-        "the wash never painted, so the panel's coverage test could only answer unknown");
+      check("the wash painted its region band, so the band wording can be read", false,
+        "no dst-glow in the scope-mask pane — the region band never painted");
     }
     // ==== TEMPLATE:END smoke-coverage-band ====
 
@@ -325,29 +333,90 @@ try {
     await context.close();
   }
 
-  // 2b. The negative Bay point misses every anchor — the honest "no district"
-  //     empty state (never snap to nearest), from the same static geometry.
+  // 2b. THE APP GREW FROM SAN FRANCISCO TO THE WHOLE STATE ON 2026-11-11, and
+  //     two things must hold at once: the city's layers HIDE outside the city
+  //     (coverage: inSanFrancisco), and the statewide layers ANSWER there. Both
+  //     halves are asserted, because a hide test alone passes for a layer that
+  //     is hidden everywhere and an answer test alone passes for a city layer
+  //     that wrongly answers in Sacramento. Sacramento's Capitol is the point:
+  //     every answer below comes from same-origin files (state-counties.json
+  //     and the mirrored tile archives), so this needs no network.
+  //     The negative point is in Mexico, so the ZIP layer (coverage:
+  //     inCalifornia) hides there and the three chambers, which are statewide
+  //     files with no coverage test, answer with no district.
+  const SACRAMENTO = "38.57660,-121.49320"; // California State Capitol, 10th and L
+  const hiddenAt = async (page, id) => {
+    // wait for the coverage test's outline fetch before reading, the rule the
+    // New York smoke test learned on a busy runner (PR #1513)
+    await page.waitForFunction((cid) => {
+      const card = document.getElementById("card-" + cid);
+      const block = card && card.closest(".layer-block");
+      return !!block && block.hidden === true;
+    }, id, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    return page.evaluate((cid) => {
+      const card = document.getElementById("card-" + cid);
+      const block = card && card.closest(".layer-block");
+      const visible = (el) => !!el && !el.hidden && el.offsetParent !== null;
+      return { card: visible(block) };
+    }, id);
+  };
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await context.newPage();
     await routeLeaflet(page);
-    await page.goto(`${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.join(",")}`, { waitUntil: "domcontentloaded" });
+    const SF_ONLY = OFFLINE.concat(["election-precinct", "elementary-attendance-area"]);
+    await page.goto(`${BASE}#point=${SACRAMENTO}&layers=${SF_ONLY.concat(["county", "municipality", "zip-code"]).join(",")}`,
+      { waitUntil: "domcontentloaded" });
     await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
-    for (const id of OFFLINE) {
+    for (const id of SF_ONLY) {
+      const shown = await hiddenAt(page, id);
+      check(`${id} hides in Sacramento, outside San Francisco`, !shown.card, JSON.stringify(shown));
+    }
+    for (const [id, want] of [["county", "Sacramento"], ["municipality", "Sacramento"], ["zip-code", "95814"]]) {
       const c = await cardText(page, id);
-      check(`${id} reports no district at the Bay point`, c.empty && !c.error, c.text.slice(0, 70));
+      check(`${id} answers in Sacramento (${want})`, !c.error && !c.empty && c.text.includes(want), c.text.slice(0, 70));
+    }
+    await context.close();
+  }
+  {
+    // the anchor half: at City Hall the ZIP layer and the County card answer,
+    // so a ZIP layer hidden everywhere cannot pass the Mexico check below
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await context.newPage();
+    await routeLeaflet(page);
+    await page.goto(`${BASE}#point=${POINT}&layers=county,zip-code`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+    for (const [id, want] of [["county", "San Francisco"], ["zip-code", "94102"]]) {
+      const c = await cardText(page, id);
+      check(`${id} answers at City Hall (${want})`, !c.error && !c.empty && c.text.includes(want), c.text.slice(0, 70));
+    }
+    await context.close();
+  }
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await context.newPage();
+    await routeLeaflet(page);
+    const CHAMBERS = ["congress", "ca-senate", "ca-assembly"];
+    await page.goto(`${BASE}#point=${NEGATIVE_POINT}&layers=${OFFLINE.concat(["zip-code"], CHAMBERS).join(",")}`,
+      { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+    for (const id of OFFLINE.concat(["zip-code"])) {
+      const shown = await hiddenAt(page, id);
+      check(`${id} hides at the negative point in Mexico`, !shown.card, JSON.stringify(shown));
+    }
+    for (const id of CHAMBERS) {
+      const c = await cardText(page, id);
+      check(`${id} reports no district at the negative point in Mexico`, c.empty && !c.error, c.text.slice(0, 70));
     }
     await context.close();
   }
 
   // 2c. The three legislative chambers classify City Hall from pre-built,
-  //     SF-clipped same-origin geometry (data/app), and now name the officeholder
-  //     from the scraped same-origin roster (data/app/*-members.json / roster).
-  //     They use water-inclusive TIGERweb boundaries, so — unlike the
-  //     shoreline-clipped anchors — they legitimately DO contain the negative Bay
-  //     point (§7); they are checked positive-only here, deliberately not in the
-  //     negative-point block above. The specific names change week to week, so we
-  //     assert the member's ROLE label (proof a roster row joined), not a name.
+  //     statewide same-origin geometry (data/app, SF-clipped until 2026-11-11),
+  //     and name the officeholder from the scraped same-origin roster
+  //     (data/app/*-members.json / roster). Their negative half is in 2b. The
+  //     specific names change week to week, so we assert the member's ROLE
+  //     label (proof a roster row joined), not a name.
   {
     const CHAMBERS = {
       "congress": { district: "11", role: "Representative" },

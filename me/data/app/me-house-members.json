@@ -1,0 +1,905 @@
+{
+  "1": {
+    "name": "Lucien Daigle",
+    "party": "Republican",
+    "email": "Lucien.Daigle@legislature.maine.gov",
+    "phone": "207-631-8082"
+  },
+  "2": {
+    "name": "Roger Albert",
+    "party": "Republican",
+    "email": "Roger.Albert@legislature.maine.gov",
+    "phone": "207-436-9156"
+  },
+  "3": {
+    "name": "Mark Babin",
+    "party": "Republican",
+    "email": "Mark.Babin@legislature.maine.gov",
+    "phone": "207-227-0198"
+  },
+  "4": {
+    "name": "Timothy Guerrette",
+    "party": "Republican",
+    "email": "Timothy.Guerrette@legislature.maine.gov",
+    "phone": "207-227-3577"
+  },
+  "5": {
+    "name": "Joseph Underwood",
+    "party": "Republican",
+    "email": "Joseph.Underwood@legislature.maine.gov",
+    "phone": "207-762-4921"
+  },
+  "6": {
+    "name": "Donald Ardell",
+    "party": "Republican",
+    "email": "Donald.Ardell@legislature.maine.gov",
+    "phone": "207-521-1130"
+  },
+  "7": {
+    "name": "Gregory Swallow",
+    "party": "Republican",
+    "email": "Gregory.Swallow@legislature.maine.gov",
+    "phone": "207-521-7416"
+  },
+  "8": {
+    "name": "Tracy Quint",
+    "party": "Republican",
+    "email": "Tracy.Quint@legislature.maine.gov",
+    "phone": "207-217-4493"
+  },
+  "9": {
+    "name": "Arthur Mingo",
+    "party": "Republican",
+    "email": "Arthur.Mingo@legislature.maine.gov",
+    "phone": "207-214-8537"
+  },
+  "10": {
+    "name": "William Tuell",
+    "party": "Republican",
+    "email": "William.tuell@legislature.maine.gov",
+    "phone": "207-271-8521"
+  },
+  "11": {
+    "name": "Tiffany Strout",
+    "party": "Republican",
+    "email": "Tiffany.Strout@legislature.maine.gov",
+    "phone": "207-598-7043"
+  },
+  "12": {
+    "name": "Billy Bob Faulkingham",
+    "party": "Republican",
+    "email": "William.Faulkingham@legislature.maine.gov",
+    "phone": "207-460-6967"
+  },
+  "13": {
+    "name": "Russell White",
+    "party": "Republican",
+    "email": "Russell.White@legislature.maine.gov",
+    "phone": "207-460-6359"
+  },
+  "14": {
+    "name": "Gary Friedmann",
+    "party": "Democratic",
+    "email": "Gary.Friedmann@legislature.maine.gov",
+    "phone": "207-460-7362"
+  },
+  "15": {
+    "name": "Holly Eaton",
+    "party": "Democratic",
+    "email": "holly.eaton@legislature.maine.gov",
+    "phone": "207-610-9281"
+  },
+  "16": {
+    "name": "Nina Milliken",
+    "party": "Democratic",
+    "email": "nina.milliken@legislature.maine.gov",
+    "phone": "207-412-8828"
+  },
+  "17": {
+    "name": "Steven Bishop",
+    "party": "Republican",
+    "email": "Steven.Bishop@legislature.maine.gov",
+    "phone": "207-991-7909"
+  },
+  "18": {
+    "name": "Mathew McIntyre",
+    "party": "Republican",
+    "email": "Mathew.McIntyre@legislature.maine.gov",
+    "phone": "207-680-0678"
+  },
+  "19": {
+    "name": "Richard Campbell",
+    "party": "Republican",
+    "email": "Richard.Campbell@legislature.maine.gov",
+    "phone": "207-745-7748"
+  },
+  "20": {
+    "name": "Dani O'Halloran",
+    "party": "Democratic",
+    "email": "Dani.OHalloran@legislature.maine.gov",
+    "phone": "207-745-4499"
+  },
+  "21": {
+    "name": "Ambureen Rana",
+    "party": "Democratic",
+    "email": "ambureen.rana@legislature.maine.gov",
+    "phone": "207-350-5081"
+  },
+  "22": {
+    "name": "Laura Supica",
+    "party": "Democratic",
+    "email": "laura.supica@legislature.maine.gov",
+    "phone": "207-717-5702"
+  },
+  "23": {
+    "name": "Amy Roeder",
+    "party": "Democratic",
+    "email": "Amy.Roeder@legislature.maine.gov",
+    "phone": "207-370-5517"
+  },
+  "24": {
+    "name": "Sean Faircloth",
+    "party": "Democratic",
+    "email": "Sean.Faircloth@legislature.maine.gov",
+    "phone": "207-307-9868"
+  },
+  "25": {
+    "name": "Laurie Osher",
+    "party": "Democratic",
+    "email": "Laurie.Osher@legislature.maine.gov",
+    "phone": "207-944-6743"
+  },
+  "26": {
+    "name": "James Dill",
+    "party": "Democratic",
+    "email": "James.Dill@legislature.maine.gov",
+    "phone": "207-827-3498"
+  },
+  "27": {
+    "name": "Gary Drinkwater",
+    "party": "Republican",
+    "email": "Gary.Drinkwater@legislature.maine.gov",
+    "phone": "207-356-8198"
+  },
+  "28": {
+    "name": "Irene Gifford",
+    "party": "Republican",
+    "email": "Irene.Gifford@legislature.maine.gov",
+    "phone": "207-290-5087"
+  },
+  "29": {
+    "name": "Nancy Theriault",
+    "party": "Republican",
+    "email": "nancy.theriault@legislature.maine.gov",
+    "phone": "207-731-9901"
+  },
+  "30": {
+    "name": "James White",
+    "party": "Republican",
+    "email": "James.White@legislature.maine.gov",
+    "phone": "207-564-7308"
+  },
+  "31": {
+    "name": "Chad Perkins",
+    "party": "Republican",
+    "email": "Chad.Perkins@legislature.maine.gov",
+    "phone": "207-279-0927"
+  },
+  "32": {
+    "name": "Steven Foster",
+    "party": "Republican",
+    "email": "Steven.Foster@legislature.maine.gov",
+    "phone": "207-924-4409"
+  },
+  "33": {
+    "name": "Kenneth Fredette",
+    "party": "Republican",
+    "email": "Kenneth.Fredette@legislature.maine.gov",
+    "phone": "207-287-1440"
+  },
+  "34": {
+    "name": "Abigail Griffin",
+    "party": "Republican",
+    "email": "Abigail.Griffin@legislature.maine.gov",
+    "phone": "207-403-3671"
+  },
+  "35": {
+    "name": "James Thorne",
+    "party": "Republican",
+    "email": "Jim.Thorne@legislature.maine.gov",
+    "phone": "207-735-5827"
+  },
+  "36": {
+    "name": "Kimberly Haggan",
+    "party": "Republican",
+    "email": "Kimberly.Haggan@legislature.maine.gov",
+    "phone": "207-735-7333"
+  },
+  "37": {
+    "name": "Reagan Paul",
+    "party": "Republican",
+    "email": "reagan.paul@legislature.maine.gov",
+    "phone": "207-944-8033"
+  },
+  "38": {
+    "name": "Benjamin Hymes",
+    "party": "Republican",
+    "email": "Benjamin.Hymes@legislature.maine.gov",
+    "phone": "207-808-3413"
+  },
+  "39": {
+    "name": "Janice Dodge",
+    "party": "Democratic",
+    "email": "Jan.Dodge@legislature.maine.gov",
+    "phone": "207-338-1626"
+  },
+  "40": {
+    "name": "Michael Ray",
+    "party": "Democratic",
+    "email": "michael.ray@legislature.maine.gov",
+    "phone": "207-930-0371"
+  },
+  "41": {
+    "name": "Victoria Doudera",
+    "party": "Democratic",
+    "email": "Vicki.Doudera@legislature.maine.gov",
+    "phone": "207-542-1990"
+  },
+  "42": {
+    "name": "Valli Geiger",
+    "party": "Democratic",
+    "email": "valli.geiger@legislature.maine.gov",
+    "phone": "207-956-1565"
+  },
+  "43": {
+    "name": "Ann Matlack",
+    "party": "Democratic",
+    "email": "Ann.Matlack@legislature.maine.gov",
+    "phone": "207-691-1474"
+  },
+  "44": {
+    "name": "William Pluecker",
+    "party": "Independent",
+    "email": "Bill.Pluecker@legislature.maine.gov",
+    "phone": "207-273-3044"
+  },
+  "45": {
+    "name": "Abden Simmons",
+    "party": "Republican",
+    "email": "Abden.Simmons@legislature.maine.gov",
+    "phone": "207-446-4518"
+  },
+  "46": {
+    "asOf": "2026-11-12"
+  },
+  "47": {
+    "name": "Wayne Farrin",
+    "party": "Democratic",
+    "email": "Wayne.Farrin@legislature.maine.gov",
+    "phone": "207-592-9057"
+  },
+  "48": {
+    "name": "Holly Stover",
+    "party": "Democratic",
+    "email": "Holly.Stover@legislature.maine.gov",
+    "phone": "207-633-5979"
+  },
+  "49": {
+    "name": "Allison Hepler",
+    "party": "Democratic",
+    "email": "Allison.Hepler@legislature.maine.gov",
+    "phone": "207-319-4396"
+  },
+  "50": {
+    "name": "David Sinclair",
+    "party": "Democratic",
+    "email": "david.sinclair@legislature.maine.gov",
+    "phone": "207-807-1610"
+  },
+  "51": {
+    "name": "Rafael Macias",
+    "party": "Democratic",
+    "email": "Rafael.Macias@legislature.maine.gov",
+    "phone": "207-891-1084"
+  },
+  "52": {
+    "name": "Sally Cluchey",
+    "party": "Democratic",
+    "email": "sally.cluchey@legislature.maine.gov",
+    "phone": "207-814-8879"
+  },
+  "53": {
+    "name": "Michael Lemelin",
+    "party": "Republican",
+    "email": "Michael.Lemelin@legislature.maine.gov",
+    "phone": "207-798-9399"
+  },
+  "54": {
+    "name": "Karen Montell",
+    "party": "Democratic",
+    "email": "Karen.Montell@legislature.maine.gov",
+    "phone": "207-513-0102"
+  },
+  "55": {
+    "name": "Daniel Shagoury",
+    "party": "Democratic",
+    "email": "Daniel.Shagoury@legislature.maine.gov",
+    "phone": "207-242-2169"
+  },
+  "56": {
+    "name": "Randall Greenwood",
+    "party": "Republican",
+    "email": "Randall.Greenwood@legislature.maine.gov",
+    "phone": "207-754-6604"
+  },
+  "57": {
+    "name": "Tavis Hasenfus",
+    "party": "Democratic",
+    "email": "Tavis.Hasenfus@legislature.maine.gov",
+    "phone": "207-446-0016"
+  },
+  "58": {
+    "name": "Sharon Frost",
+    "party": "Unenrolled",
+    "email": "Sharon.Frost@legislature.maine.gov",
+    "phone": "207-242-6079"
+  },
+  "59": {
+    "name": "David Rollins",
+    "party": "Democratic",
+    "email": "David.Rollins@legislature.maine.gov",
+    "phone": "207-485-6050"
+  },
+  "60": {
+    "name": "William Bridgeo",
+    "party": "Democratic",
+    "email": "william.bridgeo@legislature.maine.gov",
+    "phone": "207-458-2939"
+  },
+  "61": {
+    "name": "Alicia Collins",
+    "party": "Republican",
+    "email": "Alicia.Collins@legislature.maine.gov",
+    "phone": "207-751-4736"
+  },
+  "62": {
+    "name": "Katrina Smith",
+    "party": "Republican",
+    "email": "Katrina.Smith@legislature.maine.gov",
+    "phone": "207-230-9583"
+  },
+  "63": {
+    "name": "Paul Flynn",
+    "party": "Republican",
+    "email": "Paul.Flynn@legislature.maine.gov",
+    "phone": "207-314-5525"
+  },
+  "64": {
+    "name": "Flavia DeBrito",
+    "party": "Democratic",
+    "email": "Flavia.DeBrito@legislature.maine.gov",
+    "phone": "207-660-7212"
+  },
+  "65": {
+    "name": "Cassie Julia",
+    "party": "Democratic",
+    "email": "cassie.julia@legislature.maine.gov",
+    "phone": "207-649-5110"
+  },
+  "66": {
+    "name": "Robert Nutting",
+    "party": "Republican",
+    "email": "Robert.Nutting@legislature.maine.gov",
+    "phone": "207-629-7035"
+  },
+  "67": {
+    "name": "Shelley Rudnicki",
+    "party": "Republican",
+    "email": "Shelley.Rudnicki@legislature.maine.gov",
+    "phone": "207-314-6898"
+  },
+  "68": {
+    "name": "Amanda Collamore",
+    "party": "Republican",
+    "email": "Amanda.Collamore@legislature.maine.gov",
+    "phone": "207-679-7305"
+  },
+  "69": {
+    "name": "Dean Cray",
+    "party": "Republican",
+    "email": "dean.cray@legislature.maine.gov",
+    "phone": "207-478-8279"
+  },
+  "70": {
+    "name": "Jennifer Poirier",
+    "party": "Republican",
+    "email": "Jennifer.Poirier@legislature.maine.gov",
+    "phone": "207-399-9784"
+  },
+  "71": {
+    "name": "Jack Ducharme",
+    "party": "Republican",
+    "email": "jack.ducharme@legislature.maine.gov",
+    "phone": "207-431-0775"
+  },
+  "72": {
+    "name": "Elizabeth Caruso",
+    "party": "Republican",
+    "email": "Elizabeth.Caruso@legislature.maine.gov",
+    "phone": "207-399-9992"
+  },
+  "73": {
+    "name": "Michael Soboleski",
+    "party": "Republican",
+    "email": "Michael.Soboleski@legislature.maine.gov",
+    "phone": "207-400-7233"
+  },
+  "74": {
+    "name": "Randall Hall",
+    "party": "Republican",
+    "email": "Randall.Hall@legislature.maine.gov",
+    "phone": "207-860-8431"
+  },
+  "75": {
+    "name": "Stephan Bunker",
+    "party": "Democratic",
+    "email": "Stephan.Bunker@legislature.maine.gov",
+    "phone": "207-592-1247"
+  },
+  "76": {
+    "name": "Sheila Lyman",
+    "party": "Republican",
+    "email": "sheila.lyman@legislature.maine.gov",
+    "phone": "207-320-0588"
+  },
+  "77": {
+    "name": "Tammy Schmersal-Burgess",
+    "party": "Republican",
+    "email": "Tammy.Schmersal-Burgess@legislature.maine.gov",
+    "phone": "207-357-7179"
+  },
+  "78": {
+    "name": "Rachel Henderson",
+    "party": "Republican",
+    "email": "Rachel.Henderson@legislature.maine.gov",
+    "phone": "207-381-4237"
+  },
+  "79": {
+    "name": "Michael Lance",
+    "party": "Republican",
+    "email": "Michael.Lance@legislature.maine.gov",
+    "phone": "207-577-1022"
+  },
+  "80": {
+    "name": "Caldwell Jackson",
+    "party": "Republican",
+    "email": "Caldwell.Jackson@legislature.maine.gov",
+    "phone": "207-272-8543"
+  },
+  "81": {
+    "name": "Peter Wood",
+    "party": "Republican",
+    "email": "Peter.Wood@legislature.maine.gov",
+    "phone": "207-890-3324"
+  },
+  "82": {
+    "name": "Nathan Wadsworth",
+    "party": "Republican",
+    "email": "Nathan.Wadsworth@legislature.maine.gov",
+    "phone": "207-838-7451"
+  },
+  "83": {
+    "name": "Marygrace Cimino",
+    "party": "Republican",
+    "email": "Marygrace.Cimino@legislature.maine.gov",
+    "phone": "804-380-6101"
+  },
+  "84": {
+    "name": "Mark Walker",
+    "party": "Republican",
+    "email": "Mark.Walker@legislature.maine.gov",
+    "phone": "207-272-2728"
+  },
+  "85": {
+    "name": "Kimberly Pomerleau",
+    "party": "Republican",
+    "email": "Kimberly.Pomerleau@legislature.maine.gov",
+    "phone": "207-332-2555"
+  },
+  "86": {
+    "name": "Rolf Olsen",
+    "party": "Republican",
+    "email": "Rolf.Olsen@legislature.maine.gov",
+    "phone": "207-632-1530"
+  },
+  "87": {
+    "name": "David Boyer",
+    "party": "Republican",
+    "email": "David.Boyer@legislature.maine.gov",
+    "phone": "207-274-4633"
+  },
+  "88": {
+    "name": "Quentin Chapman",
+    "party": "Republican",
+    "email": "Quentin.Chapman@legislature.maine.gov",
+    "phone": "207-740-5595"
+  },
+  "89": {
+    "name": "Adam Lee",
+    "party": "Democratic",
+    "email": "Adam.Lee@legislature.maine.gov",
+    "phone": "207-312-4057"
+  },
+  "90": {
+    "name": "Laurel Libby",
+    "party": "Republican",
+    "email": "Laurel.Libby@legislature.maine.gov",
+    "phone": "207-632-7619"
+  },
+  "91": {
+    "name": "Joshua Morris",
+    "party": "Republican",
+    "email": "Joshua.Morris@legislature.maine.gov",
+    "phone": "207-754-7829"
+  },
+  "92": {
+    "name": "Stephen Wood",
+    "party": "Republican",
+    "email": "Stephen.Wood@legislature.maine.gov",
+    "phone": "207-740-3723"
+  },
+  "93": {
+    "name": "Julia McCabe",
+    "party": "Democratic",
+    "email": "Julia.McCabe@legislature.maine.gov",
+    "phone": "240-498-9332"
+  },
+  "94": {
+    "name": "Scott Harriman",
+    "party": "Democratic",
+    "email": "scott.harriman@legislature.maine.gov",
+    "phone": "207-613-6785"
+  },
+  "95": {
+    "name": "Mana Abdi",
+    "party": "Democratic",
+    "email": "Mana.Abdi@legislature.maine.gov",
+    "phone": "207-520-7379"
+  },
+  "96": {
+    "name": "Michel Lajoie",
+    "party": "Democratic",
+    "email": "Michel.Lajoie@legislature.maine.gov",
+    "phone": "207-713-7119"
+  },
+  "97": {
+    "name": "Richard Mason",
+    "party": "Republican",
+    "email": "Richard.Mason@legislature.maine.gov",
+    "phone": "207-577-1001"
+  },
+  "98": {
+    "name": "Kilton Webb",
+    "party": "Democratic",
+    "email": "kilton.webb@legislature.maine.gov",
+    "phone": "207-458-0172"
+  },
+  "99": {
+    "name": "Cheryl Golek",
+    "party": "Democratic",
+    "email": "Cheryl.Golek@legislature.maine.gov",
+    "phone": "207-535-9857"
+  },
+  "100": {
+    "name": "Daniel Ankeles",
+    "party": "Democratic",
+    "email": "Daniel.Ankeles@legislature.maine.gov",
+    "phone": "207-756-3793"
+  },
+  "101": {
+    "name": "Poppy Arford",
+    "party": "Democratic",
+    "email": "Poppy.Arford@legislature.maine.gov",
+    "phone": "207-522-1997"
+  },
+  "102": {
+    "name": "Melanie Sachs",
+    "party": "Democratic",
+    "email": "Melanie.Sachs@legislature.maine.gov",
+    "phone": "207-299-6825"
+  },
+  "103": {
+    "name": "Arthur Bell",
+    "party": "Democratic",
+    "email": "Arthur.Bell@legislature.maine.gov",
+    "phone": "207-415-1217"
+  },
+  "104": {
+    "name": "Amy Arata",
+    "party": "Republican",
+    "email": "Amy.Arata@legislature.maine.gov",
+    "phone": "207-333-1817"
+  },
+  "105": {
+    "name": "Anne Graham",
+    "party": "Democratic",
+    "email": "anne.graham@legislature.maine.gov",
+    "phone": "207-370-4414"
+  },
+  "106": {
+    "name": "Barbara Bagshaw",
+    "party": "Republican",
+    "email": "Barbara.Bagshaw@legislature.maine.gov",
+    "phone": "207-310-0051"
+  },
+  "107": {
+    "name": "Mark Cooper",
+    "party": "Republican",
+    "email": "Mark.Cooper@legislature.maine.gov",
+    "phone": "207-232-5842"
+  },
+  "108": {
+    "name": "Parnell Terry",
+    "party": "Democratic",
+    "email": "parnell.terry@legislature.maine.gov",
+    "phone": "207-318-1740"
+  },
+  "109": {
+    "name": "Eleanor Sato",
+    "party": "Democratic",
+    "email": "Eleanor.Sato@legislature.maine.gov",
+    "phone": "207-939-6041"
+  },
+  "110": {
+    "name": "Christina Mitchell",
+    "party": "Democratic",
+    "email": "Christina.Mitchell@legislature.maine.gov",
+    "phone": "207-829-6307"
+  },
+  "111": {
+    "name": "Amy Kuhn",
+    "party": "Democratic",
+    "email": "Amy.Kuhn@legislature.maine.gov",
+    "phone": "207-939-6903"
+  },
+  "112": {
+    "name": "W. Crockett",
+    "party": "Unenrolled",
+    "email": "Ed.Crockett@legislature.maine.gov",
+    "phone": "207-797-8371"
+  },
+  "113": {
+    "name": "Grayson Lookner",
+    "party": "Democratic",
+    "email": "grayson.lookner@legislature.maine.gov",
+    "phone": "207-200-3860"
+  },
+  "114": {
+    "name": "Dylan Pugh",
+    "party": "Democratic",
+    "email": "Dylan.Pugh@legislature.maine.gov",
+    "phone": "207-200-7791"
+  },
+  "115": {
+    "name": "Michael Brennan",
+    "party": "Democratic",
+    "email": "Michael.Brennan@legislature.maine.gov",
+    "phone": "207-939-6462"
+  },
+  "116": {
+    "name": "Samuel Zager",
+    "party": "Democratic",
+    "email": "sam.zager@legislature.maine.gov",
+    "phone": "207-400-6846"
+  },
+  "117": {
+    "name": "Matt Moonen",
+    "party": "Democratic",
+    "email": "Matt.Moonen@legislature.maine.gov",
+    "phone": "207-287-1430"
+  },
+  "118": {
+    "name": "Yusuf Yusuf",
+    "party": "Democratic",
+    "email": "Yusuf.Yusuf@legislature.maine.gov",
+    "phone": "207-415-3438"
+  },
+  "119": {
+    "name": "Charles Skold",
+    "party": "Democratic",
+    "email": "Charles.Skold@legislature.maine.gov",
+    "phone": "207-329-3838"
+  },
+  "120": {
+    "name": "Deqa Dhalac",
+    "party": "Democratic",
+    "email": "Deqa.Dhalac@legislature.maine.gov",
+    "phone": "207-613-5390"
+  },
+  "121": {
+    "name": "Christopher Kessler",
+    "party": "Democratic",
+    "email": "Christopher.Kessler@legislature.maine.gov",
+    "phone": "207-956-0882"
+  },
+  "122": {
+    "name": "Matthew Beck",
+    "party": "Democratic",
+    "email": "Matthew.Beck@legislature.maine.gov",
+    "phone": "207-799-4025"
+  },
+  "123": {
+    "name": "Michelle Boyer",
+    "party": "Democratic",
+    "email": "michelle.boyer@legislature.maine.gov",
+    "phone": "207-239-6318"
+  },
+  "124": {
+    "name": "Sophia Warren",
+    "party": "Democratic",
+    "email": "Sophia.Warren@legislature.maine.gov",
+    "phone": "207-450-0765"
+  },
+  "125": {
+    "name": "Kelly Murphy",
+    "party": "Democratic",
+    "email": "kelly.murphy@legislature.maine.gov",
+    "phone": "207-318-3215"
+  },
+  "126": {
+    "name": "Drew Gattine",
+    "party": "Democratic",
+    "email": "Andrew.Gattine@legislature.maine.gov",
+    "phone": "207-409-3477"
+  },
+  "127": {
+    "name": "Morgan Rielly",
+    "party": "Democratic",
+    "email": "morgan.rielly@legislature.maine.gov",
+    "phone": "207-228-5767"
+  },
+  "128": {
+    "name": "Suzanne Salisbury",
+    "party": "Democratic",
+    "email": "suzanne.salisbury@legislature.maine.gov",
+    "phone": "207-899-6863"
+  },
+  "129": {
+    "name": "Marshall Archer",
+    "party": "Democratic",
+    "email": "marshall.archer@legislature.maine.gov",
+    "phone": "207-653-2173"
+  },
+  "130": {
+    "name": "Lynn Copeland",
+    "party": "Democratic",
+    "email": "lynn.copeland@legislature.maine.gov",
+    "phone": "207-712-6776"
+  },
+  "131": {
+    "name": "Lori Gramlich",
+    "party": "Democratic",
+    "email": "Lori.Gramlich@legislature.maine.gov",
+    "phone": "207-287-1430"
+  },
+  "132": {
+    "name": "Ryan Fecteau",
+    "party": "Democratic",
+    "email": "ryan.fecteau@legislature.maine.gov",
+    "phone": "207-287-1300"
+  },
+  "133": {
+    "name": "Marc Malon",
+    "party": "Democratic",
+    "email": "Marc.Malon@legislature.maine.gov",
+    "phone": "207-200-6376"
+  },
+  "134": {
+    "name": "Traci Gere",
+    "party": "Democratic",
+    "email": "Traci.Gere@legislature.maine.gov",
+    "phone": "207-710-3557"
+  },
+  "135": {
+    "name": "Daniel Sayre",
+    "party": "Democratic",
+    "email": "Daniel.Sayre@legislature.maine.gov",
+    "phone": "207-613-6776"
+  },
+  "136": {
+    "name": "John Eder",
+    "party": "Republican",
+    "email": "John.Eder@legislature.maine.gov",
+    "phone": "207-283-5729"
+  },
+  "137": {
+    "name": "Nathan Carlow",
+    "party": "Republican",
+    "email": "Nathan.Carlow@legislature.maine.gov",
+    "phone": "207-241-9939"
+  },
+  "138": {
+    "name": "Mark Blier",
+    "party": "Republican",
+    "email": "Mark.Blier@legislature.maine.gov",
+    "phone": "207-712-5705"
+  },
+  "139": {
+    "name": "David Woodsome",
+    "party": "Republican",
+    "email": "David.Woodsome@legislature.maine.gov",
+    "phone": "207-432-5643"
+  },
+  "140": {
+    "name": "Wayne Parry",
+    "party": "Republican",
+    "email": "wayne.parry@legislature.maine.gov",
+    "phone": "207-229-5195"
+  },
+  "141": {
+    "name": "Lucas Lanigan",
+    "party": "Republican",
+    "email": "Lucas.Lanigan@legislature.maine.gov",
+    "phone": "207-351-5383"
+  },
+  "142": {
+    "name": "Anne-Marie Mastraccio",
+    "party": "Democratic",
+    "email": "Anne-Marie.Mastraccio@legislature.maine.gov",
+    "phone": "207-432-1453"
+  },
+  "143": {
+    "name": "Ann Fredericks",
+    "party": "Republican",
+    "email": "Ann.Fredericks@legislature.maine.gov",
+    "phone": "207-401-4141"
+  },
+  "144": {
+    "name": "Jeffrey Adams",
+    "party": "Republican",
+    "email": "Jeffrey.Adams@legislature.maine.gov",
+    "phone": "207-457-2054"
+  },
+  "145": {
+    "name": "Robert Foley",
+    "party": "Republican",
+    "email": "Robert.Foley@legislature.maine.gov",
+    "phone": "207-590-2144"
+  },
+  "146": {
+    "name": "Walter Runte",
+    "party": "Democratic",
+    "email": "gerry.runte@legislature.maine.gov",
+    "phone": "207-361-7143"
+  },
+  "147": {
+    "name": "Holly Sargent",
+    "party": "Democratic",
+    "email": "Holly.Sargent@legislature.maine.gov",
+    "phone": "617-230-1045"
+  },
+  "148": {
+    "name": "Thomas Lavigne",
+    "party": "Republican",
+    "email": "Thomas.Lavigne@legislature.maine.gov",
+    "phone": "603-842-0814"
+  },
+  "149": {
+    "name": "Tiffany Roberts",
+    "party": "Democratic",
+    "email": "Tiffany.Roberts@legislature.maine.gov",
+    "phone": "207-210-3287"
+  },
+  "150": {
+    "name": "Michele Meyer",
+    "party": "Democratic",
+    "email": "Michele.Meyer@legislature.maine.gov",
+    "phone": "207-438-9197"
+  },
+  "151": {
+    "name": "Kristi Mathieson",
+    "party": "Democratic",
+    "email": "kristi.mathieson@legislature.maine.gov",
+    "phone": "603-969-7496"
+  }
+}
