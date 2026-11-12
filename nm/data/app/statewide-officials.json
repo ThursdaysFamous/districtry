@@ -1,0 +1,67 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nm/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "New Mexico",
+ "usSenate": [
+  {
+   "name": "Martin Heinrich",
+   "party": "Democratic",
+   "url": "https://www.heinrich.senate.gov/",
+   "office": "709 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5521"
+  },
+  {
+   "name": "Ben Ray Luján",
+   "party": "Democratic",
+   "url": "https://www.lujan.senate.gov",
+   "office": "498 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6621"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Michelle Lujan Grisham",
+   "url": "https://www.governor.state.nm.us/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Howie Morales",
+   "url": "https://www.ltgov.nm.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Raúl Torrez",
+   "url": "https://nmdoj.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Maggie Toulouse Oliver",
+   "url": "https://www.sos.nm.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Joseph Maestas",
+   "url": "https://www.saonm.org/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Laura Montoya",
+   "url": "https://www.nmto.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Commissioner of Public Lands",
+   "name": "Stephanie Garcia Richard",
+   "url": "https://www.nmstatelands.org/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "New Mexico's Public Education Commission is elected by district, not statewide, and its Public Regulation Commission has been appointed since 2023, so neither is listed."
+}

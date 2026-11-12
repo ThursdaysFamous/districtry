@@ -1,0 +1,63 @@
+{
+  "1": {
+    "name": "Blake D. Moore",
+    "party": "Republican",
+    "url": "https://blakemoore.house.gov",
+    "capitolOffice": [
+      "1131 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-0453"
+    ],
+    "districtOffice": [
+      "324 25th Street",
+      "Ogden",
+      "Ogden, UT 84401",
+      "Phone: 801-625-0107"
+    ]
+  },
+  "2": {
+    "name": "Celeste Maloy",
+    "party": "Republican",
+    "url": "https://maloy.house.gov",
+    "capitolOffice": [
+      "249 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9730"
+    ],
+    "districtOffice": [
+      "585 W 500 S, #230",
+      "Bountiful, UT 84010",
+      "Phone: 801-364-5550"
+    ]
+  },
+  "3": {
+    "name": "Mike Kennedy",
+    "party": "Republican",
+    "url": "https://mikekennedy.house.gov",
+    "capitolOffice": [
+      "1626 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7751"
+    ],
+    "districtOffice": [
+      "3549 N University Ave, Suite 275",
+      "Provo, UT 84604",
+      "Phone: 801-607-3238"
+    ]
+  },
+  "4": {
+    "name": "Burgess Owens",
+    "party": "Republican",
+    "url": "https://owens.house.gov",
+    "capitolOffice": [
+      "309 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3011"
+    ],
+    "districtOffice": [
+      "9067 S. 1300 W, Suite 101",
+      "West Jordan, UT 84088",
+      "Phone: 801-999-9801"
+    ]
+  }
+}

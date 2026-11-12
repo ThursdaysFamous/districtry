@@ -1,0 +1,47 @@
+{
+  "1": {
+    "name": "Melanie A. Stansbury",
+    "party": "Democrat",
+    "url": "https://stansbury.house.gov",
+    "capitolOffice": [
+      "1421 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6316"
+    ],
+    "districtOffice": [
+      "6301 Indian School Rd, Suite 420",
+      "Albuquerque, NM 87110",
+      "Phone: 505-346-6781"
+    ]
+  },
+  "2": {
+    "name": "Gabe Vasquez",
+    "party": "Democrat",
+    "url": "https://vasquez.house.gov",
+    "capitolOffice": [
+      "322 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2365"
+    ],
+    "districtOffice": [
+      "201 Unser Blvd. NW, Unit 116",
+      "Albuquerque, NM 87121",
+      "Phone: 505-208-4777"
+    ]
+  },
+  "3": {
+    "name": "Teresa Leger Fernandez",
+    "party": "Democrat",
+    "url": "https://fernandez.house.gov",
+    "capitolOffice": [
+      "2417 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6190"
+    ],
+    "districtOffice": [
+      "207 West Hill Ave., Office 301A",
+      "Gallup, NM 87301",
+      "Phone: 505-551-4696"
+    ]
+  }
+}

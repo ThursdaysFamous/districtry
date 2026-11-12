@@ -1,0 +1,55 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from wy/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Wyoming",
+ "usSenate": [
+  {
+   "name": "John Barrasso",
+   "party": "Republican",
+   "url": "https://www.barrasso.senate.gov",
+   "office": "307 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6441"
+  },
+  {
+   "name": "Cynthia M. Lummis",
+   "party": "Republican",
+   "url": "https://www.lummis.senate.gov",
+   "office": "127A Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3424"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mark Gordon",
+   "url": "https://governor.wyo.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Chuck Gray",
+   "url": "https://sos.wyo.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Kristi Racines",
+   "url": "https://sao.wyo.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Curtis E. Meier, Jr.",
+   "url": "https://statetreasurer.wyo.gov/office/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Megan Degenfelder",
+   "url": "https://edu.wyoming.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Wyoming has no lieutenant governor, and its attorney general is appointed by the governor."
+}

@@ -1,0 +1,41 @@
+{
+ "state": "Colorado",
+ "usps": "CO",
+ "officersNote": "Colorado's voters also elect at-large members of the University of Colorado's Board of Regents and of the State Board of Education statewide. They are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Jared Polis",
+   "url": "https://www.colorado.gov/governor",
+   "headers": "browser",
+   "note": "www.colorado.gov answered this project's token with HTTP 403 and served the browser client its robots.txt (no rule matching the page) and the page (read 2026-11-12)."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Dianne Primavera",
+   "url": "https://ltgovernor.colorado.gov/",
+   "headers": "browser",
+   "note": "ltgovernor.colorado.gov answered this project's token with HTTP 403 and served the browser client its robots.txt (no rule matching the page) and the page (read 2026-11-12)."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Phil Weiser",
+   "url": "https://coag.gov/",
+   "source": "https://www.colorado.gov/",
+   "headers": "browser",
+   "note": "coag.gov answered its robots.txt request with HTTP 202, an access control rather than a document, so the Attorney General's own site is linked and never read; the state's own home page at www.colorado.gov, which lists every statewide officer, is the page read. www.colorado.gov answered this project's token with HTTP 403 and served the browser client its robots.txt (no rule matching the page) and the page (read 2026-11-12)."
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Jena Griswold",
+   "url": "https://www.coloradosos.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Dave Young",
+   "url": "https://treasury.colorado.gov/",
+   "headers": "browser",
+   "note": "treasury.colorado.gov answered this project's token with HTTP 403 and served the browser client its robots.txt (no rule matching the page) and the page (read 2026-11-12). The page also names the treasurer-elect, who takes office in January 2027."
+  }
+ ]
+}

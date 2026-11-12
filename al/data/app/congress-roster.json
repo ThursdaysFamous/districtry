@@ -1,0 +1,110 @@
+{
+  "1": {
+    "name": "Barry Moore",
+    "party": "Republican",
+    "url": "https://barrymoore.house.gov",
+    "capitolOffice": [
+      "1511 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2901"
+    ],
+    "districtOffice": [
+      "217 Graceland Drive, Suite 5",
+      "Dothan, AL 36305",
+      "Phone: 334-547-6630"
+    ]
+  },
+  "2": {
+    "name": "Shomari Figures",
+    "party": "Democrat",
+    "url": "https://figures.house.gov",
+    "capitolOffice": [
+      "225 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4931"
+    ],
+    "districtOffice": [
+      "150 Dexter Ave",
+      "Montgomery, AL 36104",
+      "Phone: 334-777-5700"
+    ]
+  },
+  "3": {
+    "name": "Mike Rogers",
+    "party": "Republican",
+    "url": "https://mikerogers.house.gov",
+    "capitolOffice": [
+      "2469 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3261"
+    ],
+    "districtOffice": [
+      "701 Avenue A, Suite 300",
+      "G.W. Andrews Federal Building",
+      "Opelika, AL 36801",
+      "Phone: 334-745-6221"
+    ]
+  },
+  "4": {
+    "name": "Robert B. Aderholt",
+    "party": "Republican",
+    "url": "https://aderholt.house.gov",
+    "capitolOffice": [
+      "272 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4876"
+    ],
+    "districtOffice": [
+      "205 4th Ave. NE, Suite 104",
+      "Cullman, AL 35055",
+      "Phone: 256-734-6043"
+    ]
+  },
+  "5": {
+    "name": "Dale W. Strong",
+    "party": "Republican",
+    "url": "https://strong.house.gov",
+    "capitolOffice": [
+      "449 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4801"
+    ],
+    "districtOffice": [
+      "302 Lee Street NE",
+      "Morgan County Courthouse",
+      "Decatur, AL 35601",
+      "Phone: 256-355-9400"
+    ]
+  },
+  "6": {
+    "name": "Gary J. Palmer",
+    "party": "Republican",
+    "url": "https://palmer.house.gov",
+    "capitolOffice": [
+      "170 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4921"
+    ],
+    "districtOffice": [
+      "3535 Grandview Pkwy., Suite 525",
+      "Birmingham, AL 35243",
+      "Phone: 205-968-1290"
+    ]
+  },
+  "7": {
+    "name": "Terri A. Sewell",
+    "party": "Democrat",
+    "url": "https://sewell.house.gov",
+    "capitolOffice": [
+      "1035 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2665"
+    ],
+    "districtOffice": [
+      "908 Alabama Ave., Suite 112",
+      "Federal Building",
+      "Selma, AL 36701",
+      "Phone: 334-877-4414"
+    ]
+  }
+}

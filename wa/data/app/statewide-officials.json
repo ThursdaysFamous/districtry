@@ -1,0 +1,79 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from wa/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Washington",
+ "usSenate": [
+  {
+   "name": "Maria Cantwell",
+   "party": "Democratic",
+   "url": "https://www.cantwell.senate.gov",
+   "office": "511 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3441"
+  },
+  {
+   "name": "Patty Murray",
+   "party": "Democratic",
+   "url": "https://www.murray.senate.gov/",
+   "office": "154 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2621"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Bob Ferguson",
+   "url": "https://governor.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Denny Heck",
+   "url": "https://ltgov.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Steve Hobbs",
+   "url": "https://www.sos.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mike Pellicciotti",
+   "url": "https://tre.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Pat McCarthy",
+   "url": "https://sao.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Nick Brown",
+   "url": "https://www.atg.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Commissioner of Public Lands",
+   "name": "Dave Upthegrove",
+   "url": "https://www.dnr.wa.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Chris Reykdal",
+   "url": "https://ospi.k12.wa.us/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Patty Kuderer",
+   "url": "https://www.insurance.wa.gov/",
+   "verified": "2026-11-11"
+  }
+ ],
+ "officersNote": "Washington's voters also elect the Supreme Court's nine justices statewide. They are not listed here yet."
+}

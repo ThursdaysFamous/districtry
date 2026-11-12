@@ -1,0 +1,717 @@
+{
+  "1": {
+    "name": "Javier Mabrey",
+    "party": "Democratic",
+    "email": "javier.mabrey.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2966"
+    ],
+    "url": "https://leg.colorado.gov/legislators/javier-mabrey"
+  },
+  "2": {
+    "name": "Steven Woodrow",
+    "party": "Democratic",
+    "email": "steven.woodrow.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2967"
+    ],
+    "url": "https://leg.colorado.gov/legislators/steven-woodrow"
+  },
+  "3": {
+    "name": "Meg Froelich",
+    "party": "Democratic",
+    "email": "meg.froelich.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2921"
+    ],
+    "url": "https://leg.colorado.gov/legislators/meg-froelich"
+  },
+  "4": {
+    "name": "Cecelia Espenoza",
+    "party": "Democratic",
+    "email": "cecelia.espenoza.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2954"
+    ],
+    "url": "https://leg.colorado.gov/legislators/cecelia-espenoza"
+  },
+  "5": {
+    "name": "Alex Valdez",
+    "party": "Democratic",
+    "email": "alex.valdez.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2925"
+    ],
+    "url": "https://leg.colorado.gov/legislators/alex-valdez"
+  },
+  "6": {
+    "name": "Sean Camacho",
+    "party": "Democratic",
+    "email": "sean.camacho.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2911"
+    ],
+    "url": "https://leg.colorado.gov/legislators/sean-camacho"
+  },
+  "7": {
+    "name": "Jennifer Bacon",
+    "party": "Democratic",
+    "email": "jennifer.bacon.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2909"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jennifer-bacon"
+  },
+  "8": {
+    "name": "Lindsay Gilchrist",
+    "party": "Democratic",
+    "email": "lindsay.gilchrist.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2959"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lindsay-gilchrist"
+  },
+  "9": {
+    "name": "Emily Sirota",
+    "party": "Democratic",
+    "email": "emily.sirota.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2910"
+    ],
+    "url": "https://leg.colorado.gov/legislators/emily-sirota"
+  },
+  "10": {
+    "name": "Junie Joseph",
+    "party": "Democratic",
+    "email": "junie.joseph.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2915"
+    ],
+    "url": "https://leg.colorado.gov/legislators/junie-joseph"
+  },
+  "11": {
+    "name": "Karen McCormick",
+    "party": "Democratic",
+    "email": "karen.mccormick.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2780"
+    ],
+    "url": "https://leg.colorado.gov/legislators/karen-mccormick"
+  },
+  "12": {
+    "name": "Kyle Brown",
+    "party": "Democratic",
+    "email": "kyle.brown.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2920"
+    ],
+    "url": "https://leg.colorado.gov/legislators/kyle-brown"
+  },
+  "13": {
+    "name": "Julie McCluskie",
+    "party": "Democratic",
+    "email": "Julie.Mccluskie.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2952"
+    ],
+    "url": "https://leg.colorado.gov/legislators/julie-mccluskie"
+  },
+  "14": {
+    "name": "Ava Flanell",
+    "party": "Republican",
+    "email": "ava.flanell.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2965"
+    ],
+    "url": "https://leg.colorado.gov/legislators/ava-flanell"
+  },
+  "15": {
+    "name": "Scott Bottoms",
+    "party": "Republican",
+    "email": "scott.bottoms.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-5525"
+    ],
+    "url": "https://leg.colorado.gov/legislators/scott-bottoms"
+  },
+  "16": {
+    "name": "Rebecca Keltie",
+    "party": "Republican",
+    "email": "rebecca.keltie.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2937"
+    ],
+    "url": "https://leg.colorado.gov/legislators/rebecca-keltie"
+  },
+  "17": {
+    "name": "Regina English",
+    "party": "Democratic",
+    "email": "regina.english.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3069"
+    ],
+    "url": "https://leg.colorado.gov/legislators/regina-english"
+  },
+  "18": {
+    "name": "Amy Paschal",
+    "party": "Democratic",
+    "email": "amy.paschal.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2932"
+    ],
+    "url": "https://leg.colorado.gov/legislators/amy-paschal"
+  },
+  "19": {
+    "name": "Dan Woog",
+    "party": "Republican",
+    "email": "dan.woog.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2924"
+    ],
+    "url": "https://leg.colorado.gov/legislators/dan-woog"
+  },
+  "20": {
+    "name": "Jarvis Caldwell",
+    "party": "Republican",
+    "email": "jarvis.caldwell.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2191"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jarvis-caldwell"
+  },
+  "21": {
+    "name": "Mary Bradfield",
+    "party": "Republican",
+    "email": "mary.bradfield.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2946"
+    ],
+    "url": "https://leg.colorado.gov/legislators/mary-bradfield"
+  },
+  "22": {
+    "name": "Ken DeGraaf",
+    "party": "Republican",
+    "email": "ken.degraaf.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2927"
+    ],
+    "url": "https://leg.colorado.gov/legislators/ken-degraaf"
+  },
+  "23": {
+    "name": "Monica Duran",
+    "party": "Democratic",
+    "email": "monica.duran.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-5522"
+    ],
+    "url": "https://leg.colorado.gov/legislators/monica-duran"
+  },
+  "24": {
+    "name": "Lisa Feret",
+    "party": "Democratic",
+    "email": "lisa.feret.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2950"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lisa-feret"
+  },
+  "25": {
+    "name": "Tammy Story",
+    "party": "Democratic",
+    "email": "tammy.story.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2582"
+    ],
+    "url": "https://leg.colorado.gov/legislators/tammy-story"
+  },
+  "26": {
+    "name": "Meghan Lukens",
+    "party": "Democratic",
+    "email": "meghan.lukens.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2923"
+    ],
+    "url": "https://leg.colorado.gov/legislators/meghan-lukens"
+  },
+  "27": {
+    "name": "Brianna Titone",
+    "party": "Democratic",
+    "email": "brianna.titone.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2962"
+    ],
+    "url": "https://leg.colorado.gov/legislators/brianna-titone"
+  },
+  "28": {
+    "name": "Sheila Lieder",
+    "party": "Democratic",
+    "email": "sheila.lieder.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2939"
+    ],
+    "url": "https://leg.colorado.gov/legislators/sheila-lieder"
+  },
+  "29": {
+    "name": "Lori Goldstein",
+    "party": "Democratic",
+    "email": "lori.goldstein.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2843"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lori-goldstein"
+  },
+  "30": {
+    "name": "Rebekah Stewart",
+    "party": "Democratic",
+    "email": "rebekah.stewart.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2951"
+    ],
+    "url": "https://leg.colorado.gov/legislators/rebekah-stewart"
+  },
+  "31": {
+    "name": "Jacque Phillips",
+    "party": "Democratic",
+    "email": "jacque.phillips.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2918"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jacque-phillips"
+  },
+  "32": {
+    "name": "Maria Gonzalez",
+    "party": "Democratic",
+    "email": "maria.gonzalez.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2945"
+    ],
+    "url": "https://leg.colorado.gov/legislators/maria-gonzalez"
+  },
+  "33": {
+    "name": "Kenny Nguyen",
+    "party": "Democratic",
+    "email": "kenny.nguyen.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4667"
+    ],
+    "url": "https://leg.colorado.gov/legislators/kenny-nguyen"
+  },
+  "34": {
+    "name": "Jenny Willford",
+    "party": "Democratic",
+    "email": "jenny.willford.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2931"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jenny-willford"
+  },
+  "35": {
+    "name": "Lorena Garcia",
+    "party": "Democratic",
+    "email": "lorena.garcia.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2964"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lorena-garcia"
+  },
+  "36": {
+    "name": "Michael Carter",
+    "party": "Democratic",
+    "email": "michael.carter.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2942"
+    ],
+    "url": "https://leg.colorado.gov/legislators/michael-carter"
+  },
+  "37": {
+    "name": "Chad Clifford",
+    "party": "Democratic",
+    "email": "chad.clifford.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-5510"
+    ],
+    "url": "https://leg.colorado.gov/legislators/chad-clifford"
+  },
+  "38": {
+    "name": "Gretchen Rydin",
+    "party": "Democratic",
+    "email": "gretchen.rydin.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2953"
+    ],
+    "url": "https://leg.colorado.gov/legislators/gretchen-rydin"
+  },
+  "39": {
+    "name": "Brandi Bradley",
+    "party": "Republican",
+    "email": "brandi.bradley.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2935"
+    ],
+    "url": "https://leg.colorado.gov/legislators/brandi-bradley"
+  },
+  "40": {
+    "name": "Naquetta Ricks",
+    "party": "Democratic",
+    "email": "Naquetta.Ricks.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2944"
+    ],
+    "url": "https://leg.colorado.gov/legislators/naquetta-ricks"
+  },
+  "41": {
+    "name": "Jamie Jackson",
+    "party": "Democratic",
+    "email": "jamie.jackson.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2919"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jamie-jackson"
+  },
+  "42": {
+    "name": "Mandy Lindsay",
+    "party": "Democratic",
+    "email": "mandy.lindsay.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3911"
+    ],
+    "url": "https://leg.colorado.gov/legislators/mandy-lindsay"
+  },
+  "43": {
+    "name": "Bob Marshall",
+    "party": "Democratic",
+    "email": "bob.marshall.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2936"
+    ],
+    "url": "https://leg.colorado.gov/legislators/bob-marshall"
+  },
+  "44": {
+    "name": "Anthony Hartsook",
+    "party": "Republican",
+    "email": "anthony.hartsook.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2933"
+    ],
+    "url": "https://leg.colorado.gov/legislators/anthony-hartsook"
+  },
+  "45": {
+    "name": "Max Brooks",
+    "party": "Republican",
+    "email": "max.brooks.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2948"
+    ],
+    "url": "https://leg.colorado.gov/legislators/max-brooks"
+  },
+  "46": {
+    "name": "Tisha Mauro",
+    "party": "Democratic",
+    "email": "tisha.mauro.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2968"
+    ],
+    "url": "https://leg.colorado.gov/legislators/tisha-mauro"
+  },
+  "47": {
+    "name": "Ty Winter",
+    "party": "Republican",
+    "email": "ty.winter.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2747"
+    ],
+    "url": "https://leg.colorado.gov/legislators/ty-winter"
+  },
+  "48": {
+    "name": "Carlos Barron",
+    "party": "Republican",
+    "email": "carlos.barron.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2943"
+    ],
+    "url": "https://leg.colorado.gov/legislators/carlos-barron"
+  },
+  "49": {
+    "name": "Lesley Smith",
+    "party": "Democratic",
+    "email": "lesley.smith.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2578"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lesley-smith"
+  },
+  "50": {
+    "name": "Ryan Gonzalez",
+    "party": "Republican",
+    "email": "ryan.gonzalez.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2929"
+    ],
+    "url": "https://leg.colorado.gov/legislators/ryan-gonzalez"
+  },
+  "51": {
+    "name": "Ron Weinberg",
+    "party": "Republican",
+    "email": "ron.weinberg.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2947"
+    ],
+    "url": "https://leg.colorado.gov/legislators/ron-weinberg"
+  },
+  "52": {
+    "name": "Yara Zokaie",
+    "party": "Democratic",
+    "email": "yara.zokaie.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4569"
+    ],
+    "url": "https://leg.colorado.gov/legislators/yara-zokaie"
+  },
+  "53": {
+    "name": "Andrew Boesenecker",
+    "party": "Democratic",
+    "email": "andrew.boesenecker.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2917"
+    ],
+    "url": "https://leg.colorado.gov/legislators/andrew-boesenecker"
+  },
+  "54": {
+    "name": "Matt Soper",
+    "party": "Republican",
+    "email": "matthew.soper.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2583"
+    ],
+    "url": "https://leg.colorado.gov/legislators/matt-soper"
+  },
+  "55": {
+    "name": "Rick Taggart",
+    "party": "Republican",
+    "email": "rick.taggart.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3068"
+    ],
+    "url": "https://leg.colorado.gov/legislators/rick-taggart"
+  },
+  "56": {
+    "name": "Chris Richardson",
+    "party": "Republican",
+    "email": "chris.richardson.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2912"
+    ],
+    "url": "https://leg.colorado.gov/legislators/chris-richardson"
+  },
+  "57": {
+    "name": "Elizabeth Velasco",
+    "party": "Democratic",
+    "email": "elizabeth.velasco.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2949"
+    ],
+    "url": "https://leg.colorado.gov/legislators/elizabeth-velasco"
+  },
+  "58": {
+    "name": "Larry Don Suckla",
+    "party": "Republican",
+    "email": "larry.suckla.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2955"
+    ],
+    "url": "https://leg.colorado.gov/legislators/larry-don-suckla"
+  },
+  "59": {
+    "name": "Katie Stewart",
+    "party": "Democratic",
+    "email": "katie.stewart.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2914"
+    ],
+    "url": "https://leg.colorado.gov/legislators/katie-stewart"
+  },
+  "60": {
+    "name": "Stephanie Luck",
+    "party": "Republican",
+    "email": "stephanie.luck.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2905"
+    ],
+    "url": "https://leg.colorado.gov/legislators/stephanie-luck"
+  },
+  "61": {
+    "name": "Eliza Hamrick",
+    "party": "Democratic",
+    "email": "eliza.hamrick.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3706"
+    ],
+    "url": "https://leg.colorado.gov/legislators/eliza-hamrick"
+  },
+  "62": {
+    "name": "Matthew Martinez",
+    "party": "Democratic",
+    "email": "matthew.martinez.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2916"
+    ],
+    "url": "https://leg.colorado.gov/legislators/matthew-martinez"
+  },
+  "63": {
+    "name": "Dusty Johnson",
+    "party": "Republican",
+    "email": "dustyforcolorado@gmail.com",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2398"
+    ],
+    "url": "https://leg.colorado.gov/legislators/dusty-johnson"
+  },
+  "64": {
+    "name": "Scott Slaugh",
+    "party": "Republican",
+    "email": "scott.slaugh.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2906"
+    ],
+    "url": "https://leg.colorado.gov/legislators/scott-slaugh"
+  },
+  "65": {
+    "name": "Lori Garcia Sander",
+    "party": "Republican",
+    "email": "lori.garciasander.house@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2907"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lori-garcia-sander"
+  }
+}

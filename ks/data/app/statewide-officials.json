@@ -1,0 +1,59 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ks/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Kansas",
+ "usSenate": [
+  {
+   "name": "Roger Marshall",
+   "party": "Republican",
+   "url": "https://www.marshall.senate.gov",
+   "office": "479A Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4774"
+  },
+  {
+   "name": "Jerry Moran",
+   "party": "Republican",
+   "url": "https://www.moran.senate.gov",
+   "office": "521 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6521"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Laura Kelly",
+   "url": "https://governor.kansas.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "url": "https://governor.kansas.gov/",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kris Kobach",
+   "url": "https://www.ag.ks.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Scott Schwab",
+   "url": "https://sos.ks.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Steven Johnson",
+   "url": "https://www.kansasstatetreasurer.com/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Vicki Schmidt",
+   "url": "https://insurance.kansas.gov/",
+   "verified": "2026-11-12"
+  }
+ ]
+}

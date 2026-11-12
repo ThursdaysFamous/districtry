@@ -1,0 +1,67 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from sd/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "South Dakota",
+ "usSenate": [
+  {
+   "name": "Mike Rounds",
+   "party": "Republican",
+   "url": "https://www.rounds.senate.gov",
+   "office": "716 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5842"
+  },
+  {
+   "name": "John Thune",
+   "party": "Republican",
+   "url": "https://www.thune.senate.gov/",
+   "office": "511 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2321"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Larry Rhoden",
+   "url": "https://governor.sd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Tony Venhuizen",
+   "url": "https://governor.sd.gov/office/team.aspx",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Marty Jackley",
+   "url": "https://atg.sd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Monae Johnson",
+   "url": "https://sdsos.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Josh Haeder",
+   "url": "https://sdtreasurer.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Rich Sattgast",
+   "url": "https://sdauditor.sd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Commissioner of School and Public Lands",
+   "name": "Brock L. Greenfield",
+   "url": "https://sdpubliclands.sd.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "South Dakota's voters also elect the three members of the Public Utilities Commission statewide. They are not listed here yet."
+}

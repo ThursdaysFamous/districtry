@@ -1,0 +1,61 @@
+{
+ "state": "North Dakota",
+ "usps": "ND",
+ "officersNote": "North Dakota's voters also elect the three members of the Public Service Commission statewide. They are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kelly Armstrong",
+   "url": "https://www.governor.nd.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Michelle Strinden",
+   "url": "https://www.governor.nd.gov/",
+   "match": [
+    "Lt. Gov. Strinden"
+   ],
+   "note": "The governor's own home page names her as \"Lt. Gov. Strinden\" and never prints her given name; its /lt-governor page still describes Brent Sanford, who left the office in 2024, so it is not read (read 2026-11-12)."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Drew Wrigley",
+   "url": "https://attorneygeneral.nd.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Howe",
+   "url": "https://www.sos.nd.gov/about-office"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Thomas Beadle",
+   "url": "https://www.treasurer.nd.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Joshua Gallion",
+   "url": "https://www.nd.gov/auditor/about-us"
+  },
+  {
+   "office": "Agriculture Commissioner",
+   "name": "Doug Goehring",
+   "url": "https://www.ndda.nd.gov/"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Jon Godfread",
+   "url": "https://www.insurance.nd.gov/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Levi Bachmeier",
+   "url": "https://www.nd.gov/dpi/state-superintendent"
+  },
+  {
+   "office": "Tax Commissioner",
+   "name": "Brian Kroshus",
+   "url": "https://www.tax.nd.gov/"
+  }
+ ]
+}
