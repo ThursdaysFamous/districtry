@@ -22808,13 +22808,6 @@
    "name": "Blue Ridge Manor",
    "officials": [
     {
-     "email": "johathanayer@blueridgemanorky.gov",
-     "first": "Jonathan",
-     "last": "Ayer",
-     "phone": "(502) 822-1779",
-     "title": "City Commission"
-    },
-    {
      "email": "stanchauvin@gmail.com",
      "first": "Stanley",
      "last": "Chauvin",
@@ -22848,6 +22841,13 @@
      "last": "Kreitman",
      "phone": "(502) 727-6468",
      "title": "Mayor"
+    },
+    {
+     "email": "publicworks@blueridgemanorky.gov",
+     "first": "monique L.",
+     "last": "LaVertu",
+     "phone": "(502) 822-1779",
+     "title": "City Commission"
     },
     {
      "email": "rossparmly@blueridgemanorky.gov",
@@ -31813,7 +31813,7 @@
   "414": {
    "address": "111 South Main Street, PO Box 72",
    "county": "Todd",
-   "email": "trentoncityhall@mchsi.com",
+   "email": "cityhall@trentonky.org",
    "govType": "Commission",
    "mailCity": "Trenton",
    "name": "Trenton",
@@ -31833,7 +31833,7 @@
      "title": "City Clerk"
     },
     {
-     "email": "trentoncityhall@mchsi.com",
+     "email": "cityhall@trentonky.org",
      "first": "Carol",
      "last": "Chester",
      "phone": "(270) 466-3332",
@@ -31843,7 +31843,14 @@
      "email": "joyceedwards@mhsi.com",
      "first": "Joyce",
      "last": "Edwards",
-     "phone": "(270) 466-3332",
+     "phone": "(270) 466-3350",
+     "title": "City Commission"
+    },
+    {
+     "email": "findingfinney2015@gmail.com",
+     "first": "Shelley",
+     "last": "Haley",
+     "phone": "(615) 927-4960",
      "title": "City Commission"
     },
     {
@@ -31852,13 +31859,6 @@
      "last": "Hamlet",
      "phone": "(270) 839-8078",
      "title": "Police Chief"
-    },
-    {
-     "email": "waynejohnson07@bellsouth.net",
-     "first": "Wayne",
-     "last": "Johnson",
-     "phone": "(270) 847-5870",
-     "title": "City Commission"
     },
     {
      "email": "tkulesza@agrichemky.com",
@@ -31885,14 +31885,21 @@
      "email": "jstahl@kyethanol.com",
      "first": "Jonathan",
      "last": "Stahl",
-     "phone": "(270) 604-5470",
+     "phone": "(270) 466-3332",
      "title": "Fire Chief"
     },
     {
-     "email": "trentoncityhall@mchsi.com",
-     "first": "Jeffrey",
+     "email": "trentoncityutilities@trentonky.org",
+     "first": "benn",
+     "last": "Stahl",
+     "phone": "(270) 889-7114",
+     "title": "Planning and Zoning Administrator"
+    },
+    {
+     "email": "jeff.traughber@gmail.com",
+     "first": "Jeff",
      "last": "Traughber",
-     "phone": "(270) 466-3332",
+     "phone": "(270) 265-5651",
      "title": "City Attorney"
     }
    ],
@@ -33051,13 +33058,6 @@
      "first": "Carolyn",
      "last": "Caldwell",
      "phone": "(859) 567-5900",
-     "title": "City Clerk"
-    },
-    {
-     "email": "carolyn@cityofwarsawky.org",
-     "first": "Carolyn",
-     "last": "Caldwell",
-     "phone": "(859) 567-5900",
      "title": "City Treasurer"
     },
     {
@@ -33121,6 +33121,13 @@
      "last": "Samuel",
      "phone": "(859) 567-5900",
      "title": "City Council"
+    },
+    {
+     "email": "awainscott@cityofwarsawky.org",
+     "first": "April",
+     "last": "Wainscott",
+     "phone": "(859) 567-5900",
+     "title": "City Clerk"
     },
     {
      "email": "wooddwayne2418@yahoo.com",
@@ -33230,17 +33237,17 @@
      "title": "City Council"
     },
     {
-     "email": "bbmiller02@yahoo.com",
-     "first": "Barbara",
-     "last": "Miller",
-     "phone": "(502) 426-6378",
+     "email": "wade.myers@me.com",
+     "first": "Wade",
+     "last": "Myers",
+     "phone": "(502) 529-6145",
      "title": "City Clerk"
     },
     {
-     "email": "bbmiller02@yahoo.com",
+     "email": "wade.myers@me.com",
      "first": "Wade",
      "last": "Myers",
-     "phone": "(502) 426-6378",
+     "phone": "(502) 529-6145",
      "title": "City Treasurer"
     },
     {
@@ -41960,7 +41967,7 @@
  "source": {
   "counties": 120,
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-11-04",
+  "read": "2026-11-11",
   "url": "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm"
  }
 }
