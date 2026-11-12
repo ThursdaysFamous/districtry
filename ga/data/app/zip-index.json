@@ -716,7 +716,6 @@
 {"type":"Feature","bbox":[-84.9798,32.4306,-84.9267,32.5023],"geometry":{"type":"Point","coordinates":[-84.94444,32.46255]},"properties":{"zip":"31906","layer":"zip-code"}},
 {"type":"Feature","bbox":[-84.9454,32.4227,-84.8477,32.5404],"geometry":{"type":"Point","coordinates":[-84.9215,32.49439]},"properties":{"zip":"31907","layer":"zip-code"}},
 {"type":"Feature","bbox":[-84.9628,32.4977,-84.8715,32.5833],"geometry":{"type":"Point","coordinates":[-84.93504,32.52975]},"properties":{"zip":"31909","layer":"zip-code"}},
-{"type":"Feature","bbox":[-85.4128,32.9511,-85.203,33.1083],"geometry":{"type":"Point","coordinates":[-85.2101,33.0142]},"properties":{"zip":"36855","layer":"zip-code"}},
 {"type":"Feature","bbox":[-84.8127,31.303,-84.5604,31.5323],"geometry":{"type":"Point","coordinates":[-84.68718,31.46226]},"properties":{"zip":"39813","layer":"zip-code"}},
 {"type":"Feature","bbox":[-84.5774,30.6899,-84.3804,30.82],"geometry":{"type":"Point","coordinates":[-84.49466,30.72257]},"properties":{"zip":"39815","layer":"zip-code"}},
 {"type":"Feature","bbox":[-84.7637,30.7752,-84.4387,31.0786],"geometry":{"type":"Point","coordinates":[-84.59473,30.94254]},"properties":{"zip":"39817","layer":"zip-code"}},

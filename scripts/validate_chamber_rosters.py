@@ -87,6 +87,14 @@ BUILDERS = (
     "fl/scripts/build_fl_legislature_roster.py",
     "oh/scripts/build_oh_legislature_roster.py",
     "wa/scripts/build_wa_legislature_roster.py",
+    "ma/scripts/build_ma_legislature_roster.py",
+    "co/scripts/build_co_legislature_roster.py",
+    "md/scripts/build_md_legislature_roster.py",
+    "al/scripts/build_al_legislature_roster.py",
+    "or/scripts/build_or_legislature_roster.py",
+    "ct/scripts/build_ct_legislature_roster.py",
+    "ut/scripts/build_ut_legislature_roster.py",
+    "ks/scripts/build_ks_legislature_roster.py",
 )
 
 

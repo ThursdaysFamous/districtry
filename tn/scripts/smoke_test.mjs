@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "36.16590,-86.78440"; // the State Capitol, Nashville, Davidson County
 const OFFLINE = ["county", "us-house", "tn-senate", "tn-house", "county-commissioner", "voting-precinct", "tn-judicial-district"];
 const EXPECT_DISTRICT = { "county": "Davidson County", "us-house": "7", "tn-senate": "21", "tn-house": "51", "county-commissioner": "19", "voting-precinct": "Precinct 19-4", "tn-judicial-district": "20" };
-const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee and outside every other instance in the fleet, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA BECAUSE NO INSTANCE SERVES IT and none is planned next: Arkansas and Mississippi, both on the next-states list, were passed over so this point does not have to move when either goes live.
+const NEGATIVE_POINT = "34.90000,-86.60000"; // near Hazel Green, Madison County, ALABAMA, about 11 km south of the state line — outside Tennessee, and inside permalink_gate (minLat 34.80) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Alabama at this point (control: the Capitol anchor returns Tennessee). ALABAMA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED ALABAMA (batch 3 of the state-level launch, written 2026-11-12), AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because all eight of Tennessee's neighbours are served. It is still outside Tennessee and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here (Huntsville) became an Alabama routing case in the same change, as Kentucky's did once Ohio was live. ALABAMA WAS CHOSEN on 2026-10-10 because no instance served it and none was planned next: Arkansas and Mississippi, both on the next-states list then, were passed over so this point would not have to move when either went live.
 const APP_NAME = "districtry Tennessee";
 const EXPECT_LAYERS = 19;
 // ==== GENERATED:END smoke-config ====
@@ -384,13 +384,20 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS SEVEN LIVE INSTANCES, so it has both halves to
-  //     prove. Kentucky, North Carolina, Arkansas (live since 2026-10-15) and
-  //     Mississippi (live since 2026-10-16) are covered, and Missouri, Virginia
-  //     and Georgia since their go-lives, so a point just over any of those
-  //     lines must open that app; the one neighbour left (Alabama) is not, so a
-  //     point over its line must be selected HERE, where the app says nothing
-  //     answers there (1a2-ii). Dalton, Georgia joined as a case in the change
+  //     TENNESSEE BORDERS EIGHT LIVE INSTANCES, ALL OF ITS NEIGHBOURS, so
+  //     every case here is the routing half. Kentucky, North Carolina,
+  //     Arkansas (live since 2026-10-15) and Mississippi (live since
+  //     2026-10-16) are covered, and Missouri, Virginia, Georgia and Alabama
+  //     since their go-lives, so a point just over any of those lines must
+  //     open that app. Huntsville, Alabama was the click that had to stay
+  //     HERE (1a2-ii) until Alabama's go-live (batch 3 of the state-level
+  //     launch) made it a case: it is about 30 km south of the state line and
+  //     inside Alabama's outline in fleet-outlines.json and no other. The
+  //     stays-here check went with it, because measured the same day on a
+  //     0.05-degree grid no ground in this app's gate lies more than 2 km
+  //     from every outline, as Kentucky's had found once Ohio was live; the
+  //     negative point stays in Alabama, since every check that uses it
+  //     boots or selects it here and none clicks it. Dalton, Georgia joined as a case in the change
   //     that published Georgia: it is the OUTSIDE anchor this app's own outline
   //     builder already holds outside Tennessee, about 24 km south of the state
   //     line, and is inside Georgia's outline in fleet-outlines.json and no
@@ -413,6 +420,7 @@ try {
       { name: "Southaven, Mississippi", lat: 34.9690, lng: -90.0130, want: "https://districtry.com/ms/" },
       { name: "Abingdon, Virginia", lat: 36.7098, lng: -81.9773, want: "https://districtry.com/va/" },
       { name: "Dalton, Georgia", lat: 34.7698, lng: -84.9702, want: "https://districtry.com/ga/" },
+      { name: "Huntsville, Alabama", lat: 34.7304, lng: -86.5861, want: "https://districtry.com/al/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -428,31 +436,6 @@ try {
       check(`a click on ${c.name} from Tennessee opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-  }
-
-  // 1a2-ii. The half that keeps 1a2 honest: Huntsville, Alabama is about
-  //     30 km south of the state line and no districtry instance covers it, so
-  //     the click must stay HERE. A route to a sibling would be the same lie
-  //     pointing the other way, and the stub makes it visible: if the app
-  //     navigated, the URL would be the stubbed sibling rather than this app.
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("https://districtry.com/**", (route) =>
-        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
-    });
-    await page.evaluate(({ n }) => {
-      window[n].map.fire("click", { latlng: window.L.latLng(34.7304, -86.5861) });
-    }, { n: EXPORTS_NAME });
-    await page.waitForTimeout(3000);
-    const url = page.url();
-    // Still under BASE means still this app. This asked for the URL NOT to
-    // name one of a list of sibling tags, and that list had fallen behind the
-    // fleet (it lacked South Carolina, Arkansas and Mississippi): the tag a
-    // list lacks reads as staying here.
-    check("a click on Huntsville, Alabama stays in this app",
-      url.startsWith(BASE), url);
-    await context.close();
   }
 
   // 1b. The search box retries a zero-result query with the unit fragment

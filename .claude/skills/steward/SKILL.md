@@ -70,6 +70,14 @@ python3 scripts/build_coverage_gaps.py --check --metro texas --out tx/data/app/c
 python3 scripts/build_coverage_gaps.py --check --metro florida --out fl/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro ohio --out oh/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro washington --out wa/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro massachusetts --out ma/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro colorado --out co/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro maryland --out md/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro alabama --out al/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro oregon --out or/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro connecticut --out ct/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro utah --out ut/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro kansas --out ks/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -161,6 +169,14 @@ python3 tx/scripts/build_metro_outline.py --check
 python3 fl/scripts/build_metro_outline.py --check
 python3 oh/scripts/build_metro_outline.py --check
 python3 wa/scripts/build_metro_outline.py --check
+python3 ma/scripts/build_metro_outline.py --check
+python3 co/scripts/build_metro_outline.py --check
+python3 md/scripts/build_metro_outline.py --check
+python3 al/scripts/build_metro_outline.py --check
+python3 or/scripts/build_metro_outline.py --check
+python3 ct/scripts/build_metro_outline.py --check
+python3 ut/scripts/build_metro_outline.py --check
+python3 ks/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -250,6 +266,8 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 nv/scripts/build_legislative_boundaries.py --check      # the same relation in Nevada (two Assembly per Senate, by a measured pairing rather than by number), shared topology from its first day
 python3 oh/scripts/build_legislative_boundaries.py --check      # the same relation in Ohio (art. XI s. 4, three House per Senate, by a measured table rather than by number)
+python3 md/scripts/build_legislative_boundaries.py --check      # the same relation in Maryland (art. III s. 3, three delegates per Senate district, at large or from subdistricts inside it, by a measured table)
+python3 or/scripts/build_legislative_boundaries.py --check      # the same relation in Oregon (art. IV s. 6, Senate N is House 2N-1 and 2N)
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
@@ -320,6 +338,14 @@ python3 tx/scripts/validate_index.py tx/index.html
 python3 fl/scripts/validate_index.py fl/index.html
 python3 oh/scripts/validate_index.py oh/index.html
 python3 wa/scripts/validate_index.py wa/index.html
+python3 ma/scripts/validate_index.py ma/index.html
+python3 co/scripts/validate_index.py co/index.html
+python3 md/scripts/validate_index.py md/index.html
+python3 al/scripts/validate_index.py al/index.html
+python3 or/scripts/validate_index.py or/index.html
+python3 ct/scripts/validate_index.py ct/index.html
+python3 ut/scripts/validate_index.py ut/index.html
+python3 ks/scripts/validate_index.py ks/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -352,6 +378,14 @@ BASE_URL=http://localhost:8000/tx/ node tx/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/fl/ node fl/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/oh/ node oh/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/wa/ node wa/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ma/ node ma/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/co/ node co/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/md/ node md/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/al/ node al/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/or/ node or/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ct/ node ct/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ut/ node ut/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ks/ node ks/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

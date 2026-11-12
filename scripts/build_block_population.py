@@ -280,6 +280,72 @@ INSTANCES = {
     "wa": {"name": "Washington", "state": "53", "total": 7705281, "counties": 39,
            "bbox": (-124.85, 45.54, -116.91, 49.01),
            "maps": [("congress-districts.json", 10, 0.006), ("wa-legislative-districts.json", 49, 0.025)]},
+    # Batch 3 of the state-level launch. Each row's tolerances are the worst
+    # district measured on the shipped outlines on 2026-11-12, rounded up (to
+    # 0.05% for congress and 0.5% for a legislative chamber).
+    # MASSACHUSETTS'S TWO CHAMBERS ARE NOT HELD HERE: every Senate and House
+    # district is named ("Third Middlesex", "19th Suffolk") rather than
+    # numbered, which the driver's numbered-district reading cannot key, so
+    # their partition of the state is held by ma/scripts/
+    # build_legislative_boundaries.py's own 2,000-point gate. Its congressional
+    # map sits within 0.001% of its ideal.
+    "ma": {"name": "Massachusetts", "state": "25", "total": 7029917, "counties": 14,
+           "bbox": (-73.51, 41.18, -69.85, 42.89),
+           "maps": [("congress-districts.json", 9, 0.0005)]},
+    # CONNECTICUT'S FILES ARE ITS EIGHT 2020 COUNTIES, because the 2020 blocks
+    # carry those codes, not the nine planning regions the Census has filed as
+    # its county equivalents since 2022. Its congressional map sits within
+    # 0.001% of its ideal; the Senate's worst district is 5.677% under the
+    # raw-census ideal and the House's 8.809% over. The likeliest reason,
+    # inferred and not measured, is that Connecticut has counted an
+    # incarcerated person at their last address since its 2021 plan.
+    "ct": {"name": "Connecticut", "state": "09", "total": 3605944, "counties": 8, "counties_2020": True,
+           "bbox": (-73.73, 40.95, -71.78, 42.06),
+           "maps": [("congress-districts.json", 5, 0.0005), ("ct-senate-districts.json", 36, 0.06),
+                    ("ct-house-districts.json", 151, 0.09)]},
+    # MARYLAND'S HOUSE IS NOT HELD: its 71 features are whole districts
+    # electing three delegates and subdistricts electing one or two, so one
+    # ideal over 71 describes none of them. Its congressional map's worst
+    # district is 0.737% over the raw-census ideal and its Senate's 5.421%
+    # under it; the likeliest reason, inferred and not measured, is that
+    # Maryland has counted an incarcerated person at their last address since
+    # 2010, as New York does.
+    "md": {"name": "Maryland", "state": "24", "total": 6177224, "counties": 24,
+           "bbox": (-79.49, 37.88, -74.98, 39.73),
+           "maps": [("congress-districts.json", 8, 0.0075), ("md-senate-districts.json", 47, 0.055)]},
+    # Alabama's congressional map is the court-drawn plan of the 119th
+    # Congress, within 0.001% of its ideal; both legislative plans run to the
+    # 5% range the Legislature adopted (+4.986% and -4.983%).
+    "al": {"name": "Alabama", "state": "01", "total": 5024279, "counties": 67,
+           "bbox": (-88.48, 30.14, -84.88, 35.01),
+           "maps": [("congress-districts.json", 7, 0.0005), ("al-senate-districts.json", 35, 0.05),
+                    ("al-house-districts.json", 105, 0.05)]},
+    # Oregon's House nests two to a Senate district, so the two plans share
+    # every line; worst districts -0.950% (Senate) and +0.984% (House), and
+    # the congressional map within 0.001%.
+    "or": {"name": "Oregon", "state": "41", "total": 4237256, "counties": 36,
+           "bbox": (-124.71, 41.99, -116.46, 46.3),
+           "maps": [("congress-districts.json", 6, 0.0005), ("or-senate-districts.json", 30, 0.01),
+                    ("or-house-districts.json", 60, 0.01)]},
+    # Colorado's commissions' plans: congress +0.011%, Senate +4.568% and
+    # House +3.234% at their worst districts.
+    "co": {"name": "Colorado", "state": "08", "total": 5773714, "counties": 64,
+           "bbox": (-109.07, 36.99, -102.04, 41.01),
+           "maps": [("congress-districts.json", 8, 0.0005), ("co-senate-districts.json", 35, 0.05),
+                    ("co-house-districts.json", 65, 0.035)]},
+    # Utah's congressional map is the 2025 court-ordered plan of the 119th
+    # Congress layer, within 0.001% of its ideal; Senate -1.880% and House
+    # -4.637% at their worst.
+    "ut": {"name": "Utah", "state": "49", "total": 3271616, "counties": 29,
+           "bbox": (-114.06, 36.99, -109.04, 42.01),
+           "maps": [("congress-districts.json", 4, 0.0005), ("ut-senate-districts.json", 29, 0.02),
+                    ("ut-house-districts.json", 75, 0.05)]},
+    # Kansas: congress within 0.001%, Senate +3.946% and House -3.940% at
+    # their worst districts.
+    "ks": {"name": "Kansas", "state": "20", "total": 2937880, "counties": 105,
+           "bbox": (-102.06, 36.99, -94.58, 40.01),
+           "maps": [("congress-districts.json", 4, 0.0005), ("ks-senate-districts.json", 40, 0.04),
+                    ("ks-house-districts.json", 125, 0.04)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
@@ -327,7 +393,12 @@ def sum_by_county(spec, url, extra_where=""):
 
 
 def county_names(spec):
-    data = fetch(COUNTIES, {"where": county_where(spec), "outFields": "COUNTY,NAME",
+    # Connecticut's blocks carry the 2020 census's county codes, its eight
+    # historical counties, while the current county layer holds the nine
+    # planning regions the Census has filed since 2022; a row setting
+    # "counties_2020" names its files from the 2020 county layer instead.
+    layer = COUNTIES_2020 if spec.get("counties_2020") else COUNTIES
+    data = fetch(layer, {"where": county_where(spec), "outFields": "COUNTY,NAME",
                             "returnGeometry": "false", "f": "json"})
     return {f["attributes"]["COUNTY"]: f["attributes"]["NAME"] for f in data["features"]}
 

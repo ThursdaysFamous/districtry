@@ -1185,6 +1185,14 @@ INSTANCES = {
     "fl":  {"app": "fl",  "scripts": "fl/scripts",  "docs": "fl",  "worksheet": "fl/metro-worksheet.json"},
     "oh":  {"app": "oh",  "scripts": "oh/scripts",  "docs": "oh",  "worksheet": "oh/metro-worksheet.json"},
     "wa":  {"app": "wa",  "scripts": "wa/scripts",  "docs": "wa",  "worksheet": "wa/metro-worksheet.json"},
+    "ma":  {"app": "ma",  "scripts": "ma/scripts",  "docs": "ma",  "worksheet": "ma/metro-worksheet.json"},
+    "co":  {"app": "co",  "scripts": "co/scripts",  "docs": "co",  "worksheet": "co/metro-worksheet.json"},
+    "md":  {"app": "md",  "scripts": "md/scripts",  "docs": "md",  "worksheet": "md/metro-worksheet.json"},
+    "al":  {"app": "al",  "scripts": "al/scripts",  "docs": "al",  "worksheet": "al/metro-worksheet.json"},
+    "or":  {"app": "or",  "scripts": "or/scripts",  "docs": "or",  "worksheet": "or/metro-worksheet.json"},
+    "ct":  {"app": "ct",  "scripts": "ct/scripts",  "docs": "ct",  "worksheet": "ct/metro-worksheet.json"},
+    "ut":  {"app": "ut",  "scripts": "ut/scripts",  "docs": "ut",  "worksheet": "ut/metro-worksheet.json"},
+    "ks":  {"app": "ks",  "scripts": "ks/scripts",  "docs": "ks",  "worksheet": "ks/metro-worksheet.json"},
 }
 
 

@@ -86,6 +86,14 @@ INSTANCES = {
     "fl": ["fl/index.html", "fl/sw.js"],
     "oh": ["oh/index.html", "oh/sw.js"],
     "wa": ["wa/index.html", "wa/sw.js"],
+    "ma": ["ma/index.html", "ma/sw.js"],
+    "co": ["co/index.html", "co/sw.js"],
+    "md": ["md/index.html", "md/sw.js"],
+    "al": ["al/index.html", "al/sw.js"],
+    "or": ["or/index.html", "or/sw.js"],
+    "ct": ["ct/index.html", "ct/sw.js"],
+    "ut": ["ut/index.html", "ut/sw.js"],
+    "ks": ["ks/index.html", "ks/sw.js"],
 }
 
 # The sub-pages — every published page that is not the app. They compose the

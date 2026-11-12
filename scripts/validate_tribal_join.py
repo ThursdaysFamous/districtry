@@ -89,6 +89,14 @@ STATE_OF_INSTANCE = {
     "fl": "Florida",
     "oh": "Ohio",
     "wa": "Washington",
+    "ma": "Massachusetts",
+    "co": "Colorado",
+    "md": "Maryland",
+    "al": "Alabama",
+    "or": "Oregon",
+    "ct": "Connecticut",
+    "ut": "Utah",
+    "ks": "Kansas",
 }
 
 

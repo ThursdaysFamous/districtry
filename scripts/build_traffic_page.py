@@ -98,6 +98,14 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "California",
                   "fl": "Florida",
                   "oh": "Ohio",
                   "wa": "Washington",
+                  "ma": "Massachusetts",
+                  "co": "Colorado",
+                  "md": "Maryland",
+                  "al": "Alabama",
+                  "or": "Oregon",
+                  "ct": "Connecticut",
+                  "ut": "Utah",
+                  "ks": "Kansas",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -129,7 +137,11 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "nj": "2026-11-11", "nh": "2026-11-11",
                 # Batch 2 likewise; a later merge day moves these four too.
                 "tx": "2026-11-11", "fl": "2026-11-11", "oh": "2026-11-11",
-                "wa": "2026-11-11"}
+                "wa": "2026-11-11",
+                # Batch 3 likewise; a later merge day moves these eight too.
+                "ma": "2026-11-12", "co": "2026-11-12", "md": "2026-11-12",
+                "al": "2026-11-12", "or": "2026-11-12", "ct": "2026-11-12",
+                "ut": "2026-11-12", "ks": "2026-11-12"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",

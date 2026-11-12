@@ -66,7 +66,9 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13",
               "pa": "42", "nv": "32", "az": "04", "nj": "34", "nh": "33",
-              "tx": "48", "fl": "12", "oh": "39", "wa": "53"}
+              "tx": "48", "fl": "12", "oh": "39", "wa": "53",
+              "ma": "25", "co": "08", "md": "24", "al": "01", "or": "41",
+              "ct": "09", "ut": "49", "ks": "20"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -169,6 +171,25 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     "tx": None,
     "fl": None,
     "wa": None,
+    # BATCH 3, added at its go-live (2026-11-12). Massachusetts: every part of
+    # the state is in a city or a town, and a town (FUNCSTAT A, 293 of them)
+    # governs everyone in it through its town meeting and select board; the
+    # 58 cities are FUNCSTAT F and are counted as places. Connecticut
+    # likewise: every part of the state is in one of 169 towns, each the
+    # general-purpose government of everyone in it (the 20 consolidated with a
+    # city are FUNCSTAT C and the city is counted as a place). Maryland's
+    # subdivisions are its counties' election districts, which govern nobody;
+    # Colorado, Alabama, Oregon and Utah are divided into census county
+    # divisions (FUNCSTAT S), which govern nobody. Kansas has townships; None
+    # while no active one reaches the floor, which the build checks.
+    "ma": True,
+    "ct": True,
+    "md": None,
+    "co": None,
+    "al": None,
+    "or": None,
+    "ut": None,
+    "ks": None,
 }
 
 

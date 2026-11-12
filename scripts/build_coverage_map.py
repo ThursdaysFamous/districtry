@@ -182,6 +182,15 @@ AREAS = {
     "fl": {"outline": "fl/data/app/metro-outline.json", "state_outline": None},
     "oh": {"outline": "oh/data/app/metro-outline.json", "state_outline": None},
     "wa": {"outline": "wa/data/app/metro-outline.json", "state_outline": None},
+    # Batch 3 joined at its go-live, one tier each for the same reason.
+    "ma": {"outline": "ma/data/app/metro-outline.json", "state_outline": None},
+    "co": {"outline": "co/data/app/metro-outline.json", "state_outline": None},
+    "md": {"outline": "md/data/app/metro-outline.json", "state_outline": None},
+    "al": {"outline": "al/data/app/metro-outline.json", "state_outline": None},
+    "or": {"outline": "or/data/app/metro-outline.json", "state_outline": None},
+    "ct": {"outline": "ct/data/app/metro-outline.json", "state_outline": None},
+    "ut": {"outline": "ut/data/app/metro-outline.json", "state_outline": None},
+    "ks": {"outline": "ks/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

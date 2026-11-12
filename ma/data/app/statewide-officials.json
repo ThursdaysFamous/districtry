@@ -1,0 +1,55 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ma/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Massachusetts",
+ "usSenate": [
+  {
+   "name": "Edward J. Markey",
+   "party": "Democratic",
+   "url": "https://www.markey.senate.gov",
+   "office": "255 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2742"
+  },
+  {
+   "name": "Elizabeth Warren",
+   "party": "Democratic",
+   "url": "https://www.warren.senate.gov",
+   "office": "311 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4543"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "url": "https://www.mass.gov/orgs/office-of-the-governor",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "url": "https://www.mass.gov/orgs/office-of-the-governor",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  },
+  {
+   "office": "Attorney General",
+   "url": "https://www.mass.gov/orgs/office-of-the-attorney-general",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  },
+  {
+   "office": "Secretary of the Commonwealth",
+   "url": "https://www.sec.state.ma.us/",
+   "unnamed": "The Secretary's website answers automated readers with a security check, so no name is shown here."
+  },
+  {
+   "office": "Treasurer and Receiver General",
+   "name": "Deborah B. Goldberg",
+   "url": "https://www.masstreasury.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "url": "https://www.mass.gov/orgs/office-of-the-state-auditor",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  }
+ ]
+}

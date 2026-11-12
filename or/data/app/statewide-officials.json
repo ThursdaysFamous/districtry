@@ -1,0 +1,55 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from or/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Oregon",
+ "usSenate": [
+  {
+   "name": "Jeff Merkley",
+   "party": "Democratic",
+   "url": "https://www.merkley.senate.gov",
+   "office": "531 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3753"
+  },
+  {
+   "name": "Ron Wyden",
+   "party": "Democratic",
+   "url": "https://www.wyden.senate.gov/",
+   "office": "221 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5244"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tina Kotek",
+   "url": "https://www.oregon.gov/gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Tobias Read",
+   "url": "https://sos.oregon.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dan Rayfield",
+   "url": "https://www.doj.state.or.us/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Elizabeth Steiner",
+   "url": "https://www.oregon.gov/treasury/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Commissioner of the Bureau of Labor and Industries",
+   "name": "Christina Stephenson",
+   "url": "https://www.oregon.gov/boli/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Oregon has no lieutenant governor; the secretary of state is first in line to succeed the governor. Its voters also elect the Supreme Court and the Court of Appeals statewide; they are not listed here yet."
+}

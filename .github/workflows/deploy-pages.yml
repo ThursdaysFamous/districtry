@@ -172,6 +172,14 @@ jobs:
             fl/data/state fl/data/source fl/scripts
             oh/data/state oh/data/source oh/scripts
             wa/data/state wa/data/source wa/scripts
+            ma/data/state ma/data/source ma/scripts
+            co/data/state co/data/source co/scripts
+            md/data/state md/data/source md/scripts
+            al/data/state al/data/source al/scripts
+            or/data/state or/data/source or/scripts
+            ct/data/state ct/data/source ct/scripts
+            ut/data/state ut/data/source ut/scripts
+            ks/data/state ks/data/source ks/scripts
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
@@ -271,13 +279,13 @@ jobs:
             test ! -e "_site/$unpublished" || { echo "::error::$unpublished leaked into the published tree"; exit 1; }
           done
           # R5: ny/, ca/, wi/, ia/, mi/, mn/, ky/, in/, nc/, ok/, sc/, tn/, ar/, ms/, la/, mo/, va/, wv/, ga/,
-          # pa/, nv/, az/, nj/, nh/ and (as of the state-level launch's batch 2 go-live PR) tx/, fl/, oh/ and wa/ are LIVE now — chidistricts.com's subdomains forward to /ny and /ca, so
+          # pa/, nv/, az/, nj/, nh/, tx/, fl/, oh/, wa/ and (as of the state-level launch's batch 3 go-live PR) ma/, co/, md/, al/, or/, ct/, ut/ and ks/ are LIVE now — chidistricts.com's subdomains forward to /ny and /ca, so
           # an assemble that drops any of them serves a 404 to every redirected
           # visitor or every reader of districtry.com/<tag>/. The old guard
           # asserted their ABSENCE; publishing them means asserting their
           # PRESENCE, or the same silent failure the il/index.html check
           # exists to prevent happens to the siblings.
-          for published in ny ca wi ia mi mn ky in nc ok sc tn ar ms la mo va wv ga pa nv az nj nh tx fl oh wa; do
+          for published in ny ca wi ia mi mn ky in nc ok sc tn ar ms la mo va wv ga pa nv az nj nh tx fl oh wa ma co md al or ct ut ks; do
             test -f "_site/$published/index.html" || { echo "::error::assemble produced no $published/index.html"; exit 1; }
           done
           echo "Published tree:" && find _site -type f | sort
