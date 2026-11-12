@@ -79,7 +79,7 @@ in the researched-but-unbuilt backlog.
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "massachusetts": ["us-house", "county", "ma-senate", "school-district-secondary", "ma-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "colorado": ["us-house", "co-senate", "county", "co-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "maryland": ["us-house", "county", "school-district-unified", "md-senate", "md-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
@@ -4502,6 +4502,18 @@ trusted.
             "why": "No list of the board members of Washington's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board of directors, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='53': 295 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary), so every Washington district is filed as one unified district, and none is the Census's \"School District Not Defined\" placeholder. They ship as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Office of Superintendent of Public Instruction's own directories; the county auditors' election results, which were not checked for school board contests; and each district's own website. The Washington State School Directors' Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wa-tribal-government",
+            "concept": "Tribal government",
+            "area": "Washington",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website. It does not name any nation's council yet.",
+            "why": "Each nation publishes its own government on its own site, and this app has not read any Washington nation's council list yet.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-12 as `tribal-government`: 50 pieces, 28 reservations and 22 pieces of off-reservation trust land, held by 29 nations, measured with scripts/tribal_areas.py --report Washington (control passed: Washington resolves to state code 53). Every piece lies wholly in the state but the Umatilla Off-Reservation Trust Land, 71.4% of which (43.353 km2) is in Washington; its nation, the Confederated Tribes of the Umatilla Indian Reservation, is seated in Pendleton, Oregon. The Samish Indian Nation, which the Bureau seats in Anacortes, holds no land the Census draws in Washington, so no card names it. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py, and NO NATION'S PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "massachusetts": [

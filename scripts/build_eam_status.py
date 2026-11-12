@@ -3059,10 +3059,12 @@ ANSWERS = {
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # Measured 2026-11-11 with scripts/tribal_areas.py --report Washington:
-        # the Census keeps 28 reservations and 22 off-reservation trust lands
-        # in Washington, and the app draws no tribal land yet (wa/WATCH.md).
-        "tribal-government": OPEN,
+        # Drawn 2026-11-12: all 50 pieces the Census keeps in Washington (28
+        # reservations and 22 off-reservation trust lands), each named with its
+        # government -- 29 nations, the Umatilla seated in Oregon among them.
+        # No council is named yet; each nation's page is read one at a time,
+        # the Oklahoma shape (gap wa-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     # BATCH 3 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12).
     "ma": {

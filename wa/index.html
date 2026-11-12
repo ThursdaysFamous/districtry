@@ -4609,7 +4609,7 @@ function initWashingtonExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "county": "co", "wa-senate": "was", "wa-house": "wah",
     "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4618,7 +4618,7 @@ function initWashingtonExplorer() {
     "state-house": ["wa-house"], "county": ["county"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11468,6 +11468,7 @@ function initWashingtonExplorer() {
     "school-district-unified", // 295 school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // ZIP Code Tabulation Areas inside Washington, drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 281 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Washington has 50 pieces, 28 reservations and 22 pieces of off-reservation trust land, held by 29 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Colville Reservation (5,658.9 km², Ferry and Okanogan counties), the Yakama Nation Reservation (5,579.8 km², 5,028.4 km² of it in Yakima County and most of the rest in Klickitat), the Quinault Reservation (839.3 km², Grays Harbor and Jefferson counties) and the Spokane Reservation (648.5 km², Stevens and Lincoln counties); the smallest is the Swinomish Off-Reservation Trust Land (0.0006 km², Skagit County). Every piece lies wholly in Washington but one: 43.353 km² of the Umatilla Off-Reservation Trust Land, in Columbia and Walla Walla counties, is 71.4% of a trust land whose nation is seated in Pendleton, Oregon. The Census draws tribal districts on the Tulalip Tribes' land alone. Ranked after municipalities and before the point layers, as Texas's and Louisiana's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16632,6 +16633,113 @@ function initWashingtonExplorer() {
   });
 
 
+  /* ---------- 9a. Tribal Government — Washington's tribal land, 50 pieces, 29 nations.
+   *
+   * Twenty-eight reservations and twenty-two pieces of off-reservation trust
+   * land, measured 2026-11-12 by scripts/build_tribal_areas.py, with the
+   * counties measured against this app's own county outlines. The largest are
+   * the Colville Reservation (5,658.9 km², Ferry and Okanogan counties, 7,804
+   * people at the 2020 census) and the Yakama Nation Reservation (5,579.8 km²,
+   * mostly Yakima County, 31,469 people); the most populous is the Puyallup
+   * Reservation (75.8 km², Pierce County, 54,402 people). Every piece lies
+   * wholly in Washington but one: 43.353 km² of the Umatilla Off-Reservation
+   * Trust Land, in Columbia and Walla Walla counties, is 71.4% of a trust land
+   * whose nation, the Confederated Tribes of the Umatilla Indian Reservation,
+   * is seated in Pendleton, Oregon. The Census draws tribal districts on the
+   * Tulalip Tribes' land alone, and the card lists them.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so the card says so in those
+   * words (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py) and links the
+   * nation's own site. The councils are to be read one nation at a time.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Washington are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes wa/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Texas's has.
+  var loadWaTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadWaTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Washington has 50 tribal areas across 29 nations, 28 reservations and 22 pieces of off-reservation trust land, and this point is on none of them."
+  });
+
+
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18526,7 +18634,7 @@ function initWashingtonExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "wa-senate", "wa-house",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19043,10 +19151,11 @@ function initWashingtonExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

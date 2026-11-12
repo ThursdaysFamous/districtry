@@ -347,7 +347,7 @@ All 88 counties: cities and villages, school districts, ZIP codes, and the neare
 
 All 39 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Washington's 49 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Washington district lookup](https://districtry.com/wa/): 10 layers, all 39 counties.
+- [Washington district lookup](https://districtry.com/wa/): 11 layers, all 39 counties.
 - [Who is my U.S. representative?](https://districtry.com/wa/congress.html)
 - [Sources & data layers](https://districtry.com/wa/sources.html)
 - [Who is my Washington legislator?](https://districtry.com/wa/state-legislature.html)
