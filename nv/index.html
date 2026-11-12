@@ -4612,7 +4612,7 @@ function initNevadaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "county": "co", "school-district-unified": "su",
     "nv-senate": "nvs", "nv-assembly": "nva", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4621,7 +4621,7 @@ function initNevadaExplorer() {
     "state-house": ["nv-assembly"], "county": ["county"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11493,6 +11493,7 @@ function initNevadaExplorer() {
     "nv-assembly",       // 42 Assembly districts — two in each Senate district
     "zip-code",          // 182 ZIP Code Tabulation Areas inside Nevada (439 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 19 incorporated cities, Carson City among them, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Nevada has 35 pieces, 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Pyramid Lake Paiute Reservation (1,889.4 km², Washoe County with slivers of Storey and Lyon), the Walker River Reservation (1,375.5 km², Mineral, Lyon and Churchill counties), the Duck Valley Reservation (582.7 km² in Nevada, 49.7% of it, Elko County), the Washoe Ranches Trust Land (377.1 km², mostly Douglas County), the Moapa River Indian Reservation (287.4 km², Clark County) and the Goshute Reservation (284.1 km² in Nevada, 58.4% of it, White Pine County); the smallest is the Battle Mountain Off-Reservation Trust Land (0.006 km², Lander County). Six pieces cross the state line and are drawn whole: the Duck Valley, Fort McDermitt (48.0% in Nevada), Goshute, Timbi-Sha Shoshone (78.1%) and Fort Mojave (11.5%) reservations and the Washoe Ranches Trust Land (99.7%). The Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe are seated in California and the Confederated Tribes of the Goshute Reservation in Utah. The Census draws no tribal district on any of this land. Ranked after municipalities and before the point layers, as Arizona's and Washington's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16610,6 +16611,133 @@ function initNevadaExplorer() {
   });
 
 
+  /* ---------- 7a. Tribal Government — Nevada's tribal land, 35 pieces, 20 nations.
+   *
+   * Twenty-seven reservations and eight pieces of off-reservation trust land,
+   * measured 2026-11-12 by scripts/build_tribal_areas.py, with the counties
+   * measured against this app's own county outlines. The largest is the
+   * Pyramid Lake Paiute Reservation (1,889.4 km², Washoe County with slivers
+   * of Storey and Lyon; 1,933 people at the 2020 census), then the Walker
+   * River (1,375.5 km², Mineral, Lyon and Churchill counties), the Duck Valley
+   * (582.7 km² in Nevada, 49.7% of it), the Washoe Ranches Trust Land
+   * (377.1 km²) and the Moapa River (287.4 km²). Six pieces cross the state
+   * line and are drawn whole: the Duck Valley, Fort McDermitt (48.0%),
+   * Goshute (58.4%), Timbi-Sha Shoshone (78.1%) and Fort Mojave (11.5%)
+   * reservations and the Washoe Ranches Trust Land (99.7%). The Fort Mojave
+   * Indian Tribe and the Timbisha Shoshone Tribe are seated in California and
+   * the Confederated Tribes of the Goshute Reservation in Utah. The Census
+   * draws no tribal district on any of it. At the Census's own detail: the
+   * file is 345 KB, under the size at which Arizona's is simplified.
+   *
+   * EIGHT NATIONS THE BUREAU LISTS WITH NO OFFICE TOWN. The Bureau of Indian
+   * Affairs gives neither a city nor a state for eight of these nations, and
+   * Adam chose on 2026-11-12 to take the town from each nation's own site.
+   * Seven have one, and each card gives that town with a line saying where it
+   * came from and when it was read; all seven agree with Nevada's Department
+   * of Native American Affairs' list of tribal chairs. The Winnemucca Indian
+   * Colony has none, so its card says the Bureau lists no office town. Two of
+   * the Bureau's site addresses no longer reach the nation (the Goshute's
+   * serves an unrelated site, the Duck Valley's a page-not-found page), so
+   * those cards link the nation's own site instead. The record of each is
+   * `seatFromNation` / `seatNotFound` in data/tribal-government-join.json.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so the card says so in those
+   * words (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py) and links the
+   * nation's own site where there is one. The councils are to be read one
+   * nation at a time.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Nevada are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes nv/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Texas's has.
+  var loadNvTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadNvTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      // Only where the Bureau of Indian Affairs lists no office town: where the
+      // seat above came from (the nation's own site, read on a date), or that
+      // there is none to give (scripts/build_tribal_areas.py seat_note).
+      { name: "seatNote", label: "About the seat", keys: ["seatnote"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Nevada has 35 tribal areas across 20 nations, 27 reservations and 8 pieces of off-reservation trust land, and this point is on none of them."
+  });
+
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18503,7 +18631,7 @@ function initNevadaExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "nv-senate", "nv-assembly",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19020,10 +19148,11 @@ function initNevadaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

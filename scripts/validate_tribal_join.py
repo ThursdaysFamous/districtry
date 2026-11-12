@@ -216,6 +216,7 @@ def _problems(doc, govs, instance_states):
                 out.append(
                     "%s: seat recorded as %r, the Bureau says %r" % (where, seat, theirs)
                 )
+        out.extend(_seat_problems(where, entry, govs))
         parent = entry.get("parentGovernment")
         if parent is not None and parent not in govs:
             out.append(
@@ -252,6 +253,62 @@ def _problems(doc, govs, instance_states):
                     "leaves out — it should not be in this table"
                     % (where, land.get("name"), km2, share)
                 )
+    return out
+
+
+def _seat_problems(where, entry, govs):
+    """A seat this table supplies because the Bureau lists none.
+
+    The Bureau carries some governments with neither a city nor a state, and
+    Adam chose on 2026-11-12 to take the town from the nation's own site
+    (`seatFromNation`) or, where no site of the nation's own that gives one
+    is found, to record that and draw the land anyway (`seatNotFound`). Either is a
+    claim this project makes, so it must name its page and date, and either
+    goes stale the day the Bureau lists a state, which fails here so the
+    Bureau's own seat replaces it."""
+    import re
+    out = []
+    sfn = entry.get("seatFromNation")
+    none = entry.get("seatNotFound")
+    if not (sfn or none):
+        return out
+    gov = entry.get("government")
+    if entry.get("governments") or entry.get("stateRecognition") or gov not in govs:
+        out.append("%s: a seat taken from the nation's site, or a recorded absence of "
+                   "one, belongs only on an entry naming one government the Bureau "
+                   "lists" % where)
+        return out
+    if sfn and none:
+        out.append("%s: records a seat from the nation's site and no seat at all" % where)
+    if govs[gov].get("state"):
+        out.append("%s: the Bureau lists a state for %r now, so the seat this table "
+                   "supplies is stale — use the Bureau's" % (where, gov))
+    date = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    if sfn:
+        for key in ("city", "state", "page", "read", "why"):
+            if not sfn.get(key):
+                out.append("%s: seatFromNation carries no %r" % (where, key))
+        if not re.match(r"^[A-Z]{2}$", str(sfn.get("state") or "")):
+            out.append("%s: seatFromNation's state is not a two-letter code" % where)
+        if not str(sfn.get("page") or "").startswith("https://"):
+            out.append("%s: seatFromNation's page is not an https link" % where)
+        if not date.match(str(sfn.get("read") or "")):
+            out.append("%s: seatFromNation's read date is not YYYY-MM-DD" % where)
+        site = sfn.get("website")
+        if site is not None and not re.match(r"^https?://", str(site)):
+            out.append("%s: seatFromNation's website is not an http(s) link" % where)
+        if sfn.get("bureauWebsiteWithdrawn") and not govs[gov].get("website"):
+            out.append("%s: says the Bureau's site address is withdrawn, and the Bureau "
+                       "lists none" % where)
+        extra = set(sfn) - {"city", "state", "page", "read", "why", "website",
+                            "bureauWebsiteWithdrawn"}
+        if extra:
+            out.append("%s: seatFromNation carries unknown keys %s" % (where, sorted(extra)))
+    if none:
+        if not date.match(str(none.get("looked") or "")):
+            out.append("%s: seatNotFound's looked date is not YYYY-MM-DD" % where)
+        if not none.get("why"):
+            out.append("%s: seatNotFound says nothing about why" % where)
     return out
 
 
@@ -401,6 +458,23 @@ def selftest():
          lambda d: d["areas"]["9300"].update(government=sorted(govs)[0])),
         ("a state-recognized nation drawn on federal land",
          lambda d: d["areas"]["9300"]["lands"][0].update(**{"class": "reservation"})),
+        ("a seat from the nation's site with no page",
+         lambda d: d["areas"]["3010"]["seatFromNation"].update(page="")),
+        ("a seat from the nation's site with a malformed state",
+         lambda d: d["areas"]["3010"]["seatFromNation"].update(state="Nevada")),
+        ("a seat from the nation's site with no read date",
+         lambda d: d["areas"]["3010"]["seatFromNation"].update(read="12 Nov")),
+        ("a seat from the nation's site and a recorded absence on one entry",
+         lambda d: d["areas"]["3010"].update(seatNotFound={"looked": "2026-11-12",
+                                                            "why": "x"})),
+        ("a seat from the nation's site where the Bureau lists one",
+         lambda d: d["areas"].__setitem__("1040", dict(
+             d["areas"]["1040"], seatFromNation=d["areas"]["3010"]["seatFromNation"]))),
+        ("a withdrawn Bureau site where the Bureau lists none",
+         lambda d: d["areas"]["3010"]["seatFromNation"].update(
+             bureauWebsiteWithdrawn="dead")),
+        ("a recorded absence of a seat with no reason",
+         lambda d: d["areas"]["4635"]["seatNotFound"].update(why="")),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label

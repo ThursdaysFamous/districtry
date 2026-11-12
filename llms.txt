@@ -277,7 +277,7 @@ All 67 counties: cities, boroughs and townships, school districts, ZIP codes, an
 
 All 16 counties and Carson City: incorporated cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Nevada Senate, Assembly and U.S. House districts, with who holds each seat. County commissioners and city and school board members are not named yet, and the Data gaps panel says why.
 
-- [Nevada district lookup](https://districtry.com/nv/): 10 layers, all 16 counties and Carson City.
+- [Nevada district lookup](https://districtry.com/nv/): 11 layers, all 16 counties and Carson City.
 - [Who is my U.S. representative?](https://districtry.com/nv/congress.html)
 - [Sources & data layers](https://districtry.com/nv/sources.html)
 - [Who is my Nevada legislator?](https://districtry.com/nv/state-legislature.html)
@@ -287,7 +287,7 @@ All 16 counties and Carson City: incorporated cities, school districts, ZIP code
 
 All 15 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus Arizona's 30 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Arizona district lookup](https://districtry.com/az/): 12 layers, all 15 counties.
+- [Arizona district lookup](https://districtry.com/az/): 13 layers, all 15 counties.
 - [Who is my U.S. representative?](https://districtry.com/az/congress.html)
 - [Sources & data layers](https://districtry.com/az/sources.html)
 - [Who is my Arizona legislator?](https://districtry.com/az/state-legislature.html)
