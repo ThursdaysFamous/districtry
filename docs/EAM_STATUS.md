@@ -44,21 +44,21 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ak | **EAM·** | 30 | 30/30 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
-| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
-| ca | **--M·** | — | — | 0 | 0 | — | 20 | all | 7 of 14 levels |
-| co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
-| ct | **--M·** | — | — | 0 | 0 | — | 12 | all | 7 of 14 levels |
+| ca | **--M·** | — | — | 0 | 0 | — | 21 | all | 8 of 14 levels |
+| co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
+| ct | **--M·** | — | — | 0 | 0 | — | 13 | all | 8 of 14 levels |
 | de | **EAM·** | 3 | 3/3 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
 | fl | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
-| ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 18 | all | 9 of 14 levels |
+| ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 19 | all | 10 of 14 levels |
 | hi | **EAM·** | 5 | 5/5 § | 0 | 0 | by record | 12 | all | 10 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 11 | all | 6 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,159 | all | 431 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 23 | all | 11 of 14 levels |
-| ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 12 | all | 5 of 14 levels |
+| ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 20 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 26 | all | 9 of 14 levels |
 | ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -79,14 +79,14 @@ different thing from one it failed.
 | ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 39 | all | 10 of 14 levels |
 | oh | **EAM·** | 88 | 88/88 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 21 | all | 10 of 14 levels |
-| or | **EAM·** | 36 | 36/36 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| or | **EAM·** | 36 | 36/36 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | pa | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | ri | **--M·** | — | — | 0 | 0 | — | 12 | all | 8 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 12 | all | 5 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 23 | all | 10 of 14 levels |
 | tx | **EAM·** | 254 | 254/254 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
-| ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -127,7 +127,7 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `al-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 67 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `al-house-districts.json`, `al-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `al/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 67 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 24 units at 25,000+ name a governing body; unanswered: Alabaster city, Athens city, Auburn city, Bessemer city, Birmingham city, Daphne city, Decatur city, Dothan city and 16 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -135,7 +135,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Alabama has no sub-county general-purpose government — outside a city or town the county governs. The 390 sub-county units the Census publishes for Alabama are census county divisions: statistical areas, not governments (measured 2026-11-12).
@@ -155,7 +154,7 @@ per county, so each one is named under its state below.
 
 - **Examined by a statewide record:** `az-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 15 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `az-legislative-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `az/data/app/population/`, `state-counties.json`, `tribal-areas.json`
+- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `az-legislative-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `az/data/app/population/`, `state-counties.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 15 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 31 units at 25,000+ name a governing body; unanswered: Apache Junction city, Avondale city, Buckeye city, Bullhead City city, Casa Grande city, Chandler city, El Mirage city, Flagstaff city and 23 more
@@ -173,7 +172,7 @@ per county, so each one is named under its state below.
 - **E and A do not apply.** California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet; only San Francisco names a county governing body so far.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `ca-state-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `ca/data/app/population/`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `state-counties.json`, `supervisor-districts.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
   - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
@@ -181,7 +180,6 @@ per county, so each one is named under its state below.
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
   - **14. Township or county subdivision boundaries** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
@@ -191,7 +189,7 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `co-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 64 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `co-house-districts.json`, `co-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `co/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 64 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 28 units at 25,000+ name a governing body; unanswered: Arvada city, Aurora city, Boulder city, Brighton city, Broomfield city, Castle Rock town, Centennial city, Colorado Springs city and 20 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -199,7 +197,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Colorado has no sub-county general-purpose government — outside a city or town the county governs. The 209 sub-county units the Census publishes for Colorado are census county divisions: statistical areas, not governments (measured 2026-11-12).
@@ -209,7 +206,7 @@ per county, so each one is named under its state below.
 - **E and A do not apply.** Connecticut has had no county government since 1960. Its nine planning regions are councils of governments whose boards are made up of the chief elected officials of their towns, and nobody is elected to one, so there is no county governing body to name.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ct-house-districts.json`, `ct-senate-districts.json`, `metro-outline.json`, `ct/data/app/population/`, `state-counties.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 45 units at 25,000+ name a governing body; unanswered: Branford town, Bridgeport city, Bristol city, Cheshire town, Danbury city, East Hartford town, East Haven town, Enfield town and 37 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
@@ -217,7 +214,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **4. The county governing body, in every county of the state** — Connecticut has had no county government since 1960. Its nine planning regions are councils of governments whose boards are made up of the chief elected officials of their towns, and nobody is elected to one, so there is no county governing body to name.
 
@@ -259,12 +255,11 @@ per county, so each one is named under its state below.
 
 - **Examined by a statewide record:** `ga-county-commission-members` accounts for every county in the state, which is what Examined rests on here: 152 of 159 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ga-board-district-counties.json`, `ga-commission-districts.json`, `ga-house-districts.json`, `ga-judicial-circuits.json`, `ga-precincts.json`, `ga-school-board-districts.json`, `ga-senate-districts.json`, `metro-outline.json`, `ga/data/app/population/`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 146 of 159 counties name a governing body and draw it where it is elected by district; 6 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Georgia has no sub-county general-purpose government — outside a city limit the county governs. The 586 sub-county units the Census publishes for Georgia are census county divisions: statistical areas, not governments.
 
@@ -331,7 +326,7 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `ks-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 105 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ks-house-districts.json`, `ks-senate-districts.json`, `metro-outline.json`, `ks/data/app/population/`, `state-counties.json`
-- **Covered: no.** 9 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 105 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 16 units at 25,000+ name a governing body; unanswered: Derby city, Dodge City city, Garden City city, Hutchinson city, Kansas City city, Lawrence city, Leavenworth city, Leawood city and 8 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -340,7 +335,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 
 ### ky — EAM·
@@ -578,7 +572,7 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `nv-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 17 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nv-assembly-districts.json`, `nv-senate-districts.json`, `nv/data/app/population/`, `state-counties.json`, `tribal-areas.json`
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nv-assembly-districts.json`, `nv-senate-districts.json`, `nv/data/app/population/`, `state-counties.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 17 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 6 units at 25,000+ name a governing body; unanswered: Carson City, Henderson city, Las Vegas city, North Las Vegas city, Reno city, Sparks city
@@ -621,7 +615,7 @@ this instance is in maintenance.
 ### ok — EAM·
 
 - **Watched, not rewritten:** `ok/data/app/ok-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-directors.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `ok/data/app/population/`, `state-counties.json`, `tribal-areas.json`
+- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-directors.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `ok/data/app/population/`, `state-counties.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 15 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Muskogee city
   - **10. School boards elected by district** — open (required only where the state has the level)
@@ -635,7 +629,7 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `or-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 36 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `or-house-districts.json`, `or-senate-districts.json`, `or/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 36 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 24 units at 25,000+ name a governing body; unanswered: Albany city, Beaverton city, Bend city, Corvallis city, Eugene city, Forest Grove city, Grants Pass city, Gresham city and 16 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -643,7 +637,6 @@ this instance is in maintenance.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Oregon has no sub-county general-purpose government — outside a city the county governs. The 212 sub-county units the Census publishes for Oregon are census county divisions: statistical areas, not governments (measured 2026-11-12).
@@ -744,7 +737,7 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `ut-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 29 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ut/data/app/population/`, `state-counties.json`, `ut-house-districts.json`, `ut-senate-districts.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 29 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 38 units at 25,000+ name a governing body; unanswered: American Fork city, Bountiful city, Cedar City city, Clearfield city, Cottonwood Heights city, Draper city, Eagle Mountain city, Herriman city and 30 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -752,7 +745,6 @@ this instance is in maintenance.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Utah has no sub-county general-purpose government — outside a city or town the county governs. The 93 sub-county units the Census publishes for Utah are census county divisions: statistical areas, not governments (measured 2026-11-12).
@@ -787,7 +779,7 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `wa-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 39 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wa/data/app/population/`, `state-counties.json`, `tribal-areas.json`, `wa-legislative-districts.json`
+- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wa/data/app/population/`, `state-counties.json`, `wa-legislative-districts.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 39 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 45 units at 25,000+ name a governing body; unanswered: Auburn city, Bellevue city, Bellingham city, Bothell city, Bremerton city, Burien city, Camas city, Des Moines city and 37 more
