@@ -59,6 +59,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -203,6 +204,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -235,6 +237,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -325,6 +328,7 @@
         "post-office",
         "school-board-district",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "voting-precinct",
         "zip-code"
@@ -567,6 +571,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1286,6 +1291,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1509,6 +1515,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "ut-house",
         "ut-senate",

@@ -97,7 +97,7 @@ EXPECT_LAYER_IDS = [
     "us-house", "ga-superior-court", "ga-senate", "county", "ga-house",
     "school-district-unified", "county-subdivision", "county-commissioner",
     "school-board-district", "zip-code", "voting-precinct", "municipality",
-    "police-station", "fire-station", "post-office",
+    "tribal-government", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -112,6 +112,7 @@ GEOMETRY_FILES = {
     "ga-precincts.json": (2724, 2724),  # Every Georgia voting precinct, pre-built by ga/scripts/build_ga_precincts.py through scripts/statewide_precincts.py from the Reapportionment Office's 2024 statewide precinct map (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.92% with zero overlaps; an exact 2,724 count), each precinct carrying what the map check found about its county's precincts on the 2026 ballots. 8.7 MB, 2.16 MB gzipped, fetched only when a reader switches the layer on.
     "ga-judicial-circuits.json": (51, 51),  # Georgia's 51 judicial circuits, dissolved from the county fabric by ga/scripts/build_ga_superior_courts.py --draw and held to the record of which ballot placed each county by its --check.
     "zip-index.json": (748, 748),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (1, 1),  # Georgia's tribal land (scripts/build_tribal_areas.py) — the Tama (state) Reservation, at the Census's own detail (1.7 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

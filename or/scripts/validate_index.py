@@ -96,8 +96,8 @@ MIN_REGISTER_LAYER = 10
 EXPECT_LAYER_IDS = [
     "us-house", "school-district-secondary", "or-senate", "county",
     "or-house", "school-district-elementary", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "zip-code", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +108,7 @@ GEOMETRY_FILES = {
     "or-senate-districts.json": (30, 30),  # The 30 Oregon Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper), simplified in one topology with the House districts.
     "or-house-districts.json": (60, 60),  # The 60 Oregon House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower), simplified in one topology with the Senate districts.
     "zip-index.json": (427, 427),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (18, 18),  # Oregon's tribal land (scripts/build_tribal_areas.py) — 10 reservations and 8 pieces of off-reservation trust land, held by 11 nations, two pieces drawn whole across the state line, at the Census's own detail (469 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

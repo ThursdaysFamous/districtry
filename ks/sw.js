@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ks-shell-v2";
+const CACHE_NAME = "districtry-ks-shell-v3";
 
 const SHELL_URLS = [
   "./",
@@ -50,6 +50,7 @@ const GEOMETRY_URLS = [
   "./data/app/ks-senate-districts.json",
   "./data/app/ks-house-districts.json",
   "./data/app/zip-index.json",
+  "./data/app/tribal-areas.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -60,6 +61,7 @@ const ROSTER_URLS = [
   "./data/app/ks-senate-members.json",
   "./data/app/ks-house-members.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/tribal-councils.json",
   "./data/app/statewide-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

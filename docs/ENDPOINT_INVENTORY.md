@@ -173,7 +173,7 @@ prose.
 | mo | 0 | 13 |
 | va | 0 | 17 |
 | wv | 0 | 12 |
-| ga | 0 | 15 |
+| ga | 0 | 16 |
 | pa | 0 | 10 |
 | nv | 0 | 11 |
 | az | 0 | 13 |
@@ -184,13 +184,13 @@ prose.
 | oh | 0 | 10 |
 | wa | 0 | 11 |
 | ma | 0 | 12 |
-| co | 0 | 10 |
+| co | 0 | 11 |
 | md | 0 | 10 |
-| al | 0 | 10 |
-| or | 0 | 12 |
-| ct | 0 | 12 |
-| ut | 0 | 10 |
-| ks | 0 | 10 |
+| al | 0 | 11 |
+| or | 0 | 13 |
+| ct | 0 | 13 |
+| ut | 0 | 11 |
+| ks | 0 | 11 |
 | nm | 0 | 10 |
 | ne | 0 | 9 |
 | id | 0 | 10 |
@@ -521,7 +521,7 @@ measured until the next run describes it.
 | mo | 23 | 15 | 0 |
 | va | 23 | 20 | 0 |
 | wv | 21 | 14 | 0 |
-| ga | 21 | 17 | 0 |
+| ga | 21 | 18 | 0 |
 | pa | 16 | 11 | 0 |
 | nv | 16 | 12 | 0 |
 | az | 17 | 11 | 0 |
@@ -532,13 +532,13 @@ measured until the next run describes it.
 | oh | 16 | 11 | 0 |
 | wa | 15 | 11 | 0 |
 | ma | 18 | 11 | 0 |
-| co | 16 | 11 | 0 |
+| co | 16 | 12 | 0 |
 | md | 16 | 11 | 0 |
-| al | 16 | 11 | 0 |
-| or | 18 | 11 | 0 |
-| ct | 18 | 11 | 0 |
-| ut | 16 | 11 | 0 |
-| ks | 16 | 11 | 0 |
+| al | 16 | 12 | 0 |
+| or | 18 | 12 | 0 |
+| ct | 18 | 12 | 0 |
+| ut | 16 | 12 | 0 |
+| ks | 16 | 13 | 0 |
 | nm | 16 | 11 | 0 |
 | ne | 13 | 9 | 0 |
 | id | 15 | 10 | 0 |
@@ -552,7 +552,7 @@ measured until the next run describes it.
 | ak | 16 | 11 | 0 |
 | vt | 18 | 11 | 0 |
 | wy | 17 | 11 | 0 |
-| **total** | **1299** | **1491** | **12** |
+| **total** | **1299** | **1499** | **12** |
 
 **258 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
