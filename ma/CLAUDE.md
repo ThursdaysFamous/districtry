@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the General Court's own pages: **County** (`county`, the 14 counties, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (9 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Massachusetts Senate** (`ma-senate`, 40 named districts) and **Massachusetts House** (`ma-house`, 160 named districts), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, the 351 cities and towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the General Court's own pages: **County** (`county`, the 14 counties, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (9 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Massachusetts Senate** (`ma-senate`, 40 named districts) and **Massachusetts House** (`ma-house`, 160 named districts), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, the 351 cities and towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -75,11 +75,33 @@ commissioners, and Nantucket's town select board serves as its county commission
 card says which form the county has and names nobody yet (gap `ma-county-officials`); nor is any
 city or town official named (gap `ma-municipal-officeholders`).
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps two trust lands in Massachusetts, the
-Wampanoag-Aquinnah Trust Land (about 2.0 km2) and the Mashpee Wampanoag Trust Land (about 1.3
-km2), and the Hassanamisco state reservation (0.02 km2), measured 2026-11-12 with
-`scripts/tribal_areas.py --report Massachusetts`. The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE TRUST LAND OF THE TWO WAMPANOAG TRIBES, LEAVES THE HASSANAMISCO
+RESERVATION OFF, AND NAMES NO COUNCIL YET** (`tribal-areas.json`, since 2026-11-13). The Census
+keeps three pieces in Massachusetts, measured 2026-11-12 with `scripts/tribal_areas.py --report
+Massachusetts`: the Wampanoag-Aquinnah Trust Land (about 2.0 km2, in Aquinnah on Martha's Vineyard),
+the Mashpee Wampanoag Trust Land (about 1.3 km2 in ten parts, 54% of it in Mashpee and 46% in
+Taunton, measured 2026-11-13 against TIGERweb's county subdivisions with Boston and Worcester as
+controls) and the Hassanamisco state reservation in Grafton (0.021 km2, about five acres). The two
+trust lands are drawn, each joined in `data/tribal-government-join.json` to the government the
+Bureau of Indian Affairs lists for it, seated in Aquinnah and Mashpee. **THE HASSANAMISCO
+RESERVATION IS NOT DRAWN, ON ADAM'S RULING OF 2026-11-13** (his word was "federal", choosing the two
+federal trust lands over drawing all three from a bill, or waiting): a state reservation is drawn
+only where a state government source names the tribe that holds it, www.mass.gov answered this
+project with its "Not allowed" page that day, which is not worked around, and the one state source
+that could be read, House Bill 3413 of the 194th General Court, is a bill filed by request and not a
+law. It is recorded under `landsNotDrawn` in the join, a table that exists for this one piece, and
+the shipped file repeats it as `notDrawn`. **SO THE LAYER'S OFF-LAND SENTENCE DOES NOT SAY "NOT ON
+TRIBAL LAND" IN THIS APP**: it says the point is on none of the tribal land this map draws, and
+names the reservation and why it is missing, because a reader standing on it would otherwise be told
+something false. `python3 scripts/build_tribal_areas.py --check` fails if the page stops naming it,
+if the piece is ever both drawn and recorded, or if the Census stops keeping it. To draw it, read a
+state law or a state agency's own page that names the tribe, add the join entry with its
+`recognition`, and delete the `landsNotDrawn` row in the same change. **THE MASHPEE CARD DOES NOT
+LINK THE ADDRESS THE BUREAU LISTS**: `http://www.mashpeewampanoagtribe.com` served another
+publisher's blog under the tribe's name on 2026-11-13, so the join withdraws it (`websiteWithdrawn`)
+and the card links `https://mashpeewampanoagtribe-nsn.gov/`, the tribe's own site, read the same
+day. No council is named: each card says so and links the tribe (`ROSTER_NOT_SOUGHT`, gap
+`ma-tribal-government`).
 
 **THE ZIP LAYER HIDES OUTSIDE MASSACHUSETTS.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -115,7 +137,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Massachusetts (`massachusetts`) — https://districtry.com/ma/
 - Geocoders: address Photon (Massachusetts-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Massachusetts-bounded, serial >=1s queue)
 - Ground truth: 42.35866,-71.06363 (Massachusetts State House, 24 Beacon Street, Boston, Suffolk County) → county Suffolk County; us-house 8; ma-senate Third Suffolk; ma-house 8th Suffolk. Negative point 41.95000,-69.70000 (The Atlantic about 15 km east of Cape Cod's outer shore at Wellfleet — outside Massachusetts and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Massachusetts), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MassachusettsExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MassachusettsExplorer`.
 - Scheduled workflows: `update-ma-congress-roster.yml` (Mon 22:07 UTC); `update-ma-legislature-roster.yml` (Tue 22:07 UTC); `ma-validate-sources.yml` (1st of month 23:13 UTC).
 - Source registry: `ma/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

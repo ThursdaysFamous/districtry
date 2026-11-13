@@ -61,7 +61,7 @@ different thing from one it failed.
 | ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 20 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 26 | all | 9 of 14 levels |
-| ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
+| ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 72 | all | 13 of 14 levels |
@@ -363,7 +363,7 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `ma-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 14 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ma-house-districts.json`, `ma-senate-districts.json`, `metro-outline.json`, `ma/data/app/population/`, `state-counties.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 14 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 80 units at 25,000+ name a governing body; unanswered: Agawam Town city, Amherst Town city, Andover town, Arlington town, Attleboro city, Barnstable Town city, Belmont town, Beverly city and 72 more
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
@@ -371,7 +371,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **8. Courts whose judges are elected by district** — Massachusetts elects no judge. Its judges are nominated and appointed by the Governor with the consent of the Governor's Council, so there is no district a voter elects a judge from.
 

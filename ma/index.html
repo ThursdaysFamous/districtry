@@ -4613,7 +4613,7 @@ function initMassachusettsExplorer() {
   var LAYER_CODES = { "us-house": "us", "county": "co", "ma-senate": "mas",
     "school-district-secondary": "sh", "ma-house": "mah", "school-district-unified": "su",
     "school-district-elementary": "se", "municipality": "mu", "zip-code": "zp",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4624,7 +4624,7 @@ function initMassachusettsExplorer() {
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11498,6 +11498,7 @@ function initMassachusettsExplorer() {
     "school-district-elementary", // 64 elementary districts, about 64 km2 of land on average, drawn from a mirrored tile archive; the ground the unified districts leave
     "municipality",      // 351 cities and towns (293 towns and 58 cities), about 57 km2 of land on average, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 540 ZIP Code Tabulation Areas that reach into Massachusetts (1027 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
+    "tribal-government", // Tribal land — Massachusetts has 2 pieces of trust land drawn, held by two nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines and the towns against TIGERweb's county subdivisions: the Mashpee Wampanoag Trust Land (1.294 km² in ten parts, 54% in Mashpee, Barnstable County, and 46% in Taunton, Bristol County), held by the Mashpee Wampanoag Tribe, and the Wampanoag-Aquinnah Trust Land (1.985 km² in eight parts, in Aquinnah, Dukes County), held by the Wampanoag Tribe of Gay Head (Aquinnah). The Census draws no tribal district on either. The Census keeps a third piece in Massachusetts, the Hassanamisco (state) Reservation in Grafton (0.021 km², about five acres), and it is NOT drawn: a state reservation is drawn only where a state government source names the tribe that holds it, www.mass.gov answered this project with a page saying the request was not allowed on 2026-11-13, and the one state source that could be read is a bill, not a law. By Adam's ruling of that day, to draw the two federal trust lands only, it is recorded under landsNotDrawn in data/tribal-government-join.json and named in the layer's off-land sentence. Ranked after towns and ZIP codes and before the point layers, so the pieces, a square kilometre or two each, are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16787,6 +16788,133 @@ function initMassachusettsExplorer() {
   });
 
 
+  /* ---------- 7a. Tribal Government — Massachusetts's tribal land, 2 pieces drawn, 2 nations.
+   *
+   * Two pieces of trust land, measured 2026-11-13 by
+   * scripts/build_tribal_areas.py, with the counties measured against this
+   * app's own county outlines and the towns against TIGERweb's county
+   * subdivisions: the Mashpee Wampanoag Trust Land (1.294 km² in ten parts,
+   * 54% of it in the town of Mashpee, in Barnstable County, and 46% in the
+   * city of Taunton, in Bristol County; 3 people at the 2020 census), held by
+   * the Mashpee Wampanoag Tribe, seated at Mashpee; and the
+   * Wampanoag-Aquinnah Trust Land (1.985 km² in eight parts, all in the town
+   * of Aquinnah on Martha's Vineyard, in Dukes County; 86 people), held by
+   * the Wampanoag Tribe of Gay Head (Aquinnah), seated at Aquinnah. The
+   * Census draws no tribal district on either.
+   *
+   * ONE PIECE THE CENSUS KEEPS HERE IS NOT DRAWN: the Hassanamisco (state)
+   * Reservation in Grafton (0.021 km², about five acres). A state
+   * reservation is drawn only where a state government source names the
+   * tribe that holds it (Adam's ruling of 2026-10-10); www.mass.gov answered
+   * this project with its "Not allowed" page on 2026-11-13, which is not
+   * worked around, and the one state source that could be read is a bill,
+   * not a law. Adam ruled that day ("federal") to draw the two trust lands
+   * and leave the reservation off. It is recorded under `landsNotDrawn` in
+   * data/tribal-government-join.json and under `notDrawn` in this app's own
+   * file, and the emptyNote below names it, because a reader standing on it
+   * gets that sentence: scripts/build_tribal_areas.py --check fails if this
+   * page stops naming it.
+   *
+   * THE MASHPEE CARD LINKS THE TRIBE'S OWN SITE, NOT THE BUREAU'S ADDRESS.
+   * The address the Bureau of Indian Affairs lists, mashpeewampanoagtribe.com,
+   * served a blog about museums on 2026-11-13, so by Adam's ruling of that
+   * day ("withdraw") the card links mashpeewampanoagtribe-nsn.gov, read the
+   * same day (`websiteWithdrawn` in the join).
+   *
+   * WHO THE CARD NAMES. Nobody yet. This app has not yet read the council
+   * lists the two tribes publish, so their cards say so and link each
+   * tribe's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py).
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Massachusetts are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes ma/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Kansas's has.
+  var loadMaTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadMaTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land by
+    // the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      if (!hasRoster) return null;
+      var wrap = cardEl("div");
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is on none of the tribal land this map draws. Massachusetts has 2 tribal areas drawn here, the trust land of the Mashpee Wampanoag Tribe, in Mashpee and Taunton, and of the Wampanoag Tribe of Gay Head (Aquinnah), on Martha's Vineyard. The Hassanamisco Reservation in Grafton, a state reservation of about five acres, is not drawn: this app could not read a state law or a state agency's page that names the tribe that holds it."
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18681,7 +18809,7 @@ function initMassachusettsExplorer() {
   var LAYER_SIDEBAR_RANK = ["us-house", "ma-senate", "ma-house",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};

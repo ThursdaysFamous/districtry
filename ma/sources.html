@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 3 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1227,6 +1227,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ma-house-members.json, rebuilt weekly by CI from the General Court's own member table (malegislature.gov/Legislators/Members/House): each representative's name, party, State House room and telephone, General Court e-mail address and page. A district the table lists as vacant ships as a vacant seat with the date it was read (three on 2026-11-12).</td>
                 <td data-label="Where it applies">Massachusetts — statewide, all 160 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land this map draws, and which nation's government answers for it — Massachusetts has 2 such areas, the trust lands of the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), both seated in Massachusetts. A third piece the Census keeps, the Hassanamisco Reservation in Grafton, a state reservation, is not drawn.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No council is named yet. Each tribe publishes its own council, and this app has not yet read those pages, so each card says so and links the tribe's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Massachusetts — the 2 pieces of trust land above, in Mashpee, Taunton and Aquinnah. Every other point in the state is on no tribal land this map draws; the Hassanamisco Reservation in Grafton, a state reservation of about five acres, is not drawn, because this project could not read a state law or a state agency's page that names the tribe that holds it.</td>
               </tr>
             </tbody>
           </table>
@@ -1584,6 +1595,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Massachusetts. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ma/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land this map draws, and which nation's government answers for it — Massachusetts has 2 such areas, the trust lands of the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), both seated in Massachusetts. A third piece the Census keeps, the Hassanamisco Reservation in Grafton, a state reservation, is not drawn. No council is named yet. Each tribe publishes its own council, and this app has not yet read those pages, so each card says so and links the tribe's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/ma/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ma/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Massachusetts — the 2 pieces of trust land above, in Mashpee, Taunton and Aquinnah. Every other point in the state is on no tribal land this map draws; the Hassanamisco Reservation in Grafton, a state reservation of about five acres, is not drawn, because this project could not read a state law or a state agency's page that names the tribe that holds it"
       }
     },
     {

@@ -254,6 +254,7 @@ def _problems(doc, govs, instance_states):
                     "leaves out — it should not be in this table"
                     % (where, land.get("name"), km2, share)
                 )
+    out.extend(_not_drawn_problems(doc, covered, ta))
     # One government, one site: a nation whose Bureau address is withdrawn on
     # one of its cards and linked on another would contradict itself.
     said = {}
@@ -265,6 +266,62 @@ def _problems(doc, govs, instance_states):
         if len({r[1] for r in rows}) > 1:
             out.append("%s: its entries %s do not agree about withdrawing the Bureau's "
                        "site" % (gov, ", ".join(r[0] for r in rows)))
+    return out
+
+
+def _not_drawn_problems(doc, covered, ta):
+    """Land the Census keeps for a government and this map leaves off
+    (`landsNotDrawn`).
+
+    Adam ruled on 2026-11-13 ("federal") that Massachusetts's two trust lands
+    are drawn and the Hassanamisco (state) Reservation is left off, because no
+    state law or state agency's page naming the tribe that holds it could be
+    read. Leaving land off is a claim of this project's, so the record must
+    say which piece, when it was looked at, why, and whose ruling it is. Only
+    a state reservation may be recorded: every other class a government holds
+    has a government in the Bureau's own list, so leaving one off would be an
+    omission rather than a ruling. The piece must be one the cross-state
+    floor keeps, its state must be covered, and its code must not also be
+    joined to a government, or the table would say two things about one
+    piece of land."""
+    import re
+    out = []
+    table = doc.get("landsNotDrawn")
+    if table is None:
+        return out
+    if not isinstance(table, dict) or not table:
+        return ["landsNotDrawn is present and records nothing — remove it"]
+    if list(table) != sorted(table):
+        out.append("landsNotDrawn is not sorted by code")
+    areas = doc.get("areas") or {}
+    for code, land in table.items():
+        where = "land not drawn %s" % code
+        if not (len(code) == 4 and code.isdigit()):
+            out.append("%s: not a four-digit AIANNH code" % where)
+        if code in areas:
+            out.append("%s: is also joined to a government, so the table says both that "
+                       "it is drawn and that it is not" % where)
+        for key in ("class", "geoid", "name", "state", "read", "why", "ruling"):
+            if not land.get(key):
+                out.append("%s: carries no %r" % (where, key))
+        extra = set(land) - {"class", "geoid", "name", "state", "km2", "share", "read",
+                             "why", "ruling"}
+        if extra:
+            out.append("%s: carries unknown keys %s" % (where, sorted(extra)))
+        if land.get("class") != "state-reservation":
+            out.append("%s: only a state reservation may be left off; a %r has a "
+                       "government in the Bureau's list" % (where, land.get("class")))
+        if land.get("state") not in covered:
+            out.append("%s: recorded in %r, which this table does not claim to cover"
+                       % (where, land.get("state")))
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(land.get("read") or "")):
+            out.append("%s: its read date is not YYYY-MM-DD" % where)
+        km2, share = land.get("km2"), land.get("share")
+        if km2 is None or share is None:
+            out.append("%s: carries no measurement" % where)
+        elif not (km2 > 0 and (share >= ta.KEEP_SHARE or km2 >= ta.KEEP_AREA_KM2)):
+            out.append("%s: is recorded at %s km2 / %s of the area, which the floor leaves "
+                       "out — it needs no record here" % (where, km2, share))
     return out
 
 
@@ -421,6 +478,9 @@ def check():
     pending = doc.get("statesNotYetCovered") or []
     if pending:
         print("   not yet covered: %s" % ", ".join(pending))
+    for code, land in sorted((doc.get("landsNotDrawn") or {}).items()):
+        print("   not drawn, by ruling: %s %s in %s (%s km2)"
+              % (code, land["name"], land["state"], land["km2"]))
     return 0
 
 
@@ -438,6 +498,7 @@ def measure():
 
     missing, extra = [], []
     seen = set()
+    not_drawn = doc.get("landsNotDrawn") or {}
     for state in doc["statesCovered"]:
         poly, geoid = ta.state_polygon(state)
         print("control OK: %s is state code %s" % (state, geoid))
@@ -454,6 +515,12 @@ def measure():
                 props = feat.get("properties") or {}
                 code = props.get("AIANNH")
                 name = props.get("NAME")
+                left_off = not_drawn.get(code)
+                if left_off and (left_off["class"], left_off["state"]) == (cls, state):
+                    seen.add((code, cls, state))
+                    print("NOT DRAWN, as recorded: %s %r in %s (%s km2)"
+                          % (code, name, state, round(got["inside_km2"], 3)))
+                    continue
                 if code not in areas:
                     missing.append((state, cls, code, name, round(got["inside_km2"], 3)))
                     continue
@@ -464,6 +531,10 @@ def measure():
             if key not in seen:
                 extra.append((code, entry.get("government") or " / ".join(entry["governments"]),
                               land["name"], land["state"]))
+
+    for code, land in not_drawn.items():
+        if (code, land["class"], land["state"]) not in seen:
+            extra.append((code, "not drawn", land["name"], land["state"]))
 
     for state, cls, code, name, km2 in missing:
         print("MISSING %s in %s: %s %r (%s km2) has no entry" % (cls, state, code, name, km2))
@@ -507,7 +578,8 @@ def selftest():
         ("an entry with no land",
          lambda d: d["areas"][code].update(lands=[])),
         ("land in a state the table does not claim to cover",
-         lambda d: d["areas"][code]["lands"][0].update(state="Ohio")),
+         lambda d: (d["areas"][code]["lands"][0].update(state="Puerto Rico"),
+                    d["areas"][code].update(states=["Puerto Rico"]))),
         ("land the ruled floor leaves out",
          lambda d: d["areas"][code]["lands"][0].update(km2=0.0001, share=0.0001)),
         ("a land class no government holds",
@@ -571,6 +643,20 @@ def selftest():
          lambda d: d["areas"]["0215"]["websiteWithdrawn"].update(website="http://x.invalid/")),
         ("one government's site withdrawn on one card and linked on another",
          lambda d: d["areas"]["1955"].pop("websiteWithdrawn")),
+        ("land left off the map with no reason",
+         lambda d: d["landsNotDrawn"]["9150"].update(why="")),
+        ("land left off the map with no ruling",
+         lambda d: d["landsNotDrawn"]["9150"].pop("ruling")),
+        ("federal land left off the map",
+         lambda d: d["landsNotDrawn"]["9150"].update(**{"class": "reservation"})),
+        ("land left off the map and joined to a government at once",
+         lambda d: d["areas"].__setitem__("9150", d["areas"][code])),
+        ("land left off the map in a state the table does not cover",
+         lambda d: d["landsNotDrawn"]["9150"].update(state="Puerto Rico")),
+        ("land left off the map that the floor would leave out anyway",
+         lambda d: d["landsNotDrawn"]["9150"].update(km2=0.0001, share=0.0001)),
+        ("an empty table of land left off the map",
+         lambda d: d.update(landsNotDrawn={})),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label

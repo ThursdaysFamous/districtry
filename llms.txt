@@ -357,7 +357,7 @@ All 39 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 14 counties and 351 cities and towns: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Massachusetts Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city, town and school board officials are not named yet; the Data gaps panel says why.
 
-- [Massachusetts district lookup](https://districtry.com/ma/): 12 layers, all 14 counties.
+- [Massachusetts district lookup](https://districtry.com/ma/): 13 layers, all 14 counties.
 - [Who is my U.S. representative?](https://districtry.com/ma/congress.html)
 - [Sources & data layers](https://districtry.com/ma/sources.html)
 - [Who is my MA legislator?](https://districtry.com/ma/state-legislature.html)

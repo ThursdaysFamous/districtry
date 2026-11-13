@@ -183,7 +183,7 @@ prose.
 | fl | 0 | 11 |
 | oh | 0 | 10 |
 | wa | 0 | 11 |
-| ma | 0 | 12 |
+| ma | 0 | 13 |
 | co | 0 | 11 |
 | md | 0 | 10 |
 | al | 0 | 11 |
@@ -531,7 +531,7 @@ measured until the next run describes it.
 | fl | 16 | 13 | 0 |
 | oh | 16 | 11 | 0 |
 | wa | 15 | 12 | 0 |
-| ma | 18 | 11 | 0 |
+| ma | 18 | 12 | 0 |
 | co | 16 | 12 | 0 |
 | md | 16 | 11 | 0 |
 | al | 16 | 12 | 0 |
@@ -552,7 +552,7 @@ measured until the next run describes it.
 | ak | 16 | 12 | 0 |
 | vt | 18 | 11 | 0 |
 | wy | 17 | 12 | 0 |
-| **total** | **1299** | **1519** | **12** |
+| **total** | **1299** | **1520** | **12** |
 
 **258 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
