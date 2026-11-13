@@ -3,18 +3,18 @@
  "state": "Delaware",
  "usSenate": [
   {
-   "name": "Christopher A. Coons",
-   "party": "Democratic",
-   "url": "https://www.coons.senate.gov/",
-   "office": "218 Russell Senate Office Building Washington DC 20510",
-   "phone": "(202) 224-5042"
-  },
-  {
    "name": "Lisa Blunt Rochester",
    "party": "Democratic",
    "url": "https://www.bluntrochester.senate.gov/",
    "office": "513 Hart Senate Office Building Washington DC 20510",
    "phone": "(202) 224-2441"
+  },
+  {
+   "name": "Christopher A. Coons",
+   "party": "Democratic",
+   "url": "https://www.coons.senate.gov/",
+   "office": "218 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5042"
   }
  ],
  "usSenateSource": "https://www.senate.gov/senators/",

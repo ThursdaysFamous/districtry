@@ -59,14 +59,25 @@ So THE SHIPPED FILE IS AN INPUT AS WELL AS THE OUTPUT — the shape
 `build_wi_alderperson_roster.py` for the eighteen councils — and a name is
 carried when, and only when, ALL of these hold:
 
-* THE SCRAPER SAYS `unreachable`. That is the one verdict meaning we could not
-  ASK. `refused` is an access control and a carried copy would be the site's
+* THE SCRAPER SAYS `unreachable` OR `robots-unread`. Those are the two verdicts
+  meaning we could not ASK: the page did not answer, or the site's robots.txt
+  did not (a timeout, a reset, a 5xx), so the page was never requested.
+  `refused` is an access control and a carried copy would be the site's
   data kept alive against its refusal; `missing` (404) and a page that READ and
   did not witness are both the source answering, and carrying either would hide
   a real change in what the municipality publishes. `robots-refused` is the
   site asking not to be read at all, and the Iowa chair rule is explicit that
   it is never carried. The scraper's own comment above `fetch` carries the
   split.
+
+  `robots-unread` JOINED ON 2026-11-13. Until then an unreadable robots.txt
+  arrived as `robots-refused`, and on 2026-11-12 one timeout on
+  www.milwaukee.gov/robots.txt dropped Milwaukee's mayor from the file with the
+  sentence written for a site that has said no. Nobody had said no. Adam's
+  ruling of 2026-09-19, "Preserve data we have already fetched", covers it (his
+  own example was a robots.txt answering HTTP 500), and it closes the question
+  #1271 left open: an unreadable robots.txt is carried and expires like an
+  unreachable page, under every condition below.
 
 WHY A ROBOTS REFUSAL DROPS A NAME HERE AND NOT ON THE COUNTY-BOARD CARD
 ------------------------------------------------------------------------
@@ -123,9 +134,10 @@ EXPECT_MUNIS = 19
 MIN_WITNESSED = 6          # 9 witnessed 2026-09-03; see the docstring
 STATE_FIPS = "55"
 
-# The only scraper verdict that means WE COULD NOT ASK; see the docstring and
-# the comment above `fetch` in wi_municipal_executive_scraper.py.
-CARRY_STATUSES = frozenset(["unreachable"])
+# The scraper verdicts that mean WE COULD NOT ASK: the page did not answer, or
+# the site's robots.txt did not, so the page was never requested. See the
+# docstring and the comment above `fetch` in wi_municipal_executive_scraper.py.
+CARRY_STATUSES = frozenset(["unreachable", "robots-unread"])
 # Sixty days is eight weekly runs — long enough that a municipality behind an
 # address-sensitive CDN survives a run of bad luck, short enough that a site
 # which has genuinely gone away clears within two months. The same figure
@@ -256,8 +268,11 @@ def carry_forward(prior, roster, statuses, layer_names, today):
         roster[geoid] = kept
         carried.append(geoid)
         lines.append("  NOT RE-READ %s: %r kept from the last shipped file, "
-                     "unreachable this run, carried since %s (%d days)"
-                     % (muni, was["name"], stamp, age))
+                     "%s this run, carried since %s (%d days)"
+                     % (muni, was["name"],
+                        "its robots.txt could not be read"
+                        if status == "robots-unread" else "unreachable",
+                        stamp, age))
     return carried, lines
 
 
@@ -321,7 +336,7 @@ def main():
     carried, carry_lines = carry_forward(
         prior, roster, statuses, layer_names, datetime.date.today())
     if len(carried) > MAX_CARRIED:
-        fail("%d municipalities were unreachable and would be carried (%s) — "
+        fail("%d municipalities could not be asked and would be carried (%s) — "
              "that is this end failing, not theirs. The shipped file is left "
              "alone; read the scraper's per-municipality log before raising "
              "MAX_CARRIED (%d)."
@@ -390,6 +405,18 @@ CARRY_CASES = [
     ("robots-refused and fresh and the layer agrees — still not carried",
      dict(NAMED, carriedFrom=TODAY.isoformat()), "robots-refused",
      "Michael J. Neitzke", 0),
+    # robots.txt itself did not answer: nobody said no, so it carries like an
+    # unreachable page and under the same limits (Milwaukee, 2026-11-12).
+    ("robots.txt could not be read, the layer agrees, carry begins today",
+     NAMED, "robots-unread", "Michael J. Neitzke", 1),
+    ("robots.txt could not be read, carried 59 days",
+     dict(NAMED, carriedFrom="2026-07-21"), "robots-unread",
+     "Michael J. Neitzke", 1),
+    ("robots.txt could not be read, carried 61 days — past the limit",
+     dict(NAMED, carriedFrom="2026-07-19"), "robots-unread",
+     "Michael J. Neitzke", 0),
+    ("robots.txt could not be read, but the layer now names somebody else",
+     NAMED, "robots-unread", "Somebody Else", 0),
     ("a verdict this builder does not know",
      NAMED, "something-new", "Michael J. Neitzke", 0),
     ("carriedFrom is not a date",
