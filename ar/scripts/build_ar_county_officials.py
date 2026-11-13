@@ -151,6 +151,19 @@ RESULTS_TITLE = "2024 General Election Results, Justices of the Peace"
 # association's people. The other 17, and why each is held back, are in
 # ar/WATCH.md; 29 counties could not be read at all (no site, a block, or a
 # robots.txt that refuses or cannot be read) and 9 publish no list by district.
+# A 2024 winner whose name the results PDF misspells. The district card prints
+# the results' spelling, and a winner is matched to the association's current
+# list by surname, so a misspelt surname both prints wrong and leaves the
+# district unnamed. Each entry is (county FIPS, district): (the PDF's spelling,
+# the right spelling, why). check_shipped fails once the PDF stops printing the
+# old spelling or the current list stops carrying the new one.
+RESULTS_SPELLING = {
+    ("05009", "7"): ("Rodney Sullivan", "Rodney Sullins",
+                     "Boone County. The association's current list spells him Sullins "
+                     "(read 2026-11-11), and Adam found every other source names him "
+                     "Sullins (2026-11-12)."),
+}
+
 NUMBERED = {
     "05005": {  # Baxter
         "url": "https://www.baxtercountyar.gov/justices.php",
@@ -1135,7 +1148,11 @@ def results_block(results, fips, names, today):
     the winners still on the association's current list, by district, and
     which districts the results cannot name and why. `asOf` is the day the
     comparison was made, which is the day the current list was read."""
-    named, gone, unclear, empty = match_results(results["counties"][fips], names)
+    winners = dict(results["counties"][fips])
+    for (f, d), (wrong, right, _why) in RESULTS_SPELLING.items():
+        if f == fips and d in winners and winners[d].get("name") == wrong:
+            winners[d] = dict(winners[d], name=right)
+    named, gone, unclear, empty = match_results(winners, names)
     return {
         "districts": named,
         "notOnList": gone,
@@ -1192,6 +1209,16 @@ def check_shipped(doc):
         if sorted(int(d) for d in recs) != list(range(1, seats.get(fips, 0) + 1)):
             problems.append("%s: the 2024 results snapshot does not number 1..%r"
                             % (fips, seats.get(fips)))
+    for (f, d), (wrong, right, _why) in RESULTS_SPELLING.items():
+        got = ((results["counties"].get(f) or {}).get(d) or {}).get("name")
+        if got != wrong:
+            problems.append("RESULTS_SPELLING %s district %s: the 2024 results snapshot "
+                            "prints %r, not %r; retire the entry" % (f, d, got, wrong))
+        listed = [j.get("name") for j in ((doc.get(f) or {}).get("quorumCourt") or {})
+                  .get("justices") or []]
+        if right not in listed:
+            problems.append("RESULTS_SPELLING %s district %s: the current list no longer "
+                            "carries %r; re-read it" % (f, d, right))
     for fips, e in doc.items():
         qc = e.get("quorumCourt") or {}
         shipped = qc.get("results")
