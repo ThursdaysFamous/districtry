@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own data: **County** (`county`, all 29, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Utah Senate** and **Utah House** (29 and 75 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member file), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 255 incorporated places), **School District** (41) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own data: **County** (`county`, all 29, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Utah Senate** and **Utah House** (29 and 75 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member file), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 255 incorporated places), **School District** (41) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -60,11 +60,21 @@ elected council where the county has adopted another form of government, and ele
 as a clerk, an assessor, a sheriff, an attorney and a treasurer. Recorded as gaps
 `ut-county-officials` and `ut-municipal-officeholders`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps seven reservations in Utah (the largest the
-Uintah and Ouray Reservation, about 17,671 km2, and the Utah part of the Navajo Nation Reservation,
-about 5,189 km2) and two off-reservation trust lands, measured 2026-11-12 with
-`scripts/tribal_areas.py --report Utah`. The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF SEVEN NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps seven reservations in Utah (the largest the Uintah and Ouray
+Reservation, about 17,671 km2) and two off-reservation trust lands, measured 2026-11-12 with
+`scripts/tribal_areas.py --report Utah`, and all nine pieces are drawn, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it.
+Three reservations cross the state line and are drawn whole: the Navajo Nation's (8.9% of it in
+Utah, about 5,189 km2), seated in Window Rock, Arizona, whose card names the nine tribal
+subdivisions the Census draws on its Utah ground; the Goshute (42% in Utah); and the Ute Mountain
+(1.3% in Utah), seated in Towaoc, Colorado. The Bureau lists no office town for the Confederated
+Tribes of the Goshute Reservation, so its card gives the one the tribe's own site gives, Ibapah,
+says where it came from, and links that site, as Nevada's card for the same land does
+(`seatFromNation`). Drawn whole, the Navajo Nation made the file 2.17 MB, so the land goes through
+one Douglas-Peucker run at 3 m, Arizona's setting, and is 915 KB (240 KB gzipped), the worst stray
+3.3 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). No council is carried
+yet (`ROSTER_NOT_SOUGHT`), recorded in gap `ut-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE UTAH.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -94,7 +104,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Utah (`utah`) — https://districtry.com/ut/
 - Geocoders: address Photon (Utah-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Utah-bounded, serial >=1s queue)
 - Ground truth: 40.77749,-111.88800 (Utah State Capitol, 350 State Street, Salt Lake City, Salt Lake County) → county Salt Lake County; us-house 1; ut-senate 8; ut-house 22. Negative point 41.45000,-110.90000 (Uinta County, Wyoming, north of Evanston and about 12 km east of the Utah line — outside Utah and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Utah), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Utah and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.UtahExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.UtahExplorer`.
 - Scheduled workflows: `update-ut-congress-roster.yml` (Mon 23:19 UTC); `update-ut-legislature-roster.yml` (Tue 23:19 UTC); `ut-validate-sources.yml` (1st of month 23:49 UTC).
 - Source registry: `ut/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

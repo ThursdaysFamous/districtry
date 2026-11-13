@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ut-senate", "ut-house"];
 const EXPECT_DISTRICT = { "county": "Salt Lake County", "us-house": "1", "ut-senate": "8", "ut-house": "22" };
 const NEGATIVE_POINT = "41.45000,-110.90000"; // Uinta County, Wyoming, north of Evanston and about 12 km east of the Utah line — outside Utah and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Utah), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Utah and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Utah";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "UtahExplorer";
@@ -1019,6 +1019,112 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Utah part of the Goshute Reservation is seated at Ibapah from
+  //         the nation's own site, because the Bureau of Indian Affairs lists
+  //         no office town for the tribes; the card says so on an "About the
+  //         seat" line and links that site.
+  //       - The Utah part of the Navajo Nation Reservation names a nation the
+  //         Bureau seats at Window Rock, Arizona, and its districts line names
+  //         the nine tribal subdivisions the Census draws on its ground here.
+  //       - The Uintah and Ouray Reservation is the ordinary case: the
+  //         Bureau's town and site, and no "About the seat" line.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 4.6 km, 14.5 km and 39.8 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const GOSHUTE = "39.85232,-113.99371";
+    const NAVAJO = "37.16204,-109.20824";
+    const UINTAH_OURAY = "40.33461,-110.54080";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, GOSHUTE);
+      const p = land[0] || {};
+      const c = await at(GOSHUTE);
+      check("the Utah part of the Goshute Reservation is seated at Ibapah from the nation's own site, says so, and links that site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Confederated Tribes of the Goshute Reservation, Nevada and Utah" &&
+          c.by("Land") === "Goshute Reservation" &&
+          c.by("Seat of government") === "Ibapah, UT" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
+          p.url === "https://ctgr.us/home/" &&
+          p.shareInState < 1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, NAVAJO);
+      const p = land[0] || {};
+      const c = await at(NAVAJO);
+      check("the Utah part of the Navajo Nation Reservation names a nation seated in Arizona and the tribal subdivisions drawn there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Navajo Nation, Arizona, New Mexico & Utah" &&
+          c.by("Land") === "Navajo Nation Reservation" &&
+          c.by("Seat of government") === "Window Rock, AZ" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.shareInState < 1 &&
+          (p.districts || []).length === 9 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, UINTAH_OURAY);
+      const p = land[0] || {};
+      const c = await at(UINTAH_OURAY);
+      check("the Uintah and Ouray Reservation takes the Bureau's town and site and carries no note about its seat",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Ute Indian Tribe of the Uintah & Ouray Reservation, Utah" &&
+          c.by("Land") === "Uintah and Ouray Reservation" &&
+          c.by("Seat of government") === "Ft. Duchesne, UT" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          !p.seatNote && c.labels.indexOf("About the seat") === -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("9 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

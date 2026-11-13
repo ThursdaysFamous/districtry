@@ -13,6 +13,7 @@ The national tier, both chambers of the General Assembly named from its own data
 | **Political** | U.S. House District (8) | U.S. Census TIGERweb boundary, layer 0 (the same map as layer 4) (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Colorado Senate District (35) | TIGERweb's 2026 state legislative districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the General Assembly's own legislator list, refreshed weekly by CI |
 | | Colorado House District (65) | TIGERweb's 2026 state legislative districts (pre-built) + the same roster |
+| | Tribal Government (2) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; no council is named yet |
 | **Schools** | School District (Unified) | TIGERweb unified school districts, from a tile archive; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (64) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | City or Town | TIGERweb incorporated places, from a tile archive; most of the state is in none, and an empty card says the county governs there |

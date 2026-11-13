@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1227,6 +1227,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">co-house-members.json, rebuilt weekly by CI from the General Assembly's own legislator list (leg.colorado.gov/legislators): each representative's name, party, Capitol office and telephone, General Assembly e-mail address and page.</td>
                 <td data-label="Where it applies">Colorado — statewide, all 65 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Colorado has 2 such areas, the Southern Ute and Ute Mountain reservations, held by the Southern Ute Indian Tribe and the Ute Mountain Ute Tribe, both seated in Colorado.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No council is named yet. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no website for either nation; this app has not read a council list for either, so each card says so and links nothing (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Colorado — the 2 reservations above, in La Plata, Archuleta and Montezuma counties. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1518,6 +1529,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Colorado — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/co/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Colorado has 2 such areas, the Southern Ute and Ute Mountain reservations, held by the Southern Ute Indian Tribe and the Ute Mountain Ute Tribe, both seated in Colorado. No council is named yet. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no website for either nation; this app has not read a council list for either, so each card says so and links nothing (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/co/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/co/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Colorado — the 2 reservations above, in La Plata, Archuleta and Montezuma counties. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

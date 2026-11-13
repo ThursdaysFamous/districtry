@@ -1182,6 +1182,11 @@ def stamp_rosters():
 # triangle in New Mexico about 40 m long and 6 m wide); at 3 m every part and
 # every ring of all 28 pieces survives and the worst stray is 3.0 m, for a
 # 1.44 MB file against 3.93 MB as published (386 KB against 981 KB gzipped).
+# Utah takes Arizona's setting for the same land: the Navajo Nation's whole
+# reservation is drawn on Utah's map as on Arizona's, and as published Utah's
+# nine pieces came to 2.17 MB; at 3 m they are 915 KB (240 KB gzipped) and the
+# worst stray is 3.3 m, on the Uintah and Ouray Reservation (measured
+# 2026-11-13).
 MAPSHAPER = "mapshaper@0.6.102"
 SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0},
             "Arizona": {"interval": "interval=3", "ceiling_m": 25.0},

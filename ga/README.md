@@ -13,6 +13,7 @@ The national tier, and the three district maps the General Assembly enacted in D
 | **Political** | U.S. House District (14) | The General Assembly's own shapefile of the 2023 congressional plan, the map the November 2026 election uses too (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Georgia Senate District (56) | The General Assembly's own shapefile of the 2023 Senate plan (pre-built, 2,000-point agreement gate and an 8 m fidelity ceiling) + the General Assembly's own member data: name, party, Capitol office, telephone and e-mail address, and a vacant seat named as vacant |
 | | Georgia House District (180) | The General Assembly's own shapefile of the 2023 House plan + the same member data |
+| | Tribal Government (1) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it, and a state reservation to the state's own recognition; no council is named yet |
 | **Schools** | School District (181) | TIGERweb unified school districts, which cover the whole state but Fort Benning; identity only, recorded as a gap |
 | **Geography** | County (159) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no commissioner named yet, recorded as a gap |
 | | Census County Division | TIGERweb county subdivisions; Georgia has no township governments, and the card says so |
