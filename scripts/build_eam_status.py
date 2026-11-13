@@ -3540,9 +3540,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "New
         # Mexico": the Census keeps 24 reservations and 13 off-reservation trust
-        # lands in New Mexico, and the app draws no tribal land yet
-        # (nm/WATCH.md).
-        "tribal-government": OPEN,
+        # lands in New Mexico,
+        # drawn since 2026-11-13, held by 24 nations, the Navajo Nation's
+        # reservation whole and simplified; no council is named yet
+        # (gap nm-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ne": {
         "us-house": answers("us-house"),
@@ -3571,8 +3573,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Nebraska:
         # the Census keeps 6 reservations and 3 off-reservation trust lands in
-        # Nebraska, and the app draws no tribal land yet (ne/WATCH.md).
-        "tribal-government": OPEN,
+        # Nebraska,
+        # drawn since 2026-11-13, held by 7 nations, and the Winnebago Tribe's
+        # council named from its own page; the other six councils are not named
+        # yet (gap ne-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "id": {
         "us-house": answers("us-house"),
@@ -3605,8 +3610,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Idaho: the
         # Census keeps 5 reservations and 2 off-reservation trust lands in
-        # Idaho, and the app draws no tribal land yet (id/WATCH.md).
-        "tribal-government": OPEN,
+        # Idaho,
+        # drawn since 2026-11-13, held by 5 nations, the Duck Valley
+        # Reservation seated at Owyhee from the tribes' own site; no council is
+        # named yet (gap id-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "hi": {
         "us-house": answers("us-house"),
@@ -3688,8 +3696,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Maine: the
         # Census keeps 4 reservations and 4 off-reservation trust lands in
-        # Maine, and the app draws no tribal land yet (me/WATCH.md).
-        "tribal-government": OPEN,
+        # Maine,
+        # drawn since 2026-11-13, held by 4 nations and 5 governments; no
+        # council is named yet (gap me-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "mt": {
         "us-house": answers("us-house"),
@@ -3721,8 +3731,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Montana: the
         # Census keeps 7 reservations and 7 off-reservation trust lands in
-        # Montana, and the app draws no tribal land yet (mt/WATCH.md).
-        "tribal-government": OPEN,
+        # Montana,
+        # drawn since 2026-11-13, held by 8 nations; no council is named yet
+        # (gap mt-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ri": {
         "us-house": answers("us-house"),
@@ -3754,9 +3766,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "Rhode
         # Island": the Census keeps 1 reservation and no off-reservation trust
-        # land in Rhode Island, and the app draws no tribal land yet
-        # (ri/WATCH.md).
-        "tribal-government": OPEN,
+        # land in Rhode Island,
+        # drawn since 2026-11-13, the Narragansett Reservation held by the
+        # Narragansett Indian Tribe; no council is named yet
+        # (gap ri-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "sd": {
         "us-house": answers("us-house"),
@@ -3785,9 +3799,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "South
         # Dakota": the Census keeps 9 reservations and 7 off-reservation trust
-        # lands in South Dakota, and the app draws no tribal land yet
-        # (sd/WATCH.md).
-        "tribal-government": OPEN,
+        # lands in South Dakota,
+        # drawn since 2026-11-13, held by 12 nations, and the Shakopee
+        # Mdewakanton Sioux Community's council named from its own page; the
+        # other eleven councils are not named yet (gap sd-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "nd": {
         "us-house": answers("us-house"),
@@ -3815,9 +3831,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "North
         # Dakota": the Census keeps 5 reservations and 2 off-reservation trust
-        # lands in North Dakota, and the app draws no tribal land yet
-        # (nd/WATCH.md).
-        "tribal-government": OPEN,
+        # lands in North Dakota,
+        # drawn since 2026-11-13, held by 5 nations; no council is named yet
+        # (gap nd-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ak": {
         "us-house": answers("us-house"),
@@ -3851,8 +3868,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alaska: the
         # Census keeps 1 reservation and no off-reservation trust land in
-        # Alaska, and the app draws no tribal land yet (ak/WATCH.md).
-        "tribal-government": OPEN,
+        # Alaska,
+        # drawn since 2026-11-13, the Annette Island Reserve held by the
+        # Metlakatla Indian Community; no council is named yet
+        # (gap ak-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "vt": {
         "us-house": answers("us-house"),
@@ -3918,8 +3938,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Wyoming: the
         # Census keeps 1 reservation and 1 off-reservation trust land in
-        # Wyoming, and the app draws no tribal land yet (wy/WATCH.md).
-        "tribal-government": OPEN,
+        # Wyoming,
+        # drawn since 2026-11-13, the Wind River Reservation and its trust land
+        # held by the Eastern Shoshone and Northern Arapaho tribes together; no
+        # council is named yet (gap wy-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "de": {
         "us-house": answers("us-house"),

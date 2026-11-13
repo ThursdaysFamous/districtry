@@ -31,6 +31,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -423,6 +424,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -734,6 +736,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -916,6 +919,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -983,6 +987,7 @@
         "post-office",
         "school-district-elementary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1010,6 +1015,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1102,6 +1108,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1352,6 +1359,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1416,6 +1424,7 @@
         "school-district-unified",
         "sd-house",
         "sd-senate",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1728,6 +1737,7 @@
         "post-office",
         "school-district-elementary",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "wy-house",
         "wy-senate",

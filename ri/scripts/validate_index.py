@@ -96,8 +96,8 @@ MIN_REGISTER_LAYER = 10
 EXPECT_LAYER_IDS = [
     "us-house", "county", "school-district-secondary",
     "school-district-elementary", "ri-senate", "municipality",
-    "school-district-unified", "ri-house", "zip-code", "police-station",
-    "fire-station", "post-office",
+    "school-district-unified", "ri-house", "zip-code", "tribal-government",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +108,7 @@ GEOMETRY_FILES = {
     "ri-senate-districts.json": (38, 38),  # The 38 Rhode Island Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper).
     "ri-house-districts.json": (75, 75),  # The 75 Rhode Island House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (81, 81),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (1, 1),  # Rhode Island's tribal land (scripts/build_tribal_areas.py) — the Narragansett Reservation, at the Census's own detail (34 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

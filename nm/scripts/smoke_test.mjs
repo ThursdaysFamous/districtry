@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "nm-senate", "nm-house"];
 const EXPECT_DISTRICT = { "county": "Santa Fe County", "us-house": "3", "nm-senate": "25", "nm-house": "47" };
 const NEGATIVE_POINT = "31.25000,-108.60000"; // Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry New Mexico";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NewMexicoExplorer";
@@ -1055,6 +1055,110 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Fort Sill Apache Indian Reservation, 0.121 km² in Luna County,
+  //         names a tribe the Bureau of Indian Affairs seats at Apache,
+  //         Oklahoma, and links its site.
+  //       - Nambe Pueblo takes the town the Bureau gives, Santa Fe, and the
+  //         Bureau lists no site for the pueblo, so the card links nothing.
+  //       - The New Mexico part of the Navajo Nation Reservation names a
+  //         nation seated in Arizona and the 54 chapters the Census draws on
+  //         its ground here.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 141 m, 3.3 km and 34.8 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const FORT_SILL = "32.24134,-107.42220";
+    const NAMBE = "35.88465,-105.95435";
+    const NAVAJO = "36.25684,-108.65850";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, FORT_SILL);
+      const p = land[0] || {};
+      const c = await at(FORT_SILL);
+      check("the Fort Sill Apache Indian Reservation names a tribe seated in Oklahoma and links its site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Fort Sill Apache Tribe of Oklahoma" &&
+          c.by("Land") === "Fort Sill Apache Indian Reservation" &&
+          c.by("Seat of government") === "Apache, OK" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, NAMBE);
+      const p = land[0] || {};
+      const c = await at(NAMBE);
+      check("Nambe Pueblo takes the Bureau's town, Santa Fe, links nothing, and says why it names nobody",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Pueblo of Nambe, New Mexico" &&
+          c.by("Land") === "Nambe Pueblo" &&
+          c.by("Seat of government") === "Santa Fe, NM" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          p.url === null && c.link.text === "" && !c.text.includes("(official)") &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("no site of the nation's own") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, NAVAJO);
+      const p = land[0] || {};
+      const c = await at(NAVAJO);
+      check("the New Mexico part of the Navajo Nation Reservation names a nation seated in Arizona and its 54 chapters there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Navajo Nation, Arizona, New Mexico & Utah" &&
+          c.by("Land") === "Navajo Nation Reservation" &&
+          c.by("Seat of government") === "Window Rock, AZ" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.shareInState < 1 &&
+          c.by("Population") === p.populationNote &&
+          p.populationNote.indexOf("lies in New Mexico") !== -1 &&
+          (p.districts || []).length === 54 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("37 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

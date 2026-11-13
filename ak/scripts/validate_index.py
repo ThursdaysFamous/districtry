@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ak-senate", "county", "ak-house", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "zip-code", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "ak-senate-districts.json": (20, 20),  # The 20 Alaska Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper), simplified in one topology with the House districts.
     "ak-house-districts.json": (40, 40),  # The 40 Alaska House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower), simplified in one topology with the Senate districts.
     "zip-index.json": (244, 244),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (1, 1),  # Alaska's tribal land (scripts/build_tribal_areas.py) — the Annette Island Reserve, at the Census's own detail (18 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

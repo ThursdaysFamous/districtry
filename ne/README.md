@@ -12,6 +12,7 @@ The national tier, its one chamber of the Legislature named from the Legislature
 |---|---|---|
 | **Political** | U.S. House District (3) | U.S. Census TIGERweb boundary, layer 0 (the same map as layer 4) (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Nebraska Legislature District (49) | TIGERweb's 2026 upper-house districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the Legislature's own senator pages, refreshed weekly by CI; nonpartisan, so no party is shown |
+| | Tribal Government (9) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; the Winnebago Tribe's council from its own page, refreshed weekly by CI |
 | **Schools** | School District (Unified) | TIGERweb unified school districts, from a tile archive; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (93) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | City or Village | TIGERweb incorporated places, from a tile archive; most of the state is in none, and an empty card says so |

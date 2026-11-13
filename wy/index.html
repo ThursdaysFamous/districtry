@@ -4612,8 +4612,8 @@ function initWyomingExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "county": "co", "wy-senate": "wys",
     "school-district-unified": "su", "wy-house": "wyh", "zip-code": "zp",
-    "school-district-elementary": "se", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "school-district-elementary": "se", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4623,7 +4623,7 @@ function initWyomingExplorer() {
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11496,6 +11496,7 @@ function initWyomingExplorer() {
     "zip-code",          // 180 ZIP Code Tabulation Areas that reach into Wyoming (233 in the app's bounding box), about 1,397 km2 of land on average, drawn from a tile archive of the ones inside the state; the layer hides outside it
     "school-district-elementary", // 1 elementary district, about 216 km2 of land on average, drawn from a mirrored tile archive; the ground the unified districts leave
     "municipality",      // 99 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Wyoming has 2 pieces, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Wind River Reservation (9,128.7 km², Fremont and Hot Springs counties) and its trust land (20.4 km², Hot Springs County), both held by the Eastern Shoshone Tribe and the Northern Arapaho Tribe together. The Census draws no tribal district on either. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16728,6 +16729,134 @@ function initWyomingExplorer() {
   });
 
 
+  /* ---------- 7a. Tribal Government — Wyoming's tribal land, 2 pieces, 2 nations.
+   *
+   * One reservation and one piece of off-reservation trust land, measured
+   * 2026-11-13 by scripts/build_tribal_areas.py, with the counties measured
+   * against this app's own county outlines: the Wind River Reservation
+   * (9,128.7 km², Fremont and Hot Springs counties; 25,757 people at the 2020
+   * census) and its trust land (20.4 km² in six parts, Hot Springs County).
+   * The Census draws no tribal district on either.
+   *
+   * BOTH PIECES BELONG TO TWO NATIONS. The Eastern Shoshone Tribe, seated at
+   * Fort Washakie, and the Northern Arapaho Tribe, seated at Ethete, share
+   * the reservation, and the Bureau of Indian Affairs lists each separately,
+   * so each card names both governments, lists each one's seat and site, and
+   * carries no single link, as Oregon's Celilo Village card does.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so the card says so
+   * (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py).
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Wyoming are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes wy/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Kansas's has.
+  var loadWyTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadWyTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      // On both pieces, which the Eastern Shoshone Tribe and the Northern
+      // Arapaho Tribe hold together: each one's name, seat and site, listed
+      // under the card below.
+      { name: "nations", label: "", keys: ["nations"], when: function () { return false; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here. A shared area has no single link; each
+    // government's is on its own row below.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // EVERY GOVERNMENT ON A SHARED AREA, each with its own seat and site; and
+    // THE COUNCIL, where the nation's own page names it, merged onto the land by
+    // the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var nations = (result && result.nations) || [];
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      if (!nations.length && !hasRoster) return null;
+      var wrap = cardEl("div");
+      if (nations.length) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Governments",
+          note: nations.length + " governments share this land"
+        }));
+        wrap.appendChild(renderPersonRows(nations.map(function (n) {
+          var person = { name: String(n.name) };
+          if (n.seat) person.note = "Seat: " + String(n.seat);
+          if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
+          return person;
+        })));
+      }
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Wyoming has 2 tribal areas, the Wind River Reservation and its off-reservation trust land, which the Eastern Shoshone Tribe and the Northern Arapaho Tribe hold together, and this point is on neither of them."
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18621,7 +18750,7 @@ function initWyomingExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "wy-senate", "wy-house",
     "school-district-unified", "school-district-elementary", "county",
-    "municipality", "zip-code", "police-station",
+    "municipality", "zip-code", "tribal-government", "police-station",
     "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19138,11 +19267,11 @@ function initWyomingExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
-    "#D19133": "#FFD6A3"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

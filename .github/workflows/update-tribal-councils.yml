@@ -84,6 +84,16 @@ jobs:
           python3 ks/scripts/validate_index.py ks/index.html
           python3 or/scripts/validate_index.py or/index.html
           python3 ut/scripts/validate_index.py ut/index.html
+          python3 nm/scripts/validate_index.py nm/index.html
+          python3 ne/scripts/validate_index.py ne/index.html
+          python3 id/scripts/validate_index.py id/index.html
+          python3 me/scripts/validate_index.py me/index.html
+          python3 mt/scripts/validate_index.py mt/index.html
+          python3 ri/scripts/validate_index.py ri/index.html
+          python3 sd/scripts/validate_index.py sd/index.html
+          python3 nd/scripts/validate_index.py nd/index.html
+          python3 ak/scripts/validate_index.py ak/index.html
+          python3 wy/scripts/validate_index.py wy/index.html
 
       - name: Check for changes
         id: diff

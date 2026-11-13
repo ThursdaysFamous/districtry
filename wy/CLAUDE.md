@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own member feed: **County** (`county`, all 23, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Wyoming Senate** and **Wyoming House** (31 and 62 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member feed), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 99 incorporated places), **School District (Unified)** and **(Elementary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own member feed: **County** (`county`, all 23, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Wyoming Senate** and **Wyoming House** (31 and 62 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member feed), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 99 incorporated places), **School District (Unified)** and **(Elementary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -65,10 +65,15 @@ is empty. Each county is governed by an elected board of county commissioners an
 as a clerk, a treasurer, an assessor, a sheriff and a county attorney. Recorded as gap
 `wy-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps the Wind River Reservation (9,128.7 km2), shared by the
-Eastern Shoshone Tribe and the Northern Arapaho Tribe, and its trust land (20.4 km2) in Wyoming
-(`scripts/tribal_areas.py --report Wyoming`, 2026-11-12). The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE WIND RIVER RESERVATION AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps the Wind River Reservation (9,128.7 km2)
+and its trust land (20.4 km2) in Wyoming, measured 2026-11-12 with `scripts/tribal_areas.py --report
+Wyoming`. Both are drawn and held by two nations together, which the Bureau of Indian Affairs lists
+separately, so each piece is joined in `data/tribal-government-join.json` to both, and its card
+names the Eastern Shoshone Tribe (Fort Washakie) and the Northern Arapaho Tribe (Ethete), each with
+its seat and site, and carries no single link, as Oregon's card for Celilo Village does. No council
+is carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap
+`wy-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE WYOMING.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -98,7 +103,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Wyoming (`wyoming`) — https://districtry.com/wy/
 - Geocoders: address Photon (Wyoming-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Wyoming-bounded, serial >=1s queue)
 - Ground truth: 41.14010,-104.82024 (Wyoming State Capitol, 200 West 24th Street, Cheyenne, Laramie County) → county Laramie County; us-house Congressional District (at Large); wy-senate 8; wy-house 11. Negative point 40.85000,-105.40000 (Larimer County, Colorado, south of the Wyoming line — outside Wyoming and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Colorado here (control: the Wyoming State Capitol returns Wyoming), none of the state's shipped boundary files contains it, and of every outline in the fleet only Colorado's does (Colorado went live in batch 3 of the state-level launch). Wyoming borders no water and no other country, and every one of its neighbours (Montana, South Dakota, Nebraska, Colorado, Utah and Idaho) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 11 registered (political 3, safety 2, schools 2, geography 4); `registerLayer(` floor 9. Debug namespace `window.WyomingExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 2, geography 4); `registerLayer(` floor 9. Debug namespace `window.WyomingExplorer`.
 - Scheduled workflows: `update-wy-congress-roster.yml` (Wed 23:51 UTC); `update-wy-legislature-roster.yml` (Thu 23:51 UTC); `wy-validate-sources.yml` (2nd of month 23:51 UTC).
 - Source registry: `wy/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

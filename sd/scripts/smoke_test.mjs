@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "sd-senate", "sd-house"];
 const EXPECT_DISTRICT = { "county": "Hughes County", "us-house": "Congressional District (at Large)", "sd-senate": "24", "sd-house": "24" };
 const NEGATIVE_POINT = "46.05000,-100.10000"; // Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry South Dakota";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "SouthDakotaExplorer";
@@ -1031,6 +1031,132 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The South Dakota part of the Shakopee Mdewakanton Sioux
+  //         Off-Reservation Trust Land names the community's Business Council
+  //         from the councils file, the list Minnesota's card names, and keeps
+  //         naming the community with nobody on its council when that file
+  //         fails.
+  //       - The Pine Ridge Reservation names the Oglala Sioux Tribe and the
+  //         eight districts the Census draws there.
+  //       - The South Dakota part of the Standing Rock Reservation names a
+  //         tribe the Bureau seats at Fort Yates, North Dakota, and the five
+  //         districts drawn on its ground here.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 857 m, 28.9 km and 26.1 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
+    const SHAKOPEE = "44.06298,-103.78668";
+    const PINE_RIDGE = "43.35373,-101.58525";
+    const STANDING_ROCK = "45.70794,-101.60239";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, SHAKOPEE);
+      const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(SHAKOPEE);
+      check("the Shakopee Mdewakanton trust land names the community, its seat in Minnesota and its whole council, and where the names come from",
+        land.length === 1 && council.length > 0 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Shakopee Mdewakanton Sioux Community of Minnesota" &&
+          c.by("Seat of government") === "Prior Lake, MN" &&
+          c.by("Land") === "Shakopee Mdewakanton Sioux Off-Reservation Trust Land" &&
+          council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
+          !!p.url && c.link.text === p.nation + " (official)" &&
+          p.shareInState < 1,
+        `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const p = propsAt(areas, SHAKOPEE)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(SHAKOPEE, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Shakopee Mdewakanton Sioux Community of Minnesota" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, PINE_RIDGE);
+      const p = land[0] || {};
+      const c = await at(PINE_RIDGE);
+      check("the Pine Ridge Reservation names the Oglala Sioux Tribe and the eight districts drawn there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Oglala Sioux Tribe" &&
+          c.by("Land") === "Pine Ridge Reservation" &&
+          c.by("Seat of government") === "Pine Ridge, SD" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          (p.districts || []).length === 8 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, STANDING_ROCK);
+      const p = land[0] || {};
+      const c = await at(STANDING_ROCK);
+      check("the South Dakota part of the Standing Rock Reservation names a tribe seated in North Dakota and the five districts drawn there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Standing Rock Sioux Tribe of North & South Dakota" &&
+          c.by("Land") === "Standing Rock Reservation" &&
+          c.by("Seat of government") === "Fort Yates, ND" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.shareInState < 1 &&
+          c.by("Population") === p.populationNote &&
+          p.populationNote.indexOf("lies in South Dakota") !== -1 &&
+          (p.districts || []).length === 5 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("16 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

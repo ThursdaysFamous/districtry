@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own member pages: **County** (`county`, all 33, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (3 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **New Mexico Senate** and **New Mexico House** (42 and 70 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City, Town or Village** (`municipality`, 105 incorporated places), **School District** (89 unified districts) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own member pages: **County** (`county`, all 33, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (3 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **New Mexico Senate** and **New Mexico House** (42 and 70 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City, Town or Village** (`municipality`, 105 incorporated places), **School District** (89 unified districts) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -63,11 +63,24 @@ is empty. Each county is governed by an elected board of county commissioners an
 as a clerk, a treasurer, an assessor, a sheriff and a probate judge; Los Alamos is the exception above.
 Recorded as gap `nm-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps 24 reservations and 13 off-reservation trust lands in
-New Mexico (`scripts/tribal_areas.py --report "New Mexico"`, 2026-11-12), among them the New Mexico part
-of the Navajo Nation Reservation (11,376.8 km2, 19.5% of it) and its trust land (4,869.5 km2), the
-Jicarilla Apache Nation and Mescalero reservations and the land of the 19 pueblos. The state is recorded
-as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 24 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps 24 reservations and 13 off-reservation trust lands in New
+Mexico, measured 2026-11-12 with `scripts/tribal_areas.py --report "New Mexico"`: the land of the 19
+pueblos, the Jicarilla Apache Nation's and Mescalero Apache Tribe's reservations, the Fort Sill
+Apache Indian Reservation (0.121 km2, Luna County), and the New Mexico parts of the Navajo Nation
+(11,376.8 km2, 19.5% of the reservation, and 4,869.5 km2 of trust land), Ute Mountain and Zuni
+reservations. All 37 pieces are drawn, the four that cross the state line whole, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it.
+Three nations are seated outside the state: the Navajo Nation at Window Rock, Arizona, whose card
+names the 54 chapters the Census draws on its New Mexico ground; the Ute Mountain Ute Tribe at
+Towaoc, Colorado; and the Fort Sill Apache Tribe at Apache, Oklahoma. The Bureau gives Santa Fe as
+the town for the pueblos of Nambe, Pojoaque, San Ildefonso and Tesuque, whose land lies north of the
+city, and the cards give it as the Bureau does. The Bureau lists a website for only three of the 24
+nations, so the other cards link none and say so. Drawn whole, the Navajo Nation made the file 3.63
+MB, so the land goes through one Douglas-Peucker run at 3 m and is 1.30 MB (343 KB gzipped), the
+worst stray 3.5 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). No council
+is carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap
+`nm-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NEW MEXICO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -100,7 +113,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: New Mexico (`newmexico`) — https://districtry.com/nm/
 - Geocoders: address Photon (New Mexico-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, New Mexico-bounded, serial >=1s queue)
 - Ground truth: 35.68226,-105.93964 (New Mexico State Capitol, 490 Old Santa Fe Trail, Santa Fe, Santa Fe County) → county Santa Fe County; us-house 3; nm-senate 25; nm-house 47. Negative point 31.25000,-108.60000 (Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NewMexicoExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NewMexicoExplorer`.
 - Scheduled workflows: `update-nm-congress-roster.yml` (Wed 22:05 UTC); `update-nm-legislature-roster.yml` (Thu 22:05 UTC); `nm-validate-sources.yml` (2nd of month 22:05 UTC).
 - Source registry: `nm/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

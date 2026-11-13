@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "wy-senate", "wy-house"];
 const EXPECT_DISTRICT = { "county": "Laramie County", "us-house": "Congressional District (at Large)", "wy-senate": "8", "wy-house": "11" };
 const NEGATIVE_POINT = "40.85000,-105.40000"; // Larimer County, Colorado, south of the Wyoming line — outside Wyoming and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Colorado here (control: the Wyoming State Capitol returns Wyoming), none of the state's shipped boundary files contains it, and of every outline in the fleet only Colorado's does (Colorado went live in batch 3 of the state-level launch). Wyoming borders no water and no other country, and every one of its neighbours (Montana, South Dakota, Nebraska, Colorado, Utah and Idaho) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Wyoming";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "WyomingExplorer";
@@ -1043,6 +1043,73 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Wind River Reservation is held by two nations, the Eastern
+  //         Shoshone Tribe and the Northern Arapaho Tribe, so the card names
+  //         both, lists each one's seat and site, and carries no single
+  //         "(official)" link.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 38.3 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const WIND_RIVER = "43.29930,-108.63326";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, WIND_RIVER);
+      const p = land[0] || {};
+      const c = await at(WIND_RIVER);
+      const names = (p.nations || []).map((n) => n.name);
+      check("the Wind River Reservation names both nations that hold it, each with its seat and site, and no single link",
+        land.length === 1 && !c.error && names.length === 2 &&
+          names[0] === "Eastern Shoshone Tribe of the Wind River Reservation, Wyoming" && names[1] === "Northern Arapaho Tribe of the Wind River Reservation, Wyoming" &&
+          c.by("Tribal government") === p.nation && p.nation === names[0] + " and " + names[1] &&
+          c.by("Land") === "Wind River Reservation" &&
+          c.labels.indexOf("Seat of government") === -1 &&
+          c.text.indexOf("2 governments share this land") !== -1 &&
+          c.text.indexOf("Seat: Fort Washakie, WY") !== -1 && c.text.indexOf("Seat: Ethete, WY") !== -1 &&
+          (p.nations || []).every((n) => !!n.url) &&
+          p.url === null && c.link.text === "" &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("2 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();
