@@ -656,15 +656,21 @@ try {
   //         named on the card for its own reservation.
   //       - The XL Ranch Rancheria's Census name does not name the Pit River
   //         Tribe, which holds it; the card names the tribe with the Bureau's
-  //         town and site, and no "About the seat" line.
+  //         town and no "About the seat" line, and links the tribe's own site,
+  //         pitrivertribe.gov, because the site the Bureau lists had no DNS
+  //         record on 2026-11-13 (Adam's "withdraw" of that day).
+  //       - The Paskenta Rancheria names the four council members its own page
+  //         names, and says the page lists the Tribal Secretary's seat as
+  //         vacant; by Adam's ruling of 2026-11-13 ("carry") such a council
+  //         is carried.
   //       - The California part of the Colorado River Indian Reservation
   //         names a government the Bureau seats in Parker, Arizona.
   //       - San Francisco City Hall is on no tribal land, and the card says
   //         so in the layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
   //     piece inside this app's state outline, as the shipped files draw them
-  //     (shapely polylabel, 2026-11-12): 682 m, 1.9 km, 1.1 km and 3.4 km
-  //     from its edge.
+  //     (shapely polylabel, 2026-11-12, and 2026-11-13 for Paskenta): 682 m,
+  //     1.9 km, 1.1 km, 3.4 km and 1.2 km from its edge.
   {
     const areas = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "tribal-areas.json"), "utf8"));
     const councils = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "tribal-councils.json"), "utf8"));
@@ -690,6 +696,7 @@ try {
     const CAPITAN_GRANDE = "32.89983,-116.70090";
     const XL_RANCH = "41.52814,-120.46352";
     const COLORADO_RIVER = "34.20904,-114.27367";
+    const PASKENTA = "39.86722,-122.22612";
     const at = async (pt, routeFn) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await context.newPage();
@@ -769,14 +776,29 @@ try {
       const land = propsAt(areas, XL_RANCH);
       const p = land[0] || {};
       const c = await at(XL_RANCH);
-      check("the XL Ranch Rancheria names the Pit River Tribe with the Bureau's town and site and no note about its seat",
+      check("the XL Ranch Rancheria names the Pit River Tribe with the Bureau's town and no note about its seat, and links the tribe's own site in place of the Bureau's dead one",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === "Pit River Tribe, California" &&
           c.by("Land") === "XL Ranch Rancheria" &&
           c.by("Seat of government") === "Burney, CA" && !p.seatNote &&
           c.labels.indexOf("About the seat") === -1 &&
-          p.url === "http://www.pitrivertribe.org" && c.link.href === p.url,
+          p.url === "https://pitrivertribe.gov/" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("so the card does not link it") !== -1,
         `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)}`);
+    }
+
+    {
+      const land = propsAt(areas, PASKENTA);
+      const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(PASKENTA);
+      check("the Paskenta Rancheria names the four council members its page names and says the page lists the Tribal Secretary's seat as vacant",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && /^Paskenta Band of Nomlaki Indians/.test(p.nation) &&
+          council.length === 4 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("The page lists the Tribal Secretary's seat as vacant.") &&
+          !c.by("Why no names"),
+        `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
     {

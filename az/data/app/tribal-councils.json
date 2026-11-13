@@ -269,6 +269,142 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "1505": {
+  "roster": [
+   {
+    "name": "Lamar B. Keevama",
+    "role": "Chairman"
+   },
+   {
+    "name": "Mikah H. Kewanimptewa Sr.",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Dwayne Secakuku",
+    "role": "Tribal Secretary"
+   },
+   {
+    "name": "Wilfred Gaseoma",
+    "role": "Tribal Treasurer"
+   },
+   {
+    "name": "Alfonso Sakeva Sr.",
+    "role": "Sergeant-at-Arms"
+   },
+   {
+    "name": "LeRoy Shingoitewa",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Philton Talahytewa Sr.",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Robert Charley",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Marilyn Fredericks",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Ruth Kewanimptewa",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Clifford Qotsquahu",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Wendell Honanie, Sr.",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Kristofer Kelhoyouma",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Nona Tuchawena",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Nicole Honanie",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "George Mase",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Maude Yoyhoema",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Debra Kukuma",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Merwin Kooyahoema",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Malinda Andrews",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Marilyn Tewa",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Arthur Batala",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Carlton Timms",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Dale Sinquah",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Daryn Melvin",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Wilbur Kaye",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page lists five officers and says the council has 22 village representatives, of whom it names 21, so one representative is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.hopi-nsn.gov/tribal-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "1545": {
   "roster": [
    {
@@ -330,6 +466,33 @@
   "rosterNote": "From the nation's own council page, read 2026-11-13.",
   "rosterSource": "nation",
   "rosterPage": "http://www.hualapai-nsn.gov/government/tribal_council/index.php",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2130": {
+  "roster": [
+   {
+    "name": "Gabriel Lopez",
+    "role": "Chairman"
+   },
+   {
+    "name": "Delia Carlyle",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Dennis Antone",
+    "role": "Council Member"
+   },
+   {
+    "name": "Cecil Peters",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the council has five members and names four, so one council member's seat is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "http://www.ak-chin.nsn.us/community-council/",
   "rosterRead": "2026-11-13",
   "rosterHost": null,
   "rosterMeasured": null

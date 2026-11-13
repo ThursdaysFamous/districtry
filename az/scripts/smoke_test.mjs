@@ -1141,8 +1141,10 @@ try {
   //       - The Arizona part of the Fort Yuma Indian Reservation names a
   //         nation seated in California.
   //       - The Hopi Reservation links no official site, because the Bureau
-  //         lists none, and says its council page names all but one seat, so
-  //         no name is carried.
+  //         lists none, and names the council its own page lists, which leaves
+  //         out one of the 22 village representatives; by Adam's ruling of
+  //         2026-11-13 ("carry") a council missing one seat is carried, and
+  //         the card says which seat is not named.
   //       - The Capitol is on no tribal land, and the card says so in the
   //         layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
@@ -1238,13 +1240,15 @@ try {
     {
       const land = propsAt(areas, HOPI);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(HOPI);
-      check("the Hopi Reservation links no official site, because the Bureau lists none, and says its partial council is not carried",
+      check("the Hopi Reservation links no official site, because the Bureau lists none, names the council its page lists, and says one representative is not named",
         land.length === 1 && !c.error && p.url === null &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("A partial council is not carried") !== -1 &&
           c.by("Tribal government") === "Hopi Tribe of Arizona" &&
-          c.link.text === "" && !c.text.includes("(official)"),
-        `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+          council.length === 26 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("of whom it names 21, so one representative is not named here.") &&
+          !c.by("Why no names") && c.link.text === "" && !c.text.includes("(official)"),
+        `land here=${land.length} council=${council.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
     {

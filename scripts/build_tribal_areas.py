@@ -213,9 +213,11 @@ ROSTER_BLOCKED = {
         "host": "www.oneidaindiannation.com",
         "measured": "2026-10-10",
         "why": "The nation's leadership page names its federally recognized "
-               "Representative, Ray Halbritter, and says each clan chooses members "
-               "of the Nation Council, without naming them (read 2026-10-10). A "
-               "partial council is not carried, so the card links the nation.",
+               "Representative, Ray Halbritter, and says each clan chooses "
+               "members of the Nation Council, without naming them (read "
+               "2026-10-10). A council is carried only where its page names or "
+               "lists as vacant all of its seats, or all but one, so the card "
+               "links the nation.",
     },
     "2570": {
         "host": "www.onondaganation.org",
@@ -298,10 +300,12 @@ ROSTER_BLOCKED = {
     "0795": {
         "host": "www.coushatta.org",
         "measured": "2026-10-20",
-        "why": "The tribe's own site names its chairman, David Sickey, and says "
-               "the council has five members, the chairman and four council "
-               "members, without naming the other four (read 2026-10-20). A "
-               "partial council is not carried, so the card links the tribe.",
+        "why": "The tribe's own site names its chairman, David Sickey, and "
+               "says the council has five members, the chairman and four "
+               "council members, without naming the other four (read "
+               "2026-10-20). A council is carried only where its page names or "
+               "lists as vacant all of its seats, or all but one, so the card "
+               "links the tribe.",
     },
     # Measured 2026-11-12 with tribal_council_scraper.py's client. The Bureau
     # lists tribe.miccosukee.com, which has no DNS record. www.miccosukee.com's
@@ -368,10 +372,11 @@ ROSTER_BLOCKED = {
     "0215": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "0240": {
         "host": "www.bia.gov",
@@ -389,10 +394,11 @@ ROSTER_BLOCKED = {
     "0415": {
         "host": "www.fantasyspringsresort.com",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the band, which "
-               "this card links, is its resort's site, and this project found no "
-               "council list of the band's own when it searched on 2026-11-13, so "
-               "no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the band is "
+               "its resort's site, which does not give the band's government, "
+               "so the card does not link it, and this project found no "
+               "council list of the band's own when it searched on 2026-11-13, "
+               "so no name is carried.",
     },
     "0450": {
         "host": "www.campo-nsn.gov",
@@ -411,20 +417,13 @@ ROSTER_BLOCKED = {
                "named on the card for its own reservation, so this card names "
                "nobody.",
     },
-    "0510": {
-        "host": "washoetribe.us",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page names 10 of its council's 11 members (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
-    },
     "0555": {
         "host": "www.cedarvillerancheria.net",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the rancheria, "
-               "which this card links, had no DNS record (2026-11-13), and this "
-               "project found no other site of the rancheria's own, so no name is "
-               "carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the "
+               "rancheria had no DNS record (2026-11-13), so the card does not "
+               "link it, and this project found no other site of the "
+               "rancheria's own, so no name is carried.",
     },
     "0585": {
         "host": "www.chemehuevi.net",
@@ -451,31 +450,17 @@ ROSTER_BLOCKED = {
         "host": "www.colusa-nsn.gov",
         "measured": "2026-11-13",
         "why": "The community's own page names three officers of its Community "
-               "Council and no other member (read 2026-11-13). A partial council "
-               "is not carried, so the card links the community.",
+               "Council and no other member (read 2026-11-13). A council is "
+               "carried only where its page names or lists as vacant all of "
+               "its seats, or all but one, so the card links the community.",
     },
     "0825": {
         "host": "coyotevalleytribe.com",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the band, which "
-               "this card links, now shows a parked domain with nothing of theirs "
-               "on it (2026-11-13), and this project found no other site of the "
-               "band's own, so no name is carried.",
-    },
-    "0940": {
-        "host": "washoetribe.us",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page names 10 of its council's 11 members (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
-    },
-    "0975": {
-        "host": "duckwatertribe.org",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page lists two of its council's seats, the vice "
-               "chairman's and the council secretary's, as vacant (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
+        "why": "The address the Bureau of Indian Affairs lists for the band "
+               "now shows a parked domain with nothing of theirs on it "
+               "(2026-11-13), so the card does not link it, and this project "
+               "found no other site of the band's own, so no name is carried.",
     },
     "1005": {
         "host": "www.temoaktribe.com",
@@ -501,9 +486,10 @@ ROSTER_BLOCKED = {
     "1140": {
         "host": "www.wmat.us",
         "measured": "2026-11-13",
-        "why": "The tribe's own page names its chairman and vice chairman and no "
-               "other council member (read 2026-11-13). A partial council is not "
-               "carried, so the card links the tribe.",
+        "why": "The tribe's own page names its chairman and vice chairman and "
+               "no other council member (read 2026-11-13). A council is "
+               "carried only where its page names or lists as vacant all of "
+               "its seats, or all but one, so the card links the tribe.",
     },
     "1170": {
         "host": "www.bia.gov",
@@ -565,15 +551,6 @@ ROSTER_BLOCKED = {
                "verification page (2026-11-13). A check like that is not worked "
                "around, so no name is carried and the card links the tribe.",
     },
-    "1505": {
-        "host": "www.hopi-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The tribe's own government page says its council has 22 "
-               "representatives from its villages and names 21 of them (read "
-               "2026-11-13). A partial council is not carried, and the Bureau of "
-               "Indian Affairs lists no website for the tribe, so no name is "
-               "carried.",
-    },
     "1560": {
         "host": "www.bia.gov",
         "measured": "2026-11-13",
@@ -584,10 +561,11 @@ ROSTER_BLOCKED = {
     "1640": {
         "host": "www.jacksoncasino.com",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the band, which "
-               "this card links, is its casino's site, and this project found no "
-               "council list of the band's own when it searched on 2026-11-13, so "
-               "no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the band is "
+               "its casino's site, which does not give the band's government, "
+               "so the card does not link it, and this project found no "
+               "council list of the band's own when it searched on 2026-11-13, "
+               "so no name is carried.",
     },
     "1655": {
         "host": "jamestowntribe.org",
@@ -615,41 +593,45 @@ ROSTER_BLOCKED = {
     "1850": {
         "host": "www.lajollaindians.com",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the band, which "
-               "this card links, now shows a parked domain with nothing of theirs "
-               "on it (2026-11-13), and this project found no other site of the "
-               "band's own, so no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the band "
+               "now shows a parked domain with nothing of theirs on it "
+               "(2026-11-13), so the card does not link it, and this project "
+               "found no other site of the band's own, so no name is carried.",
     },
     "1925": {
         "host": "www.cahto.org",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the tribe, "
-               "which this card links, now shows a gambling site that is not the "
-               "tribe's (2026-11-13), and this project found no other site of the "
-               "tribe's own, so no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the tribe "
+               "now shows a gambling site that is not the tribe's "
+               "(2026-11-13), so the card does not link it, and this project "
+               "found no other site of the tribe's own, so no name is carried.",
     },
     "1955": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "1970": {
         "host": "lppsr.org",
         "measured": "2026-11-13",
         "why": "The tribe's own page names its vice chairperson, treasurer, "
-               "secretary and a trustee, and no chairperson (read 2026-11-13). A "
-               "partial council is not carried, so the card links the tribe.",
+               "secretary and a trustee, and no chairperson, and does not say "
+               "how many seats its council has (read 2026-11-13). A council is "
+               "carried only where its page names or lists as vacant all of its "
+               "seats, or all but one, so the card links the tribe.",
     },
     "1980": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "1995": {
         "host": "www.bia.gov",
@@ -662,16 +644,18 @@ ROSTER_BLOCKED = {
     "2015": {
         "host": "www.paiutetribelovelock.org",
         "measured": "2026-11-13",
-        "why": "The tribe's own page names its chair and no other council member "
-               "(read 2026-11-13). A partial council is not carried, so the card "
-               "links the tribe.",
+        "why": "The tribe's own page names its chair and no other council "
+               "member (read 2026-11-13). A council is carried only where its "
+               "page names or lists as vacant all of its seats, or all but "
+               "one, so the card links the tribe.",
     },
     "2075": {
         "host": "lyttonrancheria.com",
         "measured": "2026-11-13",
         "why": "The rancheria's own page names its chairperson and no other "
-               "council member (read 2026-11-13). A partial council is not "
-               "carried, so no name is carried.",
+               "council member (read 2026-11-13). A council is carried only "
+               "where its page names or lists as vacant all of its seats, or "
+               "all but one, so no name is carried.",
     },
     "2100": {
         "host": "www.bia.gov",
@@ -688,20 +672,14 @@ ROSTER_BLOCKED = {
                "of the band's own when it searched on 2026-11-13, so no name is "
                "carried.",
     },
-    "2130": {
-        "host": "www.ak-chin.nsn.us",
-        "measured": "2026-11-13",
-        "why": "The community's own page says its council has five members and "
-               "names four of them (read 2026-11-13). A partial council is not "
-               "carried, so the card links the community.",
-    },
     "2330": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "2340": {
         "host": "mooretownrancheria-nsn.gov",
@@ -709,13 +687,6 @@ ROSTER_BLOCKED = {
         "why": "The rancheria's own page for its tribal council shows its members "
                "only in pictures, with no names in its text (read 2026-11-13), so "
                "no name is carried and the card links the rancheria.",
-    },
-    "2685": {
-        "host": "paskenta-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The band's own page names four of its council's five seats and "
-               "lists the fifth, the secretary's, as vacant (read 2026-11-13). A "
-               "partial council is not carried, so no name is carried.",
     },
     "2745": {
         "host": "www.pechanga-nsn.gov",
@@ -728,18 +699,20 @@ ROSTER_BLOCKED = {
     "2820": {
         "host": "pinolevillepomonation.org",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the nation, "
-               "which this card links, now shows a parked domain with nothing of "
-               "theirs on it (2026-11-13), and this project found no other site of "
-               "the nation's own, so no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the nation "
+               "now shows a parked domain with nothing of theirs on it "
+               "(2026-11-13), so the card does not link it, and this project "
+               "found no other site of the nation's own, so no name is "
+               "carried.",
     },
     "2835": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "3000": {
         "host": "www.puyalluptribe-nsn.gov",
@@ -774,8 +747,9 @@ ROSTER_BLOCKED = {
         "host": "www.rsic.org",
         "measured": "2026-11-13",
         "why": "The colony's own page names its chairman and no other council "
-               "member (read 2026-11-13). A partial council is not carried, so no "
-               "name is carried.",
+               "member (read 2026-11-13). A council is carried only where its "
+               "page names or lists as vacant all of its seats, or all but "
+               "one, so no name is carried.",
     },
     "3165": {
         "host": "www.rincontribe.org",
@@ -789,10 +763,11 @@ ROSTER_BLOCKED = {
     "3185": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "3195": {
         "host": "rrcbc-nsn.gov",
@@ -863,20 +838,13 @@ ROSTER_BLOCKED = {
                "page whose only text is its title (2026-11-13), so no name could "
                "be read from it. No name is carried and the card links the tribe.",
     },
-    "3980": {
-        "host": "washoetribe.us",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page names 10 of its council's 11 members (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
-    },
     "3985": {
         "host": "stewartspoint.org",
         "measured": "2026-11-13",
-        "why": "The band's own site could not be read (2026-11-13): its front page "
-               "forwards in a loop, and the address the Bureau of Indian Affairs "
-               "lists, which this card links, answered HTTP 500. No name is "
-               "carried.",
+        "why": "The band's own site could not be read (2026-11-13): its front "
+               "page forwards in a loop, and the address the Bureau of Indian "
+               "Affairs lists answered HTTP 500, so the card does not link it. "
+               "No name is carried.",
     },
     "4030": {
         "host": "www.bia.gov",
@@ -928,23 +896,25 @@ ROSTER_BLOCKED = {
         "measured": "2026-11-13",
         "why": "The band's own page says the band is governed by its Community "
                "Council, made up of its voting members, and names only that "
-               "council's four officers (read 2026-11-13). A partial council is "
-               "not carried, so the card links the band.",
+               "council's four officers (read 2026-11-13). A council is "
+               "carried only where its page names or lists as vacant all of "
+               "its seats, or all but one, so the card links the band.",
     },
     "4375": {
         "host": "29palmstribe.org",
         "measured": "2026-11-13",
-        "why": "The band's own page names its chairman and no other council member "
-               "(read 2026-11-13). A partial council is not carried, so no name is "
-               "carried.",
+        "why": "The band's own page names its chairman and no other council "
+               "member (read 2026-11-13). A council is carried only where its "
+               "page names or lists as vacant all of its seats, or all but "
+               "one, so no name is carried.",
     },
     "4430": {
         "host": "www.upperlakepomoindians.com",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the tribe, "
-               "which this card links, had no DNS record (2026-11-13), and this "
-               "project found no other site of the tribe's own, so no name is "
-               "carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the tribe "
+               "had no DNS record (2026-11-13), so the card does not link it, "
+               "and this project found no other site of the tribe's own, so no "
+               "name is carried.",
     },
     "4455": {
         "host": "upperskagittribe-nsn.gov",
@@ -953,13 +923,6 @@ ROSTER_BLOCKED = {
                "Council is the tribe's governing body without naming its members "
                "(read 2026-11-13), and the Bureau of Indian Affairs lists no "
                "website for the tribe, so no name is carried.",
-    },
-    "4560": {
-        "host": "washoetribe.us",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page names 10 of its council's 11 members (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
     },
     "4580": {
         "host": "www.temoaktribe.com",
@@ -975,20 +938,14 @@ ROSTER_BLOCKED = {
                "Indian Colony, and this project found no site of the colony's own "
                "when it searched on 2026-11-13, so no name is carried.",
     },
-    "4665": {
-        "host": "washoetribe.us",
-        "measured": "2026-11-13",
-        "why": "The tribe's own page names 10 of its council's 11 members (read "
-               "2026-11-13). A partial council is not carried, so the card links "
-               "the tribe.",
-    },
     "4680": {
         "host": "pitrivertribe.gov",
         "measured": "2026-11-13",
-        "why": "The tribe's own site, at pitrivertribe.gov, names no council "
-               "member (read 2026-11-13), so no name is carried. The address the "
-               "Bureau of Indian Affairs lists for the tribe, which this card "
-               "links, had no DNS record the same day.",
+        "why": "The tribe's own site, at pitrivertribe.gov, which this card "
+               "links, names no council member (read 2026-11-13), so no name "
+               "is carried. The address the Bureau of Indian Affairs lists for "
+               "the tribe had no DNS record the same day, so the card does not "
+               "link it.",
     },
     "4710": {
         "host": "www.ypit.com",
@@ -999,10 +956,10 @@ ROSTER_BLOCKED = {
     "4740": {
         "host": "yombatribe.org",
         "measured": "2026-11-13",
-        "why": "The address the Bureau of Indian Affairs lists for the tribe, "
-               "which this card links, now forwards to a roofing company's site "
-               "(2026-11-13), and this project found no other site of the tribe's "
-               "own, so no name is carried.",
+        "why": "The address the Bureau of Indian Affairs lists for the tribe "
+               "now forwards to a roofing company's site (2026-11-13), so the "
+               "card does not link it, and this project found no other site of "
+               "the tribe's own, so no name is carried.",
     },
 }
 
@@ -1167,9 +1124,16 @@ def _roster_note(rec):
                 "because the nation publishes no council of its own. Read %s."
                 % (rec["publisher"], rec["listUpdated"], when))
     if rec.get("carriedFrom"):
-        return ("From the nation's own council page, last read %s; the page could "
+        note = ("From the nation's own council page, last read %s; the page could "
                 "not be read on the most recent weekly run." % when)
-    return "From the nation's own council page, read %s." % when
+    else:
+        note = "From the nation's own council page, read %s." % when
+    # A council whose page names all but one seat, or lists vacant seats, is
+    # carried on Adam's ruling of 2026-11-13, and the card says which seat
+    # the page leaves out (tribal_council_scraper.py's NATIONS "partial").
+    if rec.get("partial"):
+        note += " " + rec["partial"]
+    return note
 
 
 def _roles(rec):
@@ -1440,6 +1404,15 @@ def government_of(entry, bia):
     sfs = entry.get("seatFromState")
     if gov is not None and sfs:
         gov = dict(gov, city=sfs["city"], state=sfs["state"], seatFromState=sfs)
+    # A SITE THE BUREAU LISTS THAT NO LONGER REACHES THE NATION. Adam ruled on
+    # 2026-11-13 ("withdraw") that the card links no such address: one with no
+    # DNS record, a parked domain, another business's site, an HTTP 500, or a
+    # casino or resort page that does not give the government
+    # (`websiteWithdrawn`: the Bureau's address, the date and what it served).
+    # Where the nation's own site is known the card links that instead.
+    ww = entry.get("websiteWithdrawn")
+    if gov is not None and ww:
+        gov = dict(gov, website=ww.get("website"), websiteWithdrawn=ww)
     return gov
 
 

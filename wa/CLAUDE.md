@@ -94,8 +94,10 @@ each nation's own page into `tribal-councils.json` (a separate file the loader m
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
 `update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
-project or showed a check only a person can pass, a page naming part of the council or none of it,
-or no site of the nation's own. A partial council is not carried. Recorded in gap
+project or showed a check only a person can pass, a page naming only part of the council or
+none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. No Washington council is missing a seat.
+Recorded in gap
 `wa-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE WASHINGTON.** A ZCTA carries no state field, so over the line the

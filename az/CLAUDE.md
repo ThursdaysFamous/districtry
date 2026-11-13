@@ -98,13 +98,15 @@ Gila River, Hopi, Navajo, Salt River and Tohono O'odham nations, and their cards
 Census's own lines come to 3.9 MB, the Navajo Nation's land the bulk of it, so they are simplified
 by Douglas-Peucker at 3 m and held to a 25 m ceiling, with every part and ring kept (`SIMPLIFY`
 there says why 3 m and not Oklahoma's 20). The San Juan Southern Paiute Tribe is federally
-recognized and the Census draws no land for it, so no card names it. Since 2026-11-13 the cards name the council of 13 of the 21 nations, read nation by nation from
+recognized and the Census draws no land for it, so no card names it. Since 2026-11-13 the cards name the council of 15 of the 21 nations, read nation by nation from
 each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
 `update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
-project or showed a check only a person can pass, a page naming part of the council or none of it,
-or no site of the nation's own. A partial council is not carried. Recorded in gap
+project or showed a check only a person can pass, a page naming only part of the council or
+none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. Two are: Ak-Chin's page names four of
+its five members and Hopi's 21 of its 22 village representatives. Recorded in gap
 `az-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE ARIZONA.** A ZCTA carries no state field, so over the line the live

@@ -16646,12 +16646,16 @@ function initNevadaExplorer() {
    * WHO THE CARD NAMES. The authority for who sits on a nation's council is
    * that nation's own published list, so the card names a council where the
    * nation's own page names the whole of it, with the date it was read and a
-   * link to the page. scripts/tribal_council_scraper.py reads those pages
-   * weekly into data/app/tribal-councils.json, which the loader merges onto
-   * the land. Every other card says why it names nobody, in words measured
-   * nation by nation (ROSTER_BLOCKED in scripts/build_tribal_areas.py): a
-   * site that refused this project or could not be read, a page naming part
-   * of a council or none of it, or no site of the nation's own.
+   * link to the page. Since Adam's ruling of 2026-11-13 a page that names
+   * every seat but one, or says which seats are vacant, is carried too, and
+   * the card's note says which seat the page leaves out.
+   * scripts/tribal_council_scraper.py reads those pages weekly into
+   * data/app/tribal-councils.json, which the loader merges onto the land.
+   * Every other card says why it names nobody, in words measured nation by
+   * nation (ROSTER_BLOCKED in scripts/build_tribal_areas.py): a site that
+   * refused this project or could not be read, a page naming only its
+   * officers or chair, or none of its council, or no site of the nation's
+   * own.
    *
    * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
    * of 2026-09-30, a government answers for that ground, so a reader who

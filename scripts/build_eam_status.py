@@ -2813,9 +2813,10 @@ ANSWERS = {
         # government -- 20 nations, the Fort Mojave and Timbisha Shoshone seated
         # in California and the Goshute in Utah among them, and eight the Bureau
         # lists with no office town, seated from their own sites by Adam's
-        # choice of that day. Since 2026-11-13 the councils of nine of the 20
-        # nations are named from each nation's own page; each of the other
-        # eleven says why it names nobody (gap nv-tribal-government).
+        # choice of that day. Since 2026-11-13 the councils of 11 of the 20
+        # nations are named from each nation's own page, two of them with the
+        # card saying which seats the page leaves out; each of the other nine
+        # says why it names nobody (gap nv-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "az": {
@@ -2851,8 +2852,9 @@ ANSWERS = {
         # reservations and 7 off-reservation trust lands), each named with its
         # government -- 21 nations, the Fort Mojave and Quechan seated in
         # California and the Zuni in New Mexico among them. Since 2026-11-13 the
-        # councils of 13 of the 21 nations are named from each nation's own
-        # page; each of the other eight says why it names nobody
+        # councils of 15 of the 21 nations are named from each nation's own
+        # page, two of them with the card saying which seat the page leaves
+        # out; each of the other six says why it names nobody
         # (gap az-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
@@ -3509,9 +3511,11 @@ ANSWERS = {
         # Tribes seated in Arizona and the Washoe Tribe in Nevada among them, and
         # the two the Bureau lists with no office town seated from their own
         # sites by Adam's choice of that day for Nevada. Since 2026-11-13 the
-        # councils of 49 of the 98 nations are named from each nation's own
-        # page; each of the others says why it names nobody
-        # (gap ca-tribal-government).
+        # councils of 51 of the 98 nations are named from each nation's own
+        # page, two of them with the card saying which seat the page leaves
+        # out; each of the others says why it names nobody, and ten whose
+        # Bureau-listed site no longer reaches them link no site of the
+        # Bureau's (gap ca-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),

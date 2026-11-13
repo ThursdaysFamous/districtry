@@ -62,6 +62,22 @@ rather than repaired:
     listed under a council (Soboba's executive assistant) is not a seat.
     Shingle Springs lists a Secretary with no term under its council of
     seven elected members; that row ships as printed and says so.
+  * Duckwater prints its offices in capitals, which is the page's styling,
+    so each is written in title case; Paskenta writes one office "Tribal
+    COuncil Member at Large", which is read and written correctly.
+A COUNCIL MISSING ONE SEAT IS CARRIED, AND SAYS WHICH (Adam's ruling,
+2026-11-13, "carry"). Where a page says how many seats its council has and
+names every member, or all but one, or says which seats are vacant, the
+council ships, and NATIONS' "partial" is the sentence the card adds saying
+which seat the page leaves out: Ak-Chin's page names four of its five
+members, Hopi's 21 of its 22 village representatives (under the five
+officers it lists first), and the Washoe Tribe's one of its two
+Off-Reservation representatives; Duckwater lists two seats as vacant and
+Paskenta one. Each of those parsers checks the fact its sentence states, so
+a seat filled or newly left empty fails the run rather than leaving a card
+line that is no longer true. A page that names only its officers or only
+its chair is still not carried.
+
 Contact details ship only where the page pairs them with the person on the
 same row, never from a table elsewhere on the page with a different date
 (Bad River's contact table is headed "2021", so its numbers are not taken).
@@ -332,6 +348,19 @@ NATIONS = {
     "4708": {"nation": "Yavapai-Apache",
              "pages": ["https://yavapai-apache.org/tribal_council/"], "seats": 9},
     "4785": {"nation": "Zuni", "pages": ["https://ashiwi.org/tribal-leadership/"], "seats": 8},
+    # Two councils whose page names all but one seat, carried on Adam's ruling
+    # of 2026-11-13 with a card line saying which seat is not named. Ak-Chin's
+    # page says five members and names four; Hopi's says 22 village
+    # representatives and names 21, under the five officers it lists first.
+    "2130": {"nation": "Ak-Chin",
+             "pages": ["http://www.ak-chin.nsn.us/community-council/"], "seats": 4,
+             "partial": "The page says the council has five members and names four, "
+                        "so one council member's seat is not named here."},
+    "1505": {"nation": "Hopi",
+             "pages": ["https://www.hopi-nsn.gov/tribal-government/"], "seats": 26,
+             "partial": "The page lists five officers and says the council has 22 "
+                        "village representatives, of whom it names 21, so one "
+                        "representative is not named here."},
     # Nevada. Goshute's and Moapa's older domains have lapsed (one now a
     # finance blog, the other a forms company's page); each nation's current
     # site is the one read. Walker River's council is on its government page,
@@ -359,6 +388,27 @@ NATIONS = {
              "pages": ["https://timbisha.com/newsite/government-info/"], "seats": 5},
     "4515": {"nation": "Walker River Paiute",
              "pages": ["https://www.wrpt.org/tribal-government/"], "seats": 7},
+    # Carried on Adam's ruling of 2026-11-13: Duckwater's page lists its vice
+    # chairperson's and council secretary's seats as vacant, and the Washoe
+    # Tribe's names one of the two Off-Reservation representatives its members
+    # elect. The card says which seats those are.
+    "0975": {"nation": "Duckwater Shoshone",
+             "pages": ["https://duckwatertribe.org/tribal-council/"], "seats": 3,
+             "partial": "The page lists the Vice Chairperson's and Council "
+                        "Secretary's seats as vacant."},
+    # The Washoe Tribe's site draws each page in the browser from its own
+    # content service, so the council is read from that service's answer for
+    # the page (the address the page itself asks), and the card links the page
+    # a visitor sees. Its five pieces of land in Nevada and California, the
+    # Carson Colony (0510), Dresslerville (0940), Stewart (3980), Washoe Ranches
+    # (4560) and Woodfords (4665), each carry the one council.
+    **{code: {"nation": "Washoe",
+              "pages": ["https://washoetribe.us/api/v2/pages/163/?format=json"],
+              "link": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+              "json": True, "seats": 10,
+              "partial": "The page says the tribe's members elect two Off-Reservation "
+                         "representatives and names one, so the other is not named here."}
+       for code in ("0510", "0940", "3980", "4560", "4665")},
     # California. Where the Bureau lists no website, or one that has lapsed or
     # names no council, the nation's current site was found by a web search
     # and is the one read: Big Pine, Jamul, Picayune (Chukchansi), Table
@@ -416,6 +466,11 @@ NATIONS = {
              "pages": ["https://northforkrancheria-nsn.gov/sovereign-nation/tribal-council/"], "seats": 5},
     "2635": {"nation": "Pala",
              "pages": ["https://www.palatribe.com/government/executive-committee/"], "seats": 6},
+    # Carried on Adam's ruling of 2026-11-13: the page lists the Tribal
+    # Secretary's seat as vacant, and the card says so.
+    "2685": {"nation": "Paskenta",
+             "pages": ["https://paskenta-nsn.gov/about-the-nation/our-government/"], "seats": 4,
+             "partial": "The page lists the Tribal Secretary's seat as vacant."},
     "2715": {"nation": "Pauma", "pages": ["https://www.paumatribe.com/government/"], "seats": 5},
     "2775": {"nation": "Picayune Rancheria of the Chukchansi",
              "pages": ["https://chukchansi-nsn.gov/council/"], "seats": 7},
@@ -2577,6 +2632,194 @@ def p_kletsel_dehe(pages):
                                 r"Secretary|Treasurer|Councilman|Councilwoman)$", 5)
 
 
+# The five councils below name all but one seat, or list vacant seats, and
+# are carried on Adam's ruling of 2026-11-13 ("carry"). Each parser checks
+# the fact its card line states (NATIONS' "partial"), so a page that changes
+# fails the run rather than leaving a card line that is no longer true.
+
+def p_ak_chin(pages):
+    # name / office pairs under "COMMUNITY COUNCIL"; the chairman and vice
+    # chairman each have a biography line under their office, the two
+    # council members none
+    ls = pages[0]
+    i = ls.index("COMMUNITY COUNCIL")
+    if not any("governed by a five-member Tribal Council" in l for l in ls[i:i + 4]):
+        raise ValueError("Ak-Chin: the page no longer says its council has five members")
+    out, k = [], ls.index("Chairman", i) - 1
+    while len(out) < 4:
+        name, role = ls[k], ls[k + 1]
+        if not re.match(r"^(Chairman|Vice-Chairman|Council Member)$", role):
+            raise ValueError("Ak-Chin: expected an office after %r, found %r" % (name, role))
+        out.append(_m(name, role))
+        k += 2
+        if ls[k].startswith(name + " is "):
+            k += 1
+    if ls[k] != "Welcome to the Ak-Chin Indian Community":
+        raise ValueError("Ak-Chin: the council block runs past four, found %r" % ls[k])
+    return out
+
+
+_HOPI_OFFICERS = ("Chairman", "Vice Chairman", "Tribal Secretary", "Tribal Treasurer",
+                  "Sergeant-at-Arms")
+
+
+def p_hopi(pages):
+    # "Office: Name" for the five officers the page lists under "Hopi Tribal
+    # Council", then each village's representatives under "Village of <name>"
+    # (or "First Mesa Consolidated Villages"); a line naming a clan sits under
+    # some representatives and is not a seat
+    ls = pages[0]
+    if not any(l.startswith("Today’s current council consists of 22 representatives")
+               for l in ls):
+        raise ValueError("Hopi: the page no longer says its council has 22 representatives")
+    blk = _after(ls, "Hopi Tribal Council")
+    out = []
+    for line, office in zip(blk[:5], _HOPI_OFFICERS):
+        said, _, name = line.partition(": ")
+        if said != office or not name:
+            raise ValueError("Hopi: expected %r, found %r" % (office, line))
+        out.append(_m(name, office))
+    if blk[5] != "Hopi Tribal Council Representatives":
+        raise ValueError("Hopi: expected the representatives after the officers, found %r"
+                         % blk[5])
+    village = None
+    for line in blk[6:]:
+        if line == "Tribal Government":
+            break
+        if line.startswith("Village of ") or line == "First Mesa Consolidated Villages":
+            village = line.replace("Village of ", "", 1)
+        elif line.endswith(" Clan"):
+            if out[-1]["role"] != "Representative":
+                raise ValueError("Hopi: a clan line %r under no representative" % line)
+        elif village is None:
+            raise ValueError("Hopi: %r before any village" % line)
+        else:
+            out.append(_m(line, "Representative", district=village))
+    else:
+        raise ValueError("Hopi: the representatives block has no end")
+    reps = sum(1 for m in out if m["role"] == "Representative")
+    if reps != 21:
+        raise ValueError("Hopi: read %d representatives; the page named 21 of its 22 "
+                         "when its card line was written" % reps)
+    return out
+
+
+_DUCKWATER_OFFICES = ("INTERIM CHAIRPERSON", "VICE CHAIRPERSON", "COUNCIL SECRETARY",
+                      "COUNCIL MEMBER")
+
+
+def p_duckwater(pages):
+    # office in capitals, then "Name- address@duckwatertribe.org" (or "VACANT-
+    # ..."), then "(Term Ending – 2026)" under each seat that is held. The
+    # capitals are the page's styling, so each office is written in title
+    # case; a vacant seat's mailbox rides nobody
+    ls = _after(pages[0], "Council Seats")
+    k = ls.index(_DUCKWATER_OFFICES[0])
+    out, vacant = [], []
+    while not ls[k].startswith("©"):
+        role = ls[k]
+        if role not in _DUCKWATER_OFFICES:
+            raise ValueError("Duckwater: expected an office, found %r" % role)
+        m = re.match(r"^(.+?)\s*[-–]\s*(\S+@\S+)$", ls[k + 1])
+        if not m:
+            raise ValueError("Duckwater: expected 'Name- address' after %r, found %r"
+                             % (role, ls[k + 1]))
+        name, mail = m.groups()
+        office = role.title()
+        if name == "VACANT":
+            vacant.append(office)
+            k += 2
+            continue
+        t = re.match(r"^\(Term Ending\s*[–-]?\s*(\d{4})\)$", ls[k + 2])
+        if not t:
+            raise ValueError("Duckwater: no term after %r, found %r" % (name, ls[k + 2]))
+        out.append(_m(name, office, termEnds=t.group(1), email=_email(mail)))
+        k += 3
+    if vacant != ["Vice Chairperson", "Council Secretary"]:
+        raise ValueError("Duckwater: the page's vacant seats are now %r" % vacant)
+    return out
+
+
+_PASKENTA_OFFICES = r"^Tribal (Chairman|Vice Chairman|Secretary|Treasurer|Council Member at Large)$"
+
+
+def p_paskenta(pages):
+    # name / office pairs under "Meet Our Tribal Council", "Vacant" in place of
+    # a name for an empty seat. The page writes one office "Tribal COuncil
+    # Member at Large"; the office is read and written correctly
+    ls = pages[0]
+    if not any("elects the five members of the Tribal Council" in l for l in ls):
+        raise ValueError("Paskenta: the page no longer says its council has five members")
+    blk = _after(ls, "Meet Our Tribal Council")
+    out, vacant = [], []
+    for k in range(0, 10, 2):
+        name, role = blk[k], blk[k + 1]
+        if role.lower() == "tribal council member at large":
+            role = "Tribal Council Member at Large"
+        if not re.match(_PASKENTA_OFFICES, role):
+            raise ValueError("Paskenta: expected an office after %r, found %r" % (name, role))
+        if name == "Vacant":
+            vacant.append(role)
+        else:
+            out.append(_m(name, role))
+    if not blk[10].startswith("©"):
+        raise ValueError("Paskenta: the council block runs past five seats, found %r" % blk[10])
+    if vacant != ["Tribal Secretary"]:
+        raise ValueError("Paskenta: the page's vacant seats are now %r" % vacant)
+    return out
+
+
+_WASHOE_PLACES = ("Carson Colony", "Dresslerville Community", "Stewart Community",
+                  "Woodfords Community")
+
+
+def p_washoe(pages):
+    # The Washoe Tribe's council page is drawn in the browser from its own
+    # content service, and pages[0] is that service's answer for the page:
+    # one caption per member under the carousel titled "Washoe Tribal
+    # Council", and the page's own text saying who sits on it, which is two
+    # members appointed by each of the four community councils, two
+    # Off-Reservation representatives elected by the whole membership, and
+    # the chairman (read 2026-11-13)
+    doc = pages[0]
+    blk = doc["content"][0]["value"]
+    if blk["title_and_text"]["title"] != "Washoe Tribal Council":
+        raise ValueError("Washoe: the page's first block is not the council")
+    text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ",
+                                                      doc["content"][1]["value"]["richtext"])))
+    for said in ("The Community Council also appoints two members to serve on the Washoe "
+                 "Tribal Council",
+                 "elect two Off-Reservation representatives to serve on the Washoe Tribal "
+                 "Council",
+                 "The Washoe Tribal Chairman is elected by the Washoe Tribal membership"):
+        if said not in text:
+            raise ValueError("Washoe: the page no longer says %r" % said)
+    places = "|".join(re.escape(p) for p in _WASHOE_PLACES + ("Off-Reservation",))
+    out = []
+    for item in blk["image_block"]:
+        cap = re.sub(r"\s+", " ", item["value"]["caption"]).strip()
+        m = re.match(r"^(.+?), Chairman of the Washoe Tribe of Nevada and California$", cap)
+        if m:
+            out.append(_m(m.group(1), "Chairman"))
+            continue
+        m = re.match(r"^(.+?), Washoe Tribal Vice-Chairman, (%s) Representative$" % places, cap)
+        if m:
+            out.append(_m(m.group(1), "Vice-Chairman", district=m.group(2)))
+            continue
+        m = re.match(r"^(.+?), (%s) Representative$" % places, cap)
+        if not m:
+            raise ValueError("Washoe: a caption this parser does not read: %r" % cap)
+        out.append(_m(m.group(1), "Representative", district=m.group(2)))
+    chairs = [m for m in out if m["role"] == "Chairman"]
+    count = {p: sum(1 for m in out if m.get("district") == p) for p in _WASHOE_PLACES}
+    off = sum(1 for m in out if m.get("district") == "Off-Reservation")
+    if len(chairs) != 1 or any(n != 2 for n in count.values()) or off != 1:
+        raise ValueError("Washoe: read %d chairman, %r and %d Off-Reservation; the page named "
+                         "one, two per community and one of two when its card line was written"
+                         % (len(chairs), count, off))
+    return out
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
@@ -2619,6 +2862,9 @@ PARSERS = {
     "3735": p_sherwood_valley, "3750": p_shingle_springs, "3855": p_tolowa,
     "3870": p_soboba, "4060": p_susanville, "4090": p_sycuan, "4110": p_table_mountain,
     "4255": p_torres_martinez, "4275": p_trinidad, "4760": p_yurok,
+    # partial councils carried on Adam's ruling of 2026-11-13
+    "2130": p_ak_chin, "1505": p_hopi, "0975": p_duckwater, "2685": p_paskenta,
+    **{code: p_washoe for code in ("0510", "0940", "3980", "4560", "4665")},
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community",
                        "3075": "Rappahannock"}
@@ -2716,12 +2962,21 @@ def run(from_dir=None, today=None):
                     rec["list"] = sl["list"]
                     rec["officersOnly"] = True
             else:
-                pages = [lines_of(get(u, "%s-%d.html" % (code, k)).decode("utf-8", "replace"),
-                                  spec.get("br", "\n"))
-                         for k, u in enumerate(spec["pages"])]
+                raw = [get(u, "%s-%d.html" % (code, k)) for k, u in enumerate(spec["pages"])]
+                if spec.get("json"):
+                    # a page drawn in the browser from its site's own content
+                    # service is read from that service's answer (Washoe)
+                    pages = [json.loads(r.decode("utf-8")) for r in raw]
+                else:
+                    pages = [lines_of(r.decode("utf-8", "replace"), spec.get("br", "\n"))
+                             for r in raw]
                 members = PARSERS[code](pages)
-                rec = {"source": "nation", "page": spec["pages"][-1],
+                # the card links the page a visitor sees, which is the last
+                # page read unless the spec names the visitor's address
+                rec = {"source": "nation", "page": spec.get("link") or spec["pages"][-1],
                        "pages": spec["pages"]}
+                if spec.get("partial"):
+                    rec["partial"] = spec["partial"]
             rec["members"] = validate(code, members)
             rec["read"] = today
             councils[code] = rec
@@ -2957,6 +3212,90 @@ def selftest():
         pass
     else:
         raise AssertionError("Redding's block running past seven must fail")
+    # The five partial councils (names invented). Each reader checks the
+    # fact its card line states, so a filled or newly vacant seat fails.
+    ak = p_ak_chin([["COMMUNITY COUNCIL",
+                     "The community is governed by a five-member Tribal Council.",
+                     "Ann Example", "Chairman", "Ann Example is the chairman.",
+                     "Bob Sample", "Vice-Chairman", "Cy Person", "Council Member",
+                     "Di Person", "Council Member",
+                     "Welcome to the Ak-Chin Indian Community"]])
+    assert [m["name"] for m in ak] == ["Ann Example", "Bob Sample", "Cy Person", "Di Person"], ak
+    hp_page = (["Today’s current council consists of 22 representatives from the villages.",
+                "Hopi Tribal Council", "Chairman: Ann Example", "Vice Chairman: Bob Sample",
+                "Tribal Secretary: Cy Person", "Tribal Treasurer: Di Person",
+                "Sergeant-at-Arms: Ed Person", "Hopi Tribal Council Representatives",
+                "Village of Example"]
+               + ["Rep%s Person" % c for c in "ABCDEFGHIJ"] + ["Corn Clan",
+                  "First Mesa Consolidated Villages"]
+               + ["Rep%s Person" % c for c in "KLMNOPQRSTU"] + ["Tribal Government"])
+    hp = p_hopi([hp_page])
+    assert hp[5] == _m("RepA Person", "Representative", district="Example"), hp
+    assert hp[-1]["district"] == "First Mesa Consolidated Villages" and len(hp) == 26, hp
+    for bad in (hp_page[:9] + hp_page[10:],
+                [l.replace("22 representatives", "21 representatives") for l in hp_page]):
+        try:
+            p_hopi([bad])
+        except ValueError:
+            continue
+        raise AssertionError("Hopi's reader passed a changed page")
+    dw_page = ["Council Seats", "INTERIM CHAIRPERSON", "Ann Example- chair@example.org",
+               "(Term Ending – 2026)", "VICE CHAIRPERSON", "VACANT- vice@example.org",
+               "COUNCIL SECRETARY", "VACANT- sec@example.org", "COUNCIL MEMBER",
+               "Bob Sample – bob@example.org", "(Term Ending 2028)", "© Example"]
+    dw = p_duckwater([dw_page])
+    assert dw == [_m("Ann Example", "Interim Chairperson", termEnds="2026",
+                     email="chair@example.org"),
+                  _m("Bob Sample", "Council Member", termEnds="2028",
+                     email="bob@example.org")], dw
+    try:
+        p_duckwater([[l.replace("VACANT- sec@", "Cy Person- sec@") for l in dw_page]])
+    except (ValueError, IndexError):
+        pass
+    else:
+        raise AssertionError("a filled Duckwater seat must fail its card line")
+    pk_page = ["The General Council elects the five members of the Tribal Council.",
+               "Meet Our Tribal Council", "Ann Example", "Tribal Chairman", "Bob Sample",
+               "Tribal Vice Chairman", "Vacant", "Tribal Secretary", "Cy Person",
+               "Tribal Treasurer", "Di Person", "Tribal COuncil Member at Large", "© Example"]
+    pk = p_paskenta([pk_page])
+    assert pk[-1] == _m("Di Person", "Tribal Council Member at Large") and len(pk) == 4, pk
+    try:
+        p_paskenta([[l.replace("Vacant", "Ed Person") for l in pk_page]])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("a filled Paskenta seat must fail its card line")
+    wt_text = ("<p>The Community Council also appoints two members to serve on the Washoe "
+               "Tribal Council. The Washoe Tribal membership as a whole elect two "
+               "Off-Reservation representatives to serve on the Washoe Tribal Council. "
+               "The Washoe Tribal Chairman is elected by the Washoe Tribal membership as a "
+               "whole.</p>")
+    caps = (["Ann Example, Chairman of the Washoe Tribe of Nevada and California",
+             "Bob Sample, Washoe Tribal Vice-Chairman, Dresslerville Community Representative",
+             "Cy Person, Dresslerville Community Representative"]
+            + ["%s Person, %s Representative" % (n, place) for n, place in (
+                ("Di", "Carson Colony"), ("Ed", "Carson Colony"),
+                ("Fay", "Stewart Community"), ("Gus", "Stewart Community"),
+                ("Hal", "Woodfords Community"), ("Ida", "Woodfords Community"),
+                ("Jo", "Off-Reservation"))])
+    def wt_doc(captions):
+        return {"content": [{"value": {"title_and_text": {"title": "Washoe Tribal Council"},
+                                       "image_block": [{"value": {"caption": c}}
+                                                       for c in captions]}},
+                            {"value": {"richtext": wt_text}}]}
+    wt = p_washoe([wt_doc(caps)])
+    assert wt[1] == _m("Bob Sample", "Vice-Chairman", district="Dresslerville Community"), wt
+    assert len(wt) == 10 and wt[-1]["district"] == "Off-Reservation", wt
+    try:
+        p_washoe([wt_doc(caps + ["Kay Person, Off-Reservation Representative"])])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("a second Off-Reservation representative must fail Washoe's card line")
+    for code, spec in NATIONS.items():
+        assert bool(spec.get("partial")) == (PARSERS.get(code) in (
+            p_ak_chin, p_hopi, p_duckwater, p_paskenta, p_washoe)), code
     assert _drop_stop("Julian Example.") == "Julian Example"
     assert _drop_stop("Ann Example Jr.") == "Ann Example Jr."
     for code, spec in NATIONS.items():

@@ -1016,6 +1016,33 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "2685": {
+  "roster": [
+   {
+    "name": "Brandin Paya",
+    "role": "Tribal Chairman"
+   },
+   {
+    "name": "Natasha Magaña",
+    "role": "Tribal Treasurer"
+   },
+   {
+    "name": "Keith Ray",
+    "role": "Tribal Vice Chairman"
+   },
+   {
+    "name": "Mary Raigosa",
+    "role": "Tribal Council Member at Large"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page lists the Tribal Secretary's seat as vacant.",
+  "rosterSource": "nation",
+  "rosterPage": "https://paskenta-nsn.gov/about-the-nation/our-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "2715": {
   "roster": [
    {
@@ -1765,6 +1792,126 @@
   "rosterNote": "From the nation's own council page, read 2026-11-13.",
   "rosterSource": "nation",
   "rosterPage": "https://viejasbandofkumeyaay.org/modern-government/viejas-government-officers/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4560": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4665": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
   "rosterRead": "2026-11-13",
   "rosterHost": null,
   "rosterMeasured": null

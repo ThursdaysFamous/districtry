@@ -665,6 +665,66 @@
    ],
    "read": "2026-11-13"
   },
+  "0510": {
+   "source": "nation",
+   "page": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+   "pages": [
+    "https://washoetribe.us/api/v2/pages/163/?format=json"
+   ],
+   "partial": "The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+   "members": [
+    {
+     "name": "Serrell Smokey",
+     "role": "Chairman"
+    },
+    {
+     "name": "Patrick Burtt",
+     "role": "Vice-Chairman",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Dena Sargent",
+     "role": "Representative",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Gary Nevers",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Everett Osorio",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Steven \"Buck\" Cruz",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Jeanne Mortimer",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Darienne Tenorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Blain Osorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Lydell Wyatt",
+     "role": "Representative",
+     "district": "Off-Reservation"
+    }
+   ],
+   "read": "2026-11-13"
+  },
   "0525": {
    "source": "nation",
    "page": "https://catawba.com/executive-committee",
@@ -1204,6 +1264,66 @@
    ],
    "read": "2026-11-13"
   },
+  "0940": {
+   "source": "nation",
+   "page": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+   "pages": [
+    "https://washoetribe.us/api/v2/pages/163/?format=json"
+   ],
+   "partial": "The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+   "members": [
+    {
+     "name": "Serrell Smokey",
+     "role": "Chairman"
+    },
+    {
+     "name": "Patrick Burtt",
+     "role": "Vice-Chairman",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Dena Sargent",
+     "role": "Representative",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Gary Nevers",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Everett Osorio",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Steven \"Buck\" Cruz",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Jeanne Mortimer",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Darienne Tenorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Blain Osorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Lydell Wyatt",
+     "role": "Representative",
+     "district": "Off-Reservation"
+    }
+   ],
+   "read": "2026-11-13"
+  },
   "0955": {
    "source": "nation",
    "page": "https://drycreekrancheria.com/board-of-directors/",
@@ -1289,6 +1409,35 @@
      "termEnds": "2028",
      "email": "sandra.e@shopai.org",
      "phone": "(208) 759-3100 ext. 1292"
+    }
+   ],
+   "read": "2026-11-13"
+  },
+  "0975": {
+   "source": "nation",
+   "page": "https://duckwatertribe.org/tribal-council/",
+   "pages": [
+    "https://duckwatertribe.org/tribal-council/"
+   ],
+   "partial": "The page lists the Vice Chairperson's and Council Secretary's seats as vacant.",
+   "members": [
+    {
+     "name": "Marian Perez",
+     "role": "Interim Chairperson",
+     "termEnds": "2026",
+     "email": "chairman@duckwatertribe.org"
+    },
+    {
+     "name": "Jerry Millett",
+     "role": "Council Member",
+     "termEnds": "2028",
+     "email": "j.millet@duckwatertribe.org"
+    },
+    {
+     "name": "Ondy Thompson",
+     "role": "Council Member",
+     "termEnds": "2027",
+     "email": "thompson.o@duckwatertribe.org"
     }
    ],
    "read": "2026-11-13"
@@ -2020,6 +2169,142 @@
      "role": "District Representative",
      "district": "Campbell Field District",
      "email": "ccarpenter@hoopa-nsn.gov"
+    }
+   ],
+   "read": "2026-11-13"
+  },
+  "1505": {
+   "source": "nation",
+   "page": "https://www.hopi-nsn.gov/tribal-government/",
+   "pages": [
+    "https://www.hopi-nsn.gov/tribal-government/"
+   ],
+   "partial": "The page lists five officers and says the council has 22 village representatives, of whom it names 21, so one representative is not named here.",
+   "members": [
+    {
+     "name": "Lamar B. Keevama",
+     "role": "Chairman"
+    },
+    {
+     "name": "Mikah H. Kewanimptewa Sr.",
+     "role": "Vice Chairman"
+    },
+    {
+     "name": "Dwayne Secakuku",
+     "role": "Tribal Secretary"
+    },
+    {
+     "name": "Wilfred Gaseoma",
+     "role": "Tribal Treasurer"
+    },
+    {
+     "name": "Alfonso Sakeva Sr.",
+     "role": "Sergeant-at-Arms"
+    },
+    {
+     "name": "LeRoy Shingoitewa",
+     "role": "Representative",
+     "district": "Upper Moenkopi"
+    },
+    {
+     "name": "Philton Talahytewa Sr.",
+     "role": "Representative",
+     "district": "Upper Moenkopi"
+    },
+    {
+     "name": "Robert Charley",
+     "role": "Representative",
+     "district": "Upper Moenkopi"
+    },
+    {
+     "name": "Marilyn Fredericks",
+     "role": "Representative",
+     "district": "Bakabi"
+    },
+    {
+     "name": "Ruth Kewanimptewa",
+     "role": "Representative",
+     "district": "Bakabi"
+    },
+    {
+     "name": "Clifford Qotsquahu",
+     "role": "Representative",
+     "district": "Bakabi"
+    },
+    {
+     "name": "Wendell Honanie, Sr.",
+     "role": "Representative",
+     "district": "Kykotsmovi"
+    },
+    {
+     "name": "Kristofer Kelhoyouma",
+     "role": "Representative",
+     "district": "Kykotsmovi"
+    },
+    {
+     "name": "Nona Tuchawena",
+     "role": "Representative",
+     "district": "Kykotsmovi"
+    },
+    {
+     "name": "Nicole Honanie",
+     "role": "Representative",
+     "district": "Kykotsmovi"
+    },
+    {
+     "name": "George Mase",
+     "role": "Representative",
+     "district": "Sipaulovi"
+    },
+    {
+     "name": "Maude Yoyhoema",
+     "role": "Representative",
+     "district": "Sipaulovi"
+    },
+    {
+     "name": "Debra Kukuma",
+     "role": "Representative",
+     "district": "Sipaulovi"
+    },
+    {
+     "name": "Merwin Kooyahoema",
+     "role": "Representative",
+     "district": "Mishongnovi"
+    },
+    {
+     "name": "Malinda Andrews",
+     "role": "Representative",
+     "district": "Mishongnovi"
+    },
+    {
+     "name": "Marilyn Tewa",
+     "role": "Representative",
+     "district": "Mishongnovi"
+    },
+    {
+     "name": "Arthur Batala",
+     "role": "Representative",
+     "district": "Mishongnovi"
+    },
+    {
+     "name": "Carlton Timms",
+     "role": "Representative",
+     "district": "First Mesa Consolidated Villages"
+    },
+    {
+     "name": "Dale Sinquah",
+     "role": "Representative",
+     "district": "First Mesa Consolidated Villages"
+    },
+    {
+     "name": "Daryn Melvin",
+     "role": "Representative",
+     "district": "First Mesa Consolidated Villages"
+    },
+    {
+     "name": "Wilbur Kaye",
+     "role": "Representative",
+     "district": "First Mesa Consolidated Villages"
     }
    ],
    "read": "2026-11-13"
@@ -2886,6 +3171,33 @@
     {
      "name": "J. Guadalupe Castañeda",
      "role": "Councilmember"
+    }
+   ],
+   "read": "2026-11-13"
+  },
+  "2130": {
+   "source": "nation",
+   "page": "http://www.ak-chin.nsn.us/community-council/",
+   "pages": [
+    "http://www.ak-chin.nsn.us/community-council/"
+   ],
+   "partial": "The page says the council has five members and names four, so one council member's seat is not named here.",
+   "members": [
+    {
+     "name": "Gabriel Lopez",
+     "role": "Chairman"
+    },
+    {
+     "name": "Delia Carlyle",
+     "role": "Vice-Chairman"
+    },
+    {
+     "name": "Dennis Antone",
+     "role": "Council Member"
+    },
+    {
+     "name": "Cecil Peters",
+     "role": "Council Member"
     }
    ],
    "read": "2026-11-13"
@@ -3878,6 +4190,33 @@
      "role": "Council Member",
      "email": "Francisco.G.Munoz@pascuayaqui-nsn.gov",
      "phone": "520.883.5028"
+    }
+   ],
+   "read": "2026-11-13"
+  },
+  "2685": {
+   "source": "nation",
+   "page": "https://paskenta-nsn.gov/about-the-nation/our-government/",
+   "pages": [
+    "https://paskenta-nsn.gov/about-the-nation/our-government/"
+   ],
+   "partial": "The page lists the Tribal Secretary's seat as vacant.",
+   "members": [
+    {
+     "name": "Brandin Paya",
+     "role": "Tribal Chairman"
+    },
+    {
+     "name": "Keith Ray",
+     "role": "Tribal Vice Chairman"
+    },
+    {
+     "name": "Natasha Magaña",
+     "role": "Tribal Treasurer"
+    },
+    {
+     "name": "Mary Raigosa",
+     "role": "Tribal Council Member at Large"
     }
    ],
    "read": "2026-11-13"
@@ -5225,6 +5564,66 @@
    ],
    "read": "2026-11-10"
   },
+  "3980": {
+   "source": "nation",
+   "page": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+   "pages": [
+    "https://washoetribe.us/api/v2/pages/163/?format=json"
+   ],
+   "partial": "The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+   "members": [
+    {
+     "name": "Serrell Smokey",
+     "role": "Chairman"
+    },
+    {
+     "name": "Patrick Burtt",
+     "role": "Vice-Chairman",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Dena Sargent",
+     "role": "Representative",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Gary Nevers",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Everett Osorio",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Steven \"Buck\" Cruz",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Jeanne Mortimer",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Darienne Tenorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Blain Osorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Lydell Wyatt",
+     "role": "Representative",
+     "district": "Off-Reservation"
+    }
+   ],
+   "read": "2026-11-13"
+  },
   "4000": {
    "source": "nation",
    "page": "https://www.stillaguamish.com/departmentprogramservice/tribal-government/",
@@ -5965,6 +6364,66 @@
    ],
    "read": "2026-11-13"
   },
+  "4560": {
+   "source": "nation",
+   "page": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+   "pages": [
+    "https://washoetribe.us/api/v2/pages/163/?format=json"
+   ],
+   "partial": "The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+   "members": [
+    {
+     "name": "Serrell Smokey",
+     "role": "Chairman"
+    },
+    {
+     "name": "Patrick Burtt",
+     "role": "Vice-Chairman",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Dena Sargent",
+     "role": "Representative",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Gary Nevers",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Everett Osorio",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Steven \"Buck\" Cruz",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Jeanne Mortimer",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Darienne Tenorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Blain Osorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Lydell Wyatt",
+     "role": "Representative",
+     "district": "Off-Reservation"
+    }
+   ],
+   "read": "2026-11-13"
+  },
   "4595": {
    "source": "nation",
    "page": "https://www.whiteearth.com/rbc/district-iii",
@@ -6065,6 +6524,66 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "4665": {
+   "source": "nation",
+   "page": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+   "pages": [
+    "https://washoetribe.us/api/v2/pages/163/?format=json"
+   ],
+   "partial": "The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+   "members": [
+    {
+     "name": "Serrell Smokey",
+     "role": "Chairman"
+    },
+    {
+     "name": "Patrick Burtt",
+     "role": "Vice-Chairman",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Dena Sargent",
+     "role": "Representative",
+     "district": "Dresslerville Community"
+    },
+    {
+     "name": "Gary Nevers",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Everett Osorio",
+     "role": "Representative",
+     "district": "Carson Colony"
+    },
+    {
+     "name": "Steven \"Buck\" Cruz",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Jeanne Mortimer",
+     "role": "Representative",
+     "district": "Woodfords Community"
+    },
+    {
+     "name": "Darienne Tenorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Blain Osorio",
+     "role": "Representative",
+     "district": "Stewart Community"
+    },
+    {
+     "name": "Lydell Wyatt",
+     "role": "Representative",
+     "district": "Off-Reservation"
+    }
+   ],
+   "read": "2026-11-13"
   },
   "4690": {
    "source": "nation",

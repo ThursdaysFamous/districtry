@@ -30,16 +30,22 @@ town its own site gives, Covelo and Brooks (`seatFromNation`), with a line on th
 the town came from; only the town is carried. Yocha Dehe's own site could not be read from this
 project's sandbox, so its card keeps the Bureau's address as the nation's site. The Greenville
 Rancheria the Bureau lists with a state and no city, so its card gives the state alone. The Bureau
-lists no website for 28 of the 98 nations. The Census draws tribal districts on one piece, the Yurok
+lists no website for 28 of the 98 nations, and the addresses it lists for ten more no longer reach
+the nation (no DNS record, a parked domain, a gambling site, an HTTP 500, or a casino or resort page
+that does not give the government), so on Adam's ruling of 2026-11-13 those cards link no site, or,
+for the Pit River Tribe, the tribe's own site at pitrivertribe.gov (`websiteWithdrawn`). The Census draws tribal districts on one piece, the Yurok
 Reservation (Orick, Pecwan, Requa and Weitchpec), named on its card. The file is 1.12 MB (258 KB
 gzipped) at the Census's own detail, smaller than Arizona's simplified file, so it is not
-simplified. Since 2026-11-13 the cards name the council of 49 of the 98 nations, read nation by nation from
+simplified. Since 2026-11-13 the cards name the council of 51 of the 98 nations, read nation by nation from
 each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
 `update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
-project or showed a check only a person can pass, a page naming part of the council or none of it,
-or no site of the nation's own. A partial council is not carried. Recorded in gap
+project or showed a check only a person can pass, a page naming only part of the council or
+none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. Two are: Paskenta's page lists its
+secretary's seat as vacant, and the Washoe Tribe's names one of its two Off-Reservation
+representatives. Recorded in gap
 `ca-tribal-government`.
 
 **There is no build step, no framework, and no server-side code.** The entire app — styles, core, and all layer modules — lives inline in `index.html`. `sw.js` is the service worker; `data/app/*.json` are runtime-fetched data files. Everything else is data pipeline, scrapers, or CI.

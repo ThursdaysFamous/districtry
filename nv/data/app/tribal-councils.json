@@ -38,6 +38,126 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "0510": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "0940": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "0965": {
   "roster": [
    {
@@ -94,6 +214,35 @@
   "rosterNote": "From the nation's own council page, read 2026-11-13.",
   "rosterSource": "nation",
   "rosterPage": "https://shopaitribes.org/business-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "0975": {
+  "roster": [
+   {
+    "name": "Marian Perez",
+    "role": "Interim Chairperson",
+    "termEnds": "2026",
+    "email": "chairman@duckwatertribe.org"
+   },
+   {
+    "name": "Jerry Millett",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "j.millet@duckwatertribe.org"
+   },
+   {
+    "name": "Ondy Thompson",
+    "role": "Council Member",
+    "termEnds": "2027",
+    "email": "thompson.o@duckwatertribe.org"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page lists the Vice Chairperson's and Council Secretary's seats as vacant.",
+  "rosterSource": "nation",
+  "rosterPage": "https://duckwatertribe.org/tribal-council/",
   "rosterRead": "2026-11-13",
   "rosterHost": null,
   "rosterMeasured": null
@@ -316,6 +465,66 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "3980": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "4180": {
   "roster": [
    {
@@ -394,6 +603,66 @@
   "rosterNote": "From the nation's own council page, read 2026-11-13.",
   "rosterSource": "nation",
   "rosterPage": "https://www.wrpt.org/tribal-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4560": {
+  "roster": [
+   {
+    "name": "Serrell Smokey",
+    "role": "Chairman"
+   },
+   {
+    "name": "Patrick Burtt",
+    "role": "Vice-Chairman",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Dena Sargent",
+    "role": "Representative",
+    "district": "Dresslerville Community"
+   },
+   {
+    "name": "Gary Nevers",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Everett Osorio",
+    "role": "Representative",
+    "district": "Carson Colony"
+   },
+   {
+    "name": "Steven \"Buck\" Cruz",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Jeanne Mortimer",
+    "role": "Representative",
+    "district": "Woodfords Community"
+   },
+   {
+    "name": "Darienne Tenorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Blain Osorio",
+    "role": "Representative",
+    "district": "Stewart Community"
+   },
+   {
+    "name": "Lydell Wyatt",
+    "role": "Representative",
+    "district": "Off-Reservation"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the tribe's members elect two Off-Reservation representatives and names one, so the other is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://washoetribe.us/departmentlandingpage/163-Page-tribal-council",
   "rosterRead": "2026-11-13",
   "rosterHost": null,
   "rosterMeasured": null

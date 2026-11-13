@@ -94,14 +94,18 @@ list gives for its chair, with a line saying so (`seatFromState`), on Adam's yes
 only the town is carried, never the street. Two of the Bureau's site addresses no longer reach the nation
 (the Goshute's serves an unrelated finance site and the Duck Valley's a page-not-found page), so
 those cards link the nation's own site, recorded as `bureauWebsiteWithdrawn`. The Bureau lists no
-website for nine of the 20 nations. The Census draws no tribal district on any of this land, and the
-file is 345 KB at the Census's own detail, so it is not simplified. Since 2026-11-13 the cards name the council of 9 of the 20 nations, read nation by nation from
+website for nine of the 20 nations, and the address it lists for the Yomba
+Shoshone Tribe now forwards to a roofing company's site, so on Adam's ruling of 2026-11-13 that card
+links no site (`websiteWithdrawn`). The Census draws no tribal district on any of this land, and the
+file is 345 KB at the Census's own detail, so it is not simplified. Since 2026-11-13 the cards name the council of 11 of the 20 nations, read nation by nation from
 each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
 `update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
-project or showed a check only a person can pass, a page naming part of the council or none of it,
-or no site of the nation's own. A partial council is not carried. Recorded in gap
+project or showed a check only a person can pass, a page naming only part of the council or
+none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. Two are: Duckwater's page lists two seats as
+vacant, and the Washoe Tribe's names one of its two Off-Reservation representatives. Recorded in gap
 `nv-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NEVADA.** A ZCTA carries no state field, so over the line the live
