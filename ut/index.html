@@ -4612,7 +4612,7 @@ function initUtahExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ut-senate": "uts", "county": "co",
     "school-district-unified": "su", "ut-house": "uth", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4621,7 +4621,7 @@ function initUtahExplorer() {
     "state-house": ["ut-house"], "county": ["county"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11494,6 +11494,7 @@ function initUtahExplorer() {
     "ut-house",          // 75 House districts, each electing one representative
     "zip-code",          // 303 ZIP Code Tabulation Areas that reach into Utah (361 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 255 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Utah has 9 pieces, 7 reservations and 2 pieces of off-reservation trust land, held by 7 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Uintah and Ouray Reservation (17,671.4 km², mostly Duchesne and Uintah counties), the Navajo Nation Reservation (5,188.9 km² in Utah, 8.9% of it, San Juan County), the Goshute Reservation (202.5 km² in Utah, 41.6% of it, Juab County), the Paiute (UT) Reservation (131.2 km²) and the Skull Valley Reservation (72.9 km², Tooele County); the smallest is the Northwestern Shoshone Reservation (0.788 km², Box Elder County). Three pieces cross the state line and are drawn whole: the Navajo Nation, Goshute and Ute Mountain reservations. The Navajo Nation is seated in Arizona and the Ute Mountain Ute Tribe in Colorado. The Census draws tribal subdivisions on the Navajo Nation alone. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16657,6 +16658,138 @@ function initUtahExplorer() {
   });
 
 
+  /* ---------- 7a. Tribal Government — Utah's tribal land, 9 pieces, 7 nations.
+   *
+   * Seven reservations and two pieces of off-reservation trust land, measured
+   * 2026-11-13 by scripts/build_tribal_areas.py, with the counties measured
+   * against this app's own county outlines: the Uintah and Ouray Reservation
+   * (17,671.4 km², mostly Duchesne and Uintah counties; 25,192 people at the
+   * 2020 census) and its trust land (3.3 km²), held by the Ute Indian Tribe,
+   * seated at Fort Duchesne; the Utah part of the Navajo Nation Reservation
+   * (5,188.9 km², 8.9% of it, San Juan County); the Goshute Reservation
+   * (202.5 km² in Utah, 41.6% of it, Juab County); the Paiute (UT)
+   * Reservation (131.2 km² in ten parts, Washington, Iron, Sevier and Millard
+   * counties), held by the Paiute Indian Tribe of Utah, seated at Cedar City;
+   * the Skull Valley Reservation (72.9 km², Tooele County); the Utah part of
+   * the Ute Mountain Reservation (30.6 km², 1.3% of it) and the Ute Mountain
+   * Off-Reservation Trust Land (30.2 km²), both in San Juan County; and the
+   * Northwestern Shoshone Reservation (0.788 km², Box Elder County). Three
+   * pieces cross the state line and are drawn whole: the Navajo Nation,
+   * Goshute and Ute Mountain reservations. The Navajo Nation is seated at
+   * Window Rock, Arizona, and the Ute Mountain Ute Tribe at Towaoc,
+   * Colorado. The Census draws tribal subdivisions on the Navajo Nation
+   * alone, nine of them on its ground in Utah, which the card names.
+   *
+   * DRAWN SIMPLIFIED. The Navajo Nation drawn whole made the file 2.17 MB, so
+   * it goes through one Douglas-Peucker run at 3 m, as Arizona's does, and is
+   * 915 KB (240 KB gzipped). scripts/build_tribal_areas.py holds every vertex
+   * of the Census's line within 25 m of the line drawn; the worst measured
+   * was 3.3 m.
+   *
+   * ONE NATION THE BUREAU LISTS WITH NO OFFICE TOWN: the Confederated Tribes
+   * of the Goshute Reservation, whose card gives the town the nation's own
+   * site gives, Ibapah, with a line saying where it came from, as Nevada's
+   * card for the same land does, and links that site.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so every card says so and
+   * links the nation's own site where there is one (ROSTER_NOT_SOUGHT in
+   * scripts/build_tribal_areas.py); the Bureau of Indian Affairs lists none
+   * for the Skull Valley Band or the Ute Mountain Ute Tribe.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Utah are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes ut/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Kansas's has.
+  var loadUtTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadUtTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      // Only where the Bureau of Indian Affairs lists no office town: where the
+      // seat above came from (the nation's own site, read on a date).
+      { name: "seatNote", label: "About the seat", keys: ["seatnote"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land by
+    // the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      if (!hasRoster) return null;
+      var wrap = cardEl("div");
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Utah has 9 tribal areas across 7 nations, 7 reservations and 2 pieces of off-reservation trust land, and this point is on none of them."
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18550,7 +18683,7 @@ function initUtahExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ut-senate", "ut-house",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19067,10 +19200,11 @@ function initUtahExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

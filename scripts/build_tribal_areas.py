@@ -383,6 +383,27 @@ ROSTER_NOT_SOUGHT = {
     # among them), drawn 2026-11-12 with no council yet, read one nation at a
     # time.
     "Nevada": {"since": "2026-11-12"},
+    # The 98 nations with land in California (the Colorado River Indian
+    # Tribes, seated in Parker, Arizona, and the Washoe Tribe, seated in
+    # Gardnerville, Nevada, among them), drawn 2026-11-12 with no council yet,
+    # read one nation at a time.
+    "California": {"since": "2026-11-12"},
+    # Batch 3 of the state-level launch and Georgia, drawn 2026-11-13 with no
+    # council yet, read one nation at a time: the Southern Ute and Ute
+    # Mountain Ute in Colorado; the Poarch Creek and the MOWA Choctaw in
+    # Alabama; the Mashantucket Pequot, the Mohegan and the three tribes
+    # Connecticut recognizes; the Lower Muscogee Creek in Georgia; the
+    # Kickapoo, Prairie Band Potawatomi, Iowa and Sac and Fox nations in
+    # Kansas; Oregon's nine and the three that share Celilo Village (the
+    # Yakama, seated in Washington, among them); and Utah's, the Navajo
+    # Nation, seated in Arizona, and the Goshute among them.
+    "Alabama": {"since": "2026-11-13"},
+    "Colorado": {"since": "2026-11-13"},
+    "Connecticut": {"since": "2026-11-13"},
+    "Georgia": {"since": "2026-11-13"},
+    "Kansas": {"since": "2026-11-13"},
+    "Oregon": {"since": "2026-11-13"},
+    "Utah": {"since": "2026-11-13"},
 }
 
 
@@ -1145,8 +1166,8 @@ def stamp_rosters():
 
 
 # WHERE THE LAND IS DRAWN SIMPLIFIED, AND HOW FAR IT MAY STRAY. Every other
-# state ships the Census's own lines, which is at most 0.94 MB (Washington's,
-# measured 2026-11-12). Oklahoma's statistical areas cover most of the state and
+# state ships the Census's own lines, which is at most 1.12 MB (California's
+# 150 pieces, 258 KB gzipped, measured 2026-11-12; Washington's is 0.94 MB). Oklahoma's statistical areas cover most of the state and
 # come to 2.8 MB as published, and Arizona's reservations to 3.9 MB (the Navajo
 # Nation's alone 302 parts and its trust land 456, measured 2026-11-12), so
 # each goes through ONE mapshaper run, all areas together so a shared edge is one
@@ -1161,9 +1182,15 @@ def stamp_rosters():
 # triangle in New Mexico about 40 m long and 6 m wide); at 3 m every part and
 # every ring of all 28 pieces survives and the worst stray is 3.0 m, for a
 # 1.44 MB file against 3.93 MB as published (386 KB against 981 KB gzipped).
+# Utah takes Arizona's setting for the same land: the Navajo Nation's whole
+# reservation is drawn on Utah's map as on Arizona's, and as published Utah's
+# nine pieces came to 2.17 MB; at 3 m they are 915 KB (240 KB gzipped) and the
+# worst stray is 3.3 m, on the Uintah and Ouray Reservation (measured
+# 2026-11-13).
 MAPSHAPER = "mapshaper@0.6.102"
 SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0},
-            "Arizona": {"interval": "interval=3", "ceiling_m": 25.0}}
+            "Arizona": {"interval": "interval=3", "ceiling_m": 25.0},
+            "Utah": {"interval": "interval=3", "ceiling_m": 25.0}}
 
 
 def _local_metres(lat0):

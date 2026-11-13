@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "or-senate", "or-house"];
 const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "6", "or-senate": "11", "or-house": "21" };
 const NEGATIVE_POINT = "44.95000,-124.40000"; // The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Oregon";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "OregonExplorer";
@@ -1066,6 +1066,111 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - Celilo Village is administered jointly by three nations, as the
+  //         Oregon Blue Book says, so the card names all three, lists each
+  //         one's seat and site, and carries no single "(official)" link.
+  //       - The Warm Springs Reservation is the ordinary case: the Bureau's
+  //         town and site.
+  //       - The Oregon part of the Fort McDermitt Indian Reservation names
+  //         tribes the Bureau seats in McDermitt, Nevada, and lists no site
+  //         for, so the card links nothing.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 192 m, 24.8 km and 2.9 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const CELILO = "45.64520,-120.96213";
+    const WARM_SPRINGS = "44.86556,-121.43193";
+    const FORT_MCDERMITT = "42.04310,-117.57420";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, CELILO);
+      const p = land[0] || {};
+      const c = await at(CELILO);
+      const names = (p.nations || []).map((n) => n.name);
+      check("Celilo Village names the three nations that administer it, each with its seat and site, and no single link",
+        land.length === 1 && !c.error && names.length === 3 &&
+          names[0] === "Confederated Tribes of the Warm Springs Reservation of Oregon" &&
+          names[1] === "Confederated Tribes of the Umatilla Indian Reservation" &&
+          names[2] === "Confederated Tribes and Bands of the Yakama Nation" &&
+          c.by("Tribal government") === p.nation && p.nation === names[0] + ", " + names[1] + " and " + names[2] &&
+          c.by("Land") === "Celilo Village" &&
+          c.labels.indexOf("Seat of government") === -1 &&
+          c.text.indexOf("3 governments share this land") !== -1 &&
+          c.text.indexOf("Seat: Warm Springs, OR") !== -1 && c.text.indexOf("Seat: Pendleton, OR") !== -1 &&
+          c.text.indexOf("Seat: Toppenish, WA") !== -1 &&
+          p.url === null && c.link.text === "",
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, WARM_SPRINGS);
+      const p = land[0] || {};
+      const c = await at(WARM_SPRINGS);
+      check("the Warm Springs Reservation names the tribes with the Bureau's town and site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Confederated Tribes of the Warm Springs Reservation of Oregon" &&
+          c.by("Land") === "Warm Springs Reservation" &&
+          c.by("Seat of government") === "Warm Springs, OR" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, FORT_MCDERMITT);
+      const p = land[0] || {};
+      const c = await at(FORT_MCDERMITT);
+      check("the Oregon part of the Fort McDermitt Indian Reservation names tribes seated in Nevada and links nothing",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation &&
+          c.by("Land") === "Fort McDermitt Indian Reservation" &&
+          c.by("Seat of government") === "McDermitt, NV" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          p.url === null && c.link.text === "" && !c.text.includes("(official)") &&
+          p.nation.indexOf("Fort McDermitt Paiute and Shoshone Tribes") === 0 &&
+          p.shareInState < 1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("18 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

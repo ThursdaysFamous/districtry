@@ -3142,8 +3142,9 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Colorado: the Census keeps two
         # reservations in Colorado (Southern Ute and Ute Mountain),
-        # and the app draws no tribal land yet (co/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, the Ute Mountain whole across the state line;
+        # no council is named yet (gap co-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "md": {
         "us-house": answers("us-house"),
@@ -3214,8 +3215,10 @@ ANSWERS = {
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alabama: the Census keeps the Poarch Band of
         # Creek Indians' reservation and trust land and one state reservation
         # (MOWA Choctaw),
-        # and the app draws no tribal land yet (al/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, the MOWA Band named from the Alabama Indian
+        # Affairs Commission's list; no council is named yet
+        # (gap al-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "or": {
         "us-house": answers("us-house"),
@@ -3248,8 +3251,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Oregon: the Census keeps 10 reservations and
         # 8 off-reservation trust lands in Oregon,
-        # and the app draws no tribal land yet (or/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, held by 11 nations, Celilo Village named with
+        # the three the Oregon Blue Book says administer it; no council is
+        # named yet (gap or-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ct": {
         "us-house": answers("us-house"),
@@ -3283,8 +3288,10 @@ ANSWERS = {
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Connecticut: the Census keeps two reservations
         # (Mashantucket Pequot and Mohegan), one trust land and three state
         # reservations in Connecticut,
-        # and the app draws no tribal land yet (ct/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, the three state reservations named from the
+        # Department of Energy and Environmental Protection's tribal affairs
+        # page; no council is named yet (gap ct-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ut": {
         "us-house": answers("us-house"),
@@ -3317,8 +3324,9 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Utah: the Census keeps 7 reservations and 2
         # off-reservation trust lands in Utah,
-        # and the app draws no tribal land yet (ut/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, held by 7 nations, the Navajo Nation's
+        # reservation whole; no council is named yet (gap ut-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ks": {
         "us-house": answers("us-house"),
@@ -3347,8 +3355,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Kansas: the Census keeps 4 reservations and 2
         # off-reservation trust lands in Kansas,
-        # and the app draws no tribal land yet (ks/WATCH.md).
-        "tribal-government": OPEN,
+        # drawn since 2026-11-13, held by 4 nations, and the Prairie Band
+        # Potawatomi Nation's council named from its own page; the other three
+        # councils are not named yet (gap ks-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the
@@ -3401,12 +3411,13 @@ ANSWERS = {
         # each card saying what the ballots since say about its county.
         "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
-        # OPEN, NOT "NO TRIBAL LAND": measured 2026-11-10 with
-        # scripts/tribal_areas.py --report Georgia, the Census publishes no
-        # federal reservation and no trust land in Georgia and one state
-        # reservation, the Tama (state) Reservation, 0.367 km2, which the app
-        # does not draw.
-        "tribal-government": OPEN,
+        # Measured 2026-11-10 with scripts/tribal_areas.py --report Georgia,
+        # the Census publishes no federal reservation and no trust land in
+        # Georgia and one state reservation, the Tama (state) Reservation,
+        # 0.367 km2, drawn since 2026-11-13 and named with the Lower Muscogee
+        # Creek Tribe from Code Section 44-12-300; no council is named yet
+        # (gap ga-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "ny": {
         "us-house": answers("congress"),
@@ -3486,8 +3497,15 @@ ANSWERS = {
         # San Francisco's precincts only.
         "precincts": Entry("open", ("election-precinct",)),
         "special-districts": Entry("open", ("bart-director",)),
-        # Tribal lands are not drawn yet (owed after the batch-2 launch).
-        "tribal-government": OPEN,
+        # Drawn 2026-11-12: all 150 pieces the Census keeps in California (103
+        # reservations and rancherias and 47 off-reservation trust lands), each
+        # named with its government -- 98 nations, the Colorado River Indian
+        # Tribes seated in Arizona and the Washoe Tribe in Nevada among them, and
+        # the two the Bureau lists with no office town seated from their own
+        # sites by Adam's choice of that day for Nevada. No council is named
+        # yet; each nation's page is read one at a time, the Oklahoma shape
+        # (gap ca-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),
     # the change that gave every state an app.

@@ -428,10 +428,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 11,
+      "rank_note": "Tribal land — California has 150 pieces, 103 reservations and rancherias and 47 pieces of off-reservation trust land, held by 98 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Hoopa Valley Reservation (366.8 km², Humboldt County), the Yurok Reservation (226.5 km², Humboldt and Del Norte counties), the Tule River Reservation (218.1 km², Tulare County), the Colorado River Indian Reservation (195.1 km² in California, 16.2% of it, San Bernardino and Riverside counties) and the Fort Yuma Indian Reservation (172.6 km², 95.4% of it, Imperial County); the smallest is the Likely Rancheria (0.006 km², Modoc County). Five pieces cross the state line and are drawn whole: the Colorado River, Fort Mojave (18.5% in California), Fort Yuma and Timbi-Sha Shoshone (21.9%) reservations and the Washoe Ranches Trust Land (0.3%). The Colorado River Indian Tribes are seated in Arizona and the Washoe Tribe in Nevada. The Census draws tribal districts on the Yurok Reservation alone. Ranked after municipalities, as Arizona's and Nevada's are, so they are drawn above the larger areas around them, and before the San Francisco layers, none of which this land touches. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — California has 150 such areas, held by 98 nations: 94 seated in California, one (the Colorado River Indian Tribes) in Arizona, one (the Washoe Tribe) in Nevada, and two (the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation) for which the Bureau lists no office town, given the town their own sites give.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for two of these nations, the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation; for both the seat is the town the nation's own site gives, read 2026-11-12, and the card says so. The Capitan Grande Reservation is shared by the Capitan Grande Band's two groups, Barona and Viejas, and its card lists both with their seats and sites. The Bureau lists no website for 28 of the nations, among them the Fort Mojave Indian Tribe, the Quechan Tribe and the Colorado River Indian Tribes; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "California — the 150 pieces of land above, which reach into 34 of its 58 counties. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "election-precinct",
       "label": "Election Precinct",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "514 election precincts (2022 map) - subOf supervisor-district, ranks just before its parent so the outline frames the fills",
       "source": {
         "answers": "Which voting precinct this address is in.",
@@ -449,7 +467,7 @@
       "id": "election-results",
       "label": "Election Results",
       "group": "elections",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "Election results, drawn on the Election Precinct outlines",
       "rank_comment": [
         "The same precinct shapes as Election Precinct, from the same archive, so it ranks right",
@@ -476,7 +494,7 @@
       },
       "label": "Supervisor District",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "SF Board of Supervisors district (11; water-trimmed, tiles the city)",
       "source": {
         "answers": "Which Board of Supervisors district covers this address, and who represents it.",
@@ -495,7 +513,7 @@
       "id": "police-district",
       "label": "Police District",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "SFPD district (10)",
       "source": {
         "answers": "Which SFPD district covers this address, and which station serves it.",
@@ -514,7 +532,7 @@
       "id": "neighborhood",
       "label": "Neighborhood",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "SF Analysis Neighborhood (41) - smallest polygon layer",
       "source": {
         "answers": "Which of the city's analysis neighborhoods contains this address.",
@@ -533,7 +551,7 @@
       "id": "elementary-attendance-area",
       "label": "Elementary Attendance Area",
       "group": "schools",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "SFUSD elementary attendance area (58; lottery tiebreaker, not a guaranteed seat)",
       "source": {
         "answers": "Which SFUSD elementary attendance area this address falls in.",
@@ -551,7 +569,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "SFPD station house (nearest 3, straight-line; 10 stations) - point layer, topmost",
       "source": {
         "answers": "The nearest SFPD stations to this point, by straight-line distance.",
@@ -570,7 +588,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "SFFD firehouse (nearest 3, straight-line; 44 active stations) - point layer, topmost",
       "source": {
         "answers": "The nearest fire stations to this point, by straight-line distance.",
@@ -589,7 +607,7 @@
       "id": "school-site",
       "label": "School Location",
       "group": "schools",
-      "area_rank": 19,
+      "area_rank": 20,
       "rank_note": "Every active SF school (nearest 3, straight-line; 232 public/charter/private) - point layer, topmost",
       "source": {
         "answers": "The nearest school sites to this point, by straight-line distance.",
@@ -608,7 +626,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 20,
+      "area_rank": 21,
       "rank_note": "USGS National Map post offices (nearest 3, straight-line; the app's envelope, read a page at a time) - point layer, topmost",
       "source": {
         "answers": "The nearest post offices to this point, by straight-line distance.",
@@ -626,7 +644,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 21,
+      "area_rank": 22,
       "rank_note": "SFPL locations from City Facilities (nearest 3, straight-line; Main Library + 27 branches, support facility excluded) - point layer, topmost",
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
@@ -645,7 +663,7 @@
       "id": "early-voting",
       "label": "Voting Center & Ballot Drop-off",
       "group": "political",
-      "area_rank": 22,
+      "area_rank": 23,
       "rank_note": "hand-curated SF Dept of Elections voting center + drop boxes (nearest 3) - point layer, topmost",
       "source": {
         "answers": "The nearest early-voting sites to this point for the current election.",
@@ -662,7 +680,7 @@
     }
   ],
   "min_register_layer": 12,
-  "layer_count_note": "Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17; + county, municipality and the three school district tilings when the app grew to the whole state (2026-11) = 22",
+  "layer_count_note": "Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17; + county, municipality and the three school district tilings when the app grew to the whole state (2026-11) = 22; + tribal-government (2026-11-12) = 23",
   "anchor_point": {
     "lat": 37.77927,
     "lng": -122.41924,
@@ -754,6 +772,12 @@
         "min_features": 1799,
         "max_features": 1799,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside ca-state-outline.json, the ground the ZIP layer's coverage test (inCalifornia) answers on; --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 150,
+        "max_features": 150,
+        "note": "California's tribal land (scripts/build_tribal_areas.py) — 103 reservations and rancherias and 47 pieces of off-reservation trust land, held by 98 nations, five pieces drawn whole across the state line, at the Census's own detail (1.12 MB, 258 KB gzipped, under Arizona's simplified 1.44 MB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -805,7 +829,7 @@
     ]
   },
   "sw": {
-    "cache_name": "district-explorer-shell-sf-v12",
+    "cache_name": "district-explorer-shell-sf-v13",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
