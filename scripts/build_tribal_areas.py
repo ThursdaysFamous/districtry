@@ -383,6 +383,11 @@ ROSTER_NOT_SOUGHT = {
     # among them), drawn 2026-11-12 with no council yet, read one nation at a
     # time.
     "Nevada": {"since": "2026-11-12"},
+    # The 98 nations with land in California (the Colorado River Indian
+    # Tribes, seated in Parker, Arizona, and the Washoe Tribe, seated in
+    # Gardnerville, Nevada, among them), drawn 2026-11-12 with no council yet,
+    # read one nation at a time.
+    "California": {"since": "2026-11-12"},
 }
 
 
@@ -1145,8 +1150,8 @@ def stamp_rosters():
 
 
 # WHERE THE LAND IS DRAWN SIMPLIFIED, AND HOW FAR IT MAY STRAY. Every other
-# state ships the Census's own lines, which is at most 0.94 MB (Washington's,
-# measured 2026-11-12). Oklahoma's statistical areas cover most of the state and
+# state ships the Census's own lines, which is at most 1.12 MB (California's
+# 150 pieces, 258 KB gzipped, measured 2026-11-12; Washington's is 0.94 MB). Oklahoma's statistical areas cover most of the state and
 # come to 2.8 MB as published, and Arizona's reservations to 3.9 MB (the Navajo
 # Nation's alone 302 parts and its trust land 456, measured 2026-11-12), so
 # each goes through ONE mapshaper run, all areas together so a shared edge is one

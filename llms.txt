@@ -61,7 +61,7 @@ Counties, towns and villages, school and judicial districts across the state, pl
 
 All 58 counties: cities and towns, unified, elementary and high school districts, ZIP codes and the nearest post office, plus the California Senate, Assembly and U.S. House districts, with who holds each seat. San Francisco in full: its supervisor districts and precincts, neighborhoods, police districts and stations, fire stations, school attendance areas and sites, libraries and voting centers, and the BART board, which also covers Alameda and Contra Costa counties. Tribal lands are not drawn yet, and county, city and school board officials outside San Francisco are not named yet; the Data gaps panel says why.
 
-- [California district lookup](https://districtry.com/ca/): 22 layers, statewide, San Francisco in depth.
+- [California district lookup](https://districtry.com/ca/): 23 layers, statewide, San Francisco in depth.
 - [Who is my U.S. representative?](https://districtry.com/ca/congress.html)
 - [2026 precinct election results](https://districtry.com/ca/election-results.html)
 - [Sources & data layers](https://districtry.com/ca/sources.html)
