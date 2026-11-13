@@ -1,7 +1,7 @@
 {
  "election": "General Election",
  "electionDate": "2026-11-03",
- "listDate": "2026-11-04",
+ "listDate": "2026-11-13",
  "lookupUrl": "https://vote.elections.virginia.gov/VoterInformation",
  "precincts": {
   "51001-000101": 0,
@@ -450,19 +450,19 @@
   "51059-000116": 443,
   "51059-000118": 444,
   "51059-000119": 445,
-  "51059-000120": 446,
-  "51059-000121": 447,
-  "51059-000123": 448,
-  "51059-000126": 449,
-  "51059-000127": 450,
-  "51059-000128": 451,
-  "51059-000129": 452,
-  "51059-000130": 453,
+  "51059-000121": 446,
+  "51059-000123": 447,
+  "51059-000126": 448,
+  "51059-000127": 449,
+  "51059-000128": 450,
+  "51059-000129": 451,
+  "51059-000130": 452,
+  "51059-000131": 453,
   "51059-000132": 454,
   "51059-000134": 455,
   "51059-000135": 456,
   "51059-000136": 457,
-  "51059-000138": 458,
+  "51059-000137": 458,
   "51059-000201": 459,
   "51059-000203": 460,
   "51059-000208": 461,
@@ -5081,12 +5081,6 @@
    "place": "LAUREL RIDGE ELEMENTARY SCHOOL"
   },
   {
-   "address": "5004 Sideburn Rd, Fairfax, VA 22032",
-   "lat": 38.81884,
-   "lng": -77.309891,
-   "place": "OAK VIEW ELEMENTARY SCHOOL"
-  },
-  {
    "address": "10900 Santa Clara Dr, Fairfax, VA 22030",
    "lat": 38.840041,
    "lng": -77.323318,
@@ -5129,6 +5123,12 @@
    "place": "TERRA CENTRE ELEMENTARY SCHOOL"
   },
   {
+   "address": "4500 Dixie Hill Road, Fairfax, VA 22030",
+   "lat": 38.851349,
+   "lng": -77.362758,
+   "place": "EAGLE VIEW ELEMENTARY SCHOOL"
+  },
+  {
    "address": "12000 Government Center Pkwy Rm 2, Fairfax, VA 22035",
    "lat": 38.853964,
    "lng": -77.357008,
@@ -5153,10 +5153,10 @@
    "place": "WOODSON HIGH SCHOOL"
   },
   {
-   "address": "4500 Dixie Hill Road, Fairfax, VA 22030",
-   "lat": 38.851349,
-   "lng": -77.362758,
-   "place": "EAGLE VIEW ELEMENTARY SCHOOL"
+   "address": "5004 Sideburn Rd, Fairfax, VA 22032",
+   "lat": 38.81884,
+   "lng": -77.309891,
+   "place": "OAK VIEW ELEMENTARY SCHOOL"
   },
   {
    "address": "11900 Lake Newport Rd, Reston, VA 20194",
