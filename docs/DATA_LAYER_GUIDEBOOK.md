@@ -6988,7 +6988,7 @@ committed `data/app` file" and "a vintage roll reaches it on its own" are true o
 a new census vintage reaches the card and the tiled map through the weekly pull request
 `update-tiger-tiles.yml` opens.
 
-Fleet totals: **Chicago 42 · New York 40 · California 22 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
+Fleet totals: **Chicago 42 · New York 40 · California 23 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
 
 ---
 
@@ -15700,7 +15700,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `early-voting` | Early Voting Site | political | NearestPt | live NYS GIS elections service, L1 (city, 158) + L0 (other 57 counties, 251) merged | — |
 | `polling-place` | Election Day Poll Site | political | NearestPt | live NYS GIS elections service, L3 (city, 1,214) + L2 (other 57 counties, 3,655) merged; the card states that none of them is necessarily the reader's and links the state BOE lookup | — |
 
-### California — 22 layers
+### California — 23 layers
 
 California's app answered for San Francisco alone until 2026-11-11, when it grew to the whole state and kept every San Francisco layer. Its key in this file stays `sf`, the `this_metro` its worksheet still carries. The statewide layers answer in all 58 counties; the San Francisco layers (every row from `bart-director` to `early-voting` except `zip-code` and `post-office`) hide outside the city and county.
 
@@ -15711,6 +15711,7 @@ California's app answered for San Francisco alone until 2026-11-11, when it grew
 | `ca-assembly` | CA State Assembly District | political | Chamber | pre-built statewide (TIGERweb L2, 80 districts) | `ca-assembly-members.json` (weekly CI) |
 | `county` | County | geography | Polygon | pre-built (TIGERweb State_County L1, 58) | — (gap `ca-county-officials`: no county's supervisors or officers are named outside San Francisco) |
 | `municipality` | City or Town | geography | Polygon | mirrored archive (TIGERweb Places L4, 462 cities and 21 towns, 5.4% of the state's land) | — (gap `ca-municipal-officeholders`) |
+| `tribal-government` | Tribal Government | political | Polygon | pre-built `tribal-areas.json` by `scripts/build_tribal_areas.py` off the shared reader `scripts/tribal_areas.py` (TIGERweb/AIANNHA current), 150 areas — 103 reservations and rancherias and 47 pieces of off-reservation trust land, in 34 of the 58 counties and none in San Francisco — five drawn whole across the state line | nation, seat and site from `data/bia-tribal-governments.json`, joined on AIANNH code via `data/tribal-government-join.json` (the Pit River Tribe's seven pieces from its own history page; the Capitan Grande Reservation under both groups that share it; Round Valley and Yocha Dehe seated from their own sites, `seatFromNation`); NO council named yet (`ROSTER_NOT_SOUGHT`, gap `ca-tribal-government`) |
 | `school-district-unified` | School District (Unified) | schools | Polygon | mirrored archive (TIGERweb School L0, 345 districts and the Census's 'not defined' placeholder) | — (gap `ca-school-board-members`) |
 | `school-district-elementary` | School District (Elementary) | schools | Polygon | mirrored archive (TIGERweb School L2, 517) | — (gap `ca-school-board-members`) |
 | `school-district-secondary` | School District (Secondary) | schools | Polygon | mirrored archive (TIGERweb School L1, 112) | — (gap `ca-school-board-members`) |
