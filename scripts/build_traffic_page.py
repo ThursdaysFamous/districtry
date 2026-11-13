@@ -328,6 +328,11 @@ LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                # Reached the 7-day top ten on 2026-10-26, a few days after the
                # ZIP search started turning the layer on, and drew as the raw id.
                "zip-code": "ZIP code",
+               # Six apps register their county board layer under this id
+               # (Georgia, Michigan, Minnesota, Missouri, Oklahoma, Tennessee).
+               # It reached the two-month top ten on 2026-11-12 and drew as
+               # the raw id.
+               "county-commissioner": "County commissioner",
                "judicial-subcircuit": "Judicial subcircuit",
                "county-precinct": "County precinct",
                "fire-district": "Fire district", "park-district": "Park district",
