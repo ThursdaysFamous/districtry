@@ -831,8 +831,7 @@
    }
   ],
   "treasurer": {
-   "email": "cherokeetreas@co.cherokee.ia.us",
-   "name": "Jodi B. Mongan",
+   "name": "Rob Byers",
    "party": "Republican",
    "phone": "(712) 225-6740"
   }
@@ -2656,6 +2655,7 @@
   }
  },
  "19117": {
+  "boardPhone": "(641) 774-2018",
   "county": "Lucas",
   "countyAttorney": {
    "email": "ca@sheltonlawfirm.com",
@@ -2677,13 +2677,14 @@
   },
   "supervisorPlan": "PLAN 1",
   "supervisorSeats": 3,
-  "supervisorSource": "https://lucascounty.iowa.gov/board_of_supervisors/",
   "supervisors": [
    {
-    "name": "Larry Davis"
+    "name": "Larry Davis",
+    "party": "Republican"
    },
    {
-    "name": "Cathy Reece"
+    "name": "Cathy Reece",
+    "party": "Republican"
    },
    {
     "name": "Dennis Smith"
@@ -2887,6 +2888,7 @@
   "recorder": {
    "email": "nbenson@marshallcountyia.gov",
    "name": "Nan Benson",
+   "party": "Republican",
    "phone": "(641) 754-6323"
   },
   "sheriff": {
@@ -3909,6 +3911,7 @@
   }
  },
  "19171": {
+  "boardPhone": "(641) 484-3980",
   "county": "Tama",
   "countyAttorney": {
    "email": "bheeren@tca.tamacountyiowa.gov",
@@ -3930,32 +3933,26 @@
   },
   "supervisorPlan": "PLAN 3",
   "supervisorSeats": 5,
-  "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
   "supervisors": [
    {
-    "email": "mdoland@tamacounty.org",
     "name": "Mark Doland",
-    "phone": "641-481-2533"
+    "party": "Republican"
    },
    {
-    "email": "curthilmer@gmail.com",
     "name": "Curt Hilmer",
-    "phone": "319-939-3291"
+    "party": "Republican"
    },
    {
-    "email": "hknebel@tamacounty.org",
     "name": "Heather Knebel",
-    "phone": "641-481-2532"
+    "party": "Republican"
    },
    {
-    "email": "ckupka@tamacounty.org",
     "name": "Curt Kupka",
-    "phone": "641-481-2310"
+    "party": "Republican"
    },
    {
-    "email": "dturner@tamacounty.org",
     "name": "David Turner",
-    "phone": "641-481-2456"
+    "party": "Republican"
    }
   ],
   "treasurer": {
@@ -4441,6 +4438,7 @@
   "recorder": {
    "email": "miskaff@woodburycountyiowa.gov",
    "name": "Michelle Skaff",
+   "party": "Republican",
    "phone": "(712) 279-6528"
   },
   "sheriff": {
