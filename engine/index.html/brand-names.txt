@@ -41,3 +41,14 @@
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");
   }
+
+  /* A sibling app's two-letter state code, shown wherever the fleet lists
+     another state: the state menu under the wordmark and the search rows that
+     open another state's app. It is the app's path, which is its tag
+     everywhere in the fleet (districtry.com/il/ is "il"), so it needs no
+     second field kept in step with the url. A url of another shape gives ""
+     and its row carries no code rather than a wrong one. */
+  function metroCode(metro) {
+    var m = /\/([a-z]{2})\/?$/.exec((metro && metro.url) || "");
+    return m ? m[1].toUpperCase() : "";
+  }

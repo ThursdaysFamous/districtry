@@ -32,9 +32,20 @@ nearly written from memory instead, and all three were wrong or unsourced:
   the seat            the Bureau's `city` + `state` columns. A first draft wrote
                       "Mayetta, Kansas" from memory; it happens to be right, and
                       a geographic claim about a place gets a source before it is
-                      written down, not after.
+                      written down, not after. Where the Bureau lists neither
+                      (71 governments, eight of them Nevada's), the town the
+                      nation's own site gives, read and dated in the join's
+                      `seatFromNation`, by Adam's choice of 2026-11-12; where
+                      the nation has no such site, the town of the address a
+                      state's own list gives for it, read and dated in
+                      `seatFromState`, by his yes of the same day for the one
+                      such nation (Winnemucca, from Nevada's list of tribal
+                      chairs); or, where neither was found, nothing, and the
+                      card says the Bureau lists no office town
+                      (`seatNotFound`). The card says which (`seat_note`).
   the nation's site   the Bureau's `website` column, published as http. It is
-                      LINKED and never fetched.
+                      LINKED and never fetched. A site the Bureau writes as a
+                      bare host is linked with the http scheme (_website).
   how the council
   is chosen           NOT STATED, because nothing readable says. A first draft
                       asserted that the council is elected by the nation's
@@ -359,15 +370,71 @@ def _not_read_why(entry):
 # into one of the two per-nation tables above or into tribal-councils.json.
 ROSTER_NOT_SOUGHT = {
     "Oklahoma": {"since": "2026-10-10"},
+    # The 29 nations with land in Washington (the Umatilla, seated in Oregon,
+    # among them), drawn 2026-11-12 with no council yet: each nation's page is
+    # read and moved into tribal-councils.json one nation at a time.
+    "Washington": {"since": "2026-11-12"},
+    # The 21 nations with land in Arizona (the Quechan and the Fort Mojave,
+    # seated in California, and the Zuni, seated in New Mexico, among them),
+    # drawn 2026-11-12 with no council yet, read one nation at a time.
+    "Arizona": {"since": "2026-11-12"},
+    # The 20 nations with land in Nevada (the Fort Mojave, seated in
+    # California, and the Timbisha Shoshone, seated in Bishop, California,
+    # among them), drawn 2026-11-12 with no council yet, read one nation at a
+    # time.
+    "Nevada": {"since": "2026-11-12"},
+    # The 98 nations with land in California (the Colorado River Indian
+    # Tribes, seated in Parker, Arizona, and the Washoe Tribe, seated in
+    # Gardnerville, Nevada, among them), drawn 2026-11-12 with no council yet,
+    # read one nation at a time.
+    "California": {"since": "2026-11-12"},
+    # Batch 3 of the state-level launch and Georgia, drawn 2026-11-13 with no
+    # council yet, read one nation at a time: the Southern Ute and Ute
+    # Mountain Ute in Colorado; the Poarch Creek and the MOWA Choctaw in
+    # Alabama; the Mashantucket Pequot, the Mohegan and the three tribes
+    # Connecticut recognizes; the Lower Muscogee Creek in Georgia; the
+    # Kickapoo, Prairie Band Potawatomi, Iowa and Sac and Fox nations in
+    # Kansas; Oregon's nine and the three that share Celilo Village (the
+    # Yakama, seated in Washington, among them); and Utah's, the Navajo
+    # Nation, seated in Arizona, and the Goshute among them.
+    "Alabama": {"since": "2026-11-13"},
+    "Colorado": {"since": "2026-11-13"},
+    "Connecticut": {"since": "2026-11-13"},
+    "Georgia": {"since": "2026-11-13"},
+    "Kansas": {"since": "2026-11-13"},
+    "Oregon": {"since": "2026-11-13"},
+    "Utah": {"since": "2026-11-13"},
 }
 
 
-def _not_sought_why(shared):
-    """The card's own words for a council nobody here has looked for yet."""
+def _not_sought_why(shared, linked=True):
+    """The card's own words for a council nobody here has looked for yet.
+
+    Only a card with a link to give says it links the nation: until
+    2026-11-12 the sentence said so on every card, and the Upper Skagit Indian
+    Tribe's in Washington, whose site the Bureau does not list, linked nothing.
+    """
+    who = "each of these nations" if shared else "this nation"
+    if not linked:
+        # Nor does it say the nation publishes a council list: a nation with
+        # no site this app has found may publish none it can read.
+        if shared:
+            return ("Not carried yet. This app has not read a council list for "
+                    "any of these nations and has no site of theirs to link, so "
+                    "the card names nobody.")
+        return ("Not carried yet. This app has not read a council list for this "
+                "nation and has no site of the nation's own to link, so the card "
+                "names nobody.")
     return ("Not carried yet. This app has not yet read the council list %s "
             "publishes, so the card links %s instead of naming anybody."
-            % (("each of these nations", "the nations") if shared
-               else ("this nation", "the nation")))
+            % (who, "the nations" if shared else "the nation"))
+
+
+def _linked(props):
+    """Whether a card has a nation's site to link: its own, or for an area
+    several nations share, any of theirs."""
+    return bool(props.get("url")) or any(
+        n.get("url") for n in (props.get("nations") or []))
 
 
 COUNCILS = os.path.join(REPO, "data", "tribal-councils.json")
@@ -624,7 +691,7 @@ def nations_list(entry, bia):
     out = []
     for name in names:
         gov = bia[name]
-        out.append({"name": name, "seat": _seat(gov), "url": gov.get("website")})
+        out.append({"name": name, "seat": _seat(gov), "url": _website(gov)})
     return out
 
 
@@ -665,7 +732,53 @@ def government_of(entry, bia):
         return {"name": entry["government"], "state": rec.get("state"),
                 "city": rec.get("city"), "website": rec.get("website"),
                 "stateRecognition": rec}
-    return bia.get(entry["government"])
+    gov = bia.get(entry["government"])
+    # A NATION THE BUREAU LISTS WITH NO OFFICE TOWN. The Bureau carries 71
+    # governments with neither a city nor a state, eight of them Nevada's, and
+    # Adam chose on 2026-11-12 to take the town from the nation's own site
+    # (`seatFromNation`: the town, the page it was read on and the date), and,
+    # where no site of the nation's own that gives one is found, to draw the land and
+    # say the Bureau lists no office town (`seatNotFound`). The site the card
+    # links is the Bureau's unless the entry names the nation's own: where the
+    # Bureau lists none, or where the Bureau's address no longer belongs to the
+    # nation (`bureauWebsiteWithdrawn`, with what it serves now and the date).
+    sfn = entry.get("seatFromNation")
+    if gov is not None and sfn:
+        gov = dict(gov, city=sfn["city"], state=sfn["state"], seatFromNation=sfn)
+        if sfn.get("website"):
+            gov["website"] = sfn["website"]
+        elif sfn.get("bureauWebsiteWithdrawn"):
+            gov["website"] = None
+    # A NATION WITH NO SITE OF ITS OWN, WHOSE STATE LISTS AN ADDRESS FOR IT.
+    # Adam said yes on 2026-11-12 to the Winnemucca Indian Colony's Reno
+    # address from Nevada's Department of Native American Affairs
+    # (`seatFromState`: the town, the publisher, the page and the date). Only
+    # the town is carried, never the street, and the site the card links is
+    # left as the Bureau gives it.
+    sfs = entry.get("seatFromState")
+    if gov is not None and sfs:
+        gov = dict(gov, city=sfs["city"], state=sfs["state"], seatFromState=sfs)
+    return gov
+
+
+def seat_note(entry):
+    """The card's sentence saying where a seat that is not the Bureau's comes
+    from, or None for every seat the Bureau gives, so those records are
+    unchanged by this field existing."""
+    sfn = entry.get("seatFromNation")
+    if sfn:
+        return ("From the nation's own site, read %s; the Bureau of Indian "
+                "Affairs lists no office town for this nation." % sfn["read"])
+    sfs = entry.get("seatFromState")
+    if sfs:
+        return ("From the address %s lists for this nation, read %s; the Bureau "
+                "of Indian Affairs lists no office town for it, and this app has "
+                "found no site of the nation's own." % (sfs["publisher"], sfs["read"]))
+    if entry.get("seatNotFound"):
+        return ("The Bureau of Indian Affairs lists no office town for this "
+                "nation, and this app has found no site of the nation's own "
+                "that gives one.")
+    return None
 
 
 def recognition_note(entry):
@@ -715,6 +828,27 @@ def check_join(areas, join, bia):
                 "not carry that government" % (entry["government"], code))
         if gov.get("stateRecognition"):
             continue
+        if entry.get("seatFromNation") and entry.get("seatNotFound"):
+            raise RuntimeError("AIANNH %s records a seat from the nation's site "
+                               "and no seat at all" % code)
+        if entry.get("seatFromState") and (entry.get("seatFromNation")
+                                           or entry.get("seatNotFound")):
+            raise RuntimeError("AIANNH %s records a seat from a state's list and "
+                               "another account of the seat" % code)
+        if entry.get("seatFromState") and bia[entry["government"]].get("state"):
+            raise RuntimeError(
+                "the Bureau lists a state for %r now, so the seat taken from a "
+                "state's list for AIANNH %s is stale" % (entry["government"], code))
+        if entry.get("seatNotFound"):
+            if bia[entry["government"]].get("state"):
+                raise RuntimeError(
+                    "the Bureau lists a state for %r now, so seatNotFound for "
+                    "AIANNH %s is stale" % (entry["government"], code))
+            continue
+        if entry.get("seatFromNation") and bia[entry["government"]].get("state"):
+            raise RuntimeError(
+                "the Bureau lists a state for %r now, so the seat taken from the "
+                "nation's site for AIANNH %s is stale" % (entry["government"], code))
         if not gov.get("state"):
             raise RuntimeError("the Bureau lists no state for %r, so no card can "
                                "say where it sits" % entry["government"])
@@ -731,6 +865,25 @@ def _seat(gov):
     if gov.get("city") and gov.get("state"):
         return "%s, %s" % (gov["city"], gov["state"])
     return gov.get("state") or None
+
+
+def _website(gov):
+    """The nation's site as the card can link it, from the Bureau's column.
+
+    The card links only an http(s) address (safeHttpUrl in the engine), and the
+    Bureau writes six of its sites as a bare host -- the Zuni Tribe's is
+    "www.ashiwi.org", measured 2026-11-12 -- which the card would drop without
+    a word. Such a host is given the http scheme a browser takes when one is
+    typed bare; the host itself is the Bureau's, never one supplied here.
+    """
+    url = gov.get("website")
+    if not url:
+        return None
+    if re.match(r"^[a-z][a-z0-9+.-]*://", url, re.I):
+        return url
+    if re.match(r"^[a-z0-9-]+(\.[a-z0-9-]+)+(/\S*)?$", url, re.I):
+        return "http://" + url
+    return url
 
 
 def _population_note(counts, known, code, cls, share=1.0, state=None, renamed=None):
@@ -849,7 +1002,7 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
             "nation": nation_display(government_names(entry)),
             "parentNation": entry.get("parentGovernment"),
             "seat": _seat(gov) if gov else None,
-            "url": gov.get("website") if gov else None,
+            "url": _website(gov) if gov else None,
             # Measured per build: the districts a nation draws on its own land.
             # An empty list means none was found beside a control that found
             # 484 nationwide, which is a measurement and not a silence.
@@ -893,10 +1046,15 @@ def _record(cls, feat, clip, entry, gov, district_names, counts, known, councils
     if note:
         rec["properties"]["recognition"] = note
         rec["properties"]["recognitionUrl"] = entry["stateRecognition"]["url"]
+    # Only a seat the Bureau does not give carries this, so every other shipped
+    # record is unchanged by its existence.
+    snote = seat_note(entry)
+    if snote:
+        rec["properties"]["seatNote"] = snote
     return stamp(rec, councils or {}, state)
 
 
-def _no_roster_props(code, councils, state=None, shared=False):
+def _no_roster_props(code, councils, state=None, shared=False, linked=True):
     """The roster fields the GEOMETRY file carries. For a nation whose council
     is carried they are all empty, because the names live in the instance's
     own tribal-councils.json: the geometry is served cache-first and changes
@@ -913,7 +1071,7 @@ def _no_roster_props(code, councils, state=None, shared=False):
     not_read = ROSTER_NOT_READ.get(code)
     sought = ROSTER_NOT_SOUGHT.get(state) if not (blocked or not_read) else None
     if sought:
-        return {"roster": None, "rosterWhy": _not_sought_why(shared),
+        return {"roster": None, "rosterWhy": _not_sought_why(shared, linked),
                 "rosterHost": None, "rosterMeasured": sought["since"]}
     out = {
         "roster": None,
@@ -935,7 +1093,8 @@ def stamp(feature, councils, state=None):
     p = feature["properties"]
     for k in [k for k in p if k.startswith("roster")]:
         del p[k]
-    p.update(_no_roster_props(p["aiannh"], councils, state, bool(p.get("nations"))))
+    p.update(_no_roster_props(p["aiannh"], councils, state, bool(p.get("nations")),
+                              _linked(p)))
     # The district sentence depends on the council as well as the land, so a
     # re-read that starts or stops naming members' districts rewrites it here.
     if "districts" in p:
@@ -1007,16 +1166,31 @@ def stamp_rosters():
 
 
 # WHERE THE LAND IS DRAWN SIMPLIFIED, AND HOW FAR IT MAY STRAY. Every other
-# state ships the Census's own lines, which is at most 0.8 MB. Oklahoma's
-# statistical areas cover most of the state and come to 2.8 MB as published, so
-# they go through ONE mapshaper run, all areas together so a shared edge is one
+# state ships the Census's own lines, which is at most 1.12 MB (California's
+# 150 pieces, 258 KB gzipped, measured 2026-11-12; Washington's is 0.94 MB). Oklahoma's statistical areas cover most of the state and
+# come to 2.8 MB as published, and Arizona's reservations to 3.9 MB (the Navajo
+# Nation's alone 302 parts and its trust land 456, measured 2026-11-12), so
+# each goes through ONE mapshaper run, all areas together so a shared edge is one
 # line simplified once, by Douglas-Peucker in metres -- the same setting and the
 # same 25 m ceiling Oklahoma's own chamber builder measured and gates
 # (ok/scripts/build_legislative_boundaries.py). The ceiling is held here on
 # every build: no vertex of the Census's line may lie further than it from the
-# line as drawn.
+# line as drawn. Arizona's interval is 3 m, not Oklahoma's 20, and that is
+# measured: the Navajo Nation's land has slivers a few metres wide, and at
+# 20 m the run dropped them whole, the worst a vertex 291.1 m from any line
+# drawn (the trust land), at 10 m and 5 m a 40.8 m one (the reservation, a
+# triangle in New Mexico about 40 m long and 6 m wide); at 3 m every part and
+# every ring of all 28 pieces survives and the worst stray is 3.0 m, for a
+# 1.44 MB file against 3.93 MB as published (386 KB against 981 KB gzipped).
+# Utah takes Arizona's setting for the same land: the Navajo Nation's whole
+# reservation is drawn on Utah's map as on Arizona's, and as published Utah's
+# nine pieces came to 2.17 MB; at 3 m they are 915 KB (240 KB gzipped) and the
+# worst stray is 3.3 m, on the Uintah and Ouray Reservation (measured
+# 2026-11-13).
 MAPSHAPER = "mapshaper@0.6.102"
-SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0}}
+SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0},
+            "Arizona": {"interval": "interval=3", "ceiling_m": 25.0},
+            "Utah": {"interval": "interval=3", "ceiling_m": 25.0}}
 
 
 def _local_metres(lat0):
@@ -1148,7 +1322,7 @@ def also_seated(feats, state_name, bia):
                 continue
             gov = bia[name]
             p.setdefault("alsoSeated", []).append(
-                {"name": name, "seat": _seat(gov), "url": gov.get("website")})
+                {"name": name, "seat": _seat(gov), "url": _website(gov)})
             print("build-tribal-areas: %s is seated at %s, inside %s"
                   % (name, place, p["censusName"]))
     for name, place in outside:
@@ -1242,7 +1416,7 @@ def check():
             # so every check below is made on that merged view.
             geo = feat["properties"]
             stamped = _no_roster_props(geo["aiannh"], councils, doc["state"],
-                                       bool(geo.get("nations")))
+                                       bool(geo.get("nations")), _linked(geo))
             if {k: v for k, v in geo.items() if k.startswith("roster")} != stamped:
                 raise RuntimeError(
                     "%s: AIANNH %s's geometry carries roster fields `stamp` "
@@ -1292,6 +1466,10 @@ def check():
                 raise RuntimeError(
                     "%s: AIANNH %s's recognition sentence is not what the join "
                     "gives — rebuild the file" % (tag, p["aiannh"]))
+            if p.get("seatNote") != seat_note(entry):
+                raise RuntimeError(
+                    "%s: AIANNH %s's sentence about where its seat comes from is "
+                    "not what the join gives — rebuild the file" % (tag, p["aiannh"]))
             if p.get("populationNote") != population_note(
                     p.get("population"), p.get("countedIn2020"),
                     p.get("shareInState"), doc["state"], p.get("landClass"),
@@ -1309,17 +1487,17 @@ def check():
                 raise RuntimeError(
                     "%s says %r sits at %r where the Bureau says %r"
                     % (tag, p["nation"], p["seat"], _seat(gov)))
-            if not gov.get("_shared") and p["url"] != gov.get("website"):
+            if not gov.get("_shared") and p["url"] != _website(gov):
                 raise RuntimeError("%s links %r for %r where the Bureau publishes "
                                    "%r" % (tag, p["url"], p["nation"],
-                                           gov.get("website")))
+                                           _website(gov)))
             # A nation listed as seated here must be the Bureau's, as the Bureau
             # gives it, in a state that places seats, and not one the area's own
             # name already names.
             for n in p.get("alsoSeated") or []:
                 g = bia.get(n["name"])
                 if (doc["state"] not in SEAT_STATES or g is None
-                        or n != {"name": n["name"], "seat": _seat(g), "url": g.get("website")}
+                        or n != {"name": n["name"], "seat": _seat(g), "url": _website(g)}
                         or n["name"] in government_names(entry)):
                     raise RuntimeError(
                         "%s: AIANNH %s lists %r as seated there in a way the Bureau's "
@@ -1453,6 +1631,73 @@ def selftest():
     assert _seat({"state": "KS"}) == "KS"
     assert _seat({"city": "Mayetta"}) is None
     assert _seat({}) is None
+    assert _website({"website": "www.ashiwi.org"}) == "http://www.ashiwi.org"
+    assert _website({"website": "mooretownrancheria-nsn.gov"}) == "http://mooretownrancheria-nsn.gov"
+    assert _website({"website": "https://a.invalid/x"}) == "https://a.invalid/x"
+    assert _website({"website": None}) is None and _website({}) is None
+
+    # A nation the Bureau lists with no office town: the town its own site
+    # gives, the site it was read on linked where the Bureau lists none or a
+    # dead one, and a card that says where the seat came from; or, with no
+    # such site, no seat and a card that says the Bureau lists none.
+    nv = {"Pyramid Lake Paiute Tribe": {"name": "Pyramid Lake Paiute Tribe",
+                                        "city": None, "state": None, "website": None},
+          "Goshute": {"name": "Goshute", "city": None, "state": None,
+                      "website": "http://dead.invalid/"},
+          "Duckwater": {"name": "Duckwater", "city": None, "state": None,
+                        "website": "http://duckwater.invalid/"},
+          "Winnemucca": {"name": "Winnemucca", "city": None, "state": None,
+                         "website": None}}
+    sfn = {"city": "Nixon", "state": "NV", "page": "https://a.invalid/", "read": "2026-11-12",
+           "website": "https://a.invalid/", "why": "x"}
+    e1 = {"government": "Pyramid Lake Paiute Tribe", "seatFromNation": sfn}
+    g1 = government_of(e1, nv)
+    assert _seat(g1) == "Nixon, NV" and _website(g1) == "https://a.invalid/"
+    assert nv["Pyramid Lake Paiute Tribe"]["state"] is None  # the Bureau's record untouched
+    assert seat_note(e1) == ("From the nation's own site, read 2026-11-12; the Bureau "
+                             "of Indian Affairs lists no office town for this nation.")
+    e2 = {"government": "Goshute", "seatFromNation": dict(sfn, website=None,
+          bureauWebsiteWithdrawn="serves another site")}
+    assert _website(government_of(e2, nv)) is None
+    e3 = {"government": "Duckwater", "seatFromNation": dict(sfn, website=None)}
+    assert _website(government_of(e3, nv)) == "http://duckwater.invalid/"
+    e4 = {"government": "Winnemucca", "seatNotFound": {"looked": "2026-11-12", "why": "x"}}
+    assert _seat(government_of(e4, nv)) is None
+    assert seat_note(e4).startswith("The Bureau of Indian Affairs lists no office town")
+    assert seat_note({"government": "Prairie Band Potawatomi Nation"}) is None
+    sfs = {"city": "Reno", "state": "NV", "publisher": "A State Office",
+           "page": "https://s.invalid/list.pdf", "read": "2026-11-12", "why": "x"}
+    e5 = {"government": "Winnemucca", "seatFromState": sfs}
+    g5 = government_of(e5, nv)
+    assert _seat(g5) == "Reno, NV" and _website(g5) is None
+    assert nv["Winnemucca"]["state"] is None  # the Bureau's record untouched
+    assert seat_note(e5) == ("From the address A State Office lists for this nation, "
+                             "read 2026-11-12; the Bureau of Indian Affairs lists no "
+                             "office town for it, and this app has found no site of "
+                             "the nation's own.")
+    for code, e in (("0001", e1), ("0002", e2), ("0003", e3), ("0004", e4), ("0006", e5)):
+        assert check_join([("reservation", feat(code), {})], {"areas": {code: e}}, nv)
+    for e, b, want in (
+            ({"government": "Winnemucca"}, nv, "no state for"),
+            (dict(e4, seatFromNation=sfn), nv, "and no seat at all"),
+            (e4, dict(nv, Winnemucca=dict(nv["Winnemucca"], state="NV")), "seatNotFound"),
+            (e1, dict(nv, **{"Pyramid Lake Paiute Tribe": dict(
+                nv["Pyramid Lake Paiute Tribe"], state="NV")}), "is stale"),
+            (dict(e5, seatNotFound=e4["seatNotFound"]), nv, "another account"),
+            (e5, dict(nv, Winnemucca=dict(nv["Winnemucca"], state="NV")),
+             "from a state's list")):
+        try:
+            check_join([("reservation", feat("0005"), {})], {"areas": {"0005": e}}, b)
+        except RuntimeError as err:
+            assert want in str(err), (want, str(err))
+        else:
+            raise AssertionError("expected a failure containing %r" % want)
+    # A card links the nation only where it has a link to give.
+    assert "links the nation" in _not_sought_why(False, True)
+    assert "links" not in _not_sought_why(False, False)
+    assert "names nobody" in _not_sought_why(True, False)
+    assert _linked({"url": "https://a.invalid/"}) and not _linked({"url": None})
+    assert _linked({"url": None, "nations": [{"url": None}, {"url": "https://b.invalid/"}]})
 
     # The four population branches are four different statements about a place,
     # and the one that matters most is the difference between a parcel the

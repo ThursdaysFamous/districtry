@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own data: **County** (`county`, all 67, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Alabama Senate** and **Alabama House** (35 and 105 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member data), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 465 incorporated places), **School District** (141) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own data: **County** (`county`, all 67, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (7 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Alabama Senate** and **Alabama House** (35 and 105 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member data), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 465 incorporated places), **School District** (141) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -61,10 +61,19 @@ to assume the office is empty. Each county is governed by an elected county comm
 officers such as a probate judge and a sheriff. Recorded as gaps `al-county-officials` and
 `al-municipal-officeholders`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps the Poarch Creek Reservation (about 1.1 km2)
-and the Poarch Creek Off-Reservation Trust Land (about 0.5 km2) in Alabama, and the MOWA Choctaw
-state reservation (about 2.7 km2), measured 2026-11-12 with `scripts/tribal_areas.py --report
-Alabama`. The state is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THREE PIECES OF LAND HELD BY TWO TRIBES AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps the Poarch Creek Reservation (about 1.1
+km2) and the Poarch Creek Off-Reservation Trust Land (about 0.5 km2, 98.6% of it in Alabama and the
+rest in Florida, whose app draws it too) in Alabama, and the MOWA Choctaw state reservation (about
+2.7 km2), measured 2026-11-12 with `scripts/tribal_areas.py --report Alabama`. All three are drawn,
+each joined in `data/tribal-government-join.json`: the Poarch Band of Creek Indians, seated in
+Atmore, from the Bureau of Indian Affairs' list; and the MOWA Band of Choctaw Indians, which the
+United States does not recognize, from the Alabama Indian Affairs Commission's list of tribes the
+State of Alabama recognizes (revised June 2026), so its card says the state recognizes the band,
+links that list and gives the office town the list gives, Mount Vernon. The Poarch Band's own site
+answered this project with an automated challenge page on 2026-11-12, so its card names nobody and
+says why (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`, from the Florida change); the MOWA
+Band's council is not carried yet (`ROSTER_NOT_SOUGHT`). Recorded in gap `al-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE ALABAMA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -97,7 +106,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Alabama (`alabama`) — https://districtry.com/al/
 - Geocoders: address Photon (Alabama-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Alabama-bounded, serial >=1s queue)
 - Ground truth: 32.37771,-86.30091 (Alabama State Capitol, 600 Dexter Avenue, Montgomery, Montgomery County) → county Montgomery County; us-house 2; al-senate 26; al-house 77. Negative point 29.95000,-88.00000 (The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlabamaExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlabamaExplorer`.
 - Scheduled workflows: `update-al-congress-roster.yml` (Mon 22:43 UTC); `update-al-legislature-roster.yml` (Tue 22:43 UTC); `al-validate-sources.yml` (1st of month 23:31 UTC).
 - Source registry: `al/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

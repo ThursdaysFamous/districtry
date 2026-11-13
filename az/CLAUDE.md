@@ -81,8 +81,26 @@ is named yet (gap `az-school-board-members`).
 
 **NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
 to assume the office is empty. Recorded as gaps `az-county-officials` and
-`az-municipal-officeholders`. The land of Arizona's tribal nations is not drawn yet
-(`az/WATCH.md`).
+`az-municipal-officeholders`.
+
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 21 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-12). The Census keeps 21 reservations and 7 off-reservation trust lands in Arizona,
+and all 28 pieces are drawn, each joined in `data/tribal-government-join.json` to the government
+the Bureau of Indian Affairs lists for it, with its seat and, where the Bureau gives one, its
+website. Five reservations cross the state line and are drawn whole: the Navajo Nation's (71.6% in
+Arizona), the Colorado River Indian Reservation (83.8%), the Fort Mojave (70.0%), the Fort Yuma
+(4.6%) and the Zuni (3.1%). Three nations are seated outside the state: the Fort Mojave Indian Tribe
+in Needles and the Quechan Tribe in Winterhaven, California, and the Zuni Tribe in Zuni, New
+Mexico. The Bureau lists no website for six of the 21 nations, so their cards link nothing, and it
+writes the Zuni Tribe's as a bare host, which the builder links with the http scheme
+(`_website` in `scripts/build_tribal_areas.py`). The Census draws tribal districts on the land of the
+Gila River, Hopi, Navajo, Salt River and Tohono O'odham nations, and their cards list them. The
+Census's own lines come to 3.9 MB, the Navajo Nation's land the bulk of it, so they are simplified
+by Douglas-Peucker at 3 m and held to a 25 m ceiling, with every part and ring kept (`SIMPLIFY`
+there says why 3 m and not Oklahoma's 20). The San Juan Southern Paiute Tribe is federally
+recognized and the Census draws no land for it, so no card names it. No council is named yet
+(`ROSTER_NOT_SOUGHT`, the Oklahoma shape): each nation's own page is read and its council moved
+into `tribal-councils.json` one nation at a time, recorded in gap `az-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE ARIZONA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
@@ -107,7 +125,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Arizona (`arizona`) — https://districtry.com/az/
 - Geocoders: address Photon (Arizona-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arizona-bounded, serial >=1s queue)
 - Ground truth: 33.44812,-112.09699 (Arizona State Capitol, 1700 West Washington Street, Phoenix) → county Maricopa County; us-house 3; az-senate 11; az-house 11. Negative point 31.00000,-111.50000 (Sonora, Mexico, about 37 km south of the Arizona line between Nogales and Sasabe — outside Arizona and outside every other instance in the fleet, and inside permalink_gate (minLat 30.90) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State Capitol and Tucson's city hall return Arizona, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. MEXICO BECAUSE NO INSTANCE WILL EVER SERVE IT: every U.S. neighbour of Arizona is in a later batch of the state-level launch, and a point on any of them would have to move the day that neighbour goes live.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.ArizonaExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.ArizonaExplorer`.
 - Scheduled workflows: `update-az-congress-roster.yml` (Mon 20:43 UTC); `update-az-legislature-roster.yml` (Tue 20:43 UTC); `az-validate-sources.yml` (1st of month 22:33 UTC).
 - Source registry: `az/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

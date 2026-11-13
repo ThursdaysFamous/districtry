@@ -306,10 +306,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "Tribal land — Kansas has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Kickapoo (KS) Reservation (613.4 km², Brown, Jackson and Atchison counties), the Prairie Band of Potawatomi Nation Reservation (316.3 km², Jackson County), the Iowa (KS-NE) Reservation (35.3 km² in Kansas, 69% of it, Brown and Doniphan counties) and its trust land (0.639 km², Brown County), and the Sac and Fox Nation Reservation (19.7 km² in Kansas, 33% of it) and its trust land (1.020 km² in Kansas, 70% of it), both in Brown County. The Iowa and Sac and Fox reservations and the Sac and Fox trust land are drawn whole into Nebraska. The Census draws no tribal district on any of it. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Kansas has 6 such areas, held by four nations seated in Kansas: the Kickapoo Tribe in Kansas, the Prairie Band Potawatomi Nation, the Iowa Tribe of Kansas and Nebraska, and the Sac & Fox Nation of Missouri in Kansas and Nebraska.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Prairie Band Potawatomi Nation's council of seven, from the nation's own page (the list Illinois's card names for the nation's trust land near Shabbona), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. This app has not yet read the council lists the other three nations publish, so their cards say so and link each nation's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Kansas — the 6 pieces of land above, in Brown, Jackson, Atchison and Doniphan counties. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -430,6 +448,12 @@
         "min_features": 704,
         "max_features": 704,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Kansas's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, three pieces drawn whole into Nebraska, at the Census's own detail (79 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -454,6 +478,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of the Prairie Band Potawatomi Nation, from its own page, keyed by the Census AIANNH code of its land (2980) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The same council Illinois's card names for the nation's trust land there. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Kansas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ks/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -461,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ks-shell-v2",
+    "cache_name": "districtry-ks-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
