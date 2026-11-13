@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the state's open data portal: **Planning Region** (`county`, the nine planning regions, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (5 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Connecticut Senate** and **Connecticut House** (36 and 151 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own member list), the TIGERweb fabric drawn from mirrored tile archives — **Town** (`municipality`, the 169 towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the state's open data portal: **Planning Region** (`county`, the nine planning regions, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (5 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Connecticut Senate** and **Connecticut House** (36 and 151 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own member list), the TIGERweb fabric drawn from mirrored tile archives — **Town** (`municipality`, the 169 towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every planning region is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -72,11 +72,20 @@ officeholder to name and no gap is recorded for one (the done-standard scorer ca
 yet (gap `ct-municipal-officeholders`). **THE POPULATION FILES USE THE EIGHT COUNTIES OF 2020**,
 because the 2020 blocks carry those codes and not the planning regions'.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps the Mashantucket Pequot Reservation (about 5.5
-km2) and the Mohegan Reservation (about 2.5 km2) in Connecticut, the Mashantucket Pequot
-Off-Reservation Trust Land, and three state reservations (Schaghticoke, Paucatuck Eastern Pequot
-and Golden Hill Paugussett), measured 2026-11-12 with `scripts/tribal_areas.py --report
-Connecticut`. The state is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FIVE TRIBES AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps the Mashantucket Pequot Reservation (about 5.5 km2), the
+Mashantucket Pequot Off-Reservation Trust Land (about 1.3 km2) and the Mohegan Reservation (about
+2.5 km2) in Connecticut, and three state reservations (Schaghticoke, Paucatuck Eastern Pequot and
+Golden Hill Paugussett), measured 2026-11-12 with `scripts/tribal_areas.py --report Connecticut`.
+All six are drawn. The two federally recognized tribes are joined in
+`data/tribal-government-join.json` to the Bureau of Indian Affairs' list, seated in Mashantucket and
+Uncasville. The three state reservations belong to tribes the United States does not recognize, and
+each is joined to the tribal affairs page of the Department of Energy and Environmental Protection,
+which keeps the state's reservations under section 47-65 of the General Statutes: each card says the
+State of Connecticut recognizes the tribe, links that page, and gives no seat, because the page
+gives no office town. The Schaghticoke card names the tribe as the page does and neither of the two
+factions the page describes. No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `ct-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE CONNECTICUT.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -106,7 +115,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Connecticut (`connecticut`) — https://districtry.com/ct/
 - Geocoders: address Photon (Connecticut-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Connecticut-bounded, serial >=1s queue)
 - Ground truth: 41.76373,-72.68255 (Connecticut State Capitol, 210 Capitol Avenue, Hartford, Capitol Planning Region) → county Capitol Planning Region; us-house 1; ct-senate 1; ct-house 7. Negative point 40.85000,-71.60000 (The Atlantic about 25 km south of Block Island and 30 km south-east of Montauk Point — outside Connecticut and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Connecticut), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.ConnecticutExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.ConnecticutExplorer`.
 - Scheduled workflows: `update-ct-congress-roster.yml` (Mon 23:07 UTC); `update-ct-legislature-roster.yml` (Tue 23:07 UTC); `ct-validate-sources.yml` (1st of month 23:41 UTC).
 - Source registry: `ct/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

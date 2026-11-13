@@ -61,7 +61,7 @@ Counties, towns and villages, school and judicial districts across the state, pl
 
 All 58 counties: cities and towns, unified, elementary and high school districts, ZIP codes and the nearest post office, plus the California Senate, Assembly and U.S. House districts, with who holds each seat. San Francisco in full: its supervisor districts and precincts, neighborhoods, police districts and stations, fire stations, school attendance areas and sites, libraries and voting centers, and the BART board, which also covers Alameda and Contra Costa counties. Tribal lands are not drawn yet, and county, city and school board officials outside San Francisco are not named yet; the Data gaps panel says why.
 
-- [California district lookup](https://districtry.com/ca/): 22 layers, statewide, San Francisco in depth.
+- [California district lookup](https://districtry.com/ca/): 23 layers, statewide, San Francisco in depth.
 - [Who is my U.S. representative?](https://districtry.com/ca/congress.html)
 - [2026 precinct election results](https://districtry.com/ca/election-results.html)
 - [Sources & data layers](https://districtry.com/ca/sources.html)
@@ -256,7 +256,7 @@ All 55 counties: each county's commission and elected officers, magisterial dist
 
 All 159 counties: county commission and school board districts where the county's own elections confirm the map, voting precincts, judicial circuits with their judges and district attorneys, cities and towns, census county divisions, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Georgia Senate, House and U.S. House districts, with who holds each seat. County commissioners and school board members are named from the Secretary of State's election results where an election since November 2024 chose them. The Data gaps panel says which seats are not named and why.
 
-- [Georgia district lookup](https://districtry.com/ga/): 15 layers, all 159 counties.
+- [Georgia district lookup](https://districtry.com/ga/): 16 layers, all 159 counties.
 - [Who is my U.S. representative?](https://districtry.com/ga/congress.html)
 - [Who are my county commissioners?](https://districtry.com/ga/county-commissioner.html): links a page per county, 152 of them, each naming every member with the election on the Secretary of State's results site that named each one, and no contact details yet.
 - [Sources & data layers](https://districtry.com/ga/sources.html)
@@ -277,7 +277,7 @@ All 67 counties: cities, boroughs and townships, school districts, ZIP codes, an
 
 All 16 counties and Carson City: incorporated cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Nevada Senate, Assembly and U.S. House districts, with who holds each seat. County commissioners and city and school board members are not named yet, and the Data gaps panel says why.
 
-- [Nevada district lookup](https://districtry.com/nv/): 10 layers, all 16 counties and Carson City.
+- [Nevada district lookup](https://districtry.com/nv/): 11 layers, all 16 counties and Carson City.
 - [Who is my U.S. representative?](https://districtry.com/nv/congress.html)
 - [Sources & data layers](https://districtry.com/nv/sources.html)
 - [Who is my Nevada legislator?](https://districtry.com/nv/state-legislature.html)
@@ -287,7 +287,7 @@ All 16 counties and Carson City: incorporated cities, school districts, ZIP code
 
 All 15 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus Arizona's 30 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Arizona district lookup](https://districtry.com/az/): 12 layers, all 15 counties.
+- [Arizona district lookup](https://districtry.com/az/): 13 layers, all 15 counties.
 - [Who is my U.S. representative?](https://districtry.com/az/congress.html)
 - [Sources & data layers](https://districtry.com/az/sources.html)
 - [Who is my Arizona legislator?](https://districtry.com/az/state-legislature.html)
@@ -347,7 +347,7 @@ All 88 counties: cities and villages, school districts, ZIP codes, and the neare
 
 All 39 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Washington's 49 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Washington district lookup](https://districtry.com/wa/): 10 layers, all 39 counties.
+- [Washington district lookup](https://districtry.com/wa/): 11 layers, all 39 counties.
 - [Who is my U.S. representative?](https://districtry.com/wa/congress.html)
 - [Sources & data layers](https://districtry.com/wa/sources.html)
 - [Who is my Washington legislator?](https://districtry.com/wa/state-legislature.html)
@@ -367,7 +367,7 @@ All 14 counties and 351 cities and towns: unified, elementary and secondary scho
 
 All 64 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Colorado Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Colorado district lookup](https://districtry.com/co/): 10 layers, all 64 counties.
+- [Colorado district lookup](https://districtry.com/co/): 11 layers, all 64 counties.
 - [Who is my U.S. representative?](https://districtry.com/co/congress.html)
 - [Sources & data layers](https://districtry.com/co/sources.html)
 - [Who is my Colorado legislator?](https://districtry.com/co/state-legislature.html)
@@ -387,7 +387,7 @@ All 23 counties and Baltimore City: cities, towns and villages, school districts
 
 All 67 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Alabama Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Alabama district lookup](https://districtry.com/al/): 10 layers, all 67 counties.
+- [Alabama district lookup](https://districtry.com/al/): 11 layers, all 67 counties.
 - [Who is my U.S. representative?](https://districtry.com/al/congress.html)
 - [Sources & data layers](https://districtry.com/al/sources.html)
 - [Who is my Alabama legislator?](https://districtry.com/al/state-legislature.html)
@@ -397,7 +397,7 @@ All 67 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 36 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oregon Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Oregon district lookup](https://districtry.com/or/): 12 layers, all 36 counties.
+- [Oregon district lookup](https://districtry.com/or/): 13 layers, all 36 counties.
 - [Who is my U.S. representative?](https://districtry.com/or/congress.html)
 - [Sources & data layers](https://districtry.com/or/sources.html)
 - [Who is my Oregon legislator?](https://districtry.com/or/state-legislature.html)
@@ -407,7 +407,7 @@ All 36 counties: cities and towns, unified, elementary and high school districts
 
 All 9 planning regions and 169 towns: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Connecticut Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and town and school board officials are not named yet; the Data gaps panel says why.
 
-- [Connecticut district lookup](https://districtry.com/ct/): 12 layers, all 9 planning regions.
+- [Connecticut district lookup](https://districtry.com/ct/): 13 layers, all 9 planning regions.
 - [Who is my U.S. representative?](https://districtry.com/ct/congress.html)
 - [Sources & data layers](https://districtry.com/ct/sources.html)
 - [Who is my Connecticut legislator?](https://districtry.com/ct/state-legislature.html)
@@ -417,7 +417,7 @@ All 9 planning regions and 169 towns: unified, elementary and secondary school d
 
 All 29 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Utah Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Utah district lookup](https://districtry.com/ut/): 10 layers, all 29 counties.
+- [Utah district lookup](https://districtry.com/ut/): 11 layers, all 29 counties.
 - [Who is my U.S. representative?](https://districtry.com/ut/congress.html)
 - [Sources & data layers](https://districtry.com/ut/sources.html)
 - [Who is my Utah legislator?](https://districtry.com/ut/state-legislature.html)
@@ -427,7 +427,7 @@ All 29 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 105 counties: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Kansas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Kansas district lookup](https://districtry.com/ks/): 10 layers, all 105 counties.
+- [Kansas district lookup](https://districtry.com/ks/): 11 layers, all 105 counties.
 - [Who is my U.S. representative?](https://districtry.com/ks/congress.html)
 - [Sources & data layers](https://districtry.com/ks/sources.html)
 - [Who is my Kansas legislator?](https://districtry.com/ks/state-legislature.html)

@@ -6,7 +6,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry California: a single-file, dependency-light web app. Click a point in California (or search an address) and it reports every civic district containing that point and who represents you there. Across all 58 counties it answers the county, the city or town, the three kinds of school district, the ZIP code, the nearest post offices, and the U.S. House, California Senate and California Assembly districts with the member who holds each seat; inside San Francisco it also answers the supervisor district, precinct and election results, BART director, police district, neighbourhood, attendance area and the city's facilities. Deployed as a static site at `districtry.com/ca/`. It answered for San Francisco alone until 2026-11-11, when it grew to the whole state and kept every San Francisco layer; the worksheet's `this_metro` stays `sf`. Illinois (`il/`) is the reference implementation.
 
-**Two coverage tests, read from two shipped outlines.** The San Francisco layers declare `coverage: inSanFrancisco` (`san-francisco-county-outline.json`, the union of the supervisor districts with Treasure Island) and hide outside the city and county; the statewide layers that need one declare `coverage: inCalifornia` (`ca-state-outline.json`, the 58 counties dissolved). The wash draws the state as its region and San Francisco as its full coverage, so the key's middle band reads "Statewide layers only". No county supervisor, mayor, council member or school board member is named outside San Francisco yet; the four gap records (`ca-county-officials`, `ca-municipal-officeholders`, `ca-school-board-members`, `ca-tribal-government`) say why, and California's tribal land is not drawn.
+**Two coverage tests, read from two shipped outlines.** The San Francisco layers declare `coverage: inSanFrancisco` (`san-francisco-county-outline.json`, the union of the supervisor districts with Treasure Island) and hide outside the city and county; the statewide layers that need one declare `coverage: inCalifornia` (`ca-state-outline.json`, the 58 counties dissolved). The wash draws the state as its region and San Francisco as its full coverage, so the key's middle band reads "Statewide layers only". No county supervisor, mayor, council member or school board member is named outside San Francisco yet; the four gap records (`ca-county-officials`, `ca-municipal-officeholders`, `ca-school-board-members`, `ca-tribal-government`) say why. The fourth is now about the tribal councils: the land itself is drawn (below).
+
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 98 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-12). The Census keeps 103 reservations and rancherias and 47 off-reservation trust
+lands in California, and all 150 pieces are drawn, each joined in `data/tribal-government-join.json`
+to the government the Bureau of Indian Affairs lists for it. They lie in 34 of the 58 counties and
+none in San Francisco, so the layer declares no coverage test and the city's own layers are
+untouched. Five pieces cross the state line and are drawn whole: the Colorado River (16.2% in
+California), Fort Mojave (18.5%), Fort Yuma (95.4%) and Timbi-Sha Shoshone (21.9%) reservations
+and the Washoe Ranches Trust Land (0.3%). Two nations are seated outside the state, the Colorado
+River Indian Tribes in Parker, Arizona, and the Washoe Tribe in Gardnerville, Nevada. **SEVEN
+CENSUS CODES ARE THE PIT RIVER TRIBE'S AND SIX OF THEIR NAMES DO NOT SAY SO**: the Big Bend, Likely,
+Lookout, Montgomery Creek, Roaring Creek and XL Ranch rancherias and the Pit River Trust Land are
+joined to the tribe on its own history page (pitrivertribe.gov/tribal-history/, read 2026-11-12),
+which names its land as including those rancherias. **THE CAPITAN GRANDE RESERVATION IS SHARED**:
+the Bureau lists the Capitan Grande Band itself with no city, state or site and lists its two
+groups, Barona and Viejas, each with a seat, so the reservation is entered under `governments` and
+its card names both, with Barona's own history page as the record that the reservation came before
+the Barona Ranch. The Bureau lists neither a city nor a state for the Round Valley Indian Tribes and
+the Yocha Dehe Wintun Nation, and under Adam's choice of 2026-11-12 for Nevada each is seated at the
+town its own site gives, Covelo and Brooks (`seatFromNation`), with a line on the card saying where
+the town came from; only the town is carried. Yocha Dehe's own site could not be read from this
+project's sandbox, so its card keeps the Bureau's address as the nation's site. The Greenville
+Rancheria the Bureau lists with a state and no city, so its card gives the state alone. The Bureau
+lists no website for 28 of the 98 nations. The Census draws tribal districts on one piece, the Yurok
+Reservation (Orick, Pecwan, Requa and Weitchpec), named on its card. The file is 1.12 MB (258 KB
+gzipped) at the Census's own detail, smaller than Arizona's simplified file, so it is not
+simplified. No council is named yet (`ROSTER_NOT_SOUGHT`, the Oklahoma shape): each nation's own
+page is read and its council moved into `tribal-councils.json` one nation at a time, recorded in gap
+`ca-tribal-government`.
 
 **There is no build step, no framework, and no server-side code.** The entire app — styles, core, and all layer modules — lives inline in `index.html`. `sw.js` is the service worker; `data/app/*.json` are runtime-fetched data files. Everything else is data pipeline, scrapers, or CI.
 
@@ -17,7 +46,7 @@ districtry California: a single-file, dependency-light web app. Click a point in
 - Metro: California (`sf`) — https://districtry.com/ca/
 - Geocoders: address Photon (California-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, serial >=1s queue)
 - Ground truth: 37.77927,-122.41924 (SF City Hall (Civic Center)) → supervisor-district 5; neighborhood Tenderloin; police-district NORTHERN. Negative point 32.40000,-115.60000 (The Mexicali Valley in Mexico, about 15 km south of the border at Calexico — outside California and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11 against TIGERweb's state layer (controls: San Francisco City Hall returns California, and Mexicali, Baja California, returns no state). IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 22 registered (elections 1, political 7, safety 3, schools 5, geography 6); `registerLayer(` floor 12. Debug namespace `window.SFExplorer`.
+- Layers: 23 registered (elections 1, political 8, safety 3, schools 5, geography 6); `registerLayer(` floor 12. Debug namespace `window.SFExplorer`.
 - Scheduled workflows: `ca-update-election-results.yml` (daily 14:10 UTC); `ca-update-congress-roster.yml` (Mon 13:00 UTC); `ca-update-legislature-roster.yml` (Tue 13:00 UTC); `ca-update-sf-supervisor-roster.yml` (Wed 13:00 UTC); `ca-validate-sources.yml` (1st of month 14:00 UTC).
 - Source registry: `scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

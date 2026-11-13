@@ -53,9 +53,9 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "39.16384,-119.76637"; // Nevada State Capitol, 101 North Carson Street, Carson City
 const OFFLINE = ["county", "us-house", "nv-senate", "nv-assembly"];
 const EXPECT_DISTRICT = { "county": "Carson City", "us-house": "2", "nv-senate": "16", "nv-assembly": "40" };
-const NEGATIVE_POINT = "42.15000,-116.00000"; // Owyhee County, Idaho, about 17 km north of the Nevada line — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), and none of the state's shipped boundary files contains it. IDAHO'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED IDAHO (batch 4 of the state-level launch, written 2026-11-12), which found it inside Idaho's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Nevada and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Idaho routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
+const NEGATIVE_POINT = "42.15000,-115.50000"; // Owyhee County, Idaho, about 17 km north of the Nevada line and 40 km east of the Duck Valley Reservation — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. MOVED 2026-11-12 FROM 42.15, -116.0, 41 km west, when the Tribal Government layer shipped: that layer draws the whole Duck Valley Reservation, its Idaho half included, and the old point lay about 0.9 km inside the reservation's northern edge, so validate_index.py found it inside data/app/tribal-areas.json. Measured that day from the shipped files: the Idaho app's own county outlines (id/data/app/state-counties.json, from TIGERweb) put the new point in Owyhee County, it is inside Idaho's outline in fleet-outlines.json and no other, and none of this app's shipped boundary files contains it. The old point had been measured 2026-11-10, when TIGERweb's state layer named Idaho there (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state). Every neighbour of Nevada is a live app since Idaho's go-live (batch 4 of the state-level launch, 2026-11-12), and measured that day on a 0.05-degree grid no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so the point is inside Idaho's outline wherever it goes. That is all right: the checks that use it boot on it or select it, which asks only that it be outside Nevada and outside every shipped boundary file, and a selection the app makes itself never leaves; the click that had to stay here became an Idaho routing case in the change that published Idaho, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Nevada";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NevadaExplorer";
@@ -403,7 +403,10 @@ try {
   //     negative point, in Owyhee County, Idaho, about 17 km north of the
   //     Nevada line, was the click that had to stay HERE until Idaho's
   //     go-live made it a case; measured that day (2026-11-12) it lies inside
-  //     Idaho's outline in fleet-outlines.json and no other.
+  //     Idaho's outline in fleet-outlines.json and no other. It moved 41 km
+  //     east the same day, to 42.15, -115.5, off the Duck Valley
+  //     Reservation's Idaho half, which the Tribal Government layer draws,
+  //     and the new spot is inside Idaho's outline and no other too.
   //     The stays-here check (1a2-ii) went with it, because measured the
   //     same day on a 0.05-degree grid no ground in this app's gate lies
   //     more than 2 km from every outline in fleet-outlines.json; the
@@ -415,7 +418,7 @@ try {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "San Francisco City Hall", lat: 37.7793, lng: -122.4193, want: "https://districtry.com/ca/" },
-      { name: "the negative point, in Owyhee County, Idaho", lat: 42.15, lng: -116.0, want: "https://districtry.com/id/" },
+      { name: "the negative point, in Owyhee County, Idaho", lat: 42.15, lng: -115.5, want: "https://districtry.com/id/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -1002,6 +1005,126 @@ try {
       check(c.name, !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0 && present.length === 0,
         `file=${at.NAME} missing=${missing} unwanted=${present} text=${text.slice(0, 120)}`);
       await context.close();
+    }
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each seat came from.
+  //       - The Pyramid Lake Paiute Reservation's seat, Nixon, comes from the
+  //         nation's own site, because the Bureau of Indian Affairs lists no
+  //         office town for the tribe; the card says so on an "About the
+  //         seat" line and links that site.
+  //       - The Winnemucca Indian Colony has no town from the Bureau and no
+  //         site of its own, so its seat, Reno, is the town of the address
+  //         Nevada's Department of Native American Affairs lists for its
+  //         chair; the card says so, carries no street, and links nothing.
+  //       - The Nevada part of the Goshute Reservation names a nation seated
+  //         in Utah, from the nation's own site, and links that site rather
+  //         than the address the Bureau lists, which serves an unrelated
+  //         business.
+  //       - The Yomba Reservation is the ordinary case: the Bureau's town and
+  //         site, and no "About the seat" line.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-12): 16.3 km, 415 m, 7.3 km and
+  //     652 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const PYRAMID_LAKE = "40.11579,-119.54210";
+    const WINNEMUCCA = "40.95392,-117.72082";
+    const GOSHUTE = "39.92731,-114.11292";
+    const YOMBA = "38.93526,-117.48115";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, PYRAMID_LAKE);
+      const p = land[0] || {};
+      const c = await at(PYRAMID_LAKE);
+      check("the Pyramid Lake Paiute Reservation is seated at Nixon from the nation's own site, says so, and links that site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Pyramid Lake Paiute Tribe of the Pyramid Lake Reservation, Nevada" &&
+          c.by("Seat of government") === "Nixon, NV" &&
+          c.by("Land") === "Pyramid Lake Paiute Reservation" &&
+          !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
+          p.url === "https://plpt.nsn.us/" && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} seat=${JSON.stringify(c.by("Seat of government"))} note=${JSON.stringify(c.by("About the seat").slice(0, 80))}`);
+    }
+
+    {
+      const land = propsAt(areas, WINNEMUCCA);
+      const p = land[0] || {};
+      const c = await at(WINNEMUCCA);
+      check("the Winnemucca Indian Colony is seated at Reno from Nevada's list of tribal chairs, says so, and links nothing",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Winnemucca Indian Colony of Nevada" &&
+          p.seat === "Reno, NV" && c.by("Seat of government") === "Reno, NV" &&
+          !!p.seatNote && c.by("About the seat") === p.seatNote &&
+          p.seatNote.indexOf("From the address Nevada's Department of Native American Affairs lists") === 0 &&
+          p.seatNote.indexOf("lists no office town") !== -1 && !/\d{2,}/.test(c.by("Seat of government")) &&
+          p.url === null && c.link.text === "" && !c.text.includes("(official)") &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("no site of") !== -1,
+        `land here=${land.length} seat=${JSON.stringify(c.by("Seat of government"))} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 120))}`);
+    }
+
+    {
+      const land = propsAt(areas, GOSHUTE);
+      const p = land[0] || {};
+      const c = await at(GOSHUTE);
+      check("the Nevada part of the Goshute Reservation names a nation seated in Utah from its own site, and links that site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Confederated Tribes of the Goshute Reservation, Nevada and Utah" &&
+          c.by("Seat of government") === "Ibapah, UT" &&
+          c.by("Land") === "Goshute Reservation" && p.shareInState < 1 &&
+          c.by("About the seat") === p.seatNote && !!p.seatNote &&
+          p.url === "https://ctgr.us/home/" && c.link.href === "https://ctgr.us/home/",
+        `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, YOMBA);
+      const p = land[0] || {};
+      const c = await at(YOMBA);
+      check("the Yomba Reservation takes the Bureau's town and site and carries no note about its seat",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Yomba Shoshone Tribe of the Yomba Reservation, Nevada" &&
+          c.by("Seat of government") === "Austin, NV" && !p.seatNote &&
+          c.labels.indexOf("About the seat") === -1 &&
+          p.url === "http://yombatribe.org/" && c.link.href === p.url,
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("35 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
     }
   }
 } finally {

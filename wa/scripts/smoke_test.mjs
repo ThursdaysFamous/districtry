@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "wa-senate", "wa-house"];
 const EXPECT_DISTRICT = { "county": "Thurston County", "us-house": "10", "wa-senate": "22", "wa-house": "22" };
 const NEGATIVE_POINT = "48.42840,-123.36560"; // Victoria, British Columbia, across the Strait of Juan de Fuca — outside Washington and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Legislative Building in Olympia returns Washington), none of the state's shipped boundary files contains it, and none of the outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Washington";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "WashingtonExplorer";
@@ -1060,6 +1060,111 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it.
+  //       - The Colville Reservation names the Confederated Tribes, their seat
+  //         and the land, links the nation's own site, and says why nobody on
+  //         its council is named: no Washington nation's council has been read
+  //         yet.
+  //       - The Washington part of the Umatilla trust land names a nation
+  //         seated in Oregon, with its Oregon seat.
+  //       - The Tulalip Reservation lists the tribal districts the Census draws
+  //         on it, the one Washington land that has any.
+  //       - The Upper Skagit Reservation links no official site, because the
+  //         Bureau of Indian Affairs lists none.
+  //       - The Legislative Building is on no tribal land, and the card says
+  //         so in the layer's own words.
+  //     Each point is the pole of inaccessibility of the piece's largest part
+  //     as the shipped file draws it (shapely polylabel, 2026-11-12): 30.5 km,
+  //     1.9 km, 5.7 km and 150 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const COLVILLE = "48.20704,-118.60964";
+    const UMATILLA = "46.10896,-117.94733";
+    const TULALIP = "48.07226,-122.28587";
+    const UPPER_SKAGIT = "48.54128,-122.18538";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? a.textContent.trim() : "";
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link,
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, COLVILLE);
+      const p = land[0] || {};
+      const c = await at(COLVILLE);
+      check("the Colville Reservation names the Confederated Tribes, their seat and the land, links their site, and says why no council is named",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Confederated Tribes of the Colville Reservation" &&
+          c.by("Seat of government") === "Nespelem, WA" &&
+          c.by("Land") === "Colville Reservation" &&
+          !!p.url && c.link === p.nation + " (official)" &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 80))}`);
+    }
+
+    {
+      const land = propsAt(areas, UMATILLA);
+      const p = land[0] || {};
+      const c = await at(UMATILLA);
+      check("the Washington part of the Umatilla trust land names a nation seated in Oregon",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Confederated Tribes of the Umatilla Indian Reservation" &&
+          c.by("Seat of government") === "Pendleton, OR" &&
+          c.by("Land") === "Umatilla Off-Reservation Trust Land" && p.shareInState < 1,
+        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, TULALIP);
+      const p = land[0] || {};
+      const c = await at(TULALIP);
+      check("the Tulalip Reservation lists the tribal districts the Census draws on it",
+        land.length === 1 && !c.error && (p.districts || []).length > 0 &&
+          c.by("Land") === "Tulalip Reservation" &&
+          c.by("Districts drawn here") === p.districtsNote,
+        `land here=${land.length} districts=${(p.districts || []).length} ${JSON.stringify(c.by("Districts drawn here").slice(0, 120))}`);
+    }
+
+    {
+      const land = propsAt(areas, UPPER_SKAGIT);
+      const p = land[0] || {};
+      const c = await at(UPPER_SKAGIT);
+      check("the Upper Skagit Reservation links no official site, because the Bureau lists none",
+        land.length === 1 && !c.error && p.url === null &&
+          c.by("Tribal government") === "Upper Skagit Indian Tribe" &&
+          c.link === "" && !c.text.includes("(official)"),
+        `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("50 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

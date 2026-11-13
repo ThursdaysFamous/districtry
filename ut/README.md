@@ -13,6 +13,7 @@ The national tier, both chambers of the Legislature named from its own data, and
 | **Political** | U.S. House District (4) | U.S. Census TIGERweb boundary, layer 4 (the 119th Congress) until 3 January 2027, then layer 0 (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Utah Senate District (29) | TIGERweb's 2026 state legislative districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the Legislature's own member file, refreshed weekly by CI |
 | | Utah House District (75) | TIGERweb's 2026 state legislative districts (pre-built) + the same roster |
+| | Tribal Government (9) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; no council is named yet |
 | **Schools** | School District (Unified) | TIGERweb unified school districts, from a tile archive; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (29) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | City or Town | TIGERweb incorporated places, from a tile archive; most of the state is in none, and an empty card says the county governs there |
