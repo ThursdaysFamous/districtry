@@ -306,10 +306,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "Tribal land — Nevada has 35 pieces, 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Pyramid Lake Paiute Reservation (1,889.4 km², Washoe County with slivers of Storey and Lyon), the Walker River Reservation (1,375.5 km², Mineral, Lyon and Churchill counties), the Duck Valley Reservation (582.7 km² in Nevada, 49.7% of it, Elko County), the Washoe Ranches Trust Land (377.1 km², mostly Douglas County), the Moapa River Indian Reservation (287.4 km², Clark County) and the Goshute Reservation (284.1 km² in Nevada, 58.4% of it, White Pine County); the smallest is the Battle Mountain Off-Reservation Trust Land (0.006 km², Lander County). Six pieces cross the state line and are drawn whole: the Duck Valley, Fort McDermitt (48.0% in Nevada), Goshute, Timbi-Sha Shoshone (78.1%) and Fort Mojave (11.5%) reservations and the Washoe Ranches Trust Land (99.7%). The Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe are seated in California and the Confederated Tribes of the Goshute Reservation in Utah. The Census draws no tribal district on any of this land. Ranked after municipalities and before the point layers, as Arizona's and Washington's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Nevada has 35 such areas, held by 20 nations, 16 of them seated in Nevada, two (the Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe) in California, one (the Confederated Tribes of the Goshute Reservation) in Utah.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for eight of these nations. For seven of them the seat is the town the nation's own site gives, read 2026-11-12 and agreeing with Nevada's Department of Native American Affairs' list of tribal chairs, and the card says so; for the Winnemucca Indian Colony, which has no site, it is the town of the address that state list gives for the colony's chair, Reno, and the card says so. The Bureau lists no website for nine of the nations, among them the Fort Mojave Indian Tribe, the Reno-Sparks Indian Colony and the Las Vegas Tribe of Paiute Indians; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Nevada — the 35 pieces of land above, which reach into 15 of its 17 counties, all but Eureka and Lincoln. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -386,8 +404,8 @@
   ],
   "negative_point": {
     "lat": 42.15,
-    "lng": -116.0,
-    "note": "Owyhee County, Idaho, about 17 km north of the Nevada line — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), and none of the state's shipped boundary files contains it. IDAHO'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED IDAHO (batch 4 of the state-level launch, written 2026-11-12), which found it inside Idaho's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Nevada and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Idaho routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served."
+    "lng": -115.5,
+    "note": "Owyhee County, Idaho, about 17 km north of the Nevada line and 40 km east of the Duck Valley Reservation — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. MOVED 2026-11-12 FROM 42.15, -116.0, 41 km west, when the Tribal Government layer shipped: that layer draws the whole Duck Valley Reservation, its Idaho half included, and the old point lay about 0.9 km inside the reservation's northern edge, so validate_index.py found it inside data/app/tribal-areas.json. Measured that day from the shipped files: the Idaho app's own county outlines (id/data/app/state-counties.json, from TIGERweb) put the new point in Owyhee County, it is inside Idaho's outline in fleet-outlines.json and no other, and none of this app's shipped boundary files contains it. The old point had been measured 2026-11-10, when TIGERweb's state layer named Idaho there (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state). Every neighbour of Nevada is a live app since Idaho's go-live (batch 4 of the state-level launch, 2026-11-12), and measured that day on a 0.05-degree grid no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so the point is inside Idaho's outline wherever it goes. That is all right: the checks that use it boot on it or select it, which asks only that it be outside Nevada and outside every shipped boundary file, and a selection the app makes itself never leaves; the click that had to stay here became an Idaho routing case in the change that published Idaho, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served."
   },
   "coverage_key": {
     "outside": "Outside Nevada",
@@ -430,6 +448,12 @@
         "min_features": 180,
         "max_features": 180,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 35,
+        "max_features": 35,
+        "note": "Nevada's tribal land (scripts/build_tribal_areas.py) — 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, six pieces drawn whole across the state line, at the Census's own detail (345 KB, under the size at which Arizona's and Oklahoma's are simplified). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -461,7 +485,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-nv-shell-v2",
+    "cache_name": "districtry-nv-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

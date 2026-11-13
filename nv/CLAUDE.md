@@ -74,6 +74,31 @@ counties and Carson City, and no elementary or secondary ones. No trustee is nam
 to assume the office is empty. Recorded as gaps `nv-county-officials` and
 `nv-municipal-officeholders`.
 
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 20 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-12). The Census keeps 27 reservations and 8 off-reservation trust lands in Nevada,
+and all 35 pieces are drawn, each joined in `data/tribal-government-join.json` to the government
+the Bureau of Indian Affairs lists for it. Six pieces cross the state line and are drawn whole: the
+Duck Valley (49.7% in Nevada), Fort McDermitt (48.0%), Goshute (58.4%), Timbi-Sha Shoshone (78.1%)
+and Fort Mojave (11.5%) reservations and the Washoe Ranches Trust Land (99.7%). Three nations are
+seated outside the state: the Fort Mojave Indian Tribe in Needles and the Timbisha Shoshone Tribe in
+Bishop, California, and the Confederated Tribes of the Goshute Reservation in Ibapah, Utah. **THE
+BUREAU LISTS NEITHER A CITY NOR A STATE FOR EIGHT OF THESE NATIONS**, and Adam chose on 2026-11-12
+to take the town from each nation's own site, reading robots.txt first and working around no
+challenge, and where a nation has no such site to draw its land and say so. Seven have one
+(Duck Valley in Owyhee, Duckwater, Goshute in Ibapah, Lovelock, Moapa, Pyramid Lake in Nixon and
+Walker River in Schurz), each recorded with its page and date as `seatFromNation`, and all seven
+agree with Nevada's Department of Native American Affairs' list of tribal chairs, updated
+2026-01-30. Their cards give the town with a line saying it came from the nation's own site. The
+Winnemucca Indian Colony has no site, so its card gives Reno, the town of the address the state's
+list gives for its chair, with a line saying so (`seatFromState`), on Adam's yes of the same day;
+only the town is carried, never the street. Two of the Bureau's site addresses no longer reach the nation
+(the Goshute's serves an unrelated finance site and the Duck Valley's a page-not-found page), so
+those cards link the nation's own site, recorded as `bureauWebsiteWithdrawn`. The Bureau lists no
+website for nine of the 20 nations. The Census draws no tribal district on any of this land, and the
+file is 345 KB at the Census's own detail, so it is not simplified. No council is named yet
+(`ROSTER_NOT_SOUGHT`, the Oklahoma shape): each nation's own page is read and its council moved into
+`tribal-councils.json` one nation at a time, recorded in gap `nv-tribal-government`.
+
 **THE ZIP LAYER HIDES OUTSIDE NEVADA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -96,8 +121,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Nevada (`nevada`) — https://districtry.com/nv/
 - Geocoders: address Photon (Nevada-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Nevada-bounded, serial >=1s queue)
-- Ground truth: 39.16384,-119.76637 (Nevada State Capitol, 101 North Carson Street, Carson City) → county Carson City; us-house 2; nv-senate 16; nv-assembly 40. Negative point 42.15000,-116.00000 (Owyhee County, Idaho, about 17 km north of the Nevada line — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), and none of the state's shipped boundary files contains it. IDAHO'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED IDAHO (batch 4 of the state-level launch, written 2026-11-12), which found it inside Idaho's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Nevada and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Idaho routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NevadaExplorer`.
+- Ground truth: 39.16384,-119.76637 (Nevada State Capitol, 101 North Carson Street, Carson City) → county Carson City; us-house 2; nv-senate 16; nv-assembly 40. Negative point 42.15000,-115.50000 (Owyhee County, Idaho, about 17 km north of the Nevada line and 40 km east of the Duck Valley Reservation — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. MOVED 2026-11-12 FROM 42.15, -116.0, 41 km west, when the Tribal Government layer shipped: that layer draws the whole Duck Valley Reservation, its Idaho half included, and the old point lay about 0.9 km inside the reservation's northern edge, so validate_index.py found it inside data/app/tribal-areas.json. Measured that day from the shipped files: the Idaho app's own county outlines (id/data/app/state-counties.json, from TIGERweb) put the new point in Owyhee County, it is inside Idaho's outline in fleet-outlines.json and no other, and none of this app's shipped boundary files contains it. The old point had been measured 2026-11-10, when TIGERweb's state layer named Idaho there (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state). Every neighbour of Nevada is a live app since Idaho's go-live (batch 4 of the state-level launch, 2026-11-12), and measured that day on a 0.05-degree grid no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so the point is inside Idaho's outline wherever it goes. That is all right: the checks that use it boot on it or select it, which asks only that it be outside Nevada and outside every shipped boundary file, and a selection the app makes itself never leaves; the click that had to stay here became an Idaho routing case in the change that published Idaho, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NevadaExplorer`.
 - Scheduled workflows: `update-nv-congress-roster.yml` (Mon 20:21 UTC); `update-nv-legislature-roster.yml` (Tue 20:21 UTC); `nv-validate-sources.yml` (1st of month 22:11 UTC).
 - Source registry: `nv/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

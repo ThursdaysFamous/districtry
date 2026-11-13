@@ -161,7 +161,7 @@ was struck in Harkenrider v. Hochul and replaced by special-master (Cervas) line
 Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map was signed Feb 28,
 2024. Redistricting is emphatically not only decennial.
 
-### CA (22 layers; San Francisco only until 2026-11-11)
+### CA (23 layers; San Francisco only until 2026-11-11)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -175,6 +175,7 @@ Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map wa
 | SFPD districts (10) | Administrative-rare | SFPD | geometry, anchor |
 | SFUSD attendance areas | Annual | SFUSD | dataset id every school year |
 | Neighborhood / ZIP | Rarely / USPS-driven | DataSF / USPS | occasional |
+| Tribal government (CA, 150 areas) | **NOT A REDISTRICTING AT ALL** — land enters the map when the United States takes it into trust on a nation's application, published by no calendar | the United States, on a nation's trust application; drawn by the Census Bureau's AIANNHA service | geometry (`scripts/build_tribal_areas.py --state California --tag ca` re-run against the live service). `--check` is OFFLINE and proves the join, never that the Census has not added or removed an area. A NEW AREA ALSO NEEDS A JOIN ROW, and the builder refuses to write without one. No council is carried yet (`ROSTER_NOT_SOUGHT`) |
 
 California's per-date calendar lives in `ca/WATCH.md`; this master runbook holds the
 response procedure.

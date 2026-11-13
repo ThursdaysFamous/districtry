@@ -4702,10 +4702,11 @@ function initSFExplorer() {
   var LAYER_CODES = { "ca-senate": "cas", "congress": "cg", "county": "co",
     "ca-assembly": "caa", "school-district-secondary": "sh", "school-district-unified": "su",
     "bart-director": "bt", "school-district-elementary": "se", "zip-code": "zp",
-    "municipality": "mu", "election-precinct": "ep", "election-results": "er",
-    "supervisor-district": "sd", "police-district": "pd", "neighborhood": "nb",
-    "elementary-attendance-area": "ea", "police-station": "ps", "fire-station": "fs",
-    "school-site": "ss", "post-office": "po", "library": "lb", "early-voting": "ev" };
+    "municipality": "mu", "tribal-government": "tg", "election-precinct": "ep",
+    "election-results": "er", "supervisor-district": "sd", "police-district": "pd",
+    "neighborhood": "nb", "elementary-attendance-area": "ea", "police-station": "ps",
+    "fire-station": "fs", "school-site": "ss", "post-office": "po", "library": "lb",
+    "early-voting": "ev" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4721,7 +4722,8 @@ function initSFExplorer() {
     "school-district-secondary": ["school-district-secondary"],
     "elementary-school-zone": ["elementary-attendance-area"], "school-site": ["school-site"],
     "police-district": ["police-district"], "police-station": ["police-station"],
-    "fire-station": ["fire-station"], "post-office": ["post-office"], "library": ["library"] };
+    "fire-station": ["fire-station"], "post-office": ["post-office"], "library": ["library"],
+    "tribal-government": ["tribal-government"] };
   // Where a map link that names layers and no point opens (ENGINE permalink):
   // `areas` are [west, south, east, north], measured from the shipped files the
   // worksheet's `frames` names; `layers` answer only inside their area. A link
@@ -11592,6 +11594,7 @@ function initSFExplorer() {
     "school-district-elementary", // 517 elementary school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // ZIP Code Tabulation Areas inside California, drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 483 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — California has 150 pieces, 103 reservations and rancherias and 47 pieces of off-reservation trust land, held by 98 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Hoopa Valley Reservation (366.8 km², Humboldt County), the Yurok Reservation (226.5 km², Humboldt and Del Norte counties), the Tule River Reservation (218.1 km², Tulare County), the Colorado River Indian Reservation (195.1 km² in California, 16.2% of it, San Bernardino and Riverside counties) and the Fort Yuma Indian Reservation (172.6 km², 95.4% of it, Imperial County); the smallest is the Likely Rancheria (0.006 km², Modoc County). Five pieces cross the state line and are drawn whole: the Colorado River, Fort Mojave (18.5% in California), Fort Yuma and Timbi-Sha Shoshone (21.9%) reservations and the Washoe Ranches Trust Land (0.3%). The Colorado River Indian Tribes are seated in Arizona and the Washoe Tribe in Nevada. The Census draws tribal districts on the Yurok Reservation alone. Ranked after municipalities, as Arizona's and Nevada's are, so they are drawn above the larger areas around them, and before the San Francisco layers, none of which this land touches. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "election-precinct", // 514 election precincts (2022 map) - subOf supervisor-district, ranks just before its parent so the outline frames the fills
     // The same precinct shapes as Election Precinct, from the same archive, so it ranks right
     // after it; each precinct is filled by the choice leading there in the picked contest.
@@ -17819,6 +17822,164 @@ function initSFExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — California's tribal land, 150 pieces, 98 nations.
+   *
+   * One hundred and three reservations and rancherias and forty-seven pieces
+   * of off-reservation trust land, measured 2026-11-12 by
+   * scripts/build_tribal_areas.py, with the counties measured against this
+   * app's own county outlines: the land reaches into 34 of the 58 counties.
+   * The largest is the Hoopa Valley Reservation (366.8 km², Humboldt County),
+   * then the Yurok (226.5 km², Humboldt and Del Norte), the Tule River
+   * (218.1 km², Tulare), the Colorado River (195.1 km² in California, 16.2% of
+   * it) and the Fort Yuma (172.6 km², 95.4% of it); the smallest is the Likely
+   * Rancheria (0.006 km², Modoc County). Five pieces cross the state line and
+   * are drawn whole: the Colorado River, Fort Mojave (18.5% in California),
+   * Fort Yuma and Timbi-Sha Shoshone (21.9%) reservations and the Washoe
+   * Ranches Trust Land (0.3%). The Colorado River Indian Tribes are seated in
+   * Parker, Arizona, and the Washoe Tribe in Gardnerville, Nevada, whose
+   * Woodfords Community lies wholly in California. The Census draws tribal
+   * districts on one piece only, the Yurok Reservation's four. At the Census's
+   * own detail: the file is 1.12 MB (258 KB gzipped), under Arizona's
+   * simplified 1.44 MB.
+   *
+   * THE PIT RIVER TRIBE HOLDS SEVEN PIECES whose Census names do not name it:
+   * the Big Bend, Likely, Lookout, Montgomery Creek, Roaring Creek and XL Ranch
+   * rancherias and the Pit River Trust Land, joined to the tribe from its own
+   * history page (pitrivertribe.gov/tribal-history/, read 2026-11-12).
+   *
+   * ONE PIECE TWO GOVERNMENTS SHARE: the Capitan Grande Reservation. The
+   * Census names it for the Capitan Grande Band, which the Bureau of Indian
+   * Affairs lists with no seat, no state and no site, beside the band's two
+   * groups, Barona and Viejas, each with a seat. The card names both groups
+   * and lists each one's seat and site, as Oklahoma's shared areas do.
+   *
+   * TWO NATIONS THE BUREAU LISTS WITH NO OFFICE TOWN. The Bureau gives neither
+   * a city nor a state for the Round Valley Indian Tribes or the Yocha Dehe
+   * Wintun Nation, and under Adam's choice of 2026-11-12 for Nevada the card
+   * gives the town each nation's own site gives, Covelo and Brooks, with a
+   * line saying where it came from and when it was read. Only the town is
+   * carried, never the street. The record of each is `seatFromNation` in
+   * data/tribal-government-join.json.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so the card says so in those
+   * words (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py) and links the
+   * nation's own site where there is one; the Bureau lists none for 28 of the
+   * 98. The councils are to be read one nation at a time.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in California are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand. It declares no coverage test: none of this
+   * land lies in San Francisco, and a click outside the state goes to the app
+   * that covers it.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes ca/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Texas's has.
+  var loadCaTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadCaTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      // Only where the Bureau of Indian Affairs lists no office town: where the
+      // seat above came from (the nation's own site, read on a date), or that
+      // there is none to give (scripts/build_tribal_areas.py seat_note).
+      { name: "seatNote", label: "About the seat", keys: ["seatnote"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      // Only on the Capitan Grande Reservation, which two governments share:
+      // each one's name, seat and site, listed under the card below.
+      { name: "nations", label: "", keys: ["nations"], when: function () { return false; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here. A shared area has no single link; each
+    // government's is on its own row below.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // EVERY GOVERNMENT ON A SHARED AREA, each with its own seat and site, as
+    // Oklahoma's card lists them; and THE COUNCIL, where the nation's own page
+    // names it, merged onto the land by the loader above, so the card makes no
+    // request of its own.
+    people: function (result) {
+      var nations = (result && result.nations) || [];
+      var roster = result && result.roster;
+      if (!nations.length && (!roster || !roster.length)) return null;
+      var wrap = cardEl("div");
+      if (nations.length) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Governments",
+          note: nations.length + " governments share this land"
+        }));
+        wrap.appendChild(renderPersonRows(nations.map(function (n) {
+          var person = { name: String(n.name) };
+          if (n.seat) person.note = "Seat: " + String(n.seat);
+          if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
+          return person;
+        })));
+      }
+      if (!roster || !roster.length) return wrap;
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. California has 150 tribal areas across 98 nations, 103 reservations and rancherias and 47 pieces of off-reservation trust land, and this point is on none of them."
+  });
+
+
   /* ---------- School districts — all three of TIGER's tilings ----------
    * Measured 2026-11-11 against TIGERweb School/MapServer for STATE='06':
    * layer 0 (unified) 346 records, layer 2 (elementary) 517 and layer 1
@@ -20485,7 +20646,7 @@ function initSFExplorer() {
     "school-district-unified", "school-district-elementary",
     "school-district-secondary", "elementary-attendance-area", "school-site",
     "police-district", "police-station", "fire-station",
-    "county", "municipality", "zip-code", "neighborhood",
+    "county", "municipality", "zip-code", "tribal-government", "neighborhood",
     "post-office", "library"];
   (function applySidebarRank() {
     var pos = {};
@@ -20961,14 +21122,15 @@ function initSFExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#005E7C": "#4CB0DA", "#0099D8": "#9ED9FE", "#06375E": "#528DC6",
-    "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6FB2": "#74BBFF",
-    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3D6B49": "#7EBC8D",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4A4A55": "#9999A9",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F4",
-    "#63B57F": "#8DFAB2", "#6A3FA0": "#BA8BFE", "#6B7280": "#B1BACE", "#7A1E5C": "#E266B4",
-    "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9", "#8A5A00": "#E3A241", "#8C2E4A": "#F47294",
-    "#9C0B24": "#FF696D", "#A05F00": "#FBA23D", "#A15C00": "#FD9F3D", "#A3341F": "#FE8269",
-    "#B0316E": "#FF87B8", "#C8102E": "#FE928F", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6F6B": "#5DC0BA",
+    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
+    "#3D6B49": "#7EBC8D", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4A4A55": "#9999A9", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92",
+    "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F4", "#63B57F": "#8DFAB2", "#6A3FA0": "#BA8BFE",
+    "#6B7280": "#B1BACE", "#7A1E5C": "#E266B4", "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9",
+    "#8A5A00": "#E3A241", "#8C2E4A": "#F47294", "#9C0B24": "#FF696D", "#A05F00": "#FBA23D",
+    "#A15C00": "#FD9F3D", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#C8102E": "#FE928F",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

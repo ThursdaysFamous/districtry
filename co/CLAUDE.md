@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the General Assembly's own data: **County** (`county`, all 64, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (8 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Colorado Senate** and **Colorado House** (35 and 65 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own legislator list), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 272 incorporated places and one inactive town), **School District** (178) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the General Assembly's own data: **County** (`county`, all 64, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (8 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Colorado Senate** and **Colorado House** (35 and 65 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own legislator list), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 272 incorporated places and one inactive town), **School District** (178) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -60,10 +60,15 @@ to assume the office is empty. Each county is governed by an elected board of co
 and elects officers such as a clerk and recorder, a treasurer, an assessor, a sheriff and a coroner.
 Recorded as gaps `co-county-officials` and `co-municipal-officeholders`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps two reservations in Colorado, the Southern Ute
-Reservation (about 2,759 km2) and the Colorado part of the Ute Mountain Reservation (about 1,854
-km2, 80.5% of it), measured 2026-11-12 with `scripts/tribal_areas.py --report Colorado`. The state
-is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF THE TWO UTE TRIBES AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps two reservations in Colorado, the Southern
+Ute Reservation (about 2,759 km2) and the Ute Mountain Reservation, 80.5% of which (about 1,854 km2)
+is in Colorado and the rest in New Mexico and Utah, measured 2026-11-12 with
+`scripts/tribal_areas.py --report Colorado`. Both are drawn, the Ute Mountain whole across the state
+line, each joined in `data/tribal-government-join.json` to the government the Bureau of Indian
+Affairs lists for it, seated in Ignacio and Towaoc. The Bureau lists no website for either tribe, so
+neither card links one, and each says so. No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `co-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE COLORADO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -98,7 +103,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Colorado (`colorado`) — https://districtry.com/co/
 - Geocoders: address Photon (Colorado-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Colorado-bounded, serial >=1s queue)
 - Ground truth: 39.73924,-104.98480 (Colorado State Capitol, 200 East Colfax Avenue, Denver) → county Denver County; us-house 1; co-senate 31; co-house 6. Negative point 41.15000,-105.90000 (Albany County, Wyoming, about 17 km north of the Colorado line west of Laramie — outside Colorado and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Colorado), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Colorado and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.ColoradoExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.ColoradoExplorer`.
 - Scheduled workflows: `update-co-congress-roster.yml` (Mon 22:19 UTC); `update-co-legislature-roster.yml` (Tue 22:19 UTC); `co-validate-sources.yml` (1st of month 23:19 UTC).
 - Source registry: `co/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

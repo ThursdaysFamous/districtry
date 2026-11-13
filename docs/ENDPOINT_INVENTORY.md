@@ -156,7 +156,7 @@ prose.
 |---|---|---|
 | il | 5 | 42 |
 | ny | 0 | 40 |
-| ca | 0 | 22 |
+| ca | 0 | 23 |
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
@@ -173,10 +173,10 @@ prose.
 | mo | 0 | 13 |
 | va | 0 | 17 |
 | wv | 0 | 12 |
-| ga | 0 | 15 |
+| ga | 0 | 16 |
 | pa | 0 | 10 |
-| nv | 0 | 10 |
-| az | 0 | 12 |
+| nv | 0 | 11 |
+| az | 0 | 13 |
 | nj | 0 | 12 |
 | nh | 0 | 12 |
 | tx | 0 | 13 |
@@ -184,13 +184,13 @@ prose.
 | oh | 0 | 10 |
 | wa | 0 | 11 |
 | ma | 0 | 12 |
-| co | 0 | 10 |
+| co | 0 | 11 |
 | md | 0 | 10 |
-| al | 0 | 10 |
-| or | 0 | 12 |
-| ct | 0 | 12 |
-| ut | 0 | 10 |
-| ks | 0 | 10 |
+| al | 0 | 11 |
+| or | 0 | 13 |
+| ct | 0 | 13 |
+| ut | 0 | 11 |
+| ks | 0 | 11 |
 | nm | 0 | 10 |
 | ne | 0 | 9 |
 | id | 0 | 10 |
@@ -280,7 +280,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
 - **Not measured** — declared since the probe ran: `election-results`, `tribal-government`.
 
-#### ca — 4 of 22 layers fetch their shapes
+#### ca — 4 of 23 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -291,7 +291,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `ca-senate`, `congress`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
-- **Not measured** — declared since the probe ran: `county`, `school-district-secondary`, `school-district-unified`, `school-district-elementary`, `municipality`, `election-results`.
+- **Not measured** — declared since the probe ran: `county`, `school-district-secondary`, `school-district-unified`, `school-district-elementary`, `municipality`, `tribal-government`, `election-results`.
 
 #### wi — 6 of 32 layers fetch their shapes
 
@@ -504,7 +504,7 @@ measured until the next run describes it.
 |---|---|---|---|
 | il | 131 | 418 | 6 |
 | ny | 38 | 38 | 0 |
-| ca | 20 | 19 | 0 |
+| ca | 20 | 20 | 0 |
 | wi | 92 | 268 | 5 |
 | ia | 72 | 57 | 0 |
 | mi | 40 | 71 | 1 |
@@ -521,10 +521,10 @@ measured until the next run describes it.
 | mo | 23 | 15 | 0 |
 | va | 23 | 20 | 0 |
 | wv | 21 | 14 | 0 |
-| ga | 21 | 17 | 0 |
+| ga | 21 | 18 | 0 |
 | pa | 16 | 11 | 0 |
-| nv | 16 | 11 | 0 |
-| az | 17 | 10 | 0 |
+| nv | 16 | 12 | 0 |
+| az | 17 | 11 | 0 |
 | nj | 17 | 10 | 0 |
 | nh | 19 | 11 | 0 |
 | tx | 16 | 13 | 0 |
@@ -532,13 +532,13 @@ measured until the next run describes it.
 | oh | 16 | 11 | 0 |
 | wa | 15 | 11 | 0 |
 | ma | 18 | 11 | 0 |
-| co | 16 | 11 | 0 |
+| co | 16 | 12 | 0 |
 | md | 16 | 11 | 0 |
-| al | 16 | 11 | 0 |
-| or | 18 | 11 | 0 |
-| ct | 18 | 11 | 0 |
-| ut | 16 | 11 | 0 |
-| ks | 16 | 11 | 0 |
+| al | 16 | 12 | 0 |
+| or | 18 | 12 | 0 |
+| ct | 18 | 12 | 0 |
+| ut | 16 | 12 | 0 |
+| ks | 16 | 13 | 0 |
 | nm | 16 | 11 | 0 |
 | ne | 13 | 9 | 0 |
 | id | 15 | 10 | 0 |
@@ -552,7 +552,7 @@ measured until the next run describes it.
 | ak | 16 | 11 | 0 |
 | vt | 18 | 11 | 0 |
 | wy | 17 | 11 | 0 |
-| **total** | **1299** | **1488** | **12** |
+| **total** | **1299** | **1499** | **12** |
 
 **258 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
