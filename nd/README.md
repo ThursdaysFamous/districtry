@@ -13,6 +13,7 @@ The national tier, both chambers of the Legislative Assembly named from the Legi
 | **Political** | U.S. House District (at large) | U.S. Census TIGERweb boundary, layer 0, the whole state (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | North Dakota Senate District (47) | TIGERweb's 2026 state legislative districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the Legislative Branch's own member pages, refreshed weekly by CI |
 | | North Dakota House District (48: 46 districts electing two and the subdistricts 4A and 4B) | TIGERweb, inside the Senate districts and drawn in one shared topology with them + the same roster |
+| | Tribal Government (7) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; no council is named yet |
 | **Schools** | School District (Unified), (Elementary) | TIGERweb school districts, from tile archives; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (53) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | City | TIGERweb incorporated places, from a tile archive; most of the state is in none, and an empty card says so |

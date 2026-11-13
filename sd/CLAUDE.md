@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own data service: **County** (`county`, all 66, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **South Dakota Senate** and **South Dakota House** (35 Senate districts and 37 House districts electing 70 representatives, TIGERweb's 2026 state legislative districts joined to the Legislature's own data service), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 310 incorporated places), **School District** (147 unified districts) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own data service: **County** (`county`, all 66, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **South Dakota Senate** and **South Dakota House** (35 Senate districts and 37 House districts electing 70 representatives, TIGERweb's 2026 state legislative districts joined to the Legislature's own data service), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 310 incorporated places), **School District** (147 unified districts) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -63,12 +63,26 @@ is empty. Each county is governed by an elected board of county commissioners an
 as an auditor, a treasurer, a register of deeds, a sheriff and a state's attorney. Recorded as gap
 `sd-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps nine reservations and seven trust lands in South Dakota
-(`scripts/tribal_areas.py --report "South Dakota"`, 2026-11-12): the Cheyenne River (11,424.8 km2), Pine
-Ridge (11,272.8 km2), Rosebud, Yankton, Crow Creek, Lower Brule and Flandreau reservations, the South
-Dakota parts of the Standing Rock (69.2% of it) and Lake Traverse (92.9%) reservations, and the Rosebud
-trust land (1,825.1 km2) among the trust lands. The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 12 NATIONS AND NAMES ONE COUNCIL** (`tribal-areas.json` and
+`tribal-councils.json`, since 2026-11-13). The Census keeps nine reservations and seven trust lands
+in South Dakota, measured 2026-11-12 with `scripts/tribal_areas.py --report "South Dakota"`: the
+Cheyenne River (11,424.8 km2), Pine Ridge (11,272.8 km2), Rosebud, Yankton, Crow Creek, Lower Brule
+and Flandreau reservations, the South Dakota parts of the Standing Rock (69.2% of it) and Lake
+Traverse (92.9%) reservations, and seven trust lands, among them the Rosebud trust land (1,825.1
+km2) and the South Dakota parts of the trust land of three nations seated outside the state: the
+Shakopee Mdewakanton Sioux Community (Prior Lake, Minnesota), the Northern Cheyenne Tribe (Lame
+Deer, Montana) and the Turtle Mountain Band (Belcourt, North Dakota). All 16 pieces are drawn, those
+that cross the state line whole, each joined in `data/tribal-government-join.json` to the government
+the Bureau of Indian Affairs lists for it, and the cards name the tribal districts the Census draws
+on the Rosebud, Pine Ridge, Lake Traverse, Cheyenne River, Standing Rock and Crow Creek land. The
+Shakopee Mdewakanton Sioux Community's card names its Business Council of three, the list
+Minnesota's card already names, read weekly from the community's own page by
+`scripts/tribal_council_scraper.py` into this app's own network-first `tribal-councils.json`; if
+that file fails to load, the card still names the community and names nobody. As published the land
+made 1.32 MB, the Rosebud trust land alone in 580 parts, so it goes through one Douglas-Peucker run
+at 3 m and is 603 KB (163 KB gzipped), the worst stray 3.4 m against a 25 m ceiling (`SIMPLIFY` in
+`scripts/build_tribal_areas.py`). The other eleven nations' councils are not carried yet
+(`ROSTER_NOT_SOUGHT`), recorded in gap `sd-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE SOUTH DAKOTA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -99,7 +113,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: South Dakota (`southdakota`) — https://districtry.com/sd/
 - Geocoders: address Photon (South Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Dakota-bounded, serial >=1s queue)
 - Ground truth: 44.36706,-100.34604 (South Dakota State Capitol, 500 East Capitol Avenue, Pierre, Hughes County) → county Hughes County; us-house Congressional District (at Large); sd-senate 24; sd-house 24. Negative point 46.05000,-100.10000 (Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SouthDakotaExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SouthDakotaExplorer`.
 - Scheduled workflows: `update-sd-congress-roster.yml` (Wed 23:17 UTC); `update-sd-legislature-roster.yml` (Thu 23:17 UTC); `sd-validate-sources.yml` (2nd of month 23:17 UTC).
 - Source registry: `sd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

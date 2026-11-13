@@ -404,6 +404,31 @@ ROSTER_NOT_SOUGHT = {
     "Kansas": {"since": "2026-11-13"},
     "Oregon": {"since": "2026-11-13"},
     "Utah": {"since": "2026-11-13"},
+    # Batch 4 of the state-level launch, drawn 2026-11-13 with no council yet,
+    # read one nation at a time: New Mexico's pueblos and Apache nations, the
+    # Fort Sill Apache (seated in Oklahoma) among them; Nebraska's four, with
+    # the Iowa and Sac and Fox nations seated in Kansas and the Oglala Sioux
+    # Tribe's sliver of Pine Ridge (the Winnebago Tribe's council is already
+    # named from the Iowa change, and the Omaha Tribe's site is recorded
+    # unreachable in ROSTER_BLOCKED); Idaho's five, the Shoshone-Paiute of
+    # Duck Valley among them; the two Passamaquoddy governments, the
+    # Penobscot, Maliseet and Micmac in Maine; Montana's seven and the Turtle
+    # Mountain Band's trust land; the Narragansett in Rhode Island; the Lakota
+    # and Dakota nations of the two Dakotas and the Three Affiliated Tribes
+    # (the Shakopee Mdewakanton Sioux Community's council, read for Minnesota,
+    # is named on its South Dakota trust land too); the Metlakatla Indian
+    # Community in Alaska; and the Eastern Shoshone and Northern Arapaho, who
+    # share Wind River.
+    "Alaska": {"since": "2026-11-13"},
+    "Idaho": {"since": "2026-11-13"},
+    "Maine": {"since": "2026-11-13"},
+    "Montana": {"since": "2026-11-13"},
+    "Nebraska": {"since": "2026-11-13"},
+    "New Mexico": {"since": "2026-11-13"},
+    "North Dakota": {"since": "2026-11-13"},
+    "Rhode Island": {"since": "2026-11-13"},
+    "South Dakota": {"since": "2026-11-13"},
+    "Wyoming": {"since": "2026-11-13"},
 }
 
 
@@ -1187,10 +1212,24 @@ def stamp_rosters():
 # nine pieces came to 2.17 MB; at 3 m they are 915 KB (240 KB gzipped) and the
 # worst stray is 3.3 m, on the Uintah and Ouray Reservation (measured
 # 2026-11-13).
+# New Mexico takes the same setting for the same reason: the Navajo Nation's
+# whole reservation and trust land are drawn on its map too, and as published
+# its 37 pieces came to 3.63 MB (897 KB gzipped); at 3 m they are 1.30 MB
+# (343 KB gzipped) and the worst stray is 3.5 m, on the Isleta Pueblo. Montana
+# and South Dakota take it because each, as published, was larger than every
+# state shipped at the Census's own detail -- Montana's 14 pieces 1.47 MB (the
+# Turtle Mountain trust land alone 256 parts, the Crow trust land 102) and
+# South Dakota's 16 pieces 1.32 MB (the Rosebud trust land 580 parts); at 3 m
+# Montana's are 614 KB (167 KB gzipped), worst stray 3.7 m on the Northern
+# Cheyenne Indian Reservation, and South Dakota's 603 KB (163 KB gzipped),
+# worst stray 3.4 m on the Pine Ridge Reservation (all measured 2026-11-13).
 MAPSHAPER = "mapshaper@0.6.102"
 SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0},
             "Arizona": {"interval": "interval=3", "ceiling_m": 25.0},
-            "Utah": {"interval": "interval=3", "ceiling_m": 25.0}}
+            "Utah": {"interval": "interval=3", "ceiling_m": 25.0},
+            "New Mexico": {"interval": "interval=3", "ceiling_m": 25.0},
+            "Montana": {"interval": "interval=3", "ceiling_m": 25.0},
+            "South Dakota": {"interval": "interval=3", "ceiling_m": 25.0}}
 
 
 def _local_metres(lat0):

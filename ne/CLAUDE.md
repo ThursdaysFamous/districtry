@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own senator pages: **County** (`county`, all 93, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (3 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Nebraska Legislature** (`ne-legislature`, 49 districts, TIGERweb's 2026 upper-house districts joined to the Legislature's own senator pages), the TIGERweb fabric drawn from mirrored tile archives — **City or Village** (`municipality`, 528 incorporated places), **School District** (244 unified districts) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own senator pages: **County** (`county`, all 93, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (3 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Nebraska Legislature** (`ne-legislature`, 49 districts, TIGERweb's 2026 upper-house districts joined to the Legislature's own senator pages), the TIGERweb fabric drawn from mirrored tile archives — **City or Village** (`municipality`, 528 incorporated places), **School District** (244 unified districts) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -60,12 +60,23 @@ is empty. Each county is governed by an elected board of commissioners or, in th
 township government, a board of supervisors, and elects officers such as a clerk, a treasurer, an
 assessor, a sheriff and a county attorney. Recorded as gap `ne-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps six reservations and three trust lands in Nebraska
-(`scripts/tribal_areas.py --report Nebraska`, 2026-11-12): the Omaha (787.1 km2, 98.0% of it in the
-state), Santee (477.9 km2) and Winnebago (457.5 km2, 99.4%) reservations, the Nebraska parts of the Sac
-and Fox Nation and Iowa (KS-NE) reservations, a 2.2 km2 sliver of the Pine Ridge Reservation, and the
-Ponca, Winnebago and Sac and Fox trust lands. The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF SEVEN NATIONS AND NAMES ONE COUNCIL** (`tribal-areas.json` and
+`tribal-councils.json`, since 2026-11-13). The Census keeps six reservations and three trust lands
+in Nebraska, measured 2026-11-12 with `scripts/tribal_areas.py --report Nebraska`: the Omaha (787.1
+km2, 98.0% of it in the state), Santee (477.9 km2) and Winnebago (457.5 km2, 99.4%) reservations,
+the Nebraska parts of the Sac and Fox Nation and Iowa (KS-NE) reservations, whose nations are seated
+in Kansas, a 2.236 km2 strip of the Pine Ridge Reservation in Sheridan County, and the Ponca,
+Winnebago and Sac and Fox trust lands. All nine pieces are drawn, those that cross the state line
+whole, each joined in `data/tribal-government-join.json` to the government the Bureau of Indian
+Affairs lists for it. The Pine Ridge strip is kept by Adam's rule that a cross-border piece counts
+at 1% of its area or 0.25 km2, and its card names the Oglala Sioux Tribe and the one tribal district
+the Census draws there. The Winnebago Tribe's card names its council of nine, the list Iowa's card
+already names for the reservation's Iowa part, read weekly from the tribe's own page by
+`scripts/tribal_council_scraper.py` into this app's own network-first `tribal-councils.json`; if
+that file fails to load, the card still names the tribe and names nobody. The Omaha Tribe's site
+could not be reached from where this project is built (2026-10-10, `ROSTER_BLOCKED`), so its card
+says so; the other five nations' councils are not carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `ne-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NEBRASKA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -96,7 +107,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Nebraska (`nebraska`) — https://districtry.com/ne/
 - Geocoders: address Photon (Nebraska-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Nebraska-bounded, serial >=1s queue)
 - Ground truth: 40.80814,-96.69957 (Nebraska State Capitol, 1445 K Street, Lincoln, Lancaster County) → county Lancaster County; us-house 1; ne-legislature 28. Negative point 42.87000,-97.05000 (Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 9 registered (political 2, safety 2, schools 1, geography 4); `registerLayer(` floor 7. Debug namespace `window.NebraskaExplorer`.
+- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 7. Debug namespace `window.NebraskaExplorer`.
 - Scheduled workflows: `update-ne-congress-roster.yml` (Wed 22:13 UTC); `update-ne-legislature-roster.yml` (Thu 22:13 UTC); `ne-validate-sources.yml` (2nd of month 22:13 UTC).
 - Source registry: `ne/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

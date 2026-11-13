@@ -191,19 +191,19 @@ prose.
 | ct | 0 | 13 |
 | ut | 0 | 11 |
 | ks | 0 | 11 |
-| nm | 0 | 10 |
-| ne | 0 | 9 |
-| id | 0 | 10 |
+| nm | 0 | 11 |
+| ne | 0 | 10 |
+| id | 0 | 11 |
 | hi | 0 | 9 |
-| me | 0 | 12 |
-| mt | 0 | 12 |
-| ri | 0 | 12 |
+| me | 0 | 13 |
+| mt | 0 | 13 |
+| ri | 0 | 13 |
 | de | 0 | 10 |
-| sd | 0 | 10 |
-| nd | 0 | 11 |
-| ak | 0 | 10 |
+| sd | 0 | 11 |
+| nd | 0 | 12 |
+| ak | 0 | 11 |
 | vt | 0 | 12 |
-| wy | 0 | 11 |
+| wy | 0 | 12 |
 
 ### Where each layer's shapes come from
 
@@ -539,20 +539,20 @@ measured until the next run describes it.
 | ct | 18 | 12 | 0 |
 | ut | 16 | 12 | 0 |
 | ks | 16 | 13 | 0 |
-| nm | 16 | 11 | 0 |
-| ne | 13 | 9 | 0 |
-| id | 15 | 10 | 0 |
+| nm | 16 | 12 | 0 |
+| ne | 13 | 11 | 0 |
+| id | 15 | 11 | 0 |
 | hi | 15 | 11 | 0 |
-| me | 18 | 11 | 0 |
-| mt | 18 | 11 | 0 |
-| ri | 18 | 11 | 0 |
+| me | 18 | 12 | 0 |
+| mt | 18 | 12 | 0 |
+| ri | 18 | 12 | 0 |
 | de | 16 | 11 | 0 |
-| sd | 16 | 11 | 0 |
-| nd | 17 | 11 | 0 |
-| ak | 16 | 11 | 0 |
+| sd | 16 | 13 | 0 |
+| nd | 17 | 12 | 0 |
+| ak | 16 | 12 | 0 |
 | vt | 18 | 11 | 0 |
-| wy | 17 | 11 | 0 |
-| **total** | **1299** | **1499** | **12** |
+| wy | 17 | 12 | 0 |
+| **total** | **1299** | **1511** | **12** |
 
 **258 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

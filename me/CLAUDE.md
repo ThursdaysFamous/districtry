@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own pages: **County** (`county`, all 16, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Maine Senate** and **Maine House** (35 and 151 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member lists), the TIGERweb fabric drawn from mirrored tile archives — **Town or City** (`municipality`, 529 county subdivisions), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own pages: **County** (`county`, all 16, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Maine Senate** and **Maine House** (35 and 151 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member lists), the TIGERweb fabric drawn from mirrored tile archives — **Town or City** (`municipality`, 529 county subdivisions), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -65,12 +65,19 @@ in two districts at once. No school board member is named yet (gap `me-school-bo
 is empty. Each county is governed by an elected board of county commissioners and elects officers such
 as a sheriff, a register of deeds and a judge of probate. Recorded as gap `me-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps four reservations and four trust lands in Maine
-(`scripts/tribal_areas.py --report Maine`, 2026-11-12): the Indian Township (115.1 km2), Penobscot
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FOUR NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps four reservations and four trust lands in Maine, measured
+2026-11-12 with `scripts/tribal_areas.py --report Maine`: the Indian Township (115.1 km2), Penobscot
 (57.8 km2), Houlton Maliseet and Pleasant Point reservations, and the Passamaquoddy (391.7 km2),
-Penobscot (391.2 km2), Aroostook Band of Micmac and Houlton Maliseet trust lands. The Town or City card
-names the two reservations the Census files as county subdivisions, without their governments. The state
-is recorded as not yet covered in `data/tribal-government-join.json`.
+Penobscot (391.2 km2), Aroostook Band of Micmac and Houlton Maliseet trust lands. All eight pieces
+are drawn, each joined in `data/tribal-government-join.json` to the government the Bureau of Indian
+Affairs lists for it. The Bureau lists the Passamaquoddy Tribe's two governments separately, at
+Indian Township (Princeton) and at Pleasant Point (Perry), and each reservation is joined to its
+own; the Passamaquoddy Trust Land is held for the tribe as a whole, so its card names both
+governments, each with its seat and site, and carries no single link, as Oregon's card for Celilo
+Village does. The Town or City card still names the two reservations the Census files as county
+subdivisions, without their governments. No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `me-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE MAINE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -102,7 +109,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Maine (`maine`) — https://districtry.com/me/
 - Geocoders: address Photon (Maine-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Maine-bounded, serial >=1s queue)
 - Ground truth: 44.30710,-69.78167 (Maine State House, 210 State Street, Augusta, Kennebec County) → county Kennebec County; us-house 2; me-senate 15; me-house 59. Negative point 43.50000,-69.40000 (the Gulf of Maine about 40 km off Pemaquid Point — outside Maine and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Maine State House returns Maine), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MaineExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MaineExplorer`.
 - Scheduled workflows: `update-me-congress-roster.yml` (Wed 22:37 UTC); `update-me-legislature-roster.yml` (Thu 22:37 UTC); `me-validate-sources.yml` (2nd of month 22:37 UTC).
 - Source registry: `me/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

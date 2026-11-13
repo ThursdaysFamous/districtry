@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or Open States' export, because the Legislature's own data cannot yet say who sits today: **County** (`county`, all 56, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Montana Senate** and **Montana House** (50 and 100 districts, TIGERweb's 2026 state legislative districts joined to Open States' export of current legislators), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 127 incorporated places), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or Open States' export, because the Legislature's own data cannot yet say who sits today: **County** (`county`, all 56, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Montana Senate** and **Montana House** (50 and 100 districts, TIGERweb's 2026 state legislative districts joined to Open States' export of current legislators), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 127 incorporated places), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -66,11 +66,20 @@ is empty. Each county is governed by an elected board of county commissioners an
 as a clerk and recorder, a treasurer, a sheriff and a county attorney; Butte-Silver Bow and Anaconda-Deer
 Lodge are the exceptions above. Recorded as gap `mt-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps seven reservations and seven trust lands in Montana
-(`scripts/tribal_areas.py --report Montana`, 2026-11-12): the Crow (9,262.3 km2), Fort Peck (8,551.9
-km2), Blackfeet (6,214.1 km2), Flathead (5,329.7 km2), Fort Belknap, Northern Cheyenne and Rocky Boy's
-reservations, and their trust lands with the Montana part of the Turtle Mountain trust land (232.4 km2,
-53.4% of it). The state is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF EIGHT NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps seven reservations and seven trust lands in Montana, measured
+2026-11-12 with `scripts/tribal_areas.py --report Montana`: the Crow (9,262.3 km2), Fort Peck
+(8,551.9 km2), Blackfeet (6,214.1 km2), Flathead (5,329.7 km2), Fort Belknap, Northern Cheyenne and
+Rocky Boy's reservations, their trust lands, and the Montana part of the Turtle Mountain trust land
+(232.4 km2, 53.4% of it), whose band is seated at Belcourt, North Dakota. All 14 pieces are drawn,
+the two that cross the state line whole, each joined in `data/tribal-government-join.json` to the
+government the Bureau of Indian Affairs lists for it, and the cards name the tribal districts the
+Census draws on the Flathead, Fort Peck, Northern Cheyenne and Fort Belknap land. As published the
+land made 1.47 MB, the Turtle Mountain trust land alone in 256 parts and the Crow trust land in 102,
+larger than any state shipped at Census detail, so it goes through one Douglas-Peucker run at 3 m
+and is 614 KB (167 KB gzipped), the worst stray 3.7 m against a 25 m ceiling (`SIMPLIFY` in
+`scripts/build_tribal_areas.py`). No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `mt-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE MONTANA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -101,7 +110,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Montana (`montana`) — https://districtry.com/mt/
 - Geocoders: address Photon (Montana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Montana-bounded, serial >=1s queue)
 - Ground truth: 46.58566,-112.01822 (Montana State Capitol, 1301 East 6th Avenue, Helena, Lewis and Clark County) → county Lewis and Clark County; us-house 2; mt-senate 41; mt-house 82. Negative point 49.15000,-107.00000 (Saskatchewan, Canada, north of the Montana line — outside Montana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Montana State Capitol returns Montana), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MontanaExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.MontanaExplorer`.
 - Scheduled workflows: `update-mt-congress-roster.yml` (Wed 22:45 UTC); `update-mt-legislature-roster.yml` (Thu 22:45 UTC); `mt-validate-sources.yml` (2nd of month 22:45 UTC).
 - Source registry: `mt/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

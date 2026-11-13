@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">9 layers — 2 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">2 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1216,6 +1216,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ne-legislature-members.json, rebuilt weekly by CI from the Legislature's own pages (nebraskalegislature.gov, the senator list and each district's senator page): each senator's name, e-mail address at leg.ne.gov, the one telephone the page prints and page. Nebraska elects its senators on a ballot that names no party, so no party is carried. The site states a Crawl-delay of 3 seconds, which the builder honours.</td>
                 <td data-label="Where it applies">Nebraska — statewide, all 49 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Nebraska has 9 such areas, held by seven nations: the Omaha Tribe, the Santee Sioux Nation, the Winnebago Tribe and the Ponca Tribe, all seated in Nebraska, the Iowa Tribe of Kansas and Nebraska and the Sac &amp; Fox Nation of Missouri in Kansas and Nebraska, seated in Kansas, and the Oglala Sioux Tribe, seated in South Dakota.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The Winnebago Tribe of Nebraska's council of nine, from the tribe's own page (the list Iowa's card names for the reservation's Iowa part), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. The Omaha Tribe's site could not be reached from where this project is built (2026-10-10), so its card says so (ROSTER_BLOCKED in scripts/build_tribal_areas.py); this app has not yet read the council lists the other five nations publish, so their cards say so and link each nation's own site (ROSTER_NOT_SOUGHT). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Nebraska — the 9 pieces of land above, in Thurston, Cuming, Burt, Dixon, Knox, Richardson and Sheridan counties. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1485,6 +1496,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Nebraska — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ne/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Nebraska has 9 such areas, held by seven nations: the Omaha Tribe, the Santee Sioux Nation, the Winnebago Tribe and the Ponca Tribe, all seated in Nebraska, the Iowa Tribe of Kansas and Nebraska and the Sac & Fox Nation of Missouri in Kansas and Nebraska, seated in Kansas, and the Oglala Sioux Tribe, seated in South Dakota. The Winnebago Tribe of Nebraska's council of nine, from the tribe's own page (the list Iowa's card names for the reservation's Iowa part), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. The Omaha Tribe's site could not be reached from where this project is built (2026-10-10), so its card says so (ROSTER_BLOCKED in scripts/build_tribal_areas.py); this app has not yet read the council lists the other five nations publish, so their cards say so and link each nation's own site (ROSTER_NOT_SOUGHT). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/ne/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ne/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Nebraska — the 9 pieces of land above, in Thurston, Cuming, Burt, Dixon, Knox, Richardson and Sheridan counties. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

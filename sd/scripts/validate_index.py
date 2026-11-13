@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "sd-senate", "sd-house", "county", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "zip-code", "municipality", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "sd-senate-districts.json": (35, 35),  # The 35 South Dakota Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper), simplified in one topology with the House districts.
     "sd-house-districts.json": (37, 37),  # The 37 South Dakota House districts and subdistricts, TIGERweb layer 2 (2026 State Legislative Districts - Lower), simplified in one topology with the Senate districts.
     "zip-index.json": (376, 376),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (16, 16),  # South Dakota's tribal land (scripts/build_tribal_areas.py) — nine reservations and seven pieces of off-reservation trust land, held by 12 nations, every piece that crosses the state line drawn whole, simplified by one Douglas-Peucker run at 3 m because as published they came to 1.32 MB (603 KB, 163 KB gzipped; worst stray from the Census's line 3.4 m against a 25 m ceiling). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,6 +116,7 @@ ROSTER_FILES = {
     "sd-senate-members.json": 35,  # South Dakota Senate roster, one record per district, refreshed weekly by update-sd-legislature-roster.yml.
     "sd-house-members.json": 37,  # South Dakota House roster, one record per district holding its seat count and every member listed, refreshed weekly by update-sd-legislature-roster.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "tribal-councils.json": 1,  # The Business Council of the Shakopee Mdewakanton Sioux Community, from its own page, keyed by the Census AIANNH code of its land (3680) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The same council Minnesota's card names for the community's land there. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "statewide-officials.json": 5,  # The officers South Dakota elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from sd/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
 }
 

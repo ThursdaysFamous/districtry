@@ -288,10 +288,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 7,
+      "rank_note": "Tribal land — Nebraska has 9 pieces held by seven nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Omaha Reservation (787.1 km² in Nebraska, 98.0% of it, Thurston, Cuming and Burt counties), the Santee Reservation (477.9 km², Knox County), the Winnebago Reservation (457.5 km² in Nebraska, 99.4% of it, Thurston and Dixon counties) and its trust land (0.465 km², Burt County), the Ponca (NE) Trust Land (0.825 km², Knox County), the Sac and Fox Nation Reservation (40.0 km² in Nebraska) and trust land (0.431 km²) and the Iowa (KS-NE) Reservation (15.6 km² in Nebraska), all three in Richardson County, and 2.236 km² of the Pine Ridge Reservation in Sheridan County. Every piece but the Santee Reservation and the Winnebago trust land is drawn whole across the state line. The Census draws one tribal district on the Pine Ridge land in Nebraska. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Nebraska has 9 such areas, held by seven nations: the Omaha Tribe, the Santee Sioux Nation, the Winnebago Tribe and the Ponca Tribe, all seated in Nebraska, the Iowa Tribe of Kansas and Nebraska and the Sac & Fox Nation of Missouri in Kansas and Nebraska, seated in Kansas, and the Oglala Sioux Tribe, seated in South Dakota.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Winnebago Tribe of Nebraska's council of nine, from the tribe's own page (the list Iowa's card names for the reservation's Iowa part), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. The Omaha Tribe's site could not be reached from where this project is built (2026-10-10), so its card says so (ROSTER_BLOCKED in scripts/build_tribal_areas.py); this app has not yet read the council lists the other five nations publish, so their cards say so and link each nation's own site (ROSTER_NOT_SOUGHT). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Nebraska — the 9 pieces of land above, in Thurston, Cuming, Burt, Dixon, Knox, Richardson and Sheridan counties. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -309,7 +327,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -402,6 +420,12 @@
         "min_features": 585,
         "max_features": 585,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Nebraska's tribal land (scripts/build_tribal_areas.py) — six reservations and three pieces of off-reservation trust land, seven pieces drawn whole across the state line, the Pine Ridge Reservation among them, at the Census's own detail (260 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -421,6 +445,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of the Winnebago Tribe of Nebraska, from its own page, keyed by the Census AIANNH code of its land (4625) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The same council Iowa's card names for the reservation's Iowa part. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Nebraska elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ne/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -428,7 +457,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ne-shell-v1",
+    "cache_name": "districtry-ne-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

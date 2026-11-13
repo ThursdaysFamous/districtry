@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislative Branch's own member pages: **County** (`county`, all 53, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **North Dakota Senate** and **North Dakota House** (47 Senate districts and 48 House districts electing 94 representatives, TIGERweb's 2026 state legislative districts joined to the Legislative Branch's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 355 incorporated cities), **School District (Unified)** and **(Elementary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislative Branch's own member pages: **County** (`county`, all 53, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **North Dakota Senate** and **North Dakota House** (47 Senate districts and 48 House districts electing 94 representatives, TIGERweb's 2026 state legislative districts joined to the Legislative Branch's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 355 incorporated cities), **School District (Unified)** and **(Elementary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -66,11 +66,17 @@ is empty. Each county is governed by an elected board of county commissioners an
 as an auditor, a treasurer, a recorder, a sheriff and a state's attorney. Recorded as gap
 `nd-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps five reservations and two trust lands in North Dakota
-(`scripts/tribal_areas.py --report "North Dakota"`, 2026-11-12): the Fort Berthold (4,099.0 km2), Spirit
-Lake and Turtle Mountain reservations, the North Dakota parts of the Standing Rock (30.8% of it) and Lake
-Traverse (7.1%) reservations, and the Turtle Mountain (46.1%) and Lake Traverse trust lands. The state is
-recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FIVE NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps five reservations and two trust lands in North Dakota, measured
+2026-11-12 with `scripts/tribal_areas.py --report "North Dakota"`: the Fort Berthold (4,099.0 km2),
+Spirit Lake and Turtle Mountain reservations, the North Dakota parts of the Standing Rock (30.8% of
+it) and Lake Traverse (7.1%) reservations, and the Turtle Mountain (46.1%) and Lake Traverse trust
+lands. All seven pieces are drawn, the four that cross the state line whole, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it; the
+Sisseton-Wahpeton Oyate is seated at Agency Village, South Dakota. The cards name the tribal
+districts the Census draws on the Fort Berthold, Spirit Lake, Standing Rock and Lake Traverse land.
+No council is carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap
+`nd-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NORTH DAKOTA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -105,7 +111,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: North Dakota (`northdakota`) — https://districtry.com/nd/
 - Geocoders: address Photon (North Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Dakota-bounded, serial >=1s queue)
 - Ground truth: 46.82078,-100.78267 (North Dakota State Capitol, 600 East Boulevard Avenue, Bismarck, Burleigh County) → county Burleigh County; us-house Congressional District (at Large); nd-senate 35; nd-house 35. Negative point 49.15000,-99.00000 (Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 3, safety 2, schools 2, geography 4); `registerLayer(` floor 9. Debug namespace `window.NorthDakotaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 2, geography 4); `registerLayer(` floor 9. Debug namespace `window.NorthDakotaExplorer`.
 - Scheduled workflows: `update-nd-congress-roster.yml` (Wed 23:27 UTC); `update-nd-legislature-roster.yml` (Thu 23:27 UTC); `nd-validate-sources.yml` (2nd of month 23:27 UTC).
 - Source registry: `nd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -96,8 +96,8 @@ MIN_REGISTER_LAYER = 10
 EXPECT_LAYER_IDS = [
     "us-house", "county", "me-senate", "me-house", "school-district-unified",
     "school-district-secondary", "zip-code", "municipality",
-    "school-district-elementary", "police-station", "fire-station",
-    "post-office",
+    "school-district-elementary", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +108,7 @@ GEOMETRY_FILES = {
     "me-senate-districts.json": (35, 35),  # The 35 Maine Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper).
     "me-house-districts.json": (151, 151),  # The 151 Maine House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (424, 424),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (8, 8),  # Maine's tribal land (scripts/build_tribal_areas.py) — four reservations and four pieces of off-reservation trust land, held by four nations, at the Census's own detail (557 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

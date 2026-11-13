@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ne-legislature"];
 const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28" };
 const NEGATIVE_POINT = "42.87000,-97.05000"; // Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Nebraska";
-const EXPECT_LAYERS = 9;
+const EXPECT_LAYERS = 10;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NebraskaExplorer";
@@ -1037,6 +1037,124 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Winnebago Reservation names the tribe's council from the
+  //         councils file, the list Iowa's card names for the reservation's
+  //         Iowa part, and keeps naming the tribe with nobody on its council
+  //         when that file fails.
+  //       - The Omaha Reservation names the tribe with the Bureau's town and
+  //         site, and says the tribe's site could not be reached.
+  //       - The Nebraska part of the Iowa (KS-NE) Reservation names a tribe
+  //         seated at White Cloud, Kansas, and says how much of the land lies
+  //         in Nebraska.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 6.5 km, 8.4 km and 1.7 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
+    const WINNEBAGO = "42.21939,-96.72634";
+    const OMAHA = "42.10326,-96.40983";
+    const IOWA = "40.01536,-95.36100";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, WINNEBAGO);
+      const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(WINNEBAGO);
+      check("the Winnebago Reservation names the tribe, its seat and its whole council, and where the names come from",
+        land.length === 1 && council.length > 0 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Winnebago Tribe of Nebraska" &&
+          c.by("Seat of government") === "Winnebago, NE" &&
+          c.by("Land") === "Winnebago Reservation" &&
+          council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
+          !!p.url && c.link.text === p.nation + " (official)",
+        `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const p = propsAt(areas, WINNEBAGO)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(WINNEBAGO, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Winnebago Tribe of Nebraska" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, OMAHA);
+      const p = land[0] || {};
+      const c = await at(OMAHA);
+      check("the Omaha Reservation names the tribe with the Bureau's town and site, and says its site could not be reached",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Omaha Tribe of Nebraska" &&
+          c.by("Land") === "Omaha Reservation" &&
+          c.by("Seat of government") === "Macy, NE" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("could not be reached") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, IOWA);
+      const p = land[0] || {};
+      const c = await at(IOWA);
+      check("the Nebraska part of the Iowa (KS-NE) Reservation names a tribe seated in Kansas and says how much of the land lies in Nebraska",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Iowa Tribe of Kansas and Nebraska" &&
+          c.by("Land") === "Iowa (KS-NE) Reservation" &&
+          c.by("Seat of government") === "White Cloud, KS" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.shareInState < 1 &&
+          c.by("Population") === p.populationNote &&
+          p.populationNote.indexOf("lies in Nebraska") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("9 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

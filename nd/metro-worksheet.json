@@ -324,10 +324,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 9,
+      "rank_note": "Tribal land — North Dakota has 7 pieces, 5 reservations and 2 pieces of off-reservation trust land, held by five nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Fort Berthold Reservation (4,099.0 km²), the Standing Rock Reservation (2,922.0 km² in North Dakota, 30.8% of it, Sioux County), the Spirit Lake Reservation (1,034.5 km²), the Turtle Mountain Reservation (186.0 km², Rolette County) and its trust land (200.9 km² in North Dakota, 46.1% of it), and the Lake Traverse Reservation (276.6 km² in North Dakota, 7.1% of it) and its trust land (0.515 km²). Four pieces cross the state line and are drawn whole: the Standing Rock and Lake Traverse reservations and both pieces of trust land. The Sisseton-Wahpeton Oyate is seated in South Dakota. The Census draws tribal districts on the Fort Berthold, Spirit Lake, Standing Rock and Lake Traverse land. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — North Dakota has 7 such areas, held by five nations: the Three Affiliated Tribes, the Standing Rock Sioux Tribe, the Spirit Lake Tribe and the Turtle Mountain Band of Chippewa Indians, all seated in North Dakota, and the Sisseton-Wahpeton Oyate, seated in South Dakota.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "North Dakota — the 7 pieces of land above. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -448,6 +466,12 @@
         "min_features": 388,
         "max_features": 388,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "North Dakota's tribal land (scripts/build_tribal_areas.py) — five reservations and two pieces of off-reservation trust land, held by five nations, four pieces drawn whole across the state line, at the Census's own detail (571 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -479,7 +503,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-nd-shell-v1",
+    "cache_name": "districtry-nd-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -88,19 +88,19 @@ in the researched-but-unbuilt backlog.
   "connecticut": ["us-house", "county", "ct-senate", "school-district-secondary", "ct-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "utah": ["us-house", "ut-senate", "county", "school-district-unified", "ut-house", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "kansas": ["us-house", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "newmexico": ["us-house", "county", "nm-senate", "nm-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "nebraska": ["us-house", "ne-legislature", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "idaho": ["us-house", "id-senate", "id-house", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "newmexico": ["us-house", "county", "nm-senate", "nm-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "nebraska": ["us-house", "ne-legislature", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "idaho": ["us-house", "id-senate", "id-house", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "hawaii": ["school-district-unified", "us-house", "county", "hi-senate", "hi-house", "zip-code", "police-station", "fire-station", "post-office"],
-  "maine": ["us-house", "county", "me-senate", "me-house", "school-district-unified", "school-district-secondary", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
-  "montana": ["us-house", "mt-senate", "county", "mt-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "rhodeisland": ["us-house", "county", "school-district-secondary", "school-district-elementary", "ri-senate", "municipality", "school-district-unified", "ri-house", "zip-code", "police-station", "fire-station", "post-office"],
+  "maine": ["us-house", "county", "me-senate", "me-house", "school-district-unified", "school-district-secondary", "zip-code", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
+  "montana": ["us-house", "mt-senate", "county", "mt-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "rhodeisland": ["us-house", "county", "school-district-secondary", "school-district-elementary", "ri-senate", "municipality", "school-district-unified", "ri-house", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "delaware": ["us-house", "county", "school-district-unified", "de-senate", "de-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "southdakota": ["us-house", "sd-senate", "sd-house", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "northdakota": ["us-house", "nd-senate", "nd-house", "county", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "alaska": ["us-house", "ak-senate", "county", "ak-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "southdakota": ["us-house", "sd-senate", "sd-house", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "northdakota": ["us-house", "nd-senate", "nd-house", "county", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "alaska": ["us-house", "ak-senate", "county", "ak-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "vermont": ["us-house", "county", "vt-senate", "school-district-secondary", "vt-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "wyoming": ["us-house", "county", "wy-senate", "school-district-unified", "wy-house", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"]
+  "wyoming": ["us-house", "county", "wy-senate", "school-district-unified", "wy-house", "zip-code", "school-district-elementary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4972,6 +4972,18 @@ trusted.
             "why": "No list of the members of New Mexico's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='35': 89 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Public Education Department's directory of school districts; each district's own website; and the county clerks' election results, since the county clerks run school board elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nm-tribal-government",
+            "concept": "Tribal government",
+            "area": "New Mexico",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any New Mexico nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 37 pieces, 24 reservations and 13 pieces of off-reservation trust land, held by 24 nations, measured with scripts/tribal_areas.py --report New Mexico (control passed: New Mexico resolves to state code 35). Four pieces cross the state line and are drawn whole: the Navajo Nation Reservation (19.5% in New Mexico, 11,376.8 km2) and its trust land (99.4%), seated in Window Rock, Arizona, with the 54 chapters the Census draws on its New Mexico ground; the Ute Mountain Reservation (18.2%), seated in Towaoc, Colorado; and the Zuni Reservation (96.9%). The Fort Sill Apache Indian Reservation (0.121 km2, Luna County) is held by the Fort Sill Apache Tribe, seated in Apache, Oklahoma. The Bureau gives Santa Fe as the town for the pueblos of Nambe, Pojoaque, San Ildefonso and Tesuque, and lists a website for only 3 of the 24 nations. The land is drawn simplified at 3 m, the worst stray 3.5 m against a 25 m ceiling. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "nebraska": [
@@ -5011,6 +5023,18 @@ trusted.
             "why": "No list of the members of Nebraska's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='31': 244 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's education directory; each district's own website; and the county clerks' and election commissioners' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ne-tribal-government",
+            "concept": "Tribal government",
+            "area": "Nebraska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website. It names the Winnebago Tribe's council, and not yet the other six nations' councils.",
+            "why": "This app has not read the council lists of Nebraska's other six nations yet, and the Omaha Tribe's site could not be reached. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 9 pieces, 6 reservations and 3 pieces of off-reservation trust land, held by 7 nations, measured with scripts/tribal_areas.py --report Nebraska (control passed: Nebraska resolves to state code 31). Seven cross the state line and are drawn whole, among them the Nebraska parts of the Sac and Fox Nation (66.9%) and Iowa (KS-NE) (30.6%) reservations, whose nations are seated in Reserve and White Cloud, Kansas, and 2.236 km2 of the Pine Ridge Reservation in Sheridan County, kept by Adam's 1%-or-0.25 km2 rule and named with the Oglala Sioux Tribe and the one tribal district the Census draws there. The Winnebago Tribe's card names its council of nine, read weekly from the tribe's own page into ne/data/app/tribal-councils.json, the council Iowa's card already names. The Omaha Tribe's site could not be reached from where this project is built (2026-10-10, ROSTER_BLOCKED in scripts/build_tribal_areas.py); the Santee Sioux Nation, the Ponca Tribe, the Iowa Tribe of Kansas and Nebraska, the Sac & Fox Nation of Missouri in Kansas and Nebraska and the Oglala Sioux Tribe are not carried, recorded state-wide in ROSTER_NOT_SOUGHT. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "idaho": [
@@ -5050,6 +5074,18 @@ trusted.
             "why": "No list of the members of Idaho's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='16': 116 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school districts; each district's own website; and the county clerks' election results, which include school board trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "id-tribal-government",
+            "concept": "Tribal government",
+            "area": "Idaho",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Idaho nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 7 pieces, 5 reservations and 2 pieces of off-reservation trust land, held by 5 nations, measured with scripts/tribal_areas.py --report Idaho (control passed: Idaho resolves to state code 16). The Duck Valley Reservation (50.3% in Idaho, 588.7 km2) is drawn whole across the Nevada line; the Bureau lists no office town for the Shoshone-Paiute Tribes, so its card gives Owyhee, Nevada, the town the tribes' own site gives (seatFromNation in data/tribal-government-join.json, read 2026-11-12), as Nevada's card does. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "hawaii": [
@@ -5104,6 +5140,18 @@ trusted.
             "why": "No list of the members of Maine's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='23': 187 records on layer 0 (unified), 74 on layer 2 (elementary) and 3 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school administrative units; each district's own website; and the town and city clerks' election results, since school board members are elected locally. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "me-tribal-government",
+            "concept": "Tribal government",
+            "area": "Maine",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Maine nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 8 pieces, 4 reservations and 4 pieces of off-reservation trust land, held by 4 nations and 5 governments, measured with scripts/tribal_areas.py --report Maine (control passed: Maine resolves to state code 23). The Bureau lists the Passamaquoddy Tribe's governments at Indian Township (Princeton) and Pleasant Point (Perry) separately; each reservation is joined to its own, and the Passamaquoddy Trust Land (391.7 km2 in 34 parts across five counties), held for the tribe as a whole, is joined to both, so its card names both with their seats and sites and carries no single link. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "montana": [
@@ -5143,6 +5191,18 @@ trusted.
             "why": "No list of the members of Montana's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='30': 65 records on layer 0 (unified), 233 on layer 2 (elementary) and 97 on layer 1 (secondary), which lie over the same ground as the elementary districts. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Office of Public Instruction's directory of school districts; each district's own website; and the county election administrators' election results, which include school trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "mt-tribal-government",
+            "concept": "Tribal government",
+            "area": "Montana",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Montana nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 14 pieces, 7 reservations and 7 pieces of off-reservation trust land, held by 8 nations, measured with scripts/tribal_areas.py --report Montana (control passed: Montana resolves to state code 30). Two cross the state line and are drawn whole: the Northern Cheyenne trust land (89.8% in Montana) and the Turtle Mountain Off-Reservation Trust Land (53.4% in Montana, 232.4 km2), whose band is seated in Belcourt, North Dakota. The cards name the tribal districts the Census draws on the Flathead (8), Fort Peck (6), Northern Cheyenne (5) and Fort Belknap (4) land. The land is drawn simplified at 3 m, the worst stray 3.7 m against a 25 m ceiling. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "rhodeisland": [
@@ -5169,6 +5229,18 @@ trusted.
             "why": "No list of the members of Rhode Island's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='44': 31 records on layer 0 (unified), one of them the placeholder for coastal water no district covers, 5 on layer 2 (elementary) and 1 on layer 1 (secondary), which lies over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of districts; each district's own website; and the Board of Elections' results, since school committee members are elected by city and town. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ri-tribal-government",
+            "concept": "Tribal government",
+            "area": "Rhode Island",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read the Narragansett Indian Tribe's council list yet.",
+            "wanted": "The tribe's own published list of its council.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 1 piece, held by 1 tribe, measured with scripts/tribal_areas.py --report Rhode Island (control passed: Rhode Island resolves to state code 44). The Narragansett Reservation (8.331 km2 in six parts, Washington County, nobody living there at the 2020 census) is held by the Narragansett Indian Tribe, seated in Charlestown. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "delaware": [
@@ -5247,6 +5319,18 @@ trusted.
             "why": "No list of the members of South Dakota's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='46': 147 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the school districts' own election results, since South Dakota's school boards run their own elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "sd-tribal-government",
+            "concept": "Tribal government",
+            "area": "South Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website. It names the Shakopee Mdewakanton Sioux Community's council, and not yet the other eleven nations' councils.",
+            "why": "This app has not read the council lists of South Dakota's other eleven nations yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 16 pieces, 9 reservations and 7 pieces of off-reservation trust land, held by 12 nations, measured with scripts/tribal_areas.py --report South Dakota (control passed: South Dakota resolves to state code 46). Every piece that crosses the state line is drawn whole: the Pine Ridge, Standing Rock (69.2% in South Dakota) and Lake Traverse (92.9%) reservations, the Lake Traverse trust land, and the trust land of three nations seated outside the state, the Shakopee Mdewakanton Sioux Community (Prior Lake, Minnesota), the Northern Cheyenne Tribe (Lame Deer, Montana) and the Turtle Mountain Band (Belcourt, North Dakota). The cards name the tribal districts the Census draws on the Rosebud (20), Pine Ridge (8), Lake Traverse (7), Cheyenne River (6), Standing Rock (5) and Crow Creek (3) land. The Shakopee Mdewakanton Sioux Community's card names its Business Council of three, read weekly from the community's own page into sd/data/app/tribal-councils.json, the council Minnesota's card already names; the other eleven nations are not carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. The land is drawn simplified at 3 m, the worst stray 3.4 m against a 25 m ceiling. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "northdakota": [
@@ -5286,6 +5370,18 @@ trusted.
             "why": "No list of the members of North Dakota's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='38': 147 records on layer 0 (unified) and 20 on layer 2 (elementary), and none on layer 1 (secondary). Both are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Public Instruction's directory of school districts; each district's own website; and the school districts' own election results, since North Dakota's school boards run their own elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nd-tribal-government",
+            "concept": "Tribal government",
+            "area": "North Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any North Dakota nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 7 pieces, 5 reservations and 2 pieces of off-reservation trust land, held by 5 nations, measured with scripts/tribal_areas.py --report North Dakota (control passed: North Dakota resolves to state code 38). Four cross the state line and are drawn whole: the Standing Rock (30.8% in North Dakota) and Lake Traverse (7.1%) reservations, the Turtle Mountain trust land (46.1%) and the Lake Traverse trust land (91.5%); the Sisseton-Wahpeton Oyate is seated in Agency Village, South Dakota. The cards name the tribal districts the Census draws on the Fort Berthold (6), Spirit Lake (4), Standing Rock (4) and Lake Traverse (1) land. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "alaska": [
@@ -5325,6 +5421,18 @@ trusted.
             "why": "No list of the members of Alaska's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='02': 52 records on layer 0, the unified districts (the borough and city districts and the regional districts of the Unorganized Borough), and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education and Early Development's directory of school districts; each district's own website; and the boroughs' and cities' own election results, which include school board elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ak-tribal-government",
+            "concept": "Tribal government",
+            "area": "Alaska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read the Metlakatla Indian Community's council list yet.",
+            "wanted": "The community's own published list of its council.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 1 piece, held by 1 community, measured with scripts/tribal_areas.py --report Alaska (control passed: Alaska resolves to state code 02). The Annette Island Reserve (587.3 km2) is held by the Metlakatla Indian Community, seated at Metlakatla. The Census's Alaska Native village statistical areas are statistical areas and are not drawn (Census statistical areas are drawn only in Oklahoma, by Adam's rule). No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "vermont": [
@@ -5403,6 +5511,18 @@ trusted.
             "why": "No list of the members of Wyoming's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='56': 48 records on layer 0 (unified), one of them the placeholder the Census files over about 4,499 km2 of Park County land no district reaches, and one on layer 2 (elementary), Fremont County School District 38, and none on layer 1 (secondary). Both are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results, which include school board trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wy-tribal-government",
+            "concept": "Tribal government",
+            "area": "Wyoming",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read the council list of either Wind River nation yet. Each publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 2 pieces, held by 2 nations together, measured with scripts/tribal_areas.py --report Wyoming (control passed: Wyoming resolves to state code 56). The Wind River Reservation (9,128.7 km2) and its trust land (20.4 km2) are each joined to both the Eastern Shoshone Tribe (Fort Washakie) and the Northern Arapaho Tribe (Ethete), which the Bureau lists separately, so each card names both with their seats and sites and carries no single link. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ]
 }

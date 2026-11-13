@@ -306,10 +306,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "Tribal land — South Dakota has 16 pieces, 9 reservations and 7 pieces of off-reservation trust land, held by 12 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Cheyenne River Reservation (11,424.8 km², Dewey and Ziebach counties), the Pine Ridge Reservation (11,272.8 km² in South Dakota), the Standing Rock Reservation (6,564.0 km² in South Dakota, 69.2% of it), the Lake Traverse Reservation (3,630.3 km² in South Dakota, 92.9% of it), the Rosebud Indian Reservation (3,602.3 km²) and its trust land (1,825.1 km²); the smallest is the Lake Traverse trust land's South Dakota part (0.048 km², 8.5% of it). Every piece that crosses the state line is drawn whole: the Pine Ridge, Standing Rock and Lake Traverse reservations, the Lake Traverse trust land, and the trust land of three nations seated outside the state, the Shakopee Mdewakanton Sioux Community (Minnesota), the Northern Cheyenne Tribe (Montana) and the Turtle Mountain Band (North Dakota). The Census draws tribal districts on the Rosebud, Pine Ridge, Lake Traverse, Cheyenne River, Standing Rock and Crow Creek land. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Dakota has 16 such areas, held by 12 nations: eight seated in South Dakota, the Standing Rock Sioux Tribe and the Turtle Mountain Band of Chippewa Indians, seated in North Dakota, the Northern Cheyenne Tribe, seated in Montana, and the Shakopee Mdewakanton Sioux Community, seated in Minnesota.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Shakopee Mdewakanton Sioux Community's Business Council of three, from the community's own page (the list Minnesota's card names for its land there), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. This app has not yet read the council lists the other eleven nations publish, so their cards say so and link each nation's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "South Dakota — the 16 pieces of land above. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -430,6 +448,12 @@
         "min_features": 376,
         "max_features": 376,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "South Dakota's tribal land (scripts/build_tribal_areas.py) — nine reservations and seven pieces of off-reservation trust land, held by 12 nations, every piece that crosses the state line drawn whole, simplified by one Douglas-Peucker run at 3 m because as published they came to 1.32 MB (603 KB, 163 KB gzipped; worst stray from the Census's line 3.4 m against a 25 m ceiling). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -454,6 +478,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The Business Council of the Shakopee Mdewakanton Sioux Community, from its own page, keyed by the Census AIANNH code of its land (3680) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The same council Minnesota's card names for the community's land there. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers South Dakota elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from sd/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -461,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-sd-shell-v1",
+    "cache_name": "districtry-sd-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

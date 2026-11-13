@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own member pages: **Borough or Census Area** (`county`, all 30, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Alaska Senate** and **Alaska House** (20 lettered and 40 numbered districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 149 incorporated places), **School District** (52 unified districts) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own member pages: **Borough or Census Area** (`county`, all 30, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (the at-large district, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Alaska Senate** and **Alaska House** (20 lettered and 40 numbered districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 149 incorporated places), **School District** (52 unified districts) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every borough or census area is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -67,10 +67,15 @@ census areas the Census Bureau draws over the Unorganized Borough, which has no 
 where the state provides the services a borough would. No assembly member or mayor is named yet, and the
 card says so (gap `ak-county-officials`).
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps one reservation in Alaska, the Metlakatla Indian
-Community's Annette Island Reserve (587.3 km2), and no trust land (`scripts/tribal_areas.py --report
-Alaska`, 2026-11-12). Alaska Native villages and corporations are statistical areas, which the fleet draws
-only in Oklahoma. The state is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE ANNETTE ISLAND RESERVE AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps one reservation in Alaska, the Metlakatla
+Indian Community's Annette Island Reserve (587.3 km2), and no trust land, measured 2026-11-12 with
+`scripts/tribal_areas.py --report Alaska`. It is drawn and joined in
+`data/tribal-government-join.json` to the community, seated at Metlakatla, from the Bureau of Indian
+Affairs' list. Alaska Native villages and corporations are statistical areas, which the fleet draws
+only in Oklahoma, so a point anywhere else in Alaska is told it is on no tribal land the Census
+draws for a government, in words that say why. No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `ak-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE ALASKA**, as it does in every app. A ZCTA carries no state
 field, so the coverage test reads the shipped outline rather than the service, and the smoke test asserts
@@ -103,7 +108,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Alaska (`alaska`) — https://districtry.com/ak/
 - Geocoders: address Photon (Alaska-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Alaska-bounded, serial >=1s queue)
 - Ground truth: 58.30196,-134.41035 (Alaska State Capitol, 120 4th Street, Juneau, Juneau City and Borough) → county Juneau City and Borough; us-house Congressional District (at Large); ak-senate B; ak-house 4. Negative point 57.70000,-140.50000 (the Gulf of Alaska about 200 km south of Yakutat — outside Alaska and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Alaska State Capitol returns Alaska), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlaskaExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlaskaExplorer`.
 - Scheduled workflows: `update-ak-congress-roster.yml` (Wed 23:33 UTC); `update-ak-legislature-roster.yml` (Thu 23:33 UTC); `ak-validate-sources.yml` (2nd of month 23:33 UTC).
 - Source registry: `ak/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

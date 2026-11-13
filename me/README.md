@@ -13,6 +13,7 @@ The national tier, both chambers of the Legislature named from the Legislature's
 | **Political** | U.S. House District (2) | U.S. Census TIGERweb boundary, layer 0 (the same map as layer 4) (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Maine Senate District (35) | TIGERweb's 2026 state legislative districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the Legislature's own pages, refreshed weekly by CI |
 | | Maine House District (151) | TIGERweb's 2026 state legislative districts (pre-built) + the same roster |
+| | Tribal Government (8) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; no council is named yet |
 | **Schools** | School District (Unified), (Elementary), (Secondary) | TIGERweb school districts, from tile archives; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (16) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | Town or City | TIGERweb county subdivisions, from a tile archive; every part of the state's land is in one |

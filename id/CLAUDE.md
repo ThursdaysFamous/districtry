@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own membership pages: **County** (`county`, all 44, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Idaho Senate** and **Idaho House** (`id-senate` and `id-house`, the same 35 legislative districts, one senator and two representatives each, joined to the Legislature's own membership pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 199 incorporated cities), **School District** (116 unified districts) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own membership pages: **County** (`county`, all 44, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Idaho Senate** and **Idaho House** (`id-senate` and `id-house`, the same 35 legislative districts, one senator and two representatives each, joined to the Legislature's own membership pages), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 199 incorporated cities), **School District** (116 unified districts) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -64,11 +64,17 @@ is empty. Each county is governed by an elected board of three county commission
 such as a clerk, a treasurer, an assessor, a sheriff, a coroner and a prosecuting attorney. Recorded as
 gap `id-county-officials`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps five reservations and two trust lands in Idaho
-(`scripts/tribal_areas.py --report Idaho`, 2026-11-12): the Nez Perce (3,120.9 km2), Fort Hall
-(2,214.0 km2), Coeur d'Alene (1,389.4 km2) and Kootenai reservations, the Idaho half of the Duck Valley
-Reservation (588.7 km2, 50.3% of it), and the Kootenai and Fort Hall trust lands. The state is recorded
-as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FIVE NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-13). The Census keeps five reservations and two trust lands in Idaho, measured
+2026-11-12 with `scripts/tribal_areas.py --report Idaho`: the Nez Perce (3,120.9 km2), Fort Hall
+(2,214.0 km2), Coeur d'Alene (1,389.4 km2) and Kootenai reservations, the Idaho half of the Duck
+Valley Reservation (588.7 km2, 50.3% of it), and the Kootenai and Fort Hall trust lands. All seven
+pieces are drawn, the Duck Valley Reservation whole into Nevada, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it. The
+Bureau lists no office town for the Shoshone-Paiute Tribes of the Duck Valley Reservation, so its
+card gives the one the tribes' own site gives, Owyhee, Nevada, says where it came from, and links
+that site, as Nevada's card for the same land does (`seatFromNation`). No council is carried yet
+(`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap `id-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE IDAHO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -98,7 +104,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Idaho (`idaho`) — https://districtry.com/id/
 - Geocoders: address Photon (Idaho-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Idaho-bounded, serial >=1s queue)
 - Ground truth: 43.61771,-116.19975 (Idaho State Capitol, 700 West Jefferson Street, Boise, Ada County) → county Ada County; us-house 2; id-senate 19; id-house 19. Negative point 49.08000,-116.45000 (British Columbia, Canada, north of Bonners Ferry — outside Idaho and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Idaho State Capitol returns Idaho), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.IdahoExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.IdahoExplorer`.
 - Scheduled workflows: `update-id-congress-roster.yml` (Wed 22:21 UTC); `update-id-legislature-roster.yml` (Thu 22:21 UTC); `id-validate-sources.yml` (2nd of month 22:21 UTC).
 - Source registry: `id/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

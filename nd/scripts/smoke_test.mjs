@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "nd-senate", "nd-house"];
 const EXPECT_DISTRICT = { "county": "Burleigh County", "us-house": "Congressional District (at Large)", "nd-senate": "35", "nd-house": "35" };
 const NEGATIVE_POINT = "49.15000,-99.00000"; // Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry North Dakota";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NorthDakotaExplorer";
@@ -1059,6 +1059,116 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The North Dakota part of the Standing Rock Reservation names the
+  //         tribe seated at Fort Yates and the four districts drawn on its
+  //         ground here.
+  //       - The North Dakota part of the Lake Traverse Reservation names a
+  //         nation the Bureau seats at Agency Village, South Dakota, and the
+  //         one district drawn there.
+  //       - The Turtle Mountain Reservation is the ordinary case: the Bureau's
+  //         town and site, and no districts.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 16.5 km, 3.4 km and 3.6 km from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const STANDING_ROCK = "46.15714,-100.84227";
+    const LAKE_TRAVERSE = "45.97857,-97.44824";
+    const TURTLE_MOUNTAIN = "48.84876,-99.70645";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, STANDING_ROCK);
+      const p = land[0] || {};
+      const c = await at(STANDING_ROCK);
+      check("the North Dakota part of the Standing Rock Reservation names the tribe, its seat and the four districts drawn there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Standing Rock Sioux Tribe of North & South Dakota" &&
+          c.by("Land") === "Standing Rock Reservation" &&
+          c.by("Seat of government") === "Fort Yates, ND" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          p.shareInState < 1 &&
+          c.by("Population") === p.populationNote &&
+          p.populationNote.indexOf("lies in North Dakota") !== -1 &&
+          (p.districts || []).length === 4 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, LAKE_TRAVERSE);
+      const p = land[0] || {};
+      const c = await at(LAKE_TRAVERSE);
+      check("the North Dakota part of the Lake Traverse Reservation names a nation seated in South Dakota and the one district drawn there",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Sisseton-Wahpeton Oyate of the Lake Traverse Reservation, South Dakota" &&
+          c.by("Land") === "Lake Traverse Reservation" &&
+          c.by("Seat of government") === "Agency Village, SD" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.shareInState < 1 &&
+          c.by("Population") === p.populationNote &&
+          p.populationNote.indexOf("lies in North Dakota") !== -1 &&
+          (p.districts || []).length === 1 &&
+          c.by("Districts drawn here") === p.districtsNote &&
+          (p.districts || []).every((d) => p.districtsNote.indexOf(d) !== -1),
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, TURTLE_MOUNTAIN);
+      const p = land[0] || {};
+      const c = await at(TURTLE_MOUNTAIN);
+      check("the Turtle Mountain Reservation names the band with the Bureau's town and site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Turtle Mountain Band of Chippewa Indians of North Dakota" &&
+          c.by("Land") === "Turtle Mountain Reservation" &&
+          c.by("Seat of government") === "Belcourt, ND" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          (p.districts || []).length === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("7 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

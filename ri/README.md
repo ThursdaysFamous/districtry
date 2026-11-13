@@ -13,6 +13,7 @@ The national tier, both chambers of the General Assembly named from the General 
 | **Political** | U.S. House District (2) | U.S. Census TIGERweb boundary, layer 0 (the same map as layer 4) (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Rhode Island Senate District (38) | TIGERweb's 2026 state legislative districts (pre-built, a 2,000-point agreement gate and an 8 m fidelity ceiling) + the General Assembly's own member list, refreshed weekly by CI |
 | | Rhode Island House District (75) | TIGERweb's 2026 state legislative districts (pre-built) + the same roster |
+| | Tribal Government (1) | TIGERweb's tribal land (AIANNHA), pre-built by `scripts/build_tribal_areas.py`, each piece joined to the government the Bureau of Indian Affairs lists for it; no council is named yet |
 | **Schools** | School District (Unified), (Elementary), (Secondary) | TIGERweb school districts, from tile archives; identity and grades only, the school boards recorded as a gap |
 | **Geography** | County (5) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; Rhode Island has had no county government since 1842, and the card says so |
 | | City or Town | TIGERweb county subdivisions, from a tile archive; every part of the state's land is in one |

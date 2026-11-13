@@ -15,7 +15,7 @@ of its batch in one go-live change on Adam's own "merge", which narrowed that ex
 states an app.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the General Assembly's own member list: **County** (`county`, all five, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Rhode Island Senate** and **Rhode Island House** (38 and 75 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own member list), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, the 39 cities and towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the General Assembly's own member list: **County** (`county`, all five, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (2 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Rhode Island Senate** and **Rhode Island House** (38 and 75 districts, TIGERweb's 2026 state legislative districts joined to the General Assembly's own member list), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, the 39 cities and towns), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -63,9 +63,13 @@ named yet (gap `ri-school-board-members`).
 County card says the city or town is the local government and the City or Town card names it. There is
 no county-officials gap, because there is no county official to name.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps one reservation in Rhode Island, the Narragansett
-Reservation (8.331 km2), measured 2026-11-12 with `scripts/tribal_areas.py --report "Rhode Island"`. The
-state is recorded as not yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE NARRAGANSETT RESERVATION AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps one reservation in Rhode Island, the
+Narragansett Reservation (8.331 km2 in six parts, Washington County, nobody living there at the 2020
+census), measured 2026-11-12 with `scripts/tribal_areas.py --report "Rhode Island"`. It is drawn and
+joined in `data/tribal-government-join.json` to the Narragansett Indian Tribe, seated in
+Charlestown, from the Bureau of Indian Affairs' list. No council is carried yet (`ROSTER_NOT_SOUGHT`
+in `scripts/build_tribal_areas.py`), recorded in gap `ri-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE RHODE ISLAND.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -94,7 +98,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Rhode Island (`rhodeisland`) — https://districtry.com/ri/
 - Geocoders: address Photon (Rhode Island-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Rhode Island-bounded, serial >=1s queue)
 - Ground truth: 41.83087,-71.41492 (Rhode Island State House, 82 Smith Street, Providence, Providence County) → county Providence County; us-house 1; ri-senate 1; ri-house 1. Negative point 41.02000,-71.30000 (the Atlantic Ocean southeast of Block Island — outside Rhode Island and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Rhode Island State House returns Rhode Island), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.RhodeIslandExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.RhodeIslandExplorer`.
 - Scheduled workflows: `update-ri-congress-roster.yml` (Wed 23:03 UTC); `update-ri-legislature-roster.yml` (Thu 23:03 UTC); `ri-validate-sources.yml` (2nd of month 23:03 UTC).
 - Source registry: `ri/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
