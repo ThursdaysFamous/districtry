@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">16 layers — 6 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1249,6 +1249,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ga-county-officials.json, the County card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Seats not on a ballot since November 2024 are not named — recorded as gap ga-county-commission-members.</td>
                 <td data-label="Where it applies">Georgia — the 110 counties whose commission map passed; hidden elsewhere, with gap ga-county-commission-district-lines saying why each other county's map is not drawn.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Georgia has one such area, the Tama (state) Reservation in Grady County, held by the Lower Muscogee Creek Tribe, which the State of Georgia recognizes.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations, off-reservation trust land and state reservations, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No council is named yet: this app has not read a council list for the tribe and has no site of its own to link, so the card says so (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The tribe is not in the Bureau of Indian Affairs' tribal leaders directory, because the United States does not recognize it, so its name and its seat (Whigham) come from Code Section 44-12-300 of the Official Code of Georgia as House Bill 43 of 2024 amended it, published by the Office of the Governor (read 2026-11-13), and the card links that law; the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Georgia — the one piece of land above, in Grady County. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1689,6 +1700,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Georgia — statewide. A point outside every city and town is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ga/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Georgia has one such area, the Tama (state) Reservation in Grady County, held by the Lower Muscogee Creek Tribe, which the State of Georgia recognizes. No council is named yet: this app has not read a council list for the tribe and has no site of its own to link, so the card says so (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The tribe is not in the Bureau of Indian Affairs' tribal leaders directory, because the United States does not recognize it, so its name and its seat (Whigham) come from Code Section 44-12-300 of the Official Code of Georgia as House Bill 43 of 2024 amended it, published by the Office of the Governor (read 2026-11-13), and the card links that law; the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/ga/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ga/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations, off-reservation trust land and state reservations, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Georgia — the one piece of land above, in Grady County. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

@@ -37,7 +37,8 @@ Board District** (`school-board-district`, 105 counties), each naming its distri
 Secretary of State's election results, and the office's 2024 statewide precinct map: **Voting
 Precinct** (`voting-precinct`, 2,724). **Judicial Circuit** (`ga-superior-court`, 51) is drawn from
 whole counties and names each circuit's superior court judges and district attorney from the same
-election results.
+election results. **Tribal Government** (`tribal-government`) draws the Tama state
+reservation.
 
 **THE THREE DISTRICT MAPS ARE THE GENERAL ASSEMBLY'S OWN FILES, NOT TIGERweb's, AND THAT IS A
 MEASUREMENT.** The Legislative and Congressional Reapportionment Office lists each enacted 2023 plan
@@ -112,6 +113,17 @@ Columbus, one government with Muscogee County, as a city. The card reads `GA_CON
 GEOID, and for the two that share their county with other cities (Athens-Clarke and Augusta-Richmond)
 it says the balance of the county is the consolidated government.
 
+**TRIBAL GOVERNMENT DRAWS THE TAMA STATE RESERVATION AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps one reservation in Georgia, the Tama state
+reservation in Grady County (about 0.37 km2, 14 people at the 2020 census), and its card names the
+Lower Muscogee Creek Tribe, which the United States does not recognize and Georgia does: House Bill
+43, signed in 2024, amends Code Section 44-12-300 to recognize the Lower Muscogee Creek Tribe, Tama
+Reservation, Whigham, Georgia, so the card links the bill as the Governor's office publishes it and
+gives Whigham as the seat (the join in `data/tribal-government-join.json`). The Georgia Tribe of
+Eastern Cherokee's state-designated tribal statistical area (about 87.8 km2) is a Census statistical
+area and is not drawn, by Adam's rule that only Oklahoma's are. No council is carried yet
+(`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap `ga-tribal-government`.
+
 **THE ZIP LAYER HIDES OUTSIDE GEORGIA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -131,7 +143,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Georgia (`georgia`) — https://districtry.com/ga/
 - Geocoders: address Photon (Georgia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Georgia-bounded, serial >=1s queue)
 - Ground truth: 33.74900,-84.38900 (Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files) → county Fulton County; us-house 5; ga-senate 36; ga-house 58. Negative point 31.40000,-80.90000 (In the Atlantic Ocean, about 22 km from the nearest point of Georgia's shipped outline — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer names no state here (controls: the State Capitol returns Georgia, and Tallahassee, the old point, returns Florida), and no outline in fleet-outlines.json contains it, the nearest being Georgia's. THIS POINT WAS IN TALLAHASSEE, FLORIDA (30.4383, -84.2807) until the change that published Florida (batch 2 of the state-level launch, written 2026-11-11), which put it inside Florida's outline. THE OCEAN RATHER THAN ALABAMA, which this note used to name as the next place: Alabama is in batch 3, so a point there would move again within weeks, while no instance will ever serve the ocean. South Carolina's point moved to the Atlantic for the same reason when Georgia went live.).
-- Layers: 15 registered (political 5, safety 2, schools 2, geography 6); `registerLayer(` floor 10. Debug namespace `window.GeorgiaExplorer`.
+- Layers: 16 registered (political 6, safety 2, schools 2, geography 6); `registerLayer(` floor 10. Debug namespace `window.GeorgiaExplorer`.
 - Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `update-ga-county-officials.yml` (Wed 19:41 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `ga/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

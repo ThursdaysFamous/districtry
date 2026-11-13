@@ -215,12 +215,8 @@
       /* and the layers the reader has on travel with them (ENGINE
          metro-portal), as they do when a click crosses a state line */
       if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
-      /* The code is the app's path, which is its tag everywhere in the fleet
-         (districtry.com/il/ is "il"), so it needs no second field kept in
-         step with the url. A url of another shape gets no badge rather than
-         a wrong one. */
-      var tm = /\/([a-z]{2})\/?$/.exec(m.url || "");
-      var code = tm ? tm[1].toUpperCase() : "";
+      /* the state's two-letter code (ENGINE brand-names metroCode) */
+      var code = metroCode(m);
       if (code) {
         var badge = document.createElement("span");
         badge.className = "dst-metro-code";

@@ -1260,6 +1260,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: flex-start;
     gap: 2px;
   }
+  /* the state's code sits in front of the address like a letter, so a
+     long address wraps under it rather than beside it */
+  .sibling-result-code { margin-right: 7px; vertical-align: 1px; }
   .sibling-result-hint {
     font-size: 11.5px;
     font-weight: 600;
@@ -4610,7 +4613,7 @@ function initOregonExplorer() {
   var LAYER_CODES = { "us-house": "us", "school-district-secondary": "sh", "or-senate": "ors",
     "county": "co", "or-house": "orh", "school-district-elementary": "se",
     "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4621,7 +4624,7 @@ function initOregonExplorer() {
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4845,6 +4848,17 @@ function initOregonExplorer() {
   function siblingDisplayName(metro) {
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");
+  }
+
+  /* A sibling app's two-letter state code, shown wherever the fleet lists
+     another state: the state menu under the wordmark and the search rows that
+     open another state's app. It is the app's path, which is its tag
+     everywhere in the fleet (districtry.com/il/ is "il"), so it needs no
+     second field kept in step with the url. A url of another shape gives ""
+     and its row carries no code rather than a wrong one. */
+  function metroCode(metro) {
+    var m = /\/([a-z]{2})\/?$/.exec((metro && metro.url) || "");
+    return m ? m[1].toUpperCase() : "";
   }
   /* ==== ENGINE:END brand-names ==== */
 
@@ -9568,8 +9582,19 @@ function initOregonExplorer() {
     btn.type = "button";
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
+    /* the state's two-letter code, the badge the state menu shows beside
+       each state (Adam, 2026-11-12: codes rather than the emoji the fleet
+       list used to carry) */
+    var code = metroCode(metro);
+    if (code) {
+      var badge = document.createElement("span");
+      badge.className = "dst-metro-code sibling-result-code";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = code;
+      addr.appendChild(badge);
+    }
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
+    addr.appendChild(document.createTextNode(label));
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -11473,6 +11498,7 @@ function initOregonExplorer() {
     "school-district-unified", // 187 unified districts, about 1,197 km2 of land on average, plus the Census's placeholder for water in no school district, drawn from a mirrored tile archive; with the 9 elementary districts they cover the state's land
     "zip-code",          // 430 ZIP Code Tabulation Areas that reach into Oregon (575 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 241 incorporated cities, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Oregon has 18 pieces, 10 reservations and 8 pieces of off-reservation trust land, held by 11 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Warm Springs Reservation (2,627.7 km², Wasco and Jefferson counties), the Umatilla Reservation (701.5 km², Umatilla County), the Cow Creek Reservation (92.5 km², Douglas County), the Fort McDermitt Indian Reservation (73.3 km² in Oregon, 52% of it, Malheur County) and the Coos, Lower Umpqua, and Siuslaw Reservation (59.7 km², Douglas, Lane and Coos counties); the smallest is Celilo Village (0.461 km², Wasco County), which the Warm Springs, Umatilla and Yakama nations administer jointly. Two pieces cross the state line and are drawn whole: the Fort McDermitt Reservation, whose tribes are seated in Nevada, and the Umatilla Off-Reservation Trust Land (28.6% in Oregon), which reaches into Washington. The Census draws no tribal district on any of it. Ranked after ZIP codes and municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16721,6 +16747,145 @@ function initOregonExplorer() {
   });
 
 
+  /* ---------- 7a. Tribal Government — Oregon's tribal land, 18 pieces, 11 nations.
+   *
+   * Ten reservations and eight pieces of off-reservation trust land, measured
+   * 2026-11-13 by scripts/build_tribal_areas.py, with the counties measured
+   * against this app's own county outlines. The largest are the Warm Springs
+   * Reservation (2,627.7 km², Wasco and Jefferson counties; 3,395 people at
+   * the 2020 census), the Umatilla (701.5 km², Umatilla County), the Cow
+   * Creek (92.5 km², Douglas County), the Fort McDermitt (73.3 km² in Oregon,
+   * 52% of it, Malheur County) and the Coos, Lower Umpqua and Siuslaw
+   * (59.7 km², Douglas, Lane and Coos counties); the smallest is Celilo
+   * Village (0.461 km², Wasco County). Two pieces cross the state line and are
+   * drawn whole: the Fort McDermitt Reservation, whose tribes are seated at
+   * McDermitt, Nevada, and the Umatilla Off-Reservation Trust Land (28.6% of
+   * it in Oregon), which reaches into Washington. The Census draws no tribal
+   * district on any of it.
+   *
+   * CELILO VILLAGE BELONGS TO NO ONE NATION. The Oregon Blue Book, which the
+   * Secretary of State publishes, says it is jointly administered by the
+   * Confederated Tribes of Warm Springs, the Confederated Tribes of Umatilla
+   * and the Yakama Indian Nation (read 2026-11-13), so its card names all
+   * three, lists each one's seat and site, and carries no single link, as
+   * California's Capitan Grande card does. The Yakama Nation is seated at
+   * Toppenish, Washington.
+   *
+   * WHO THE CARD NAMES. Nobody yet. Each nation publishes its own council,
+   * and this app has not yet read those pages, so every card says so and
+   * links the nation's own site where there is one (ROSTER_NOT_SOUGHT in
+   * scripts/build_tribal_areas.py); the Bureau of Indian Affairs lists none
+   * for the Fort McDermitt tribes. The councils are to be read one nation at
+   * a time.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Oregon are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes or/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Kansas's has.
+  var loadOrTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadOrTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      // Only on Celilo Village, which three governments administer jointly:
+      // each one's name, seat and site, listed under the card below.
+      { name: "nations", label: "", keys: ["nations"], when: function () { return false; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here. A shared area has no single link; each
+    // government's is on its own row below.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // EVERY GOVERNMENT ON A SHARED AREA, each with its own seat and site; and
+    // THE COUNCIL, where the nation's own page names it, merged onto the land by
+    // the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var nations = (result && result.nations) || [];
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      if (!nations.length && !hasRoster) return null;
+      var wrap = cardEl("div");
+      if (nations.length) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Governments",
+          note: nations.length + " governments share this land"
+        }));
+        wrap.appendChild(renderPersonRows(nations.map(function (n) {
+          var person = { name: String(n.name) };
+          if (n.seat) person.note = "Seat: " + String(n.seat);
+          if (n.url) person.links = [{ label: "Official website", url: String(n.url) }];
+          return person;
+        })));
+      }
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Oregon has 18 tribal areas across 11 nations, 10 reservations and 8 pieces of off-reservation trust land, and this point is on none of them."
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18615,7 +18780,7 @@ function initOregonExplorer() {
   var LAYER_SIDEBAR_RANK = ["us-house", "or-senate", "or-house",
     "school-district-unified", "school-district-elementary",
     "school-district-secondary",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19132,11 +19297,12 @@ function initOregonExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#8163AE": "#CAAAFE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5E3A8C": "#B283F4",
+    "#6B7280": "#B1BACE", "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
+    "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
@@ -19356,12 +19522,8 @@ function initOregonExplorer() {
       /* and the layers the reader has on travel with them (ENGINE
          metro-portal), as they do when a click crosses a state line */
       if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
-      /* The code is the app's path, which is its tag everywhere in the fleet
-         (districtry.com/il/ is "il"), so it needs no second field kept in
-         step with the url. A url of another shape gets no badge rather than
-         a wrong one. */
-      var tm = /\/([a-z]{2})\/?$/.exec(m.url || "");
-      var code = tm ? tm[1].toUpperCase() : "";
+      /* the state's two-letter code (ENGINE brand-names metroCode) */
+      var code = metroCode(m);
       if (code) {
         var badge = document.createElement("span");
         badge.className = "dst-metro-code";
