@@ -2,7 +2,7 @@
  "05001": {
   "county": "Arkansas County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Thomas Eddie Best",
    "phone": "870-946-4321",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -10,7 +10,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Eddie Roberson"
@@ -42,7 +42,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Eddie Roberson",
      "2": "Clay Carter",
@@ -69,7 +69,7 @@
  "05003": {
   "county": "Ashley County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jim Hudson",
    "phone": "870-853-2000",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -77,7 +77,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Ron Miller"
@@ -109,7 +109,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Ron Miller",
      "2": "Billie C. Pippen",
@@ -136,7 +136,7 @@
  "05005": {
   "county": "Baxter County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Kevin Litty",
    "office": "#1 East Seventh, Suite 303, Mountain Home, AR 72653",
    "phone": "870-425-2755",
@@ -145,7 +145,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.baxtercountyar.gov/justices.php",
    "districts": {
@@ -198,7 +198,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Dennis Frank",
      "10": "Shannon Walker",
@@ -229,7 +229,7 @@
  "05007": {
   "county": "Benton County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Barry Moehring",
    "office": "215 East Central, Bentonville, AR 72712",
    "phone": "479-271-1098",
@@ -238,7 +238,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Jeff Dunn"
@@ -288,7 +288,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jeff Dunn",
      "10": "Danny McCrackin",
@@ -333,7 +333,7 @@
    "weekly": false
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Matt Odom"
@@ -354,7 +354,7 @@
      "name": "Sam Tinsley"
     },
     {
-     "name": "Rodney Sullivan"
+     "name": "Rodney Sullins"
     },
     {
      "name": "Shane Jones"
@@ -371,7 +371,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Matt Odom",
      "10": "Bill Melbourne",
@@ -380,13 +380,13 @@
      "3": "Heath Kirkpatrick",
      "5": "Kyle Evatt",
      "6": "Sam Tinsley",
-     "7": "Rodney Sullivan",
      "8": "Shane M. Jones",
      "9": "Ralph H. Guynn"
     },
     "noWinner": [],
     "notOnList": [
-     "4"
+     "4",
+     "7"
     ],
     "publisher": "Association of Arkansas Counties",
     "sourceUrl": "https://arcounties.org/site/assets/files/6331/2024_general_election_winners.pdf",
@@ -402,7 +402,7 @@
  "05011": {
   "county": "Bradley County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Klay McKinney",
    "office": "101 East Cedar, Warren, AR 71671",
    "phone": "870-226-3853",
@@ -411,7 +411,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Gwendolyn S. Bullard"
@@ -443,7 +443,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Gwendolyn S. Bullard",
      "2": "Mike Jolley",
@@ -470,7 +470,7 @@
  "05013": {
   "county": "Calhoun County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Floyd Nutt",
    "phone": "870-798-4818",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -478,7 +478,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Thomas R. Stringfellow"
@@ -510,7 +510,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Tommy Stringfellow",
      "2": "Keith Gresham",
@@ -537,7 +537,7 @@
  "05015": {
   "county": "Carroll County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "David Writer",
    "office": "210 West Church Ave., Berryville, AR 72616",
    "phone": "870-423-2967",
@@ -546,7 +546,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "http://carrollcounty.us/QuorumCourt/Justices",
    "districts": {
@@ -599,7 +599,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jack Deaton",
      "10": "Jerry King",
@@ -630,7 +630,7 @@
  "05017": {
   "county": "Chicot County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Tom Mosley",
    "phone": "870-265-8015",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -638,7 +638,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Theodore Brown"
@@ -670,7 +670,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Theodore Brown",
      "2": "Clinton Hampton",
@@ -698,7 +698,7 @@
  "05019": {
   "county": "Clark County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Troy Tucker",
    "office": "401 Clay Street, Arkadelphia, AR 71923",
    "phone": "870-246-5847",
@@ -707,7 +707,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://clarkcountyar.gov/quorum-court/",
    "districts": {
@@ -760,7 +760,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Zachary Bledsoe",
      "10": "Wayne Baumgardner",
@@ -790,7 +790,7 @@
  "05021": {
   "county": "Clay County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Mike Patterson",
    "phone": "870-598-2667",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -798,7 +798,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Neal \"Poppy\" Smith"
@@ -830,7 +830,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Neal “Poppy” Smith",
      "2": "Joseph C. Henderson",
@@ -857,7 +857,7 @@
  "05023": {
   "county": "Cleburne County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Eric Crosby",
    "office": "300 W. Main Street, Heber Springs, AR 72543",
    "phone": "501-362-8141",
@@ -866,7 +866,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Brian Moorehead"
@@ -904,7 +904,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Brian Moorehead",
      "10": "Mark G. Baugh",
@@ -934,7 +934,7 @@
  "05025": {
   "county": "Cleveland County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Don Triplett",
    "note": "The Arkansas Judiciary's directory names an earlier judge.",
    "phone": "870-325-6214",
@@ -943,7 +943,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Ricky Neal"
@@ -975,7 +975,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Ricky Neal",
      "2": "Melody Spears",
@@ -1003,7 +1003,7 @@
  "05027": {
   "county": "Columbia County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "William Douglas Fields",
    "office": "1 Court Square, Magnolia, AR 71753",
    "phone": "(870) 234-2542",
@@ -1012,7 +1012,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Virginia Pate"
@@ -1050,7 +1050,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Virginia Annette Pate",
      "10": "Lynn Story",
@@ -1081,7 +1081,7 @@
  "05029": {
   "county": "Conway County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jimmy Hart",
    "office": "117 S. Moose Street, Morrilton, AR 72110",
    "phone": "501-354-9640",
@@ -1090,7 +1090,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://conwaycountyar.com/home/quorum-court/",
    "districts": {
@@ -1143,7 +1143,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Philip Hoyt",
      "10": "Dr. Leslie Griffiths",
@@ -1173,7 +1173,7 @@
  "05031": {
   "county": "Craighead County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Marvin Day",
    "office": "511 Union Street, Jonesboro, AR 72401",
    "phone": "870-933-4500",
@@ -1182,7 +1182,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Brad Noel"
@@ -1226,7 +1226,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Brad Noel",
      "10": "Steve Cline",
@@ -1258,7 +1258,7 @@
  "05033": {
   "county": "Crawford County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Chris Keith",
    "office": "300 Main Street - Room 4, Van Buren, AR 72956",
    "phone": "479-474-1511",
@@ -1267,7 +1267,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://crawfordcountyar.gov/officials/justices.cshtml",
    "districts": {
@@ -1328,7 +1328,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Robert Kevin Arnold",
      "10": "Jayson E. Peppas",
@@ -1360,7 +1360,7 @@
  "05035": {
   "county": "Crittenden County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Woody Wheeless",
    "office": "100 Court Square, Marion, AR 72364",
    "phone": "870-739-3200",
@@ -1369,7 +1369,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Vickie Miles-Robertson"
@@ -1407,7 +1407,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Vickie Robertson",
      "10": "Bradly Moore",
@@ -1437,7 +1437,7 @@
  "05037": {
   "county": "Cross County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Lynn Blake",
    "office": "705 East Union, Suite 4, Wynne, AR 72396",
    "phone": "870-238-5750",
@@ -1446,7 +1446,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Amy Imboden"
@@ -1478,7 +1478,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Amy Imboden",
      "2": "John Kyle Wilson",
@@ -1506,7 +1506,7 @@
  "05039": {
   "county": "Dallas County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Chris Stanfield",
    "office": "206 3rd Street West, Fordyce, AR 71742",
    "phone": "870-352-3371",
@@ -1515,7 +1515,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Wornest Lambert"
@@ -1547,7 +1547,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Wornest Lambert",
      "2": "Loretta Cotton",
@@ -1574,7 +1574,7 @@
  "05041": {
   "county": "Desha County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Wayne Smith",
    "note": "The Arkansas Judiciary's directory names an earlier judge.",
    "phone": "870-877-2426",
@@ -1583,7 +1583,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Troy Jackson Jr."
@@ -1615,7 +1615,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Troy Jackson, Jr.",
      "2": "G. Lynn Weatherford",
@@ -1643,7 +1643,7 @@
  "05043": {
   "county": "Drew County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jessie Griffin",
    "office": "210 South Main, Monticello, AR 71655",
    "phone": "870-460-6200",
@@ -1652,7 +1652,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Orlando Jones"
@@ -1684,7 +1684,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Orlando Jones",
      "2": "Ben D. Higginbotham",
@@ -1711,7 +1711,7 @@
  "05045": {
   "county": "Faulkner County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Allen Dodson",
    "office": "801 Locust Street, Conway, AR 72034",
    "phone": "501-450-4900",
@@ -1720,7 +1720,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Justin Knight"
@@ -1764,7 +1764,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Justin Knight",
      "10": "Andy Shock",
@@ -1796,7 +1796,7 @@
  "05047": {
   "county": "Franklin County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Rickey Bowman",
    "office": "211 West Commercial, Ozark, AR 72949",
    "phone": "479-667-4726",
@@ -1805,7 +1805,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Roy Day"
@@ -1837,7 +1837,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Roy Day",
      "2": "Freddy Ree",
@@ -1866,7 +1866,7 @@
  "05049": {
   "county": "Fulton County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Kenneth Crow",
    "phone": "870-895-3341",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -1874,7 +1874,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.fultoncountyar.gov/quorum-court",
    "districts": {
@@ -1919,7 +1919,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Cris Newberry",
      "2": "Dennis W. Kinder",
@@ -1947,7 +1947,7 @@
  "05051": {
   "county": "Garland County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Darryl Mahoney",
    "office": "501 Ouachita, Hot Springs, AR 71901",
    "phone": "501-622-3600",
@@ -1956,7 +1956,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.garlandcounty.org/280/Justices-of-the-Peace",
    "districts": {
@@ -2017,7 +2017,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Micah Braughton",
      "10": "Debbie McGrew",
@@ -2049,7 +2049,7 @@
  "05053": {
   "county": "Grant County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Randy Pruitt",
    "office": "101 West Center Street, Room 101, Sheridan, AR 72150",
    "phone": "870-942-2551",
@@ -2058,7 +2058,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Jason Roshto"
@@ -2090,7 +2090,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jason Roshto",
      "2": "Danny Bone",
@@ -2118,7 +2118,7 @@
  "05055": {
   "county": "Greene County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Rusty McMillon",
    "office": "320 W. Court Street, Room 107, Paragould, AR 72450",
    "phone": "870-239-6300",
@@ -2127,7 +2127,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Sherma Dicus"
@@ -2165,7 +2165,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Sherma Clark Dicus",
      "10": "Ronnie Roberts",
@@ -2196,7 +2196,7 @@
  "05057": {
   "county": "Hempstead County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jerry Crane",
    "phone": "870-777-7800 ext. 100",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -2204,7 +2204,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://hempsteadcountyar.com/justice-of-the-peace/",
    "districts": {
@@ -2257,7 +2257,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "10": "Jay Lathrop",
      "11": "B. Keith Steed",
@@ -2287,7 +2287,7 @@
  "05059": {
   "county": "Hot Spring County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Dennis Thornton",
    "office": "210 Locust Street, Malvern, AR 72104",
    "phone": "501-332-2261",
@@ -2296,7 +2296,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "James Bryant"
@@ -2334,7 +2334,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "James Bryant",
      "10": "Wylie Whitley",
@@ -2365,7 +2365,7 @@
  "05061": {
   "county": "Howard County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Brent Pinkerton",
    "office": "421 N. Main St., Nashville, AR 71852",
    "phone": "870-845-7501",
@@ -2374,7 +2374,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Kerry Strasner"
@@ -2406,7 +2406,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Kerry Strasner",
      "2": "Andy Hogg",
@@ -2435,7 +2435,7 @@
  "05063": {
   "county": "Independence County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Kevin B. Jeffery",
    "office": "192 East Main Street, Batesville, AR 72501",
    "phone": "870-793-8800",
@@ -2444,7 +2444,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Timothy Stewart"
@@ -2482,7 +2482,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Timothy Stewart",
      "10": "Charles Jordan",
@@ -2512,7 +2512,7 @@
  "05065": {
   "county": "Izard County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Eric Smith",
    "phone": "870-368-4328",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -2520,7 +2520,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.izardcountyar.org/plugins/show_image.php?id=726",
    "districts": {
@@ -2565,7 +2565,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Mark Simino",
      "2": "Kelly Hatman",
@@ -2593,7 +2593,7 @@
  "05067": {
   "county": "Jackson County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jeff Phillips",
    "office": "208 Main Street, Newport, AR 72112",
    "phone": "870-523-7400",
@@ -2602,7 +2602,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Rusty Kinder"
@@ -2634,7 +2634,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Rusty Kinder",
      "2": "Tommy Young",
@@ -2662,7 +2662,7 @@
  "05069": {
   "county": "Jefferson County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Ivan Whitfield",
    "note": "The Arkansas Judiciary's directory names an earlier judge.",
    "phone": "870-541-5360",
@@ -2671,7 +2671,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Alfred Carroll, Sr."
@@ -2715,7 +2715,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Alfred Carroll",
      "10": "Conley F. Byrd, Jr.",
@@ -2748,7 +2748,7 @@
  "05071": {
   "county": "Johnson County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Herman Houston",
    "phone": "479-754-2175",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -2756,7 +2756,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://johnsoncounty.arkansas.gov/quorum-court/",
    "districts": {
@@ -2809,7 +2809,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "10": "Robert Petersen",
      "11": "Bryan Cooper",
@@ -2839,7 +2839,7 @@
  "05073": {
   "county": "Lafayette County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Valarie Clark",
    "office": "#1 Courthouse Square, Lewisville, AR 71845",
    "phone": "870-921-4858",
@@ -2848,7 +2848,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Jeremy Kitchens"
@@ -2880,7 +2880,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jeremy Kitchens",
      "2": "Linda D. Goodner",
@@ -2908,7 +2908,7 @@
  "05075": {
   "county": "Lawrence County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Gary Barnhill",
    "office": "315 West Main Street, Room 1, Walnut Ridge, AR 72476",
    "phone": "870-886-1110",
@@ -2917,7 +2917,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Pardo Roberts"
@@ -2949,7 +2949,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Pardo Roberts",
      "2": "Frank Brewer",
@@ -2978,7 +2978,7 @@
  "05077": {
   "county": "Lee County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Terry Sandefer",
    "office": "15 East Chestnut Street, Marianna, AR 72360",
    "phone": "870-295-7700",
@@ -2987,7 +2987,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Rusty Crump"
@@ -3019,7 +3019,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Rusty Crump",
      "2": "Junious Pruett",
@@ -3046,7 +3046,7 @@
  "05079": {
   "county": "Lincoln County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Buddy Lynn Earnest",
    "office": "300 S. Drew Street, Star City, AR 71667",
    "phone": "870-628-4147",
@@ -3055,7 +3055,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Kip Dutton"
@@ -3087,7 +3087,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Kip Dutton",
      "2": "Corey Dial",
@@ -3114,7 +3114,7 @@
  "05081": {
   "county": "Little River County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Larry Cowling",
    "office": "351 North Second, Ashdown, AR 71822",
    "phone": "870-898-7202",
@@ -3123,7 +3123,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://lrcounty.org/departments/quorum-court/",
    "districts": {
@@ -3168,7 +3168,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Andrea L. Billingsley",
      "2": "Lisa Hearn",
@@ -3195,7 +3195,7 @@
  "05083": {
   "county": "Logan County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Ray Gack",
    "phone": "479-963-3601",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3203,7 +3203,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://logancountyark.org/quorum-court",
    "districts": {
@@ -3256,7 +3256,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Charles Sparks",
      "10": "Dr. Christopher Loftin",
@@ -3286,7 +3286,7 @@
  "05085": {
   "county": "Lonoke County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Doug Erwin",
    "phone": "501-676-6403",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3294,7 +3294,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Brent Canon"
@@ -3338,7 +3338,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Brent Canon",
      "11": "Mike Dolan",
@@ -3370,7 +3370,7 @@
  "05087": {
   "county": "Madison County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Larry D. Garrett",
    "phone": "479-738-6721",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3378,7 +3378,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://madisoncountyar.gov/quorum_court.php",
    "districts": {
@@ -3423,7 +3423,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Bob Rawson",
      "2": "Cord Riley",
@@ -3451,7 +3451,7 @@
  "05089": {
   "county": "Marion County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jason Stumph",
    "phone": "870-449-6231",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3459,7 +3459,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://marioncounty.arkansas.gov/Marion-County-Quorum-Court",
    "districts": {
@@ -3504,7 +3504,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Chuck Van Velkinburgh",
      "2": "Sandra L. Lee",
@@ -3532,7 +3532,7 @@
  "05091": {
   "county": "Miller County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Cathy Hardin Harrison",
    "office": "400 Laurel Street #115, Texarkana, AR 71854",
    "phone": "870-774-1301",
@@ -3541,7 +3541,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Judy Wilson"
@@ -3579,7 +3579,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Judy Wilson",
      "10": "Jimmy Cowart",
@@ -3610,7 +3610,7 @@
  "05093": {
   "county": "Mississippi County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "John Alan Nelson",
    "office": "200 W. Walnut, Blytheville, AR 72315",
    "phone": "870-763-3212",
@@ -3619,7 +3619,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Drake Brown"
@@ -3657,7 +3657,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Drake Brown",
      "10": "Betty V. Hepler",
@@ -3687,7 +3687,7 @@
  "05095": {
   "county": "Monroe County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "P.K. Norman",
    "phone": "870-747-3921",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3695,7 +3695,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Cathy Shelton"
@@ -3727,7 +3727,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Cathy Shelton",
      "2": "Jeff Lovell",
@@ -3754,7 +3754,7 @@
  "05097": {
   "county": "Montgomery County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Bart Williams",
    "office": "105 Highway 270 East, Suite 7, Mount Ida, AR 71957",
    "phone": "870-867-3114",
@@ -3763,7 +3763,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Benjamin Harrison"
@@ -3795,7 +3795,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "2": "Tommy Beshears",
      "3": "Matt Rae",
@@ -3823,7 +3823,7 @@
  "05099": {
   "county": "Nevada County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Mike Otwell",
    "office": "215 East 2nd Street South, Prescott, AR 71857",
    "phone": "870-887-3115",
@@ -3832,7 +3832,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Dennis Pruitt"
@@ -3864,7 +3864,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Dennis Carroll Pruitt",
      "2": "Willie A. Wilson",
@@ -3891,7 +3891,7 @@
  "05101": {
   "county": "Newton County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Warren Campbell",
    "phone": "870-446-5127",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3899,7 +3899,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Jamie Mefford"
@@ -3931,7 +3931,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jamie Mefford",
      "2": "Richard Campbell",
@@ -3958,7 +3958,7 @@
  "05103": {
   "county": "Ouachita County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Robbie McAdoo",
    "phone": "870-837-2210",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -3966,7 +3966,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Ware Russell"
@@ -4004,7 +4004,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Ware Russell",
      "10": "Helen Aregood",
@@ -4034,7 +4034,7 @@
  "05105": {
   "county": "Perry County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Larry Blackmon",
    "phone": "501-889-5128",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -4042,7 +4042,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Travis Bentley"
@@ -4074,7 +4074,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Travis Bentley",
      "2": "Dale Payne",
@@ -4103,7 +4103,7 @@
  "05107": {
   "county": "Phillips County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Clark Hall",
    "office": "620 Cherry Street, Helena, AR 72342",
    "phone": "870-338-5500",
@@ -4112,7 +4112,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Edward Carter"
@@ -4144,7 +4144,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Edward Carter",
      "3": "Oscar Hoskins",
@@ -4172,7 +4172,7 @@
  "05109": {
   "county": "Pike County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Eddie Howard",
    "phone": "870-285-2414",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -4180,7 +4180,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Randy Lamb"
@@ -4212,7 +4212,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Randy Lamb",
      "2": "Robbie Crocker",
@@ -4240,7 +4240,7 @@
  "05111": {
   "county": "Poinsett County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "J.C. Carter",
    "office": "401 Market Street, Harrisburg, AR 72432",
    "phone": "870-578-0600",
@@ -4249,7 +4249,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Diane Jones"
@@ -4287,7 +4287,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "10": "Steve Jernigan",
      "11": "Harold Blackwood",
@@ -4318,7 +4318,7 @@
  "05113": {
   "county": "Polk County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Brandon Ellison",
    "office": "507 Church Avenue, Box 7, Mena, AR 71953",
    "phone": "479-394-8133",
@@ -4327,7 +4327,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Chris Daniel"
@@ -4359,7 +4359,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Chris Daniel",
      "2": "Jeremy Jones",
@@ -4386,7 +4386,7 @@
  "05115": {
   "county": "Pope County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Ben Cross",
    "office": "100 West Main, Russellville, AR 72801",
    "phone": "479-968-7487",
@@ -4395,7 +4395,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Philip Haney"
@@ -4439,7 +4439,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Philip Haney",
      "10": "Allan R. George",
@@ -4472,7 +4472,7 @@
  "05117": {
   "county": "Prairie County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Lawrence Holloway",
    "office": "605 Highway 38 E, Des Arc, AR 72040",
    "phone": "870-256-3741",
@@ -4481,7 +4481,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Bill Calhoun"
@@ -4513,7 +4513,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Bill Calhoun",
      "2": "Zach Payne",
@@ -4540,7 +4540,7 @@
  "05119": {
   "county": "Pulaski County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Barry Hyde",
    "office": "201 S. Broadway, Little Rock, AR 72201",
    "phone": "501-340-8305",
@@ -4549,7 +4549,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.pulaskicounty.net/quorum-court",
    "districts": {
@@ -4618,7 +4618,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Rebekah Davis",
      "11": "Aaron Robinson",
@@ -4653,7 +4653,7 @@
  "05121": {
   "county": "Randolph County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Ben Wicker",
    "office": "107 West Broadway, Pocahontas, AR 72455",
    "phone": "870-892-5264",
@@ -4662,7 +4662,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Mistina Hibbard"
@@ -4694,7 +4694,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Mistina Hibbard",
      "2": "Jill Thompson Henderson",
@@ -4721,7 +4721,7 @@
  "05123": {
   "county": "St. Francis County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Stanley Craig Jones",
    "office": "313 S. Izard St. , Suite 1, Forrest City, AR 72335",
    "phone": "870-261-1700",
@@ -4730,7 +4730,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://stfranciscountyar.gov/departments/quorum-court/",
    "districts": {
@@ -4783,7 +4783,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Charles Jones",
      "11": "Jamie Busby",
@@ -4814,7 +4814,7 @@
  "05125": {
   "county": "Saline County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Matthew Brumley",
    "office": "200 North Main, Room 117, Benton, AR 72015",
    "phone": "501-303-5640",
@@ -4823,7 +4823,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://salinecounty.org/government/quorum_court/justices_of_the_peace.php",
    "districts": {
@@ -4884,7 +4884,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Pat Bisbee",
      "10": "Jim Whitley",
@@ -4917,7 +4917,7 @@
  "05127": {
   "county": "Scott County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Brian K. Jones",
    "phone": "479-637-2155",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -4925,7 +4925,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Bobby Hattabaugh"
@@ -4957,7 +4957,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Bobby Hattabaugh",
      "2": "Melvin “Dee” Parker",
@@ -4985,7 +4985,7 @@
  "05129": {
   "county": "Searcy County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Tony Horton",
    "phone": "870-448-3554",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -4993,7 +4993,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "John Hinchey"
@@ -5025,7 +5025,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "2": "Kim D. Loftin",
      "3": "James Madison Smith",
@@ -5054,7 +5054,7 @@
  "05131": {
   "county": "Sebastian County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Steve Hotz",
    "office": "35 South 6th, Fort Smith, AR 72901",
    "phone": "479-783-6139",
@@ -5063,7 +5063,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://sebastiancountyar.gov/Departments/County-Judge/Quorum-Court/Current-Members",
    "districts": {
@@ -5124,7 +5124,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Johnny Hobbs",
      "10": "Dickie L. Robertson",
@@ -5157,7 +5157,7 @@
  "05133": {
   "county": "Sevier County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Sandra Dunn",
    "note": "The Arkansas Judiciary's directory names an earlier judge.",
    "phone": "870-642-2425",
@@ -5166,7 +5166,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Michael Barnes"
@@ -5198,7 +5198,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Michael Barnes",
      "2": "Walter L. Smith, Jr.",
@@ -5227,7 +5227,7 @@
  "05135": {
   "county": "Sharp County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Mark Counts",
    "phone": "870-994-7338",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5235,7 +5235,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://sharpcountyar.com/officials",
    "districts": {
@@ -5280,7 +5280,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Kevin Dienst",
      "3": "Joey Barnes",
@@ -5308,7 +5308,7 @@
  "05137": {
   "county": "Stone County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Stacey Avey",
    "office": "107 West Main Street, Suite C, Mountain View, AR 72560",
    "phone": "870-269-3351",
@@ -5317,7 +5317,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "districtAsOf": "2026-10-13",
    "districtSourceUrl": "https://www.stonecountyar.gov/justices-of-the-peace",
    "districts": {
@@ -5362,7 +5362,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Jimmy Bullard",
      "2": "Travis Trammell",
@@ -5389,7 +5389,7 @@
  "05139": {
   "county": "Union County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Mike Loftin",
    "office": "101 N. Washington, Suite 101, El Dorado, AR 71730",
    "phone": "870-864-1900",
@@ -5398,7 +5398,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Mike Dumas"
@@ -5436,7 +5436,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Mike Dumas",
      "10": "Ross Burton",
@@ -5467,7 +5467,7 @@
  "05141": {
   "county": "Van Buren County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Dale James",
    "phone": "501-745-2443",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5475,7 +5475,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Robbia Mays"
@@ -5507,7 +5507,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "2": "Nickie Brown",
      "3": "Sarah N. Brown",
@@ -5537,7 +5537,7 @@
  "05143": {
   "county": "Washington County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Patrick Deakins",
    "phone": "479-444-1700",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5545,7 +5545,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Bradley Bruns"
@@ -5595,7 +5595,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Bradley Bruns",
      "10": "Robert E. Dennis",
@@ -5629,7 +5629,7 @@
  "05145": {
   "county": "White County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Lisa Brown",
    "phone": "501-279-6200",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5637,7 +5637,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Doug Kennedy"
@@ -5681,7 +5681,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Doug Kennedy",
      "10": "Keith Carlisle",
@@ -5714,7 +5714,7 @@
  "05147": {
   "county": "Woodruff County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Michael John Gray",
    "phone": "870-347-5206",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5722,7 +5722,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Thomas Gaines"
@@ -5754,7 +5754,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Thomas Gaines",
      "2": "Brian Austin",
@@ -5783,7 +5783,7 @@
  "05149": {
   "county": "Yell County",
   "judge": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "name": "Jeff Gilkey",
    "phone": "479-495-4860",
    "source": "the Arkansas Judiciary's directory of county judges and clerks",
@@ -5791,7 +5791,7 @@
    "weekly": true
   },
   "quorumCourt": {
-   "asOf": "2026-10-13",
+   "asOf": "2026-11-11",
    "justices": [
     {
      "name": "Brent Montgomery"
@@ -5829,7 +5829,7 @@
    ],
    "publisher": "Association of Arkansas Counties",
    "results": {
-    "asOf": "2026-10-13",
+    "asOf": "2026-11-11",
     "districts": {
      "1": "Brent Montgomery",
      "10": "Tony Sigle",

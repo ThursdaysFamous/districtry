@@ -45,7 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ak | **EAM·** | 30 | 30/30 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
-| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
+| ar | **EAM·** | 75 | 75/75 | 775 | 736 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | ca | **--M·** | — | — | 0 | 0 | — | 21 | all | 8 of 14 levels |
 | co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
