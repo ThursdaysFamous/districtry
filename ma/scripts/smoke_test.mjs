@@ -1078,22 +1078,23 @@ try {
   //         lists, which served another publisher's pages on 2026-11-13.
   //       - The Wampanoag-Aquinnah Trust Land names the Wampanoag Tribe of
   //         Gay Head (Aquinnah) with the Bureau's town and site.
-  //       - The State House is on no tribal land, and the card says which
-  //         land the map draws.
-  //       - The Hassanamisco (state) Reservation in Grafton is NOT drawn (the
-  //         join's landsNotDrawn, Adam's ruling of 2026-11-13), so a click on
-  //         it gets the same sentence, which names the reservation and says
-  //         why it is missing. The point is the Census's own internal point
-  //         for the reservation, measured that day inside Grafton town.
-  //     Each trust-land point is the pole of inaccessibility of a part of the
-  //     piece, as the shipped file draws it (shapely polylabel, 2026-11-13):
-  //     146 m, 166 m and 205 m from its edge.
+  //       - The Hassanamisco (state) Reservation in Grafton names the
+  //         Hassanamisco Nipmuc Tribe, which the Commonwealth recognizes and
+  //         the United States does not: the card says so, gives no seat,
+  //         because no source read names the tribe's office town, and links
+  //         Executive Order 126 of 1976 in the State Library's archive, not
+  //         a site of the tribe's.
+  //       - The State House is on no tribal land, and the card says so.
+  //     Each point is the pole of inaccessibility of a part of the piece, as
+  //     the shipped file draws it (shapely polylabel, 2026-11-13): 146 m,
+  //     166 m and 205 m from its edge on the trust land, and 43 m on the
+  //     reservation, which is about 145 m across.
   {
     const areas = shipped("tribal-areas.json");
     const MASHPEE = "41.63845,-70.47662";
     const TAUNTON = "41.87165,-71.05137";
     const AQUINNAH = "41.34730,-70.77197";
-    const HASSANAMISCO = "42.21201,-71.70450";
+    const HASSANAMISCO = "42.21244,-71.70375";
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
       (els) => els.map((e) => ({
         label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
@@ -1167,30 +1168,30 @@ try {
     }
 
     {
-      const off = await at(POINT);
-      check("a point off tribal land is told it is on none of the land this map draws, and which land that is",
-        propsAt(areas, POINT).length === 0 &&
-          off.text.indexOf("none of the tribal land this map draws") !== -1 &&
-          off.text.indexOf("2 tribal areas") !== -1 && off.text.indexOf("not on tribal land") === -1,
-        JSON.stringify(off.text.slice(0, 160)));
+      const land = propsAt(areas, HASSANAMISCO);
+      const p = land[0] || {};
+      const c = await at(HASSANAMISCO);
+      check("the Hassanamisco (state) Reservation names the tribe the Commonwealth recognizes, gives no seat, and links the executive order",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Hassanamisco Nipmuc Tribe" &&
+          c.by("Land") === "Hassanamisco (state) Reservation" &&
+          c.labels.indexOf("Seat of government") === -1 && p.seat === null &&
+          !!p.recognition && c.by("Recognized by") === p.recognition &&
+          p.recognition.indexOf("Recognized by the Commonwealth of Massachusetts under Executive Order 126 of 1976") === 0 &&
+          p.recognition.indexOf("not by the federal government") !== -1 &&
+          p.url === null && !!p.recognitionUrl &&
+          c.link.text === "Executive Order 126 of 1976, in the State Library of Massachusetts" &&
+          c.link.href === p.recognitionUrl &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
     }
 
     {
-      // The Hassanamisco (state) Reservation is not drawn, so a click on it is
-      // answered like any other point off the drawn land. What is asserted is
-      // that the answer does not say "not on tribal land" there, and names
-      // the reservation and why it is missing.
-      const left = (areas.notDrawn || []).map((l) => l.censusName);
-      const off = await at(HASSANAMISCO);
-      check("a point on the Hassanamisco Reservation, which is not drawn, is told the reservation is not drawn and why",
-        left.length === 1 && left[0] === "Hassanamisco (state) Reservation" &&
-          propsAt(areas, HASSANAMISCO).length === 0 && !off.error &&
-          off.text.indexOf("none of the tribal land this map draws") !== -1 &&
-          off.text.indexOf("Hassanamisco Reservation in Grafton") !== -1 &&
-          off.text.indexOf("is not drawn") !== -1 &&
-          off.text.indexOf("could not read a state law or a state agency's page that names the tribe") !== -1 &&
-          off.text.indexOf("not on tribal land") === -1,
-        `notDrawn=${JSON.stringify(left)} ${JSON.stringify(off.text.slice(0, 400))}`);
+      const off = await at(POINT);
+      check("a point off tribal land is told it is not on tribal land, and how much tribal land the state has",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("3 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 160)));
     }
   }
 } finally {

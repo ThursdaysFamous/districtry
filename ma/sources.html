@@ -1230,14 +1230,14 @@ table.matrix code {
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
-                <td data-label="What it answers">Whether this address is on tribal land this map draws, and which nation's government answers for it — Massachusetts has 2 such areas, the trust lands of the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), both seated in Massachusetts. A third piece the Census keeps, the Hassanamisco Reservation in Grafton, a state reservation, is not drawn.</td>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Massachusetts has 3 such areas, held by three nations: the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), which the United States recognizes, and the Hassanamisco Nipmuc Tribe, which the Commonwealth of Massachusetts recognizes.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — off-reservation trust land and state reservations, shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">No council is named yet. Each tribe publishes its own council, and this app has not yet read those pages, so each card says so and links the tribe's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The land is joined to the government by this project's own data/tribal-government-join.json.</td>
-                <td data-label="Where it applies">Massachusetts — the 2 pieces of trust land above, in Mashpee, Taunton and Aquinnah. Every other point in the state is on no tribal land this map draws; the Hassanamisco Reservation in Grafton, a state reservation of about five acres, is not drawn, because this project could not read a state law or a state agency's page that names the tribe that holds it.</td>
+                <td data-label="Who it names">No council is named yet. This app has not yet read the pages where each nation names its council, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the two Wampanoag tribes, except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The Hassanamisco Nipmuc Tribe is not in that directory, because the United States does not recognize it: the Commonwealth recognizes it under Executive Order 126 of 1976, read from the State Library of Massachusetts's archive on 2026-11-13, and the name is the one the Commission on Indian Affairs' annual report for 2006 gives. Neither document gives an office town, so its card gives no seat, and the card links the order. The land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Massachusetts — the 3 pieces of land above, in Mashpee, Taunton, Aquinnah and Grafton. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1602,7 +1602,7 @@ table.matrix code {
       "@id": "https://districtry.com/ma/sources.html#dataset-tribal-government",
       "identifier": "tribal-government",
       "name": "Tribal Government",
-      "description": "Whether this address is on tribal land this map draws, and which nation's government answers for it — Massachusetts has 2 such areas, the trust lands of the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), both seated in Massachusetts. A third piece the Census keeps, the Hassanamisco Reservation in Grafton, a state reservation, is not drawn. No council is named yet. Each tribe publishes its own council, and this app has not yet read those pages, so each card says so and links the tribe's own site (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The land is joined to the government by this project's own data/tribal-government-join.json.",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Massachusetts has 3 such areas, held by three nations: the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), which the United States recognizes, and the Hassanamisco Nipmuc Tribe, which the Commonwealth of Massachusetts recognizes. No council is named yet. This app has not yet read the pages where each nation names its council, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the two Wampanoag tribes, except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The Hassanamisco Nipmuc Tribe is not in that directory, because the United States does not recognize it: the Commonwealth recognizes it under Executive Order 126 of 1976, read from the State Library of Massachusetts's archive on 2026-11-13, and the name is the one the Commission on Indian Affairs' annual report for 2006 gives. Neither document gives an office town, so its card gives no seat, and the card links the order. The land is joined to the government by this project's own data/tribal-government-join.json.",
       "url": "https://districtry.com/ma/sources.html#layer-tribal-government",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/ma/sources.html#catalog"
@@ -1610,13 +1610,13 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "CreativeWork",
-          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — off-reservation trust land and state reservations, shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "Massachusetts — the 2 pieces of trust land above, in Mashpee, Taunton and Aquinnah. Every other point in the state is on no tribal land this map draws; the Hassanamisco Reservation in Grafton, a state reservation of about five acres, is not drawn, because this project could not read a state law or a state agency's page that names the tribe that holds it"
+        "name": "Massachusetts — the 3 pieces of land above, in Mashpee, Taunton, Aquinnah and Grafton. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

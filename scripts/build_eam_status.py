@@ -3112,14 +3112,10 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Massachusetts: the Census keeps two trust
         # lands (the Wampanoag Tribe of Gay Head (Aquinnah)'s and the Mashpee
-        # Wampanoag's) and one state reservation (Hassanamisco). The two trust
-        # lands are drawn since 2026-11-13 and no council is named yet (gap
-        # ma-tribal-government). THE STATE RESERVATION IS NOT DRAWN, by Adam's
-        # ruling of that day: about five acres in Grafton, recorded in the
-        # join's landsNotDrawn and in gap ma-hassanamisco-reservation, and
-        # named in the layer's own off-land sentence. The level reads answered
-        # because the layer answers for every government it can prove; that
-        # gap record is where the missing piece is kept.
+        # Wampanoag's) and one state reservation (Hassanamisco). All three are
+        # drawn since 2026-11-13, the reservation joined to the tribe the
+        # Commonwealth recognizes under Executive Order 126 of 1976, and no
+        # council is named yet (gap ma-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "co": {

@@ -1043,9 +1043,9 @@ ROSTER_NOT_SOUGHT = {
     "Rhode Island": {"since": "2026-11-13"},
     "South Dakota": {"since": "2026-11-13"},
     "Wyoming": {"since": "2026-11-13"},
-    # Massachusetts, drawn 2026-11-13 on Adam's ruling of that day ("federal"):
-    # the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head
-    # (Aquinnah), whose councils are to be read one at a time.
+    # Massachusetts, drawn 2026-11-13: the Mashpee Wampanoag Tribe, the
+    # Wampanoag Tribe of Gay Head (Aquinnah) and the Hassanamisco Nipmuc
+    # Tribe, whose councils are to be read one at a time.
     "Massachusetts": {"since": "2026-11-13"},
 }
 
@@ -1451,58 +1451,6 @@ def recognition_note(entry):
     return ("Recognized by %s under %s, and not by the federal government. "
             "The name is the one %s gives."
             % (rec["by"], rec["law"], rec.get("nameFrom") or "that law"))
-
-
-def not_drawn_in(state_name, join):
-    """The pieces this map leaves off in one state, as the shipped file
-    records them: the join's `landsNotDrawn` entries for that state.
-
-    LAND THE CENSUS KEEPS FOR A GOVERNMENT AND THIS MAP DOES NOT DRAW. Adam
-    ruled on 2026-11-13 ("federal") that Massachusetts's two trust lands are
-    drawn and the Hassanamisco (state) Reservation is left off, because no
-    state law or state agency's page naming the tribe that holds it could be
-    read. Until then a state's pieces were drawn together or not at all. The
-    shipped file names each piece left off (`notDrawn`), and `check` fails
-    unless the app's own page names it too, because a reader standing on it
-    gets the layer's off-land sentence and must not be told flatly that the
-    point is on no tribal land."""
-    out = []
-    for code, land in sorted((join.get("landsNotDrawn") or {}).items()):
-        if land["state"] != state_name:
-            continue
-        out.append({"aiannh": code, "censusName": land["name"],
-                    "landClass": land["class"], "areaKm2": land["km2"],
-                    "why": land["why"]})
-    return out
-
-
-def split_not_drawn(areas, state_name, join):
-    """(the areas to draw, the pieces left off). A piece the join records as
-    not drawn must be one the Census still keeps in this state, in the class
-    recorded, or the record is stale and the build stops."""
-    table = join.get("landsNotDrawn") or {}
-    want = {c: l for c, l in table.items() if l["state"] == state_name}
-    drawn, found = [], set()
-    for cls, feat, clip in areas:
-        code = str(feat["properties"].get("AIANNH"))
-        land = want.get(code)
-        if land is not None and land["class"] == cls:
-            found.add(code)
-            continue
-        drawn.append((cls, feat, clip))
-    stale = sorted(set(want) - found)
-    if stale:
-        raise RuntimeError(
-            "data/tribal-government-join.json records AIANNH %s as land not drawn in "
-            "%s, and the Census keeps no such piece there in that class — the record "
-            "is stale" % (", ".join(stale), state_name))
-    return drawn, not_drawn_in(state_name, join)
-
-
-def named_on_page(land, page_text):
-    """Whether an app's page names a piece of land its map leaves off: the
-    Census's name without its "(state)" marker, as a reader would say it."""
-    return land["censusName"].replace(" (state)", "") in page_text
 
 
 def check_join(areas, join, bia):
@@ -2058,7 +2006,6 @@ def also_seated(feats, state_name, bia):
 def build(state_name, tag, out_path=None):
     join, bia = load_join(), load_bia()
     areas, state_code, state_feat, resolved = _state_areas(state_name)
-    areas, left_off = split_not_drawn(areas, state_name, join)
     check_join(areas, join, bia)
     here, _ = districts_on(state_feat, resolved[T.DEFAULT_VINTAGE]["subdivision"])
     counts, known = census_population(resolved, T.drawn_classes(state_name))
@@ -2083,14 +2030,6 @@ def build(state_name, tag, out_path=None):
         "governmentSource": json.load(open(BIA))["source"],
         "features": feats,
     }
-    # Only where a piece is left off, so every other state's file is byte for
-    # byte what it was before the key existed.
-    if left_off:
-        doc["notDrawn"] = left_off
-        for land in left_off:
-            print("build-tribal-areas: %s — NOT DRAWN, as the join records: %s (%s, "
-                  "%s km2)" % (tag, land["censusName"], land["landClass"],
-                               land["areaKm2"]))
     path = out_path or os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
     with open(path, "w") as fh:
         json.dump(doc, fh)
@@ -2116,15 +2055,13 @@ def check():
     councils file and itself."""
     join, bia = load_join(), load_bia()
     councils = load_councils()
-    seen = areas = left = 0
-    states_shipped = set()
+    seen = areas = 0
     for tag in sorted(os.listdir(REPO)):
         path = os.path.join(REPO, tag, "data", "app", "tribal-areas.json")
         if not os.path.exists(path):
             continue
         seen += 1
         doc = json.load(open(path))
-        states_shipped.add(doc["state"])
         cpath = _councils_path(tag)
         shipped_councils = (json.load(open(cpath)) if os.path.exists(cpath)
                             else None)
@@ -2145,24 +2082,6 @@ def check():
                 "%s ships tribal areas for %s and the join does not list it as "
                 "covered — re-run the join rather than the layer"
                 % (tag, doc["state"]))
-        left_off = not_drawn_in(doc["state"], join)
-        if (doc.get("notDrawn") or []) != left_off:
-            raise RuntimeError(
-                "%s: the pieces its file records as not drawn are not the ones "
-                "data/tribal-government-join.json records for %s — rebuild the file"
-                % (tag, doc["state"]))
-        if left_off:
-            page = open(os.path.join(REPO, tag, "index.html")).read()
-            for land in left_off:
-                if not named_on_page(land, page):
-                    raise RuntimeError(
-                        "%s leaves %s off its map and its page never names it, so a "
-                        "reader standing on it is told only that the point is on no "
-                        "tribal land" % (tag, land["censusName"]))
-                if land["aiannh"] in {f["properties"]["aiannh"] for f in doc["features"]}:
-                    raise RuntimeError("%s both draws AIANNH %s and records it as not "
-                                       "drawn" % (tag, land["aiannh"]))
-            left += len(left_off)
         for feat in doc["features"]:
             areas += 1
             # The geometry's own roster fields must be what `stamp` writes,
@@ -2352,13 +2271,6 @@ def check():
                                               "tribal-areas.json")))["features"]
                   if os.path.exists(os.path.join(REPO, tag, "data", "app",
                                                  "tribal-areas.json")) else [])}
-    unshipped = sorted(l["state"] for l in (join.get("landsNotDrawn") or {}).values()
-                       if l["state"] not in states_shipped)
-    if unshipped:
-        raise RuntimeError(
-            "the join records land not drawn in %s and no instance ships that "
-            "state's tribal land, so nothing tells a reader it is left off"
-            % ", ".join(unshipped))
     orphans = sorted((set(ROSTER_BLOCKED) | set(ROSTER_NOT_READ) | set(councils))
                      - shipped)
     if orphans:
@@ -2369,11 +2281,10 @@ def check():
     print("build-tribal-areas --check: OK — %d instance(s), %d area(s); every "
           "government named by the join and listed by the Bureau (or, for %d "
           "nation(s) only a state recognizes, named by that state's law), every "
-          "seat and link theirs, %d council(s) carried as read, every unnamed "
-          "roster explained, and %d piece(s) left off by ruling named on the page "
-          "that leaves them off"
+          "seat and link theirs, %d council(s) carried as read, and every unnamed "
+          "roster explained"
           % (seen, areas, sum(1 for e in join["areas"].values()
-                              if e.get("stateRecognition")), len(councils), left))
+                              if e.get("stateRecognition")), len(councils)))
     return True
 
 
@@ -2593,36 +2504,10 @@ def selftest():
     assert _no_roster_props("5550", {}, "Iowa")["rosterWhy"] is None
     for state, row in ROSTER_NOT_SOUGHT.items():
         assert len(row["since"]) == 10, state
-    # Land left off by ruling: skipped only in its own state and class, named
-    # in the file, stale when the Census no longer keeps it, and found on a
-    # page only by the name a reader would use.
-    off_join = {"landsNotDrawn": {"9150": {
-        "class": "state-reservation", "name": "Hassanamisco (state) Reservation",
-        "state": "Massachusetts", "km2": 0.021, "why": "no readable state source"}}}
-    three = [("trust-land", feat("2147"), {}), ("trust-land", feat("4530"), {}),
-             ("state-reservation", feat("9150"), {})]
-    drawn, left_off = split_not_drawn(three, "Massachusetts", off_join)
-    assert [f["properties"]["AIANNH"] for _, f, _ in drawn] == ["2147", "4530"]
-    assert left_off == [{"aiannh": "9150", "censusName": "Hassanamisco (state) Reservation",
-                         "landClass": "state-reservation", "areaKm2": 0.021,
-                         "why": "no readable state source"}]
-    assert split_not_drawn(three, "Connecticut", off_join) == (three, [])
-    assert split_not_drawn(three, "Massachusetts", {}) == (three, [])
-    for gone in (three[:2], three[:2] + [("reservation", feat("9150"), {})]):
-        try:
-            split_not_drawn(gone, "Massachusetts", off_join)
-        except RuntimeError as e:
-            assert "stale" in str(e)
-        else:
-            raise AssertionError("a not-drawn record the Census no longer bears out "
-                                 "must fail")
-    assert named_on_page(left_off[0], "the Hassanamisco Reservation in Grafton")
-    assert not named_on_page(left_off[0], "a state reservation in Grafton")
 
     print("build-tribal-areas --selftest: OK — the join check fails three ways, "
           "the seat never invents a city, all %d blocked roster(s) name a host "
-          "and a date, all %d not-yet-read roster(s) name a distinct page, and "
-          "land left off by ruling is skipped only where the join records it"
+          "and a date, and all %d not-yet-read roster(s) name a distinct page"
           % (len(ROSTER_BLOCKED), len(ROSTER_NOT_READ)))
     return True
 

@@ -75,33 +75,35 @@ commissioners, and Nantucket's town select board serves as its county commission
 card says which form the county has and names nobody yet (gap `ma-county-officials`); nor is any
 city or town official named (gap `ma-municipal-officeholders`).
 
-**TRIBAL GOVERNMENT DRAWS THE TRUST LAND OF THE TWO WAMPANOAG TRIBES, LEAVES THE HASSANAMISCO
-RESERVATION OFF, AND NAMES NO COUNCIL YET** (`tribal-areas.json`, since 2026-11-13). The Census
+**TRIBAL GOVERNMENT DRAWS THE TRUST LAND OF THE TWO WAMPANOAG TRIBES AND THE HASSANAMISCO
+RESERVATION, AND NAMES NO COUNCIL YET** (`tribal-areas.json`, since 2026-11-13). The Census
 keeps three pieces in Massachusetts, measured 2026-11-12 with `scripts/tribal_areas.py --report
 Massachusetts`: the Wampanoag-Aquinnah Trust Land (about 2.0 km2, in Aquinnah on Martha's Vineyard),
 the Mashpee Wampanoag Trust Land (about 1.3 km2 in ten parts, 54% of it in Mashpee and 46% in
 Taunton, measured 2026-11-13 against TIGERweb's county subdivisions with Boston and Worcester as
 controls) and the Hassanamisco state reservation in Grafton (0.021 km2, about five acres). The two
-trust lands are drawn, each joined in `data/tribal-government-join.json` to the government the
-Bureau of Indian Affairs lists for it, seated in Aquinnah and Mashpee. **THE HASSANAMISCO
-RESERVATION IS NOT DRAWN, ON ADAM'S RULING OF 2026-11-13** (his word was "federal", choosing the two
-federal trust lands over drawing all three from a bill, or waiting): a state reservation is drawn
-only where a state government source names the tribe that holds it, www.mass.gov answered this
-project with its "Not allowed" page that day, which is not worked around, and the one state source
-that could be read, House Bill 3413 of the 194th General Court, is a bill filed by request and not a
-law. It is recorded under `landsNotDrawn` in the join, a table that exists for this one piece, and
-the shipped file repeats it as `notDrawn`. **SO THE LAYER'S OFF-LAND SENTENCE DOES NOT SAY "NOT ON
-TRIBAL LAND" IN THIS APP**: it says the point is on none of the tribal land this map draws, and
-names the reservation and why it is missing, because a reader standing on it would otherwise be told
-something false. `python3 scripts/build_tribal_areas.py --check` fails if the page stops naming it,
-if the piece is ever both drawn and recorded, or if the Census stops keeping it. To draw it, read a
-state law or a state agency's own page that names the tribe, add the join entry with its
-`recognition`, and delete the `landsNotDrawn` row in the same change. **THE MASHPEE CARD DOES NOT
+trust lands are joined in `data/tribal-government-join.json` to the governments the Bureau of
+Indian Affairs lists, seated in Aquinnah and Mashpee. **THE RESERVATION IS JOINED TO THE
+HASSANAMISCO NIPMUC TRIBE, WHICH THE COMMONWEALTH RECOGNIZES AND THE UNITED STATES DOES NOT, FROM
+DOCUMENTS IN THE STATE LIBRARY'S ARCHIVE**, because www.mass.gov, which carries the Commonwealth's
+current page on its tribes, answered this project with its "Not allowed" page on 2026-11-13 and was
+not worked around. Executive Order 126 of 8 July 1976 says the tribal council of the Nipmuc is the
+recognized governing body of the Nipmuc Tribe and tells state agencies to deal with the Hassanamisco
+Nipmuc Tribal Council (the archive's transcription prints "Massanamisco"); the Commission on Indian
+Affairs' annual report for 2006 names the Hassanamisco Nipmuc Tribe, which is the name on the card;
+its report for 1982 lists a commissioner for the Nipmuck at the Hassanamisco Reservation; and the
+Department of Public Health's Health of Massachusetts (April 2010) lists Hassanamisco among the
+state-recognized tribes. None gives an office town, so the card gives no seat. Adam's ruling of
+2026-11-13 ("federal") was to leave the reservation off until a state source that could be read
+names the band, when the only one found was House Bill 3413, a bill; these were read later the same
+day. **NO CURRENT PAGE OF THE COMMONWEALTH'S WAS READ**: the newest of these documents is from 2010,
+so when www.mass.gov can be read, compare the name and look for an office town (`ma/WATCH.md`).
+**THE MASHPEE CARD DOES NOT
 LINK THE ADDRESS THE BUREAU LISTS**: `http://www.mashpeewampanoagtribe.com` served another
 publisher's blog under the tribe's name on 2026-11-13, so the join withdraws it (`websiteWithdrawn`)
 and the card links `https://mashpeewampanoagtribe-nsn.gov/`, the tribe's own site, read the same
-day. No council is named: each card says so and links the tribe (`ROSTER_NOT_SOUGHT`, gap
-`ma-tribal-government`).
+day. No council is named: each card says so, and the two Wampanoag cards link the tribe
+(`ROSTER_NOT_SOUGHT`, gap `ma-tribal-government`).
 
 **THE ZIP LAYER HIDES OUTSIDE MASSACHUSETTS.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
