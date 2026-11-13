@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 3 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1231,6 +1231,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ct-house-members.json, rebuilt weekly by CI from the General Assembly's own member list as the state publishes it on data.ct.gov (dataset rgw6-bpst): each representative's name, party, Legislative Office Building room and telephone, General Assembly e-mail address and page. The query names the columns it reads, so the list's home-address columns are never fetched.</td>
                 <td data-label="Where it applies">Connecticut — statewide, all 151 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Connecticut has 6 such areas, held by five nations: the Mashantucket Pequot Indian Tribe and the Mohegan Tribe, which the United States recognizes, and the Eastern Pequot Tribal Nation, the Golden Hill Paugussett and the Schaghticoke Tribe, which the State of Connecticut recognizes.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations, off-reservation trust land and state reservations, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the Mashantucket Pequot and the Mohegan. The other three nations are not in that directory, because the United States does not recognize them, so each name comes from the tribal affairs page of the Department of Energy and Environmental Protection, which has the care of their reservations under chapter 824 of the General Statutes (read 2026-11-13); that page gives no town, so their cards give no seat, and each card links the page; the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Connecticut — the 6 pieces of land above, in the Southeastern Connecticut, Greater Bridgeport and Northwest Hills planning regions. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1588,6 +1599,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Connecticut. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ct/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Connecticut has 6 such areas, held by five nations: the Mashantucket Pequot Indian Tribe and the Mohegan Tribe, which the United States recognizes, and the Eastern Pequot Tribal Nation, the Golden Hill Paugussett and the Schaghticoke Tribe, which the State of Connecticut recognizes. No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the Mashantucket Pequot and the Mohegan. The other three nations are not in that directory, because the United States does not recognize them, so each name comes from the tribal affairs page of the Department of Energy and Environmental Protection, which has the care of their reservations under chapter 824 of the General Statutes (read 2026-11-13); that page gives no town, so their cards give no seat, and each card links the page; the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/ct/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ct/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations, off-reservation trust land and state reservations, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Connecticut — the 6 pieces of land above, in the Southeastern Connecticut, Greater Bridgeport and Northwest Hills planning regions. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

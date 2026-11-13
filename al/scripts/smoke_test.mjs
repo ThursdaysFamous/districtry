@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "al-senate", "al-house"];
 const EXPECT_DISTRICT = { "county": "Montgomery County", "us-house": "2", "al-senate": "26", "al-house": "77" };
 const NEGATIVE_POINT = "29.95000,-88.00000"; // The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Alabama";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "AlabamaExplorer";
@@ -1036,6 +1036,89 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The MOWA Choctaw (state) Reservation is held by the MOWA Band of
+  //         Choctaw Indians, which the State of Alabama recognizes and the
+  //         United States does not: the card says so, gives the band's town
+  //         from the state's own list, and links that list.
+  //       - The Poarch Creek Reservation is the ordinary case: the Bureau's
+  //         town and site, and the reason the card names nobody, the tribe's
+  //         own site answering with a challenge page.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 454 m and 240 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const MOWA = "31.14870,-88.05317";
+    const POARCH = "31.10485,-87.56589";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, MOWA);
+      const p = land[0] || {};
+      const c = await at(MOWA);
+      check("the MOWA Choctaw (state) Reservation names the band the State of Alabama recognizes, says so, and links the state's list",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "MOWA Band of Choctaw Indians" &&
+          c.by("Land") === "MOWA Choctaw (state) Reservation" &&
+          c.by("Seat of government") === "Mount Vernon, AL" &&
+          !!p.recognition && c.by("Recognized by") === p.recognition &&
+          p.recognition.indexOf("Recognized by the State of Alabama") === 0 && p.recognition.indexOf("not by the federal government") !== -1 &&
+          p.url === null && !!p.recognitionUrl && c.link.text === "The Alabama Indian Affairs Commission's list of recognized tribes" && c.link.href === p.recognitionUrl &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, POARCH);
+      const p = land[0] || {};
+      const c = await at(POARCH);
+      check("the Poarch Creek Reservation names the Poarch Band with the Bureau's town and site, and says why it names nobody",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Poarch Band of Creek Indians" &&
+          c.by("Land") === "Poarch Creek Reservation" &&
+          c.by("Seat of government") === "Atmore, AL" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("challenge") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("3 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();
