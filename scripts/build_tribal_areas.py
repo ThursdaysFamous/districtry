@@ -388,6 +388,22 @@ ROSTER_NOT_SOUGHT = {
     # Gardnerville, Nevada, among them), drawn 2026-11-12 with no council yet,
     # read one nation at a time.
     "California": {"since": "2026-11-12"},
+    # Batch 3 of the state-level launch and Georgia, drawn 2026-11-13 with no
+    # council yet, read one nation at a time: the Southern Ute and Ute
+    # Mountain Ute in Colorado; the Poarch Creek and the MOWA Choctaw in
+    # Alabama; the Mashantucket Pequot, the Mohegan and the three tribes
+    # Connecticut recognizes; the Lower Muscogee Creek in Georgia; the
+    # Kickapoo, Prairie Band Potawatomi, Iowa and Sac and Fox nations in
+    # Kansas; Oregon's nine and the three that share Celilo Village (the
+    # Yakama, seated in Washington, among them); and Utah's, the Navajo
+    # Nation, seated in Arizona, and the Goshute among them.
+    "Alabama": {"since": "2026-11-13"},
+    "Colorado": {"since": "2026-11-13"},
+    "Connecticut": {"since": "2026-11-13"},
+    "Georgia": {"since": "2026-11-13"},
+    "Kansas": {"since": "2026-11-13"},
+    "Oregon": {"since": "2026-11-13"},
+    "Utah": {"since": "2026-11-13"},
 }
 
 
@@ -1168,7 +1184,8 @@ def stamp_rosters():
 # 1.44 MB file against 3.93 MB as published (386 KB against 981 KB gzipped).
 MAPSHAPER = "mapshaper@0.6.102"
 SIMPLIFY = {"Oklahoma": {"interval": "interval=20", "ceiling_m": 25.0},
-            "Arizona": {"interval": "interval=3", "ceiling_m": 25.0}}
+            "Arizona": {"interval": "interval=3", "ceiling_m": 25.0},
+            "Utah": {"interval": "interval=3", "ceiling_m": 25.0}}
 
 
 def _local_metres(lat0):
