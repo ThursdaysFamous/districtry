@@ -90,7 +90,7 @@ different thing from one it failed.
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
-| wi | **EAM·** | 72 | 72/72 | 1590 | 1,577 | all | 269 | all | 13 of 14 levels |
+| wi | **EAM·** | 72 | 72/72 | 1590 | 1,573 | all | 269 | all | 13 of 14 levels |
 | wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 15 | all | 10 of 14 levels |
 | wy | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 
