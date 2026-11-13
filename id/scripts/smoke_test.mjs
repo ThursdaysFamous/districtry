@@ -1058,7 +1058,8 @@ try {
   //       - The Idaho part of the Duck Valley Reservation is seated at Owyhee,
   //         Nevada, from the nation's own site, because the Bureau of Indian
   //         Affairs lists no office town for the tribes; the card says so on
-  //         an "About the seat" line and links that site.
+  //         an "About the seat" line, links that site, and names the whole
+  //         council.
   //       - The Nez Perce Reservation is the ordinary case: the Bureau's town
   //         and site, and no "About the seat" line.
   //       - The Capitol is on no tribal land, and the card says so in the
@@ -1068,6 +1069,7 @@ try {
   //     them (shapely polylabel, 2026-11-13): 6.6 km and 20.0 km from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const DUCK_VALLEY = "42.07770,-116.06622";
     const NEZ_PERCE = "46.33028,-116.35833";
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
@@ -1096,15 +1098,18 @@ try {
     {
       const land = propsAt(areas, DUCK_VALLEY);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(DUCK_VALLEY);
-      check("the Idaho part of the Duck Valley Reservation is seated at Owyhee from the nation's own site, says so, and links that site",
+      check("the Idaho part of the Duck Valley Reservation is seated at Owyhee from the nation's own site, says so, links that site, and names its whole council",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Shoshone-Paiute Tribes of the Duck Valley Reservation, Nevada" &&
           c.by("Land") === "Duck Valley Reservation" &&
           c.by("Seat of government") === "Owyhee, NV" &&
           c.labels.indexOf("Recognized by") === -1 &&
           !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
           !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
           p.url === "https://shopaitribes.org/" &&
           p.shareInState < 1 &&

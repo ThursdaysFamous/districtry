@@ -355,7 +355,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no website for the Fort McDermitt tribes. Celilo Village is administered jointly by the Confederated Tribes of Warm Springs, the Confederated Tribes of the Umatilla Indian Reservation and the Yakama Nation, as the Oregon Blue Book says (read 2026-11-13), so its card names all three with their seats and sites; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The Confederated Tribes of the Umatilla Indian Reservation's Board of Trustees, from the nation's own page (the list Washington's card names for the nation's land there), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. This app has not yet read the other nations' council lists, so their cards say so and link each nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no website for the Fort McDermitt tribes. Celilo Village is administered jointly by the Confederated Tribes of Warm Springs, the Confederated Tribes of the Umatilla Indian Reservation and the Yakama Nation, as the Oregon Blue Book says (read 2026-11-13), so its card names all three with their seats and sites; the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Oregon — the 18 pieces of land above. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -514,6 +514,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of the Confederated Tribes of the Umatilla Indian Reservation (its Board of Trustees), from its own page, the same council Washington's card names, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Oregon elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from or/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -521,7 +526,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-or-shell-v2",
+    "cache_name": "districtry-or-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

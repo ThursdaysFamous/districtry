@@ -646,11 +646,14 @@ try {
   //       - The Round Valley Reservation's seat, Covelo, comes from the
   //         tribes' own site, because the Bureau of Indian Affairs lists no
   //         office town for them; the card says so on an "About the seat"
-  //         line and links the site the Bureau lists.
+  //         line, links the site the Bureau lists, and names the whole council
+  //         from the councils file; when that file fails the card still names
+  //         the nation and names nobody on its council.
   //       - The Capitan Grande Reservation is shared by two governments, the
   //         Barona and Viejas groups of the Capitan Grande Band, so the card
   //         names both, lists each one's seat and site, and carries no single
-  //         "(official)" link.
+  //         "(official)" link; it names no council, because each band's is
+  //         named on the card for its own reservation.
   //       - The XL Ranch Rancheria's Census name does not name the Pit River
   //         Tribe, which holds it; the card names the tribe with the Bureau's
   //         town and site, and no "About the seat" line.
@@ -664,6 +667,7 @@ try {
   //     from its edge.
   {
     const areas = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "tribal-areas.json"), "utf8"));
+    const councils = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "tribal-councils.json"), "utf8"));
     // The app's rule for a shipped file: even-odd within a polygon, any part
     // of a multipolygon.
     const inRing = (x, y, ring) => {
@@ -686,10 +690,11 @@ try {
     const CAPITAN_GRANDE = "32.89983,-116.70090";
     const XL_RANCH = "41.52814,-120.46352";
     const COLORADO_RIVER = "34.20904,-114.27367";
-    const at = async (pt) => {
+    const at = async (pt, routeFn) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await context.newPage();
       await routeLeaflet(page);
+      if (routeFn) await routeFn(page);
       await page.goto(`${BASE}#point=${pt}&layers=tribal-government`, { waitUntil: "domcontentloaded" });
       await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
       const card = await cardText(page, "tribal-government");
@@ -714,16 +719,32 @@ try {
     {
       const land = propsAt(areas, ROUND_VALLEY);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(ROUND_VALLEY);
-      check("the Round Valley Reservation is seated at Covelo from the tribes' own site, says so, and links the Bureau's site for them",
+      check("the Round Valley Reservation is seated at Covelo from the tribes' own site, says so, and links the Bureau's site for them, and names their whole council",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Round Valley Indian Tribes, Round Valley Reservation, California" &&
           c.by("Seat of government") === "Covelo, CA" &&
           c.by("Land") === "Round Valley Reservation" &&
           !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
           p.url === "http://www.rvit.org" && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names"),
         `land here=${land.length} link=${JSON.stringify(c.link)} seat=${JSON.stringify(c.by("Seat of government"))} note=${JSON.stringify(c.by("About the seat").slice(0, 80))}`);
+    }
+
+    {
+      const p = propsAt(areas, ROUND_VALLEY)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(ROUND_VALLEY, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Round Valley Indian Tribes, Round Valley Reservation, California" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
     }
 
     {
@@ -731,8 +752,9 @@ try {
       const p = land[0] || {};
       const c = await at(CAPITAN_GRANDE);
       const names = (p.nations || []).map((n) => n.name);
-      check("the Capitan Grande Reservation names both groups that share it, each with its seat and site, and no single link",
+      check("the Capitan Grande Reservation names both groups that share it, each with its seat and site, no single link, and no council of its own",
         land.length === 1 && !c.error && names.length === 2 &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("named on the card for its own reservation") !== -1 &&
           names[0].indexOf("(Barona Group") !== -1 && names[1].indexOf("Viejas (Baron Long) Group") !== -1 &&
           c.by("Tribal government") === p.nation && p.nation === names[0] + " and " + names[1] &&
           c.by("Land") === "Capitan Grande Reservation" &&

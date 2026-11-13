@@ -1028,7 +1028,7 @@ try {
   //       - The Utah part of the Goshute Reservation is seated at Ibapah from
   //         the nation's own site, because the Bureau of Indian Affairs lists
   //         no office town for the tribes; the card says so on an "About the
-  //         seat" line and links that site.
+  //         seat" line, links that site, and names the whole council.
   //       - The Utah part of the Navajo Nation Reservation names a nation the
   //         Bureau seats at Window Rock, Arizona, and its districts line names
   //         the nine tribal subdivisions the Census draws on its ground here.
@@ -1041,6 +1041,7 @@ try {
   //     them (shapely polylabel, 2026-11-13): 4.6 km, 14.5 km and 39.8 km from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const GOSHUTE = "39.85232,-113.99371";
     const NAVAJO = "37.16204,-109.20824";
     const UINTAH_OURAY = "40.33461,-110.54080";
@@ -1070,15 +1071,18 @@ try {
     {
       const land = propsAt(areas, GOSHUTE);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(GOSHUTE);
-      check("the Utah part of the Goshute Reservation is seated at Ibapah from the nation's own site, says so, and links that site",
+      check("the Utah part of the Goshute Reservation is seated at Ibapah from the nation's own site, says so, links that site, and names its whole council",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Confederated Tribes of the Goshute Reservation, Nevada and Utah" &&
           c.by("Land") === "Goshute Reservation" &&
           c.by("Seat of government") === "Ibapah, UT" &&
           c.labels.indexOf("Recognized by") === -1 &&
           !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
           !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
           p.url === "https://ctgr.us/home/" &&
           p.shareInState < 1,

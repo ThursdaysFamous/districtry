@@ -1068,7 +1068,7 @@ try {
   //         Bureau lists no site for the pueblo, so the card links nothing.
   //       - The New Mexico part of the Navajo Nation Reservation names a
   //         nation seated in Arizona and the 54 chapters the Census draws on
-  //         its ground here.
+  //         its ground here, and names the nation's whole council.
   //       - The Capitol is on no tribal land, and the card says so in the
   //         layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
@@ -1076,6 +1076,7 @@ try {
   //     them (shapely polylabel, 2026-11-13): 141 m, 3.3 km and 34.8 km from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const FORT_SILL = "32.24134,-107.42220";
     const NAMBE = "35.88465,-105.95435";
     const NAVAJO = "36.25684,-108.65850";
@@ -1135,9 +1136,13 @@ try {
     {
       const land = propsAt(areas, NAVAJO);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(NAVAJO);
-      check("the New Mexico part of the Navajo Nation Reservation names a nation seated in Arizona and its 54 chapters there",
+      check("the New Mexico part of the Navajo Nation Reservation names a nation seated in Arizona and its 54 chapters there, and names its whole council",
         land.length === 1 && !c.error &&
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
           c.by("Tribal government") === p.nation && p.nation === "Navajo Nation, Arizona, New Mexico & Utah" &&
           c.by("Land") === "Navajo Nation Reservation" &&
           c.by("Seat of government") === "Window Rock, AZ" &&

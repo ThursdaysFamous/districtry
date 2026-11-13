@@ -1131,8 +1131,9 @@ try {
   //     with it.
   //       - The Navajo Nation Reservation names the nation, its seat and the
   //         land, links the nation's own site, lists the chapters the Census
-  //         draws on it, and says why nobody on its council is named: no
-  //         Arizona nation's council has been read yet.
+  //         draws on it, and names the whole council from the councils file;
+  //         when that file fails the card still names the nation and names
+  //         nobody on its council.
   //       - The Arizona part of the Zuni Reservation names a nation seated in
   //         New Mexico and links its site, which the Bureau of Indian Affairs
   //         writes as a bare host ("www.ashiwi.org") and the card links only
@@ -1140,7 +1141,8 @@ try {
   //       - The Arizona part of the Fort Yuma Indian Reservation names a
   //         nation seated in California.
   //       - The Hopi Reservation links no official site, because the Bureau
-  //         lists none.
+  //         lists none, and says its council page names all but one seat, so
+  //         no name is carried.
   //       - The Capitol is on no tribal land, and the card says so in the
   //         layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
@@ -1149,6 +1151,7 @@ try {
   //     from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const NAVAJO = "36.39695,-109.64718";
     const ZUNI = "34.63709,-109.57341";
     const FORT_YUMA = "32.72748,-114.60215";
@@ -1158,9 +1161,9 @@ try {
         label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
         value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
       })));
-    const at = async (pt) => {
+    const at = async (pt, routeFn) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
       const card = await cardText(page, "tribal-government");
       const fields = await fieldsOf(page);
       // The "(official)" link is the card's footer, a sibling of the card body,
@@ -1179,16 +1182,32 @@ try {
     {
       const land = propsAt(areas, NAVAJO);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(NAVAJO);
-      check("the Navajo Nation Reservation names the nation, its seat and the land, links its site, lists its chapters, and says why no council is named",
+      check("the Navajo Nation Reservation names the nation, its seat and the land, links its site, lists its chapters, and names its whole council",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Navajo Nation, Arizona, New Mexico & Utah" &&
           c.by("Seat of government") === "Window Rock, AZ" &&
           c.by("Land") === "Navajo Nation Reservation" &&
           !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
           (p.districts || []).length > 0 && c.by("Districts drawn here") === p.districtsNote &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names"),
         `land here=${land.length} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 80))}`);
+    }
+
+    {
+      const p = propsAt(areas, NAVAJO)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(NAVAJO, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Navajo Nation, Arizona, New Mexico & Utah" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
     }
 
     {
@@ -1220,8 +1239,9 @@ try {
       const land = propsAt(areas, HOPI);
       const p = land[0] || {};
       const c = await at(HOPI);
-      check("the Hopi Reservation links no official site, because the Bureau lists none",
+      check("the Hopi Reservation links no official site, because the Bureau lists none, and says its partial council is not carried",
         land.length === 1 && !c.error && p.url === null &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("A partial council is not carried") !== -1 &&
           c.by("Tribal government") === "Hopi Tribe of Arizona" &&
           c.link.text === "" && !c.text.includes("(official)"),
         `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);

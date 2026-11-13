@@ -50,7 +50,18 @@ rather than repaired:
     spelling stated on the row, because choosing between a nation's two
     spellings of its own officer is not this project's call.
   * Stockbridge-Munsee prints one member as "JOE Miller". Casing is the
-    nation's and ships unchanged.
+    nation's and ships unchanged; so do the Yurok Tribe's names, all in
+    capitals.
+  * Several pages read on 2026-11-13 contradict themselves about one member:
+    a paragraph giving another office or spelling (Chehalis, Jamul) or a
+    contact card spelling a name another way (Pala). The council block
+    ships, with the page's other wording stated on the row.
+  * A courtesy title (Mr., Ms., Mrs.) is not part of a name and is dropped
+    (Quechan, Round Valley); "Dr." and "Esq." are the page's own and ship.
+  * An alternate (Redding), a proxy (Torres Martinez) or a staff member
+    listed under a council (Soboba's executive assistant) is not a seat.
+    Shingle Springs lists a Secretary with no term under its council of
+    seven elected members; that row ships as printed and says so.
 Contact details ship only where the page pairs them with the person on the
 same row, never from a table elsewhere on the page with a different date
 (Bad River's contact table is headed "2021", so its numbers are not taken).
@@ -244,6 +255,203 @@ NATIONS = {
                            ("0690", "Coconut Creek"), ("1260", "Fort Pierce"),
                            ("1475", "Hollywood"), ("1555", "Immokalee"),
                            ("3665", "Seminole Trust Land"), ("4130", "Tampa"))},
+    # Washington, Arizona, Nevada and California (read 2026-11-13, each
+    # robots.txt with this scraper's client; every one allows the page read).
+    # Each nation is carried only where its own page names the whole council;
+    # the nations that are not, and why, are in build_tribal_areas.py's
+    # ROSTER_BLOCKED. A nation whose land lies in two or three of these states
+    # (the Colorado River Indian Tribes, Fort Mojave, Quechan, the Navajo
+    # Nation, Zuni, Duck Valley, the Goshute, Timbisha, Umatilla) is read once
+    # and carried for every state its land is drawn in.
+    # Washington. The Umatilla's board of trustees is also Oregon's.
+    "0575": {"nation": "Chehalis",
+             "pages": ["https://www.chehalistribe.org/business-committee/"], "seats": 5},
+    "0760": {"nation": "Colville",
+             "pages": ["https://www.colvilletribes.com/get-to-know-your-council"], "seats": 14},
+    "0820": {"nation": "Cowlitz",
+             "pages": ["https://www.cowlitz.org/council-members"], "seats": 22},
+    "2040": {"nation": "Lower Elwha Klallam",
+             "pages": ["https://www.elwha.org/departments/tribal-government/"], "seats": 5},
+    "2070": {"nation": "Lummi",
+             "pages": ["https://www.lummi-nsn.gov/node/Website.php?PageID=763"], "seats": 11},
+    "2085": {"nation": "Makah",
+             "pages": ["https://makah.com/makah-tribal-info/governance/"], "seats": 5},
+    "2375": {"nation": "Muckleshoot",
+             "pages": ["https://www.muckleshoot.nsn.us/tribal-council"], "seats": 9},
+    "2460": {"nation": "Nisqually",
+             "pages": ["https://www.nisqually-nsn.gov/Nisqually-Tribal-Council"], "seats": 7},
+    "2475": {"nation": "Nooksack", "pages": ["https://nooksacktribe.org/council/"], "seats": 8},
+    "2910": {"nation": "Port Gamble S'Klallam",
+             "pages": ["https://pgst.nsn.us/tribal-council/"], "seats": 6},
+    "2925": {"nation": "Suquamish",
+             "pages": ["https://suquamish.nsn.us/home/government/"], "seats": 7},
+    "3030": {"nation": "Quileute",
+             "pages": ["https://quileutetribe.com/government/tribal-council/"], "seats": 5},
+    "3040": {"nation": "Quinault",
+             "pages": ["https://www.quinaultindiannation.com/255/Tribal-Council"], "seats": 11},
+    "3780": {"nation": "Shoalwater Bay",
+             "pages": ["https://www.shoalwaterbay-nsn.gov/tribal-government/general-council/"], "seats": 5},
+    "3825": {"nation": "Skokomish",
+             "pages": ["https://skokomish.org/skokomish-tribal-council/"], "seats": 8},
+    "3860": {"nation": "Snoqualmie",
+             "pages": ["https://snoqualmietribe.us/snoqualmie-tribal-council/"], "seats": 10},
+    "4000": {"nation": "Stillaguamish",
+             "pages": ["https://www.stillaguamish.com/departmentprogramservice/tribal-government/"], "seats": 6},
+    "4290": {"nation": "Tulalip",
+             "pages": ["https://www.tulaliptribes-nsn.gov/Government/BoardOfDirectors"], "seats": 7},
+    "4405": {"nation": "Umatilla",
+             "pages": ["https://ctuir.org/our-government/board-of-trustees/bot-members/"], "seats": 9},
+    "4690": {"nation": "Yakama",
+             "pages": ["https://yakama.com/about/tribal-council/"], "seats": 14},
+    # Arizona. The Hualapai Tribe's site answers over http only. The Navajo
+    # Nation Council's own site is the nation's legislative branch (the Bureau
+    # lists the executive's www.navajo-nsn.gov, which reset every connection
+    # here); the Zuni Pueblo's council is also New Mexico's.
+    "0695": {"nation": "Cocopah",
+             "pages": ["https://www.cocopah.com/government.html"], "seats": 5},
+    "0735": {"nation": "Colorado River Indian Tribes",
+             "pages": ["https://crit-nsn.gov/crit_contents/government/"], "seats": 9},
+    "1235": {"nation": "Fort Mojave",
+             "pages": ["https://www.fortmojaveindiantribe.com/tribal-council/"], "seats": 6},
+    "1280": {"nation": "Quechan",
+             "pages": ["https://quechantribe.com/government.html"], "seats": 7},
+    "1310": {"nation": "Gila River",
+             "pages": ["https://www.gilariver.org/index.php/government/misc/council-members"], "seats": 17},
+    "1545": {"nation": "Hualapai",
+             "pages": ["http://www.hualapai-nsn.gov/government/tribal_council/index.php"], "seats": 9},
+    "2430": {"nation": "Navajo",
+             "pages": ["https://www.navajonationcouncil.org/council/"], "seats": 24},
+    "2680": {"nation": "Pascua Yaqui",
+             "pages": ["https://www.pascuayaqui-nsn.gov/council-administration"], "seats": 11},
+    "3340": {"nation": "Salt River Pima-Maricopa",
+             "pages": ["https://srpmic-nsn.gov/government/council/"], "seats": 9},
+    "3355": {"nation": "San Carlos Apache",
+             "pages": ["https://www.scat-nsn.gov/san-carlos-apache-tribe-tribal-council/"], "seats": 11},
+    "4200": {"nation": "Tohono O'odham",
+             "pages": ["https://tolc-nsn.org/representatives-and-committees/"], "seats": 22},
+    "4708": {"nation": "Yavapai-Apache",
+             "pages": ["https://yavapai-apache.org/tribal_council/"], "seats": 9},
+    "4785": {"nation": "Zuni", "pages": ["https://ashiwi.org/tribal-leadership/"], "seats": 8},
+    # Nevada. Goshute's and Moapa's older domains have lapsed (one now a
+    # finance blog, the other a forms company's page); each nation's current
+    # site is the one read. Walker River's council is on its government page,
+    # Las Vegas Paiute's on its front page.
+    # The Yerington Paiute Tribe's two pieces of land, Campbell Ranch (0440)
+    # and the Yerington Colony (4725), and the Fallon Paiute-Shoshone Tribe's
+    # two, the colony (1070) and the reservation (1075), each carry the one
+    # council, read from the one page.
+    "0440": {"nation": "Yerington Paiute",
+             "pages": ["https://ypt-nsn.gov/our-government/"], "seats": 7},
+    "4725": {"nation": "Yerington Paiute",
+             "pages": ["https://ypt-nsn.gov/our-government/"], "seats": 7},
+    "0965": {"nation": "Shoshone-Paiute (Duck Valley)",
+             "pages": ["https://shopaitribes.org/business-council/"], "seats": 7},
+    "1070": {"nation": "Fallon Paiute-Shoshone",
+             "pages": ["https://www.fpst.org/166/Fallon-Business-Council"], "seats": 7},
+    "1075": {"nation": "Fallon Paiute-Shoshone",
+             "pages": ["https://www.fpst.org/166/Fallon-Business-Council"], "seats": 7},
+    "1340": {"nation": "Confederated Tribes of the Goshute",
+             "pages": ["https://ctgr.us/home/tribal-council/"], "seats": 5},
+    "1915": {"nation": "Las Vegas Paiute", "pages": ["https://www.lvpaiute.gov/"], "seats": 7},
+    "2315": {"nation": "Moapa Band of Paiutes",
+             "pages": ["https://www.moapabandofpaiutes.com/tribal-administration"], "seats": 6},
+    "4180": {"nation": "Timbisha Shoshone",
+             "pages": ["https://timbisha.com/newsite/government-info/"], "seats": 5},
+    "4515": {"nation": "Walker River Paiute",
+             "pages": ["https://www.wrpt.org/tribal-government/"], "seats": 7},
+    # California. Where the Bureau lists no website, or one that has lapsed or
+    # names no council, the nation's current site was found by a web search
+    # and is the one read: Big Pine, Jamul, Picayune (Chukchansi), Table
+    # Mountain, Redwood Valley, Sherwood Valley, Mesa Grande, Cahuilla and
+    # Kletsel Dehe. Cahuilla's and Picayune's addresses are the ones their
+    # older links redirect to.
+    "0120": {"nation": "United Auburn",
+             "pages": ["https://www.auburnrancheria.com/about-us/tribal-council/"], "seats": 5},
+    "0125": {"nation": "Augustine",
+             "pages": ["https://tribe.augustinetribe-nsn.gov/tribal-council/"], "seats": 2},
+    "0155": {"nation": "Barona", "pages": ["https://www.barona-nsn.gov/government"], "seats": 6},
+    "0185": {"nation": "Benton Paiute",
+             "pages": ["https://www.bentonpaiutereservation.org/council.htm"], "seats": 5},
+    "0250": {"nation": "Big Pine Paiute",
+             "pages": ["https://bigpinepaiute.org/about-the-tribe/"], "seats": 5},
+    "0265": {"nation": "Big Sandy",
+             "pages": ["https://www.bigsandyrancheria.com/governance-administration-1"], "seats": 5},
+    "0275": {"nation": "Big Valley",
+             "pages": ["https://www.bvrancheria.com/tribal-council"], "seats": 4},
+    "0290": {"nation": "Bishop Paiute",
+             "pages": ["https://bishoppaiute.net/about-us/"], "seats": 5},
+    "0325": {"nation": "Blue Lake",
+             "pages": ["https://www.bluelakerancheria-nsn.gov/about/Tribal-government/"], "seats": 5},
+    "0435": {"nation": "Cahuilla",
+             "pages": ["https://cahuilla-nsn.gov/tribal-government/tribal-council/"], "seats": 5},
+    # The Viejas Band's own reservation; the Capitan Grande Reservation
+    # (0495), which it holds jointly with the Barona Band, carries neither
+    # band's council (build_tribal_areas.py's ROSTER_BLOCKED says why).
+    "4500": {"nation": "Viejas",
+             "pages": ["https://viejasbandofkumeyaay.org/modern-government/viejas-government-officers/"], "seats": 7},
+    "0780": {"nation": "Kletsel Dehe Wintun",
+             "pages": ["https://www.kletseldehe.org/governance/"], "seats": 5},
+    "0955": {"nation": "Dry Creek",
+             "pages": ["https://drycreekrancheria.com/board-of-directors/"], "seats": 5},
+    "1010": {"nation": "Elk Valley",
+             "pages": ["https://elk-valley.com/the-rancheria/tribal-council/"], "seats": 9},
+    "1055": {"nation": "Estom Yumeka Maidu (Enterprise)",
+             "pages": ["https://enterpriserancheria.org/our-tribe/"], "seats": 7},
+    "1380": {"nation": "Greenville", "pages": ["https://www.grth.org/about"], "seats": 5},
+    "1490": {"nation": "Hoopa Valley",
+             "pages": ["https://www.hoopa-nsn.gov/hoopa-valley-tribal-council/"], "seats": 8},
+    "1515": {"nation": "Hopland",
+             "pages": ["https://www.hbpi.gov/getpage.php?name=Tribal_Council&sub=Governance"], "seats": 7},
+    "1670": {"nation": "Jamul", "pages": ["https://jiv-nsn.gov/tribal-government/"], "seats": 7},
+    "1750": {"nation": "Karuk", "pages": ["https://www.karuk.us/council"], "seats": 9},
+    "1895": {"nation": "La Posta",
+             "pages": ["https://www.lptribe.net/government-officers/"], "seats": 5},
+    "2190": {"nation": "Mesa Grande",
+             "pages": ["https://www.mesagrandeband-nsn.gov/tribal-government/"], "seats": 5},
+    "2255": {"nation": "Middletown",
+             "pages": ["https://middletownrancheria-nsn.gov/tribal-council/"], "seats": 5},
+    "2360": {"nation": "Morongo",
+             "pages": ["https://morongonation.org/tribal-council/"], "seats": 7},
+    "2495": {"nation": "North Fork",
+             "pages": ["https://northforkrancheria-nsn.gov/sovereign-nation/tribal-council/"], "seats": 5},
+    "2635": {"nation": "Pala",
+             "pages": ["https://www.palatribe.com/government/executive-committee/"], "seats": 6},
+    "2715": {"nation": "Pauma", "pages": ["https://www.paumatribe.com/government/"], "seats": 5},
+    "2775": {"nation": "Picayune Rancheria of the Chukchansi",
+             "pages": ["https://chukchansi-nsn.gov/council/"], "seats": 7},
+    "3095": {"nation": "Redding",
+             "pages": ["https://www.reddingrancheria-nsn.gov/tribal-council/"], "seats": 7},
+    "3115": {"nation": "Redwood Valley",
+             "pages": ["https://www.rvrpomo.net/about-us-1"], "seats": 7},
+    "3145": {"nation": "Pulikla Tribe of Yurok People",
+             "pages": ["https://puliklatribe.gov/who-we-are/tribal-council/"], "seats": 5},
+    "3220": {"nation": "Bear River Band",
+             "pages": ["https://www.bearriverrancheria.org/about-1"], "seats": 7},
+    "3250": {"nation": "Round Valley",
+             "pages": ["https://www.rvit.org/government/tribal-council"], "seats": 7},
+    "3520": {"nation": "Tachi Yokut (Santa Rosa Rancheria)",
+             "pages": ["https://www.tachi-yokut-nsn.gov/council"], "seats": 6},
+    "3540": {"nation": "Santa Ynez Chumash",
+             "pages": ["https://chumash.gov/government"], "seats": 5},
+    "3735": {"nation": "Sherwood Valley",
+             "pages": ["https://www.sherwoodvalleybandofpomo.com/tribal-government.html"], "seats": 7},
+    "3750": {"nation": "Shingle Springs",
+             "pages": ["https://shinglespringsrancheria.com/tribal-council/"], "seats": 8},
+    "3855": {"nation": "Tolowa Dee-ni'",
+             "pages": ["https://www.tolowa.gov/209/LHETLH-XAT-NE-TRIBAL-COUNCIL"], "seats": 7},
+    "3870": {"nation": "Soboba", "pages": ["https://www.soboba-nsn.gov/about-us"], "seats": 5},
+    "4060": {"nation": "Susanville",
+             "pages": ["https://sir-nsn.gov/boards-committees.html"], "seats": 7},
+    "4090": {"nation": "Sycuan",
+             "pages": ["https://sycuantribe.com/tribal-government/"], "seats": 7},
+    "4110": {"nation": "Table Mountain",
+             "pages": ["https://tablemountainrancheria.com/tribal-council/"], "seats": 5},
+    "4255": {"nation": "Torres Martinez",
+             "pages": ["https://torresmartinez.org/tribal_council/"], "seats": 6},
+    "4275": {"nation": "Trinidad (Cher-Ae Heights)",
+             "pages": ["https://trinidad-rancheria.org/tribal-council/"], "seats": 5},
+    "4760": {"nation": "Yurok",
+             "pages": ["https://www.yuroktribe.org/tribal-council-members"], "seats": 9},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -1167,6 +1375,1208 @@ def p_seminole_fl(pages):
     return out
 
 
+# ---- Washington ---------------------------------------------------------------
+# Read 2026-11-13. Contact details ship only where the page prints them in that
+# member's own entry and nowhere else; a telephone printed beside every member
+# (Nooksack's, Quileute's) is the council office's and rides nobody.
+
+def _name_role_pairs(ls, roles, count):
+    """name line, then its office line, `count` times, starting at ls[0]."""
+    out = []
+    for i in range(0, 2 * count, 2):
+        name, role = ls[i], ls[i + 1]
+        if not re.search(roles, role):
+            raise ValueError("expected an office after %r, found %r" % (name, role))
+        out.append(_m(name, role))
+    return out
+
+
+def _comma_role_lines(ls, count):
+    """'Name, Office' lines; the office is after the last comma."""
+    out = []
+    for line in ls[:count]:
+        name, role = line.rsplit(", ", 1)
+        out.append(_m(name, role))
+    return out
+
+
+def p_chehalis(pages):
+    # each member is a name, an office heading and a paragraph about them; on
+    # 2026-11-13 two paragraphs give a different office from the heading above
+    # them and one spells the name differently, so the heading ships and the
+    # page's other wording is stated on the row rather than chosen between
+    ls = pages[0]
+    i0 = ls.index("Chairman") - 1
+    out, i = [], i0
+    while len(out) < 5:
+        name, role = ls[i], ls[i + 1]
+        out.append(_m(name, role))
+        i += 2
+        if i < len(ls) and ls[i].startswith(("Thomas ", "Farley ", "Cheryle ", "Don ")) \
+                and " serves as " in ls[i]:
+            bio = ls[i]
+            said = re.search(r" serves as (?:Tribal )?(.+?) on the Chehalis", bio)
+            if said and said.group(1) != role:
+                out[-1]["note"] = ("the same page also describes this member as serving as %s"
+                                   % said.group(1))
+            spelled = bio.split(",", 1)[0]
+            if spelled.split()[-1] != name.split()[-1]:
+                extra = "the same page also spells the name %s" % spelled
+                out[-1]["note"] = ("; ".join([out[-1]["note"], extra])
+                                   if out[-1].get("note") else extra)
+            i += 1
+    return out
+
+
+_COLVILLE_OFFICES = {"Chairwoman", "Chairman", "Vice-Chairwoman", "Vice-Chairman", "Secretary"}
+
+
+def p_colville(pages):
+    # name, then the council office if any, then any committee the member
+    # chairs, then the member's district, then a "learn more" link (whose text
+    # sometimes runs onto a line of its own)
+    ls = _after(pages[0], "-Colville Business Council")
+    out, i = [], 0
+    while len(out) < 14:
+        name = ls[i]
+        i += 1
+        labels = []
+        while not ls[i].endswith("District Representative"):
+            labels.append(ls[i])
+            i += 1
+        district = ls[i][:-len(" Representative")]
+        i += 1
+        if not ls[i].startswith("Click to Learn More About"):
+            raise ValueError("Colville: no link after %r" % name)
+        if ls[i] == "Click to Learn More About":
+            i += 1
+        i += 1
+        office = [l for l in labels if l in _COLVILLE_OFFICES]
+        committee = [l for l in labels if l not in _COLVILLE_OFFICES]
+        out.append(_m(name, office[0] if office else "Council Member", district=district,
+                      note="; ".join(committee)))
+    return out
+
+
+def p_cowlitz(pages):
+    ls = _after(pages[0], "Current Tribal Council Members")
+    out, i = [], 0
+    while i + 2 < len(ls) and ls[i + 1].startswith("Term ends "):
+        out.append(_m(ls[i], ls[i + 2], termEnds=ls[i + 1][len("Term ends "):]))
+        i += 3
+    return out
+
+
+def p_lower_elwha(pages):
+    return _comma_role_lines(_after(pages[0], "Our Council"), 5)
+
+
+def p_makah(pages):
+    return _comma_role_lines(_after(pages[0], "Makah Tribal Council Members:"), 5)
+
+
+def p_muckleshoot(pages):
+    # the contact box near the top names the chair once; the council is the
+    # list that follows the introduction
+    i0 = [k for k, l in enumerate(pages[0])
+          if l == "Chair" and k > 0 and pages[0][k - 1] == "Donny Stevenson"][0] - 1
+    return _name_role_pairs(pages[0][i0:], r"Chair|Secretary|Treasurer|Councilmember", 9)
+
+
+def p_nisqually(pages):
+    ls = _after(pages[0], "The Nisqually Tribal Council")
+    return [_m(*l.rsplit(" - ", 1)) for l in ls[:7]]
+
+
+def p_nooksack(pages):
+    # each member is name, office, the council office's telephone (the same
+    # number for all eight) and an e-mail link
+    ls = _after(pages[0], "Council Members", nth=1)
+    out = []
+    for i in range(0, 32, 4):
+        if ls[i + 3] != "Email":
+            raise ValueError("Nooksack: unexpected row at %r" % ls[i])
+        out.append(_m(ls[i], ls[i + 1]))
+    return out
+
+
+def p_pgst(pages):
+    i0 = pages[0].index("Policy Manual") + 1
+    return _name_role_pairs(pages[0][i0:], r"Chair|Council Person", 6)
+
+
+def p_quileute(pages):
+    # name, office, the council office's shared telephone, the office's mailbox
+    ls = _after(pages[0], "Quileute Tribal Council")[1:]
+    out = []
+    for i in range(0, 20, 4):
+        out.append(_m(ls[i], ls[i + 1], email=_email(ls[i + 3])))
+    return out
+
+
+def p_quinault(pages):
+    ls = _after(pages[0], "Members")
+    out = []
+    for i in range(0, 33, 3):
+        if ls[i + 2] != "More Information":
+            raise ValueError("Quinault: unexpected row at %r" % ls[i])
+        out.append(_m(ls[i], ls[i + 1]))
+    return out
+
+
+def p_shoalwater(pages):
+    # a table of name, office and the member's own telephone; the
+    # member-at-large's row gives an e-mail address instead
+    ls = _after(pages[0], "Phone Number")
+    out = []
+    for i in range(0, 15, 3):
+        contact = ls[i + 2]
+        out.append(_m(ls[i], ls[i + 1], phone=_phone(contact), email=_email(contact)))
+    return out
+
+
+def p_skokomish(pages):
+    # a table of office, name, the member's own telephone and e-mail; one
+    # member's row has no telephone, and the table ends with the council's
+    # executive secretary, who is staff
+    ls = _after(pages[0], "E-Mail")
+    out, i = [], 0
+    while ls[i] != "Executive Secretary":
+        role, name = ls[i], ls[i + 1]
+        i += 2
+        phone = email = None
+        if _phone(ls[i]):
+            phone = ls[i]
+            i += 1
+        if _email(ls[i]):
+            email = ls[i]
+            i += 1
+        out.append(_m(name, role, phone=phone, email=email))
+    return out
+
+
+def p_snoqualmie(pages):
+    out = []
+    for line in pages[0]:
+        m = re.match(r"(Chairperson|Vice Chair|Tribal Secretary|Treasurer): (.+)$", line)
+        if m:
+            out.append(_m(m.group(2), m.group(1)))
+        elif line.startswith("Council: "):
+            out += [_m(n, "Council") for n in line[len("Council: "):].split(", ")]
+    return out
+
+
+def p_stillaguamish(pages):
+    return _comma_role_lines(_after(pages[0], "Tribal Council/Board of Directors:"), 6)
+
+
+_SUQ = r"Council Member|Vice Chair|Chairman|Secretary|Treasurer"
+
+
+def p_suquamish(pages):
+    # the council is named in the caption of its photograph; a suffix follows
+    # its own comma ("Mills, Jr"), so the caption is split on offices, not commas
+    pre = "Suquamish Tribal Council, from left to right, is "
+    text = [l for l in pages[0] if l.startswith(pre)][0][len(pre):].rstrip(".")
+    found = re.findall(r"(%s) (.+?)(?=, (?:and )?(?:%s) |$)" % (_SUQ, _SUQ), text)
+    return [_m(n, r) for r, n in found]
+
+
+def p_tulalip(pages):
+    ls = _after(pages[0], "Board of Directors", nth=3)[1:]
+    return _name_role_pairs(ls, r"Chair|Secretary|Treasurer|Board Member", 7)
+
+
+def p_lummi(pages):
+    i0 = [k for k, l in enumerate(pages[0]) if l.startswith("Lummi Indian Business Council (LIBC) is")][0]
+    return _name_role_pairs(pages[0][i0 + 1:], r"Chair|Secretary|Treasurer|Council Member", 11)
+
+
+def p_yakama(pages):
+    # name, the member's Yakama name, then for an officer the office; every
+    # entry ends "VIEW BIO"
+    ls = _after(pages[0], "Executive Members")
+    out, i, role = [], 0, None
+    while len(out) < 14:
+        if ls[i] == "Members":
+            i += 1
+            continue
+        name, own = ls[i], ls[i + 1]
+        if ls[i + 2] == "VIEW BIO":
+            role, i = "Council Member", i + 3
+        else:
+            role, i = ls[i + 2], i + 4
+            if ls[i - 1] != "VIEW BIO":
+                raise ValueError("Yakama: unexpected row at %r" % name)
+        out.append(_m(name, role, note="Yakama name " + own))
+    return out
+
+
+def p_umatilla(pages):
+    # the heading is in the menu and the breadcrumb too; the list is under the last
+    ls = _after(pages[0], "Board of Trustees", nth=pages[0].count("Board of Trustees") - 1)
+    return _name_role_pairs(ls, r"Chair|Treasurer|Secretary|Trustee", 9)
+
+
+# ---- Arizona ------------------------------------------------------------------
+# Read 2026-11-13, each robots.txt with this scraper's client. A telephone
+# printed beside every member of a council (Gila River's main line) is the
+# council office's and rides nobody.
+
+def _drop_stop(name):
+    """A full stop closing a line that is only a name ends the caption, except
+    where it ends a suffix or an initial."""
+    if name.endswith(".") and not re.search(r"(?:\bJr|\bSr|\b[A-Z])\.$", name):
+        return name[:-1]
+    return name
+
+
+def p_cocopah(pages):
+    # "Chairwoman:" / name, "Vice-Chairman:" / name, "Council members:" / three
+    ls = _after(pages[0], "Current Tribal Council 2026-2028:")
+    out = [_m(ls[1], ls[0].rstrip(":")), _m(ls[3], ls[2].rstrip(":"))]
+    if ls[4] != "Council members:":
+        raise ValueError("Cocopah: expected the council members heading, found %r" % ls[4])
+    out += [_m(n, "Council Member") for n in ls[5:8]]
+    return out
+
+
+def p_gila_river(pages):
+    # "District N" headings, each over its members: an optional "(Photo Coming
+    # Soon)", the name, an e-mail line, a telephone line and an optional fax.
+    # The council's main line, (520) 562-9720, is printed beside most members
+    # and is the office's; a different number is that member's own.
+    ls = _after(pages[0], "Council Members", nth=1)
+    out, district, i = [], None, 0
+    while len(out) < 17:
+        line = ls[i]
+        if re.match(r"^District \d$", line):
+            district = line
+        elif line == "(Photo Coming Soon)" or line.startswith(("Fax", "Phone", "E-Mail",
+                                                               "E-mail", "Email")):
+            pass
+        else:
+            email = _email(ls[i + 1])
+            if not email:
+                raise ValueError("Gila River: no e-mail after %r" % line)
+            phone = None
+            if ls[i + 2].startswith("Phone"):
+                digits = re.sub(r"\D", "", ls[i + 2])
+                if digits != "5205629720":
+                    phone = ls[i + 2].split(":", 1)[1].strip()
+            out.append(_m(_drop_stop(line), "Council Member", district=district,
+                          email=email, phone=phone))
+        i += 1
+    return out
+
+
+def p_hualapai(pages):
+    # "Name, Office, 2024-2028" then the member's e-mail
+    ls = _after(pages[0], "Tribal Council", nth=pages[0].count("Tribal Council") - 1)
+    ls = [l for l in ls if not l.startswith("If you would like")]
+    out = []
+    for k in range(0, 18, 2):
+        name, role, term = ls[k].rsplit(", ", 2)
+        if not re.match(r"^\d{4}-\d{4}$", term):
+            raise ValueError("Hualapai: no term on %r" % ls[k])
+        out.append(_m(name, role, termEnds=term.split("-")[1], email=_email(ls[k + 1])))
+    return out
+
+
+def p_pascua_yaqui(pages):
+    # name, OFFICE in capitals, e-mail, "Office <n>" and an optional "Cell <n>"
+    i0 = pages[0].index("CHAIRMAN") - 1
+    ls = pages[0][i0:]
+    out = []
+    for k in range(0, 44, 4):
+        name, role, email, tel = ls[k:k + 4]
+        m = re.match(r"^Office (\S+)(?: Cell (\S+))?$", tel)
+        if not m or not _email(email):
+            raise ValueError("Pascua Yaqui: unexpected rows after %r" % name)
+        out.append(_m(name, role.title(), email=_email(email), phone=m.group(1),
+                      phonesExtra=["cell " + m.group(2)] if m.group(2) else None))
+    return out
+
+
+def p_salt_river(pages):
+    # name, then the office or the member's district, then a "Read Bio" link
+    ls = _after(pages[0], "Council Leadership")
+    out = []
+    for k in range(0, 27, 3):
+        name, what, link = ls[k:k + 3]
+        if not link.startswith("Read Bio"):
+            raise ValueError("Salt River: expected a bio link after %r" % name)
+        if what in ("President", "Vice President"):
+            out.append(_m(name, what))
+        else:
+            out.append(_m(name, "Council Member", district=what))
+    return out
+
+
+def p_tohono_oodham(pages):
+    # the Legislative Council's table: "Surname, Given", e-mail, telephone,
+    # district, the month a term expires, then committee lines; the council's
+    # own Chairperson and Vice Chairperson are the committee line "TOLC, ...".
+    # The table writes each name surname first, so it is turned round at its
+    # one comma; no word of it changes.
+    ls = _after(pages[0], "Committee Title")
+    out, k = [], 0
+    while len(out) < 22:
+        name, email, phone, district, term = ls[k:k + 5]
+        if not _email(email) or not re.match(r"^\d{1,2}/\d{4}$", term):
+            raise ValueError("Tohono O'odham: unexpected rows after %r" % name)
+        surname, given = name.split(", ")
+        k += 5
+        role = "Representative"
+        while (k < len(ls) and ls[k] != "Tohono O’odham Nation"
+               and not (k + 1 < len(ls) and _email(ls[k + 1]))):
+            if ls[k] == "TOLC, Chairperson":
+                role = "Chairperson"
+            elif ls[k] == "TOLC, Vice Chairperson":
+                role = "Vice Chairperson"
+            k += 1
+        out.append(_m(given + " " + surname, role, district=district, email=_email(email),
+                      phone=phone, termEnds=term))
+    return out
+
+
+def p_yavapai_apache(pages):
+    ls = _after(pages[0], "Tribal Council")
+    return _name_role_pairs(ls, r"(?i)^(chairman|vice chairman|council member)$", 9)
+
+
+_FORT_MOJAVE_OFFICES = ("Vice Chairman", "Chairman", "Secretary", "Council Member")
+
+
+def p_fort_mojave(pages):
+    # each member's name runs straight into the office ("Tim WilliamsChairman");
+    # the office is cut off the end, longest first
+    i0 = [i for i, l in enumerate(pages[0]) if l.startswith("Tribal Counciladmin")][0]
+    out = []
+    for line in pages[0][i0 + 1:i0 + 7]:
+        for off in _FORT_MOJAVE_OFFICES:
+            if line.endswith(off):
+                out.append(_m(line[:-len(off)], off))
+                break
+        else:
+            raise ValueError("Fort Mojave: no office on %r" % line)
+    return out
+
+
+def p_quechan(pages):
+    # the President and Vice President under their own headings, then a photo
+    # caption naming the whole council "(l-r)". The caption puts "Mr." before
+    # each man's name: a courtesy title is not part of the name and is not
+    # carried. "Dr." and "Ed. D." are the page's own and ship, as Dr. ships for
+    # other nations.
+    ls = pages[0]
+    i = ls.index("Quechan Tribal President")
+    out = [_m(ls[i + 1], "President")]
+    if ls[i + 2] != "Quechan Tribal Vice President":
+        raise ValueError("Quechan: no vice president heading")
+    out.append(_m(ls[i + 3], "Vice President"))
+    cap = " ".join(ls[i + 4:i + 7])
+    if not cap.startswith("Quechan Tribal Council (l-r): "):
+        raise ValueError("Quechan: no council caption")
+    cap = cap[len("Quechan Tribal Council (l-r): "):]
+    for part in re.split(r",\s+(?=(?:Mr\.|Dr\.|Tribal President|Vice-President) )", cap):
+        part = _drop_stop(part.strip())
+        if part.startswith(("Tribal President ", "Vice-President ")):
+            continue
+        out.append(_m(re.sub(r"^Mr\. ", "", part), "Council Member"))
+    return out
+
+
+def p_san_carlos(pages):
+    # photo captions, most "<District> Councilwoman – Name"; on 2026-11-13 one
+    # caption is a name alone and one an office over a name, and the last is a
+    # name alone. A member the block names with no office is carried as a
+    # council member with that stated on the row, never given a district the
+    # block does not print.
+    ls = _after(pages[0], "San Carlos Apache Tribe Tribal Council")
+    out = []
+    for line in ls[:2]:
+        role, name = line.split(" – ", 1)
+        out.append(_m(name, role))
+    for line in ls[2:8]:
+        m = re.match(r"^(.+ District) (Council(?:wo)?man)(?: –)? (.+)$", line)
+        if not m:
+            raise ValueError("San Carlos: cannot read %r" % line)
+        out.append(_m(m.group(3), m.group(2), district=m.group(1)))
+    if ls[8:12] != ["Ned Anderson Jr", "Bylas District Councilman", "Jonathan Kitcheyan",
+                    "Dr. John Bush"]:
+        raise ValueError("San Carlos: the last captions changed: %r" % ls[8:12])
+    out.append(_m("Ned Anderson Jr", "Council Member",
+                  note="the council block names this member without an office or district"))
+    out.append(_m("Jonathan Kitcheyan", "Councilman", district="Bylas District"))
+    out.append(_m("Dr. John Bush", "Council Member",
+                  note=("the council block names this member without an office; the "
+                        "page's menu lists him under the Peridot District office")))
+    return out
+
+
+def p_zuni(pages):
+    ls = _after(pages[0], "Pueblo of Zuni Governor and Council")[1:]
+    return _name_role_pairs(ls, r"^(Governor|Lieutenant Governor|Head Councilman|"
+                                r"Councilman|Councilwoman)$", 8)
+
+
+def p_crit(pages):
+    # "Office:" / name for the four officers, then "Councilmembers:" over the
+    # rest; the page breaks one member's name over two lines ("Bill" /
+    # "Beeson"), which are rejoined
+    ls = _after(pages[0], "The current CRIT Tribal Council is:")
+    out = []
+    for k in range(0, 8, 2):
+        out.append(_m(ls[k + 1], ls[k].rstrip(":")))
+    if ls[8] != "Councilmembers:":
+        raise ValueError("CRIT: expected the council members heading, found %r" % ls[8])
+    rest, names = ls[9:], []
+    while rest and len(names) < 5:
+        if len(rest[0].split()) == 1 and len(rest) > 1 and len(rest[1].split()) == 1:
+            names.append(rest[0] + " " + rest[1])
+            rest = rest[2:]
+        else:
+            names.append(rest[0])
+            rest = rest[1:]
+    out += [_m(n, "Council Member") for n in names]
+    return out
+
+
+def p_navajo(pages):
+    # the Navajo Nation Council's own site (the nation's legislative branch;
+    # the Bureau lists the executive's www.navajo-nsn.gov, which reset every
+    # connection on 2026-11-13). Each delegate: name, "<name> is representing:",
+    # the chapters in brackets, a committee line, the delegate's e-mail, then
+    # clan and hometown lines, which are not carried. The site's own menu links
+    # "Speaker" to Crystalyne Curley's biography, and she is the one delegate
+    # with no standing committee, so her row carries that office.
+    ls = _after(pages[0], "Click below to expand")
+    out = []
+    for i, line in enumerate(ls):
+        if not line.endswith(" is representing:"):
+            continue
+        name, chapters, committee, email = ls[i - 1], ls[i + 1], ls[i + 2], ls[i + 3]
+        if not (chapters.startswith("(") and chapters.endswith(")")
+                and committee.startswith("Committee:") and _email(email)):
+            raise ValueError("Navajo: unexpected rows for %r" % name)
+        role = "Speaker" if name == "Crystalyne Curley" else "Council Delegate"
+        out.append(_m(name, role, district=chapters[1:-1], email=_email(email)))
+    return out
+
+
+
+
+# ---- Nevada -------------------------------------------------------------------
+# Read 2026-11-13 with this scraper's client, each robots.txt first. Goshute's
+# and Moapa's older domains have lapsed (one now a finance blog, the other a
+# forms company's page); each nation's current site is the one read.
+
+def p_fallon(pages):
+    # name / office pairs from the Chairwoman down, with an "Email <name>"
+    # link line under some names
+    ls = pages[0][pages[0].index("Tribal Chairwoman") - 1:]
+    ls = [l for l in ls if not l.startswith("Email ")]
+    return _name_role_pairs(ls, r"^(Tribal Chairwoman|Tribal Chairman|Vice Chairman|"
+                                r"Vice Chairwoman|Tribal Secretary|Treasurer|"
+                                r"Council Member)$", 7)
+
+
+def p_duck_valley(pages):
+    # office, name, "Term: April 2029", "Email: x", "Phone: <main line> ext. N";
+    # the extension is the member's own, so the line rides that member
+    ls = _after(pages[0], "Business Council")
+    out = []
+    for k in range(0, 35, 5):
+        role, name, term, email, phone = ls[k:k + 5]
+        m = re.match(r"^Term: \w+ (\d{4})$", term)
+        x = re.match(r"^Phone: (.+ ext\. \d+)$", phone)
+        if not (m and x and _email(email)):
+            raise ValueError("Duck Valley: unexpected rows after %r" % name)
+        out.append(_m(_drop_stop(name), role, termEnds=m.group(1), email=_email(email),
+                      phone=x.group(1)))
+    if ls[35] != "Chief Executive Officer":
+        raise ValueError("Duck Valley: the council block runs past seven, found %r" % ls[35])
+    return out
+
+
+def p_timbisha(pages):
+    # name, office, e-mail, then a sentence about the member, from the
+    # Chairperson down
+    ls = pages[0]
+    i0 = ls.index("Tribal Chairperson") - 1
+    out = []
+    for k in range(i0, i0 + 20, 4):
+        name, role, email = ls[k:k + 3]
+        if not _email(email):
+            raise ValueError("Timbisha: no e-mail after %r" % name)
+        out.append(_m(name, role, email=_email(email)))
+    return out
+
+
+def p_yerington(pages):
+    # the Chairman's name over "Tribal Chairman |Yerington Paiute Tribe" and a
+    # biography, then name / office pairs
+    ls = _after(pages[0], "Meet Our Tribal Council")
+    role = ls[1].split("|")[0].strip()
+    if role != "Tribal Chairman":
+        raise ValueError("Yerington: expected the Chairman first, found %r" % ls[1])
+    out = [_m(ls[0], role)]
+    i = ls.index("Vice Chairman") - 1
+    out += _name_role_pairs(ls[i:], r"^(Vice Chairman|Council Member|Secretary|"
+                                    r"Treasurer)$", 6)
+    return out
+
+
+def p_walker_river(pages):
+    # name, office, "Email – x"
+    ls = _after(pages[0], "Tribal Council")
+    out = []
+    for k in range(0, 21, 3):
+        name, role, email = ls[k:k + 3]
+        if not email.startswith("Email") or not _email(email):
+            raise ValueError("Walker River: no e-mail after %r" % name)
+        out.append(_m(name, role, email=_email(email)))
+    return out
+
+
+def p_las_vegas_paiute(pages):
+    # a heading repeating each office, then the name and the office; a
+    # "Council Members" heading sits over the five council members
+    ls = _after(pages[0], "Executive Leadership")
+    ls = ls[:ls.index("Serving Our Community")]
+    ls = [l for l in ls if l != "Council Members"]
+    out = []
+    for k in range(0, len(ls), 3):
+        heading, name, role = ls[k:k + 3]
+        if heading not in ("Chairman", "Vice Chairman", "Council Member"):
+            raise ValueError("Las Vegas Paiute: unexpected heading %r" % heading)
+        out.append(_m(name, role))
+    return out
+
+
+def p_goshute(pages):
+    # "Name – Office" lines under "Tribal Council Members"
+    ls = _after(pages[0], "Tribal Council Members")
+    out = []
+    for line in ls[:5]:
+        name, role = line.split(" – ", 1)
+        out.append(_m(name, role))
+    return out
+
+
+def p_moapa(pages):
+    # office, name, the tribe's main line (rides nobody), a description; the
+    # council's six come before the Tribal Administrator
+    ls = _after(pages[0], "Meeting Minutes Request Form")
+    out = []
+    i = 0
+    while ls[i] != "Tribal Administrator":
+        if re.match(r"^(Chairman|Vice Chairman|Tribal Secretary|Council Member|"
+                    r"Council Treasurer)$", ls[i]):
+            out.append(_m(ls[i + 1], ls[i]))
+            i += 2
+        else:
+            i += 1
+    return out
+
+
+# ---- California ---------------------------------------------------------------
+# Read 2026-11-13 with this scraper's client, each robots.txt first. Where the
+# Bureau lists no website, or one that has lapsed, the nation's current site was
+# found by a web search and is the one read. A telephone printed beside every
+# member, or the tribe's main line printed alone, is the office's and rides
+# nobody; the main line with a member's own extension rides that member.
+
+def _visible(ls):
+    """Drop lines that hold only zero-width or icon characters."""
+    return [l for l in ls if re.sub(r"[​﻿-\s]", "", l)]
+
+
+def _dash_role_lines(ls, count, sep=" – "):
+    """'Name – Office' lines."""
+    out = []
+    for line in ls[:count]:
+        if sep not in line:
+            raise ValueError("expected 'name%soffice', found %r" % (sep, line))
+        name, role = line.split(sep, 1)
+        out.append(_m(_drop_stop(name.strip()), role))
+    return out
+
+
+def _role_dash_name(ls, count, sep=" – "):
+    """'Office – Name' lines."""
+    out = []
+    for line in ls[:count]:
+        if sep not in line:
+            raise ValueError("expected 'office%sname', found %r" % (sep, line))
+        role, name = line.split(sep, 1)
+        out.append(_m(_drop_stop(name.strip()), role))
+    return out
+
+
+def p_augustine(pages):
+    # name, office and a "Read More" link for each member of the council
+    # block, which on 2026-11-13 names two
+    ls = pages[0]
+    ls = [l for l in ls[ls.index("Tribal Chairperson") - 1:] if l != "Read More"]
+    out = _name_role_pairs(ls, r"^Tribal (Chairperson|Treasurer|Vice Chairperson|Secretary)$", 2)
+    if ls[4].startswith("Tribal "):
+        raise ValueError("Augustine: the council block runs past two, found %r" % ls[4])
+    return out
+
+
+def p_big_sandy(pages):
+    # the Chairperson's name heads the block and her office label comes after
+    # the other four pairs
+    ls = pages[0]
+    s = ls.index("Vice Chairperson") - 2
+    if ls[s - 1] != "Tribal Council" or ls[s + 9] != "Chairperson":
+        raise ValueError("Big Sandy: the council block has moved")
+    out = [_m(ls[s], "Chairperson")]
+    out += _name_role_pairs(ls[s + 1:s + 9], r"^(Vice Chairperson|Treasurer|Secretary|"
+                                             r"Member-at-Large)$", 4)
+    return out
+
+
+def p_big_valley(pages):
+    ls = _visible(pages[0][pages[0].index("Tribal Chairman"):])
+    return _role_then_name(ls, {"Tribal Chairman", "Tribal Treasurer", "Tribal Vice-Chairman",
+                                "Tribal Secretary"}, 4)
+
+
+def p_bishop(pages):
+    ls = _visible(pages[0])
+    ls = ls[ls.index("Chairman") - 1:]
+    return _name_role_pairs(ls, r"^(Chairman|Chairwoman|Vice Chairman|Vice Chairwoman|"
+                                r"Secretary/Treasurer|Council Member)$", 5)
+
+
+def p_blue_lake(pages):
+    # "Name, Office" lines under "Current Elected Leadership"; "Dr." is the
+    # page's own and ships
+    return _comma_role_lines(_after(pages[0], "of the Blue Lake Rancheria"), 5)
+
+
+def p_barona(pages):
+    ls = _after(pages[0], "BARONA TRIBAL COUNCIL")
+    if ls[12] != "Gaming Commission":
+        raise ValueError("Barona: the council block runs past six, found %r" % ls[12])
+    return _name_role_pairs(ls, r"^(Chairman|Chairwoman|Vice-Chairman|Vice-Chairwoman|"
+                                r"Councilman|Councilwoman)$", 6)
+
+
+def p_trinidad(pages):
+    ls = pages[0][pages[0].index("Chairman") - 1:]
+    return _name_role_pairs(ls, r"^(Chairman|Vice Chairman|Secretary / Treasurer|"
+                                r"Council Member Seat #\d)$", 5)
+
+
+_DRY_CREEK_OFFICES = ("Secretary/Treasure", "Member at Large", "Vice-Chair", "Chairman")
+
+
+def p_dry_creek(pages):
+    # each director's name runs straight into the office ("Chris WrightChairman");
+    # the office is cut off the end, longest first, and kept as printed
+    ls = _after(pages[0], "Board of Directors", nth=2)
+    out = []
+    for line in ls[:5]:
+        for off in sorted(_DRY_CREEK_OFFICES, key=len, reverse=True):
+            if line.endswith(off):
+                out.append(_m(line[:-len(off)], off))
+                break
+        else:
+            raise ValueError("Dry Creek: no office on %r" % line)
+    return out
+
+
+def p_viejas(pages):
+    ls = pages[0]
+    ls = [l for l in ls[ls.index("Chairman") - 1:] if l != "Click for Bio"]
+    return _name_role_pairs(ls, r"^(Chairman|Vice Chairman|Secretary|Treasurer|Councilman|"
+                                r"Councilwoman)$", 7)
+
+
+def p_elk_valley(pages):
+    # four officers, each a name, an office and paragraphs about them, then
+    # five "Name, Council Member" lines; the page says the council has nine
+    ls = pages[0]
+    i, out = ls.index("Chairman") - 1, []
+    while len(out) < 4:
+        if ls[i + 1] in ("Chairman", "Vice-Chairman", "Treasurer", "Secretary") \
+                and len(ls[i].split()) <= 4:
+            out.append(_m(ls[i], ls[i + 1]))
+            i += 2
+        else:
+            i += 1
+    members = [l for l in ls[i:] if l.endswith(", Council Member")][:5]
+    out += _comma_role_lines(members, 5)
+    return out
+
+
+def p_hoopa(pages):
+    # the Chairman (with the Administrative Officer's telephone, which is not
+    # his, and his office's e-mail), then each district's representative: the
+    # name, "<District> District Representative", the main line with the
+    # member's extension (some printed with no number) and an e-mail
+    ls = _after(pages[0], "Hoopa Valley Tribal Council")
+    name, role = ls[0].split(" | ")
+    if not ls[1].startswith("Administrative Officer"):
+        raise ValueError("Hoopa: unexpected line under the Chairman: %r" % ls[1])
+    out = [_m(name, role, email=_email(ls[2]))]
+    i = 3
+    while len(out) < 8:
+        head, dist = ls[i], ls[i + 1]
+        m = re.match(r"^(.+ District) Representative$", dist)
+        x = re.match(r"^Office Phone: (.+ Ext\. \d+)$", ls[i + 2])
+        if not m or not ls[i + 2].startswith("Office Phone:") or not _email(ls[i + 3]):
+            raise ValueError("Hoopa: unexpected rows after %r" % head)
+        if " | " in head:
+            name, role = head.split(" | ")
+        else:
+            name, role = head, "District Representative"
+        out.append(_m(name, role, district=m.group(1), phone=x.group(1) if x else None,
+                      email=_email(ls[i + 3])))
+        i += 4
+        if ls[i].startswith("Click here"):
+            i += 1
+    return out
+
+
+def p_hopland(pages):
+    # "Name – Office", the member's e-mail, and a telephone line (the main
+    # line with the member's extension) under some
+    ls = _after(pages[0], "Contact the Tribal Council Office")
+    out, i = [], 0
+    while len(out) < 7:
+        if " – " not in ls[i] or not _email(ls[i + 1]):
+            raise ValueError("Hopland: unexpected rows at %r" % ls[i])
+        name, role = ls[i].split(" – ", 1)
+        email, phone = _email(ls[i + 1]), None
+        i += 2
+        x = re.match(r"^(707-472-2100) \(ext\. (\d+)\)$", ls[i])
+        if x:
+            phone = "%s ext. %s" % x.groups()
+            i += 1
+        out.append(_m(_drop_stop(name), role, email=email, phone=phone))
+    return out
+
+
+def p_karuk(pages):
+    # name, office, then the term as "<start>" / "-" / "<end>"; the end ships
+    # as printed, including terms the page shows as ending before it was read
+    ls = _after(pages[0], "Tribal Council Members", nth=2)
+    i0 = ls.index("Chairperson") - 1
+    out = []
+    for k in range(i0, i0 + 45, 5):
+        name, role, start, dash, end = ls[k:k + 5]
+        if dash != "-" or not re.match(r"^[A-Z][a-z]{2} \d{1,2}, \d{4}$", end):
+            raise ValueError("Karuk: unexpected rows after %r" % name)
+        out.append(_m(name, role, termEnds=end))
+    if ls[i0 + 45] != "Council Core Values":
+        raise ValueError("Karuk: the council block runs past nine, found %r" % ls[i0 + 45])
+    return out
+
+
+def p_la_posta(pages):
+    ls = _after(pages[0], "La Posta Government Officers")
+    return _name_role_pairs(ls, r"^(Chair Woman|Vice-Chairman|Secretary Treasurer|"
+                                r"Tribal Council Member)$", 5)
+
+
+def p_middletown(pages):
+    # "Name, Office: Elected <date> – Present" over each member's paragraph
+    out = []
+    for line in pages[0]:
+        m = re.match(r"^(.+?), (Tribal [^:]+): Elected ", line)
+        if m:
+            out.append(_m(_drop_stop(m.group(1)), m.group(2)))
+    return out
+
+
+def p_morongo(pages):
+    ls = pages[0][pages[0].index("Tribal Chairman") - 1:]
+    return _name_role_pairs(ls, r"^(Tribal Chairman|Tribal Vice Chair|Council Member)$", 7)
+
+
+def p_pala(pages):
+    # "Office – Name" under the six-member Executive Committee's heading. The
+    # contact cards above it print the Pala admin line beside every member and
+    # John A. Machado's own direct line beside him alone; the cards spell one
+    # name differently, which the row states
+    ls = _after(pages[0], "Current Executive Committee members are:")
+    out = _role_dash_name(ls, 6)
+    cards = pages[0][:pages[0].index("Tribal Council")]
+    for mem in out:
+        if mem["name"] == "John A. Machado":
+            i = cards.index("John A. Machado")
+            x = re.match(r"^(760-891-3535) \(Direct\)$", cards[i + 2])
+            if x:
+                mem["phone"] = x.group(1)
+        if mem["name"] == "Sheila Smith-Lopez" and "Shelia Smith-Lopez" in cards:
+            mem["note"] = "the same page also spells it Shelia Smith-Lopez"
+    return out
+
+
+def p_pauma(pages):
+    ls = _after(pages[0], "Our Pauma Tribal Council")
+    if ls[10] != "Council Committees":
+        raise ValueError("Pauma: the council block runs past five, found %r" % ls[10])
+    return _name_role_pairs(ls, r"^(Chairman|Chairwoman|Vice Chairman|Vice Chairwoman|"
+                                r"Treasurer|Secretary|Council Member)$", 5)
+
+
+def p_bear_river(pages):
+    # office, then name, from the Chairwoman down; the telephone and e-mail
+    # above the block are the Executive Secretary's
+    ls = pages[0][pages[0].index("Chairwoman"):]
+    return _role_then_name(ls, {"Chairwoman", "Chairman", "Vice-Chairman", "Vice-Chairwoman",
+                                "Secretary", "Treasurer", "Member-At-Large 1",
+                                "Member-At-Large 2", "Member-At-Large 3"}, 7)
+
+
+def p_northfork(pages):
+    # "Chairperson" is also a menu entry; the council is under the last one
+    ls = pages[0]
+    i0 = len(ls) - 1 - ls[::-1].index("Chairperson") - 1
+    return _name_role_pairs(ls[i0:], r"^(Chairperson|Vice Chairman|Vice Chairperson|"
+                                     r"Treasurer|Secretary|Member at Large)$", 5)
+
+
+def p_redding(pages):
+    # "Office – Name" from the Tribal Chairman down; the three alternates
+    # listed after the seven are not seats
+    ls = pages[0][[i for i, l in enumerate(pages[0]) if l.startswith("Tribal Chairman – ")][0]:]
+    if not ls[7].startswith("1st Alternate"):
+        raise ValueError("Redding: the council block runs past seven, found %r" % ls[7])
+    return _role_dash_name(ls, 7)
+
+
+def p_pulikla(pages):
+    # name, office and the member's own e-mail, five times
+    ls = pages[0]
+    i0 = ls.index("Chairperson") - 1
+    out = []
+    for k in range(i0, i0 + 15, 3):
+        name, role, email = ls[k:k + 3]
+        if not _email(email):
+            raise ValueError("Pulikla: no e-mail after %r" % name)
+        out.append(_m(name, role, email=_email(email)))
+    return out
+
+
+def p_tachi(pages):
+    # office, name and a sentence about the office, six times
+    ls = pages[0][pages[0].index("Tribal Council Chairman"):]
+    out = []
+    for k in range(0, 18, 3):
+        role, name = ls[k], ls[k + 1]
+        if not re.match(r"^(Tribal Council Chairman|Vice-Chairman|Treasurer|Secretary|"
+                        r"Delegate)$", role):
+            raise ValueError("Tachi Yokut: expected an office, found %r" % role)
+        out.append(_m(name, role))
+    return out
+
+
+def p_santa_ynez(pages):
+    # the Business Committee: name, "<OFFICE> Santa Ynez Band of Chumash
+    # Indians", a paragraph and a "Read More" link; offices printed in capitals
+    # are title-cased
+    ls = pages[0][pages[0].index("Business Committee", pages[0].index("Our Government") + 2):]
+    out = []
+    for i, line in enumerate(ls):
+        if line.endswith(" Santa Ynez Band of Chumash Indians") and i > 0:
+            role = line[:-len(" Santa Ynez Band of Chumash Indians")]
+            out.append(_m(ls[i - 1], role.title() if role.isupper() else role))
+        if line == "Elders Council":
+            break
+    return out
+
+
+def p_shingle_springs(pages):
+    # name, office and "Term • <start> – <end>" for seven members, then a
+    # Secretary listed with no term, which the row says
+    # "Tribal Council" is also a menu entry; the block opens three lines
+    # above the first term
+    i0 = [i for i, l in enumerate(pages[0]) if l.startswith("Term • ")][0] - 2
+    if pages[0][i0 - 1] != "Tribal Council":
+        raise ValueError("Shingle Springs: the council block has moved")
+    ls = pages[0][i0:]
+    out = []
+    for k in range(0, 21, 3):
+        name, role, term = ls[k:k + 3]
+        m = re.match(r"^Term • \d{4} – (\d{4})$", term)
+        if not m:
+            raise ValueError("Shingle Springs: no term after %r" % name)
+        out.append(_m(name, role, termEnds=m.group(1)))
+    if ls[22] != "Secretary":
+        raise ValueError("Shingle Springs: expected the Secretary, found %r" % ls[21:23])
+    out.append(_m(ls[21], ls[22],
+                  note="the council block lists this member with no term, unlike the others"))
+    return out
+
+
+def p_soboba(pages):
+    # the five, after the sentence saying there are five; the Executive
+    # Assistant listed under them is staff
+    i = [k for k, l in enumerate(pages[0])
+         if l.startswith("The Soboba Tribal Government consists of five ")][0]
+    ls = pages[0][i + 1:]
+    if not ls[11].startswith("Executive Assistant"):
+        raise ValueError("Soboba: the council block runs past five, found %r" % ls[11])
+    return _name_role_pairs(ls, r"^(Chairman|Chairwoman|Vice-Chair|Secretary|Treasurer|"
+                                r"Sergeant of Arms)$", 5)
+
+
+def p_susanville(pages):
+    # "Office: Name" lines after the sentence saying there are seven; a
+    # district councilmember's office carries the district
+    i = [k for k, l in enumerate(pages[0])
+         if l.startswith("The Tribal Business council of the SIR is composed of seven ")][0]
+    out = []
+    for line in pages[0][i + 1:i + 8]:
+        role, name = line.split(": ", 1)
+        m = re.match(r"^(District \d) (Council(?:wo)?man)$", role)
+        if m:
+            out.append(_m(name, m.group(2), district=m.group(1)))
+        else:
+            out.append(_m(name, role))
+    return out
+
+
+def p_sycuan(pages):
+    # "Name, Office" lines (one broken over two), each officer's with a
+    # paragraph and a "READ BIO" link
+    ls = _after(pages[0], "Sycuan Tribal Council")
+    ls = ls[:ls.index("Sovereignty")]
+    rows, carry = [], ""
+    for line in ls:
+        if line == "READ BIO" or len(line) > 70:
+            continue
+        if line.endswith(","):
+            carry = line + " "
+            continue
+        rows.append(carry + line)
+        carry = ""
+    return _comma_role_lines(rows, 7)
+
+
+def p_torres_martinez(pages):
+    # the proxy listed after the six is not a seat
+    ls = pages[0][pages[0].index("Chairman") - 1:]
+    if ls[13] != "Tribal Council Proxy":
+        raise ValueError("Torres Martinez: the council block runs past six, found %r" % ls[13])
+    return _name_role_pairs(ls, r"^(Chairman|Vice-Chair|Secretary|Treasurer|Tribal Council)$", 6)
+
+
+def p_united_auburn(pages):
+    ls = pages[0][pages[0].index("Tribal Chairman") - 1:]
+    return _name_role_pairs(ls, r"^Tribal (Chairman|Vice Chairman|Secretary|Treasurer|"
+                                r"Council Member at Large)$", 5)
+
+
+def p_benton(pages):
+    # "Name - Office" and "Email: x" for each member
+    ls = _after(pages[0], "TRIBAL COUNCIL:")
+    out = []
+    for k in range(0, 10, 2):
+        name, role = ls[k].split(" - ", 1)
+        if not _email(ls[k + 1]):
+            raise ValueError("Benton: no e-mail after %r" % name)
+        out.append(_m(name, role, email=_email(ls[k + 1])))
+    return out
+
+
+def p_yurok(pages):
+    # name in capitals (kept as printed), then the office or the member's
+    # district, then the member's e-mail; on 2026-11-13 the last member's
+    # e-mail is printed just above his name
+    # the heading is also a menu entry; the council is under the last one
+    ls = _after(pages[0], "Tribal Council Members",
+                nth=pages[0].count("Tribal Council Members") - 1)
+    ls = ls[:ls.index("Home")]
+    out, used = [], set()
+    i = 0
+    while i < len(ls):
+        line = ls[i]
+        if _email(line):
+            i += 1
+            continue
+        name, what = line, ls[i + 1]
+        email = _email(ls[i + 2]) if i + 2 < len(ls) else None
+        if email:
+            i += 3
+        else:
+            prior = _email(ls[i - 1]) if i > 0 else None
+            if prior and prior not in used:
+                email = prior
+            i += 2
+        used.add(email)
+        if what in ("Chairman", "Vice Chairperson"):
+            out.append(_m(name, what, email=email))
+        elif what.endswith(" District"):
+            out.append(_m(name, "Council Member", district=what, email=email))
+        else:
+            raise ValueError("Yurok: no office or district after %r" % name)
+    return out
+
+
+_TOLOWA_OFFICES = {"Chairperson", "Vice-Chairperson", "Secretary", "Treasurer",
+                   "Councilwoman", "Councilman"}
+
+
+def p_tolowa(pages):
+    # each member's name (one broken over two lines), the office, then the
+    # name again in full; the full line ships once it agrees with the first
+    ls = _after(pages[0], "Members")
+    out = []
+    for i, line in enumerate(ls[:40]):
+        if line in _TOLOWA_OFFICES:
+            full = ls[i + 1]
+            if full not in (ls[i - 1], ls[i - 2] + " " + ls[i - 1]):
+                raise ValueError("Tolowa: the name under %r does not match: %r" % (line, full))
+            out.append(_m(full, line))
+    return out
+
+
+def p_greenville(pages):
+    ls = _after(pages[0], "The Tribal Council")
+    return _name_role_pairs(ls, r"^Tribal (Chairman|Vice-Chairwoman|Vice-Chairman|"
+                                r"Secretary / Treasurer|Representative)$", 5)
+
+
+def p_round_valley(pages):
+    # office, "Mr./Ms./Mrs. Name", e-mail, "Term:" and the years. A courtesy
+    # title is not part of the name; the receptionist's mailbox printed under
+    # one member is the office's and rides nobody
+    ls = _after(pages[0], "Round Valley Indian Tribes, Tribal Council")
+    out = []
+    for k in range(0, 35, 5):
+        role, name, email, term, years = ls[k:k + 5]
+        m = re.match(r"^\d{4}-(\d{4})$", years)
+        if term != "Term:" or not m or not _email(email):
+            raise ValueError("Round Valley: unexpected rows after %r" % name)
+        email = _email(email)
+        if email.lower().startswith("tribalreceptionist@"):
+            email = None
+        out.append(_m(re.sub(r"^(?:Mr|Ms|Mrs)\. ", "", name), role, email=email,
+                      termEnds=m.group(1)))
+    return out
+
+
+def p_enterprise(pages):
+    return _dash_role_lines(_after(pages[0], "Estom Yumeka Maidu Tribe"), 7)
+
+
+def p_big_pine(pages):
+    # name, office and the member's own e-mail; the page says five
+    ls = pages[0]
+    i0 = ls.index("Chairperson") - 1
+    out = []
+    for k in range(i0, i0 + 15, 3):
+        name, role, email = ls[k:k + 3]
+        if not _email(email):
+            raise ValueError("Big Pine: no e-mail after %r" % name)
+        out.append(_m(name, role, email=_email(email)))
+    return out
+
+
+def p_jamul(pages):
+    # name, office, a paragraph (or "Coming Soon!") and a "Read More" link,
+    # under the last "Tribal Council" before the news; one paragraph spells a
+    # member's given name in full, which the row states
+    ls = pages[0]
+    end = ls.index("Latest News")
+    i0 = max(i for i in range(end) if ls[i] == "Tribal Council") + 1
+    out = []
+    for k in range(i0, end, 4):
+        name, role, bio, more = ls[k:k + 4]
+        if more != "Read More":
+            raise ValueError("Jamul: unexpected rows after %r" % name)
+        mem = _m(name, role)
+        first = bio.split(" currently serves")[0]
+        if first != bio and first != name and first.split()[-1] == name.split()[-1]:
+            mem["note"] = "the same page also names this member %s" % first
+        out.append(mem)
+    return out
+
+
+def p_picayune(pages):
+    # name, office and a "Bio" link; the page says seven
+    ls = _after(pages[0], "The Tribal Council")
+    ls = [l for l in ls[:ls.index("Meetings")] if l != "Bio"]
+    return _name_role_pairs(ls, r"^(Chairperson|Vice-Chairwoman|Vice-Chairman|Secretary|"
+                                r"Treasurer|Member-at-Large)$", 7)
+
+
+def p_table_mountain(pages):
+    ls = pages[0][pages[0].index("Tribal Chairperson") - 1:]
+    if not ls[10].startswith(">>"):
+        raise ValueError("Table Mountain: the council block runs past five, found %r" % ls[10])
+    return _name_role_pairs(ls, r"^Tribal (Chairperson|Vice-Chairperson|Secretary/Treasurer|"
+                                r"Council Member)$", 5)
+
+
+def p_redwood_valley(pages):
+    rows = [l for l in pages[0] if re.match(r"^[^,]+, Council ", l)]
+    return _comma_role_lines(rows, 7)
+
+
+def p_sherwood_valley(pages):
+    # name, office and a contact link (a form, so no address is carried),
+    # under the year's "Tribal Council" heading
+    i = [k for k, l in enumerate(pages[0]) if re.match(r"^\d{4} Tribal Council$", l)][0]
+    ls = pages[0][i + 1:]
+    out = []
+    for k in range(0, 21, 3):
+        name, role, link = ls[k], ls[k + 1].strip("​﻿ "), ls[k + 2]
+        if not link.lower().startswith("contact"):
+            raise ValueError("Sherwood Valley: unexpected rows after %r" % name)
+        out.append(_m(name, role))
+    if ls[21] != "Office Hours:":
+        raise ValueError("Sherwood Valley: the council block runs past seven, found %r" % ls[21])
+    return out
+
+
+def p_mesa_grande(pages):
+    ls = _after(pages[0], "Mesa Grande Tribal Council")
+    if not ls[5].startswith("To contact"):
+        raise ValueError("Mesa Grande: the council block runs past five, found %r" % ls[5])
+    return _comma_role_lines(ls, 5)
+
+
+_CAHUILLA_OFFICES = {"Chairwoman", "Chairman", "Vice-Chairman", "Vice-Chairwoman",
+                     "Secretary", "Treasurer", "Council Member"}
+
+
+def p_cahuilla(pages):
+    # each member is a name (with a line of degrees under one), the office,
+    # the year seated or the term, and a bio link; the Chairwoman's entry
+    # prints the tribal office's telephone and address, which ride nobody
+    ls = _after(pages[0], "for More Information")
+    ls = ls[:ls.index("Staff")]
+    out = []
+    for i, line in enumerate(ls):
+        if line not in _CAHUILLA_OFFICES:
+            continue
+        name = ls[i - 1]
+        if re.match(r"^[A-Z][A-Za-z.]*(?:, [A-Z][A-Za-z.]*)+$", name) and "." in name:
+            name = ls[i - 2]
+        m = re.match(r"^Current Term: .+-(\w+ \d{4})$", ls[i + 1])
+        out.append(_m(name, line, termEnds=m.group(1) if m else None))
+    return out
+
+
+def p_kletsel_dehe(pages):
+    # after the sentence naming the offices and the one about elections
+    i = [k for k, l in enumerate(pages[0]) if l.startswith("The Tribal Council governs ")][0]
+    ls = pages[0][i + 2:]
+    if ls[10] != "Contact":
+        raise ValueError("Kletsel Dehe: the council block runs past five, found %r" % ls[10])
+    return _name_role_pairs(ls, r"^(Chairman|Chairwoman|Vice-Chairman|Vice-Chairwoman|"
+                                r"Secretary|Treasurer|Councilman|Councilwoman)$", 5)
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
@@ -1182,15 +2592,46 @@ PARSERS = {
     "0050": p_alabama_coushatta, "1775": p_kickapoo_tx, "4755": p_ysleta,
     **{code: p_seminole_fl for code in ("0225", "0360", "0690", "1260", "1475", "1555",
                                         "3665", "4130")},
+    # Washington
+    "0575": p_chehalis, "0760": p_colville, "0820": p_cowlitz, "2040": p_lower_elwha,
+    "2070": p_lummi, "2085": p_makah, "2375": p_muckleshoot, "2460": p_nisqually,
+    "2475": p_nooksack, "2910": p_pgst, "2925": p_suquamish, "3030": p_quileute,
+    "3040": p_quinault, "3780": p_shoalwater, "3825": p_skokomish, "3860": p_snoqualmie,
+    "4000": p_stillaguamish, "4290": p_tulalip, "4405": p_umatilla, "4690": p_yakama,
+    # Arizona
+    "0695": p_cocopah, "0735": p_crit, "1235": p_fort_mojave, "1280": p_quechan,
+    "1310": p_gila_river, "1545": p_hualapai, "2430": p_navajo, "2680": p_pascua_yaqui,
+    "3340": p_salt_river, "3355": p_san_carlos, "4200": p_tohono_oodham,
+    "4708": p_yavapai_apache, "4785": p_zuni,
+    # Nevada
+    "0440": p_yerington, "0965": p_duck_valley, "1070": p_fallon, "1075": p_fallon, "1340": p_goshute, "4725": p_yerington,
+    "1915": p_las_vegas_paiute, "2315": p_moapa, "4180": p_timbisha, "4515": p_walker_river,
+    # California
+    "0120": p_united_auburn, "0125": p_augustine, "0155": p_barona, "0185": p_benton,
+    "0250": p_big_pine, "0265": p_big_sandy, "0275": p_big_valley, "0290": p_bishop,
+    "0325": p_blue_lake, "0435": p_cahuilla, "4500": p_viejas, "0780": p_kletsel_dehe,
+    "0955": p_dry_creek, "1010": p_elk_valley, "1055": p_enterprise, "1380": p_greenville,
+    "1490": p_hoopa, "1515": p_hopland, "1670": p_jamul, "1750": p_karuk,
+    "1895": p_la_posta, "2190": p_mesa_grande, "2255": p_middletown, "2360": p_morongo,
+    "2495": p_northfork, "2635": p_pala, "2715": p_pauma, "2775": p_picayune,
+    "3095": p_redding, "3115": p_redwood_valley, "3145": p_pulikla, "3220": p_bear_river,
+    "3250": p_round_valley, "3520": p_tachi, "3540": p_santa_ynez,
+    "3735": p_sherwood_valley, "3750": p_shingle_springs, "3855": p_tolowa,
+    "3870": p_soboba, "4060": p_susanville, "4090": p_sycuan, "4110": p_table_mountain,
+    "4255": p_torres_martinez, "4275": p_trinidad, "4760": p_yurok,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community",
                        "3075": "Rappahannock"}
 
 # governor, cacique, captain and alguacil are the Ysleta del Sur Pueblo's
-# council offices (its War Captain and Alguacil are council seats)
+# council offices (its War Captain and Alguacil are council seats); trustee is
+# the Umatilla board's, speaker the Navajo Nation Council's, delegate the
+# Tachi Yokut council's and the Navajo Nation's, and parliamentarian Sherwood
+# Valley's
 _ROLE_OK = re.compile(r"(chair|president|chief|secretary|treasurer|member|representative|"
                       r"director|legislator|councilor|council|sergeant|chaplain|leader|"
-                      r"governor|cacique|captain|alguacil)", re.I)
+                      r"governor|cacique|captain|alguacil|trustee|speaker|delegate|"
+                      r"parliamentarian)", re.I)
 _ROLE_WORDS = re.compile(r"^(chair|vice|secretary|treasurer|council|member|president|"
                          r"representative|director|legislator|councilor)\b", re.I)
 
@@ -1456,6 +2897,68 @@ def selftest():
         except ValueError:
             continue
         raise AssertionError("the Commonwealth's list parsed %r" % bad)
+    # California's shapes (names and numbers invented). Hoopa: the
+    # Chairman's line carries a staff member's telephone, which is not his,
+    # and a district member printed with an empty extension gets no number
+    hp = p_hoopa([["Hoopa Valley Tribal Council", "Ann Example | Chairman",
+                   "Administrative Officer's Phone: (555) 010-1000 Ext. 1",
+                   "email: chair@example.org"]
+                  + sum([["%s | Vice-Chairman" % n if k == 0 else n,
+                          "%s District Representative" % d,
+                          "Office Phone: (555) 010-1000 Ext.%s" % (" %d" % (k + 2) if k else ""),
+                          "email: m%d@example.org" % k]
+                         for k, (n, d) in enumerate([("Bob Sample", "East"), ("Cy Person", "West"),
+                                                     ("Di Person", "North"), ("Ed Person", "South"),
+                                                     ("Flo Person", "Upper"), ("Gus Person", "Lower"),
+                                                     ("Hal Person", "Middle")])], [])
+                  + ["About Us"]])
+    assert hp[0] == _m("Ann Example", "Chairman", email="chair@example.org"), hp[0]
+    assert hp[1] == _m("Bob Sample", "Vice-Chairman", district="East District",
+                       email="m0@example.org"), hp[1]
+    assert hp[2]["phone"] == "(555) 010-1000 Ext. 3" and hp[2]["role"] == "District Representative"
+    # Round Valley: a courtesy title is dropped, a receptionist's mailbox
+    # rides nobody
+    rv = p_round_valley([["Round Valley Indian Tribes, Tribal Council"]
+                         + sum([[r, "%s %s" % (t, n), e, "Term:", "2025-2029"]
+                                for r, t, n, e in [
+                                    ("President", "Mr.", "Ann Example", "ann@example.org"),
+                                    ("Secretary", "Ms.", "Bea Sample", "tribalreceptionist@example.org"),
+                                    ("Treasurer", "Mrs.", "Cy Person", "t@example.org"),
+                                    ("Member at large", "Mr.", "Di Person", "d@example.org"),
+                                    ("Member at large", "Ms.", "Ed Person", "e@example.org"),
+                                    ("Member at large", "Mr.", "Flo Person", "f@example.org"),
+                                    ("Member at large", "Mr.", "Gus Person", "g@example.org")]], [])])
+    assert rv[0] == _m("Ann Example", "President", email="ann@example.org", termEnds="2029"), rv[0]
+    assert rv[1] == _m("Bea Sample", "Secretary", termEnds="2029"), rv[1]
+    # Yurok: a member's address printed just above the name is his, and one
+    # already carried is not taken twice
+    yk = p_yurok([["Tribal Council Members", "ANN EXAMPLE", "Chairman", "ann@example.org",
+                   "BOB SAMPLE", "North District", "bob@example.org",
+                   "cy@example.org", "CY PERSON", "South District", "Home"]])
+    assert yk == [_m("ANN EXAMPLE", "Chairman", email="ann@example.org"),
+                  _m("BOB SAMPLE", "Council Member", district="North District",
+                     email="bob@example.org"),
+                  _m("CY PERSON", "Council Member", district="South District",
+                     email="cy@example.org")], yk
+    # Dry Creek: the office runs into the name and is cut off, longest first
+    dc = p_dry_creek([["Board of Directors", "Board of Directors", "Board of Directors",
+                       "Ann ExampleChairman", "Bob SampleVice-Chair", "Cy PersonSecretary/Treasure",
+                       "Di PersonMember at Large", "Ed PersonMember at Large"]])
+    assert dc[1] == _m("Bob Sample", "Vice-Chair") and dc[4] == _m("Ed Person", "Member at Large"), dc
+    # Redding: an alternate after the seventh member is not a seat
+    rd = p_redding([["Tribal Chairman – Ann Example"]
+                    + ["Council Member – %s Person" % n for n in "BCDEFG"]
+                    + ["1st Alternate – Hal Person"]])
+    assert len(rd) == 7 and rd[0] == _m("Ann Example", "Tribal Chairman"), rd
+    try:
+        p_redding([["Tribal Chairman – Ann Example"]
+                   + ["Council Member – %s Person" % n for n in "BCDEFGH"]])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Redding's block running past seven must fail")
+    assert _drop_stop("Julian Example.") == "Julian Example"
+    assert _drop_stop("Ann Example Jr.") == "Ann Example Jr."
     for code, spec in NATIONS.items():
         if spec.get("stateList"):
             assert spec["pages"] == [STATE_LISTS[spec["stateList"]]["page"]], code

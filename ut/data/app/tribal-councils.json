@@ -1,0 +1,188 @@
+{
+ "1340": {
+  "roster": [
+   {
+    "name": "Amos Murphy",
+    "role": "Chairman"
+   },
+   {
+    "name": "Edna Steele",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Clell Pete",
+    "role": "Council Member"
+   },
+   {
+    "name": "Elvira Murphy",
+    "role": "Council Member"
+   },
+   {
+    "name": "Madeline Greymountain",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://ctgr.us/home/tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2430": {
+  "roster": [
+   {
+    "name": "Helena Nez Begay",
+    "role": "Council Delegate",
+    "district": "Coppermine, K’aibii’to, LeChee, Tonalea/Red Lake, Bodaway/Gap",
+    "email": "helena.begay@navajo-nsn.gov"
+   },
+   {
+    "name": "Norman M. Begay",
+    "role": "Council Delegate",
+    "district": "Alamo, Ramah, Tohajiilee",
+    "email": "norman.begay@navajo-nsn.gov"
+   },
+   {
+    "name": "Shawna Ann Claw",
+    "role": "Council Delegate",
+    "district": "Chinle",
+    "email": "shawna.claw@navajo-nsn.gov"
+   },
+   {
+    "name": "Eugenia Charles-Newton",
+    "role": "Council Delegate",
+    "district": "Shiprock",
+    "email": "echarles-newton@navajo-nsn.gov"
+   },
+   {
+    "name": "Amber Kanazbah Crotty",
+    "role": "Council Delegate",
+    "district": "Cove, Toadlena/Two Grey Hills, Red Valley Tse’alnaozt’i’i’, Sheepsprings, Beclabito, Gadiiahi/To’Koi",
+    "email": "acrotty@navajo-nsn.gov"
+   },
+   {
+    "name": "Crystalyne Curley",
+    "role": "Speaker",
+    "district": "Tachee/Blue Gap, Many Farms, Nazlini, Tselani/Cottonwood, Low Mountain",
+    "email": "crystalyne.curley@navajo-nsn.gov"
+   },
+   {
+    "name": "Herman Daniels, Jr.",
+    "role": "Council Delegate",
+    "district": "Tsah Bii Kin, Navajo Mountain, Shonto, Oljato",
+    "email": "hdaniels@navajo-nsn.gov"
+   },
+   {
+    "name": "Vince R. James",
+    "role": "Council Delegate",
+    "district": "Jeddito, Cornfields, Ganado, Kinlichee, Steamboat",
+    "email": "vincejames@navajo-nsn.gov"
+   },
+   {
+    "name": "Brenda Jesus",
+    "role": "Council Delegate",
+    "district": "Oaksprings, St. Michaels",
+    "email": "brenda.jesus@navajo-nsn.gov"
+   },
+   {
+    "name": "Casey Allen Johnson",
+    "role": "Council Delegate",
+    "district": "Cameron, Coalmine Canyon, Birdsprings, Leupp, Tolani Lake",
+    "email": "casey.johnson@navajo-nsn.gov"
+   },
+   {
+    "name": "Arbin Mitchell",
+    "role": "Council Delegate",
+    "district": "Houck, Klagetoh, Nahata Dziil, Tsé Si Ani, Wide Ruins",
+    "email": "arbin.mitchell@navajo-nsn.gov"
+   },
+   {
+    "name": "Andy Nez",
+    "role": "Council Delegate",
+    "district": "Crystal, Fort Defiance, Red Lake, Sawmill",
+    "email": "andy.nez@navajo-nsn.gov"
+   },
+   {
+    "name": "Rickie Nez",
+    "role": "Council Delegate",
+    "district": "T’iistoh Sikaad, Nenahnezad, Upper Fruitland, Tse’ Daa’ Kaan, Newcomb, San Juan",
+    "email": "rickienez@navajo-nsn.gov"
+   },
+   {
+    "name": "Titus Nez",
+    "role": "Council Delegate",
+    "district": "Churchrock, Iyanbito, Mariano Lake, Pinedale, Smith Lake, Thoreau",
+    "email": "titus.nez@navajo-nsn.gov"
+   },
+   {
+    "name": "Nathan Notah",
+    "role": "Council Delegate",
+    "district": "Coyote Canyon, Mexican Springs, Naschitti, Tohatchi, Bahastl’a’a’",
+    "email": "nathan.notah@navajo-nsn.gov"
+   },
+   {
+    "name": "Shaandiin Parrish",
+    "role": "Council Delegate",
+    "district": "Chilchinbeto, Dennehotso, Kayenta",
+    "email": "sp.parrish@navajo-nsn.gov"
+   },
+   {
+    "name": "Germaine Simonson",
+    "role": "Council Delegate",
+    "district": "Hard Rock, Forest Lake, Pinon, Black Mesa, Whippoorwill",
+    "email": "germaine.simonson@navajo-nsn.gov"
+   },
+   {
+    "name": "Danny Simpson",
+    "role": "Council Delegate",
+    "district": "Becenti, Lake Valley, Nahodishgish, Standing Rock, Whiterock, Huerfano, Nageezi, Crownpoint",
+    "email": "danny.simpson@navajo-nsn.gov"
+   },
+   {
+    "name": "Carl Roessel Slater",
+    "role": "Council Delegate",
+    "district": "Tsaile/Wheatfields, Lukachukai, Round Rock, Tséch’izhí, Rock Point",
+    "email": "carlslater@navajo-nsn.gov"
+   },
+   {
+    "name": "George Tolth",
+    "role": "Council Delegate",
+    "district": "Littlewater, Pueblo Pintado, Torreon, Whitehorse Lake, Baca/Prewitt, Casamero Lake, Ojo Encino, Counselor",
+    "email": "george.tolth@navajo-nsn.gov"
+   },
+   {
+    "name": "Otto Tso",
+    "role": "Council Delegate",
+    "district": "To’ Nanees Dizi",
+    "email": "otso@navajo-nsn.gov"
+   },
+   {
+    "name": "Curtis Yanito",
+    "role": "Council Delegate",
+    "district": "Mexican Water, To’likan, Teesnospos, Aneth, Red Mesa",
+    "email": "curtis.yanito@navajo-nsn.gov"
+   },
+   {
+    "name": "Cherilyn Yazzie",
+    "role": "Council Delegate",
+    "district": "Dilcon, Indian Wells, Teesto, Whitecone, Greasewood Springs",
+    "email": "cherilyn.yazzie@navajo-nsn.gov"
+   },
+   {
+    "name": "Lester Yazzie",
+    "role": "Council Delegate",
+    "district": "Baahaali, Chilchiltah, Manuelito, Red Rock, Rock Springs, Tsayatoh",
+    "email": "lesteryazzie@navajo-nsn.gov"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.navajonationcouncil.org/council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

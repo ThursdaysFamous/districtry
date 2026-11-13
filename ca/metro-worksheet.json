@@ -441,7 +441,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for two of these nations, the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation; for both the seat is the town the nation's own site gives, read 2026-11-12, and the card says so. The Capitan Grande Reservation is shared by the Capitan Grande Band's two groups, Barona and Viejas, and its card lists both with their seats and sites. The Bureau lists no website for 28 of the nations, among them the Fort Mojave Indian Tribe, the Quechan Tribe and the Colorado River Indian Tribes; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The council of each nation whose own page names the whole of it, 49 of the 98 nations, re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date each was read. Every other card says why it names nobody, in words measured nation by nation on 2026-11-13 (ROSTER_BLOCKED in scripts/build_tribal_areas.py): a site that refused this project or could not be read, a page naming part of a council or none of it, or no site of the nation's own. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for two of these nations, the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation; for both the seat is the town the nation's own site gives, read 2026-11-12, and the card says so. The Capitan Grande Reservation is shared by the Capitan Grande Band's two groups, Barona and Viejas, and its card lists both with their seats and sites. The Bureau lists no website for 28 of the nations, among them the Fort Mojave Indian Tribe, the Quechan Tribe and the Colorado River Indian Tribes; the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "California — the 150 pieces of land above, which reach into 34 of its 58 counties. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -782,6 +782,11 @@
     ],
     "rosters": [
       {
+        "file": "tribal-councils.json",
+        "min_keys": 49,
+        "note": "The councils of the nations whose own page names the whole of it, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers California elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ca/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -829,7 +834,7 @@
     ]
   },
   "sw": {
-    "cache_name": "district-explorer-shell-sf-v13",
+    "cache_name": "district-explorer-shell-sf-v14",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

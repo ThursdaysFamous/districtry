@@ -8,7 +8,7 @@ districtry California: a single-file, dependency-light web app. Click a point in
 
 **Two coverage tests, read from two shipped outlines.** The San Francisco layers declare `coverage: inSanFrancisco` (`san-francisco-county-outline.json`, the union of the supervisor districts with Treasure Island) and hide outside the city and county; the statewide layers that need one declare `coverage: inCalifornia` (`ca-state-outline.json`, the 58 counties dissolved). The wash draws the state as its region and San Francisco as its full coverage, so the key's middle band reads "Statewide layers only". No county supervisor, mayor, council member or school board member is named outside San Francisco yet; the four gap records (`ca-county-officials`, `ca-municipal-officeholders`, `ca-school-board-members`, `ca-tribal-government`) say why. The fourth is now about the tribal councils: the land itself is drawn (below).
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF 98 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 98 NATIONS AND NAMES THE COUNCILS OF 49** (`tribal-areas.json`,
 since 2026-11-12). The Census keeps 103 reservations and rancherias and 47 off-reservation trust
 lands in California, and all 150 pieces are drawn, each joined in `data/tribal-government-join.json`
 to the government the Bureau of Indian Affairs lists for it. They lie in 34 of the 58 counties and
@@ -33,8 +33,13 @@ Rancheria the Bureau lists with a state and no city, so its card gives the state
 lists no website for 28 of the 98 nations. The Census draws tribal districts on one piece, the Yurok
 Reservation (Orick, Pecwan, Requa and Weitchpec), named on its card. The file is 1.12 MB (258 KB
 gzipped) at the Census's own detail, smaller than Arizona's simplified file, so it is not
-simplified. No council is named yet (`ROSTER_NOT_SOUGHT`, the Oklahoma shape): each nation's own
-page is read and its council moved into `tribal-councils.json` one nation at a time, recorded in gap
+simplified. Since 2026-11-13 the cards name the council of 49 of the 98 nations, read nation by nation from
+each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
+so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
+`update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
+day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
+project or showed a check only a person can pass, a page naming part of the council or none of it,
+or no site of the nation's own. A partial council is not carried. Recorded in gap
 `ca-tribal-government`.
 
 **There is no build step, no framework, and no server-side code.** The entire app — styles, core, and all layer modules — lives inline in `index.html`. `sw.js` is the service worker; `data/app/*.json` are runtime-fetched data files. Everything else is data pipeline, scrapers, or CI.

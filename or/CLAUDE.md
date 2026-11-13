@@ -65,7 +65,7 @@ a board or council its home-rule charter sets up, and most elect officers such a
 district attorney and a clerk. Recorded as gaps `or-county-officials` and
 `or-municipal-officeholders`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF ELEVEN NATIONS AND NAMES NO COUNCIL YET**
+**TRIBAL GOVERNMENT DRAWS THE LAND OF ELEVEN NATIONS AND NAMES ONE NATION'S COUNCIL**
 (`tribal-areas.json`, since 2026-11-13). The Census keeps ten reservations in Oregon (the largest
 Warm Springs, about 2,628 km2) and eight off-reservation trust lands, measured 2026-11-12 with
 `scripts/tribal_areas.py --report Oregon`, and all 18 pieces are drawn, each joined in
@@ -76,8 +76,9 @@ the Umatilla Off-Reservation Trust Land, 29% of it in Oregon and the rest in Was
 Village belongs to no one nation: the Oregon Blue Book, which the Secretary of State publishes, says
 the Confederated Tribes of Warm Springs, the Confederated Tribes of Umatilla and the Yakama Nation
 administer it jointly (read 2026-11-13), so its card names all three, with each one's seat and site,
-the Yakama's in Toppenish, Washington. No council is carried yet (`ROSTER_NOT_SOUGHT` in
-`scripts/build_tribal_areas.py`), recorded in gap `or-tribal-government`.
+the Yakama's in Toppenish, Washington. The Confederated Tribes of the Umatilla Indian Reservation's card names their Board of Trustees,
+read 2026-11-13 for the Washington part of their trust land; the other nations are not carried yet
+(`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap `or-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE OREGON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,

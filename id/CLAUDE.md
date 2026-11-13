@@ -64,7 +64,7 @@ is empty. Each county is governed by an elected board of three county commission
 such as a clerk, a treasurer, an assessor, a sheriff, a coroner and a prosecuting attorney. Recorded as
 gap `id-county-officials`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF FIVE NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FIVE NATIONS AND NAMES ONE NATION'S COUNCIL** (`tribal-areas.json`,
 since 2026-11-13). The Census keeps five reservations and two trust lands in Idaho, measured
 2026-11-12 with `scripts/tribal_areas.py --report Idaho`: the Nez Perce (3,120.9 km2), Fort Hall
 (2,214.0 km2), Coeur d'Alene (1,389.4 km2) and Kootenai reservations, the Idaho half of the Duck
@@ -73,8 +73,9 @@ pieces are drawn, the Duck Valley Reservation whole into Nevada, each joined in
 `data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it. The
 Bureau lists no office town for the Shoshone-Paiute Tribes of the Duck Valley Reservation, so its
 card gives the one the tribes' own site gives, Owyhee, Nevada, says where it came from, and links
-that site, as Nevada's card for the same land does (`seatFromNation`). No council is carried yet
-(`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap `id-tribal-government`.
+that site, as Nevada's card for the same land does (`seatFromNation`). The Shoshone-Paiute Tribes' card names their Business Council, read 2026-11-13 for the Nevada half
+of the Duck Valley Reservation; the other nations are not carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `id-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE IDAHO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,

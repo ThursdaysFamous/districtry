@@ -319,7 +319,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no office town for the Shoshone-Paiute Tribes of the Duck Valley Reservation; for them the seat is the town the nation's own site gives (Owyhee, Nevada), and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The Shoshone-Paiute Tribes' Business Council, from the tribes' own page (the list Nevada's card names for the Duck Valley Reservation's Nevada part), re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date it was read. This app has not yet read the other nations' council lists, so their cards say so and link each nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no office town for the Shoshone-Paiute Tribes of the Duck Valley Reservation; for them the seat is the town the nation's own site gives (Owyhee, Nevada), and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Idaho — the 7 pieces of land above. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -472,6 +472,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of the Shoshone-Paiute Tribes of the Duck Valley Reservation, from its own page, the same council Nevada's card names, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Idaho elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from id/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -479,7 +484,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-id-shell-v2",
+    "cache_name": "districtry-id-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
