@@ -68,7 +68,7 @@ in the researched-but-unbuilt backlog.
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
-  "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
+  "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
@@ -81,13 +81,13 @@ in the researched-but-unbuilt backlog.
   "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "massachusetts": ["us-house", "county", "ma-senate", "school-district-secondary", "ma-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "colorado": ["us-house", "co-senate", "county", "co-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "colorado": ["us-house", "co-senate", "county", "co-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "maryland": ["us-house", "county", "school-district-unified", "md-senate", "md-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "alabama": ["us-house", "al-senate", "county", "al-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "oregon": ["us-house", "school-district-secondary", "or-senate", "county", "or-house", "school-district-elementary", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "connecticut": ["us-house", "county", "ct-senate", "school-district-secondary", "ct-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "utah": ["us-house", "ut-senate", "county", "school-district-unified", "ut-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "kansas": ["us-house", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "alabama": ["us-house", "al-senate", "county", "al-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "oregon": ["us-house", "school-district-secondary", "or-senate", "county", "or-house", "school-district-elementary", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "connecticut": ["us-house", "county", "ct-senate", "school-district-secondary", "ct-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
+  "utah": ["us-house", "ut-senate", "county", "school-district-unified", "ut-house", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "kansas": ["us-house", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "newmexico": ["us-house", "county", "nm-senate", "nm-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "nebraska": ["us-house", "ne-legislature", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "idaho": ["us-house", "id-senate", "id-house", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
@@ -4002,6 +4002,18 @@ trusted.
             "why": "The election results and the court system's directory disagree about these people, and neither carries a date that says which is newer.",
             "wanted": "A dated record of the change: a judge's retirement, or a district attorney's appointment to the bench and the appointment of a successor.",
             "blocker": "MEASURED 2026-10-30 by ga/scripts/build_ga_superior_courts.py against the Administrative Office of the Courts' directory (georgiacourts.knack.com/gcd2, read through Knack's public api with the application id its page hands every visitor). A person is held back when the directory lists them in ANOTHER office of the same circuit: a district attorney it lists as a superior court judge, or a judge in office it lists as a senior judge (a retired judge) and not also on the circuit's bench, since a senior judge can share a sitting judge's name; the same holds where the ballots themselves name one person a circuit's district attorney and a judge who has taken office. Names match when the surname is the same and the shorter run of given names fits, in order, into the longer, so a shared initial alone is not a match. HELD BACK ON 2026-10-30, seven people: district attorneys Randal Matthew McGinley (Alcovy, elected 5 November 2024; the directory lists Randal M. McGinley as a superior court judge of the circuit), Billy Joe Nelson, Jr. (Atlantic, elected 8 November 2022; listed as Billy Joe Nelson, judge), Matthew W. Rollins (Paulding, elected 8 November 2022; listed as judge) and Marilyn Bennett (Waycross, elected 8 November 2022; listed as Marilyn Parker Bennett, judge); and judges Robert L. Russell (Atlantic, elected 21 May 2024; listed as a senior judge), Greg Poole (Cobb, elected 21 May 2024; listed as A. Gregory Poole, senior judge) and W. Fletcher Sams (Griffin, elected 21 May 2024; listed as a senior judge). The directory does name someone else as district attorney in all four of those circuits (Amber B. Dally in Alcovy, Richard E. Braun in Atlantic, Robert Lane in Paulding and George Barnhill in Waycross), most likely the governor's appointees, but it carries no dates and elsewhere it still names the district attorney a November 2024 winner replaced (Cobb, Houston, Chattahoochee), so its names are not shown on the card; for the three judges' seats it cannot say who holds them, because it lists judges by circuit and not by seat. The governor fills such a vacancy by appointment (gap ga-superior-court-appointments). The list moves with each weekly run: the 3 November 2026 general election elects district attorneys in some of these circuits, and a winner the directory does not list elsewhere is named. NOT YET ASKED."
+      },
+      {
+            "id": "ga-tribal-government",
+            "concept": "Tribal government",
+            "area": "Georgia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read the Lower Muscogee Creek Tribe's council list yet.",
+            "wanted": "The tribe's own published list of its council.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 1 piece, the Tama (state) Reservation (0.367 km2, Grady County, 14 people at the 2020 census), measured with scripts/tribal_areas.py --report Georgia (control passed: Georgia resolves to state code 13). It is held by the Lower Muscogee Creek Tribe, which the United States does not recognize and Georgia does: Code Section 44-12-300, as House Bill 43 of 2024 amended it, recognizes the tribe by that name with its Tama Reservation at Whigham, read 2026-11-13 from the bill as the Governor's office publishes it. The Georgia Tribe of Eastern Cherokee's state-designated tribal statistical area (about 87.8 km2) is a Census statistical area and is not drawn (Census statistical areas are drawn only in Oklahoma, by Adam's rule). No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "virginia": [
@@ -4578,6 +4590,17 @@ trusted.
             "why": "No list of the members of Massachusetts's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='25': 212 records on layer 0 (unified), one of them the placeholder for water no district covers, 64 on layer 2 (elementary) and 30 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Elementary and Secondary Education's school directory; each district's own website; and the cities' and towns' election results, since school committee members are elected locally. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ma-tribal-government",
+            "concept": "Tribal government",
+            "area": "Massachusetts",
+            "counties": [],
+            "kind": "no-source",
+            "summary": "The map does not draw tribal land in Massachusetts yet, so no Tribal Government card answers here.",
+            "why": "One of the three pieces of tribal land here is a state reservation, drawn only where a state government source names the tribe that holds it. The Commonwealth's page on the tribes it recognizes refuses automated readers.",
+            "wanted": "A page of the Commonwealth's that this project may read and that names the tribe the state recognizes on the Hassanamisco Reservation in Grafton.",
+            "blocker": "Measured 2026-11-12 with scripts/tribal_areas.py --report Massachusetts (control passed: Massachusetts resolves to state code 25): three pieces, the Mashpee Wampanoag Trust Land (1.294 km2) and the Wampanoag-Aquinnah Trust Land (1.985 km2), held by the two federally recognized tribes the Bureau of Indian Affairs lists in Massachusetts, and the Hassanamisco (state) Reservation (0.021 km2, Grafton). By Adam's ruling of 2026-10-10 a state reservation is drawn when a state government source names the tribe that holds it. www.mass.gov answered this project with its \"Not allowed\" page on 2026-11-13, which is not worked around. The one readable state source found is House Bill 3413 of the 194th General Court (malegislature.gov), a bill filed by request on 17 January 2025 to convey Lampson Brook Farm in Belchertown, whose definitions call the Hassanamisco Nipmuc Band a state-recognized tribe of the Commonwealth; it is a bill, not a law. Whether that is enough to draw the reservation was put to Adam on 2026-11-13. The builder draws a state's pieces together, so the two trust lands wait with it. Massachusetts is recorded as not yet covered in data/tribal-government-join.json. NOT YET ASKED."
       }
   ],
   "connecticut": [
@@ -4604,6 +4627,18 @@ trusted.
             "why": "No list of the members of Connecticut's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='09': 114 records on layer 0 (unified), one of them the placeholder for Long Island Sound, 44 on layer 2 (elementary) and 8 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of districts; each district's own website; and the towns' election results, since board of education members are elected by town. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ct-tribal-government",
+            "concept": "Tribal government",
+            "area": "Connecticut",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Connecticut tribe's council list yet. Each tribe publishes its own, which has to be read one tribe at a time.",
+            "wanted": "Each tribe's own published list of its council, read one tribe at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 6 pieces, held by 5 tribes, measured with scripts/tribal_areas.py --report Connecticut (control passed: Connecticut resolves to state code 09). The Mashantucket Pequot Indian Tribe holds its reservation (5.455 km2) and off-reservation trust land (1.303 km2), seated in Mashantucket, and the Mohegan Tribe its reservation (2.457 km2), seated in Uncasville. The three State American Indian Reservations, Schaghticoke (1.122 km2), Paucatuck Eastern Pequot (0.983 km2) and Golden Hill Paugussett (0.399 km2), are held by tribes the State of Connecticut recognizes and the United States does not, named as the tribal affairs page of the Department of Energy and Environmental Protection names them (read 2026-11-13); that page gives no office town, so their cards give no seat. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "colorado": [
@@ -4643,6 +4678,18 @@ trusted.
             "why": "No list of the members of Colorado's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='08': 178 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "co-tribal-government",
+            "concept": "Tribal government",
+            "area": "Colorado",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read either Colorado tribe's council list yet. Each tribe publishes its own, which has to be read one tribe at a time.",
+            "wanted": "Each tribe's own published list of its council, read one tribe at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 2 pieces, held by 2 tribes, measured with scripts/tribal_areas.py --report Colorado (control passed: Colorado resolves to state code 08): the Southern Ute Reservation (2,759.162 km2, La Plata and Archuleta counties), seated in Ignacio, and the Ute Mountain Reservation, 80.5% of it in Colorado (1,854.241 km2, almost all in Montezuma County) and drawn whole across the lines with New Mexico and Utah, seated in Towaoc. The Bureau lists no website for either tribe, so neither card links one. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "maryland": [
@@ -4721,6 +4768,18 @@ trusted.
             "why": "No list of the members of Alabama's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='01': 141 records, county systems and city systems on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school systems; each system's own website; and the probate judges' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "al-tribal-government",
+            "concept": "Tribal government",
+            "area": "Alabama",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read either Alabama tribe's council list yet. The Poarch Band's own site refuses automated readers with a challenge page, and the MOWA Band's has not been read.",
+            "wanted": "Each tribe's own published list of its council, read one tribe at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 3 pieces, held by 2 tribes, measured with scripts/tribal_areas.py --report Alabama (control passed: Alabama resolves to state code 01). The Poarch Band of Creek Indians holds the Poarch Creek Reservation (1.079 km2) and 98.6% of its off-reservation trust land (0.529 km2), whose Florida sliver Florida's app draws; the MOWA Choctaw (state) Reservation (2.694 km2, Washington and Mobile counties) is held by the MOWA Band of Choctaw Indians, which the United States does not recognize and the State of Alabama does, named from the Alabama Indian Affairs Commission's list of tribes the state recognizes (revised 10 June 2026, read 2026-11-13) with the office town that list gives, Mount Vernon. The Poarch Band's own site answered this project with an automated challenge page on 2026-11-12 (ROSTER_BLOCKED in scripts/build_tribal_areas.py, from the Florida change), so its card names nobody and says why. The MOWA Band's council is not carried, recorded state-wide in ROSTER_NOT_SOUGHT, and no page of the band's has been read. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "oregon": [
@@ -4760,6 +4819,18 @@ trusted.
             "why": "No list of the members of Oregon's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='41': 188 records on layer 0 (unified), one of them the placeholder for coastal water no district covers, 9 on layer 2 (elementary) and 1 on layer 1 (secondary), the Harney County Union High School District, which lies over most of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "or-tribal-government",
+            "concept": "Tribal government",
+            "area": "Oregon",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Oregon nation's council list yet. Most nations publish theirs on their own site, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 18 pieces, 10 reservations and 8 pieces of off-reservation trust land, held by 11 nations, measured with scripts/tribal_areas.py --report Oregon (control passed: Oregon resolves to state code 41). Two cross the state line and are drawn whole: the Fort McDermitt Indian Reservation (52.0% in Oregon), whose tribes are seated in McDermitt, Nevada, and for which the Bureau lists no website, and the Umatilla Off-Reservation Trust Land (28.6% in Oregon, the rest in Washington). Celilo Village (0.461 km2) is joined to three governments, the Confederated Tribes of the Warm Springs Reservation of Oregon, the Confederated Tribes of the Umatilla Indian Reservation and the Confederated Tribes and Bands of the Yakama Nation, because the Oregon Blue Book says they administer it jointly (read 2026-11-13). No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "utah": [
@@ -4799,6 +4870,18 @@ trusted.
             "why": "No list of the members of Utah's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='49': 41 records, county districts and city districts on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Board of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ut-tribal-government",
+            "concept": "Tribal government",
+            "area": "Utah",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Utah nation's council list yet. Most nations publish theirs on their own site, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 9 pieces, 7 reservations and 2 pieces of off-reservation trust land, held by 7 nations, measured with scripts/tribal_areas.py --report Utah (control passed: Utah resolves to state code 49). Three reservations cross the state line and are drawn whole: the Navajo Nation's (8.9% in Utah, 5,188.885 km2), seated in Window Rock, Arizona, with the nine tribal subdivisions the Census draws on its Utah ground; the Goshute (41.6% in Utah); and the Ute Mountain (1.3% in Utah), seated in Towaoc, Colorado. The Bureau lists no office town for the Confederated Tribes of the Goshute Reservation, so its card gives Ibapah, the town the tribe's own site gives (seatFromNation in data/tribal-government-join.json), as Nevada's card does. The land is drawn simplified at 3 m, the worst stray 3.3 m against a 25 m ceiling. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "kansas": [
@@ -4838,6 +4921,18 @@ trusted.
             "why": "No list of the members of Kansas's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='20': 285 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school districts; each district's own website; and the county election officers' results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ks-tribal-government",
+            "concept": "Tribal government",
+            "area": "Kansas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website. It names the Prairie Band Potawatomi Nation's council, and not yet the other three nations' councils.",
+            "why": "This app has not read the council lists of Kansas's other three nations yet. Each nation publishes its own, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 6 pieces, held by 4 nations, measured with scripts/tribal_areas.py --report Kansas (control passed: Kansas resolves to state code 20). The Kickapoo (KS) Reservation (613.392 km2) and the Prairie Band of Potawatomi Nation Reservation (316.281 km2) lie wholly in Kansas; 69.4% of the Iowa (KS-NE) Reservation (35.314 km2 in Kansas) and all of its trust land, and 33.1% of the Sac and Fox Nation Reservation (19.741 km2 in Kansas) and 70.3% of its trust land, are in Kansas and are drawn whole across the Nebraska line. The Prairie Band Potawatomi Nation's card names its seven-member council, read weekly from the nation's own page into ks/data/app/tribal-councils.json, the council Illinois's card already names; the Kickapoo Tribe in Kansas, the Iowa Tribe of Kansas and Nebraska and the Sac & Fox Nation of Missouri in Kansas and Nebraska are not carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "newmexico": [

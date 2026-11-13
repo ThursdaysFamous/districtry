@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own data: **County** (`county`, all 36, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (6 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Oregon Senate** and **Oregon House** (30 and 60 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own data service), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 241 incorporated places), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own data: **County** (`county`, all 36, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (6 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Oregon Senate** and **Oregon House** (30 and 60 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own data service), the TIGERweb fabric drawn from mirrored tile archives — **City or Town** (`municipality`, 241 incorporated places), **School District (Unified)**, **(Elementary)** and **(Secondary)** and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -65,11 +65,19 @@ a board or council its home-rule charter sets up, and most elect officers such a
 district attorney and a clerk. Recorded as gaps `or-county-officials` and
 `or-municipal-officeholders`.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps ten reservations in Oregon (the largest Warm
-Springs, about 2,628 km2, and Umatilla, about 701 km2; the Oregon part of the Fort McDermitt
-Indian Reservation is 52% of it) and eight off-reservation trust lands, Celilo Village among them,
-measured 2026-11-12 with `scripts/tribal_areas.py --report Oregon`. The state is recorded as not
-yet covered in `data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF ELEVEN NATIONS AND NAMES NO COUNCIL YET**
+(`tribal-areas.json`, since 2026-11-13). The Census keeps ten reservations in Oregon (the largest
+Warm Springs, about 2,628 km2) and eight off-reservation trust lands, measured 2026-11-12 with
+`scripts/tribal_areas.py --report Oregon`, and all 18 pieces are drawn, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it. Two
+cross the state line and are drawn whole: the Fort McDermitt Indian Reservation, 52% of it in
+Oregon, whose tribes are seated in McDermitt, Nevada, and for which the Bureau lists no website; and
+the Umatilla Off-Reservation Trust Land, 29% of it in Oregon and the rest in Washington. Celilo
+Village belongs to no one nation: the Oregon Blue Book, which the Secretary of State publishes, says
+the Confederated Tribes of Warm Springs, the Confederated Tribes of Umatilla and the Yakama Nation
+administer it jointly (read 2026-11-13), so its card names all three, with each one's seat and site,
+the Yakama's in Toppenish, Washington. No council is carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `or-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE OREGON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -101,7 +109,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oregon (`oregon`) — https://districtry.com/or/
 - Geocoders: address Photon (Oregon-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oregon-bounded, serial >=1s queue)
 - Ground truth: 44.93809,-123.03013 (Oregon State Capitol, 900 Court Street NE, Salem, Marion County) → county Marion County; us-house 6; or-senate 11; or-house 21. Negative point 44.95000,-124.40000 (The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.OregonExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.OregonExplorer`.
 - Scheduled workflows: `update-or-congress-roster.yml` (Mon 22:55 UTC); `update-or-legislature-roster.yml` (Tue 22:55 UTC); `or-validate-sources.yml` (1st of month 23:37 UTC).
 - Source registry: `or/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

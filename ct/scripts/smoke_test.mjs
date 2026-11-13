@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ct-senate", "ct-house"];
 const EXPECT_DISTRICT = { "county": "Capitol Planning Region", "us-house": "1", "ct-senate": "1", "ct-house": "7" };
 const NEGATIVE_POINT = "40.85000,-71.60000"; // The Atlantic about 25 km south of Block Island and 30 km south-east of Montauk Point — outside Connecticut and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Connecticut), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Connecticut";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "ConnecticutExplorer";
@@ -1062,6 +1062,88 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Schaghticoke (state) Reservation is held by the Schaghticoke
+  //         Tribe, which the State of Connecticut recognizes and the United
+  //         States does not: the card says so, gives no seat, because the
+  //         state's page gives none, and links that page.
+  //       - The Mashantucket Pequot Reservation is the ordinary case: the
+  //         Bureau's town and site, and no "Recognized by" line.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 519 m and 595 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const SCHAGHTICOKE = "41.69190,-73.51051";
+    const MASHANTUCKET = "41.46003,-71.97579";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, SCHAGHTICOKE);
+      const p = land[0] || {};
+      const c = await at(SCHAGHTICOKE);
+      check("the Schaghticoke (state) Reservation names the tribe the State of Connecticut recognizes, gives no seat, and links the state's page",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Schaghticoke Tribe" &&
+          c.by("Land") === "Schaghticoke (state) Reservation" &&
+          c.labels.indexOf("Seat of government") === -1 && p.seat === null &&
+          !!p.recognition && c.by("Recognized by") === p.recognition &&
+          p.recognition.indexOf("Recognized by the State of Connecticut") === 0 && p.recognition.indexOf("not by the federal government") !== -1 &&
+          p.url === null && !!p.recognitionUrl && c.link.text === "Connecticut's tribal affairs page" && c.link.href === p.recognitionUrl &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, MASHANTUCKET);
+      const p = land[0] || {};
+      const c = await at(MASHANTUCKET);
+      check("the Mashantucket Pequot Reservation names the tribe with the Bureau's town and site and no recognition line",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Mashantucket Pequot Indian Tribe" &&
+          c.by("Land") === "Mashantucket Pequot Reservation" &&
+          c.by("Seat of government") === "Mashantucket, CT" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("6 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

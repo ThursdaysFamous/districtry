@@ -342,10 +342,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 10,
+      "rank_note": "Tribal land — Connecticut has 6 pieces held by five nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the planning regions measured against this app's own outlines: the Mashantucket Pequot Reservation (5.455 km²) and Off-Reservation Trust Land (1.303 km²) and the Mohegan Reservation (2.457 km²), and three state reservations, the Paucatuck Eastern Pequot (0.983 km²), the Golden Hill Paugussett (0.399 km²) and the Schaghticoke (1.122 km²), held by nations the State of Connecticut recognizes and the United States does not. All but the Schaghticoke, in the Northwest Hills, and a sliver of the Golden Hill Paugussett's, in Greater Bridgeport, lie in the Southeastern Connecticut planning region. The Census draws no tribal district on any of it. Ranked after towns and ZIP codes and before the point layers, so the pieces, a few square kilometres each, are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Connecticut has 6 such areas, held by five nations: the Mashantucket Pequot Indian Tribe and the Mohegan Tribe, which the United States recognizes, and the Eastern Pequot Tribal Nation, the Golden Hill Paugussett and the Schaghticoke Tribe, which the State of Connecticut recognizes.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations, off-reservation trust land and state reservations, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "No council is named yet. Each nation publishes its own council, and this app has not yet read those pages, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the Mashantucket Pequot and the Mohegan. The other three nations are not in that directory, because the United States does not recognize them, so each name comes from the tribal affairs page of the Department of Energy and Environmental Protection, which has the care of their reservations under chapter 824 of the General Statutes (read 2026-11-13); that page gives no town, so their cards give no seat, and each card links the page; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Connecticut — the 6 pieces of land above, in the Southeastern Connecticut, Greater Bridgeport and Northwest Hills planning regions. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -466,6 +484,12 @@
         "min_features": 288,
         "max_features": 288,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Connecticut's tribal land (scripts/build_tribal_areas.py) — the Mashantucket Pequot Reservation and Off-Reservation Trust Land, the Mohegan Reservation and three state reservations, at the Census's own detail (72 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -497,7 +521,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ct-shell-v1",
+    "cache_name": "districtry-ct-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

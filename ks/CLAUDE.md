@@ -14,7 +14,7 @@ batch in one go-live change on Adam's own "merge", which narrowed that exclude, 
 `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
-or the Legislature's own data: **County** (`county`, all 105, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Kansas Senate** and **Kansas House** (40 and 125 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member feed), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 626 incorporated places), **School District** (285) and **ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+or the Legislature's own data: **County** (`county`, all 105, Census TIGERweb, the state outline the coverage wash covers), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators roster), **Kansas Senate** and **Kansas House** (40 and 125 districts, TIGERweb's 2026 state legislative districts joined to the Legislature's own member feed), the TIGERweb fabric drawn from mirrored tile archives — **City** (`municipality`, 626 incorporated places), **School District** (285) and **ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's tribal land, joined to the government that holds it).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -62,11 +62,20 @@ sheriff. Recorded as gaps `ks-county-officials` and `ks-municipal-officeholders`
 1,258 ACTIVE TOWNSHIPS** (TIGER's county subdivisions), each with elected officers; they are not
 drawn yet, and the done-standard scorer marks that level open.
 
-**TRIBAL LAND IS NOT DRAWN YET.** The Census keeps four reservations in Kansas (Kickapoo, about
-613 km2, Prairie Band of Potawatomi Nation, about 316 km2, and the Kansas parts of the Iowa (KS-NE)
-and Sac and Fox Nation reservations) and two off-reservation trust lands, measured 2026-11-12 with
-`scripts/tribal_areas.py --report Kansas`. The state is recorded as not yet covered in
-`data/tribal-government-join.json`.
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FOUR NATIONS AND NAMES ONE COUNCIL** (`tribal-areas.json` and
+`tribal-councils.json`, since 2026-11-13). The Census keeps four reservations in Kansas (Kickapoo,
+about 613 km2; Prairie Band Potawatomi, about 316 km2; and the Iowa and Sac and Fox Nation
+reservations, 69% and 33% of them in Kansas and the rest in Nebraska) and two off-reservation trust
+lands, the Sac and Fox one 70% in Kansas, measured 2026-11-12 with `scripts/tribal_areas.py --report
+Kansas`. All six pieces are drawn, the three that reach into Nebraska whole, each joined in
+`data/tribal-government-join.json` to the government the Bureau of Indian Affairs lists for it,
+seated in Horton, Mayetta, White Cloud and Reserve. The Prairie Band Potawatomi Nation's card names
+its seven-member council, the list Illinois's card already names for the nation's trust land near
+Shabbona, read weekly from the nation's own page by `scripts/tribal_council_scraper.py` into this
+app's own network-first `tribal-councils.json`, so a new council reaches a returning reader at once;
+if that file fails to load, the card still names the nation and names nobody. The other three
+nations' councils are not carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`),
+recorded in gap `ks-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE KANSAS.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -100,7 +109,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Kansas (`kansas`) — https://districtry.com/ks/
 - Geocoders: address Photon (Kansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Kansas-bounded, serial >=1s queue)
 - Ground truth: 39.04807,-95.67803 (Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County) → county Shawnee County; us-house 2; ks-senate 19; ks-house 57. Negative point 40.20000,-98.50000 (Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.KansasExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.KansasExplorer`.
 - Scheduled workflows: `update-ks-congress-roster.yml` (Mon 23:31 UTC); `update-ks-legislature-roster.yml` (Tue 23:31 UTC); `ks-validate-sources.yml` (1st of month 23:55 UTC).
 - Source registry: `ks/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
