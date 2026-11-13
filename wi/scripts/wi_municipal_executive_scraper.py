@@ -102,6 +102,23 @@ and that sentence is false of the first — `WITHHELD_WHY` now carries a
 picks between them. The CARRY rule is deliberately unchanged: whether an
 unreadable robots.txt should expire is the operator's open question from #1271.
 
+THAT QUESTION WAS ANSWERED ON 2026-11-13, BY MILWAUKEE. The weekly run of
+2026-11-12 read `robots  www.milwaukee.gov  unreachable` (a TimeoutError on
+robots.txt; the run's log shows about 93 seconds spent on that host), and the
+builder dropped Mayor Cavalier Johnson's name, e-mail and telephone with the
+sentence written for a site that has said no. Milwaukee said nothing, and the
+shipped file held the name because an earlier run had read the city's page and
+witnessed it. An
+unreadable robots.txt still stops the FETCH, under RFC 9309 §2.3.1.4, and that
+is unchanged. What changes is the verdict this file records for it:
+`robots-unread`, set only when the reader's own status is `unreachable`, which
+the builder carries under the rules it already applies to an unreachable page
+(the county layer still names the same person, at most 60 days, no spring
+election since). So it does expire. This follows Adam's ruling of 2026-09-19,
+"Preserve data we have already fetched", whose own example was a county whose
+robots.txt answered HTTP 500. A served `Disallow` and a managed challenge on
+the robots request keep `robots-refused` and are still never carried.
+
 TWENTY-ONE ROWS ARE NINETEEN MUNICIPALITIES. The City of Milwaukee appears
 THREE times (Muni_Code 53000), one row per polygon part. Keying on rows rather
 than on Muni_Code ships the same mayor three times and makes every count in
@@ -268,6 +285,10 @@ def robots_allows(url):
     NOT changed here (a robots.txt that cannot be read still refuses, and
     whether that should expire is the operator's open question from #1271);
     only the sentence a reader is shown is made true.
+
+    Since 2026-11-13 the caller also uses the status to choose the verdict:
+    `unreachable` becomes pageStatus `robots-unread`, which the builder may
+    carry. The module docstring records why.
     """
     verdict = _ROBOTS_GATE.verdict(url)
     ua = HDRS["User-Agent"]
@@ -474,7 +495,19 @@ def main():
             # `served` is the host stating a policy that shuts us; anything
             # else is the host not answering, and the two get their own words.
             said_no = robots_status == "served"
-            rec.update(witnessed=False, pageStatus="robots-refused",
+            # THREE EVENTS, TWO VERDICTS (2026-11-13). A robots.txt that timed
+            # out, reset or answered 5xx is `unreachable` to the fleet's
+            # reader: nothing was asked and nothing was answered, the same
+            # event as an unreachable page, so it gets a verdict of its own
+            # (`robots-unread`) that the builder may carry. A served policy
+            # that says no, and a managed challenge answering the robots
+            # request, both stay `robots-refused` and are never carried: the
+            # first is the site's stated answer and the second is an access
+            # control.
+            could_not_ask = robots_status == "unreachable"
+            rec.update(witnessed=False,
+                       pageStatus="robots-unread" if could_not_ask
+                       else "robots-refused",
                        robotsWhy=why,
                        withheldWhy=WITHHELD_WHY["robots-refused" if said_no
                                                 else "robots-unread"])
@@ -509,10 +542,13 @@ def main():
         json.dump(payload, f, indent=2, ensure_ascii=False, sort_keys=True)
         f.write("\n")
     refused = sum(1 for r in out.values() if r.get("pageStatus") == "robots-refused")
+    unread = sum(1 for r in out.values() if r.get("pageStatus") == "robots-unread")
     print("wi-municipal-executive-scraper: OK — %d municipalities, %d name(s) "
           "witnessed on the municipality's own page, %d withheld (%d of them "
-          "because the site asks not to be crawled) -> %s"
-          % (len(out), n_ok, len(out) - n_ok, refused, out_path), file=sys.stderr)
+          "because the site's crawling policy shuts this client out, %d because "
+          "that policy could not be read this run) -> %s"
+          % (len(out), n_ok, len(out) - n_ok, refused, unread, out_path),
+          file=sys.stderr)
     for line in _PACER.report():
         print(line, file=sys.stderr)
 
