@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ga-senate", "ga-house"];
 const EXPECT_DISTRICT = { "county": "Fulton County", "us-house": "5", "ga-senate": "36", "ga-house": "58" };
 const NEGATIVE_POINT = "31.40000,-80.90000"; // In the Atlantic Ocean, about 22 km from the nearest point of Georgia's shipped outline — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer names no state here (controls: the State Capitol returns Georgia, and Tallahassee, the old point, returns Florida), and no outline in fleet-outlines.json contains it, the nearest being Georgia's. THIS POINT WAS IN TALLAHASSEE, FLORIDA (30.4383, -84.2807) until the change that published Florida (batch 2 of the state-level launch, written 2026-11-11), which put it inside Florida's outline. THE OCEAN RATHER THAN ALABAMA, which this note used to name as the next place: Alabama is in batch 3, so a point there would move again within weeks, while no instance will ever serve the ocean. South Carolina's point moved to the Atlantic for the same reason when Georgia went live.
 const APP_NAME = "districtry Georgia";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "GeorgiaExplorer";
@@ -1558,6 +1558,70 @@ try {
           /This map holds Georgia's circuits, so a point outside the state gets none/.test(info.text || ""),
         (info.text || "").slice(0, 160));
       await context.close();
+    }
+  }
+
+  // 13. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Tama (state) Reservation is held by the Lower Muscogee Creek
+  //         Tribe, which the State of Georgia recognizes and the United States
+  //         does not: the card says so, gives the tribe's town from the law
+  //         that recognizes it, and links that law.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's coverage outline, as the shipped files draw
+  //     them (shapely polylabel, 2026-11-13): 235 m from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const TAMA = "30.86278,-84.26261";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, TAMA);
+      const p = land[0] || {};
+      const c = await at(TAMA);
+      check("the Tama (state) Reservation names the tribe the State of Georgia recognizes, says so, and links the law",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Lower Muscogee Creek Tribe" &&
+          c.by("Land") === "Tama (state) Reservation" &&
+          c.by("Seat of government") === "Whigham, GA" &&
+          !!p.recognition && c.by("Recognized by") === p.recognition &&
+          p.recognition.indexOf("Recognized by the State of Georgia") === 0 && p.recognition.indexOf("not by the federal government") !== -1 &&
+          p.url === null && !!p.recognitionUrl && c.link.text === "Georgia's law recognizing the tribe (House Bill 43 of 2024)" && c.link.href === p.recognitionUrl &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("one tribal area") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
     }
   }
 } finally {

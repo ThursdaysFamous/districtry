@@ -20,8 +20,9 @@ public-domain unitedstates/congress-legislators roster), **Washington Senate Dis
 **Washington House District** (`wa-senate`, `wa-house`, the same 49 districts, joined to the
 Legislature's member pages), the TIGERweb fabric drawn from mirrored tile archives — **City or
 Town** (`municipality`, 281 incorporated places), **School District** (295 unified districts) and
-**ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**,
-**Fire & EMS Station**, **Post Office**).
+**ZIP Code** — three nearest-N layers from the USGS National Map (**Police Station**,
+**Fire & EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the
+Census's tribal land, joined to the Bureau of Indian Affairs' list).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline (one ring, 39 counties inside and 15 outside anchors,
@@ -77,8 +78,21 @@ No school board member is named yet (gap `wa-school-board-members`).
 
 **NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
 to assume the office is empty. Recorded as gaps `wa-county-officials` and
-`wa-municipal-officeholders`. The land of Washington's tribal nations is not drawn yet: the
-Census keeps 28 reservations and 22 off-reservation trust lands in the state (`wa/WATCH.md`).
+`wa-municipal-officeholders`.
+
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 29 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+since 2026-11-12). The Census keeps 28 reservations and 22 off-reservation trust lands in
+Washington, and all 50 pieces are drawn, each joined in `data/tribal-government-join.json` to the
+government the Bureau of Indian Affairs lists for it, with its seat and, where the Bureau gives
+one, its website. The Bureau lists no website for the Upper Skagit Indian Tribe, so its card links
+nothing. One piece belongs to a nation seated outside the state: 71% of the Umatilla
+Off-Reservation Trust Land lies in Washington, and its card names the Confederated Tribes of the
+Umatilla Indian Reservation, seated in Pendleton, Oregon. The Samish Indian Nation is federally
+recognized and the Census draws no land for it, so no card names it. The Tulalip Reservation's card
+lists the 19 tribal districts the Census draws on it. No council is named yet (`ROSTER_NOT_SOUGHT`
+in `scripts/build_tribal_areas.py`, the Oklahoma shape): each nation's own page is read and its
+council moved into `tribal-councils.json` one nation at a time, recorded in gap
+`wa-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE WASHINGTON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -111,7 +125,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Washington (`washington`) — https://districtry.com/wa/
 - Geocoders: address Photon (Washington-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Washington-bounded, serial >=1s queue)
 - Ground truth: 47.03579,-122.90494 (The Legislative Building, Olympia, Thurston County. Measured 2026-11-11 against the shipped files: 3,815 m inside its legislative district and 13,515 m inside its congressional district and county.) → county Thurston County; us-house 10; wa-senate 22; wa-house 22. Negative point 48.42840,-123.36560 (Victoria, British Columbia, across the Strait of Juan de Fuca — outside Washington and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Legislative Building in Olympia returns Washington), none of the state's shipped boundary files contains it, and none of the outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.WashingtonExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.WashingtonExplorer`.
 - Scheduled workflows: `update-wa-congress-roster.yml` (Tue 21:23 UTC); `update-wa-legislature-roster.yml` (Thu 21:23 UTC); `wa-validate-sources.yml` (1st of month 23:37 UTC).
 - Source registry: `wa/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 8
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "county", "school-district-unified", "nv-senate",
-    "nv-assembly", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "nv-assembly", "zip-code", "municipality", "tribal-government",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "nv-senate-districts.json": (21, 21),  # The 21 Nevada Senate districts, TIGERweb layer 1, the 2021 plan, simplified in one topology with the Assembly districts.
     "nv-assembly-districts.json": (42, 42),  # The 42 Nevada Assembly districts, TIGERweb layer 2, the 2021 plan, simplified in one topology with the Senate districts.
     "zip-index.json": (180, 180),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (35, 35),  # Nevada's tribal land (scripts/build_tribal_areas.py) — 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, six pieces drawn whole across the state line, at the Census's own detail (345 KB, under the size at which Arizona's and Oklahoma's are simplified). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).

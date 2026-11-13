@@ -1260,6 +1260,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: flex-start;
     gap: 2px;
   }
+  /* the state's code sits in front of the address like a letter, so a
+     long address wraps under it rather than beside it */
+  .sibling-result-code { margin-right: 7px; vertical-align: 1px; }
   .sibling-result-hint {
     font-size: 11.5px;
     font-weight: 600;
@@ -4610,8 +4613,8 @@ function initGeorgiaExplorer() {
   var LAYER_CODES = { "us-house": "us", "ga-senate": "gas", "county": "co", "ga-house": "gah",
     "ga-superior-court": "gau", "school-district-unified": "su", "county-subdivision": "cs",
     "county-commissioner": "cm", "school-board-district": "bd", "zip-code": "zp",
-    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po" };
+    "voting-precinct": "vp", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4623,7 +4626,8 @@ function initGeorgiaExplorer() {
     "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
-    "fire-station": ["fire-station"], "post-office": ["post-office"] };
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4847,6 +4851,17 @@ function initGeorgiaExplorer() {
   function siblingDisplayName(metro) {
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");
+  }
+
+  /* A sibling app's two-letter state code, shown wherever the fleet lists
+     another state: the state menu under the wordmark and the search rows that
+     open another state's app. It is the app's path, which is its tag
+     everywhere in the fleet (districtry.com/il/ is "il"), so it needs no
+     second field kept in step with the url. A url of another shape gives ""
+     and its row carries no code rather than a wrong one. */
+  function metroCode(metro) {
+    var m = /\/([a-z]{2})\/?$/.exec((metro && metro.url) || "");
+    return m ? m[1].toUpperCase() : "";
   }
   /* ==== ENGINE:END brand-names ==== */
 
@@ -9570,8 +9585,19 @@ function initGeorgiaExplorer() {
     btn.type = "button";
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
+    /* the state's two-letter code, the badge the state menu shows beside
+       each state (Adam, 2026-11-12: codes rather than the emoji the fleet
+       list used to carry) */
+    var code = metroCode(metro);
+    if (code) {
+      var badge = document.createElement("span");
+      badge.className = "dst-metro-code sibling-result-code";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = code;
+      addr.appendChild(badge);
+    }
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
+    addr.appendChild(document.createTextNode(label));
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -11478,6 +11504,7 @@ function initGeorgiaExplorer() {
     "zip-code",          // 1,202 ZIP Code Tabulation Areas in the state's own bounding box, about 196 km2 of land on average, fetched live by envelope; the layer hides outside Georgia
     "voting-precinct",   // 2,724 precincts tiling the state, pre-built from the Reapportionment Office's 2024 statewide precinct map — 56.50 km2 mean area, land and water (median 11.79), measured 2026-10-30 on the drawn file: smaller on average than a county commission district (about 220 km2), larger than a city or town (about 26 km2 of land)
     "municipality",      // 538 incorporated places, about 26 km2 of land on average, live from TIGERweb (no data/app file)
+    "tribal-government", // Tribal land — Georgia has one piece, MEASURED by scripts/build_tribal_areas.py on 2026-11-13: the Tama (state) Reservation (0.367 km², Grady County), held by the Lower Muscogee Creek Tribe, which the State of Georgia recognizes and the United States does not. Ranked after municipalities and before the point layers, so the piece, smaller than every voting precinct around it, is drawn above them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -17749,6 +17776,131 @@ function initGeorgiaExplorer() {
   });
 
 
+  /* ---------- 8a. Tribal Government — Georgia's tribal land, 1 piece, 1 nation.
+   *
+   * One state reservation, measured 2026-11-13 by
+   * scripts/build_tribal_areas.py, with the county measured against this
+   * app's own county outlines: the Tama (state) Reservation (0.367 km², Grady
+   * County; 14 people at the 2020 census), held by the Lower Muscogee Creek
+   * Tribe. The Census draws no tribal district on it.
+   *
+   * THE TRIBE IS RECOGNIZED BY THE STATE AND NOT BY THE UNITED STATES. It is
+   * not in the Bureau of Indian Affairs' list, so its name and its seat,
+   * Whigham, come from Code Section 44-12-300 of the Official Code of Georgia
+   * as House Bill 43 of 2024 amended it, which the Governor's office
+   * publishes (read 2026-11-13), and the card says so and links that law, as
+   * Virginia's Mattaponi card links the Commonwealth's list. Only the town is
+   * carried, never the street.
+   *
+   * WHO THE CARD NAMES. Nobody yet. This app has not read a council list for
+   * the tribe and has no site of the tribe's own to link, and the card says
+   * so (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py).
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Georgia are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
+  // --check refuses a councils file that names nobody. The day a council is
+  // carried, --rosters writes ga/data/app/tribal-councils.json and this loader
+  // gains the same network-first merge Kansas's has.
+  var loadGaTribalAreas = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadGaTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, or for a nation only
+      // the state recognizes as the state's own source does, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      // Only on land held by a nation the State of Georgia recognizes and
+      // the United States does not, which the card says.
+      { name: "recognition", label: "Recognized by", keys: ["recognition"] },
+      { name: "recognitionUrl", label: "", keys: ["recognitionurl"], when: function () { return false; } },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here. Where the state's source names the
+    // nation and gives no site, the link is that source.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      if (result && result.recognitionUrl) {
+        return { label: "Georgia's law recognizing the tribe (House Bill 43 of 2024)", url: String(result.recognitionUrl) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land by
+    // the loader above, so the card makes no request of its own; and for a
+    // nation the state recognizes that has a site of its own, a link to the
+    // source that names it.
+    people: function (result) {
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      var recognition = result && result.recognitionUrl && result.url;
+      if (!hasRoster && !recognition) return null;
+      var wrap = cardEl("div");
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (recognition) {
+        links.push({ label: "Georgia's law recognizing the tribe (House Bill 43 of 2024) ↗", url: String(result.recognitionUrl) });
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Georgia has one tribal area, the Tama state reservation in Grady County, and this point is not on it."
+  });
+
   /* ---------- 9. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19644,7 +19796,7 @@ function initGeorgiaExplorer() {
     // Kentucky's courts do: its voters elect its judges and district attorney.
     "ga-superior-court",
     "county-commissioner", "school-district-unified", "school-board-district",
-    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -20163,11 +20315,12 @@ function initGeorgiaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
@@ -20387,12 +20540,8 @@ function initGeorgiaExplorer() {
       /* and the layers the reader has on travel with them (ENGINE
          metro-portal), as they do when a click crosses a state line */
       if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
-      /* The code is the app's path, which is its tag everywhere in the fleet
-         (districtry.com/il/ is "il"), so it needs no second field kept in
-         step with the url. A url of another shape gets no badge rather than
-         a wrong one. */
-      var tm = /\/([a-z]{2})\/?$/.exec(m.url || "");
-      var code = tm ? tm[1].toUpperCase() : "";
+      /* the state's two-letter code (ENGINE brand-names metroCode) */
+      var code = metroCode(m);
       if (code) {
         var badge = document.createElement("span");
         badge.className = "dst-metro-code";
