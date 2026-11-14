@@ -95,11 +95,25 @@ def get(row, *names):
     return None
 
 
+# A service that writes "[Vacant]" or "Vacant" in a seat's NAME field is saying
+# nobody holds the seat. On 2026-11-06 Kankakee's did, in District 20, with the
+# same word in the e-mail and phone fields, and the weekly build carried a
+# member of that name with a mailto: link to it. No person's name holds the
+# word, so a name that does is a vacancy: the seat ships as one of the
+# district's `vacancies`, the shape build_county_pages.py already prints as a
+# vacant seat, and no person is written for it.
+VACANCY = re.compile(r"\bvacan(?:t|cy)\b", re.I)
+VACANT_SEAT = {"vacant": True}
+
+
 def person(name, party=None, email=None, phone=None, url=None):
+    if VACANCY.search(name or ""):
+        return dict(VACANT_SEAT)
     rec = {"name": re.sub(r"\s+", " ", name).strip()}
     for key, value in (("party", party), ("email", email), ("phone", phone),
                        ("url", url)):
-        if value:
+        # the same word in a contact field is the service's filler, not contact
+        if value and not VACANCY.search(str(value)):
             rec[key] = value
     return rec
 
@@ -256,19 +270,36 @@ def fold_published_contact(spec, districts):
     return folded
 
 
+def split_vacancies(seated):
+    """({district: members}, {district: vacant seats}) from a builder's answer,
+    in which a seat the service calls vacant is a VACANT_SEAT marker."""
+    members = {k: [p for p in v if not p.get("vacant")] for k, v in seated.items()}
+    vacant = {k: sum(1 for p in v if p.get("vacant")) for k, v in seated.items()}
+    return members, {k: n for k, n in vacant.items() if n}
+
+
 def build(spec, snapshot):
     rows = snapshot["rows"]
-    districts = BUILDERS[spec["key"]](rows)
+    districts, vacant = split_vacancies(BUILDERS[spec["key"]](rows))
     if not districts:
         fail("%s: no district resolved from %d row(s)" % (spec["county"], len(rows)))
     fold_published_contact(spec, districts)
-    seats = sum(len(v) for v in districts.values())
+    # A seat the service itself calls vacant is a seat RESOLVED, so it counts
+    # toward the floor: the floor guards a parser or a service going empty, and
+    # a county saying one seat is empty is neither.
+    seats = sum(len(v) for v in districts.values()) + sum(vacant.values())
     floor = SEATS[spec["key"]]
     if seats < floor:
         fail("%s: %d seat(s) resolved, below the floor of %d — refusing to "
              "overwrite a good roster" % (spec["county"], seats, floor))
-    return {k: {"members": districts[k], "sourceUrl": spec["board_url"]}
-            for k in sorted(districts, key=district_sort)}, seats
+    roster = {}
+    for k in sorted(districts, key=district_sort):
+        roster[k] = {"members": districts[k], "sourceUrl": spec["board_url"]}
+        if vacant.get(k):
+            roster[k]["vacancies"] = vacant[k]
+            print("build-il-gis-board-rosters: %-10s district %s: %d seat(s) the "
+                  "county's service lists as vacant" % (spec["key"], k, vacant[k]))
+    return roster, seats
 
 
 # What a preserved file says about itself, read by build_county_pages.py. The
@@ -299,7 +330,8 @@ def preserve(spec, path, problem):
              "there is nothing to preserve" % (spec["county"], problem))
     with open(path, encoding="utf-8") as f:
         roster = json.load(f)
-    seats = sum(len(v.get("members") or []) for k, v in roster.items()
+    seats = sum(len(v.get("members") or []) + (v.get("vacancies") or 0)
+                for k, v in roster.items()
                 if k != NOT_READ_KEY and isinstance(v, dict))
     if seats < SEATS[spec["key"]]:
         fail("%s could not be read and its shipped roster holds %d seat(s), below "
