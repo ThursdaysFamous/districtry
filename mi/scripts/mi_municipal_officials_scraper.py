@@ -60,7 +60,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from robots_gate import RobotsGate, HostPacer  # noqa: E402
 from mi_municipal_common import (UA_ROSTER_BOT, strip_comments,  # noqa: E402
-                                 check_roster)
+                                 check_roster, settle_vacancies)
 import mi_municipal_parsers_cities_a  # noqa: E402
 import mi_municipal_parsers_cities_b  # noqa: E402
 import mi_municipal_parsers_townships  # noqa: E402
@@ -263,7 +263,8 @@ def scrape(unit, session, gate, pacer, header_gates):
                     gate, pacer)
         also.append(strip_comments(r2.text))
     try:
-        roster = check_roster(unit, unit["parse"](strip_comments(resp.text), also))
+        roster = check_roster(unit, settle_vacancies(
+            unit["parse"](strip_comments(resp.text), also)))
     except ValueError as exc:
         return None, "PARSE REFUSED — %s" % exc, "parse", gate, pacer
     return roster, None, None, gate, pacer
