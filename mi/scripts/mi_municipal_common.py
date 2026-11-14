@@ -199,6 +199,33 @@ def member(name, role, seat=None, phone_=None, email=None):
 
 NAME_OK = re.compile(r"^[A-Z][A-Za-z.'’\- ]+(?:,? (?:Jr|Sr|II|III|IV)\.?)?$")
 
+# A page that prints "Vacant" or "Currently Vacant" where a member's name goes
+# is saying the seat is empty, and those words pass NAME_OK: two capitalised
+# words. On 2026-11-01 Kentwood's page read "Currently Vacant" in a Ward 1
+# seat and the weekly build carried it as a commissioner of that name. No
+# person's name holds the word, so any name that does is a vacancy.
+VACANCY_NAME = re.compile(r"\bvacan(?:t|cy)\b", re.I)
+
+
+def settle_vacancies(roster):
+    """Move every member whose "name" is the page's own vacancy wording into
+    the roster's `vacant` list, under the seat the page gives it (the role
+    where it gives none). The scraper runs this on every parser's answer
+    before check_roster, so the seat count still adds up and the card says
+    the seat is vacant in the city's or township's own words."""
+    if not isinstance(roster, dict) or not isinstance(roster.get("members"), list):
+        return roster
+    kept, empty = [], []
+    for m in roster["members"]:
+        if isinstance(m, dict) and VACANCY_NAME.search(m.get("name") or ""):
+            empty.append(m.get("seat") or m.get("role") or "Seat")
+        else:
+            kept.append(m)
+    if empty:
+        roster["members"] = kept
+        roster["vacant"] = list(roster.get("vacant") or []) + empty
+    return roster
+
 
 def check_roster(unit, roster):
     """The gates every unit passes before its roster is kept. Raises
@@ -214,6 +241,10 @@ def check_roster(unit, roster):
     seen = set()
     for m in members:
         name = m.get("name") or ""
+        if VACANCY_NAME.search(name):
+            raise ValueError("%r is the page saying a seat is vacant, not a "
+                             "person's name: it belongs under `vacant` "
+                             "(settle_vacancies)" % name)
         if not NAME_OK.match(name) or len(name.split()) < 2 or len(name) > 60:
             raise ValueError("%r does not read as a person's name" % name)
         key = re.sub(r"[^a-z]", "", name.lower())

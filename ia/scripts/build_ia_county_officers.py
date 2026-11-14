@@ -496,6 +496,74 @@ def clean_phone(raw):
     return re.sub(r"\s+", " ", m.group(0)).strip() if m else None
 
 
+def supervisor_own_contact(county, members, page, prior_sups, board_phone):
+    """Put each supervisor's OWN phone and e-mail on a board the statewide
+    directory named, and say where they came from: ("page", n), ("carried", n)
+    or (None, 0). `members` is changed in place.
+
+    WHY THIS EXISTS. The county's own board page used to be read only where
+    the directory and the district map disagreed about the board's size. Tama
+    was such a county, and its page prints a direct line and an address beside
+    each of its five supervisors, which the card has shown since 2026-10-17.
+    On 2026-11-13 the two publishers agreed about Tama again, the page was no
+    longer consulted, and the weekly build dropped all ten contacts while the
+    county went on printing every one. A board being named by the directory
+    says nothing about whether its members' own contact is still published.
+
+    WHERE THE PAGE WAS READ THIS RUN (`verdict` ok) the contact is the page's:
+    a directory member takes what the page prints beside the ONE page member
+    who is the same person. A phone the page prints beside two members, or one
+    equal to the board's own number, is the board's and stays off the row; an
+    address goes through supervisor_address() and keeps its three refusals. So
+    a contact the county stops printing is dropped, as it should be.
+
+    WHERE THE PAGE WAS NOT READ THIS RUN and this file already ships a contact
+    under the same person, it is carried: a refusal or an outage stops the
+    fetch and does not unpublish what was fetched (Adam, 2026-09-19). A new
+    holder never inherits one, the rule the row officers' addresses follow.
+    """
+    def one_match(rows, name):
+        hits = [r for r in rows if same_person(r.get("name") or "", name)]
+        return hits[0] if len(hits) == 1 else None
+
+    n = 0
+    if page and page.get("verdict") == "ok":
+        rows = [dict(r, name=display_name(r.get("name") or ""))
+                for r in (page.get("members") or [])]
+        shared = {}
+        for r in rows:
+            ph = clean_phone(r.get("phone"))
+            if ph:
+                shared[ph] = shared.get(ph, 0) + 1
+        for m in members:
+            r = one_match(rows, m["name"])
+            if r is None:
+                continue
+            ph = clean_phone(r.get("phone"))
+            if (ph and "phone" not in m and shared.get(ph) == 1
+                    and ph != board_phone):
+                m["phone"] = ph
+                n += 1
+            if "email" not in m:
+                addr, why = supervisor_address(county, rows, rows.index(r))
+                if addr:
+                    m["email"] = addr
+                    n += 1
+                elif why:
+                    print("  PAGE      %-13s %s's address is not shipped: %s"
+                          % (county, m["name"], why), file=sys.stderr)
+        return ("page", n) if n else (None, 0)
+    for m in members:
+        was = one_match(prior_sups or [], m["name"])
+        if was is None:
+            continue
+        for key in ("phone", "email"):
+            if was.get(key) and key not in m and was[key] != board_phone:
+                m[key] = was[key]
+                n += 1
+    return ("carried", n) if n else (None, 0)
+
+
 # display_name changes a NAME, and a name here is also the key
 # ia-county-board-chairs.json joins on, so the rule gets literal cases rather
 # than a comment. Every input below is a string that has really shipped, apart
@@ -598,6 +666,59 @@ SUPERVISOR_ADDRESS_CASES = [
 ]
 
 
+# supervisor_own_contact(), on the shape that lost Tama's ten contacts: the
+# directory names the board (name and party, one shared switchboard already
+# hoisted to the board), and the county's own page prints a line and an
+# address beside each member. Every number and host is made up.
+def _own_contact_cases():
+    page = {"verdict": "ok", "members": [
+        {"name": "Jane Doe", "phone": "555-201-0001",
+         "email": "jdoe@tamacounty.example"},
+        {"name": "Al Roe", "phone": "555-201-0002",
+         "email": "bluebird7@example.net"},
+        {"name": "Pat Poe", "phone": "555-201-0009"},
+        {"name": "Sam Coe", "phone": "555-201-0009"}]}
+    board = lambda: [{"name": "Jane Doe", "party": "Republican"},
+                     {"name": "Al Roe", "party": "Republican"},
+                     {"name": "Pat Poe"}, {"name": "Sam Coe"}]
+    prior = [{"name": "Jane Doe", "phone": "555-201-0001",
+              "email": "jdoe@tamacounty.example"},
+             {"name": "Old Holder", "phone": "555-201-0003"}]
+    out = []
+    m = board()
+    got = supervisor_own_contact("Tama", m, page, prior, "555-201-0100")
+    out.append(("page read: each member's own line and address",
+                (got, m[0].get("phone"), m[0].get("email"), m[1].get("email")),
+                (("page", 4), "555-201-0001", "jdoe@tamacounty.example",
+                 "bluebird7@example.net")))
+    out.append(("page read: a number printed beside two is the board's",
+                (m[2].get("phone"), m[3].get("phone")), (None, None)))
+    out.append(("page read: the directory's party is kept",
+                m[0].get("party"), "Republican"))
+    m = board()
+    got = supervisor_own_contact("Tama", m, page, prior, "555-201-0001")
+    out.append(("page read: the board's own number stays off the row",
+                m[0].get("phone"), None))
+    m = board()
+    got = supervisor_own_contact("Tama", m, {"verdict": "unreachable"}, prior,
+                                 None)
+    out.append(("page not read: the same person's contact is carried",
+                (got, m[0].get("phone"), m[0].get("email")),
+                (("carried", 2), "555-201-0001", "jdoe@tamacounty.example")))
+    out.append(("page not read: nobody inherits a predecessor's line",
+                [x.get("phone") for x in m[1:]], [None, None, None]))
+    m = board()
+    got = supervisor_own_contact("Tama", m, None, None, None)
+    out.append(("no page and nothing shipped: nothing is added",
+                (got, m), ((None, 0), board())))
+    gone = {"verdict": "ok", "members": [{"name": "Jane Doe"}]}
+    m = board()
+    got = supervisor_own_contact("Tama", m, gone, prior, None)
+    out.append(("page read and prints no contact: none is carried",
+                (got, m[0].get("phone")), ((None, 0), None)))
+    return out
+
+
 def selftest():
     bad = []
     for raw, want in DISPLAY_CASES:
@@ -620,8 +741,13 @@ def selftest():
             bad.append("%s -> %r, wanted %r" % (label, got, want))
         print("  %-4s %-36s -> %r %s"
               % ("OK" if got == want else "FAIL", label, got, why or ""))
+    own = _own_contact_cases()
+    for label, got, want in own:
+        if got != want:
+            bad.append("%s -> %r, wanted %r" % (label, got, want))
+        print("  %-4s %s" % ("OK" if got == want else "FAIL", label))
     total = (len(DISPLAY_CASES) + len(PARTY_JOIN_CASES)
-             + len(SUPERVISOR_ADDRESS_CASES))
+             + len(SUPERVISOR_ADDRESS_CASES) + len(own))
     if bad:
         sys.exit("build-ia-county-officers --selftest: FAIL — %d case(s): %s"
                  % (len(bad), "; ".join(bad)))
@@ -696,6 +822,7 @@ def main():
     filled = {k: 0 for k, _ in OFFICES}
     boards = withheld = divergences = mislabels = resolved = switchboards = 0
     from_page = 0
+    own_contacts = 0
     scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
     page_emails = 0
     pins_used = set()
@@ -885,9 +1012,12 @@ def main():
         # that is what the gates above enforce. But the county is the publisher
         # OF ITS OWN BOARD, so where it names a legal board that agrees with
         # the districts this app draws, nothing is being preferred -- the body
-        # itself has answered. It is consulted ONLY where the gates have
-        # already failed, so a county the two directories agree about is
-        # untouched, and it must clear BOTH gates on its own: a legal size, and
+        # itself has answered. For the NAMES it is consulted ONLY where the
+        # gates have already failed, so the board of a county the two
+        # directories agree about is the directory's (since 2026-11-14 such a
+        # county still takes each supervisor's own line and address from this
+        # page: supervisor_own_contact). To name a board the page must clear
+        # BOTH gates on its own: a legal size, and
         # the seat count the shipped geometry draws. A page that cannot is
         # reported and the board stays withheld.
         if reason and geoid[2:] in board_pages:
@@ -1000,6 +1130,20 @@ def main():
                 switchboards += 1
                 for m in members:
                     m.pop("phone", None)
+            # each supervisor's OWN line and address, from the county's own
+            # board page where it was read this run, else carried for the
+            # same person -- see supervisor_own_contact()
+            how, n_own = supervisor_own_contact(
+                county, members, board_pages.get(geoid[2:]),
+                (prior.get(geoid) or {}).get("supervisors"),
+                entry.get("boardPhone"))
+            if how:
+                own_contacts += n_own
+                print("  OWN       %-13s %d supervisor contact(s) %s"
+                      % (county, n_own,
+                         "from the county's own board page" if how == "page"
+                         else "carried: its board page was not read this run"),
+                      file=sys.stderr)
             entry["supervisors"] = members
             if seats is not None:
                 entry["supervisorSeats"] = seats
@@ -1087,6 +1231,10 @@ def main():
     if from_page:
         print("  %d board(s) came from the county's own page, where the two "
               "outside directories disagreed" % from_page, file=sys.stderr)
+    if own_contacts:
+        print("  %d supervisor contact(s) of their own on boards the directory "
+              "named (the OWN lines above say from where)" % own_contacts,
+              file=sys.stderr)
     for line in withheld_detail:
         print("  supervisors withheld: %s" % line, file=sys.stderr)
 

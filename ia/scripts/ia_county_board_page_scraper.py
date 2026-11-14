@@ -88,9 +88,13 @@ NO ADDRESS IS EVER CARRIED. These pages are courthouse addresses rather than
 home ones, but the refusal is the fleet's and is not relaxed per page: a field
 that reads as a street address is dropped, and the builder refuses again.
 
-Stage 2 is `build_ia_county_officers.py`, which consults this cache ONLY for a
-county whose two outside publishers disagree, and ships it only when the page's
-board is a legal size AND equals the districts the app draws.
+Stage 2 is `build_ia_county_officers.py`, which takes a board's NAMES from this
+cache only for a county whose two outside publishers disagree, and ships it
+only when the page's board is a legal size AND equals the districts the app
+draws. Since 2026-11-14 it also reads this cache for a county whose publishers
+agree, for one thing: the phone and e-mail the page prints beside each
+supervisor (Tama's ten went missing from a weekly build the day the two
+publishers agreed again, while the county still printed them).
 """
 
 import html as H
