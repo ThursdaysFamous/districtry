@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ma-senate", "ma-house"];
 const EXPECT_DISTRICT = { "county": "Suffolk County", "us-house": "8", "ma-senate": "Third Suffolk", "ma-house": "8th Suffolk" };
 const NEGATIVE_POINT = "41.95000,-69.70000"; // The Atlantic about 15 km east of Cape Cod's outer shore at Wellfleet — outside Massachusetts and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Massachusetts), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Massachusetts";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "MassachusettsExplorer";
@@ -1065,6 +1065,134 @@ try {
       !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
       `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each name and seat came from.
+  //       - The Mashpee Wampanoag Trust Land is in two towns 60 km apart, so
+  //         it is clicked in both: at Mashpee and at Taunton the card names
+  //         the Mashpee Wampanoag Tribe, seated at Mashpee, and links the
+  //         tribe's own site, not the address the Bureau of Indian Affairs
+  //         lists, which served another publisher's pages on 2026-11-13.
+  //       - The Wampanoag-Aquinnah Trust Land names the Wampanoag Tribe of
+  //         Gay Head (Aquinnah) with the Bureau's town and site.
+  //       - The Hassanamisco (state) Reservation in Grafton names the
+  //         Hassanamisco Nipmuc Tribe, which the Commonwealth recognizes and
+  //         the United States does not: the card says so, gives no seat,
+  //         because no source read names the tribe's office town, and links
+  //         Executive Order 126 of 1976 in the State Library's archive, not
+  //         a site of the tribe's.
+  //       - The State House is on no tribal land, and the card says so.
+  //     Each point is the pole of inaccessibility of a part of the piece, as
+  //     the shipped file draws it (shapely polylabel, 2026-11-13): 146 m,
+  //     166 m and 205 m from its edge on the trust land, and 43 m on the
+  //     reservation, which is about 145 m across.
+  {
+    const areas = shipped("tribal-areas.json");
+    const MASHPEE = "41.63845,-70.47662";
+    const TAUNTON = "41.87165,-71.05137";
+    const AQUINNAH = "41.34730,-70.77197";
+    const HASSANAMISCO = "42.21244,-71.70375";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, MASHPEE);
+      const p = land[0] || {};
+      const c = await at(MASHPEE);
+      check("the Mashpee Wampanoag Trust Land at Mashpee names the tribe and its seat, links the tribe's own site, and says why it names nobody",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Mashpee Wampanoag Tribe" &&
+          c.by("Land") === "Mashpee Wampanoag Trust Land" &&
+          c.by("Seat of government") === "Mashpee, MA" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          p.url === "https://mashpeewampanoagtribe-nsn.gov/" &&
+          c.by("Population") === p.populationNote,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, TAUNTON);
+      const p = land[0] || {};
+      const c = await at(TAUNTON);
+      check("the same trust land at Taunton names the same tribe, seated at Mashpee",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Mashpee Wampanoag Tribe" &&
+          c.by("Land") === "Mashpee Wampanoag Trust Land" &&
+          c.by("Seat of government") === "Mashpee, MA" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          p.aiannh === "2147" &&
+          p.url === "https://mashpeewampanoagtribe-nsn.gov/",
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, AQUINNAH);
+      const p = land[0] || {};
+      const c = await at(AQUINNAH);
+      check("the Wampanoag-Aquinnah Trust Land names the Wampanoag Tribe of Gay Head (Aquinnah) with the Bureau's town and site",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Wampanoag Tribe of Gay Head (Aquinnah)" &&
+          c.by("Land") === "Wampanoag-Aquinnah Trust Land" &&
+          c.by("Seat of government") === "Aquinnah, MA" &&
+          c.labels.indexOf("Recognized by") === -1 &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") !== -1 &&
+          c.by("Districts drawn here") === p.districtsNote,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, HASSANAMISCO);
+      const p = land[0] || {};
+      const c = await at(HASSANAMISCO);
+      check("the Hassanamisco (state) Reservation names the tribe the Commonwealth recognizes, gives no seat, and links the executive order",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Hassanamisco Nipmuc Tribe" &&
+          c.by("Land") === "Hassanamisco (state) Reservation" &&
+          c.labels.indexOf("Seat of government") === -1 && p.seat === null &&
+          !!p.recognition && c.by("Recognized by") === p.recognition &&
+          p.recognition.indexOf("Recognized by the Commonwealth of Massachusetts under Executive Order 126 of 1976") === 0 &&
+          p.recognition.indexOf("not by the federal government") !== -1 &&
+          p.url === null && !!p.recognitionUrl &&
+          c.link.text === "Executive Order 126 of 1976, in the State Library of Massachusetts" &&
+          c.link.href === p.recognitionUrl &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told it is not on tribal land, and how much tribal land the state has",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("3 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 160)));
+    }
   }
 } finally {
   await browser.close();

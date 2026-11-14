@@ -63,7 +63,7 @@ is empty. Each county is governed by an elected board of county commissioners an
 as a clerk, a treasurer, an assessor, a sheriff and a probate judge; Los Alamos is the exception above.
 Recorded as gap `nm-county-officials`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF 24 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 24 NATIONS AND NAMES TWO NATIONS' COUNCILS** (`tribal-areas.json`,
 since 2026-11-13). The Census keeps 24 reservations and 13 off-reservation trust lands in New
 Mexico, measured 2026-11-12 with `scripts/tribal_areas.py --report "New Mexico"`: the land of the 19
 pueblos, the Jicarilla Apache Nation's and Mescalero Apache Tribe's reservations, the Fort Sill
@@ -78,9 +78,9 @@ the town for the pueblos of Nambe, Pojoaque, San Ildefonso and Tesuque, whose la
 city, and the cards give it as the Bureau does. The Bureau lists a website for only three of the 24
 nations, so the other cards link none and say so. Drawn whole, the Navajo Nation made the file 3.63
 MB, so the land goes through one Douglas-Peucker run at 3 m and is 1.30 MB (343 KB gzipped), the
-worst stray 3.5 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). No council
-is carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap
-`nm-tribal-government`.
+worst stray 3.5 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). The Navajo Nation's and the Zuni Tribe's cards name their councils, read 2026-11-13 for their
+Arizona land; the other nations are not carried yet (`ROSTER_NOT_SOUGHT` in
+`scripts/build_tribal_areas.py`), recorded in gap `nm-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NEW MEXICO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,

@@ -60,7 +60,7 @@ elected council where the county has adopted another form of government, and ele
 as a clerk, an assessor, a sheriff, an attorney and a treasurer. Recorded as gaps
 `ut-county-officials` and `ut-municipal-officeholders`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF SEVEN NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF SEVEN NATIONS AND NAMES TWO NATIONS' COUNCILS** (`tribal-areas.json`,
 since 2026-11-13). The Census keeps seven reservations in Utah (the largest the Uintah and Ouray
 Reservation, about 17,671 km2) and two off-reservation trust lands, measured 2026-11-12 with
 `scripts/tribal_areas.py --report Utah`, and all nine pieces are drawn, each joined in
@@ -73,8 +73,9 @@ Tribes of the Goshute Reservation, so its card gives the one the tribe's own sit
 says where it came from, and links that site, as Nevada's card for the same land does
 (`seatFromNation`). Drawn whole, the Navajo Nation made the file 2.17 MB, so the land goes through
 one Douglas-Peucker run at 3 m, Arizona's setting, and is 915 KB (240 KB gzipped), the worst stray
-3.3 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). No council is carried
-yet (`ROSTER_NOT_SOUGHT`), recorded in gap `ut-tribal-government`.
+3.3 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_areas.py`). The Goshute tribes' and the Navajo Nation's cards name their councils, read 2026-11-13 for their
+Nevada and Arizona land; the other nations are not carried yet (`ROSTER_NOT_SOUGHT`), recorded in
+gap `ut-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE UTAH.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,

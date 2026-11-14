@@ -217,6 +217,7 @@ def _problems(doc, govs, instance_states):
                     "%s: seat recorded as %r, the Bureau says %r" % (where, seat, theirs)
                 )
         out.extend(_seat_problems(where, entry, govs))
+        out.extend(_withdrawn_problems(where, entry, govs))
         parent = entry.get("parentGovernment")
         if parent is not None and parent not in govs:
             out.append(
@@ -253,6 +254,55 @@ def _problems(doc, govs, instance_states):
                     "leaves out — it should not be in this table"
                     % (where, land.get("name"), km2, share)
                 )
+    # One government, one site: a nation whose Bureau address is withdrawn on
+    # one of its cards and linked on another would contradict itself.
+    said = {}
+    for code, entry in areas.items():
+        if entry.get("government") in govs:
+            said.setdefault(entry["government"], []).append(
+                (code, json.dumps(entry.get("websiteWithdrawn"), sort_keys=True)))
+    for gov, rows in sorted(said.items()):
+        if len({r[1] for r in rows}) > 1:
+            out.append("%s: its entries %s do not agree about withdrawing the Bureau's "
+                       "site" % (gov, ", ".join(r[0] for r in rows)))
+    return out
+
+
+def _withdrawn_problems(where, entry, govs):
+    """A Bureau-listed site the card no longer links (`websiteWithdrawn`).
+
+    Adam ruled on 2026-11-13 ("withdraw") that a site the Bureau lists which
+    no longer reaches the nation is not linked. The entry names the Bureau's
+    own address, which must still be the one the Bureau lists, so the claim
+    goes stale (and fails here) the day the Bureau's list changes; the date
+    it was checked; what it served; and, where the nation's own site is
+    known, that site."""
+    import re
+    ww = entry.get("websiteWithdrawn")
+    if ww is None:
+        return []
+    out = []
+    gov = entry.get("government")
+    if entry.get("governments") or entry.get("stateRecognition") or gov not in govs:
+        return ["%s: a withdrawn Bureau site belongs only on an entry naming one "
+                "government the Bureau lists" % where]
+    if ww.get("url") != govs[gov].get("website"):
+        out.append("%s: websiteWithdrawn names %r, and the Bureau lists %r" %
+                   (where, ww.get("url"), govs[gov].get("website")))
+    if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(ww.get("read") or "")):
+        out.append("%s: websiteWithdrawn's read date is not YYYY-MM-DD" % where)
+    if not ww.get("why"):
+        out.append("%s: websiteWithdrawn says nothing about why" % where)
+    site = ww.get("website")
+    if site is not None and (not str(site).startswith("https://") or site == ww.get("url")):
+        out.append("%s: websiteWithdrawn's own site is not an https link other than the "
+                   "Bureau's" % where)
+    sfn = entry.get("seatFromNation") or {}
+    if sfn.get("website") or sfn.get("bureauWebsiteWithdrawn"):
+        out.append("%s: says twice which site the card links" % where)
+    extra = set(ww) - {"url", "read", "why", "website"}
+    if extra:
+        out.append("%s: websiteWithdrawn carries unknown keys %s" % (where, sorted(extra)))
     return out
 
 
@@ -513,6 +563,14 @@ def selftest():
         ("a seat from a state's list where the Bureau lists one",
          lambda d: d["areas"].__setitem__("1040", dict(
              d["areas"]["1040"], seatFromState=d["areas"]["4635"]["seatFromState"]))),
+        ("a withdrawn site that is not the one the Bureau lists",
+         lambda d: d["areas"]["4740"]["websiteWithdrawn"].update(url="http://x.invalid/")),
+        ("a withdrawn site with no reason",
+         lambda d: d["areas"]["4740"]["websiteWithdrawn"].update(why="")),
+        ("a withdrawn site whose replacement is not https",
+         lambda d: d["areas"]["0215"]["websiteWithdrawn"].update(website="http://x.invalid/")),
+        ("one government's site withdrawn on one card and linked on another",
+         lambda d: d["areas"]["1955"].pop("websiteWithdrawn")),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label

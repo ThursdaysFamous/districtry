@@ -274,8 +274,9 @@ five (chitimacha.gov, whose robots.txt asks for 10 seconds between requests, whi
 pacer honours), the Jena Band of Choctaw's Tribal Chief and four council members (jenachoctaw.org)
 and the Tunica-Biloxi's seven (tunicabiloxi.org) were read on 2026-10-20 by
 `scripts/tribal_council_scraper.py`. The Coushatta Tribe's own site (coushatta.org) names its
-chairman and says the council has five members without naming the other four, and a partial
-council is not carried, so that card names nobody and says why (`ROSTER_BLOCKED` in
+chairman and says the council has five members without naming the other four, and a council is
+carried only where its page names or lists as vacant all of its seats, or all but one (Adam,
+2026-11-13), so that card names nobody and says why (`ROSTER_BLOCKED` in
 `scripts/build_tribal_areas.py`). **THE CARD'S "(official)" LINK IS THE BUREAU OF INDIAN AFFAIRS'
 LISTING, AS IN EVERY INSTANCE, AND THE TUNICA-BILOXI'S LEADS NOWHERE**: the Bureau lists
 www.tunica.org, which answered 404 over http and a certificate for another name over https, while

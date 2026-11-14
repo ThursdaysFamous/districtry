@@ -1067,15 +1067,15 @@ try {
   //     expectation with the file; what is asserted is that each card agrees
   //     with it.
   //       - The Colville Reservation names the Confederated Tribes, their seat
-  //         and the land, links the nation's own site, and says why nobody on
-  //         its council is named: no Washington nation's council has been read
-  //         yet.
+  //         and the land, links the nation's own site, and names the whole
+  //         council from the councils file; when that file fails the card
+  //         still names the nation and names nobody on its council.
   //       - The Washington part of the Umatilla trust land names a nation
   //         seated in Oregon, with its Oregon seat.
   //       - The Tulalip Reservation lists the tribal districts the Census draws
   //         on it, the one Washington land that has any.
   //       - The Upper Skagit Reservation links no official site, because the
-  //         Bureau of Indian Affairs lists none.
+  //         Bureau of Indian Affairs lists none, and says why it names nobody.
   //       - The Legislative Building is on no tribal land, and the card says
   //         so in the layer's own words.
   //     Each point is the pole of inaccessibility of the piece's largest part
@@ -1083,6 +1083,7 @@ try {
   //     1.9 km, 5.7 km and 150 m from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const COLVILLE = "48.20704,-118.60964";
     const UMATILLA = "46.10896,-117.94733";
     const TULALIP = "48.07226,-122.28587";
@@ -1092,9 +1093,9 @@ try {
         label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
         value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
       })));
-    const at = async (pt) => {
+    const at = async (pt, routeFn) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
       const card = await cardText(page, "tribal-government");
       const fields = await fieldsOf(page);
       // The "(official)" link is the card's footer, a sibling of the card body,
@@ -1113,15 +1114,31 @@ try {
     {
       const land = propsAt(areas, COLVILLE);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(COLVILLE);
-      check("the Colville Reservation names the Confederated Tribes, their seat and the land, links their site, and says why no council is named",
+      check("the Colville Reservation names the Confederated Tribes, their seat and the land, links their site, and names their whole council",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Confederated Tribes of the Colville Reservation" &&
           c.by("Seat of government") === "Nespelem, WA" &&
           c.by("Land") === "Colville Reservation" &&
           !!p.url && c.link === p.nation + " (official)" &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names"),
         `land here=${land.length} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 80))}`);
+    }
+
+    {
+      const p = propsAt(areas, COLVILLE)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(COLVILLE, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Confederated Tribes of the Colville Reservation" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
     }
 
     {
@@ -1151,8 +1168,9 @@ try {
       const land = propsAt(areas, UPPER_SKAGIT);
       const p = land[0] || {};
       const c = await at(UPPER_SKAGIT);
-      check("the Upper Skagit Reservation links no official site, because the Bureau lists none",
+      check("the Upper Skagit Reservation links no official site, because the Bureau lists none, and says why it names nobody",
         land.length === 1 && !c.error && p.url === null &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("lists no website for the tribe") !== -1 &&
           c.by("Tribal government") === "Upper Skagit Indian Tribe" &&
           c.link === "" && !c.text.includes("(official)"),
         `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);

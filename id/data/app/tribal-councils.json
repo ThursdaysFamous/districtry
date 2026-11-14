@@ -1,0 +1,62 @@
+{
+ "0965": {
+  "roster": [
+   {
+    "name": "Brian Mason",
+    "role": "Tribal Chairman",
+    "termEnds": "2029",
+    "email": "mason.brian@shopai.org",
+    "phone": "(208) 759-3100 ext. 1231"
+   },
+   {
+    "name": "Lance Dick Jr.",
+    "role": "Secretary",
+    "termEnds": "2029",
+    "email": "lance.dickjr@shopai.org",
+    "phone": "(208) 759-3100 ext. 1290"
+   },
+   {
+    "name": "Daliah Abel",
+    "role": "Treasurer",
+    "termEnds": "2027",
+    "email": "daliah.abel@shopai.org",
+    "phone": "(208) 759-3100 ext. 1245"
+   },
+   {
+    "name": "Arnold Thomas",
+    "role": "Tribal Vice-Chairman",
+    "termEnds": "2029",
+    "email": "thomas.arnoldw@shopai.org",
+    "phone": "(208) 759-3100 ext. 1291"
+   },
+   {
+    "name": "Brian Thomas",
+    "role": "Council Member",
+    "termEnds": "2027",
+    "email": "brian.thomas@shopai.org",
+    "phone": "(208) 759-3100 ext. 1293"
+   },
+   {
+    "name": "Lindsey Manning",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "lindsey.manning@shopai.org",
+    "phone": "(208) 759-3100 ext. 1294"
+   },
+   {
+    "name": "Sandra Egan",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "sandra.e@shopai.org",
+    "phone": "(208) 759-3100 ext. 1292"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://shopaitribes.org/business-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

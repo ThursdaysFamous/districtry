@@ -1,0 +1,1007 @@
+{
+ "0575": {
+  "roster": [
+   {
+    "name": "Leroy Boyd",
+    "role": "Chairman"
+   },
+   {
+    "name": "TJ Trott",
+    "role": "Vice-Chairman",
+    "note": "the same page also describes this member as serving as 5th Council"
+   },
+   {
+    "name": "Farley Youckton",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Cheryle Star",
+    "role": "Secretary",
+    "note": "the same page also spells the name Cheryle Starr"
+   },
+   {
+    "name": "Don Secena",
+    "role": "5th Council",
+    "note": "the same page also describes this member as serving as Vice-Chairman"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.chehalistribe.org/business-committee/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "0760": {
+  "roster": [
+   {
+    "name": "Cindy Marchand",
+    "role": "Chairwoman",
+    "district": "Inchelium District"
+   },
+   {
+    "name": "Karen Condon",
+    "role": "Vice-Chairwoman",
+    "district": "Omak District",
+    "note": "Culture Chair"
+   },
+   {
+    "name": "Storey Jackson",
+    "role": "Secretary",
+    "district": "Keller District"
+   },
+   {
+    "name": "Dayna Seymour",
+    "role": "Council Member",
+    "district": "Inchelium District",
+    "note": "Health & Human Services Chair"
+   },
+   {
+    "name": "Patrick J. Tonasket",
+    "role": "Council Member",
+    "district": "Keller District",
+    "note": "Natural Resources and Fisheries Chair"
+   },
+   {
+    "name": "Joseph Finley",
+    "role": "Council Member",
+    "district": "Inchelium District",
+    "note": "Education Chair"
+   },
+   {
+    "name": "Patty McClung-Adolph",
+    "role": "Council Member",
+    "district": "Omak District",
+    "note": "Veterans Chair"
+   },
+   {
+    "name": "Sharlene Zacherle",
+    "role": "Council Member",
+    "district": "Nespelem District",
+    "note": "Employment Chair"
+   },
+   {
+    "name": "Alison Ball",
+    "role": "Council Member",
+    "district": "Nespelem District",
+    "note": "Tribal Government Chair"
+   },
+   {
+    "name": "Jarred-Michael Erickson",
+    "role": "Council Member",
+    "district": "Nespelem District"
+   },
+   {
+    "name": "Roger L. Finley",
+    "role": "Council Member",
+    "district": "Inchelium District",
+    "note": "Community Development Chair"
+   },
+   {
+    "name": "Dustin Best",
+    "role": "Council Member",
+    "district": "Omak District",
+    "note": "Law & Justice Chair"
+   },
+   {
+    "name": "Dorthey Zacherle",
+    "role": "Council Member",
+    "district": "Nespelem District",
+    "note": "Elections Chair"
+   },
+   {
+    "name": "Norma Sanchez",
+    "role": "Council Member",
+    "district": "Omak District",
+    "note": "Management and Budget Chair"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.colvilletribes.com/get-to-know-your-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "0820": {
+  "roster": [
+   {
+    "name": "William (Bill) Erickson",
+    "role": "General Council Secretary",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Gayle Singleton",
+    "role": "General Council Treasurer",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Vanessa Robertson",
+    "role": "Tribal Council Secretary",
+    "termEnds": "2028"
+   },
+   {
+    "name": "William (Bill) Iyall",
+    "role": "General Council Chair",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Dean Reynolds",
+    "role": "General Council Vice Chair",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Steve Kutz",
+    "role": "Tribal Council Chair",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Katherine Iyall Vasquez",
+    "role": "Tribal Council Vice Chair",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Patty Kinswa-Gaiser",
+    "role": "Tribal Council / Executive Council At-Large",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Rosalie Fish",
+    "role": "Tribal Council / Executive Council At-Large",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Kris Dillehay",
+    "role": "Tribal Council Member",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Dillon Dobson",
+    "role": "Tribal Council Member",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Ellen Harju",
+    "role": "Tribal Council Member",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Nathan Hooton",
+    "role": "Tribal Council Member",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Cheryl Bell",
+    "role": "Tribal Council Member",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Karissa Lowe",
+    "role": "Tribal Council Member",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Kris Kitz",
+    "role": "Tribal Council Member",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Larry Kestner",
+    "role": "Tribal Council Member",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Steve Barnett",
+    "role": "Tribal Council Member",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Greg LaDue-Grove",
+    "role": "Tribal Council Member",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Tim Van Mechelen",
+    "role": "Tribal Council Member",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Bill McTurnal",
+    "role": "Tribal Council Member",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Michelle Lawrence",
+    "role": "Tribal Council Member",
+    "termEnds": "2027"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.cowlitz.org/council-members",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2040": {
+  "roster": [
+   {
+    "name": "Melissa Gilman",
+    "role": "Tribal Chairwoman"
+   },
+   {
+    "name": "Steve Robideau",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Tia Skerbeck",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Frances G. Charles",
+    "role": "Council Member"
+   },
+   {
+    "name": "Russell N. Hepfer",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.elwha.org/departments/tribal-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2070": {
+  "roster": [
+   {
+    "name": "Anthony Hillaire",
+    "role": "Chairman"
+   },
+   {
+    "name": "Vendean (Jim) Washington",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Rosa-Revey Jacobs",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Maureen Kinley",
+    "role": "Secretary"
+   },
+   {
+    "name": "Cheryl Sanders",
+    "role": "Council Member"
+   },
+   {
+    "name": "Dana Wilson",
+    "role": "Council Member"
+   },
+   {
+    "name": "Fredrick Lane",
+    "role": "Council Member"
+   },
+   {
+    "name": "Johnny Felix",
+    "role": "Council Member"
+   },
+   {
+    "name": "Randy Kinley",
+    "role": "Council Member"
+   },
+   {
+    "name": "Raven Borsey",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tanesha Lane",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.lummi-nsn.gov/node/Website.php?PageID=763",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2085": {
+  "roster": [
+   {
+    "name": "Timothy J. Greene, Sr.",
+    "role": "Chairman"
+   },
+   {
+    "name": "Marla Tolliver",
+    "role": "Vice-Chair"
+   },
+   {
+    "name": "Roger Bain",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Brook Sawyer",
+    "role": "Councilmember"
+   },
+   {
+    "name": "J. Guadalupe Castañeda",
+    "role": "Councilmember"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://makah.com/makah-tribal-info/governance/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2375": {
+  "roster": [
+   {
+    "name": "Donny Stevenson",
+    "role": "Chair"
+   },
+   {
+    "name": "John Daniels Jr.",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Jessica Garcia-Jones",
+    "role": "Secretary"
+   },
+   {
+    "name": "Anita Mitchell",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Jaison elkins",
+    "role": "Councilmember"
+   },
+   {
+    "name": "Mike Jerry Sr.",
+    "role": "Councilmember"
+   },
+   {
+    "name": "Virginia Cross",
+    "role": "Councilmember"
+   },
+   {
+    "name": "Louie Ungaro",
+    "role": "Councilmember"
+   },
+   {
+    "name": "Eileen Richardson",
+    "role": "Councilmember"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.muckleshoot.nsn.us/tribal-council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2460": {
+  "roster": [
+   {
+    "name": "James Slape Jr.",
+    "role": "Chair"
+   },
+   {
+    "name": "Cheebo Frazier",
+    "role": "Vice-Chair"
+   },
+   {
+    "name": "Jackie Whittington",
+    "role": "Secretary"
+   },
+   {
+    "name": "Norine Wells",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Chris Olin",
+    "role": "5th Council"
+   },
+   {
+    "name": "Guido Levy Jr.",
+    "role": "6th Council"
+   },
+   {
+    "name": "Leighanna Scott",
+    "role": "7th Council"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.nisqually-nsn.gov/Nisqually-Tribal-Council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2475": {
+  "roster": [
+   {
+    "name": "Ross Cline, Sr.",
+    "role": "Chairman"
+   },
+   {
+    "name": "Anna Brewer",
+    "role": "Vice-Chairwoman"
+   },
+   {
+    "name": "Gary E. Kentner",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Frank Leyva",
+    "role": "Secretary"
+   },
+   {
+    "name": "Edward Doherty",
+    "role": "Council Member"
+   },
+   {
+    "name": "Dean Ollinger",
+    "role": "Council Member"
+   },
+   {
+    "name": "Ryawn Cline",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jesse Madera",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://nooksacktribe.org/council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2910": {
+  "roster": [
+   {
+    "name": "Amber Caldera",
+    "role": "Chairwoman"
+   },
+   {
+    "name": "Chris Tom",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Renee Veregge",
+    "role": "Council Person I"
+   },
+   {
+    "name": "Donovan Ashworth",
+    "role": "Council Person II"
+   },
+   {
+    "name": "Jonelle Grady",
+    "role": "Council Person III"
+   },
+   {
+    "name": "Matt Ives",
+    "role": "Council Person IV"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://pgst.nsn.us/tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2925": {
+  "roster": [
+   {
+    "name": "Leonard Forsman",
+    "role": "Chairman"
+   },
+   {
+    "name": "Josh Bagley, Sr",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Irene Carper",
+    "role": "Secretary"
+   },
+   {
+    "name": "Andrew George",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Luther “Jay” Mills, Jr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Azure Boure",
+    "role": "Council Member"
+   },
+   {
+    "name": "Lorilee Morsette",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://suquamish.nsn.us/home/government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3030": {
+  "roster": [
+   {
+    "name": "Justin \"Rio\" Jaime",
+    "role": "Chairman",
+    "email": "chairman@quileutetribe.com"
+   },
+   {
+    "name": "Charles \"Chas\" Woodruff",
+    "role": "Vice-Chairman",
+    "email": "vice.chairman@quileutetribe.com"
+   },
+   {
+    "name": "Skyler Foster",
+    "role": "Secretary",
+    "email": "secretary@quileutetribe.com"
+   },
+   {
+    "name": "Douglas Woodruff Jr.",
+    "role": "Treasurer",
+    "email": "treasurer@quileutetribe.com"
+   },
+   {
+    "name": "Stephanie Calderon",
+    "role": "Member",
+    "email": "memberatlarge@quileutetribe.com"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://quileutetribe.com/government/tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3040": {
+  "roster": [
+   {
+    "name": "Guy Capoeman",
+    "role": "President"
+   },
+   {
+    "name": "Noreen Underwood",
+    "role": "Vice President"
+   },
+   {
+    "name": "Hannah Curley",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Mandy Hudson-Howard",
+    "role": "Secretary"
+   },
+   {
+    "name": "Tyson Johnston",
+    "role": "1st Councilmen"
+   },
+   {
+    "name": "Jim Sellers",
+    "role": "2nd Councilmen"
+   },
+   {
+    "name": "John Bryson, Jr.",
+    "role": "3rd Councilmen"
+   },
+   {
+    "name": "Freida Waugh",
+    "role": "4th Councilwomen"
+   },
+   {
+    "name": "Brittany Bryson",
+    "role": "5th Councilwoman"
+   },
+   {
+    "name": "Kaylah Mail",
+    "role": "6th Councilmen"
+   },
+   {
+    "name": "Kristeen Mowitch",
+    "role": "7th Councilwomen"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.quinaultindiannation.com/255/Tribal-Council",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3780": {
+  "roster": [
+   {
+    "name": "Quintin Swanson",
+    "role": "Chairman",
+    "phone": "(360) 267-8212"
+   },
+   {
+    "name": "Shane Thomas",
+    "role": "Vice Chairman",
+    "phone": "(360) 267-8167"
+   },
+   {
+    "name": "Lynn Clark",
+    "role": "Secretary",
+    "phone": "(360) 267-8172"
+   },
+   {
+    "name": "Joel Blake",
+    "role": "Treasurer",
+    "phone": "(360) 267-8170"
+   },
+   {
+    "name": "Gordy Shipman",
+    "role": "Member-at-Large",
+    "email": "gshipman@shoalwaterbay-nsn.gov"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.shoalwaterbay-nsn.gov/tribal-government/general-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3825": {
+  "roster": [
+   {
+    "name": "Tom Strong",
+    "role": "Chairman",
+    "phone": "360-490-0799",
+    "email": "tstrong@skokomish.org"
+   },
+   {
+    "name": "Chris James",
+    "role": "Council Secretary",
+    "phone": "360-490-8161",
+    "email": "cjames@skokomish.org"
+   },
+   {
+    "name": "Louis Auld",
+    "role": "Council Vice-Chair",
+    "phone": "360-490-9739",
+    "email": "lauld@skokomish.org"
+   },
+   {
+    "name": "Charles “Guy” Miller",
+    "role": "Council Member",
+    "phone": "360-490-6679",
+    "email": "gmiller@skokomish.org"
+   },
+   {
+    "name": "Ed Green Sr",
+    "role": "Council Member",
+    "email": "egreen@skokomish.org"
+   },
+   {
+    "name": "Lyle Wilbur",
+    "role": "Council Member",
+    "phone": "360-463-3244",
+    "email": "lwilbur@skokomish.org"
+   },
+   {
+    "name": "Brett Peterson",
+    "role": "Council Member",
+    "phone": "360-490-1733",
+    "email": "brett@skokomish.org"
+   },
+   {
+    "name": "Gussy Wilbur",
+    "role": "General Council President",
+    "phone": "360-463-2679",
+    "email": "gwilbur@skokomish.org"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://skokomish.org/skokomish-tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3860": {
+  "roster": [
+   {
+    "name": "Robert de los Angeles",
+    "role": "Chairperson"
+   },
+   {
+    "name": "Jolene Williams",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "McKenna Sweet Dorman",
+    "role": "Tribal Secretary"
+   },
+   {
+    "name": "Josh Gabel",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Steven de los Angeles",
+    "role": "Council"
+   },
+   {
+    "name": "Melynda Digre",
+    "role": "Council"
+   },
+   {
+    "name": "Richard Sikkenga Jr.",
+    "role": "Council"
+   },
+   {
+    "name": "Chrissie Sparling",
+    "role": "Council"
+   },
+   {
+    "name": "Jim Sweet",
+    "role": "Council"
+   },
+   {
+    "name": "Angela Young",
+    "role": "Council"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://snoqualmietribe.us/snoqualmie-tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4000": {
+  "roster": [
+   {
+    "name": "Eric White",
+    "role": "Chairman"
+   },
+   {
+    "name": "Kadi Bizyayeva",
+    "role": "Vice-Chairwoman"
+   },
+   {
+    "name": "Gary Tatro",
+    "role": "Secretary"
+   },
+   {
+    "name": "Joshua Wells",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Sara Thitipraserth",
+    "role": "Member"
+   },
+   {
+    "name": "Stacy White",
+    "role": "Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.stillaguamish.com/departmentprogramservice/tribal-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4290": {
+  "roster": [
+   {
+    "name": "Hazen Shopbell",
+    "role": "Chair"
+   },
+   {
+    "name": "Deborah Parker",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Theresa Sheldon",
+    "role": "Secretary"
+   },
+   {
+    "name": "Ryan Miller",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Teri Gobin",
+    "role": "Board Member"
+   },
+   {
+    "name": "Glen Gobin",
+    "role": "Board Member"
+   },
+   {
+    "name": "Malory Simpson",
+    "role": "Board Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.tulaliptribes-nsn.gov/Government/BoardOfDirectors",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4405": {
+  "roster": [
+   {
+    "name": "Raymond Huesties",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Monica Paradise",
+    "role": "BOT Secretary"
+   },
+   {
+    "name": "N. Kathryn Brigham",
+    "role": "BOT Chair"
+   },
+   {
+    "name": "Aaron Ashley",
+    "role": "BOT Vice Chairman"
+   },
+   {
+    "name": "Lindsey X. Watchman",
+    "role": "General Council Chairman"
+   },
+   {
+    "name": "Corinne Sams",
+    "role": "Trustee"
+   },
+   {
+    "name": "Sierra Quaempts",
+    "role": "Trustee"
+   },
+   {
+    "name": "Lisa Ganuelas",
+    "role": "Trustee"
+   },
+   {
+    "name": "Toby Patrick",
+    "role": "Trustee"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://ctuir.org/our-government/board-of-trustees/bot-members/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4690": {
+  "roster": [
+   {
+    "name": "Christopher Wallahee",
+    "role": "Tribal Council Secretary",
+    "note": "Yakama name ‘Tuxh’nunam’"
+   },
+   {
+    "name": "Gerald lewis",
+    "role": "Tribal Council Chairman",
+    "note": "Yakama name ‘Kahloola’"
+   },
+   {
+    "name": "George Meninick, Sr.",
+    "role": "Tribal Council Vice-Chairman",
+    "note": "Yakama name ‘Ma-Tu-Yu-Yu’"
+   },
+   {
+    "name": "Sharon L. Goudy",
+    "role": "Council Member",
+    "note": "Yakama name ‘Kumshapum’"
+   },
+   {
+    "name": "Brian Saluskin",
+    "role": "Council Member",
+    "note": "Yakama name ‘Sawyalilx’"
+   },
+   {
+    "name": "Arnold Eyle",
+    "role": "Council Member",
+    "note": "Yakama name ‘Tkwa’Pay’Kish’"
+   },
+   {
+    "name": "JoDe Goudy",
+    "role": "Council Member",
+    "note": "Yakama name ‘Chi’Qwax’"
+   },
+   {
+    "name": "Terry Goudy-Rambler",
+    "role": "Council Member",
+    "note": "Yakama name ‘Tsagaglalal’"
+   },
+   {
+    "name": "Ruth Jim",
+    "role": "Council Member",
+    "note": "Yakama name ‘Ty’Xhul Wyat’"
+   },
+   {
+    "name": "Deland Olney",
+    "role": "Council Member",
+    "note": "Yakama name ‘Shawaway’"
+   },
+   {
+    "name": "Stephen Selam",
+    "role": "Council Member",
+    "note": "Yakama name ‘Lishwailatum’"
+   },
+   {
+    "name": "Ralph Sampson, Jr.",
+    "role": "Council Member",
+    "note": "Yakama name ‘Sun Pon’"
+   },
+   {
+    "name": "John Washines",
+    "role": "Council Member",
+    "note": "Yakama name ‘Sy’yow’"
+   },
+   {
+    "name": "Bazilu Windyboy",
+    "role": "Council Member",
+    "note": "Yakama name ‘Piyalaashanmay’"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://yakama.com/about/tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

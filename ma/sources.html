@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 3 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 3 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1227,6 +1227,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ma-house-members.json, rebuilt weekly by CI from the General Court's own member table (malegislature.gov/Legislators/Members/House): each representative's name, party, State House room and telephone, General Court e-mail address and page. A district the table lists as vacant ships as a vacant seat with the date it was read (three on 2026-11-12).</td>
                 <td data-label="Where it applies">Massachusetts — statewide, all 160 districts.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Massachusetts has 3 such areas, held by three nations: the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), which the United States recognizes, and the Hassanamisco Nipmuc Tribe, which the Commonwealth of Massachusetts recognizes.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — off-reservation trust land and state reservations, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No council is named yet. This app has not yet read the pages where each nation names its council, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the two Wampanoag tribes, except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The Hassanamisco Nipmuc Tribe is not in that directory, because the United States does not recognize it: the Commonwealth recognizes it under Executive Order 126 of 1976, read from the State Library of Massachusetts's archive on 2026-11-13, and the name is the one the Commission on Indian Affairs' annual report for 2006 gives. Neither document gives an office town, so its card gives no seat, and the card links the order. The land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Massachusetts — the 3 pieces of land above, in Mashpee, Taunton, Aquinnah and Grafton. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1584,6 +1595,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Massachusetts. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ma/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Massachusetts has 3 such areas, held by three nations: the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), which the United States recognizes, and the Hassanamisco Nipmuc Tribe, which the Commonwealth of Massachusetts recognizes. No council is named yet. This app has not yet read the pages where each nation names its council, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the two Wampanoag tribes, except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The Hassanamisco Nipmuc Tribe is not in that directory, because the United States does not recognize it: the Commonwealth recognizes it under Executive Order 126 of 1976, read from the State Library of Massachusetts's archive on 2026-11-13, and the name is the one the Commission on Indian Affairs' annual report for 2006 gives. Neither document gives an office town, so its card gives no seat, and the card links the order. The land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/ma/sources.html#layer-tribal-government",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ma/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — off-reservation trust land and state reservations, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Massachusetts — the 3 pieces of land above, in Mashpee, Taunton, Aquinnah and Grafton. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

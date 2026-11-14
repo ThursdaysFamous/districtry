@@ -342,10 +342,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 10,
+      "rank_note": "Tribal land — Massachusetts has 3 pieces drawn, held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines and the towns against TIGERweb's county subdivisions: the Mashpee Wampanoag Trust Land (1.294 km² in ten parts, 54% in Mashpee, Barnstable County, and 46% in Taunton, Bristol County), held by the Mashpee Wampanoag Tribe; the Wampanoag-Aquinnah Trust Land (1.985 km² in eight parts, in Aquinnah, Dukes County), held by the Wampanoag Tribe of Gay Head (Aquinnah); and the Hassanamisco (state) Reservation (0.021 km², about five acres, in Grafton, Worcester County), held by the Hassanamisco Nipmuc Tribe, which the Commonwealth recognizes under Executive Order 126 of 1976 and the United States does not. The Census draws no tribal district on any of them. Ranked after towns and ZIP codes and before the point layers, so the pieces, none larger than two square kilometres, are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Massachusetts has 3 such areas, held by three nations: the Mashpee Wampanoag Tribe and the Wampanoag Tribe of Gay Head (Aquinnah), which the United States recognizes, and the Hassanamisco Nipmuc Tribe, which the Commonwealth of Massachusetts recognizes.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — off-reservation trust land and state reservations, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "No council is named yet. This app has not yet read the pages where each nation names its council, so every card says so and links the nation's own site where there is one (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py); the councils are to be read and carried one nation at a time. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the two Wampanoag tribes, except the Mashpee Wampanoag Tribe's website: the address the Bureau lists served a blog about museums on 2026-11-13, so the card links the tribe's own site, mashpeewampanoagtribe-nsn.gov, read the same day. The Hassanamisco Nipmuc Tribe is not in that directory, because the United States does not recognize it: the Commonwealth recognizes it under Executive Order 126 of 1976, read from the State Library of Massachusetts's archive on 2026-11-13, and the name is the one the Commission on Indian Affairs' annual report for 2006 gives. Neither document gives an office town, so its card gives no seat, and the card links the order. The land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Massachusetts — the 3 pieces of land above, in Mashpee, Taunton, Aquinnah and Grafton. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -466,6 +484,12 @@
         "min_features": 537,
         "max_features": 537,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Massachusetts's tribal land (scripts/build_tribal_areas.py) — the Mashpee Wampanoag and Wampanoag-Aquinnah trust lands and the Hassanamisco state reservation, at the Census's own detail (26 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -497,7 +521,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ma-shell-v1",
+    "cache_name": "districtry-ma-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -2813,8 +2813,10 @@ ANSWERS = {
         # government -- 20 nations, the Fort Mojave and Timbisha Shoshone seated
         # in California and the Goshute in Utah among them, and eight the Bureau
         # lists with no office town, seated from their own sites by Adam's
-        # choice of that day. No council is named yet; each nation's page is
-        # read one at a time, the Oklahoma shape (gap nv-tribal-government).
+        # choice of that day. Since 2026-11-13 the councils of 11 of the 20
+        # nations are named from each nation's own page, two of them with the
+        # card saying which seats the page leaves out; each of the other nine
+        # says why it names nobody (gap nv-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "az": {
@@ -2849,8 +2851,10 @@ ANSWERS = {
         # Drawn 2026-11-12: all 28 pieces the Census keeps in Arizona (21
         # reservations and 7 off-reservation trust lands), each named with its
         # government -- 21 nations, the Fort Mojave and Quechan seated in
-        # California and the Zuni in New Mexico among them. No council is named
-        # yet; each nation's page is read one at a time, the Oklahoma shape
+        # California and the Zuni in New Mexico among them. Since 2026-11-13 the
+        # councils of 15 of the 21 nations are named from each nation's own
+        # page, two of them with the card saying which seat the page leaves
+        # out; each of the other six says why it names nobody
         # (gap az-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
@@ -3069,8 +3073,9 @@ ANSWERS = {
         # Drawn 2026-11-12: all 50 pieces the Census keeps in Washington (28
         # reservations and 22 off-reservation trust lands), each named with its
         # government -- 29 nations, the Umatilla seated in Oregon among them.
-        # No council is named yet; each nation's page is read one at a time,
-        # the Oklahoma shape (gap wa-tribal-government).
+        # Since 2026-11-13 the councils of 20 of the 29 nations are named from
+        # each nation's own page; each of the other nine says why it names
+        # nobody (gap wa-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     # BATCH 3 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12).
@@ -3107,9 +3112,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Massachusetts: the Census keeps two trust
         # lands (the Wampanoag Tribe of Gay Head (Aquinnah)'s and the Mashpee
-        # Wampanoag's) and one state reservation (Hassanamisco),
-        # and the app draws no tribal land yet (ma/WATCH.md).
-        "tribal-government": OPEN,
+        # Wampanoag's) and one state reservation (Hassanamisco). All three are
+        # drawn since 2026-11-13, the reservation joined to the tribe the
+        # Commonwealth recognizes under Executive Order 126 of 1976, and no
+        # council is named yet (gap ma-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "co": {
         "us-house": answers("us-house"),
@@ -3252,8 +3259,9 @@ ANSWERS = {
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Oregon: the Census keeps 10 reservations and
         # 8 off-reservation trust lands in Oregon,
         # drawn since 2026-11-13, held by 11 nations, Celilo Village named with
-        # the three the Oregon Blue Book says administer it; no council is
-        # named yet (gap or-tribal-government).
+        # the three the Oregon Blue Book says administer it; the Umatilla tribes'
+        # Board of Trustees is named since 2026-11-13, the other ten nations'
+        # councils not yet (gap or-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "ct": {
@@ -3325,7 +3333,9 @@ ANSWERS = {
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Utah: the Census keeps 7 reservations and 2
         # off-reservation trust lands in Utah,
         # drawn since 2026-11-13, held by 7 nations, the Navajo Nation's
-        # reservation whole; no council is named yet (gap ut-tribal-government).
+        # reservation whole; the Goshute tribes' and the Navajo Nation's councils
+        # are named since 2026-11-13, the other five not yet
+        # (gap ut-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "ks": {
@@ -3502,9 +3512,12 @@ ANSWERS = {
         # named with its government -- 98 nations, the Colorado River Indian
         # Tribes seated in Arizona and the Washoe Tribe in Nevada among them, and
         # the two the Bureau lists with no office town seated from their own
-        # sites by Adam's choice of that day for Nevada. No council is named
-        # yet; each nation's page is read one at a time, the Oklahoma shape
-        # (gap ca-tribal-government).
+        # sites by Adam's choice of that day for Nevada. Since 2026-11-13 the
+        # councils of 51 of the 98 nations are named from each nation's own
+        # page, two of them with the card saying which seat the page leaves
+        # out; each of the others says why it names nobody, and ten whose
+        # Bureau-listed site no longer reaches them link no site of the
+        # Bureau's (gap ca-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),
@@ -3542,7 +3555,8 @@ ANSWERS = {
         # Mexico": the Census keeps 24 reservations and 13 off-reservation trust
         # lands in New Mexico,
         # drawn since 2026-11-13, held by 24 nations, the Navajo Nation's
-        # reservation whole and simplified; no council is named yet
+        # reservation whole and simplified; the Navajo Nation's and the Zuni
+        # Tribe's councils are named since 2026-11-13, the other 22 not yet
         # (gap nm-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
@@ -3612,8 +3626,9 @@ ANSWERS = {
         # Census keeps 5 reservations and 2 off-reservation trust lands in
         # Idaho,
         # drawn since 2026-11-13, held by 5 nations, the Duck Valley
-        # Reservation seated at Owyhee from the tribes' own site; no council is
-        # named yet (gap id-tribal-government).
+        # Reservation seated at Owyhee from the tribes' own site; the
+        # Shoshone-Paiute Tribes' Business Council is named since 2026-11-13,
+        # the other four nations' councils not yet (gap id-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "hi": {

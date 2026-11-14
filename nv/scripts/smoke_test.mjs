@@ -1015,7 +1015,8 @@ try {
   //       - The Pyramid Lake Paiute Reservation's seat, Nixon, comes from the
   //         nation's own site, because the Bureau of Indian Affairs lists no
   //         office town for the tribe; the card says so on an "About the
-  //         seat" line and links that site.
+  //         seat" line and links that site; it names nobody on the council,
+  //         because the nation's council page shows it only in a picture.
   //       - The Winnemucca Indian Colony has no town from the Bureau and no
   //         site of its own, so its seat, Reno, is the town of the address
   //         Nevada's Department of Native American Affairs lists for its
@@ -1023,29 +1024,38 @@ try {
   //       - The Nevada part of the Goshute Reservation names a nation seated
   //         in Utah, from the nation's own site, and links that site rather
   //         than the address the Bureau lists, which serves an unrelated
-  //         business.
-  //       - The Yomba Reservation is the ordinary case: the Bureau's town and
-  //         site, and no "About the seat" line.
+  //         business, and names the whole council from the councils file;
+  //         when that file fails the card still names the nation and names
+  //         nobody on its council.
+  //       - The Yomba Reservation takes the Bureau's town and no "About the
+  //         seat" line, and links nothing: the site the Bureau lists forwarded
+  //         to a roofing company's site on 2026-11-13, and by Adam's ruling of
+  //         that day ("withdraw") the card no longer links it and says why.
+  //       - The Duckwater Reservation names the three council members its own
+  //         page names, and says the page lists two seats as vacant; by Adam's
+  //         ruling of 2026-11-13 ("carry") such a council is carried.
   //       - The Capitol is on no tribal land, and the card says so in the
   //         layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
   //     piece inside this app's coverage outline, as the shipped files draw
-  //     them (shapely polylabel, 2026-11-12): 16.3 km, 415 m, 7.3 km and
-  //     652 m from its edge.
+  //     them (shapely polylabel, 2026-11-12, and 2026-11-13 for Duckwater):
+  //     16.3 km, 415 m, 7.3 km, 652 m and 1.1 km from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const PYRAMID_LAKE = "40.11579,-119.54210";
     const WINNEMUCCA = "40.95392,-117.72082";
     const GOSHUTE = "39.92731,-114.11292";
     const YOMBA = "38.93526,-117.48115";
+    const DUCKWATER = "38.91905,-115.71315";
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
       (els) => els.map((e) => ({
         label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
         value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
       })));
-    const at = async (pt) => {
+    const at = async (pt, routeFn) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
       const card = await cardText(page, "tribal-government");
       const fields = await fieldsOf(page);
       // The "(official)" link is the card's footer, a sibling of the card body,
@@ -1065,14 +1075,14 @@ try {
       const land = propsAt(areas, PYRAMID_LAKE);
       const p = land[0] || {};
       const c = await at(PYRAMID_LAKE);
-      check("the Pyramid Lake Paiute Reservation is seated at Nixon from the nation's own site, says so, and links that site",
+      check("the Pyramid Lake Paiute Reservation is seated at Nixon from the nation's own site, says so, links that site, and says its council is shown only in a picture",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Pyramid Lake Paiute Tribe of the Pyramid Lake Reservation, Nevada" &&
           c.by("Seat of government") === "Nixon, NV" &&
           c.by("Land") === "Pyramid Lake Paiute Reservation" &&
           !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
           p.url === "https://plpt.nsn.us/" && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("only in a picture") !== -1,
         `land here=${land.length} link=${JSON.stringify(c.link)} seat=${JSON.stringify(c.by("Seat of government"))} note=${JSON.stringify(c.by("About the seat").slice(0, 80))}`);
     }
 
@@ -1095,9 +1105,13 @@ try {
     {
       const land = propsAt(areas, GOSHUTE);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(GOSHUTE);
-      check("the Nevada part of the Goshute Reservation names a nation seated in Utah from its own site, and links that site",
+      check("the Nevada part of the Goshute Reservation names a nation seated in Utah from its own site, links that site, and names its whole council",
         land.length === 1 && !c.error &&
+          council.length > 0 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("From the nation's own council page") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names") &&
           c.by("Tribal government") === "Confederated Tribes of the Goshute Reservation, Nevada and Utah" &&
           c.by("Seat of government") === "Ibapah, UT" &&
           c.by("Land") === "Goshute Reservation" && p.shareInState < 1 &&
@@ -1107,16 +1121,44 @@ try {
     }
 
     {
+      const p = propsAt(areas, GOSHUTE)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(GOSHUTE, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the nation, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Confederated Tribes of the Goshute Reservation, Nevada and Utah" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
       const land = propsAt(areas, YOMBA);
       const p = land[0] || {};
       const c = await at(YOMBA);
-      check("the Yomba Reservation takes the Bureau's town and site and carries no note about its seat",
+      check("the Yomba Reservation takes the Bureau's town and no note about its seat, and links nothing, because the site the Bureau lists now forwards elsewhere",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === "Yomba Shoshone Tribe of the Yomba Reservation, Nevada" &&
           c.by("Seat of government") === "Austin, NV" && !p.seatNote &&
           c.labels.indexOf("About the seat") === -1 &&
-          p.url === "http://yombatribe.org/" && c.link.href === p.url,
-        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)}`);
+          p.url === null && c.link.text === "" && !c.text.includes("yombatribe") &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("so the card does not link it") !== -1,
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 120))}`);
+    }
+
+    {
+      const land = propsAt(areas, DUCKWATER);
+      const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(DUCKWATER);
+      check("the Duckwater Reservation names the three council members its page names and says which two seats the page lists as vacant",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Duckwater Shoshone Tribe of the Duckwater Reservation, Nevada" &&
+          council.length === 3 && council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("The page lists the Vice Chairperson's and Council Secretary's seats as vacant.") &&
+          !c.by("Why no names"),
+        `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
     {

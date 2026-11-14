@@ -80,7 +80,7 @@ No school board member is named yet (gap `wa-school-board-members`).
 to assume the office is empty. Recorded as gaps `wa-county-officials` and
 `wa-municipal-officeholders`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF 29 NATIONS AND NAMES NO COUNCIL YET** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 29 NATIONS AND NAMES THE COUNCILS OF 20** (`tribal-areas.json`,
 since 2026-11-12). The Census keeps 28 reservations and 22 off-reservation trust lands in
 Washington, and all 50 pieces are drawn, each joined in `data/tribal-government-join.json` to the
 government the Bureau of Indian Affairs lists for it, with its seat and, where the Bureau gives
@@ -89,9 +89,15 @@ nothing. One piece belongs to a nation seated outside the state: 71% of the Umat
 Off-Reservation Trust Land lies in Washington, and its card names the Confederated Tribes of the
 Umatilla Indian Reservation, seated in Pendleton, Oregon. The Samish Indian Nation is federally
 recognized and the Census draws no land for it, so no card names it. The Tulalip Reservation's card
-lists the 19 tribal districts the Census draws on it. No council is named yet (`ROSTER_NOT_SOUGHT`
-in `scripts/build_tribal_areas.py`, the Oklahoma shape): each nation's own page is read and its
-council moved into `tribal-councils.json` one nation at a time, recorded in gap
+lists the 19 tribal districts the Census draws on it. Since 2026-11-13 the cards name the council of 20 of the 29 nations, read nation by nation from
+each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
+so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
+`update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
+day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
+project or showed a check only a person can pass, a page naming only part of the council or
+none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. No Washington council is missing a seat.
+Recorded in gap
 `wa-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE WASHINGTON.** A ZCTA carries no state field, so over the line the

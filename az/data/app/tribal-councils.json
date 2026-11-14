@@ -1,0 +1,1145 @@
+{
+ "0695": {
+  "roster": [
+   {
+    "name": "Sherry Cordova",
+    "role": "Chairwoman"
+   },
+   {
+    "name": "Neil White",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Wynnie Ortega",
+    "role": "Council Member"
+   },
+   {
+    "name": "Florence Mills Fitch",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jennifer Townsend",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.cocopah.com/government.html",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "0735": {
+  "roster": [
+   {
+    "name": "Amelia Flores",
+    "role": "Chairwoman"
+   },
+   {
+    "name": "Dwight Lomayesva",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Anisa Patch",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Josephine Tahbo",
+    "role": "Secretary"
+   },
+   {
+    "name": "Bill Beeson",
+    "role": "Council Member"
+   },
+   {
+    "name": "Vanessa Welch",
+    "role": "Council Member"
+   },
+   {
+    "name": "Raeanne Patch",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tracey Quillen",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tommy Drennan",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://crit-nsn.gov/crit_contents/government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1235": {
+  "roster": [
+   {
+    "name": "Tim Williams",
+    "role": "Chairman"
+   },
+   {
+    "name": "Shan Lewis",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Colleen Garcia",
+    "role": "Secretary"
+   },
+   {
+    "name": "Johnny Hemers",
+    "role": "Council Member"
+   },
+   {
+    "name": "Celina Reyes",
+    "role": "Council Member"
+   },
+   {
+    "name": "Nichole Garcia",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.fortmojaveindiantribe.com/tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1280": {
+  "roster": [
+   {
+    "name": "Jonathan E. Koteen",
+    "role": "President"
+   },
+   {
+    "name": "Virgil S. Smith",
+    "role": "Vice President"
+   },
+   {
+    "name": "Dr. Jeanette Peterson Ed. D.",
+    "role": "Council Member"
+   },
+   {
+    "name": "Christobal E. Illingworth",
+    "role": "Council Member"
+   },
+   {
+    "name": "Zion C. White",
+    "role": "Council Member"
+   },
+   {
+    "name": "Aaron Brown",
+    "role": "Council Member"
+   },
+   {
+    "name": "Faron M. Owl",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://quechantribe.com/government.html",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1310": {
+  "roster": [
+   {
+    "name": "Duane Jackson, Jr.",
+    "role": "Council Member",
+    "district": "District 1",
+    "email": "duane.jackson@gilariver-nsn.gov"
+   },
+   {
+    "name": "Joey Whitman",
+    "role": "Council Member",
+    "district": "District 1",
+    "email": "joey.whitman@gilariver-nsn.gov"
+   },
+   {
+    "name": "Ann Lucas",
+    "role": "Council Member",
+    "district": "District 2",
+    "email": "Ann.Lucas@gilariver-nsn.gov"
+   },
+   {
+    "name": "Kristina D. Morago",
+    "role": "Council Member",
+    "district": "District 3",
+    "email": "Kristina.Morago@gilariver-nsn.gov",
+    "phone": "520-562-9742"
+   },
+   {
+    "name": "Joseph Manuel, Jr.",
+    "role": "Council Member",
+    "district": "District 3",
+    "email": "Joseph.Manuel@gilariver-nsn.gov"
+   },
+   {
+    "name": "Nada Celaya",
+    "role": "Council Member",
+    "district": "District 4",
+    "email": "Nada.Celaya@gilariver-nsn.gov"
+   },
+   {
+    "name": "Alicia Ochoa",
+    "role": "Council Member",
+    "district": "District 4",
+    "email": "Alicia.Ochoa@gilariver-nsn.gov"
+   },
+   {
+    "name": "Amy Morago",
+    "role": "Council Member",
+    "district": "District 4",
+    "email": "Amy.Morago@gilariver-nsn.gov"
+   },
+   {
+    "name": "Leah Williams",
+    "role": "Council Member",
+    "district": "District 4",
+    "email": "Leah.Williams@gilariver-nsn.gov"
+   },
+   {
+    "name": "Donovan G. Kyyitan",
+    "role": "Council Member",
+    "district": "District 5",
+    "email": "Donovan.Kyyitan@gilariver-nsn.gov",
+    "phone": "520-562-9752"
+   },
+   {
+    "name": "James De La Rosa",
+    "role": "Council Member",
+    "district": "District 5",
+    "email": "James.DeLaRosa@gilariver-nsn.gov"
+   },
+   {
+    "name": "Verna Sunna",
+    "role": "Council Member",
+    "district": "District 5",
+    "email": "Verna.Sunna@gilariver-nsn.gov",
+    "phone": "(520) 610-1715"
+   },
+   {
+    "name": "Gordon Santos",
+    "role": "Council Member",
+    "district": "District 5",
+    "email": "Gordon.Santos@gilariver-nsn.gov",
+    "phone": "(520) 562 9721"
+   },
+   {
+    "name": "Charles Goldtooth",
+    "role": "Council Member",
+    "district": "District 6",
+    "email": "Charles.Goldtooth@gilariver-nsn.gov"
+   },
+   {
+    "name": "Anthony Villareal Sr.",
+    "role": "Council Member",
+    "district": "District 6",
+    "email": "Anthony.VillarealSr@gilariver-nsn.gov"
+   },
+   {
+    "name": "Terrance B. Evans",
+    "role": "Council Member",
+    "district": "District 6",
+    "email": "Terrance.Evans@gilariver-nsn.gov"
+   },
+   {
+    "name": "Jeanette Blasingim",
+    "role": "Council Member",
+    "district": "District 7",
+    "email": "Jeanette.Blasingim@gilariver-nsn.gov",
+    "phone": "520-562-9756"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.gilariver.org/index.php/government/misc/council-members",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1505": {
+  "roster": [
+   {
+    "name": "Lamar B. Keevama",
+    "role": "Chairman"
+   },
+   {
+    "name": "Mikah H. Kewanimptewa Sr.",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Dwayne Secakuku",
+    "role": "Tribal Secretary"
+   },
+   {
+    "name": "Wilfred Gaseoma",
+    "role": "Tribal Treasurer"
+   },
+   {
+    "name": "Alfonso Sakeva Sr.",
+    "role": "Sergeant-at-Arms"
+   },
+   {
+    "name": "LeRoy Shingoitewa",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Philton Talahytewa Sr.",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Robert Charley",
+    "role": "Representative",
+    "district": "Upper Moenkopi"
+   },
+   {
+    "name": "Marilyn Fredericks",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Ruth Kewanimptewa",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Clifford Qotsquahu",
+    "role": "Representative",
+    "district": "Bakabi"
+   },
+   {
+    "name": "Wendell Honanie, Sr.",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Kristofer Kelhoyouma",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Nona Tuchawena",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "Nicole Honanie",
+    "role": "Representative",
+    "district": "Kykotsmovi"
+   },
+   {
+    "name": "George Mase",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Maude Yoyhoema",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Debra Kukuma",
+    "role": "Representative",
+    "district": "Sipaulovi"
+   },
+   {
+    "name": "Merwin Kooyahoema",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Malinda Andrews",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Marilyn Tewa",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Arthur Batala",
+    "role": "Representative",
+    "district": "Mishongnovi"
+   },
+   {
+    "name": "Carlton Timms",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Dale Sinquah",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Daryn Melvin",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   },
+   {
+    "name": "Wilbur Kaye",
+    "role": "Representative",
+    "district": "First Mesa Consolidated Villages"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page lists five officers and says the council has 22 village representatives, of whom it names 21, so one representative is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.hopi-nsn.gov/tribal-government/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1545": {
+  "roster": [
+   {
+    "name": "Duane Clarke",
+    "role": "Chairperson",
+    "termEnds": "2028",
+    "email": "Duane.Clarke@hualapai-nsn.gov"
+   },
+   {
+    "name": "Ronald Quasula Sr",
+    "role": "Vice-Chairman",
+    "termEnds": "2028",
+    "email": "Ronald.Quasula@hualapai-nsn.gov"
+   },
+   {
+    "name": "Robert Bravo Jr",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "Robert.Bravojr@hualapai-nsn.gov"
+   },
+   {
+    "name": "Earlene Havatone",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "Earlene.Havatone@hualapai-nsn.gov"
+   },
+   {
+    "name": "Michelle Zephier",
+    "role": "Council Member",
+    "termEnds": "2028",
+    "email": "Michelle.Zephier@hualapai-nsn.gov"
+   },
+   {
+    "name": "Stewart Crozier",
+    "role": "Council Member",
+    "termEnds": "2030",
+    "email": "Stewart.Crozier@hualapai-nsn.gov"
+   },
+   {
+    "name": "Catalina Steele",
+    "role": "Council Member",
+    "termEnds": "2030",
+    "email": "Catalina.Steele@hualapai-nsn.gov"
+   },
+   {
+    "name": "Rosemary Sullivan",
+    "role": "Council Member",
+    "termEnds": "2030",
+    "email": "Rosemary.Sullivan@hualapai-nsn.gov"
+   },
+   {
+    "name": "Jonell Tapija",
+    "role": "Council Member",
+    "termEnds": "2030",
+    "email": "Jonell.Tapija@hualapai-nsn.gov"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "http://www.hualapai-nsn.gov/government/tribal_council/index.php",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2130": {
+  "roster": [
+   {
+    "name": "Gabriel Lopez",
+    "role": "Chairman"
+   },
+   {
+    "name": "Delia Carlyle",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Dennis Antone",
+    "role": "Council Member"
+   },
+   {
+    "name": "Cecil Peters",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13. The page says the council has five members and names four, so one council member's seat is not named here.",
+  "rosterSource": "nation",
+  "rosterPage": "http://www.ak-chin.nsn.us/community-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2430": {
+  "roster": [
+   {
+    "name": "Helena Nez Begay",
+    "role": "Council Delegate",
+    "district": "Coppermine, K’aibii’to, LeChee, Tonalea/Red Lake, Bodaway/Gap",
+    "email": "helena.begay@navajo-nsn.gov"
+   },
+   {
+    "name": "Norman M. Begay",
+    "role": "Council Delegate",
+    "district": "Alamo, Ramah, Tohajiilee",
+    "email": "norman.begay@navajo-nsn.gov"
+   },
+   {
+    "name": "Shawna Ann Claw",
+    "role": "Council Delegate",
+    "district": "Chinle",
+    "email": "shawna.claw@navajo-nsn.gov"
+   },
+   {
+    "name": "Eugenia Charles-Newton",
+    "role": "Council Delegate",
+    "district": "Shiprock",
+    "email": "echarles-newton@navajo-nsn.gov"
+   },
+   {
+    "name": "Amber Kanazbah Crotty",
+    "role": "Council Delegate",
+    "district": "Cove, Toadlena/Two Grey Hills, Red Valley Tse’alnaozt’i’i’, Sheepsprings, Beclabito, Gadiiahi/To’Koi",
+    "email": "acrotty@navajo-nsn.gov"
+   },
+   {
+    "name": "Crystalyne Curley",
+    "role": "Speaker",
+    "district": "Tachee/Blue Gap, Many Farms, Nazlini, Tselani/Cottonwood, Low Mountain",
+    "email": "crystalyne.curley@navajo-nsn.gov"
+   },
+   {
+    "name": "Herman Daniels, Jr.",
+    "role": "Council Delegate",
+    "district": "Tsah Bii Kin, Navajo Mountain, Shonto, Oljato",
+    "email": "hdaniels@navajo-nsn.gov"
+   },
+   {
+    "name": "Vince R. James",
+    "role": "Council Delegate",
+    "district": "Jeddito, Cornfields, Ganado, Kinlichee, Steamboat",
+    "email": "vincejames@navajo-nsn.gov"
+   },
+   {
+    "name": "Brenda Jesus",
+    "role": "Council Delegate",
+    "district": "Oaksprings, St. Michaels",
+    "email": "brenda.jesus@navajo-nsn.gov"
+   },
+   {
+    "name": "Casey Allen Johnson",
+    "role": "Council Delegate",
+    "district": "Cameron, Coalmine Canyon, Birdsprings, Leupp, Tolani Lake",
+    "email": "casey.johnson@navajo-nsn.gov"
+   },
+   {
+    "name": "Arbin Mitchell",
+    "role": "Council Delegate",
+    "district": "Houck, Klagetoh, Nahata Dziil, Tsé Si Ani, Wide Ruins",
+    "email": "arbin.mitchell@navajo-nsn.gov"
+   },
+   {
+    "name": "Andy Nez",
+    "role": "Council Delegate",
+    "district": "Crystal, Fort Defiance, Red Lake, Sawmill",
+    "email": "andy.nez@navajo-nsn.gov"
+   },
+   {
+    "name": "Rickie Nez",
+    "role": "Council Delegate",
+    "district": "T’iistoh Sikaad, Nenahnezad, Upper Fruitland, Tse’ Daa’ Kaan, Newcomb, San Juan",
+    "email": "rickienez@navajo-nsn.gov"
+   },
+   {
+    "name": "Titus Nez",
+    "role": "Council Delegate",
+    "district": "Churchrock, Iyanbito, Mariano Lake, Pinedale, Smith Lake, Thoreau",
+    "email": "titus.nez@navajo-nsn.gov"
+   },
+   {
+    "name": "Nathan Notah",
+    "role": "Council Delegate",
+    "district": "Coyote Canyon, Mexican Springs, Naschitti, Tohatchi, Bahastl’a’a’",
+    "email": "nathan.notah@navajo-nsn.gov"
+   },
+   {
+    "name": "Shaandiin Parrish",
+    "role": "Council Delegate",
+    "district": "Chilchinbeto, Dennehotso, Kayenta",
+    "email": "sp.parrish@navajo-nsn.gov"
+   },
+   {
+    "name": "Germaine Simonson",
+    "role": "Council Delegate",
+    "district": "Hard Rock, Forest Lake, Pinon, Black Mesa, Whippoorwill",
+    "email": "germaine.simonson@navajo-nsn.gov"
+   },
+   {
+    "name": "Danny Simpson",
+    "role": "Council Delegate",
+    "district": "Becenti, Lake Valley, Nahodishgish, Standing Rock, Whiterock, Huerfano, Nageezi, Crownpoint",
+    "email": "danny.simpson@navajo-nsn.gov"
+   },
+   {
+    "name": "Carl Roessel Slater",
+    "role": "Council Delegate",
+    "district": "Tsaile/Wheatfields, Lukachukai, Round Rock, Tséch’izhí, Rock Point",
+    "email": "carlslater@navajo-nsn.gov"
+   },
+   {
+    "name": "George Tolth",
+    "role": "Council Delegate",
+    "district": "Littlewater, Pueblo Pintado, Torreon, Whitehorse Lake, Baca/Prewitt, Casamero Lake, Ojo Encino, Counselor",
+    "email": "george.tolth@navajo-nsn.gov"
+   },
+   {
+    "name": "Otto Tso",
+    "role": "Council Delegate",
+    "district": "To’ Nanees Dizi",
+    "email": "otso@navajo-nsn.gov"
+   },
+   {
+    "name": "Curtis Yanito",
+    "role": "Council Delegate",
+    "district": "Mexican Water, To’likan, Teesnospos, Aneth, Red Mesa",
+    "email": "curtis.yanito@navajo-nsn.gov"
+   },
+   {
+    "name": "Cherilyn Yazzie",
+    "role": "Council Delegate",
+    "district": "Dilcon, Indian Wells, Teesto, Whitecone, Greasewood Springs",
+    "email": "cherilyn.yazzie@navajo-nsn.gov"
+   },
+   {
+    "name": "Lester Yazzie",
+    "role": "Council Delegate",
+    "district": "Baahaali, Chilchiltah, Manuelito, Red Rock, Rock Springs, Tsayatoh",
+    "email": "lesteryazzie@navajo-nsn.gov"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.navajonationcouncil.org/council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2680": {
+  "roster": [
+   {
+    "name": "Julian Hernandez",
+    "role": "Chairman",
+    "email": "Julian.Hernandez@pascuayaqui-nsn.gov",
+    "phone": "520.883.5110"
+   },
+   {
+    "name": "Peter Yucupicio",
+    "role": "Vice Chairman",
+    "email": "Peter.Yucupicio@pascuayaqui-nsn.gov",
+    "phone": "520.883.5007",
+    "phonesExtra": [
+     "cell 520.730.4302"
+    ]
+   },
+   {
+    "name": "Thomas J. Cupis",
+    "role": "Treasurer",
+    "email": "Thomas.Cupis@pascuayaqui-nsn.gov",
+    "phone": "520.879.5009",
+    "phonesExtra": [
+     "cell 520.780.0759"
+    ]
+   },
+   {
+    "name": "Rosa Soto Alvarez",
+    "role": "Secretary",
+    "email": "Rosa.S.Alvarez@pascuayaqui-nsn.gov",
+    "phone": "520.879.5124",
+    "phonesExtra": [
+     "cell 520.780.2691"
+    ]
+   },
+   {
+    "name": "Andrea Gonzales",
+    "role": "Council Member",
+    "email": "Andrea.Gonzales@pascuayaqui-nsn.gov",
+    "phone": "520.879.5126",
+    "phonesExtra": [
+     "cell 520.310.7862"
+    ]
+   },
+   {
+    "name": "Jose-Enrique Saldana",
+    "role": "Council Member",
+    "email": "Jose-Enrique.Saldana@pascuayaqui-nsn.gov",
+    "phone": "520.883.5005",
+    "phonesExtra": [
+     "cell 480.416.9282"
+    ]
+   },
+   {
+    "name": "Herminia Frias",
+    "role": "Council Member",
+    "email": "Herminia.Frias@pascuayaqui-nsn.gov",
+    "phone": "520.883.5003"
+   },
+   {
+    "name": "Gloria Alvarez Gomez",
+    "role": "Council Member",
+    "email": "Gloria.Gomez2@pascuayaqui-nsn.gov",
+    "phone": "520.883.5080",
+    "phonesExtra": [
+     "cell 520.780.3002"
+    ]
+   },
+   {
+    "name": "Irene Sanchez",
+    "role": "Council Member",
+    "email": "Irene.Sanchez@pascuayaqui-nsn.gov",
+    "phone": "520.883.5015"
+   },
+   {
+    "name": "Rolando Flores",
+    "role": "Council Member",
+    "email": "RolandoFlores@pascuayaqui-nsn.gov",
+    "phone": "520.883.5024"
+   },
+   {
+    "name": "Francisco Munoz",
+    "role": "Council Member",
+    "email": "Francisco.G.Munoz@pascuayaqui-nsn.gov",
+    "phone": "520.883.5028"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.pascuayaqui-nsn.gov/council-administration",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3340": {
+  "roster": [
+   {
+    "name": "Martin Harvier",
+    "role": "President"
+   },
+   {
+    "name": "Ricardo Leonard",
+    "role": "Vice President"
+   },
+   {
+    "name": "Jacob Butler",
+    "role": "Council Member",
+    "district": "District A"
+   },
+   {
+    "name": "David Antone",
+    "role": "Council Member",
+    "district": "District B"
+   },
+   {
+    "name": "Cheryl Doka",
+    "role": "Council Member",
+    "district": "District C"
+   },
+   {
+    "name": "Su:k Chu:vak Fulwilder",
+    "role": "Council Member",
+    "district": "District D"
+   },
+   {
+    "name": "Mikah Carlos",
+    "role": "Council Member",
+    "district": "District E"
+   },
+   {
+    "name": "Michael Dallas Sr.",
+    "role": "Council Member",
+    "district": "Lehi District"
+   },
+   {
+    "name": "Deanna Scabby",
+    "role": "Council Member",
+    "district": "Lehi District"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://srpmic-nsn.gov/government/council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3355": {
+  "roster": [
+   {
+    "name": "Terry Rambler",
+    "role": "Chairman"
+   },
+   {
+    "name": "Tao Etpison",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Ina Salter",
+    "role": "Councilwoman",
+    "district": "Seven Mile Wash District"
+   },
+   {
+    "name": "Barbara May",
+    "role": "Councilwoman",
+    "district": "Gilson Wash District"
+   },
+   {
+    "name": "Valerie Key-Cheney",
+    "role": "Councilwoman",
+    "district": "Peridot District"
+   },
+   {
+    "name": "John Antonio Jr",
+    "role": "Councilman",
+    "district": "Seven Mile Wash District"
+   },
+   {
+    "name": "Simon Hooke",
+    "role": "Councilman",
+    "district": "Gilson Wash District"
+   },
+   {
+    "name": "Eugene David Nozie",
+    "role": "Councilman",
+    "district": "Bylas District"
+   },
+   {
+    "name": "Ned Anderson Jr",
+    "role": "Council Member",
+    "note": "the council block names this member without an office or district"
+   },
+   {
+    "name": "Jonathan Kitcheyan",
+    "role": "Councilman",
+    "district": "Bylas District"
+   },
+   {
+    "name": "Dr. John Bush",
+    "role": "Council Member",
+    "note": "the council block names this member without an office; the page's menu lists him under the Peridot District office"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.scat-nsn.gov/san-carlos-apache-tribe-tribal-council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4200": {
+  "roster": [
+   {
+    "name": "Wavalene M. Saunders",
+    "role": "Chairperson",
+    "district": "Sif Oidak",
+    "email": "wavalenem.saunders@tonation-nsn.gov",
+    "phone": "(520) 850-3941",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Marlakay Henry",
+    "role": "Vice Chairperson",
+    "district": "Chukut Kuk",
+    "email": "marlakay.henry@tonation-nsn.gov",
+    "phone": "(520) 993-6589",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Pamela J. Benavidez",
+    "role": "Representative",
+    "district": "Pisinemo",
+    "email": "pamela.benavidez@tonation-nsn.gov",
+    "phone": "(520) 850-3713",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Ora Campillo",
+    "role": "Representative",
+    "district": "Schuk Toak",
+    "email": "ora.campillo@tonation-nsn.gov",
+    "phone": "(520) 649-7327",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Bennett Chewing",
+    "role": "Representative",
+    "district": "Gu Vo",
+    "email": "bennetta.chewing@tonation-nsn.gov",
+    "phone": "(520) 349-0339",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Janet B. Eleando",
+    "role": "Representative",
+    "district": "Sells",
+    "email": "janetb.eleando@tonation-nsn.gov",
+    "phone": "(520) 349-2319",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Janice Felix",
+    "role": "Representative",
+    "district": "San Xavier",
+    "email": "janice.felix@tonation-nsn.gov",
+    "phone": "(520) 993-3160",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Delma M. Garcia",
+    "role": "Representative",
+    "district": "Hickiwan",
+    "email": "Delma.Garcia@tonation-nsn.gov",
+    "phone": "(520) 471-4310",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Francis Homewytewa",
+    "role": "Representative",
+    "district": "Sif Oidak",
+    "email": "francis.homewytewa@tonation-nsn.gov",
+    "phone": "(520) 471-0144",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Gloria Johnson",
+    "role": "Representative",
+    "district": "Gu Achi",
+    "email": "gloria.johnson@tonation-nsn.gov",
+    "phone": "(520) 993-4525",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Evelyn Juan-Manuel",
+    "role": "Representative",
+    "district": "Sells",
+    "email": "evelyn.juan-manuel@tonation-nsn.gov",
+    "phone": "(520) 993-0635",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Vivian Juan Saunders",
+    "role": "Representative",
+    "district": "Chukut Kuk",
+    "email": "vivian.saunders@tonation-nsn.gov",
+    "phone": "(520) 993-3126",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Louis R. Lopez",
+    "role": "Representative",
+    "district": "Hickiwan",
+    "email": "louis.lopez@tonation-nsn.gov",
+    "phone": "(520) 471-0791",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Lucius E. Lopez",
+    "role": "Representative",
+    "district": "Gu Achi",
+    "email": "lucius.lopez@tonation-nsn.gov",
+    "phone": "(520) 993-6605",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Leslie Luna",
+    "role": "Representative",
+    "district": "Gu Vo",
+    "email": "leslie.luna@tonation-nsn.gov",
+    "phone": "(520) 965-8061",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Roger Manuel",
+    "role": "Representative",
+    "district": "San Lucy",
+    "email": "Roger.Manuel@tonation-nsn.gov",
+    "phone": "(520) 993-4397",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Naomi Monte",
+    "role": "Representative",
+    "district": "Pisinemo",
+    "email": "naomi.monte@tonation-nsn.gov",
+    "phone": "(520) 993-6408",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Jesse F. Navarro",
+    "role": "Representative",
+    "district": "Baboquivari",
+    "email": "jessef.navarro@tonation-nsn.gov",
+    "phone": "(520) 975-1790",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Ned Norris Jr.",
+    "role": "Representative",
+    "district": "Baboquivari",
+    "email": "ned.norrisjr@tonation-nsn.gov",
+    "phone": "(520) 993-3142",
+    "termEnds": "6/2029"
+   },
+   {
+    "name": "Daniel L.A. Preston III",
+    "role": "Representative",
+    "district": "San Xavier",
+    "email": "daniel.preston@tonation-nsn.gov",
+    "phone": "(520) 993-1398",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "Gloria M. Ramirez",
+    "role": "Representative",
+    "district": "San Lucy",
+    "email": "gloria.ramirez@tonation-nsn.gov",
+    "phone": "(520) 850-6460",
+    "termEnds": "6/2027"
+   },
+   {
+    "name": "DeLisa M. Ramon",
+    "role": "Representative",
+    "district": "Schuk Toak",
+    "email": "DeLisa.Ramon@tonation-nsn.gov",
+    "phone": "(520) 993-4484",
+    "termEnds": "6/2029"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://tolc-nsn.org/representatives-and-committees/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4708": {
+  "roster": [
+   {
+    "name": "Buddy Rocha, Jr.",
+    "role": "Chairman"
+   },
+   {
+    "name": "Charlie Baca, IV",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Darlene Felix",
+    "role": "Council Member"
+   },
+   {
+    "name": "Siera Russell",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jason Fullmer",
+    "role": "Council Member"
+   },
+   {
+    "name": "Robin Hazelwood",
+    "role": "Council member"
+   },
+   {
+    "name": "Genevieve Datsi",
+    "role": "Council member"
+   },
+   {
+    "name": "Frederick Sanchez",
+    "role": "Council member"
+   },
+   {
+    "name": "Matilda Cassadore",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://yavapai-apache.org/tribal_council/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4785": {
+  "roster": [
+   {
+    "name": "Arden Kucate",
+    "role": "Governor"
+   },
+   {
+    "name": "Cordelia Hooee",
+    "role": "Lieutenant Governor"
+   },
+   {
+    "name": "Anthony Sanchez Jr.",
+    "role": "Head Councilman"
+   },
+   {
+    "name": "Ricky Penketewa Sr.",
+    "role": "Councilman"
+   },
+   {
+    "name": "Virginia Chavez",
+    "role": "Councilwoman"
+   },
+   {
+    "name": "Birdena Sanchez",
+    "role": "Councilwoman"
+   },
+   {
+    "name": "Edward Wemytewa",
+    "role": "Councilman"
+   },
+   {
+    "name": "Shirley Bellson",
+    "role": "Councilwoman"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-13.",
+  "rosterSource": "nation",
+  "rosterPage": "https://ashiwi.org/tribal-leadership/",
+  "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}
