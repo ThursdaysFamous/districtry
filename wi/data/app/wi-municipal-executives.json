@@ -84,14 +84,12 @@
     "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5553000": {
-    "email": "mayor@milwaukee.gov",
     "municipality": "Milwaukee",
-    "name": "Cavalier Johnson",
     "office": "City of Milwaukee Mayor",
-    "phone": "414-286-2200",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
-    "witnessUrl": "https://www.milwaukee.gov/mayor"
+    "withheld": true,
+    "withheldWhy": "the municipality's own site did not answer when asked for its crawling policy, so its page is not fetched and no name is witnessed"
   },
   "5558800": {
     "municipality": "Oak Creek",
