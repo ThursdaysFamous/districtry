@@ -249,6 +249,62 @@ def officer(cell, vacancy_note=True):
     return out
 
 
+def keep_page_names(entry, prev_entry):
+    """Keep the NAMES the county's own page gave, on a run that could not
+    re-read that page. Changes `entry` in place; returns how many offices kept
+    a whole record from the last good read.
+
+    Until 2026-11-14 a county whose pages did not answer was rebuilt from the
+    Blue Book alone and only its url/phone/e-mail were carried forward, and
+    only where the book's spelling EQUALLED the shipped one. Two things went
+    wrong with that, both measured on the rerun of that day, when Kenosha's
+    directory answered HTTP 403:
+
+      * A FULLER FORM OF THE SAME NAME READ AS A NEW PERSON. The shipped
+        sheriff was the county's "David W. Zoerner", the book prints
+        "David W Zoerner", the equality test called that a turnover, and the
+        office lost its page link. A name that is the same person by
+        surname_initials keeps the shipped form, and its contact with it.
+
+      * A NAME THE COUNTY'S PAGE HAD REPLACED WENT BACK TO THE BOOK'S. Fourteen
+        offices ship a `source: county-page` name because the book's officer
+        has left (Portage's executive, Oconto's district attorney, ...). One
+        unread week put the book's person back on the card. It did not happen
+        to Kenosha, which has no such office, and nothing stopped it for the
+        fourteen. Such a record is kept WHOLE: name, title, and the contact
+        read beside that name.
+
+    Both follow the standing rule that a failed read stops the fetch and does
+    not unpublish what was read. The caller applies PRESERVE_MAX_DAYS before
+    this runs, so a kept name is at most that old and the entry is dated by
+    the caller's contactAsOf. Past the cap the book's name ships again, which
+    for those fourteen offices is a name known to be out of date: that is not
+    solved here.
+
+    The chair is left alone. It is reconciled every week against the board
+    roster file, which this run did read.
+    """
+    kept = 0
+    for office, old in prev_entry.items():
+        if office == "chair" or not isinstance(old, dict) or not old.get("name"):
+            continue
+        rec = entry.get(office)
+        if old.get("source") == "county-page":
+            if isinstance(rec, dict) and rec.get("source") == "county-page":
+                continue                    # this run read a page for it
+            entry[office] = dict(old)
+            kept += 1
+            print("%s/%s: KEPT the county page's %r — the page was not read "
+                  "on this run and the book's row is older"
+                  % (entry.get("county") or "?", office, old["name"]),
+                  file=sys.stderr)
+        elif (isinstance(rec, dict) and rec.get("name")
+              and rec["name"] != old["name"]
+              and surname_initials(rec["name"]) & surname_initials(old["name"])):
+            rec["name"] = old["name"]       # same person, the county's form
+    return kept
+
+
 def main():
     raw = json.load(open(RAW))
     counties_by_base = raw["counties"]
@@ -625,7 +681,7 @@ def main():
                      PRESERVE_MAX_DAYS, why), file=sys.stderr)
             continue
 
-        kept = 0
+        kept = keep_page_names(entry, prev_entry)
         for office, rec in entry.items():
             old = prev_entry.get(office)
             if not isinstance(rec, dict) or not isinstance(old, dict):
