@@ -213,8 +213,15 @@ COUNTIES = {
         "registerOfDeeds": "https://www.waukeshacounty.gov/register-of-deeds/",
         "sheriff": "https://www.waukeshacounty.gov/sheriff/"},
         "interim_exec": "https://www.waukeshacounty.gov/county-executive/"},
+    # Grant's sheriff page MOVED by one letter. Until 2026-11-06 it answered
+    # at /grant-county-sheriffs-office/; on 2026-11-13 that address answered
+    # 404 and the weekly run dropped the office's link. Read 2026-11-14 with
+    # this client: the page is at /grant-county-sheriff-office/ (200, 124 KB,
+    # witnesses the sheriff by name). The county's own home page still links
+    # the old address in one menu and an internal host in another, so neither
+    # menu is the place to read the address from.
     "Grant": {"mode": "pages", "floor": 5, "offices": {
-        "sheriff": "https://www.co.grant.wi.gov/grant-county-sheriffs-office/",
+        "sheriff": "https://www.co.grant.wi.gov/grant-county-sheriff-office/",
         "districtAttorney": "https://www.co.grant.wi.gov/district-attorney/",
         "treasurer": "https://www.co.grant.wi.gov/county-treasurer/",
         "clerkOfCircuitCourt": "https://www.co.grant.wi.gov/clerk-of-court/",
