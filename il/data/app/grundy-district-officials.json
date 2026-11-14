@@ -383,7 +383,7 @@
         }
       ],
       "comptrollerCode": "050/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "LaSalle",
       "heads": [
         {
@@ -447,7 +447,7 @@
       }
     }
   },
-  "generated": "2026-11-07T01:45:45Z",
+  "generated": "2026-11-14T02:11:07Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
