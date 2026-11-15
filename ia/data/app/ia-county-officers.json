@@ -831,8 +831,7 @@
    }
   ],
   "treasurer": {
-   "email": "cherokeetreas@co.cherokee.ia.us",
-   "name": "Jodi B. Mongan",
+   "name": "Rob Byers",
    "party": "Republican",
    "phone": "(712) 225-6740"
   }
@@ -1544,15 +1543,18 @@
   "supervisors": [
    {
     "name": "Boyd Campbell",
-    "party": "Republican"
+    "party": "Republican",
+    "phone": "319-240-9746"
    },
    {
     "name": "Gloria Carr",
-    "party": "No party"
+    "party": "No party",
+    "phone": "641-330-0989"
    },
    {
     "name": "Frank Rottinghaus",
-    "party": "Democratic"
+    "party": "Democratic",
+    "phone": "641-426-0156"
    }
   ],
   "treasurer": {
@@ -2656,6 +2658,7 @@
   }
  },
  "19117": {
+  "boardPhone": "(641) 774-2018",
   "county": "Lucas",
   "countyAttorney": {
    "email": "ca@sheltonlawfirm.com",
@@ -2677,13 +2680,14 @@
   },
   "supervisorPlan": "PLAN 1",
   "supervisorSeats": 3,
-  "supervisorSource": "https://lucascounty.iowa.gov/board_of_supervisors/",
   "supervisors": [
    {
-    "name": "Larry Davis"
+    "name": "Larry Davis",
+    "party": "Republican"
    },
    {
-    "name": "Cathy Reece"
+    "name": "Cathy Reece",
+    "party": "Republican"
    },
    {
     "name": "Dennis Smith"
@@ -2887,6 +2891,7 @@
   "recorder": {
    "email": "nbenson@marshallcountyia.gov",
    "name": "Nan Benson",
+   "party": "Republican",
    "phone": "(641) 754-6323"
   },
   "sheriff": {
@@ -3909,6 +3914,7 @@
   }
  },
  "19171": {
+  "boardPhone": "(641) 484-3980",
   "county": "Tama",
   "countyAttorney": {
    "email": "bheeren@tca.tamacountyiowa.gov",
@@ -3930,31 +3936,35 @@
   },
   "supervisorPlan": "PLAN 3",
   "supervisorSeats": 5,
-  "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
   "supervisors": [
    {
     "email": "mdoland@tamacounty.org",
     "name": "Mark Doland",
+    "party": "Republican",
     "phone": "641-481-2533"
    },
    {
     "email": "curthilmer@gmail.com",
     "name": "Curt Hilmer",
+    "party": "Republican",
     "phone": "319-939-3291"
    },
    {
     "email": "hknebel@tamacounty.org",
     "name": "Heather Knebel",
+    "party": "Republican",
     "phone": "641-481-2532"
    },
    {
     "email": "ckupka@tamacounty.org",
     "name": "Curt Kupka",
+    "party": "Republican",
     "phone": "641-481-2310"
    },
    {
     "email": "dturner@tamacounty.org",
     "name": "David Turner",
+    "party": "Republican",
     "phone": "641-481-2456"
    }
   ],
@@ -4441,6 +4451,7 @@
   "recorder": {
    "email": "miskaff@woodburycountyiowa.gov",
    "name": "Michelle Skaff",
+   "party": "Republican",
    "phone": "(712) 279-6528"
   },
   "sheriff": {
@@ -4543,22 +4554,27 @@
   "supervisorSeats": 5,
   "supervisors": [
    {
+    "email": "abosch@wrightco.iowa.gov",
     "name": "Ashley Bosch",
     "party": "Republican"
    },
    {
+    "email": "bellis@wrightco.iowa.gov",
     "name": "Betty Ellis",
     "party": "Republican"
    },
    {
+    "email": "dkluss@wrightco.iowa.gov",
     "name": "Dean Kluss",
     "party": "Republican"
    },
    {
+    "email": "lloux@wrightco.iowa.gov",
     "name": "Lynn Loux",
     "party": "Republican"
    },
    {
+    "email": "rrasmussen@wrightco.iowa.gov",
     "name": "Rick Rasmussen",
     "party": "Republican"
    }
