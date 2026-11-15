@@ -46,6 +46,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own
+          # last commit; in a depth-1 clone every entry takes today's date.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -121,7 +125,10 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 above. `git
+          # fetch --depth=1` RE-SHALLOWS a clone that was fetched complete, so
+          # the two have to move together.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           # AFTER the branch cut, never before: the re-cut above resets the
           # tree to main, so pages regenerated earlier would be thrown away and
@@ -133,12 +140,17 @@ jobs:
           # changes the count must regenerate it in the same commit or its own
           # --check fails on the bot's PR, over a number the PR is not about.
           python3 scripts/build_about_page.py
+          # The sitemap follows the pages: each lastmod is its own file's last
+          # commit, and a page this run rewrote takes today's date. Without it
+          # the PR of 2026-11-14 failed `build_sitemap.py --check` on three
+          # county pages dated 15 days behind.
+          python3 scripts/build_sitemap.py
           # docs/EAM_STATUS.md counts the districts this roster names, so a
           # county gaining or losing a member moves it and the smoke gate's
           # `build_eam_status.py --check` fails on this PR. See that script's
           # check_workflows(), which is what names this job.
           python3 scripts/build_eam_status.py
-          git add ia/data/app/ia-county-officers.json ia/county-supervisor about.html docs/EAM_STATUS.md
+          git add ia/data/app/ia-county-officers.json ia/county-supervisor about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update IA county officer roster"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,
