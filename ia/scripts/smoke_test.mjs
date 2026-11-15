@@ -631,7 +631,16 @@ try {
   //      directory listed its whole board again and Adair's supervisors came
   //      from there; Tama, still named by its own page, took the row.
   //
-  //      BOTH BRANCHES, for the reason 2a4 already gives. Tama must name a
+  //      Tama held it until 2026-11-15, when the statewide directory listed
+  //      Tama's five supervisors and Lucas's three again and the weekly update
+  //      took both boards from there (the same names). Humboldt took the row:
+  //      it is named by its own page in the shipped roster and in that update
+  //      alike, so the check holds on both sides of that update's merge.
+  //      When Humboldt leaves too, move the row to a county the roster still
+  //      gives a `supervisorSource`; with none left, drop the two rows and say
+  //      so here, because the sentence then renders for nobody.
+  //
+  //      BOTH BRANCHES, for the reason 2a4 already gives. Humboldt must name a
   //      supervisor AND carry the county-named sentence; Wright, whose names
   //      come from the statewide directory, must name one with NO
   //      county-named sentence; and Marshall, the anchor county, comes from the
@@ -645,10 +654,10 @@ try {
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     for (const [lat, lng, county, want, absent, why] of [
-      [42.08000, -92.53000, "Tama County", "Named by the county",
-       null, "Tama, named by the county's own page"],
-      [42.08000, -92.53000, "Tama County", "Mark Doland",
-       null, "Tama names a supervisor from the county's own page"],
+      [42.77700, -94.20700, "Humboldt County", "Named by the county",
+       null, "Humboldt, named by the county's own page"],
+      [42.77700, -94.20700, "Humboldt County", "Rick Pedersen",
+       null, "Humboldt names a supervisor from the county's own page"],
       [42.73160, -93.73270, "Wright County", "Dean Kluss",
        "Named by the county", "Wright, from the statewide directory"],
       [42.04940, -92.90710, "Marshall County", "Supervisor",
