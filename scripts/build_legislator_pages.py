@@ -211,38 +211,126 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Michigan"),
     ),
-    # CONGRESS ONLY. Minnesota's two chambers name nobody, so it is in
-    # NO_LEGISLATURE_PAGE below and this entry deliberately carries no
-    # `legislature` key. The U.S. House roster is real — 8 members, each with a
-    # district office, refreshed weekly — so that page ships exactly as the
-    # siblings' do.
+    # MINNESOTA, KENTUCKY AND INDIANA GAINED THEIR LEGISLATURE PAGES ON
+    # 2026-11-15, with their rosters. Each went live with congress.html alone,
+    # because its two chamber cards named nobody and every sentence of a
+    # legislature page is about the member (the three were NO_LEGISLATURE_PAGE's
+    # only entries). Each legislature's own site is read now, weekly:
+    # mn/scripts/build_mn_legislature_roster.py,
+    # ky/scripts/build_ky_legislature_roster.py and
+    # in/scripts/build_in_legislature_roster.py. The term sentences are each
+    # state constitution's (Minn. Const. art. IV sec. 4; Ky. Const. secs. 30 and
+    # 31; Ind. Const. art. 4 sec. 3), and each `shows` states what that state's
+    # cards carry rather than the default's "their offices".
+    #
+    # MINNESOTA'S HOUSE DISTRICTS ARE LETTERED: each Senate district is divided
+    # into two House districts, A and B (Minn. Const. art. IV sec. 3 forbids
+    # dividing a House district to form a Senate one), so its House roster is
+    # keyed 1A..67B with a {"seats": 1, "members": [...]} record per district.
     "mn": dict(
         worksheet="mn/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Minnesota legislator?",
+            body="the Minnesota Legislature",
+            short="Minnesota Legislature",
+            term="Senators serve four-year terms, with one two-year term each decade "
+                 "so that the whole Senate is elected after the districts are redrawn, "
+                 "and representatives serve two-year terms.",
+            wording=dict(
+                ground="Each Senate district is divided into two House districts, A and B, "
+                       "and a district can split a county, a city or a ZIP code, so the "
+                       "only way to know which pair covers an address is to put the "
+                       "address on the map.",
+                shows="Select any point and the two cards name the <strong>district</strong> for each\n"
+                      "        chamber and the <strong>member</strong> who holds that seat, with their party, their\n"
+                      "        St. Paul office and its telephone, their e-mail address where the chamber lists one,\n"
+                      "        and a link to their own page on the chamber's site.",
+                maps_heading="Two House districts to a Senate district",
+                maps="An address has one district in each chamber, and because every House district\n"
+                     "      is half of a Senate district, the House district decides the Senate one: House\n"
+                     "      districts 14A and 14B together are Senate District 14. The tables below list both\n"
+                     "      chambers in full, so a reader who knows their district can look up the member without\n"
+                     "      opening the map at all.",
+                names="Both rosters are re-read on a schedule from each chamber's own published "
+                      "member list and\n      land",
+                desc="Your Minnesota Legislature districts by address or ZIP \u2014 the "
+                     "district in each chamber and the member who holds it."),
+            chambers=[
+                dict(layer="mn-senate", name="Minnesota Senate", short="Senate",
+                     holder="Senator", roster="mn-senate-members.json"),
+                dict(layer="mn-house", name="Minnesota House of Representatives",
+                     short="House", holder="Representative",
+                     roster="mn-house-members.json", adapter="multi_member_districts"),
+            ]),
         congress=dict(
             file="congress.html",
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Minnesota"),
     ),
-    # CONGRESS ONLY, the same shape and the same reason as Minnesota above:
-    # Kentucky's two chambers name nobody, so it is in NO_LEGISLATURE_PAGE and
-    # carries no `legislature` key. Its U.S. House roster is real — 6 members,
-    # each with a district office, refreshed weekly — so that page ships as the
-    # siblings' do.
+    # Kentucky's chambers are apportioned separately and do not nest, so the
+    # default heading and map paragraph are true of it.
     "ky": dict(
         worksheet="ky/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Kentucky legislator?",
+            body="the Kentucky General Assembly",
+            short="Kentucky General Assembly",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                maps="An address has one district in each chamber and the two rarely share a boundary: the\n"
+                     "      chambers are apportioned separately. The tables below list both in full, so a reader\n"
+                     "      who knows their district numbers can look up the members without opening the map at all.",
+                shows=SHOWS % "their party, their Frankfort office and its telephone, their\n"
+                              "        e-mail address, a telephone of their own where the General Assembly lists one, and\n"
+                              "        a link to their own page on its site"),
+            chambers=[
+                dict(layer="ky-senate", name="Kentucky Senate", short="Senate",
+                     holder="Senator", roster="ky-senate-members.json"),
+                dict(layer="ky-house", name="Kentucky House of Representatives",
+                     short="House", holder="Representative", roster="ky-house-members.json"),
+            ]),
         congress=dict(
             file="congress.html",
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Kentucky"),
     ),
-    # CONGRESS ONLY, the third instance of the Minnesota shape: Indiana's two
-    # chambers name nobody, so it is in NO_LEGISLATURE_PAGE and carries no
-    # `legislature` key. Its U.S. House roster is real — 9 members, refreshed
-    # weekly — so that page ships as the siblings' do.
+    # INDIANA'S ROSTERS CARRY NO OFFICE ADDRESS, and a telephone or an e-mail
+    # address only where the General Assembly's own data prints one beside the
+    # member (76 of 100 representatives and no senator carried a Statehouse
+    # telephone on 2026-11-15, days after the election that seated this
+    # assembly), so `shows` promises neither for every member. Two Senate seats
+    # were unnamed that day in the Assembly's own list (one listed twice, one
+    # listed with nobody); the table prints them as not listed and the page's
+    # count is of seats, which member_count takes from the roster's keys.
     "in": dict(
         worksheet="in/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Indiana legislator?",
+            body="the Indiana General Assembly",
+            short="Indiana General Assembly",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                maps="An address has one district in each chamber and the two rarely share a boundary: the\n"
+                     "      chambers are apportioned separately. The tables below list both in full, so a reader\n"
+                     "      who knows their district numbers can look up the members without opening the map at all.",
+                shows=SHOWS % "their party, a link to their own page on the General Assembly's\n"
+                              "        site, and their Statehouse telephone and e-mail address where the General Assembly\n"
+                              "        lists one",
+                og="Find your {body} districts by address or ZIP, and who holds each of "
+                   "its {total} seats."),
+            chambers=[
+                dict(layer="in-senate", name="Indiana Senate", short="Senate",
+                     holder="Senator", roster="in-senate-members.json"),
+                dict(layer="in-house", name="Indiana House of Representatives",
+                     short="House", holder="Representative", roster="in-house-members.json"),
+            ]),
         congress=dict(
             file="congress.html",
             title="Who is my U.S. representative?",
@@ -1542,61 +1630,33 @@ def fail(msg):
 # tag -> why this instance ships NO state-legislature page. The gate below reads
 # `metros.json` and refuses an instance with no entry, on a fleet invariant that
 # is right: every instance registers two chambers, so a missing entry is a page
-# nobody wrote. Minnesota is the first instance where the page cannot be written
-# TRUELY, which is a different thing from being forgotten.
+# nobody wrote. An entry here is for an instance where the page cannot be
+# written TRULY, which is a different thing from being forgotten.
 #
-# Every sentence on that page is about the member: "the two cards name the
-# district number for each chamber and the MEMBER who holds that seat", "both
-# rosters are re-read on a schedule", and the officeholder table under it is one
-# section per chamber keyed on a roster file. Minnesota ships neither chamber
-# roster — the Legislature publishes both and this project has not built them,
-# recorded as gap `mn-legislature-roster` — so generating the page would publish
-# a page of claims about people it does not name, on a site whose whole standard
-# is that it names nobody it cannot cite.
+# IT IS EMPTY SINCE 2026-11-15, AND THAT IS A MEASUREMENT RATHER THAN AN
+# OMISSION. Minnesota (2026-09-30), Kentucky (2026-09-30) and Indiana
+# (2026-10-07) were its three entries: each went live naming nobody in either
+# chamber, and every sentence on that page is about the member ("the two cards
+# name the district number for each chamber and the MEMBER who holds that
+# seat", "both rosters are re-read on a schedule", and the officeholder table
+# under it is one section per chamber keyed on a roster file), so generating it
+# would have published a page of claims about people it did not name. Each
+# entry said the page lands with the roster, and the audit below fails an entry
+# once its rosters arrive; all three rosters arrived that day, read from each
+# legislature's own site, and the three pages were generated in the same change.
 #
-# WHAT WAS CONSIDERED AND NOT DONE: teaching this generator and
-# build_officeholder_tables.py a roster-less chamber mode — district counts off
-# the shipped boundary file, prose that links each chamber's own directory. That
-# is the page Minnesota should eventually have, and it is a change to two shared
-# generators that twelve true pages already ride, made in a change whose subject
-# is publishing a state. The roster is what makes the page true, so the page
-# lands with the roster.
+# WHAT WAS CONSIDERED AND NOT DONE while they were here: teaching this
+# generator and build_officeholder_tables.py a roster-less chamber mode
+# (district counts off the shipped boundary file, prose that links each
+# chamber's own directory). The roster is what makes the page true, so the page
+# landed with the roster instead, and no instance needs that mode today.
 #
-# This is the ACCEPTED_DROPS shape: an entry carries its reason and its date and
-# is RE-AUDITED on every run, and it FAILS when it stops describing the tree —
-# the instance gone from metros.json, the chambers it names no longer in that
-# instance's layers, or the rosters having arrived, which means the page is owed.
-NO_LEGISLATURE_PAGE = {
-    "mn": dict(
-        chambers=["mn-senate", "mn-house"],
-        rosters=["mn-senate-members.json", "mn-house-members.json"],
-        gap="mn-legislature-roster",
-        why="Minnesota names nobody in either chamber, so every claim this page "
-            "makes about a member would be false. The page lands with the roster.",
-        date="2026-09-30",
-    ),
-    # Kentucky is the SECOND instance of the same case, which is what makes the
-    # reasoning above a rule rather than one state's exception: it registers both
-    # chambers, ships neither roster, and the page's every sentence is about the
-    # member. The roster-less chamber mode that would let both pages exist is
-    # still the right eventual fix and is still not a go-live change's subject.
-    "ky": dict(
-        chambers=["ky-senate", "ky-house"],
-        rosters=["ky-senate-members.json", "ky-house-members.json"],
-        gap="ky-legislature-roster",
-        why="Kentucky names nobody in either chamber, so every claim this page "
-            "makes about a member would be false. The page lands with the roster.",
-        date="2026-09-30",
-    ),
-    "in": dict(
-        chambers=["in-senate", "in-house"],
-        rosters=["in-senate-members.json", "in-house-members.json"],
-        gap="in-general-assembly-roster",
-        why="Indiana names nobody in either chamber, so every claim this page "
-            "makes about a member would be false. The page lands with the roster.",
-        date="2026-10-07",
-    ),
-}
+# This is the ACCEPTED_DROPS shape: an entry carries `chambers`, `rosters`,
+# `gap`, `why` and `date`, is RE-AUDITED on every run, and FAILS when it stops
+# describing the tree: the instance gone from metros.json, the chambers it
+# names no longer in that instance's layers, or the rosters having arrived,
+# which means the page is owed.
+NO_LEGISLATURE_PAGE = {}
 
 
 def audit_no_legislature_page(metros, worksheets):

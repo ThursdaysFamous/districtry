@@ -162,7 +162,7 @@ PROVENANCE = [
         "note": (
             "Delegation roster from the public-domain congress-legislators "
             "project; refreshed weekly by update-mn-congress-roster.yml as a "
-            "reviewed pull request. It is the only roster this instance ships."
+            "reviewed pull request."
         ),
     },
     {
@@ -171,9 +171,26 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1",
         "note": (
             "67 state senate districts from TIGERweb's SLDU layer, built in the "
-            "same combine-files run as the House and Congress. NO ROSTER SHIPS: "
-            "the card names the district and links senate.mn.gov's own member "
-            "directory, recorded as gap mn-legislature-roster."
+            "same combine-files run as the House and Congress."
+        ),
+    },
+    {
+        "layer": "mn-senate",
+        "app_file": "mn-senate-members.json",
+        "source_url": "https://www.mnsenate.gov/api/members",
+        "note": (
+            "The Senate's own member feed, the one its member list reads; "
+            "rebuilt weekly by mn/scripts/build_mn_legislature_roster.py."
+        ),
+    },
+    {
+        "layer": "mn-house",
+        "app_file": "mn-house-members.json",
+        "source_url": "https://www.house.mn.gov/members",
+        "note": (
+            "The House's own member list, of which only the tab of sitting "
+            "members is read, by the same builder; a seat the list does not "
+            "fill is shipped as a dated record naming nobody."
         ),
     },
     {

@@ -74,7 +74,7 @@
       "keywords": "Minnesota district map, what district am I in, Minnesota Senate district, Minnesota House district, county commissioner district, civic districts, who represents me Minnesota",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/mn/#website" },
-      "dateModified": "2026-09-29",
+      "dateModified": "2026-11-15",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -4475,9 +4475,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
            where any boundary came from. It needed no research: every entry in
            the worksheet's layers[] already carried a `source` block, so the
            page's matrix and credit rows generate.
-           faq.html and history.html are STILL absent, and deliberately: both
-           are hand-written prose rather than generated, so each is its own
-           change. mn/WATCH.md carries them. -->
+           FAQ.HTML LANDED ON 2026-11-15, with the legislature rosters: it is
+           hand-written prose, so it was its own change, and it was written
+           from this instance's own worksheet rather than cloned from a
+           sibling's answers. history.html is STILL absent, for the same
+           reason, and mn/WATCH.md carries it. -->
+      <a class="masthead-action-link" href="./faq.html">Common questions</a>
       <a class="masthead-action-link" href="./sources.html">Sources &amp; data layers</a>
       <a class="masthead-action-link" href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
       <!-- ==== ENGINE:BEGIN masthead-buttons-html ==== -->
@@ -4593,7 +4596,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Sources last checked:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">September 29, 2026</strong>
+          <strong id="verified-date">November 15, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -16568,18 +16571,6 @@ function initMinnesotaExplorer() {
       });
   }
 
-  /* ---------- an empty same-origin roster ----------
-   * Three of this instance's four day-one layers name nobody, and the
-   * ENGINE chamber factory calls opts.loadRoster() unconditionally. An empty
-   * object is the honest input: the factory's own roster-miss path renders
-   * the district identity plus the chamber's official directory and invents
-   * no name. When mn/data/app/mn-{senate,house}-members.json ship, these two
-   * become real file loaders and nothing else about the registration moves.
-   * ---------- */
-  function loadNoRoster() {
-    return Promise.resolve({});
-  }
-
   /* ---------- 1. County — the instance's offline anchor ----------
    * Geometry is pre-built (TIGERweb State_County layer 1, STATE-filtered,
    * mn/scripts/build_state_counties.py) and served same-origin +
@@ -18451,17 +18442,29 @@ function initMinnesotaExplorer() {
    * "61A" rather than a number, which the engine's extractDistrictNumber
    * already returns unchanged from TIGERweb's own SLDL field.
    *
-   * NEITHER CHAMBER NAMES A MEMBER YET. The Legislature publishes both
-   * rosters and this instance has not built them, so both cards degrade to
-   * the district identifier plus the chamber's own directory — the factory's
-   * roster-miss path, entered deliberately here rather than by accident. The
-   * gap is recorded in data/app/coverage-gaps.json.
+   * THE NAMES COME FROM EACH CHAMBER'S OWN SITE (www.mnsenate.gov's member
+   * feed and www.house.mn.gov's member list, read by
+   * mn/scripts/build_mn_legislature_roster.py and refreshed weekly by
+   * update-mn-legislature-roster.yml as a reviewed PR): each member's name,
+   * party, St. Paul office and telephone, legislative e-mail address and
+   * page. ONE MEMBER PER DISTRICT IN BOTH CHAMBERS. The House roster is keyed
+   * by the lettered district ("61A") and each record is { seats: 1, members },
+   * the shape a chamber whose districts are not the numbers 1 to N ships in;
+   * the factory renders a one-seat record as an ordinary member card. A
+   * roster miss degrades to the district and the chamber's own member list,
+   * never an invented name.
    * ---------- */
   var loadMnSenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-senate-districts.json", {}, 2);
   });
   var loadMnHouseDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-house-districts.json", {}, 2);
+  });
+  var loadMnSenateMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-senate-members.json", {}, 2);
+  });
+  var loadMnHouseMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-house-members.json", {}, 2);
   });
 
   registerIlgaChamber({
@@ -18470,9 +18473,9 @@ function initMinnesotaExplorer() {
     layerIndex: 1, // TIGERweb SLDU — fallback only; loadDistricts is used when present
     loadDistricts: loadMnSenateDistricts,
     districtFields: ["sldu", "sldust"],
-    directoryUrl: "https://www.senate.mn.gov/members/index.php",
-    loadRoster: loadNoRoster,
-    memberLabel: "State Senator", capitolLabel: "Capitol Office",
+    directoryUrl: "https://www.mnsenate.gov/members/",
+    loadRoster: loadMnSenateMembers,
+    memberLabel: "State Senator", capitolLabel: "St. Paul Office",
     profileLabel: "Senator profile", directoryLabel: "Minnesota Senate directory",
     style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
@@ -18484,8 +18487,8 @@ function initMinnesotaExplorer() {
     loadDistricts: loadMnHouseDistricts,
     districtFields: ["sldl", "sldlst"],
     directoryUrl: "https://www.house.mn.gov/members",
-    loadRoster: loadNoRoster,
-    memberLabel: "Representative", capitolLabel: "Capitol Office",
+    loadRoster: loadMnHouseMembers,
+    memberLabel: "Representative", capitolLabel: "St. Paul Office",
     profileLabel: "Member profile", directoryLabel: "Minnesota House directory",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });

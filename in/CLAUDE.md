@@ -194,11 +194,20 @@ of it is recorded in the gap as evidence for the state-publishing ask. The card 
 the directory's name for a district, which differs from the map's for 21. The quarterly map check
 and the yearly directory rebuild are in `in/WATCH.md`.
 
-**NEITHER CHAMBER NAMES A PERSON.** This instance ships no General Assembly roster, so both
-chamber cards give the district number and the Assembly's own directory — the chamber factory's
-roster-miss path, which is the honest card until a roster is built. Recorded as gap
-`in-general-assembly-roster`. Gap `in-school-board-members` covers the school cards, where the
-Census carries geography and no officeholder field at all.
+**BOTH CHAMBERS NAME THEIR MEMBERS SINCE 2026-11-15.** Until that day this instance shipped no
+General Assembly roster and both cards took the chamber factory's roster-miss path (gap
+`in-general-assembly-roster`, now retired). `in/scripts/build_in_legislature_roster.py` reads
+the General Assembly's own legislator feeds weekly (`update-in-legislature-roster.yml`, Sat
+09:49 UTC): each member's name, party and page, a Statehouse telephone where the feed prints
+one (76 of 100 representatives and no senator that day) and an e-mail address where it prints
+one (26 of 148). **THE SITE ANSWERS THIS PROJECT'S OWN-NAME CLIENTS WITH ITS PAGE SHELL ON EVERY
+PATH**, robots.txt included, so the builder reads it with a browser identity and records that
+measurement in its docstring; whether GitHub's servers get the same answers is not measured
+until the first scheduled run. **THE FEED THAT DAY WAS THE ASSEMBLY ELECTED ON 3 NOVEMBER 2026**,
+and it listed two people for Senate District 1 and nobody for Senate District 46, so both ship
+as dated records naming nobody and `in/WATCH.md` carries the question.
+`in/state-legislature.html` was generated the same day. Gap `in-school-board-members` covers
+the school cards, where the Census carries geography and no officeholder field at all.
 
 **THE TOWNSHIP CARD NAMES THE TRUSTEE AND BOARD OF MOST TOWNSHIPS** (2026-10-15).
 `in/scripts/build_in_township_officials.py` reads the same archive's certified 2022 general
@@ -231,7 +240,7 @@ every other instance via `scripts/compose_app.py`.
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
 - Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12; in-court-of-appeals 2. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down). KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers. It cannot move to uncovered ground any more: measured on a 0.02-degree grid when the change that published Ohio was written (batch 2 of the state-level launch, 2026-11-11), no ground in the gate lies more than 2 km from every outline in fleet-outlines.json, because Illinois, Michigan, Ohio and Kentucky are all served. The click that must stay here moved from Butler County, Ohio to Chatham, Ontario in that change, and Butler County became an Ohio routing case. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
 - Layers: 18 registered (political 7, safety 2, schools 2, geography 7); `registerLayer(` floor 13. Debug namespace `window.IndianaExplorer`.
-- Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
+- Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-legislature-roster.yml` (Sat 09:49 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 

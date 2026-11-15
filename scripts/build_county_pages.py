@@ -5173,8 +5173,9 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
                      if wants_results(inst["tag"], inst["concept"]) else ""),
         results_html=(results_regions()[1]
                       if wants_results(inst["tag"], inst["concept"]) else ""),
-        # Only where the instance ships one: Minnesota publishes no faq.html,
-        # and a link to it would be a 404 on every one of its pages.
+        # Only where the instance ships one: Minnesota published no faq.html
+        # until 2026-11-15, and a link to a page the tree does not hold is a
+        # 404 on every one of that instance's pages.
         faq_link=('<a href="../faq.html">Common questions</a>\n'
                   if os.path.exists(os.path.join(REPO_ROOT, inst["tag"], "faq.html"))
                   else ""),
