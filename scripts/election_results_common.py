@@ -19,6 +19,7 @@ THE FILES. `<data/app>/election-results.json`, the index:
                 plus `from` where the strings are trimmed (below), and, only
                 where an app's publisher gives them: outside, certified,
                 certifiedDate, seats]
+    reported:  "1101-..."             only while the count is part done (below)
 
 and one `<data/app>/election-results/<part>.json` per part, holding each of
 its precincts' turnout [registered, ballots] and, per contest,
@@ -45,6 +46,16 @@ choice. The map draws a close race pale and a wide one strong (Adam,
 2026-11-05, choosing the lead over second place over the leader's share,
 which reads pale everywhere in a race with many candidates, and over the
 votes cast, which shows turnout rather than how close it was).
+
+`reported` is for an election night, when a publisher's precinct table fills
+in over hours: one character per precinct, in `precincts` order, "1" where the
+precinct holds a vote in some contest or a ballot in its turnout, "0" where it
+holds none, and "-" where it holds none and has no registered voters, so none
+is expected. It is written only when some precinct is "0"; a finished count
+has no such field and the files of one are byte for byte what they were before
+the field existed (2026-11-15). While the count is unofficial the card says
+how many of a race's precincts are in the totals, and gives a precinct with
+nothing counted one sentence where a table of zeros would read as a result.
 
 `multiple` is true when some precinct counted more votes in the contest than
 ballots were cast there, which happens only where a voter may choose more than
@@ -153,6 +164,7 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
     group_ids = [g["id"] for g in groups]
     index = []
     parts = {}
+    voted = set()  # precincts holding a vote in some contest (`reported`)
     for c in contests:
         if c["group"] not in group_ids:
             raise ResultsError("%s: group %r is not in the groups list" % (c["name"], c["group"]))
@@ -171,6 +183,8 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
                                    % (c["name"], k, len(vals), len(c["choices"])))
             parts.setdefault(part_of(k), {}).setdefault(k, {"contests": []})["contests"].append(
                 [c["id"]] + list(vals))
+            if k not in voted and any(vals):
+                voted.add(k)
         cast = turnout["precincts"]
         entry = {
             "id": c["id"], "name": c["name"], "group": c["group"], "beyond": bool(c["beyond"]),
@@ -213,6 +227,11 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
         "parts": [part_of(k) for k in keys],
         "contests": index,
     })
+    cast = turnout["precincts"]
+    reported = "".join("1" if k in voted or cast[k][1] else "-" if cast[k][0] == 0 else "0"
+                       for k in keys)
+    if "0" in reported:
+        doc["reported"] = reported
     out_dir = os.path.join(app_data_dir, part_dir)
     if os.path.isdir(out_dir):
         for name in os.listdir(out_dir):
@@ -282,7 +301,21 @@ def selftest():
         ("outside" in idx["contests"][1], False),
         (part["precincts"]["01001"]["turnout"], [100, 80]),
         (part["precincts"]["01001"]["contests"], [["1", 70, 50, 20], ["2", 100, 50, 40, 10]]),
+        ("reported" in idx, False),               # every precinct holds a vote or a ballot
     ]
+    # an election night: one precinct counted, one with voters and nothing
+    # counted, one with no voters, and one whose turnout is not in yet but
+    # whose votes are
+    night = {"total": [200, 80], "precincts": {"01001": [100, 80], "01002": [100, 0], "02001": [0, 0],
+                                                "02002": [50, None]}}
+    night_contests = [
+        {"id": "1", "name": "One", "group": "g", "beyond": False, "choices": ["A", "B"],
+         "total": [75, 53, 22], "precincts": {"01001": [70, 50, 20], "01002": [0, 0, 0],
+                                              "02001": [0, 0, 0], "02002": [5, 3, 2]}},
+    ]
+    with tempfile.TemporaryDirectory() as d:
+        write_results(d, stamp, groups, night, night_contests, lambda k: "w" + k[:2], "note")
+        checks.append((json.load(open(os.path.join(d, INDEX_NAME))).get("reported"), "10-1"))
     bad = [(got, want) for got, want in checks if got != want]
     for got, want in bad:
         print("election-results-common selftest: got %r, want %r" % (got, want))

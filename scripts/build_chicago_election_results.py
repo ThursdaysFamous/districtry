@@ -204,9 +204,46 @@ def map_precincts(path):
     return keys
 
 
+RESULTS_INDEX = "https://chicagoelections.gov/elections/results"
+
+def write_placeholder(args):
+    """The file the app ships before the Board has published a count.
+
+    The map's results layer reads every election file it is given when it is
+    switched on, so the file has to exist from the day the app names it; with
+    no contests the layer never offers it (engine `election-results`,
+    moreElections). It is never written over a file that holds results.
+    """
+    if not args.name or args.raw or args.counties or args.certified:
+        fail("--placeholder takes --name and --election-date and nothing to build from")
+    try:
+        datetime.date.fromisoformat(args.election_date)
+    except ValueError:
+        fail("--election-date %r is not a date" % args.election_date)
+    shipped = os.path.join(args.app_data, args.name + ".json")
+    if os.path.exists(shipped) and json.load(open(shipped)).get("contests"):
+        fail("%s already holds results; a placeholder would remove them" % os.path.relpath(shipped))
+    stamp = {"election": args.placeholder, "electionDate": args.election_date,
+             "source": RESULTS_INDEX, "read": None, "certified": False, "certifiedDate": None}
+    note = ("No results yet: the Chicago Board of Election Commissioners has not published a "
+            "count for this election. The file is here so the map can ask for it; the layout "
+            "is scripts/election_results_common.py's.")
+    try:
+        write_results(args.app_data, stamp, [], {"total": [None, None], "precincts": {}}, [],
+                      lambda k: k, note, extra={"sources": []}, name=args.name)
+    except ResultsError as e:
+        fail(str(e))
+    # no precinct, so no part file: git keeps no empty directory, and the next
+    # real build makes it again
+    parts_dir = os.path.join(args.app_data, args.name)
+    if os.path.isdir(parts_dir) and not os.listdir(parts_dir):
+        os.rmdir(parts_dir)
+    print("wrote %s with no results, for the %s of %s"
+          % (os.path.relpath(shipped), args.placeholder, args.election_date), file=sys.stderr)
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("raw")
+    ap.add_argument("raw", nargs="?")
     ap.add_argument("--election-date", required=True)
     ap.add_argument("--certified", help="the date the Board proclaimed the official results")
     ap.add_argument("--precincts", help="a JSON list of the map's ward_precinct keys (offline)")
@@ -220,10 +257,19 @@ def main():
                     help="the app's data/app directory (default: il/data/app)")
     ap.add_argument("--name", help="the files' base name where this election is kept beside "
                                    "another's (default: election-results)")
+    ap.add_argument("--placeholder", metavar="ELECTION",
+                    help="write a file with no results for an election the Board has not counted "
+                         "yet, named as this builder names it from the Board's page (\"Municipal "
+                         "General Election\"); needs --name and --election-date, takes no raw read")
     args = ap.parse_args()
     if args.name and args.counties:
         fail("--name is for an election the Board alone counts; --counties folds the "
              "county clerks' results into the default file")
+    if args.placeholder:
+        write_placeholder(args)
+        return
+    if not args.raw:
+        fail("give the scraper's raw read, or --placeholder for an election not counted yet")
 
     raw = json.load(open(args.raw))
     allowed = map_precincts(args.precincts)

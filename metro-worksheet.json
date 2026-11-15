@@ -3218,6 +3218,11 @@
         "note": "Chicago's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and leader string); each precinct's own counts sit in election-results/ward-NN.json, fetched on a click and never cached by the worker. From the Chicago Board of Election Commissioners by scripts/chicago_election_results_scraper.py + build_chicago_election_results.py through scripts/election_results_common.py, refreshed daily; certified stays false until the Board proclaims the official results. Network-first: the count changes daily"
       },
       {
+        "file": "chicago-election-results.json",
+        "min_keys": 11,
+        "note": "Chicago's city elections (mayor, clerk, treasurer, alderpersons and police district councils), precinct by precinct, as a second results file on the Election Results layer (moreElections), in the layout election-results.json uses; each precinct's own counts sit in chicago-election-results/ward-NN.json, fetched on a click and never cached by the worker. Holds no contests until the Chicago Board of Election Commissioners publishes a count (build_chicago_election_results.py --placeholder), and the layer does not offer it until then. Network-first: the count changes through election night and daily until certified"
+      },
+      {
         "file": "ccbr-roster.json",
         "min_keys": 3
       },

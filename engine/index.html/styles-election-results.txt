@@ -11,7 +11,7 @@
   }
   .election-notice-certified { border-left-color: var(--card-accent); }
   .election-pick { display: flex; flex-direction: column; gap: 4px; }
-  .election-select {
+  .election-select, .election-which {
     font: inherit; font-size: 13px; color: var(--card-ink); background: var(--card-section-bg);
     border: 1px solid var(--card-btn-border); border-radius: 6px; padding: 6px 8px;
     min-height: 32px; max-width: 100%;
