@@ -26601,6 +26601,13 @@ function initChiExplorer() {
       repaint();
       syncUrlHash(); // the race rides the link (linkParam below)
     }
+    // Another election has just become the one shown, with its own picked
+    // race still good: paint it, and write that race to the address, which
+    // was last written while the other election's race was the picked one.
+    function showSwitched() {
+      repaint();
+      syncUrlHash();
+    }
 
     /* ---- the legend over the map: which colour is which choice ---- */
     var legendEl = null;
@@ -26822,6 +26829,10 @@ function initChiExplorer() {
           ", so these totals are not the whole race." : ""));
       var part = partCountedNote(idx, contest, src);
       if (part) notes.push(part);
+      // how this kind of race is decided, where the builder says (a runoff
+      // when nobody has more than half, a body that seats three)
+      var kind = idx.groups[contest.group];
+      if (kind && kind.note) notes.push(String(kind.note));
       // votes counted in no precinct (absentee, early or provisional units a
       // publisher reports apart) are in the totals and on no shape of the map
       if (cf.outside && cf.outside[0] > 0 && whole > 0) {
@@ -26943,7 +26954,7 @@ function initChiExplorer() {
           var at = idx.pos[key];
           if (at !== undefined) partNames[idx.data.parts[at]] = true;
         });
-        return Promise.all(Object.keys(partNames).map(loadPart)).then(function (docs) {
+        return Promise.all(Object.keys(partNames).map(function (part) { return loadPart(idx, part); })).then(function (docs) {
           var byKey = {};
           docs.forEach(function (doc) {
             var ps = (doc && doc.precincts) || {};
@@ -27084,7 +27095,7 @@ function initChiExplorer() {
           var at = key === null ? undefined : idx.pos[key];
           var srcId = sourceIdOf(idx, key);
           if (at === undefined) {
-            if (switched) repaint();
+            if (switched) showSwitched();
             return { seq: seq, idx: idx, all: all, here: here, key: key, src: srcId, label: precinctLabelOf(feature), rows: [], turnout: null };
           }
           var part = idx.data.parts[at];
@@ -27107,9 +27118,9 @@ function initChiExplorer() {
                 });
               }
               if (first !== null && first !== picked) pick(first);
-              else if (switched) repaint();
+              else if (switched) showSwitched();
             } else if (switched) {
-              repaint(); // another election's colours were on the map
+              showSwitched(); // another election's colours were on the map
             } else {
               drawLegend();
             }

@@ -204,6 +204,44 @@ def map_precincts(path):
     return keys
 
 
+# HOW A CITY RACE IS DECIDED, which the card prints under the race so a reader
+# does not take "most votes" for "elected". From the Board's own "2027 Election
+# Information Pamphlet and Calendar" (published June 9, 2026, revised July 28,
+# 2026, "2027 Elections and offices to be filled in the City of Chicago"),
+# read 2026-11-15: mayor, clerk and treasurer need a majority of the votes
+# cast, and otherwise the two with the most votes meet in a runoff [65 ILCS
+# 20/21-5, 20/21-12]; an alderperson needs a majority in the ward, and
+# otherwise the two with the most votes meet in a supplementary election the
+# same day [65 ILCS 20/21-26]; and the three candidates with the most votes in
+# a police district are elected, with no second election [Chi. Muni. Code
+# 2-80-070(c)]. The runoff's date is the Board's, never computed: the
+# consolidated election it falls on moves when it meets Passover (10 ILCS
+# 5/2A-1.1a), so a city election whose runoff date is not here is refused
+# until its calendar has been read. 2023's is the date of the Board's own
+# "2023 Municipal Runoffs" results page.
+RUNOFF_DATES = {"2027-02-23": "2027-04-06", "2023-02-28": "2023-04-04"}
+CITY_GENERAL = "Municipal General Election"
+
+
+def group_notes(election, election_date):
+    """{group id: the sentence on how its races are decided}, for a city
+    election's first round; {} for any other election."""
+    if election != CITY_GENERAL:
+        return {}
+    if election_date not in RUNOFF_DATES:
+        fail("no runoff date for the city election of %s: read it from the Board's election "
+             "calendar and add it to RUNOFF_DATES" % election_date)
+    d = datetime.date.fromisoformat(RUNOFF_DATES[election_date])
+    runoff = "%s %d, %d" % (d.strftime("%B"), d.day, d.year)
+    majority = ("A candidate with more than half of the votes %sis elected. If no candidate has "
+                "more than half, the two with the most votes go to a runoff election on " + runoff + ".")
+    return {
+        "city": majority % "",
+        "city-council": majority % "in the ward ",
+        "police-council": "The three candidates with the most votes in the police district are elected.",
+    }
+
+
 RESULTS_INDEX = "https://chicagoelections.gov/elections/results"
 
 def write_placeholder(args):
@@ -349,6 +387,10 @@ def main():
         c.pop("_order", None)
 
     groups = [{"id": g, "label": GROUP_LABELS[g], "layer": GROUP_LAYERS[g]} for g in GROUP_ORDER]
+    notes = group_notes(election, args.election_date)
+    for g in groups:
+        if g["id"] in notes:
+            g["note"] = notes[g["id"]]
     stamp = {
         "election": election,
         "electionDate": args.election_date,

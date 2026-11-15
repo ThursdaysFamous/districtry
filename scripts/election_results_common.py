@@ -8,7 +8,12 @@ THE FILES. `<data/app>/election-results.json`, the index:
 
     election, electionDate, source, read, certified, certifiedDate, note,
     groups:    [{id, label, layer}]   race types in menu order, each tied to the
-                                      map layer it is elected from, or null
+                                      map layer it is elected from, or null;
+                                      plus `note` where a builder gives one,
+                                      a sentence the card prints under every
+                                      race of the group (how the race is
+                                      decided, where most votes does not
+                                      settle it: a runoff, three seats)
     turnout:   {columns, total}       the area's registered voters and ballots
     precincts: [key, ...]             each precinct's key, exactly as the app's
                                       precinct layer writes the property the

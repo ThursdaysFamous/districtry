@@ -131,6 +131,24 @@ function check(name, ok, detail) {
   if (!ok) failures.push(name);
 }
 
+// The city election's results file is the results layer's SECOND election
+// (il/index.html's moreElections, beside November's). Every page gets it
+// EMPTY unless a check says otherwise, which is how it ships before a count:
+// checks 1y to 1y5 assert what the card and legend say for November's
+// election, and each of them would change on the day the shipped city file
+// first holds results, which is an election night, when a red check stops
+// the results going out. Check 1y6 gives its pages a city file of its own,
+// and reads the SHIPPED one on a page that takes this answer away again.
+const CITY_RESULTS_INDEX = /\/data\/app\/chicago-election-results\.json(\?|$)/;
+const CITY_RESULTS_PART = /\/data\/app\/chicago-election-results\/([^/?]+)\.json(\?|$)/;
+const CITY_RESULTS_EMPTY = JSON.stringify({
+  election: "Municipal General Election", electionDate: "2027-02-23",
+  source: "https://chicagoelections.gov/elections/results", read: null,
+  certified: false, certifiedDate: null, sources: [], note: "No results yet (a stand-in for the browser test).",
+  groups: [], turnout: { columns: ["registered", "ballots"], total: [null, null] },
+  precincts: [], parts: [], contests: []
+});
+
 // Each check runs in its own context with service workers BLOCKED. The app's
 // SW serves data/app/* cache-first and — critically — its requests are not
 // interceptable by page.route, so an active SW would defeat the failure
@@ -149,6 +167,8 @@ async function booted(context, url, routeFn, leaves) {
     await page.route("**/cdnjs.cloudflare.com/**/maplibre-gl.min.js", (r) =>
       r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
   }
+  await page.route(CITY_RESULTS_INDEX, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json", body: CITY_RESULTS_EMPTY }));
   if (routeFn) await routeFn(page);
   if (leaves) {
     // A page that may hand itself to a sibling app while it boots (a link in
@@ -5630,6 +5650,286 @@ try {
     check("its race menu holds exactly the races on that suburban Cook precinct's ballot",
           onBallot.length > 5 && JSON.stringify(got.options) === JSON.stringify(onBallot),
           `menu=${got.options.length} ballot=${onBallot.length}`);
+    await context.close();
+  }
+
+  // ---- 1y6. Two elections on one results layer: Chicago's city election
+  // beside November's (the layer's moreElections). The city file here is a
+  // FIXTURE in the writer's own layout, dated 2099 so it is the later of the
+  // two whatever election the shipped file holds, with three precincts of
+  // Ward 47, one of them not counted yet, and a first race whose id is the id
+  // of November's first race on this ballot, because the Board numbers each
+  // election's races from the same small numbers and the two must not be
+  // taken for one another. Held here: the Election menu in the title's place
+  // with the later election shown, each election's own races, mail-ballot
+  // sentence and picked race, the sentence saying how a race is decided, how
+  // much of the count is in (card and legend), a link naming an election by
+  // its date, a bare race id still meaning November's, a county precinct
+  // (which no city file lists) showing November with no menu, a precinct the
+  // count has not reached saying so with no table of zeros, and the SHIPPED
+  // city file, on a page that reads it rather than the empty stand-in.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "47010";
+    const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+    const onBallot = part.precincts[key].contests.map((r) => String(r[0]));
+    const novFirst = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const novOther = idx.contests.find((c) => onBallot.includes(String(c.id)) && c !== novFirst);
+    const titleOf = (d) => {
+      const year = String(d.electionDate).slice(0, 4);
+      return d.election.indexOf(year) === -1 ? `${year} ${d.election}` : d.election;
+    };
+    const novTitle = titleOf(idx);
+    const cityDate = "2099-02-23", cityTitle = "2099 Municipal General Election";
+    const mayorId = String(novFirst.id);
+    let wardId = 9001;
+    while (idx.contests.some((c) => String(c.id) === String(wardId))) wardId++;
+    wardId = String(wardId);
+    const mayorNote = "A candidate with more than half of the votes is elected (a sentence from the test's own file).";
+    const wardNote = "A candidate with more than half of the votes in the ward is elected (a sentence from the test's own file).";
+    const mailNote = "Mail ballots are still being counted (a sentence from the test's own file).";
+    // `counted` is the reported string over 47009, 47010, 47011: the precinct
+    // marked 0 holds no votes and no ballots, as on an election night
+    const cityFile = (counted) => {
+      const read = "2099-02-24T03:00:00Z";
+      const has = ["47009", "47010", "47011"].map((k, i) => counted.charAt(i) === "1");
+      const rows = (a, b) => has.map((h) => (h ? [a, b] : [0, 0]));
+      const mayor = rows(250, 200), ward = rows(190, 240);
+      const sum = (list, n) => list.reduce((t, r) => t + r[n], 0);
+      const lead = (list) => list.map((r) => (r[0] + r[1] === 0 ? "." : r[0] > r[1] ? "0" : "1")).join("");
+      const band = (list) => list.map((r) => (r[0] + r[1] === 0 ? "-" : "1")).join("");
+      const precincts = {};
+      ["47009", "47010", "47011"].forEach((k, i) => {
+        precincts[k] = {
+          turnout: [1000, has[i] ? 460 : 0],
+          contests: [[mayorId, mayor[i][0] + mayor[i][1], mayor[i][0], mayor[i][1]],
+                     [wardId, ward[i][0] + ward[i][1], ward[i][0], ward[i][1]]]
+        };
+      });
+      const head = {
+        election: "Municipal General Election", electionDate: cityDate,
+        source: "https://chicagoelections.gov/elections/results", read, certified: false, certifiedDate: null
+      };
+      return {
+        index: Object.assign({}, head, {
+          sources: [{ id: "chicago", publisher: "Chicago Board of Election Commissioners", areaName: "Chicago",
+            source: head.source, read, certified: false, certifiedDate: null, uncountedNote: mailNote }],
+          note: "A browser-test file in scripts/election_results_common.py's layout.",
+          groups: [{ id: "city", label: "Citywide offices", layer: null, note: mayorNote },
+                   { id: "city-council", label: "City Council", layer: "ward", note: wardNote }],
+          turnout: { columns: ["registered", "ballots"], total: [3000, has.filter(Boolean).length * 460] },
+          precincts: ["47009", "47010", "47011"], parts: ["ward-47", "ward-47", "ward-47"],
+          reported: counted,
+          contests: [
+            { id: mayorId, name: "Mayor", group: "city", beyond: false, multiple: false,
+              choices: ["Ada Example", "Ben Sample"],
+              total: [sum(mayor, 0) + sum(mayor, 1), sum(mayor, 0), sum(mayor, 1)], leaders: lead(mayor), margins: band(mayor) },
+            { id: wardId, name: "Alderperson 47th Ward", group: "city-council", beyond: false, multiple: false,
+              choices: ["Cy Specimen", "Di Placeholder"],
+              total: [sum(ward, 0) + sum(ward, 1), sum(ward, 0), sum(ward, 1)], leaders: lead(ward), margins: band(ward) }
+          ]
+        }),
+        part: Object.assign({}, head, { part: "ward-47", note: "", precincts })
+      };
+    };
+    const withCity = (counted) => async (pg) => {
+      const file = cityFile(counted);
+      await pg.route(CITY_RESULTS_INDEX, (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(file.index) }));
+      await pg.route(CITY_RESULTS_PART, (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(file.part) }));
+    };
+    const read = (pg) => pg.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const which = c && c.querySelector("select.election-which");
+      const race = c && c.querySelector("select.election-select");
+      const l = document.querySelector(".election-legend");
+      const legend = l && !l.hidden ? l : null;
+      const text = (el, q) => ((el && el.querySelector(q)) || {}).textContent || "";
+      return {
+        pill: text(block, ".card-id-pill").trim(),
+        title: text(c, ".election-title"),
+        elections: which ? Array.from(which.options).map((o) => o.textContent) : [],
+        election: which && which.selectedOptions[0] ? which.selectedOptions[0].textContent : "",
+        races: race ? Array.from(race.options).map((o) => o.value) : [],
+        race: race ? race.value : "",
+        notice: text(c, ".election-notice"),
+        notes: c ? Array.from(c.querySelectorAll(".election-note")).map((n) => n.textContent) : [],
+        none: text(c, ".election-none"),
+        table: !!(c && c.querySelector(".election-race > .election-table")),
+        legendTitle: text(legend, "summary").trim(),
+        legendRace: text(legend, ".election-legend-race"),
+        legendPart: text(legend, ".election-legend-part"),
+        hash: location.hash,
+        focus: document.activeElement ? String(document.activeElement.className || "") : ""
+      };
+    });
+    // the card once it shows the election and (where one is named) the race asked for
+    const shows = (pg, election, race) => pg.waitForFunction((want) => {
+      const c = document.getElementById("card-election-results");
+      if (!c || !(c.querySelector(".election-race > .election-table") || c.querySelector(".election-none"))) return false;
+      const which = c.querySelector("select.election-which");
+      const named = which && which.selectedOptions[0] ? which.selectedOptions[0].textContent
+        : (c.querySelector(".election-title") || {}).textContent || "";
+      const sel = c.querySelector("select.election-select");
+      return named === want[0] && (want[1] === null || (sel && sel.value === want[1]));
+    }, [election, race === undefined ? null : race], { timeout: QUERY_TIMEOUT }).then(() => pg.waitForTimeout(400), () => {});
+    const brief = (g) => JSON.stringify({ title: g.title, election: g.election, elections: g.elections, races: g.races.slice(0, 4),
+      race: g.race, legend: [g.legendTitle, g.legendRace, g.legendPart], hash: g.hash, none: g.none, table: g.table, focus: g.focus });
+
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`, withCity("110"));
+    await shows(page, cityTitle, mayorId);
+    const first = await read(page);
+    check("a precinct with results from two elections gets an Election menu in the title's place, on the later election",
+          first.title === "" && first.elections.length === 2 && first.elections[0] === cityTitle &&
+          first.elections[1] === novTitle && first.election === cityTitle && first.pill === "Ward 47, Precinct 10",
+          brief(first));
+    check("the later election's card lists its own races, names its own mail-ballot date and heads the legend",
+          JSON.stringify(first.races) === JSON.stringify([mayorId, wardId]) && first.race === mayorId &&
+          first.notice.indexOf(mailNote) !== -1 && first.legendTitle === cityTitle && first.legendRace === "Mayor",
+          `${brief(first)} notice=${JSON.stringify(first.notice.slice(0, 120))}`);
+    check("the card says how the race is decided, and the card and the legend say how many precincts are counted",
+          first.notes.includes(mayorNote) && !first.notes.includes(wardNote) &&
+          first.notes.includes("Votes have been counted in 2 of Chicago's 3 precincts in this race.") &&
+          first.legendPart === "Votes have been counted in 2 of the 3 precincts in this race." &&
+          first.table && first.none === "" && first.notes.some((t) => t.indexOf("Turnout in this precinct: 460 ballots") === 0),
+          `notes=${JSON.stringify(first.notes)} legend=${JSON.stringify(first.legendPart)}`);
+    check("a race of the later election rides the link with that election's date",
+          first.hash.indexOf("r=" + mayorId + "~" + cityDate) !== -1, `hash=${JSON.stringify(first.hash)}`);
+
+    // the ward race picked in the city election, then November picked in the
+    // Election menu: November's own ballot and its own first race, written
+    // to the link bare, with the keyboard still on the menu just used
+    await page.selectOption("#card-election-results select.election-select", wardId);
+    await page.waitForTimeout(300);
+    const wardPicked = await read(page);
+    const novValue = await page.$$eval("#card-election-results select.election-which option",
+      (os, want) => (os.find((o) => o.textContent === want) || {}).value, novTitle);
+    const cityValue = await page.$$eval("#card-election-results select.election-which option",
+      (os, want) => (os.find((o) => o.textContent === want) || {}).value, cityTitle);
+    await page.selectOption("#card-election-results select.election-which", String(novValue));
+    await shows(page, novTitle, String(novFirst.id));
+    const nov = await read(page);
+    check("picking November in the Election menu shows exactly this precinct's November races, and keeps the keyboard on the menu",
+          nov.election === novTitle && nov.races.length === onBallot.length && nov.races.every((v) => onBallot.includes(v)) &&
+          nov.race === String(novFirst.id) && nov.legendTitle === novTitle && nov.legendRace === novFirst.name &&
+          nov.notice.indexOf(mailNote) === -1 && !nov.notes.includes(mayorNote) && !nov.notes.includes(wardNote) &&
+          nov.focus === "election-which",
+          `${brief(nov)} ballot=${onBallot.length}`);
+    check("a November race rides the link as a bare id, with no date",
+          new RegExp("[#&]r=" + String(novFirst.id) + "(&|$)").test(nov.hash) && nov.hash.indexOf("~") === -1,
+          `hash=${JSON.stringify(nov.hash)}`);
+    if (novOther) {
+      await page.selectOption("#card-election-results select.election-select", String(novOther.id));
+      await page.waitForTimeout(300);
+    }
+    await page.selectOption("#card-election-results select.election-which", String(cityValue));
+    await shows(page, cityTitle, wardId);
+    const back = await read(page);
+    await page.selectOption("#card-election-results select.election-which", String(novValue));
+    await shows(page, novTitle, novOther ? String(novOther.id) : String(novFirst.id));
+    const novAgain = await read(page);
+    check("each election keeps its own picked race while the other is shown",
+          wardPicked.race === wardId && wardPicked.legendRace === "Alderperson 47th Ward" && wardPicked.notes.includes(wardNote) &&
+          back.election === cityTitle && back.race === wardId && back.legendRace === "Alderperson 47th Ward" &&
+          back.hash.indexOf("r=" + wardId + "~" + cityDate) !== -1 &&
+          novAgain.election === novTitle && novAgain.race === String((novOther || novFirst).id),
+          `ward=${brief(wardPicked)} back=${brief(back)} november=${brief(novAgain)}`);
+
+    // a county precinct, which no city file lists: November's with a title
+    // and no menu; back in Chicago the reader's choice of election applies again
+    await page.selectOption("#card-election-results select.election-which", String(cityValue));
+    await shows(page, cityTitle, wardId);
+    await page.evaluate(() => window.ChiExplorer.setSelectedPoint(38.08115, -88.98503));
+    await page.waitForFunction((want) => {
+      const c = document.getElementById("card-election-results");
+      return c && (c.querySelector(".election-title") || {}).textContent === want && c.querySelector(".election-race > .election-table");
+    }, novTitle, { timeout: QUERY_TIMEOUT }).then(() => page.waitForTimeout(400), () => {});
+    const county = await read(page);
+    await page.evaluate(() => window.ChiExplorer.setSelectedPoint(41.96660, -87.67850));
+    await shows(page, cityTitle, null);
+    const cityAgain = await read(page);
+    check("a county precinct, which the city file does not list, shows November's results with a title and no Election menu",
+          county.title === novTitle && county.elections.length === 0 && county.legendTitle === novTitle &&
+          county.table && county.hash.indexOf("~") === -1,
+          brief(county));
+    check("back in Chicago the election the reader chose is shown again",
+          cityAgain.election === cityTitle && cityAgain.legendTitle === cityTitle && cityAgain.pill === "Ward 47, Precinct 10",
+          brief(cityAgain));
+    await page.close();
+
+    // links: a race with its election's date, a bare id (November's, though
+    // the city file has a race with that id), an election named with no race,
+    // and the layer on with no point
+    const open = async (hash, election, race, counted) => {
+      const pg = await booted(context, `${BASE}${hash}`, withCity(counted || "110"));
+      if (election !== null) await shows(pg, election, race);
+      else {
+        await pg.waitForFunction(() => { const l = document.querySelector(".election-legend"); return l && !l.hidden; },
+          null, { timeout: QUERY_TIMEOUT }).then(() => pg.waitForTimeout(600), () => {});
+      }
+      const got = await read(pg);
+      await pg.close();
+      return got;
+    };
+    const dated = await open(`#p=41.9666,-87.6785&l=er&r=${wardId}~${cityDate}`, cityTitle, wardId);
+    const bare = await open(`#p=41.9666,-87.6785&l=er&r=${mayorId}`, novTitle, mayorId);
+    const named = await open(`#p=41.9666,-87.6785&l=er&r=~${idx.electionDate}`, novTitle, String(novFirst.id));
+    check("a link naming a race with its election's date opens that election on that race",
+          dated.election === cityTitle && dated.race === wardId && dated.legendRace === "Alderperson 47th Ward" &&
+          dated.hash.indexOf("r=" + wardId + "~" + cityDate) !== -1, brief(dated));
+    check("a link with a bare race id opens November's race of that id, not the city election's",
+          bare.election === novTitle && bare.race === mayorId && bare.legendRace === novFirst.name &&
+          bare.legendTitle === novTitle && bare.hash.indexOf("~") === -1, brief(bare));
+    check("a link naming November by its date and no race opens November on its first race",
+          named.election === novTitle && named.race === String(novFirst.id) && named.legendTitle === novTitle, brief(named));
+    const noPoint = await open("#l=er", null, null);
+    const noPointRace = await open(`#l=er&r=${wardId}~${cityDate}`, null, null);
+    const noPointNov = await open(`#l=er&r=${mayorId}`, null, null);
+    check("with the layer on and no point, the map shows the later election, and says how much of its count is in",
+          noPoint.legendTitle === cityTitle && noPoint.legendRace === "Mayor" &&
+          noPoint.legendPart === "Votes have been counted in 2 of the 3 precincts in this race.", brief(noPoint));
+    check("with no point, a link's race keeps its place in the address: the city election's with its date, November's bare",
+          noPointRace.legendTitle === cityTitle && noPointRace.legendRace === "Alderperson 47th Ward" &&
+          noPointRace.hash.indexOf("r=" + wardId + "~" + cityDate) !== -1 &&
+          noPointNov.legendTitle === novTitle && noPointNov.legendRace === novFirst.name &&
+          new RegExp("[#&]r=" + mayorId + "(&|$)").test(noPointNov.hash),
+          `city=${brief(noPointRace)} november=${brief(noPointNov)}`);
+
+    // election night at a precinct the count has not reached: one sentence
+    // in the table's place, no turnout of 0%, the city's totals so far kept
+    const uncounted = await open("#point=41.96660,-87.67850&layers=election-results", cityTitle, mayorId, "101");
+    check("a precinct with no votes counted yet says so, with no table of zeros and no turnout line",
+          uncounted.none === "No votes from this precinct have been counted. The numbers below are the rest of Chicago's." &&
+          !uncounted.table && !uncounted.notes.some((t) => /Turnout in this precinct|Votes counted in this race here/.test(t)) &&
+          uncounted.notes.some((t) => t.indexOf("Across Chicago's precincts: Ada Example 500") === 0) &&
+          uncounted.notes.includes("Votes have been counted in 2 of Chicago's 3 precincts in this race.") &&
+          uncounted.notes.includes(mayorNote),
+          `none=${JSON.stringify(uncounted.none)} table=${uncounted.table} notes=${JSON.stringify(uncounted.notes)}`);
+
+    // the SHIPPED city file, on a page that reads it: empty before a count,
+    // so the card is November's alone; once it holds results for this
+    // precinct the card must offer both elections and show the later
+    {
+      const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/chicago-election-results.json"), "utf8"));
+      const lists = (shipped.contests || []).length > 0 && (shipped.precincts || []).includes(key);
+      const later = lists && String(shipped.electionDate) > String(idx.electionDate) ? titleOf(shipped) : novTitle;
+      const pg = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`, async (p) => {
+        await p.route(CITY_RESULTS_INDEX, (r) => r.continue());
+      });
+      await shows(pg, later, null);
+      const got = await read(pg);
+      await pg.close();
+      check(lists ? "the shipped city election file's results are offered beside November's, the later election shown"
+                  : "the shipped city election file holds no results yet, and the card is November's alone",
+            lists ? got.elections.length === 2 && got.elections.includes(titleOf(shipped)) && got.elections.includes(novTitle) &&
+                      got.election === later && got.table
+                  : got.elections.length === 0 && got.title === novTitle && got.table,
+            brief(got));
+    }
     await context.close();
   }
 } finally {
