@@ -97,6 +97,27 @@ from build_privacy_page import (  # noqa: E402
 # lower module — it cannot import from this one (this imports from it), which is
 # also why the byline reader below is a second copy of its own.
 
+# Which scheduled jobs merge their own pull request with no review. The record
+# is build_ai_page's, whose --check holds it to the workflow files, so this
+# page and /ai.html cannot come to disagree about which jobs those are.
+from build_ai_page import SELF_MERGE  # noqa: E402
+
+# What the page says about review, above its table of jobs. THE SENTENCE THIS
+# REPLACED SAID A PERSON LOOKS AT EVERY DIFF, which stopped being true on
+# 2026-09-19, when a scheduled agent took over reviewing the weekly updates
+# (CLAUDE.md, the /ai.html paragraph). It was found on 2026-11-15 only because
+# Illinois gained a job that merges its own update on an election night, and
+# the page would then have said two things. So the page says the updates are
+# reviewed, links the page that says by whom, and an instance with a job in
+# SELF_MERGE says that one is an exception; the job's own row says when.
+JOBS_INTRO = ("Every scheduled job lands its changes as a pull request, which runs "
+              "the automated checks and is reviewed before it is merged. "
+              '<a href="../ai.html">How districtry uses AI</a> says who reviews it.')
+JOBS_INTRO_OWN = (" One job in this table is an exception, and its row says when: "
+                  "it merges its own update once the automated checks pass.")
+JOBS_NOTE = "each lands as a reviewed change, never silently"
+JOBS_NOTE_OWN = "each lands as a pull request, reviewed first except where the table says"
+
 # app dir -> worksheet path, matching generate_metro_files.py's INSTANCES
 # (the reference instance's worksheet lives at the repo ROOT, not under il/)
 INSTANCES = (("il", "metro-worksheet.json"),
@@ -248,9 +269,16 @@ def build_instance(inst, w):
         if isinstance(gaps, dict):
             n_gaps = len(gaps)
 
+    merges_own = [j["file"] for j in w.get("workflows", []) if j["file"] in SELF_MERGE]
+    for name in merges_own:
+        purpose = next(j["purpose"] for j in w["workflows"] if j["file"] == name)
+        if "merges its own pull request" not in purpose:
+            fail("%s: %s merges its own pull request (build_ai_page.SELF_MERGE) and "
+                 "its worksheet purpose does not say so; the history page tells a "
+                 "reader the job's row says when" % (inst, name))
     tiles = [("map layers", len(layers), " · ".join(group_counts)),
              ("scheduled refresh & audit jobs", len(w.get("workflows", [])),
-              "each lands as a reviewed change, never silently")]
+              JOBS_NOTE_OWN if merges_own else JOBS_NOTE)]
     for spec in cfg.get("metrics", []):
         tiles.append((spec["label"], measure_metric(inst, spec), spec.get("note")))
     if n_gaps is not None:
@@ -480,9 +508,7 @@ its own date, and none is edited after the fact.</p>
 %(entries)s
 </ul>
 <h2>Checked on a schedule</h2>
-<p class="intro">Every scheduled job lands its changes as a reviewed pull
-request — data about real officeholders never ships without a person looking
-at the diff.</p>
+<p class="intro">%(jobs_intro)s</p>
 <div class="jobs-scroll"><table>
 <thead><tr><th>What it refreshes</th><th>Job</th><th>When</th></tr></thead>
 <tbody>
@@ -517,6 +543,7 @@ at the diff.</p>
         "tiles": stat_tiles(tiles),
         "entries": "\n".join(entries_html),
         "workflows": "\n".join(workflow_rows),
+        "jobs_intro": JOBS_INTRO + (JOBS_INTRO_OWN if merges_own else ""),
     }
 
 
