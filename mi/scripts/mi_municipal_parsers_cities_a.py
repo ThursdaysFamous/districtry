@@ -116,7 +116,17 @@ def parse_sterling_heights(h, also):
                               em[0] if em else None))
     _expect("Sterling Heights", members, 7)
     roster = {"members": members}
-    em = emails_in(re.search(r'<div class="fr-view my-3">(.*?)</div>', sec, re.S).group(1))
+    # The council's shared mailbox sits in the block above the list. Its class
+    # was "fr-view my-3" until the city's redesign prefixed it ("redesign-text
+    # fr-view my-3", read 2026-11-15), and the exact-match pattern then found
+    # nothing and raised AttributeError, which the scraper does not catch: one
+    # city's markup change stopped the whole weekly run on 2026-11-08 and
+    # 2026-11-14. Match the class by its fr-view token, and REFUSE (ValueError,
+    # which the scraper records for this city alone) if the block is gone.
+    block = re.search(r'<div class="(?:[^"]*\s)?fr-view(?:\s[^"]*)?">(.*?)</div>', sec, re.S)
+    if not block:
+        raise ValueError("Sterling Heights: no block above the council list for the shared mailbox")
+    em = emails_in(block.group(1))
     if em:
         roster["office"] = {"email": em[0]}
     return roster
