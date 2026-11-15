@@ -99,7 +99,11 @@ jobs:
           python3 scripts/build_concept_pages.py
           python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
-          git add wi/data/app/rusd-school-board-members.json wi/school-board.html about.html
+          # wi/school-board.html is in the sitemap and its lastmod is the
+          # page's own last commit, so a run that rewrites the page rebuilds
+          # the sitemap or `build_sitemap.py --check` fails on this PR.
+          python3 scripts/build_sitemap.py
+          git add wi/data/app/rusd-school-board-members.json wi/school-board.html about.html sitemap.xml
           git commit -m "Update RUSD school board roster from the district's board page"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
