@@ -54,7 +54,7 @@ and the artifact rather than remembered): 54 files send a browser string; 4
 of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
 `requests` stack), and 29 reach at least one host that refuses it -- and 267 of
-theÝ7 measured hosts are still reached by such a caller. The pair 101/62 that
+the 357 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in
