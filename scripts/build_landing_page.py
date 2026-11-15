@@ -92,6 +92,9 @@ from build_coverage_map import AREAS  # noqa: E402
 # The dark twin of a map colour, so a question tile and the layer it asks about
 # share one colour at night as well as by day. One derivation, not two.
 import build_dark_map_palette as palette  # noqa: E402
+# The election notice's words (the line under the address box and what the
+# results tile adds), written once for every place the notice appears.
+import build_election_notices as notices  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(REPO_ROOT, "metros.json")
@@ -1037,6 +1040,10 @@ def render_asks(metros):
             count = "%d place%s" % (places, "" if places == 1 else "s")
         else:
             count = "%d pages in %d place%s" % (len(chips), places, "" if places == 1 else "s")
+        # The results tile also names the next election a calendar holds, shown
+        # by the reader's clock (build_election_notices.landing_tile_note).
+        if RESULTS_PAGE_BASE in dict(QUESTION_ROWS)[question]:
+            count += election_notice(notices.landing_tile_note)
         style = (' style="--lc-l:%s;--lc-d:%s"' % colours[question]) if question in colours else ""
         out.append('      <details class="ask"%s open>\n'
                    '        <summary><span class="ask-sw" aria-hidden="true"></span>'
@@ -1044,6 +1051,18 @@ def render_asks(metros):
                    '        <ul class="ask-chips">\n%s\n        </ul>\n'
                    '      </details>' % (style, html.escape(question), count, links))
     return "\n".join(out)
+
+
+RESULTS_PAGE_BASE = "election-results.html"
+
+
+def election_notice(piece, *args):
+    """One piece of the election notice from scripts/build_election_notices.py,
+    with a calendar that module refuses reported as this build's failure."""
+    try:
+        return piece(*args)
+    except notices.NoticeError as e:
+        fail(str(e))
 
 
 def question_colours():
@@ -2581,6 +2600,20 @@ h1 {
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
+/* THE ELECTION LINE (2026-11-15, scripts/build_election_notices.py): which
+   election is coming and what happens to its results, under the address box
+   for the 60 days before it. It ships hidden and its own script shows it by
+   the reader's clock. The lede's colours on the page's ground, so it adds no
+   new pair of text and ground. */
+.election-line {
+  margin: 16px 0 0; padding: 2px 0 2px 14px; max-width: 40em;
+  border-left: 3px solid var(--brand-border);
+  font-size: 14.5px; line-height: 1.5; color: var(--ink-3);
+}
+.election-line strong { color: var(--ink); }
+.election-line-item:not([hidden]) { display: block; }
+.election-line-item:not([hidden]) ~ .election-line-item { margin-top: 8px; }
+
 /* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
    of six a reader can switch between, beside the address box on a wide screen
    and under it on a narrow one. Until then the page said what districtry
@@ -2983,7 +3016,7 @@ footer .support b { color: var(--ink); }
              %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
-      </div>
+%(election_line)s      </div>
 %(example)s    </div>
 
     <h2>Where it answers today</h2>
@@ -3040,7 +3073,7 @@ footer .support b { color: var(--ink); }
       for (var i = 0; i < tiles.length; i++) tiles[i].open = false;
     })();
     </script>
-
+%(tile_script)s
     <h2>What it does</h2>
     <div class="does">
       <div>
@@ -3768,6 +3801,14 @@ footer .support b { color: var(--ink); }
                           indent="    "),
         "states": render_states(metros),
         "asks": render_asks(metros),
+        # The election notice (scripts/build_election_notices.py): a dated line
+        # under the address box for the 60 days before an election a calendar
+        # marks for this page, and the script that shows the results tile's
+        # note. Both ship hidden and are shown by the reader's clock, so this
+        # page is the same file every day. "" when no calendar holds one.
+        "election_line": election_notice(notices.landing_line),
+        "tile_script": election_notice(notices.landing_tile_script,
+                                       'document.querySelector(".asks")'),
         "mark": load_mark(),
         "notice": render_notice(),
         # The footer's link to the Android app (Adam, 2026-11-08: on this page,

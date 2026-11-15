@@ -256,7 +256,7 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (76 in index.html + 3 in sw.js)
+## Current ENGINE block inventory (78 in index.html + 3 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
@@ -270,12 +270,12 @@ index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `hover-explorer`, `install-app`, `int-field`, `layer-registry`,
 `map-chrome-classes`, `map-link`, `map-pan-filter`, `map-zoom-steps`,
 `masthead-buttons-html`, `metro-links`, `metro-links-html`, `metro-portal`,
-`nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
+`nearest-point-factory`, `next-election`, `office-helpers`, `overlay-cards`, `permalink`,
 `play-app`, `poi-geocode`, `point-in-polygon`, `polygon-containment`,
 `polygon-factory`, `probe-geometry-column`, `qr-code`,
 `relationship-pinning`, `render-helper`, `sanitize`, `school-zone-factory`,
 `scope-mask`, `selection-controls`, `socrata-loader`,
-`socrata-point-loader`, `state`, `styles-app`, `styles-card-v2`,
+`socrata-point-loader`, `state`, `statewide-officials`, `styles-app`, `styles-card-v2`,
 `styles-core`, `styles-districtry-skin`, `styles-election-results`,
 `styles-footer`, `styles-hover-responsive`, `styles-markers`,
 `styles-sibling-result`, `tile-overlay`, `vector-tiles`.
@@ -298,7 +298,9 @@ here because this list names every fence `index.html` carries. The
 count line is a claim
 `check_engine_parity.py` can refute; re-run it whenever a fence is added. Re-derived again 2026-11-05 from this instance's own fences while
 adding `map-zoom-steps`, the zoom step sizes every app builds its map
-with: the list was missing every block added since mid-October.)
+with: the list was missing every block added since mid-October. Re-synced 2026-11-15 while adding `next-election`, the block that names
+the next election at a selected point: the list also missed
+`statewide-officials`.)
 
 (`basemap` — promoted 2026-08-26, the day the basemap went vector: the
 CARTO-vector-with-raster-fallback boot, the WebGL2 probe and half-added-layer

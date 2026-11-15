@@ -712,7 +712,9 @@
         if (layers[i].group !== group.id || layers[i].subOf) continue;
         if (layerRuntime[layers[i].id].relevant !== false) { allHidden = false; break; }
       }
-      section.hidden = allHidden;
+      // the next-election block sits in the Elections section and keeps it on
+      // screen where none of its layers answers (engine next-election)
+      section.hidden = allHidden && !nextElectionHolds(group.id);
     });
     syncPanelStats();
   }
@@ -900,4 +902,5 @@
     });
     dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
     syncStatewideOfficials(); // the statewide officials line (engine statewide-officials)
+    syncNextElection(); // the next election at this point (engine next-election)
   }

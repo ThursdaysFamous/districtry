@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//districtry//election reminder//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:il-chicago-2027-02-23@districtry.com
+DTSTAMP:20261115T000000Z
+DTSTART;VALUE=DATE:20270224
+DTEND;VALUE=DATE:20270225
+SUMMARY:Chicago election results on districtry
+DESCRIPTION:Precinct results for Chicago's municipal election of February 2
+ 3\, 2027 are posted on districtry as the Chicago Board of Election Commiss
+ ioners publishes them. They stay marked unofficial until the Board certifi
+ es them.\n\nhttps://districtry.com/il/election-results.html?ref=reminder
+URL:https://districtry.com/il/election-results.html?ref=reminder
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

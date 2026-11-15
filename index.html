@@ -948,6 +948,20 @@ h1 {
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
+/* THE ELECTION LINE (2026-11-15, scripts/build_election_notices.py): which
+   election is coming and what happens to its results, under the address box
+   for the 60 days before it. It ships hidden and its own script shows it by
+   the reader's clock. The lede's colours on the page's ground, so it adds no
+   new pair of text and ground. */
+.election-line {
+  margin: 16px 0 0; padding: 2px 0 2px 14px; max-width: 40em;
+  border-left: 3px solid var(--brand-border);
+  font-size: 14.5px; line-height: 1.5; color: var(--ink-3);
+}
+.election-line strong { color: var(--ink); }
+.election-line-item:not([hidden]) { display: block; }
+.election-line-item:not([hidden]) ~ .election-line-item { margin-top: 8px; }
+
 /* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
    of six a reader can switch between, beside the address box on a wide screen
    and under it on a narrow one. Until then the page said what districtry
@@ -1415,6 +1429,43 @@ footer .support b { color: var(--ink); }
              answer today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
+        <p class="election-line" id="election-line" data-election-notice hidden>
+          <span class="election-line-item" data-from="2026-12-25" data-date="2027-02-23" data-until="2027-02-23" data-tz="America/Chicago" hidden><strong>Chicago's municipal election is Tuesday, February 23, 2027.</strong> After the polls close, precinct results will be posted on <a href="/il/election-results.html">districtry&#x27;s results page for Chicago</a> as the Chicago Board of Election Commissioners publishes them.</span>
+        </p>
+        <script>
+        /* Shows an election notice while it applies, by the reader's own clock in the
+           election's time zone (scripts/build_election_notices.py). The page is the
+           same file every day, so nothing in it was written from today's date. */
+        (function (root) {
+          if (!root || !root.querySelectorAll) return;
+          var boxes = root.hasAttribute("data-election-notice") ? [root] :
+            root.querySelectorAll("[data-election-notice]");
+          for (var b = 0; b < boxes.length; b++) {
+            var box = boxes[b], items = box.querySelectorAll("[data-date]"), shown = 0;
+            for (var i = 0; i < items.length; i++) {
+              if (shown && box.getAttribute("data-election-notice") === "first") break;
+              var it = items[i], now = new Date(), today = "";
+              try { today = now.toLocaleDateString("en-CA", { timeZone: it.getAttribute("data-tz") }); }
+              catch (e) { today = ""; }
+              if (!/^\d{4}-\d{2}-\d{2}$/.test(today)) {
+                today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" +
+                  ("0" + now.getDate()).slice(-2);
+              }
+              var from = it.getAttribute("data-from");
+              if ((from && today < from) || today > it.getAttribute("data-until")) continue;
+              if (today > it.getAttribute("data-date")) {
+                var late = it.querySelectorAll("[data-after]");
+                for (var j = 0; j < late.length; j++) late[j].textContent = late[j].getAttribute("data-after");
+                var gone = it.querySelectorAll("[data-before]");
+                for (var k = 0; k < gone.length; k++) gone[k].hidden = true;
+              }
+              it.hidden = false;
+              shown++;
+            }
+            if (shown) box.hidden = false;
+          }
+        })(document.currentScript.previousElementSibling);
+        </script>
       </div>
       <aside class="example" aria-labelledby="ex-h">
         <p id="ex-h" class="ex-eyebrow">What you get</p>
@@ -1867,7 +1918,7 @@ footer .support b { color: var(--ink); }
         </ul>
       </details>
       <details class="ask" style="--lc-l:#4A4A55;--lc-d:#9999A9" open>
-        <summary><span class="ask-sw" aria-hidden="true"></span><h3>How did my area vote?</h3><span class="ask-n">6 places</span></summary>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>How did my area vote?</h3><span class="ask-n">6 places<span class="ask-next" data-election-notice="first" hidden> &#183; <span data-date="2027-02-23" data-until="2027-02-23" data-tz="America/Chicago" hidden>Next: Chicago, February 23, 2027</span></span></span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/election-results.html">Illinois<span class="chip-topic"> &#183; election results</span></a></li>
           <li><a class="chip" href="/ny/election-results.html">New York<span class="chip-topic"> &#183; election results</span></a></li>
@@ -1900,6 +1951,40 @@ footer .support b { color: var(--ink); }
       var tiles = asks.querySelectorAll("details.ask");
       for (var i = 0; i < tiles.length; i++) tiles[i].open = false;
     })();
+    </script>
+    <script>
+    /* Shows an election notice while it applies, by the reader's own clock in the
+       election's time zone (scripts/build_election_notices.py). The page is the
+       same file every day, so nothing in it was written from today's date. */
+    (function (root) {
+      if (!root || !root.querySelectorAll) return;
+      var boxes = root.hasAttribute("data-election-notice") ? [root] :
+        root.querySelectorAll("[data-election-notice]");
+      for (var b = 0; b < boxes.length; b++) {
+        var box = boxes[b], items = box.querySelectorAll("[data-date]"), shown = 0;
+        for (var i = 0; i < items.length; i++) {
+          if (shown && box.getAttribute("data-election-notice") === "first") break;
+          var it = items[i], now = new Date(), today = "";
+          try { today = now.toLocaleDateString("en-CA", { timeZone: it.getAttribute("data-tz") }); }
+          catch (e) { today = ""; }
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(today)) {
+            today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" +
+              ("0" + now.getDate()).slice(-2);
+          }
+          var from = it.getAttribute("data-from");
+          if ((from && today < from) || today > it.getAttribute("data-until")) continue;
+          if (today > it.getAttribute("data-date")) {
+            var late = it.querySelectorAll("[data-after]");
+            for (var j = 0; j < late.length; j++) late[j].textContent = late[j].getAttribute("data-after");
+            var gone = it.querySelectorAll("[data-before]");
+            for (var k = 0; k < gone.length; k++) gone[k].hidden = true;
+          }
+          it.hidden = false;
+          shown++;
+        }
+        if (shown) box.hidden = false;
+      }
+    })(document.querySelector(".asks"));
     </script>
 
     <h2>What it does</h2>
