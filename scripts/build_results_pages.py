@@ -1228,6 +1228,15 @@ def run(args):
         if (tag, res.name) not in wf:
             raise PageError("no workflow commits %s/data/app/%s, so nothing would keep "
                             "its pages current" % (tag, INDEX_NAME))
+        # A further election's file is on the place's page from the run it
+        # first holds a count, so the job that writes it must exist before
+        # that night and rebuild the page then (check_workflows held it to
+        # that); a registered file no workflow commits would stay empty.
+        for name in notices.further_results(tag):
+            if (tag, name) not in wf:
+                raise PageError("no workflow commits %s/data/app/%s.json, the further election "
+                                "the results layer registers, so its count would never be "
+                                "read or reach %s/%s" % (tag, name, tag, PAGE_FILE))
         for fpath, text in targets:
             try:
                 with open(fpath, encoding="utf-8") as f:

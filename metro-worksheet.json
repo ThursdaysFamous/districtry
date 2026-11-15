@@ -4088,6 +4088,11 @@
       "schedule": "daily 12:30 UTC"
     },
     {
+      "file": "update-chicago-city-election-results.yml",
+      "purpose": "Read every race's precinct results for Chicago's city election from the Chicago Board of Elections, finding the Board's results page by the election's date, and rebuild il/data/app/chicago-election-results.json and its ward files; reads nothing before the polls close and stops once the results are certified; on election night and the morning after it merges its own pull request once the checks pass, unless a vote count went down or a race, candidate or precinct is gone, in which case the update is held for a look; at any other time it opens a PR that waits for review",
+      "schedule": "daily 12:50 UTC"
+    },
+    {
       "file": "update-chicago-candidates.yml",
       "purpose": "Re-read the Chicago Board of Elections' list of candidates who filed for the next municipal election daily (its file name changes with each revision, so the link is discovered), rebuild il/data/source/chicago-candidates.json without the home addresses the list prints, and regenerate il/chicago-candidates.html; fails on an office or status the page has no words for, a missing ward or police district, or a list that cannot be read on or before the election date; opens a PR on any change",
       "schedule": "daily 11:40 UTC"
