@@ -109,6 +109,8 @@ except ImportError:                                       # pragma: no cover
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import build_election_notices as notices  # noqa: E402
+# the limits validate_serp_lengths.py holds every page's title and description to
+from validate_serp_lengths import SERP_LIMITS  # noqa: E402
 from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
                            MARK_RE, preserved_from_disk, shared_head_block,
                            shell, THEMEBOOT_RE)
@@ -643,6 +645,28 @@ def join_words(items):
     return "%s and %s" % (", ".join(items[:-1]), items[-1])
 
 
+def title_for(years, app_name):
+    """The title of a page carrying several elections: the first wording that
+    fits a search result beside this app's name. The plain one, "2027 and 2026
+    precinct election results", is one character too long beside "districtry
+    Illinois", which no check could say until the page first held a second
+    election's count: the rehearsal of an election night (2026-11-15) found
+    that validate_serp_lengths.py would have failed the first update of the
+    night for it. So a page whose elections change on a schedule chooses a
+    title that fits, and refuses to write one that does not."""
+    room = SERP_LIMITS["title"] - len(" — %s" % app_name)
+    cands = ["%s precinct election results" % join_words(years)]
+    if len(years) == 2:
+        cands.append("%s & %s precinct election results" % tuple(years))
+    cands += ["%s election results" % join_words(years), "Precinct election results"]
+    for cand in cands:
+        if len(cand) <= room:
+            return cand
+    raise PageError("no title for the elections of %s fits in %d characters beside %r — "
+                    "add a shorter wording to title_for()"
+                    % (join_words(years), SERP_LIMITS["title"], app_name))
+
+
 # A section's heading: the page's own second level where the page is one
 # election's, and one level down where the page names each election above its
 # sections (place_page with `extras`), so the outline reads election, then
@@ -945,7 +969,7 @@ def place_page(res, worksheet, metros, extras=()):
         for f in all_facts:
             if f["year"] not in years:
                 years.append(f["year"])
-        title = "%s precinct election results" % join_words(years)
+        title = title_for(years, app_name)
         subtitle = ("%s, race by race, with every precinct on the map."
                     % upper_first(join_words(
                         "the %s%s" % (f["title"], " in %s" % f["area"] if f["area"] != landing else "")
@@ -960,7 +984,7 @@ def place_page(res, worksheet, metros, extras=()):
                 "%s %s %s results in %s, race by race with every precinct on the map."
                 % (lead["status_word"], lead["year"], lead["phrase"], lead["area"])):
             desc = cand
-            if len(desc) <= 155:
+            if len(desc) <= SERP_LIMITS["description"]:
                 break
     else:
         title = "%s precinct election results" % lead["year"]
@@ -969,7 +993,7 @@ def place_page(res, worksheet, metros, extras=()):
         desc = ("%s results of the %s %s in %s: each race's candidates, votes and "
                 "share, and every precinct on the map." % (lead["status_word"], lead["year"],
                                                           lead["phrase"], lead["area"]))
-        if len(desc) > 155:
+        if len(desc) > SERP_LIMITS["description"]:
             desc = ("%s %s %s results in %s, race by race, with every precinct on the map."
                     % (lead["status_word"], lead["year"], lead["phrase"], lead["area"]))
     og = desc
