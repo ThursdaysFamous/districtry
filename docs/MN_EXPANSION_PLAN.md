@@ -23,8 +23,8 @@ publishers with no state-specific source between them.
 |---|---|---|---|
 | County | 87 | pre-built | nobody (gap `mn-county-officers`) |
 | U.S. House | 8 | pre-built | the representative, refreshed weekly |
-| Minnesota Senate | 67 | pre-built | nobody (gap `mn-legislature-roster`) |
-| Minnesota House | 134 | pre-built | nobody (same gap) |
+| Minnesota Senate | 67 | pre-built | every senator, from the Senate's own member feed, weekly since 2026-11-15 (gap `mn-legislature-roster` retired) |
+| Minnesota House | 134 | pre-built | every representative, from the House's own member list, weekly since 2026-11-15 |
 | School District (Unified) | 322 | live | nobody (gap `mn-school-board-members`) |
 | School District (Elementary) | 8 | live | nobody (same gap) |
 | School District (Secondary) | 1 | live | nobody (same gap) |

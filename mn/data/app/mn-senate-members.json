@@ -1,0 +1,739 @@
+{
+  "1": {
+    "name": "Mark T. Johnson",
+    "party": "Republican",
+    "email": "sen.mark.johnson@mnsenate.gov",
+    "capitolOffice": [
+      "2401 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5782"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1217"
+  },
+  "2": {
+    "name": "Steve Green",
+    "party": "Republican",
+    "email": "sen.steve.green@mnsenate.gov",
+    "capitolOffice": [
+      "2319 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-297-8063"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1251"
+  },
+  "3": {
+    "name": "Grant Hauschild",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.grant.hauschild@mnsenate.gov",
+    "capitolOffice": [
+      "3111 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1789"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1252"
+  },
+  "4": {
+    "name": "Robert J. Kupec",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.rob.kupec@mnsenate.gov",
+    "capitolOffice": [
+      "3101 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-3205"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1253"
+  },
+  "5": {
+    "name": "Paul J. Utke",
+    "party": "Republican",
+    "email": "sen.paul.utke@mnsenate.gov",
+    "capitolOffice": [
+      "2403 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-9651"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1218"
+  },
+  "6": {
+    "name": "Keri Heintzeman",
+    "party": "Republican",
+    "email": "sen.keri.heintzeman@mnsenate.gov",
+    "capitolOffice": [
+      "2235 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-7079"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1276"
+  },
+  "7": {
+    "name": "Robert D. Farnsworth",
+    "party": "Republican",
+    "email": "sen.robert.farnsworth@mnsenate.gov",
+    "capitolOffice": [
+      "2323 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-8436"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1254"
+  },
+  "8": {
+    "name": "Jennifer A. McEwen",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.jennifer.mcewen@mnsenate.gov",
+    "capitolOffice": [
+      "3217 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4188"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1241"
+  },
+  "9": {
+    "name": "Jordan Rasmusson",
+    "party": "Republican",
+    "email": "sen.jordan.rasmusson@mnsenate.gov",
+    "capitolOffice": [
+      "2409 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4875"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1255"
+  },
+  "10": {
+    "name": "Nathan Wesenberg",
+    "party": "Republican",
+    "email": "sen.nathan.wesenberg@mnsenate.gov",
+    "capitolOffice": [
+      "2325 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4913"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1256"
+  },
+  "11": {
+    "name": "Jason Rarick",
+    "party": "Republican",
+    "email": "sen.jason.rarick@mnsenate.gov",
+    "capitolOffice": [
+      "3413 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1508"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1240"
+  },
+  "12": {
+    "name": "Torrey N. Westrom",
+    "party": "Republican",
+    "email": "sen.torrey.westrom@mnsenate.gov",
+    "capitolOffice": [
+      "2201 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-3826"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1197"
+  },
+  "13": {
+    "name": "Jeff R. Howe",
+    "party": "Republican",
+    "email": "sen.jeff.howe@mnsenate.gov",
+    "capitolOffice": [
+      "2231 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-2084"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1239"
+  },
+  "14": {
+    "name": "Aric Putnam",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.aric.putnam@mnsenate.gov",
+    "capitolOffice": [
+      "3215 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-6455"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1249"
+  },
+  "15": {
+    "name": "Gary H. Dahms",
+    "party": "Republican",
+    "email": "sen.gary.dahms@mnsenate.gov",
+    "capitolOffice": [
+      "2219 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-8138"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1174"
+  },
+  "16": {
+    "name": "Andrew R. Lang",
+    "party": "Republican",
+    "email": "sen.andrew.lang@mnsenate.gov",
+    "capitolOffice": [
+      "2205 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4918"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1223"
+  },
+  "17": {
+    "name": "Glenn H. Gruenhagen",
+    "party": "Republican",
+    "email": "sen.glenn.gruenhagen@mnsenate.gov",
+    "capitolOffice": [
+      "2417 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4131"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1257"
+  },
+  "18": {
+    "name": "Nick A. Frentz",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.nick.frentz@mnsenate.gov",
+    "capitolOffice": [
+      "3109 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-6153"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1224"
+  },
+  "19": {
+    "name": "John R. Jasinski",
+    "party": "Republican",
+    "email": "sen.john.jasinski@mnsenate.gov",
+    "capitolOffice": [
+      "2227 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-0284"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1227"
+  },
+  "20": {
+    "name": "Steve Drazkowski",
+    "party": "Republican",
+    "email": "sen.steve.drazkowski@mnsenate.gov",
+    "capitolOffice": [
+      "2411 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5612"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1258"
+  },
+  "21": {
+    "name": "Bill Weber",
+    "party": "Republican",
+    "email": "sen.bill.weber@mnsenate.gov",
+    "capitolOffice": [
+      "2211 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5650"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1199"
+  },
+  "22": {
+    "name": "Rich Draheim",
+    "party": "Republican",
+    "email": "sen.rich.draheim@mnsenate.gov",
+    "capitolOffice": [
+      "2225 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5558"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1225"
+  },
+  "23": {
+    "name": "Gene Dornink",
+    "party": "Republican",
+    "email": "sen.gene.dornink@mnsenate.gov",
+    "capitolOffice": [
+      "3411 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5240"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1250"
+  },
+  "24": {
+    "name": "Carla J. Nelson",
+    "party": "Republican",
+    "email": "sen.carla.nelson@mnsenate.gov",
+    "capitolOffice": [
+      "2301 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4848"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1178"
+  },
+  "25": {
+    "name": "Liz Boldon",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.liz.boldon@mnsenate.gov",
+    "capitolOffice": [
+      "3205 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-3903"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1259"
+  },
+  "26": {
+    "name": "Jeremy R. Miller",
+    "party": "Republican",
+    "email": "sen.jeremy.miller@mnsenate.gov",
+    "capitolOffice": [
+      "2215 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5649"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1179"
+  },
+  "27": {
+    "name": "Andrew Mathews",
+    "party": "Republican",
+    "email": "sen.andrew.mathews@mnsenate.gov",
+    "capitolOffice": [
+      "2233 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-8075"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1222"
+  },
+  "28": {
+    "name": "Mark W. Koran",
+    "party": "Republican",
+    "email": "sen.mark.koran@mnsenate.gov",
+    "capitolOffice": [
+      "2203 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5419"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1228"
+  },
+  "29": {
+    "name": "Michael W. Holmstrom",
+    "party": "Republican",
+    "email": "sen.michael.holmstrom@mnsenate.gov",
+    "capitolOffice": [
+      "2209 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5981"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1277"
+  },
+  "30": {
+    "name": "Eric Lucero",
+    "party": "Republican",
+    "email": "sen.eric.lucero@mnsenate.gov",
+    "capitolOffice": [
+      "2413 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5655"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1260"
+  },
+  "31": {
+    "name": "Calvin K. Bahr",
+    "party": "Republican",
+    "email": "sen.cal.bahr@mnsenate.gov",
+    "capitolOffice": [
+      "2415 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-3219"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1261"
+  },
+  "32": {
+    "name": "Michael E. Kreun",
+    "party": "Republican",
+    "email": "sen.michael.kreun@mnsenate.gov",
+    "capitolOffice": [
+      "2321 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1282"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1262"
+  },
+  "33": {
+    "name": "Karin Housley",
+    "party": "Republican",
+    "email": "sen.karin.housley@mnsenate.gov",
+    "capitolOffice": [
+      "2213 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4351"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1214"
+  },
+  "34": {
+    "name": "John A. Hoffman",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.john.hoffman@mnsenate.gov",
+    "capitolOffice": [
+      "2111 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4154"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1205"
+  },
+  "35": {
+    "name": "Jim Abeler",
+    "party": "Republican",
+    "email": "sen.jim.abeler@mnsenate.gov",
+    "capitolOffice": [
+      "2207 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-3733"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1216"
+  },
+  "36": {
+    "name": "Heather Gustafson",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.heather.gustafson@mnsenate.gov",
+    "capitolOffice": [
+      "3103 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1253"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1263"
+  },
+  "37": {
+    "name": "Warren Limmer",
+    "party": "Republican",
+    "email": "sen.warren.limmer@mnsenate.gov",
+    "capitolOffice": [
+      "2221 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-2159"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1032"
+  },
+  "38": {
+    "name": "Susan Pha",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.susan.pha@mnsenate.gov",
+    "capitolOffice": [
+      "3233 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-2556"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1264"
+  },
+  "39": {
+    "name": "Mary K. Kunesh",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.mary.kunesh@mnsenate.gov",
+    "capitolOffice": [
+      "3209 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4334"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1242"
+  },
+  "40": {
+    "name": "John Marty",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.john.marty@mnsenate.gov",
+    "capitolOffice": [
+      "3235 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5645"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1035"
+  },
+  "41": {
+    "name": "Judy Seeberger",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.judy.seeberger@mnsenate.gov",
+    "capitolOffice": [
+      "2109 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-297-8060"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1265"
+  },
+  "42": {
+    "name": "Bonnie S. Westlin",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.bonnie.westlin@mnsenate.gov",
+    "capitolOffice": [
+      "3201 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-8869"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1266"
+  },
+  "43": {
+    "name": "Ann H. Rest",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.ann.rest@mnsenate.gov",
+    "capitolOffice": [
+      "328 Capitol",
+      "St. Paul, MN 55155-1606",
+      "651-296-2889"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1051"
+  },
+  "44": {
+    "name": "Tou Xiong",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.tou.xiong@mnsenate.gov",
+    "capitolOffice": [
+      "3203 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-6820"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1267"
+  },
+  "45": {
+    "name": "Ann M. Johnson Stewart",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.ann.johnson.stewart@mnsenate.gov",
+    "capitolOffice": [
+      "3211 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-9261"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1243"
+  },
+  "46": {
+    "name": "Ron Latz",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.ron.latz@mnsenate.gov",
+    "capitolOffice": [
+      "3105 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-297-8065"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1102"
+  },
+  "47": {
+    "name": "Amanda H. Hemmingsen-Jaeger",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.amanda.hemmingsen.jaeger@mnsenate.gov",
+    "capitolOffice": [
+      "3229 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5537"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1278"
+  },
+  "48": {
+    "name": "Julia E. Coleman",
+    "party": "Republican",
+    "email": "sen.julia.coleman@mnsenate.gov",
+    "capitolOffice": [
+      "2303 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4837"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1244"
+  },
+  "49": {
+    "name": "Steve A. Cwodzinski",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.steve.cwodzinski@mnsenate.gov",
+    "capitolOffice": [
+      "3207 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1314"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1234"
+  },
+  "50": {
+    "name": "Alice Mann",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.alice.mann@mnsenate.gov",
+    "capitolOffice": [
+      "3225 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-6238"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1270"
+  },
+  "51": {
+    "name": "Melissa H. Wiklund",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.melissa.wiklund@mnsenate.gov",
+    "capitolOffice": [
+      "2107 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-297-8061"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1209"
+  },
+  "52": {
+    "name": "Jim Carlson",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.jim.carlson@mnsenate.gov",
+    "capitolOffice": [
+      "3221 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-297-8073"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1140"
+  },
+  "53": {
+    "name": "Matt D. Klein",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.matt.klein@mnsenate.gov",
+    "capitolOffice": [
+      "2105 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4370"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1235"
+  },
+  "54": {
+    "name": "Eric R. Pratt",
+    "party": "Republican",
+    "email": "sen.eric.pratt@mnsenate.gov",
+    "capitolOffice": [
+      "2217 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4123"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1210"
+  },
+  "55": {
+    "name": "Lindsey Port",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.lindsey.port@mnsenate.gov",
+    "capitolOffice": [
+      "3213 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5975"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1245"
+  },
+  "56": {
+    "name": "Erin K. Maye Quade",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.erin.mayequade@mnsenate.gov",
+    "capitolOffice": [
+      "3227 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4120"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1271"
+  },
+  "57": {
+    "name": "Zach Duckworth",
+    "party": "Republican",
+    "email": "sen.zach.duckworth@mnsenate.gov",
+    "capitolOffice": [
+      "2229 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-7633"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1246"
+  },
+  "58": {
+    "name": "Bill Lieske",
+    "party": "Republican",
+    "email": "sen.bill.lieske@mnsenate.gov",
+    "capitolOffice": [
+      "2327 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5019"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1272"
+  },
+  "59": {
+    "name": "Bobby Joe Champion",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.bobby.champion@mnsenate.gov",
+    "capitolOffice": [
+      "3401 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-9246"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1212"
+  },
+  "60": {
+    "name": "Doron Clark",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.doron.clark@mnsenate.gov",
+    "capitolOffice": [
+      "3403 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-7809"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1275"
+  },
+  "61": {
+    "name": "D. Scott Dibble",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.scott.dibble@mnsenate.gov",
+    "capitolOffice": [
+      "3107 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4191"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1010"
+  },
+  "62": {
+    "name": "Omar Fateh",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.omar.fateh@mnsenate.gov",
+    "capitolOffice": [
+      "3219 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4261"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1247"
+  },
+  "63": {
+    "name": "Zaynab Mohamed",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.zaynab.mohamed@mnsenate.gov",
+    "capitolOffice": [
+      "2103 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-4274"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1273"
+  },
+  "64": {
+    "name": "Erin P. Murphy",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.erin.murphy@mnsenate.gov",
+    "capitolOffice": [
+      "3113 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5931"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1248"
+  },
+  "65": {
+    "name": "Sandra L. Pappas",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sandrap@mnsenate.gov",
+    "capitolOffice": [
+      "2113 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-1802"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1046"
+  },
+  "66": {
+    "name": "Clare Oumou Verbeten",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.clare.oumou.verbeten@mnsenate.gov",
+    "capitolOffice": [
+      "2101 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-8866"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1274"
+  },
+  "67": {
+    "name": "Foung Hawj",
+    "party": "Democratic-Farmer-Labor",
+    "email": "sen.foung.hawj@mnsenate.gov",
+    "capitolOffice": [
+      "3231 Minnesota Senate Bldg.",
+      "St. Paul, MN 55155",
+      "651-296-5285"
+    ],
+    "url": "https://www.mnsenate.gov/members/member_bio.html?mem_id=1213"
+  }
+}

@@ -97,13 +97,20 @@ shipped state outline, which is offline, so the browser gate proves it both ways
 negative point with the permalink intact, present at the anchor. A layer that merely returned
 nothing there would have been indistinguishable from one that was broken.
 
-**THREE OF THE FOUR ANCHOR CARDS NAME NOBODY, AND EACH SILENCE IS RECORDED RATHER THAN IMPLIED.**
-Both chamber cards enter the engine chamber factory's roster-miss path deliberately — district
-identity plus the chamber's own directory, never an invented name — under gap
-`mn-legislature-roster`, which says plainly that the Legislature publishes both rosters and
-this instance has not built them. The County card is identity only under `mn-county-officers`.
-A reader meeting three quiet cards should be able to find out why, which is what those records
-are for. The nine live layers add four more of the same kind: `mn-school-board-members` (331
+**BOTH CHAMBER CARDS NAME THEIR MEMBERS SINCE 2026-11-15, AND THE COUNTY CARD'S SILENCE IS
+RECORDED RATHER THAN IMPLIED.** From go-live until that day both chamber cards entered the
+engine chamber factory's roster-miss path — district identity plus the chamber's own directory,
+never an invented name — under gap `mn-legislature-roster`, now retired.
+`mn/scripts/build_mn_legislature_roster.py` reads each chamber's OWN site weekly
+(`update-mn-legislature-roster.yml`, Thu 09:37 UTC): the Senate's member feed, the one its
+member list reads, with each senator's own page for the office, and the House's member list,
+of which only the tab of sitting members is read. Each card carries the member's party, St.
+Paul office and its telephone, chamber e-mail address and page. The House roster is keyed by
+lettered district (1A to 67B), one `{"seats": 1, "members": [...]}` record each, and a seat a
+list does not fill ships as a dated record naming nobody. `mn/state-legislature.html` and
+`mn/faq.html` landed with the rosters. The County card is identity only under
+`mn-county-officers`. A reader meeting a quiet card should be able to find out why, which is
+what those records are for. The nine live layers add four more of the same kind: `mn-school-board-members` (331
 districts, each publishing its own board), `mn-township-officers` (1,797 towns electing three
 supervisors plus a clerk and a treasurer under Minn. Stat. 367.03 — the largest per-unit roster
 task any instance in this fleet has recorded), `mn-municipal-officeholders` (856 cities) and
@@ -230,8 +237,9 @@ and it cost no research — each of the thirteen `layers[]` entries already carr
 `source` block (`generate_metro_files.py` refuses a `sources_page` instance where one does
 not), so the layer matrix and the credit rows generate from what was already there. The shell
 was cloned from `in/sources.html` and localized; the Indiana sweep is 0 hits.
-`faq.html` and `history.html` are still absent, and deliberately: both are hand-written prose
-rather than generated, so each is its own change, and `mn/WATCH.md` carries them. The
+`faq.html` landed on 2026-11-15, written from this instance's own worksheet rather than cloned
+from a sibling's answers. `history.html` is still absent, and deliberately: it is hand-written
+prose rather than generated, so it is its own change, and `mn/WATCH.md` carries it. The
 worksheet therefore has `sources_page` and no `history_page` — those generators are opt-in and
 generate nothing for an instance that does not ask.
 
@@ -243,7 +251,7 @@ generate nothing for an instance that does not ask.
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
 - Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4; city-ward Ward 7. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27). NORTH DAKOTA'S OUTLINE HAS COVERED IT SINCE THE CHANGE THAT PUBLISHED NORTH DAKOTA (batch 4 of the state-level launch, written 2026-11-12), and the point stays: no check in this app clicks it, every one boots or selects it here, and a selection the app makes itself never leaves. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. That was the rule while panning switched apps whenever the map's centre crossed into a sibling's state, which ended on 2026-10-13; a point a check only boots on or selects need not be outside every live instance. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
 - Layers: 22 registered (elections 1, political 7, safety 2, schools 4, geography 8); `registerLayer(` floor 17. Debug namespace `window.MinnesotaExplorer`.
-- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC); `update-mn-swcd-supervisors.yml` (Thu 13:40 UTC); `update-mn-election-results.yml` (daily 12:50 UTC).
+- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-legislature-roster.yml` (Thu 09:37 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC); `update-mn-swcd-supervisors.yml` (Thu 13:40 UTC); `update-mn-election-results.yml` (daily 12:50 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -314,12 +322,10 @@ Everything Minnesota-specific lives in the `METRO:BEGIN config` block (worksheet
 this instance's own module code, which is the `STARTER MODULES` section.
 
 A layer module is registered via `registerLayer({ id, group, label, overlay, query, render })`;
-the three district layers use the fenced factory helper `registerIlgaChamber`. **The two
-chamber registrations pass `loadNoRoster`, a function returning an empty object**, because the
-factory calls `opts.loadRoster()` unconditionally and an empty roster is the honest input — it
-enters the factory's own roster-miss path rather than needing an engine change. When
-`mn-{senate,house}-members.json` ship, those two become real file loaders and nothing else
-about the registration moves.
+the three district layers use the fenced factory helper `registerIlgaChamber`. The two
+chamber registrations load `mn-{senate,house}-members.json` since 2026-11-15; until then they
+passed a function returning an empty object, which entered the factory's own roster-miss path,
+and nothing else about the registration moved when the files arrived.
 
 Two invariants pervade the code: the **stale-async guard** (`if (seq !== state.sequence)
 return;` after every await) and **per-layer failure isolation** (a layer's failure shows a

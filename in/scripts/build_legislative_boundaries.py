@@ -11,9 +11,9 @@ in/data/app/<chamber>-districts.json. No clip step: the served area IS the
 state.
 
 Like build_state_counties.py this is an occasional OPERATOR step, not weekly CI
-— re-run it on redistricting. There are no officeholder rosters for the two
-state chambers (recorded as gap in-general-assembly-roster); the U.S. House
-roster is build_congress_roster.py's and refreshes weekly.
+— re-run it on redistricting. The two state chambers' rosters are
+build_in_legislature_roster.py's (weekly, since 2026-11-15) and the U.S. House
+roster is build_congress_roster.py's, also weekly.
 
 SIMPLIFICATION SIMPLIFIES ALL THREE CHAMBERS IN ONE MAPSHAPER RUN, AND THE
 ALGORITHM IS DOUGLAS-PEUCKER RATHER THAN VISVALINGAM. Both halves are carried

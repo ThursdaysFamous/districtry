@@ -96,8 +96,8 @@ def preserved_from_disk(path):
 
 # The sub-pages this block may be read out of, in order. faq.html first, because
 # every instance that has one has it and it is the page this was written against.
-# sources.html is the fallback added 2026-09-30 for Minnesota, which ships
-# sources.html and no faq.html: the blocks are ENGINE-composed, so they are
+# sources.html is the fallback added 2026-09-30 for Minnesota, which shipped
+# sources.html and no faq.html until 2026-11-15: the blocks are ENGINE-composed, so they are
 # byte-identical in both pages of any instance that has both (verified against
 # in/faq.html the day this landed), and requiring faq.html specifically made a
 # generator's choice of donor page into a hard dependency it never meant to

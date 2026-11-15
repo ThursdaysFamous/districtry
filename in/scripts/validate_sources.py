@@ -138,6 +138,31 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "in-senate",
+        "app_file": "in-senate-members.json",
+        "source_url": "https://iga.in.gov/api/getSessionYears",
+        "note": (
+            "The General Assembly's own legislator feeds, the ones its "
+            "legislator pages read; rebuilt weekly by "
+            "in/scripts/build_in_legislature_roster.py. THIS CHECK CANNOT "
+            "TELL A WORKING FEED FROM A BROKEN ONE: measured 2026-11-15, the "
+            "site answers this validator's client HTTP 200 with a 691-byte "
+            "page shell on every path, so it reports the host reachable and "
+            "nothing more. The weekly builder is the check that reads the "
+            "feed itself."
+        ),
+    },
+    {
+        "layer": "in-house",
+        "app_file": "in-house-members.json",
+        "source_url": "https://iga.in.gov/api/getSessionYears",
+        "note": (
+            "The same feeds, read by the same builder; a seat the list "
+            "leaves empty, or names two people for, is shipped as a dated "
+            "record naming nobody."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "state-counties.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",

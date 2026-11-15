@@ -74,7 +74,7 @@
       "keywords": "Indiana district map, what district am I in, Indiana Senate district, Indiana House district, county lookup, civic districts, who represents me",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/in/#website" },
-      "dateModified": "2026-10-11",
+      "dateModified": "2026-11-15",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -4472,7 +4472,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Sources last checked:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">October 11, 2026</strong>
+          <strong id="verified-date">November 15, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -16836,14 +16836,18 @@ function initIndianaExplorer() {
   /* ---------- 3-4. Indiana Senate + Indiana House ----------
    * The two chambers through the shared ENGINE chamber factory: pre-built
    * TIGERweb Legislative geometry (in/scripts/build_legislative_boundaries.py
-   * — fetch, simplify, 2,000-point agreement gate) with NO roster join.
+   * — fetch, simplify, 2,000-point agreement gate), each district joined to
+   * a same-origin roster.
    *
-   * NEITHER CHAMBER NAMES A PERSON, AND THAT IS A RECORDED GAP RATHER THAN
-   * AN OVERSIGHT: this instance ships no General Assembly roster, so each
-   * card gives the district number and the chamber's own directory and says
-   * nothing it cannot source. The factory's roster-miss path is what a
-   * reader sees on every click here, which is the honest card until a
-   * roster is built (gap in-general-assembly-roster).
+   * THE NAMES COME FROM THE GENERAL ASSEMBLY'S OWN SITE (iga.in.gov: the
+   * feeds its legislator pages are drawn from, read by
+   * in/scripts/build_in_legislature_roster.py and refreshed weekly by
+   * update-in-legislature-roster.yml as a reviewed PR): each member's name,
+   * party and page, and the Statehouse telephone and e-mail address where
+   * the Assembly prints one. The Assembly prints no office address, and no
+   * telephone for a senator. A seat its list leaves empty, or names two
+   * people for, names nobody and says so. A roster miss degrades to the
+   * district and the Assembly's own member list, never an invented name.
    * ---------- */
   var loadInSenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/in-senate-districts.json", {}, 2);
@@ -16852,19 +16856,21 @@ function initIndianaExplorer() {
     return fetchJSONWithRetry("data/app/in-house-districts.json", {}, 2);
   });
   // The shared factory calls loadRoster() unconditionally, for the query AND
-  // for the hover popup, so a chamber with no roster supplies the empty answer
-  // here rather than asking the engine to grow a branch for this instance. An
-  // empty map is exactly what the factory's roster-miss path reads: it names
-  // nobody, prints the district number and links the Assembly's own directory.
-  // A REJECTED PROMISE WOULD NOT DO THE SAME JOB -- the query's own .catch()
-  // absorbs it, but hoverOfficial has none, and the first Indiana build passed
-  // no loadRoster at all, which made both chamber cards render "This layer's
-  // data source didn't respond" over geometry that had loaded perfectly.
-  var loadNoChamberRoster = function () { return Promise.resolve({}); };
+  // for the hover popup. A REJECTED PROMISE IS NOT A SAFE "NO ROSTER": the
+  // query's own .catch() absorbs it, but hoverOfficial has none, and the first
+  // Indiana build passed no loadRoster at all, which made both chamber cards
+  // render "This layer's data source didn't respond" over geometry that had
+  // loaded perfectly.
+  var loadInSenateMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-senate-members.json", {}, 2);
+  });
+  var loadInHouseMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-house-members.json", {}, 2);
+  });
 
   registerIlgaChamber({
     id: "in-senate",
-    loadRoster: loadNoChamberRoster, // no General Assembly roster ships (gap in-general-assembly-roster)
+    loadRoster: loadInSenateMembers,
     label: "Indiana Senate District",
     layerIndex: 1, // TIGERweb SLDU — fallback only; loadDistricts is used when present
     loadDistricts: loadInSenateDistricts,
@@ -16877,7 +16883,7 @@ function initIndianaExplorer() {
 
   registerIlgaChamber({
     id: "in-house",
-    loadRoster: loadNoChamberRoster, // no General Assembly roster ships (gap in-general-assembly-roster)
+    loadRoster: loadInHouseMembers,
     label: "Indiana House District",
     layerIndex: 2, // TIGERweb SLDL — fallback only; loadDistricts is used when present
     loadDistricts: loadInHouseDistricts,

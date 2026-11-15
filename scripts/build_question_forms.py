@@ -44,7 +44,9 @@ page itself or off metros.json:
   map link        the page's own .cta href after its `#`: its `layers=` and,
                   where the page names one, its `frame=` area
   button label    the .cta link's text, minus its trailing arrow
-  place name      metros.json landing_name for the instance the page sits in
+  place name      the area the page's link opens on, where it opens on one
+                  (AREA_PLACES below), else metros.json landing_name for the
+                  instance the page sits in
 
 so a page that changes which layers it opens changes its form by regenerating,
 and a page that stops carrying a .cta is reported rather than silently left
@@ -64,6 +66,23 @@ outside it names the area in its own link instead (`&frame=chicago` on
 Chicago's ward page, whose ward layer draws suburban wards too), and this
 fails on an area the page's app does not declare, because the app would
 ignore it without a word and open the link as if it named no area.
+
+THE BOX NAMES THE PLACE THE PAGE ANSWERS FOR, NOT ALWAYS THE STATE
+(2026-11-15). Until that day every box said "Address or ZIP in <the
+instance's landing_name>", which was right while each instance's question
+pages answered for the instance's whole ground and went wrong when California's
+app grew from San Francisco to the whole state on 2026-11-11: the supervisor
+district page then invited an "Address or ZIP in California", and an address in
+Fresno has no San Francisco supervisor. Chicago's and New York City's pages had
+said the same of Illinois and New York for longer. So the place is now the AREA
+the page's link opens on, by the app's own rule for that (engine `permalink`
+`linkFrame`): the area the link names with `frame=`, or the one area every
+layer it names is framed on in the worksheet. A link the app opens on the whole
+state keeps the state's name. The box and the map the button opens therefore
+agree about where the page answers, and both are read from the same two
+places. An area's reader-facing name has no source (a worksheet names an area
+`sf`), so it is stated once, in AREA_PLACES, which is held to the worksheets
+both ways.
 
     python3 scripts/build_question_forms.py           # write the regions
     python3 scripts/build_question_forms.py --check   # drift gate for CI
@@ -155,6 +174,61 @@ def landing_names():
     return {m["tag"]: m["landing_name"] for m in doc["metros"]}
 
 
+# tag -> {area -> the name a reader knows it by}. The worksheets name their
+# areas with slugs (`frames`: sf, nyc, chicago), which are ids and not names,
+# and nothing else in the tree says what to call one. check_area_places() fails
+# on an area a worksheet declares and this does not name, and on a name here
+# for an area no worksheet declares, so neither side can change alone.
+AREA_PLACES = {
+    "ca": {"sf": "San Francisco"},
+    "il": {"chicago": "Chicago", "cook": "Cook County", "dupage": "DuPage County"},
+    "ny": {"nyc": "New York City"},
+    "wi": {"milwaukee": "Milwaukee", "madison": "Madison"},
+}
+
+
+def instance_worksheet(tag):
+    rel = "metro-worksheet.json" if tag == "il" else os.path.join(tag, "metro-worksheet.json")
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as f:
+        return json.load(f)
+
+
+def check_area_places(tags):
+    for tag in tags:
+        declared = instance_areas(tag)
+        named = set(AREA_PLACES.get(tag, {}))
+        if declared - named:
+            fail("%s's worksheet declares the area(s) %s and AREA_PLACES gives "
+                 "no reader-facing name for them — add one, or a question page "
+                 "opening there would name the wrong place"
+                 % (tag, ", ".join(sorted(declared - named))))
+        if named - declared:
+            fail("AREA_PLACES names the area(s) %s for %s, which its worksheet "
+                 "no longer declares under frames — remove them"
+                 % (", ".join(sorted(named - declared)), tag))
+    for tag in sorted(set(AREA_PLACES) - set(tags)):
+        fail("AREA_PLACES has an entry for %r, which is not a live instance" % tag)
+
+
+def link_area(tag, link):
+    """The area the app opens this map link on, or None for the whole state.
+
+    The engine's own rule (permalink, `linkFrame` and `namedArea`): an area the
+    link names with frame= wins; otherwise the link is framed only when EVERY
+    layer it names is framed, and on one area. A layer the worksheet does not
+    register is the app's to ignore and is ignored here too.
+    """
+    m = MAP_RE.match(link)
+    if m.group(1):
+        return m.group(1)
+    frames = {l["id"]: l.get("frame") for l in instance_worksheet(tag)["layers"]}
+    named = [x for x in link[len("layers="):].split(",") if x in frames]
+    areas = {frames[x] for x in named}
+    if len(areas) == 1 and None not in areas:
+        return areas.pop()
+    return None
+
+
 def question_pages(tag):
     """(path, map link, label) for each page in <tag>/ that carries a .cta."""
     found = []
@@ -191,11 +265,16 @@ def question_pages(tag):
     return found
 
 
-def render(link, label, place):
-    """The region's contents — everything BETWEEN the two markers."""
+def render(link, label, place, area=None):
+    """The region's contents — everything BETWEEN the two markers.
+
+    The comment's last sentence says where THIS page's place name came from,
+    and a page opening on the whole state keeps the sentence it has always
+    carried, so naming an area on eleven pages did not rewrite the other 137.
+    """
     body = '''<!-- GENERATED by scripts/build_question_forms.py — do not hand-edit.
      The map link and the button label are read from this page's own .cta
-     link below; the place name comes from metros.json. Edit those, then rerun. -->
+     link below; the place name %(place_from)s. Edit those, then rerun. -->
 <form class="lookup" id="lookup" hidden>
   <div class="lookup-card">
     <label class="lookup-label" for="lookup-q">Your address or ZIP</label>
@@ -243,6 +322,8 @@ def render(link, label, place):
 })();
 </script>''' % {
         "place_attr": html.escape(place, quote=True),
+        "place_from": ("is the area that link opens on (AREA_PLACES in the "
+                       "script)" if area else "comes from metros.json"),
         "label": html.escape(label),
         "link": link,
     }
@@ -301,6 +382,7 @@ def main():
     drifted = []
     missing = []
     dark = validate_instance_registration.dark_instances() & set(instances())
+    check_area_places([t for t in instances() if t not in dark])
     for tag in instances():
         if tag in dark:
             # A DARK INSTANCE HAS NO metros.json ENTRY YET, and that is correct
@@ -331,7 +413,9 @@ def main():
                  "before a question page there can name its place" % tag)
         for path, link, label in question_pages(tag):
             rel = os.path.relpath(path, REPO_ROOT)
-            body = render(link, label, names[tag])
+            area = link_area(tag, link)
+            place = AREA_PLACES[tag][area] if area else names[tag]
+            body = render(link, label, place, area)
             state, detail = apply(path, body, args.check, rel)
             pages += 1
             if state == "drift":

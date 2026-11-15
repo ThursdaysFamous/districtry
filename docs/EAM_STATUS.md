@@ -57,15 +57,15 @@ different thing from one it failed.
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,159 | all | 431 | all | 12 of 14 levels |
-| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 23 | all | 11 of 14 levels |
+| in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 25 | all | 11 of 14 levels |
 | ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
-| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 20 | all | 12 of 14 levels |
+| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 22 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 26 | all | 9 of 14 levels |
 | ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 72 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 26 | all | 13 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 28 | all | 13 of 14 levels |
 | mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 16 | all | 7 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 26 | all | 8 of 14 levels |
 | mt | **EAM·** | 56 | 56/56 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |

@@ -74,7 +74,7 @@
       "keywords": "Kentucky district map, what district am I in, Kentucky Senate district, Kentucky House district, magisterial district, fiscal court, civic districts, who represents me Kentucky",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/ky/#website" },
-      "dateModified": "2026-10-11",
+      "dateModified": "2026-11-15",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -4480,7 +4480,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="footer-meta" id="footer-meta">
         <span>Sources last checked:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">October 11, 2026</strong>
+          <strong id="verified-date">November 15, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -16221,18 +16221,6 @@ function initKentuckyExplorer() {
       });
   }
 
-  /* ---------- an empty same-origin roster ----------
-   * Three of this instance's four day-one layers name nobody, and the
-   * ENGINE chamber factory calls opts.loadRoster() unconditionally. An empty
-   * object is the honest input: the factory's own roster-miss path renders
-   * the district identity plus the chamber's official directory and invents
-   * no name. When ky/data/app/ky-{senate,house}-members.json ship, these two
-   * become real file loaders and nothing else about the registration moves.
-   * ---------- */
-  function loadNoRoster() {
-    return Promise.resolve({});
-  }
-
   /* ---------- 1. County — the instance's offline anchor ----------
    * Geometry is pre-built (TIGERweb State_County layer 1, STATE-filtered,
    * ky/scripts/build_state_counties.py) and served same-origin +
@@ -16742,17 +16730,28 @@ function initKentuckyExplorer() {
    * is a number, which the engine's extractDistrictNumber returns unchanged
    * from TIGERweb's own SLDU and SLDL fields.
    *
-   * NEITHER CHAMBER NAMES A MEMBER YET. The General Assembly publishes both
-   * rosters and this instance has not built them, so both cards degrade to
-   * the district identifier plus the chamber's own directory — the factory's
-   * roster-miss path, entered deliberately here rather than by accident. The
-   * gap is recorded in data/app/coverage-gaps.json.
+   * THE NAMES COME FROM THE GENERAL ASSEMBLY'S OWN SITE (legislature.ky.gov:
+   * each chamber's member list and each member's own page, read by
+   * ky/scripts/build_ky_legislature_roster.py and refreshed weekly by
+   * update-ky-legislature-roster.yml as a reviewed PR): each member's name,
+   * party, Capitol Annex office and its telephone, legislative e-mail address
+   * and page, and a telephone the page prints for that member alone, under
+   * the label the page gives it. The page's mailing address and home city
+   * are never read. ONE MEMBER PER DISTRICT IN BOTH CHAMBERS. A roster miss
+   * degrades to the district and the chamber's own member list, never an
+   * invented name.
    * ---------- */
   var loadKySenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ky-senate-districts.json", {}, 2);
   });
   var loadKyHouseDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ky-house-districts.json", {}, 2);
+  });
+  var loadKySenateMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-senate-members.json", {}, 2);
+  });
+  var loadKyHouseMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-house-members.json", {}, 2);
   });
 
   registerIlgaChamber({
@@ -16762,8 +16761,8 @@ function initKentuckyExplorer() {
     loadDistricts: loadKySenateDistricts,
     districtFields: ["sldu", "sldust"],
     directoryUrl: "https://legislature.ky.gov/Legislators/senate",
-    loadRoster: loadNoRoster,
-    memberLabel: "State Senator", capitolLabel: "Capitol Office",
+    loadRoster: loadKySenateMembers,
+    memberLabel: "State Senator", capitolLabel: "Frankfort Office",
     profileLabel: "Senator profile", directoryLabel: "Kentucky Senate directory",
     style: { color: "#4A2E8C", weight: 2, fillColor: "#4A2E8C", fillOpacity: 0.05 }
   });
@@ -16775,8 +16774,8 @@ function initKentuckyExplorer() {
     loadDistricts: loadKyHouseDistricts,
     districtFields: ["sldl", "sldlst"],
     directoryUrl: "https://legislature.ky.gov/Legislators/house-of-representatives",
-    loadRoster: loadNoRoster,
-    memberLabel: "Representative", capitolLabel: "Capitol Office",
+    loadRoster: loadKyHouseMembers,
+    memberLabel: "Representative", capitolLabel: "Frankfort Office",
     profileLabel: "Member profile", directoryLabel: "Kentucky House directory",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });

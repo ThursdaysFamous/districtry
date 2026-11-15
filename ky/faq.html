@@ -64,7 +64,7 @@
           "name": "What district am I in?",
           "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Enter your address in the search box, or click your location on the map above, and the tool lists every district that contains that exact point — your county, your Kentucky Senate and House districts, and your U.S. House district."
+              "text": "Enter your address in the search box, or click your location on the map, and the tool lists every district that contains that exact point: your county and your magisterial or council district, your Kentucky Senate and House districts, your U.S. House district, your city, your school district and your court districts, along with who represents you where a roster exists."
           }
       },
       {
@@ -72,7 +72,7 @@
           "name": "How do I find out what Kentucky House district I'm in?",
           "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Search your address or click your location on the map. The tool shows your State House district. It does not name the Representative who holds the seat: this instance has not built either chamber's roster yet, so the card gives your district number and links the House's own member directory, where you can look the seat up."
+              "text": "Search your address or click your location on the map. The tool shows your Kentucky House district and the representative who holds the seat, read each week from the General Assembly's own list of members."
           }
       },
       {
@@ -88,7 +88,7 @@
           "name": "What county am I in, and who runs it?",
           "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Pick a point and the tool names your county — all 120 are carried. It names the county and nothing more, and says so on the card rather than leaving you guessing. 118 counties are run by a fiscal court. The other two are Jefferson and Fayette, which are merged city-county governments: Louisville Metro and Lexington-Fayette. Of the 118, 105 elect magistrates from magisterial districts and 13 elect three commissioners countywide, one living in each district. At least 27 counties publish a map of those districts — that number was counted county by county and may be higher — and no source anywhere pairs a named officeholder with the district they were elected from. So the card links the state's directory of county officials instead of guessing."
+              "text": "Pick a point and the tool names your county, one of 120, with its governing body and its elected county officers, read each week from the Kentucky Department for Local Government's county directory. 118 counties are run by a fiscal court: the judge/executive and the magistrates or three commissioners. The other two are Jefferson and Fayette, which are merged city-county governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council. The Magistrate or Council District card names the district your point is in and the member who represents it. The directory does not say which district a magistrate holds, so that comes from the 2022 general election results, and where the results could not match a member to a district the card says so."
           }
       },
       {
@@ -96,15 +96,15 @@
           "name": "Who represents me in Frankfort and in Washington?",
           "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Pick a location to see your Kentucky Senate district, Kentucky House district and U.S. House district. The U.S. House card names the member who currently holds the seat, rebuilt weekly from a public dataset of members of Congress. The two state chamber cards name nobody yet: the General Assembly publishes both rosters and this instance has not built them, so each card gives your district number and links that chamber's own member directory."
+              "text": "Pick a location to see your Kentucky Senate district, Kentucky House district and U.S. House district, each with the member who holds the seat. Each state legislator's card carries a party, their Frankfort office and its telephone, an e-mail address, a telephone of their own where the General Assembly lists one, and a link to their page on its site. Those names are read each week from the General Assembly's own member lists. The U.S. House card names the member who currently holds the seat, rebuilt weekly from a public dataset of members of Congress."
           }
       },
       {
           "@type": "Question",
-          "name": "Why does my card show fewer layers than other districtry states?",
+          "name": "Why does a card name nobody?",
           "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Because Kentucky is new here. This instance launched with the national tier — county, U.S. House, and both state chambers — which is what any state can be answered for from national publishers on day one. Fiscal court districts are what it is building next; school districts, cities and ZIP codes come as each one is sourced and verified. The app would rather answer four things it can prove than ten it cannot."
+              "text": "Where the app has no source it can cite for a name, the card says so instead of guessing. Kentucky's school district cards name no board member, because no list of school board members has been read yet. The “What data is missing?” button on the map lists each gap and the reason for it."
           }
       },
       {
@@ -942,11 +942,11 @@ footer.site-footer a { color: var(--accent-deep); }
   <h2 id="faq-heading">Common questions about Kentucky districts</h2>
   <details>
     <summary>What district am I in?</summary>
-    <p>Enter your address in the search box, or click your location on the map above, and the tool lists every district that contains that exact point — your county, your Kentucky Senate and House districts, and your U.S. House district.</p>
+    <p>Enter your address in the search box, or click your location on the map, and the tool lists every district that contains that exact point: your county and your magisterial or council district, your Kentucky Senate and House districts, your U.S. House district, your city, your school district and your court districts, along with who represents you where a roster exists.</p>
   </details>
   <details>
     <summary>How do I find out what Kentucky House district I'm in?</summary>
-    <p>Search your address or click your location on the map. The tool shows your State House district. It does not name the Representative who holds the seat: this instance has not built either chamber's roster yet, so the card gives your district number and links the House's own member directory, where you can look the seat up.</p>
+    <p>Search your address or click your location on the map. The tool shows your Kentucky House district and the representative who holds the seat, read each week from the General Assembly's own list of members.</p>
   </details>
   <details>
     <summary>How many Senate and House districts does Kentucky have?</summary>
@@ -954,15 +954,15 @@ footer.site-footer a { color: var(--accent-deep); }
   </details>
   <details>
     <summary>What county am I in, and who runs it?</summary>
-    <p>Pick a point and the tool names your county — all 120 are carried. It names the county and nothing more, and says so on the card rather than leaving you guessing. 118 counties are run by a fiscal court. The other two are Jefferson and Fayette, which are merged city-county governments: Louisville Metro and Lexington-Fayette. Of the 118, 105 elect magistrates from magisterial districts and 13 elect three commissioners countywide, one living in each district. At least 27 counties publish a map of those districts — that number was counted county by county and may be higher — and no source anywhere pairs a named officeholder with the district they were elected from. So the card links the state's directory of county officials instead of guessing.</p>
+    <p>Pick a point and the tool names your county, one of 120, with its governing body and its elected county officers, read each week from the Kentucky Department for Local Government's county directory. 118 counties are run by a fiscal court: the judge/executive and the magistrates or three commissioners. The other two are Jefferson and Fayette, which are merged city-county governments, so their cards name the Louisville Metro Council and the Lexington-Fayette Urban County Council. The Magistrate or Council District card names the district your point is in and the member who represents it. The directory does not say which district a magistrate holds, so that comes from the 2022 general election results, and where the results could not match a member to a district the card says so.</p>
   </details>
   <details>
     <summary>Who represents me in Frankfort and in Washington?</summary>
-    <p>Pick a location to see your Kentucky Senate district, Kentucky House district and U.S. House district. The U.S. House card names the member who currently holds the seat, rebuilt weekly from a public dataset of members of Congress. The two state chamber cards name nobody yet: the General Assembly publishes both rosters and this instance has not built them, so each card gives your district number and links that chamber's own member directory.</p>
+    <p>Pick a location to see your Kentucky Senate district, Kentucky House district and U.S. House district, each with the member who holds the seat. Each state legislator's card carries a party, their Frankfort office and its telephone, an e-mail address, a telephone of their own where the General Assembly lists one, and a link to their page on its site. Those names are read each week from the General Assembly's own member lists. The U.S. House card names the member who currently holds the seat, rebuilt weekly from a public dataset of members of Congress.</p>
   </details>
   <details>
-    <summary>Why does my card show fewer layers than other districtry states?</summary>
-    <p>Because Kentucky is new here. This instance launched with the national tier — county, U.S. House, and both state chambers — which is what any state can be answered for from national publishers on day one. Fiscal court districts are what it is building next; school districts, cities and ZIP codes come as each one is sourced and verified. The app would rather answer four things it can prove than ten it cannot.</p>
+    <summary>Why does a card name nobody?</summary>
+    <p>Where the app has no source it can cite for a name, the card says so instead of guessing. Kentucky's school district cards name no board member, because no list of school board members has been read yet. The “What data is missing?” button on the map lists each gap and the reason for it.</p>
   </details>
   <details>
     <summary>Is this an official government tool?</summary>

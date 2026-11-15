@@ -63,6 +63,8 @@ const GEOMETRY_URLS = [
 const ROSTER_URLS = [
   "./data/app/statewide-officials.json",
   "./data/app/congress-roster.json",
+  "./data/app/ky-senate-members.json",
+  "./data/app/ky-house-members.json",
   "./data/app/coverage-gaps.json",
   "./data/app/ky-judge-roster.json",
   "./data/app/ky-city-officials.json",

@@ -1141,7 +1141,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Sources last checked: <strong>October 11, 2026</strong></p>
+        <p class="verified">Sources last checked: <strong>November 15, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1169,7 +1169,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://iga.in.gov/" target="_blank" rel="noopener">Indiana General Assembly</a>
-          <span class="credit-note">The chamber directories both legislative cards link to while no roster ships.</span>
+          <span class="credit-note">The General Assembly's own legislator feeds, which name each member on the two legislative cards.</span>
         </li>
       </ul>
 <!-- ==== GENERATED:END source-credits ==== -->
@@ -1220,24 +1220,24 @@ table.matrix code {
               </tr>
               <tr id="layer-in-senate">
                 <th scope="row"><span class="layer-name">Indiana Senate District</span><code>in-senate</code></th>
-                <td data-label="What it answers">The Indiana Senate district covering the point.</td>
+                <td data-label="What it answers">The Indiana Senate district covering the point, and the senator it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber, field SLDU), pre-built for the state and shipped with the app; 50 features, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO ROSTER SHIPS IN THIS CHANGE, and the card says so: it names the district and links the General Assembly's own member directory rather than naming a senator this instance has not fetched. Recorded as gap in-general-assembly-roster; the Open States export lands in its own change with its own weekly workflow, the route every other instance took.</td>
+                <td data-label="Who it names">in-senate-members.json, rebuilt weekly by CI from the General Assembly's own legislator feeds (iga.in.gov): each senator's name, party and page, and an e-mail address where the Assembly prints one. The Assembly prints no telephone or office for a senator. A seat its list leaves empty, or names two people for, names nobody.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 50 districts.</td>
               </tr>
               <tr id="layer-in-house">
                 <th scope="row"><span class="layer-name">Indiana House District</span><code>in-house</code></th>
-                <td data-label="What it answers">The Indiana House district covering the point.</td>
+                <td data-label="What it answers">The Indiana House district covering the point, and the representative it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber, field SLDL), pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO ROSTER SHIPS IN THIS CHANGE — the same gap as the Senate layer (in-general-assembly-roster); the card names the district and links the chamber's own directory.</td>
+                <td data-label="Who it names">in-house-members.json, rebuilt weekly by CI from the General Assembly's own legislator feeds (iga.in.gov): each representative's name, party and page, and the Statehouse telephone and e-mail address where the Assembly prints one.</td>
                 <td data-label="Where it applies">Indiana — statewide, all 100 districts.</td>
               </tr>
               <tr id="layer-county-council">
@@ -1519,7 +1519,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-in-senate",
       "identifier": "in-senate",
       "name": "Indiana Senate District",
-      "description": "The Indiana Senate district covering the point. NO ROSTER SHIPS IN THIS CHANGE, and the card says so: it names the district and links the General Assembly's own member directory rather than naming a senator this instance has not fetched. Recorded as gap in-general-assembly-roster; the Open States export lands in its own change with its own weekly workflow, the route every other instance took.",
+      "description": "The Indiana Senate district covering the point, and the senator it elects. in-senate-members.json, rebuilt weekly by CI from the General Assembly's own legislator feeds (iga.in.gov): each senator's name, party and page, and an e-mail address where the Assembly prints one. The Assembly prints no telephone or office for a senator. A seat its list leaves empty, or names two people for, names nobody.",
       "url": "https://districtry.com/in/sources.html#layer-in-senate",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
@@ -1563,7 +1563,7 @@ table.matrix code {
       "@id": "https://districtry.com/in/sources.html#dataset-in-house",
       "identifier": "in-house",
       "name": "Indiana House District",
-      "description": "The Indiana House district covering the point. NO ROSTER SHIPS IN THIS CHANGE — the same gap as the Senate layer (in-general-assembly-roster); the card names the district and links the chamber's own directory.",
+      "description": "The Indiana House district covering the point, and the representative it elects. in-house-members.json, rebuilt weekly by CI from the General Assembly's own legislator feeds (iga.in.gov): each representative's name, party and page, and the Statehouse telephone and e-mail address where the Assembly prints one.",
       "url": "https://districtry.com/in/sources.html#layer-in-house",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
