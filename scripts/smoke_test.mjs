@@ -5912,21 +5912,30 @@ try {
 
     // the SHIPPED city file, on a page that reads it: empty before a count,
     // so the card is November's alone; once it holds results for this
-    // precinct the card must offer both elections and show the later
+    // precinct the card must offer both elections and show the later.
+    // ON AN ELECTION NIGHT THIS PRECINCT MAY HOLD NO VOTE YET, and the card
+    // then prints its one sentence and no table. The first draft wanted a
+    // table whenever the file held races, so it failed on a rehearsed night
+    // with half the precincts counted (2026-11-15), which would have kept
+    // the first update of the night off the site. The file's own `reported`
+    // says which precincts hold a vote ("1"); with no `reported`, all do.
     {
       const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/chicago-election-results.json"), "utf8"));
       const lists = (shipped.contests || []).length > 0 && (shipped.precincts || []).includes(key);
       const later = lists && String(shipped.electionDate) > String(idx.electionDate) ? titleOf(shipped) : novTitle;
+      const counted = !shipped.reported || shipped.reported.charAt((shipped.precincts || []).indexOf(key)) === "1";
+      const sentence = "No votes from this precinct have been counted. The numbers below are the rest of Chicago's.";
       const pg = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`, async (p) => {
         await p.route(CITY_RESULTS_INDEX, (r) => r.continue());
       });
       await shows(pg, later, null);
       const got = await read(pg);
       await pg.close();
-      check(lists ? "the shipped city election file's results are offered beside November's, the later election shown"
+      check(lists ? "the shipped city election file's results are offered beside November's, the later election shown" +
+                      (counted ? "" : ", this precinct not counted yet")
                   : "the shipped city election file holds no results yet, and the card is November's alone",
             lists ? got.elections.length === 2 && got.elections.includes(titleOf(shipped)) && got.elections.includes(novTitle) &&
-                      got.election === later && got.table
+                      got.election === later && (counted ? got.table && !got.none : !got.table && got.none === sentence)
                   : got.elections.length === 0 && got.title === novTitle && got.table,
             brief(got));
     }

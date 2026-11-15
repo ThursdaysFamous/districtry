@@ -109,8 +109,6 @@ except ImportError:                                       # pragma: no cover
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import build_election_notices as notices  # noqa: E402
-# the limits validate_serp_lengths.py holds every page's title and description to
-from validate_serp_lengths import SERP_LIMITS  # noqa: E402
 from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
                            MARK_RE, preserved_from_disk, shared_head_block,
                            shell, THEMEBOOT_RE)
@@ -643,6 +641,17 @@ def join_words(items):
     if len(items) == 2:
         return "%s and %s" % tuple(items)
     return "%s and %s" % (", ".join(items[:-1]), items[-1])
+
+
+# What a search result shows of a title and a description, the limits
+# scripts/validate_serp_lengths.py holds every page to. THEY ARE WRITTEN HERE
+# AND NOT IMPORTED: that gate takes them from generate_metro_files, whose
+# import exits the process where jsonschema is not installed (SystemExit, which
+# the gate's `except Exception` does not catch), and the daily results jobs
+# that run this script install no jsonschema. A first draft imported them and
+# would have stopped every results job in the fleet. The gate measures the page
+# this writes, so a limit here larger than the gate's fails there.
+SERP_LIMITS = {"title": 60, "description": 155}
 
 
 def title_for(years, app_name):
