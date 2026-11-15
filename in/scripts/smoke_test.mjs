@@ -604,6 +604,74 @@ try {
     await context.close();
   }
 
+  // 2a-chambers. EACH CHAMBER CARD NAMES THE MEMBER ITS ROSTER NAMES, and
+  //     carries what the roster holds for that member: the party, the office's
+  //     first line where the roster has one, and an e-mail address as a mailto
+  //     link. What is expected is read from the shipped roster for the anchor
+  //     district, so a weekly refresh that changes a member changes what is
+  //     expected. A seat the roster records as naming nobody must say "No
+  //     member listed" and name no one. An office can sit behind a closed
+  //     disclosure, which innerText leaves out, so it is read from textContent.
+  {
+    const rosterFile = (file) => JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app", file), "utf8"));
+    const chambers = [
+      ["in-senate", "in-senate-members.json", "senator"],
+      ["in-house", "in-house-members.json", "representative"],
+    ];
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=${chambers.map((c) => c[0]).join(",")}`);
+    for (const [id, file, who] of chambers) {
+      const rec = rosterFile(file)[EXPECT_DISTRICT[id]] || {};
+      const members = (Array.isArray(rec.members) ? rec.members : [rec]).filter((m) => m && m.name);
+      const info = await cardText(page, id);
+      const dom = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        return {
+          all: el ? el.textContent.replace(/\s+/g, " ") : "",
+          mailto: el ? Array.from(el.querySelectorAll("a[href^='mailto:']"))
+            .map((a) => decodeURIComponent(a.getAttribute("href").slice(7)).toLowerCase()) : [],
+        };
+      }, id);
+      // The card lifts a line that is a telephone number and nothing else out
+      // of the office block and prints it as a dial link in its own format, so
+      // such a line is compared by its digits.
+      const officeShown = (line, all) => all.includes(line) ||
+        (/^[\d\s().+-]{10,}$/.test(line) && all.replace(/\D/g, "").includes(line.replace(/\D/g, "")));
+      if (members.length) {
+        const ok = members.every((m) =>
+          info.text.includes(m.name) &&
+          (!m.party || info.text.toLowerCase().includes(String(m.party).toLowerCase())) &&
+          (!(m.capitolOffice || [])[0] || officeShown(m.capitolOffice[0], dom.all)) &&
+          (!m.email || dom.mailto.includes(String(m.email).toLowerCase())));
+        check(`${id} card names the ${who} the roster names for District ${EXPECT_DISTRICT[id]}, with the party, office and e-mail it holds`,
+          !info.error && ok,
+          `names=${members.map((m) => m.name).join("; ")} mailto=${JSON.stringify(dom.mailto)} ${info.text.slice(0, 90)}`);
+      } else {
+        check(`${id} card says no member is listed for District ${EXPECT_DISTRICT[id]}, which the roster records as naming nobody`,
+          !info.error && !!rec.asOf && /No member listed/.test(info.text),
+          info.text.slice(0, 120));
+      }
+    }
+    await context.close();
+
+    // A ROSTER THAT FAILS TO LOAD NAMES NOBODY, while the district still
+    // classifies: the card degrades to the district and the chamber's own
+    // member list rather than inventing a name.
+    const [hid, hfile] = chambers[1];
+    const hrec = rosterFile(hfile)[EXPECT_DISTRICT[hid]] || {};
+    const hnames = (Array.isArray(hrec.members) ? hrec.members : [hrec]).map((m) => m && m.name).filter(Boolean);
+    const context2 = await browser.newContext({ serviceWorkers: "block" });
+    const page2 = await booted(context2, `${BASE}#point=${POINT}&layers=${hid}`, async (p) => {
+      await p.route("**/data/app/" + hfile, (r) => r.fulfill({ status: 503, body: "down" }));
+    });
+    const hinfo = await cardText(page2, hid);
+    check(`${hid} still classifies and names nobody when its roster fails`,
+      !hinfo.error && (hinfo.text || "").includes(EXPECT_DISTRICT[hid]) &&
+        hnames.length > 0 && hnames.every((n) => !(hinfo.text || "").includes(n)),
+      (hinfo.text || "").slice(0, 120));
+    await context2.close();
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

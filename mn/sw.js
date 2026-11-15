@@ -67,6 +67,8 @@ const ROSTER_URLS = [
   "./data/app/statewide-officials.json",
   "./data/app/election-results.json",
   "./data/app/congress-roster.json",
+  "./data/app/mn-senate-members.json",
+  "./data/app/mn-house-members.json",
   "./data/app/mn-county-commissioners.json",
   "./data/app/mn-swcd-supervisors.json",
   "./data/app/mn-city-councils.json",

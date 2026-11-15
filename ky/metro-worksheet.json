@@ -137,14 +137,14 @@
       "area_rank": 4,
       "rank_note": "38 Senate districts; they do not nest with the House, so the two chambers are independent tilings of the state",
       "source": {
-        "answers": "The Kentucky Senate district covering the point.",
+        "answers": "The Kentucky Senate district covering the point, and the senator it elects.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
           }
         ],
-        "people": "Not yet shipped. The card names the district and links the Kentucky Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap ky-legislature-roster.",
+        "people": "ky-senate-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each senator's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that senator alone.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -191,14 +191,14 @@
       "area_rank": 7,
       "rank_note": "100 House districts, drawn independently of the 38 Senate districts",
       "source": {
-        "answers": "The Kentucky House district covering the point.",
+        "answers": "The Kentucky House district covering the point, and the representative it elects.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
           }
         ],
-        "people": "Not yet shipped — same as the Senate above; the card links the Kentucky House's own member directory. Recorded as the coverage gap ky-legislature-roster.",
+        "people": "ky-house-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each representative's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that representative alone.",
         "applies": "Kentucky — statewide."
       }
     },
@@ -511,9 +511,19 @@
         "note": "U.S. House roster, refreshed weekly by update-ky-congress-roster.yml."
       },
       {
+        "file": "ky-senate-members.json",
+        "min_keys": 38,
+        "note": "Kentucky Senate roster, one record per district, refreshed weekly by update-ky-legislature-roster.yml."
+      },
+      {
+        "file": "ky-house-members.json",
+        "min_keys": 100,
+        "note": "Kentucky House roster, one record per district, refreshed weekly by update-ky-legislature-roster.yml."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
-        "note": "The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the fiscal courts, the two legislature rosters, and the county officers."
+        "note": "The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the gaps recorded for this instance."
       },
       {
         "file": "ky-judge-roster.json",
@@ -562,6 +572,11 @@
       "schedule": "Mon 13:55 UTC"
     },
     {
+      "file": "update-ky-legislature-roster.yml",
+      "purpose": "Kentucky Senate and House rosters (the General Assembly's own member lists and pages)",
+      "schedule": "Fri 09:43 UTC"
+    },
+    {
       "file": "update-ky-judges-roster.yml",
       "purpose": "Kentucky judges, keyed by the district or circuit each was elected from (Kentucky Court of Justice)",
       "schedule": "Tue 14:40 UTC"
@@ -598,7 +613,7 @@
     "canonical": "https://districtry.com/ky/"
   },
   "exports_name": "KentuckyExplorer",
-  "verified_date": "October 11, 2026",
+  "verified_date": "November 15, 2026",
   "population": {
     "index": "population/index.json"
   },
@@ -720,12 +735,12 @@
       {
         "label": "Kentucky Senate",
         "url": "https://legislature.ky.gov/Legislators/senate",
-        "note": "The member directory the Senate card links while no roster ships."
+        "note": "The Senate's own member list and member pages, which name each senator on the Senate card."
       },
       {
         "label": "Kentucky House of Representatives",
         "url": "https://legislature.ky.gov/Legislators/house-of-representatives",
-        "note": "The member directory the House card links while no roster ships."
+        "note": "The House's own member list and member pages, which name each representative on the House card."
       },
       {
         "label": "Kentucky Department for Local Government",

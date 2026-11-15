@@ -1141,7 +1141,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Sources last checked: <strong>October 11, 2026</strong></p>
+        <p class="verified">Sources last checked: <strong>November 15, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1165,11 +1165,11 @@ table.matrix code {
         </li>
         <li>
           <a href="https://legislature.ky.gov/Legislators/senate" target="_blank" rel="noopener">Kentucky Senate</a>
-          <span class="credit-note">The member directory the Senate card links while no roster ships.</span>
+          <span class="credit-note">The Senate's own member list and member pages, which name each senator on the Senate card.</span>
         </li>
         <li>
           <a href="https://legislature.ky.gov/Legislators/house-of-representatives" target="_blank" rel="noopener">Kentucky House of Representatives</a>
-          <span class="credit-note">The member directory the House card links while no roster ships.</span>
+          <span class="credit-note">The House's own member list and member pages, which name each representative on the House card.</span>
         </li>
         <li>
           <a href="https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm" target="_blank" rel="noopener">Kentucky Department for Local Government</a>
@@ -1233,13 +1233,13 @@ table.matrix code {
               </tr>
               <tr id="layer-ky-senate">
                 <th scope="row"><span class="layer-name">Kentucky Senate District</span><code>ky-senate</code></th>
-                <td data-label="What it answers">The Kentucky Senate district covering the point.</td>
+                <td data-label="What it answers">The Kentucky Senate district covering the point, and the senator it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not yet shipped. The card names the district and links the Kentucky Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap ky-legislature-roster.</td>
+                <td data-label="Who it names">ky-senate-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each senator's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that senator alone.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-ky-circuit-court">
@@ -1266,13 +1266,13 @@ table.matrix code {
               </tr>
               <tr id="layer-ky-house">
                 <th scope="row"><span class="layer-name">Kentucky House District</span><code>ky-house</code></th>
-                <td data-label="What it answers">The Kentucky House district covering the point.</td>
+                <td data-label="What it answers">The Kentucky House district covering the point, and the representative it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not yet shipped — same as the Senate above; the card links the Kentucky House's own member directory. Recorded as the coverage gap ky-legislature-roster.</td>
+                <td data-label="Who it names">ky-house-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each representative's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that representative alone.</td>
                 <td data-label="Where it applies">Kentucky — statewide.</td>
               </tr>
               <tr id="layer-fiscal-court">
@@ -1499,7 +1499,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-senate",
       "identifier": "ky-senate",
       "name": "Kentucky Senate District",
-      "description": "The Kentucky Senate district covering the point. Not yet shipped. The card names the district and links the Kentucky Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap ky-legislature-roster.",
+      "description": "The Kentucky Senate district covering the point, and the senator it elects. ky-senate-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each senator's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that senator alone.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-senate",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/ky/sources.html#catalog"
@@ -1565,7 +1565,7 @@ table.matrix code {
       "@id": "https://districtry.com/ky/sources.html#dataset-ky-house",
       "identifier": "ky-house",
       "name": "Kentucky House District",
-      "description": "The Kentucky House district covering the point. Not yet shipped — same as the Senate above; the card links the Kentucky House's own member directory. Recorded as the coverage gap ky-legislature-roster.",
+      "description": "The Kentucky House district covering the point, and the representative it elects. ky-house-members.json, rebuilt weekly by CI from the General Assembly's own member list and member pages (legislature.ky.gov): each representative's name, party, Capitol Annex office and its telephone, legislative e-mail address and page, and a telephone the page prints for that representative alone.",
       "url": "https://districtry.com/ky/sources.html#layer-ky-house",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/ky/sources.html#catalog"

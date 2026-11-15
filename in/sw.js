@@ -65,6 +65,8 @@ const GEOMETRY_URLS = [
 const ROSTER_URLS = [
   "./data/app/statewide-officials.json",
   "./data/app/congress-roster.json",
+  "./data/app/in-senate-members.json",
+  "./data/app/in-house-members.json",
   "./data/app/in-county-commissioners.json",
   "./data/app/in-county-councils.json",
   "./data/app/in-city-officials.json",

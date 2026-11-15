@@ -18,7 +18,7 @@
   "stack-not-token": 9,
   "tls-chain": 1,
   "token-ok": 256,
-  "token-refused": 4,
+  "token-refused": 5,
   "token-refused-and-stack": 41
  },
  "hosts": {
@@ -1944,6 +1944,38 @@
    "callers": {
     "ia/scripts/ia_county_auditor_scraper.py": "self"
    }
+  },
+  "iga.in.gov": {
+   "host": "iga.in.gov",
+   "url": "https://iga.in.gov/api/getSessionYears",
+   "cells": {
+    "requests+token": {
+     "kind": "hollow",
+     "note": "HTTP 200, 691 bytes"
+    },
+    "stdlib+token": {
+     "kind": "hollow",
+     "note": "HTTP 200, 691 bytes"
+    },
+    "requests+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 4178 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 200)"
+   },
+   "verdict": "token-refused",
+   "note": "requests+token HTTP 200, 691 bytes; stdlib+token HTTP 200, 691 bytes; requests+chrome HTTP 200, 4178 bytes",
+   "root": {
+    "kind": "hollow",
+    "note": "HTTP 200, 691 bytes"
+   },
+   "callers": {
+    "in/scripts/build_in_legislature_roster.py": "browser",
+    "in/scripts/validate_sources.py": "self"
+   },
+   "measured": "2026-11-15"
   },
   "il-clark.accessliberty.com": {
    "host": "il-clark.accessliberty.com",

@@ -149,7 +149,7 @@ PROVENANCE = [
         "note": (
             "Delegation roster from the public-domain congress-legislators "
             "project; refreshed weekly by update-ky-congress-roster.yml as a "
-            "reviewed pull request. It is the only roster this instance ships."
+            "reviewed pull request."
         ),
     },
     {
@@ -158,9 +158,28 @@ PROVENANCE = [
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1",
         "note": (
             "38 state senate districts from TIGERweb's SLDU layer, built in the "
-            "same combine-files run as the House and Congress. NO ROSTER SHIPS: "
-            "the card names the district and links the General Assembly's own "
-            "member directory, recorded as gap ky-legislature-roster."
+            "same combine-files run as the House and Congress."
+        ),
+    },
+    {
+        "layer": "ky-senate",
+        "app_file": "ky-senate-members.json",
+        "source_url": "https://legislature.ky.gov/Legislators/senate",
+        "note": (
+            "The General Assembly's own list of senators, each linking the "
+            "senator's own page (the page's mailing address and home city "
+            "are never read); rebuilt weekly by "
+            "ky/scripts/build_ky_legislature_roster.py."
+        ),
+    },
+    {
+        "layer": "ky-house",
+        "app_file": "ky-house-members.json",
+        "source_url": "https://legislature.ky.gov/Legislators/house-of-representatives",
+        "note": (
+            "The General Assembly's own list of representatives and their "
+            "pages, read by the same builder; a seat the list does not fill "
+            "is shipped as a dated record naming nobody."
         ),
     },
     {

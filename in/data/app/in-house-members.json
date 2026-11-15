@@ -1,0 +1,749 @@
+{
+  "1": {
+    "name": "Carolyn Jackson",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_carolyn_jackson_1",
+    "capitolOffice": [
+      "317-232-9712"
+    ]
+  },
+  "2": {
+    "name": "Earl Harris",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_earl_harris_1",
+    "capitolOffice": [
+      "317-232-9828"
+    ]
+  },
+  "3": {
+    "name": "Ragen Hatcher",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ragen_hatcher_1",
+    "capitolOffice": [
+      "317-232-9715"
+    ]
+  },
+  "4": {
+    "name": "Ryan Kominakis",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ryan_kominakis_1"
+  },
+  "5": {
+    "name": "Alex Wait",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_alex_wait_1"
+  },
+  "6": {
+    "name": "Maureen Bauer",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_maureen_bauer_1",
+    "capitolOffice": [
+      "317-232-9770"
+    ]
+  },
+  "7": {
+    "name": "Jake Teshka",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jake_teshka_1",
+    "capitolOffice": [
+      "317-232-9650"
+    ]
+  },
+  "8": {
+    "name": "Ryan Dvorak",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ryan_dvorak_697",
+    "capitolOffice": [
+      "317-232-9723"
+    ],
+    "email": "rdvorak@iga.state.in.us"
+  },
+  "9": {
+    "name": "Randy Novak",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_randy_novak_1",
+    "capitolOffice": [
+      "(317) 232-9629"
+    ]
+  },
+  "10": {
+    "name": "Chuck Moseley",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_charles_moseley_973",
+    "capitolOffice": [
+      "317-232-9771"
+    ]
+  },
+  "11": {
+    "name": "Mike Aylesworth",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_mike_aylesworth_1",
+    "capitolOffice": [
+      "317-232-9742"
+    ]
+  },
+  "12": {
+    "name": "Mike Andrade",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_mike_andrade_1",
+    "capitolOffice": [
+      "317-232-9724"
+    ]
+  },
+  "13": {
+    "name": "Matt Commons",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_matt_commons_1",
+    "capitolOffice": [
+      "317-232-9626"
+    ]
+  },
+  "14": {
+    "name": "Vernon Smith",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_vernon_smith_230",
+    "capitolOffice": [
+      "317-232-9731"
+    ],
+    "email": "vsmith@iga.state.in.us"
+  },
+  "15": {
+    "name": "Harold Slager",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_harold_slager_1111",
+    "capitolOffice": [
+      "317-232-9719"
+    ],
+    "email": "hal@voteslager.com"
+  },
+  "16": {
+    "name": "Kendell Culp",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_kendell_culp_1",
+    "capitolOffice": [
+      "317-232-9819"
+    ]
+  },
+  "17": {
+    "name": "Jack Jordan",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jack_jordan_1",
+    "capitolOffice": [
+      "317-232-9772"
+    ]
+  },
+  "18": {
+    "name": "David Abbott",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_david_abbott_1",
+    "capitolOffice": [
+      "317-232-9762"
+    ]
+  },
+  "19": {
+    "name": "Nick Neal",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_nick_neal_1"
+  },
+  "20": {
+    "name": "Jim Pressel",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jim_pressel_1",
+    "capitolOffice": [
+      "317-232-9648"
+    ]
+  },
+  "21": {
+    "name": "Timothy Wesco",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_timothy_wesco_1025",
+    "capitolOffice": [
+      "317-232-9676"
+    ],
+    "email": "tim@timothywesco.com"
+  },
+  "22": {
+    "name": "Craig Snow",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_craig_snow_1",
+    "capitolOffice": [
+      "317-234-2993"
+    ]
+  },
+  "23": {
+    "name": "Ethan Manning",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ethan_manning_1",
+    "capitolOffice": [
+      "317-232-9711"
+    ]
+  },
+  "24": {
+    "name": "Racheal Bleicher",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_racheal_bleicher_1"
+  },
+  "25": {
+    "name": "Tiffany Stoner",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_tiffany_stoner_1"
+  },
+  "26": {
+    "name": "Chris Campbell",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_christine_campbell_1",
+    "capitolOffice": [
+      "(317) 232-9606"
+    ]
+  },
+  "27": {
+    "name": "Sheila Klinker",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_sheila_klinker_212",
+    "capitolOffice": [
+      "317-232-9644"
+    ],
+    "email": "sklinker@iga.state.in.us"
+  },
+  "28": {
+    "name": "Jeffrey Thompson",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jeffrey_thompson_529",
+    "capitolOffice": [
+      "317-232-9651"
+    ],
+    "email": "jeff.thompson@iga.in.gov"
+  },
+  "29": {
+    "name": "Alaina Shonkwiler",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_alaina_shonkwiler_1",
+    "capitolOffice": [
+      "317-232-9611"
+    ]
+  },
+  "30": {
+    "name": "Paula Davis",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_paula_davis_1"
+  },
+  "31": {
+    "name": "Lori Goss-Reaves",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_lori_goss_reaves_1",
+    "capitolOffice": [
+      "317-232-9509"
+    ]
+  },
+  "32": {
+    "name": "Victoria Garcia Wilburn",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_victoria_garcia_wilburn_1",
+    "capitolOffice": [
+      "317-232-9750"
+    ]
+  },
+  "33": {
+    "name": "J.D. Prescott",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_john_prescott_1",
+    "capitolOffice": [
+      "317-232-9751"
+    ]
+  },
+  "34": {
+    "name": "Sara Gullion",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_sara_gullion_1"
+  },
+  "35": {
+    "name": "Elizabeth Rowray",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_elizabeth_rowray_1",
+    "capitolOffice": [
+      "317-232-9748"
+    ]
+  },
+  "36": {
+    "name": "Kim Townsend",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_kim_townsend_1"
+  },
+  "37": {
+    "name": "Lauren Cole",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_lauren_cole_1"
+  },
+  "38": {
+    "name": "Heath VanNatter",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_heath_vannatter_956",
+    "capitolOffice": [
+      "317-232-9775"
+    ],
+    "email": "vannatterv@aol.com"
+  },
+  "39": {
+    "name": "Lindsay Gramlich",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_lindsay_gramlich_1"
+  },
+  "40": {
+    "name": "William Colteryahn",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_william_colteryahn_1"
+  },
+  "41": {
+    "name": "Mark Genda",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_mark_genda_1",
+    "capitolOffice": [
+      "317-232-9767"
+    ]
+  },
+  "42": {
+    "name": "Tim Yocum",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_tim_yocum_1",
+    "capitolOffice": [
+      "317-232-9986"
+    ]
+  },
+  "43": {
+    "name": "Tonya Pfaff",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_tonya_pfaff_1",
+    "capitolOffice": [
+      "317-232-9780"
+    ]
+  },
+  "44": {
+    "name": "Beau Baird",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_beau_baird_1",
+    "capitolOffice": [
+      "317-232-9627"
+    ]
+  },
+  "45": {
+    "name": "Kellie Streeter",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_kellie_streeter_1"
+  },
+  "46": {
+    "name": "Robert Heaton",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_robert_heaton_1030",
+    "capitolOffice": [
+      "317-232-9765"
+    ],
+    "email": "bob.heaton@frontier.com"
+  },
+  "47": {
+    "name": "Robb Greene",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_robb_greene_1",
+    "capitolOffice": [
+      "317-232-9789"
+    ]
+  },
+  "48": {
+    "name": "Doug Miller",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_doug_miller_1",
+    "capitolOffice": [
+      "317-234-9139"
+    ]
+  },
+  "49": {
+    "name": "Joanna King",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_joanna_king_1",
+    "capitolOffice": [
+      "317-232-9657"
+    ]
+  },
+  "50": {
+    "name": "Lorissa Sweet",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_lorissa_sweet_1",
+    "capitolOffice": [
+      "317-232-9734"
+    ]
+  },
+  "51": {
+    "name": "Tony Isa",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_tony_isa_1",
+    "capitolOffice": [
+      "317-232-9736"
+    ]
+  },
+  "52": {
+    "name": "Ben Smaltz",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ben_smaltz_1118",
+    "capitolOffice": [
+      "317-234-9450"
+    ],
+    "email": "vote@bensmaltz.com"
+  },
+  "53": {
+    "name": "Ethan Lawson",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ethan_lawson_1",
+    "capitolOffice": [
+      "317-232-9747"
+    ]
+  },
+  "54": {
+    "name": "Cory Criswell",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_cory_criswell_1",
+    "capitolOffice": [
+      "317-232-9850"
+    ]
+  },
+  "55": {
+    "name": "Lindsay Patterson",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_lindsay_patterson_1",
+    "capitolOffice": [
+      "317-232-9740"
+    ]
+  },
+  "56": {
+    "name": "Randy Retter",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_randy_retter_1"
+  },
+  "57": {
+    "name": "Wes Bennett",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_wes_bennett_1"
+  },
+  "58": {
+    "name": "John Reed",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_john_reed_1"
+  },
+  "59": {
+    "name": "Ryan Lauer",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_ryan_lauer_1",
+    "capitolOffice": [
+      "317-232-9800"
+    ]
+  },
+  "60": {
+    "name": "Peggy Mayfield",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_peggy_mayfield_1121",
+    "capitolOffice": [
+      "317-232-9760"
+    ]
+  },
+  "61": {
+    "name": "Matt Pierce",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_matthew_pierce_708",
+    "capitolOffice": [
+      "317-232-9656"
+    ],
+    "email": "mpierce@iga.state.in.us"
+  },
+  "62": {
+    "name": "Amy Huffman Oliver",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_amy_huffmanoliver_1"
+  },
+  "63": {
+    "name": "Amy Kippenbrock",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_amy_kippenbrock_1"
+  },
+  "64": {
+    "name": "Matt Hostettler",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_matthew_hostettler_1",
+    "capitolOffice": [
+      "317-232-9838"
+    ]
+  },
+  "65": {
+    "name": "Chris May",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_chris_may_1",
+    "capitolOffice": [
+      "317-232-9764"
+    ]
+  },
+  "66": {
+    "name": "Zach Payne",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_zach_payne_1",
+    "capitolOffice": [
+      "317-232-9754"
+    ]
+  },
+  "67": {
+    "name": "Alex Zimmerman",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_alex_zimmerman_1",
+    "capitolOffice": [
+      "317-232-9783"
+    ]
+  },
+  "68": {
+    "name": "Garrett Bascom",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_garrett_bascom_1",
+    "capitolOffice": [
+      "317-232-9696"
+    ]
+  },
+  "69": {
+    "name": "Jim Lucas",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jim_lucas_1123",
+    "capitolOffice": [
+      "317-234-9028"
+    ],
+    "email": "jim@theawningguyinc.com"
+  },
+  "70": {
+    "name": "Scott Fluhr",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_scott_fluhr_1"
+  },
+  "71": {
+    "name": "Wendy Dant Chesser",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_wendy_dant_chesser_1",
+    "capitolOffice": [
+      "(317) 232-9716"
+    ]
+  },
+  "72": {
+    "name": "Michele Henry",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_michele_henry_1"
+  },
+  "73": {
+    "name": "Jennifer Meltzer",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jennifer_meltzer_1",
+    "capitolOffice": [
+      "317-232-9782"
+    ]
+  },
+  "74": {
+    "name": "Steve Bartels",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_stephen_bartels_1",
+    "capitolOffice": [
+      "317-232-9863"
+    ]
+  },
+  "75": {
+    "name": "Cindy Ledbetter",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_cindy_ledbetter_1",
+    "capitolOffice": [
+      "317-232-9718"
+    ]
+  },
+  "76": {
+    "name": "Wendy McNamara",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_wendy_mcnamara_1046",
+    "capitolOffice": [
+      "317-232-9802"
+    ],
+    "email": "wendy.m.mcnamara@gmail.com"
+  },
+  "77": {
+    "name": "Alex Burton",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_alex_burton_1",
+    "capitolOffice": [
+      "317-232-9823"
+    ]
+  },
+  "78": {
+    "name": "Timothy O'Brien",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_timothy_obrien_1",
+    "capitolOffice": [
+      "317-232-9759"
+    ]
+  },
+  "79": {
+    "name": "Matt Lehman",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_matthew_lehman_987",
+    "capitolOffice": [
+      "317-234-9380"
+    ],
+    "email": "matt@bixlerinsurance.com"
+  },
+  "80": {
+    "name": "Philip GiaQuinta",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_philip_giaquinta_879",
+    "capitolOffice": [
+      "(317) 232-9727"
+    ]
+  },
+  "81": {
+    "name": "Martin Carbaugh",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_martin_carbaugh_1125",
+    "capitolOffice": [
+      "317-232-0404"
+    ],
+    "email": "martin.sally.carbaugh@gmail.com"
+  },
+  "82": {
+    "name": "Kyle Miller",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_kyle_miller_1",
+    "capitolOffice": [
+      "317-232-9737"
+    ]
+  },
+  "83": {
+    "name": "Chris Judy",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_christopher_judy_1",
+    "capitolOffice": [
+      "317-232-9741"
+    ]
+  },
+  "84": {
+    "name": "Misti Meehan",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_misti_meehan_1"
+  },
+  "85": {
+    "name": "Dave Heine",
+    "party": "Republican",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_dave_heine_1",
+    "capitolOffice": [
+      "317-232-9743"
+    ]
+  },
+  "86": {
+    "name": "Edward DeLaney",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_edward_delaney_988",
+    "capitolOffice": [
+      "317-232-9818"
+    ]
+  },
+  "87": {
+    "name": "Carey Hamilton",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_carey_hamilton_1",
+    "capitolOffice": [
+      "317-232-9781"
+    ]
+  },
+  "88": {
+    "name": "Stephanie Yocum",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_stephanie_yocum_1"
+  },
+  "89": {
+    "name": "Mitch Gore",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_mitch_gore_1",
+    "capitolOffice": [
+      "317-232-9761"
+    ]
+  },
+  "90": {
+    "name": "David Boyd",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_david_boyd_1"
+  },
+  "91": {
+    "name": "Jarren Hurt",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_jarren_hurt_1"
+  },
+  "92": {
+    "name": "Renee Pack",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_renee_pack_1",
+    "capitolOffice": [
+      "317-232-9707"
+    ]
+  },
+  "93": {
+    "name": "Eva Rosberg",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_eva_rosberg_1"
+  },
+  "94": {
+    "name": "Cherrish Pryor",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_cherrish_pryor_990",
+    "capitolOffice": [
+      "(317) 232-9728"
+    ],
+    "email": "cherrishpryor@comcast.net"
+  },
+  "95": {
+    "name": "John Bartlett",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_john_bartlett_942",
+    "capitolOffice": [
+      "317-232-9710"
+    ]
+  },
+  "96": {
+    "name": "Gregory Porter",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_gregory_porter_115",
+    "capitolOffice": [
+      "317-232-9739"
+    ],
+    "email": "gporter@iga.state.in.us"
+  },
+  "97": {
+    "name": "Justin Moed",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_justin_moed_908",
+    "capitolOffice": [
+      "317-232-9768"
+    ],
+    "email": "jwmoed@gmail.com"
+  },
+  "98": {
+    "name": "Robin Shackleford",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_robin_shackleford_1128",
+    "capitolOffice": [
+      "(317) 232-9874"
+    ],
+    "email": "rshackleford1@att.net"
+  },
+  "99": {
+    "name": "Vanessa Summers",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_vanessa_summers_231",
+    "capitolOffice": [
+      "317-232-9829"
+    ],
+    "email": "vsummers@iga.state.in.us"
+  },
+  "100": {
+    "name": "Blake Johnson",
+    "party": "Democratic",
+    "url": "https://iga.in.gov/legislative/2027/legislators/legislator_blake_johnson_1",
+    "capitolOffice": [
+      "317-232-9749"
+    ]
+  }
+}

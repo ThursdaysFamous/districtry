@@ -1,0 +1,2275 @@
+{
+  "1A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Burkel",
+        "party": "Republican",
+        "email": "rep.john.burkel@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9635"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15538"
+      }
+    ]
+  },
+  "1B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steve Gander",
+        "party": "Republican",
+        "email": "rep.steve.gander@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5091"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15631"
+      }
+    ]
+  },
+  "2A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bidal Duran",
+        "party": "Republican",
+        "email": "rep.bidal.duran@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4265"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15629"
+      }
+    ]
+  },
+  "2B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matt Bliss",
+        "party": "Republican",
+        "email": "rep.matt.bliss@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5516"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15458"
+      }
+    ]
+  },
+  "3A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Roger Skraba",
+        "party": "Republican",
+        "email": "rep.roger.skraba@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2190"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15623"
+      }
+    ]
+  },
+  "3B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Natalie Zeleznikar",
+        "party": "Republican",
+        "email": "rep.natalie.zeleznikar@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2676"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15624"
+      }
+    ]
+  },
+  "4A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Heather Keeler",
+        "party": "Democratic-Farmer-Labor",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5515"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15539"
+      }
+    ]
+  },
+  "4B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Joy",
+        "party": "Republican",
+        "email": "rep.jim.joy@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6829"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15591"
+      }
+    ]
+  },
+  "5A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Krista Knudsen",
+        "party": "Republican",
+        "email": "rep.krista.knudsen@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9918"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15592"
+      }
+    ]
+  },
+  "5B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Wiener",
+        "party": "Republican",
+        "email": "rep.mike.wiener@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4293"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15593"
+      }
+    ]
+  },
+  "6A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ben Davis",
+        "party": "Republican",
+        "email": "rep.ben.davis@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0172"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15594"
+      }
+    ]
+  },
+  "6B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Josh Heintzeman",
+        "party": "Republican",
+        "email": "rep.josh.heintzeman@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4333"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15435"
+      }
+    ]
+  },
+  "7A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Spencer Igo",
+        "party": "Republican",
+        "email": "rep.spencer.igo@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4936"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15540"
+      }
+    ]
+  },
+  "7B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cal Warwas",
+        "party": "Republican",
+        "email": "rep.cal.warwas@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0170"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15648"
+      }
+    ]
+  },
+  "8A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Pete Johnson",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.pete.johnson@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4246"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15636"
+      }
+    ]
+  },
+  "8B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Liish Kozlowski",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.liish.kozlowski@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2228"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15595"
+      }
+    ]
+  },
+  "9A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeff Backer",
+        "party": "Republican",
+        "email": "rep.jeff.backer@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4929"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15428"
+      }
+    ]
+  },
+  "9B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Murphy",
+        "party": "Republican",
+        "email": "rep.tom.murphy@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4946"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15596"
+      }
+    ]
+  },
+  "10A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ron Kresha",
+        "party": "Republican",
+        "email": "rep.ron.kresha@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4247"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15404"
+      }
+    ]
+  },
+  "10B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Isaac Schultz",
+        "party": "Republican",
+        "email": "rep.isaac.schultz@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6746"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15597"
+      }
+    ]
+  },
+  "11A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeff Dotseth",
+        "party": "Republican",
+        "email": "rep.jeff.dotseth@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4308"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15598"
+      }
+    ]
+  },
+  "11B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Nathan Nelson",
+        "party": "Republican",
+        "email": "rep.nathan.nelson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0518"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15534"
+      }
+    ]
+  },
+  "12A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Anderson",
+        "party": "Republican",
+        "email": "rep.paul.anderson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4317"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15301"
+      }
+    ]
+  },
+  "12B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Franson",
+        "party": "Republican",
+        "email": "rep.mary.franson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3201"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15347"
+      }
+    ]
+  },
+  "13A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lisa Demuth",
+        "party": "Republican",
+        "email": "rep.lisa.demuth@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4373"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15498"
+      }
+    ]
+  },
+  "13B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tim O'Driscoll",
+        "party": "Republican",
+        "email": "rep.tim.odriscoll@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7808"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15364"
+      }
+    ]
+  },
+  "14A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bernie Perryman",
+        "party": "Republican",
+        "email": "rep.bernie.perryman@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6316"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15599"
+      }
+    ]
+  },
+  "14B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dan Wolgamott",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.dan.wolgamott@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6612"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15499"
+      }
+    ]
+  },
+  "15A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Chris Swedzinski",
+        "party": "Republican",
+        "email": "rep.chris.swedzinski@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5374"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15369"
+      }
+    ]
+  },
+  "15B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Torkelson",
+        "party": "Republican",
+        "email": "rep.paul.torkelson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9303"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15304"
+      }
+    ]
+  },
+  "16A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Scott Van Binsbergen",
+        "party": "Republican",
+        "email": "rep.scott.vanbinsbergen@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4344"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15647"
+      }
+    ]
+  },
+  "16B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dave Baker",
+        "party": "Republican",
+        "email": "rep.dave.baker@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6206"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15429"
+      }
+    ]
+  },
+  "17A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dawn Gillman",
+        "party": "Republican",
+        "email": "rep.dawn.gillman@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4228"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15600"
+      }
+    ]
+  },
+  "17B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bobbie Harder",
+        "party": "Republican",
+        "email": "rep.bobbie.harder@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4229"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15601"
+      }
+    ]
+  },
+  "18A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Erica Schwartz",
+        "party": "Republican",
+        "email": "rep.erica.schwartz@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8634"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15644"
+      }
+    ]
+  },
+  "18B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Luke Frederick",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.luke.frederick@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3248"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15542"
+      }
+    ]
+  },
+  "19A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Keith Allen",
+        "party": "Republican",
+        "email": "rep.keith.allen@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8237"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15627"
+      }
+    ]
+  },
+  "19B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Sexton",
+        "party": "Republican",
+        "email": "rep.tom.sexton@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5368"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15645"
+      }
+    ]
+  },
+  "20A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Pam Altendorf",
+        "party": "Republican",
+        "email": "rep.pam.altendorf@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8635"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15602"
+      }
+    ]
+  },
+  "20B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Jacob",
+        "party": "Republican",
+        "email": "rep.steven.jacob@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2273"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15603"
+      }
+    ]
+  },
+  "21A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joe Schomacker",
+        "party": "Republican",
+        "email": "rep.joe.schomacker@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5505"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15367"
+      }
+    ]
+  },
+  "21B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Marj Fogelman",
+        "party": "Republican",
+        "email": "rep.marj.fogelman@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5373"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15604"
+      }
+    ]
+  },
+  "22A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bjorn Olson",
+        "party": "Republican",
+        "email": "rep.bjorn.olson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3240"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15544"
+      }
+    ]
+  },
+  "22B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Terry Stier",
+        "party": "Republican",
+        "email": "rep.terry.stier@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7065"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15646"
+      }
+    ]
+  },
+  "23A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peggy Bennett",
+        "party": "Republican",
+        "email": "rep.peggy.bennett@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8216"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15430"
+      }
+    ]
+  },
+  "23B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patricia Mueller",
+        "party": "Republican",
+        "email": "rep.patricia.mueller@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4193"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15561"
+      }
+    ]
+  },
+  "24A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Duane Quam",
+        "party": "Republican",
+        "email": "rep.duane.quam@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9236"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15366"
+      }
+    ]
+  },
+  "24B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tina Liebling",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.tina.liebling@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0573"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/12268"
+      }
+    ]
+  },
+  "25A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kim Hicks",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kim.hicks@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4378"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15605"
+      }
+    ]
+  },
+  "25B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Andy Smith",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.andy.smith@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9249"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15606"
+      }
+    ]
+  },
+  "26A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Aaron Repinski",
+        "party": "Republican",
+        "email": "rep.aaron.repinski@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8637"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15641"
+      }
+    ]
+  },
+  "26B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Greg Davids",
+        "party": "Republican",
+        "email": "rep.greg.davids@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9278"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/10123"
+      }
+    ]
+  },
+  "27A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Shane Mekeland",
+        "party": "Republican",
+        "email": "rep.shane.mekeland@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2451"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15500"
+      }
+    ]
+  },
+  "27B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bryan Lawrence",
+        "party": "Republican",
+        "email": "rep.bryan.lawrence@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5364"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15626"
+      }
+    ]
+  },
+  "28A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jimmy Gordon",
+        "party": "Republican",
+        "email": "rep.jimmy.gordon@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4346"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15632"
+      }
+    ]
+  },
+  "28B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Max Rymer",
+        "party": "Republican",
+        "email": "rep.max.rymer@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5377"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15643"
+      }
+    ]
+  },
+  "29A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joe McDonald",
+        "party": "Republican",
+        "email": "rep.joe.mcdonald@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4336"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15360"
+      }
+    ]
+  },
+  "29B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Marion Rarick",
+        "party": "Republican",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5063"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15409"
+      }
+    ]
+  },
+  "30A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Walter Hudson",
+        "party": "Republican",
+        "email": "rep.walter.hudson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-1534"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15607"
+      }
+    ]
+  },
+  "30B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Novotny",
+        "party": "Republican",
+        "email": "rep.paul.novotny@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4237"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15536"
+      }
+    ]
+  },
+  "31A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Harry Niska",
+        "party": "Republican",
+        "email": "rep.harry.niska@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2439"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15608"
+      }
+    ]
+  },
+  "31B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peggy Scott",
+        "party": "Republican",
+        "email": "rep.peggy.scott@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4231"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15314"
+      }
+    ]
+  },
+  "32A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Nolan West",
+        "party": "Republican",
+        "email": "rep.nolan.west@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4226"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15476"
+      }
+    ]
+  },
+  "32B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matt Norris",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.matt.norris@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2907"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15609"
+      }
+    ]
+  },
+  "33A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patti Anderson",
+        "party": "Republican",
+        "email": "rep.patti.anderson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3018"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15610"
+      }
+    ]
+  },
+  "33B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Josiah Hill",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.josiah.hill@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4124"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15611"
+      }
+    ]
+  },
+  "34A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Danny Nadeau",
+        "party": "Republican",
+        "email": "rep.danny.nadeau@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4315"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15612"
+      }
+    ]
+  },
+  "34B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Xp Lee",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.xp.lee@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4280"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15652"
+      }
+    ]
+  },
+  "35A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Zack Stephenson",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.zack.stephenson@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5513"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15507"
+      }
+    ]
+  },
+  "35B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kari Rehrauer",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kari.rehrauer@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-1729"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15640"
+      }
+    ]
+  },
+  "36A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Elliott Engen",
+        "party": "Republican",
+        "email": "rep.elliott.engen@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-2365"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15613"
+      }
+    ]
+  },
+  "36B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brion Curran",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.brion.curran@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4342"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15614"
+      }
+    ]
+  },
+  "37A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kristin Robbins",
+        "party": "Republican",
+        "email": "rep.kristin.robbins@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7806"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15504"
+      }
+    ]
+  },
+  "37B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kristin Bahner",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kristin.bahner@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5502"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15505"
+      }
+    ]
+  },
+  "38A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Huldah Momanyi-Hiltsley",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.huldah.momanyi-hiltsley@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3751"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15634"
+      }
+    ]
+  },
+  "38B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Samantha Vang",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.samantha.vang@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3709"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15510"
+      }
+    ]
+  },
+  "39A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Erin Koegel",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.erin.koegel@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5369"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15465"
+      }
+    ]
+  },
+  "39B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sandra Feist",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.sandra.feist@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4331"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15547"
+      }
+    ]
+  },
+  "40A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kelly Moller",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kelly.moller@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0141"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15511"
+      }
+    ]
+  },
+  "40B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Gottfried",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.david.gottfried@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7153"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15650"
+      }
+    ]
+  },
+  "41A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Wayne Johnson",
+        "party": "Republican",
+        "email": "rep.wayne.johnson@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4244"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15637"
+      }
+    ]
+  },
+  "41B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Dippel",
+        "party": "Republican",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3135"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15628"
+      }
+    ]
+  },
+  "42A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ned Carroll",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.ned.carroll@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5510"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15617"
+      }
+    ]
+  },
+  "42B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ginny Klevorn",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.ginny.klevorn@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5511"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15512"
+      }
+    ]
+  },
+  "43A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cedrick Frazier",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.cedrick.frazier@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4255"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15548"
+      }
+    ]
+  },
+  "43B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Freiberg",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.mike.freiberg@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4176"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15398"
+      }
+    ]
+  },
+  "44A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peter Fischer",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.peter.fischer@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5363"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15396"
+      }
+    ]
+  },
+  "44B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Leon Lillie",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.leon.lillie@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-1188"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/12269"
+      }
+    ]
+  },
+  "45A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Andrew Myers",
+        "party": "Republican",
+        "email": "rep.andrew.myers@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9188"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15618"
+      }
+    ]
+  },
+  "45B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patty Acomb",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.patty.acomb@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9934"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15513"
+      }
+    ]
+  },
+  "46A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Larry Kraft",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.larry.kraft@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7026"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15619"
+      }
+    ]
+  },
+  "46B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cheryl Youakim",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.cheryl.youakim@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9889"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15450"
+      }
+    ]
+  },
+  "47A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Shelley Buck",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.shelley.buck@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7807"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15655"
+      }
+    ]
+  },
+  "47B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ethan Cha",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.ethan.cha@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-1147"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15621"
+      }
+    ]
+  },
+  "48A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Nash",
+        "party": "Republican",
+        "email": "rep.jim.nash@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4282"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15441"
+      }
+    ]
+  },
+  "48B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lucy Rehm",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.lucy.rehm@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5066"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15622"
+      }
+    ]
+  },
+  "49A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alex Falconer",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.alex.falconer@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3964"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15630"
+      }
+    ]
+  },
+  "49B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Carlie Kotyza-Witthuhn",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.carlie.kotyza-witthuhn@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7449"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15515"
+      }
+    ]
+  },
+  "50A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Julie Greene",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.julie.greene@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4363"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15633"
+      }
+    ]
+  },
+  "50B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steve Elkins",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.steve.elkins@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7803"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15517"
+      }
+    ]
+  },
+  "51A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Howard",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.michael.howard@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7158"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15518"
+      }
+    ]
+  },
+  "51B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Nathan Coulter",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.nathan.coulter@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4218"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15567"
+      }
+    ]
+  },
+  "52A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Liz Reyer",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.liz.reyer@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4128"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15549"
+      }
+    ]
+  },
+  "52B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bianca Virnig",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.bianca.virnig@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4192"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15625"
+      }
+    ]
+  },
+  "53A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Frances Clardy",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.mary.frances.clardy@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3533"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15568"
+      }
+    ]
+  },
+  "53B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rick Hansen",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.rick.hansen@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6828"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/12282"
+      }
+    ]
+  },
+  "54A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brad Tabke",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.brad.tabke@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8872"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15523"
+      }
+    ]
+  },
+  "54B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ben Bakeberg",
+        "party": "Republican",
+        "email": "rep.ben.bakeberg@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5185"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15569"
+      }
+    ]
+  },
+  "55A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jessica Hanson",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.jessica.hanson@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4212"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15563"
+      }
+    ]
+  },
+  "55B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kaela Berg",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kaela.berg@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5387"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15550"
+      }
+    ]
+  },
+  "56A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Robert Bierman",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.robert.bierman@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5506"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15526"
+      }
+    ]
+  },
+  "56B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Huot",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.john.huot@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4306"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15527"
+      }
+    ]
+  },
+  "57A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jon Koznick",
+        "party": "Republican",
+        "email": "rep.jon.koznick@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-6926"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15436"
+      }
+    ]
+  },
+  "57B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeff Witte",
+        "party": "Republican",
+        "email": "rep.jeff.witte@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4240"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15570"
+      }
+    ]
+  },
+  "58A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kristi Pursell",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.kristi.pursell@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0171"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15571"
+      }
+    ]
+  },
+  "58B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Drew Roach",
+        "party": "Republican",
+        "email": "rep.drew.roach@house.mn.gov",
+        "capitolOffice": [
+          "2nd Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-1069"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15642"
+      }
+    ]
+  },
+  "59A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Fue Lee",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.fue.lee@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4262"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15468"
+      }
+    ]
+  },
+  "59B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Esther Agbaje",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.esther.agbaje@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8659"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15551"
+      }
+    ]
+  },
+  "60A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sydney Jordan",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.sydney.jordan@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4219"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15535"
+      }
+    ]
+  },
+  "60B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mohamud Noor",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.mohamud.noor@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4257"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15528"
+      }
+    ]
+  },
+  "61A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Katie Jones",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.katie.jones@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9281"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15638"
+      }
+    ]
+  },
+  "61B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jamie Long",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.jamie.long@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5375"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15529"
+      }
+    ]
+  },
+  "62A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Aisha Gomez",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.aisha.gomez@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-7152"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15531"
+      }
+    ]
+  },
+  "62B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Anquam Mahamoud",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.anquam.mahamoud@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0294"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15639"
+      }
+    ]
+  },
+  "63A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Samantha Sencer-Mura",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.samantha.sencer-mura@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-0173"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15572"
+      }
+    ]
+  },
+  "63B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Emma Greenman",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.emma.greenman@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4200"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15552"
+      }
+    ]
+  },
+  "64A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Meg Luger-Nikolai",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.meg.luger-nikolai@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-8799"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15654"
+      }
+    ]
+  },
+  "64B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dave Pinto",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.dave.pinto@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4199"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15444"
+      }
+    ]
+  },
+  "65A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Samakab Hussein",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.samakab.hussein@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-5158"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15573"
+      }
+    ]
+  },
+  "65B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "María Isa Pérez-Vega",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.maria.isa.perez-vega@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-9714"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15574"
+      }
+    ]
+  },
+  "66A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Leigh Finke",
+        "party": "Democratic-Farmer-Labor",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-3824"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15575"
+      }
+    ]
+  },
+  "66B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Athena Hollins",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.athena.hollins@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4224"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15553"
+      }
+    ]
+  },
+  "67A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Liz Lee",
+        "party": "Democratic-Farmer-Labor",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4277"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15576"
+      }
+    ]
+  },
+  "67B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jay Xiong",
+        "party": "Democratic-Farmer-Labor",
+        "email": "rep.jay.xiong@house.mn.gov",
+        "capitolOffice": [
+          "5th Floor Centennial Office Building",
+          "658 Cedar Street",
+          "St. Paul, MN 55155",
+          "651-296-4201"
+        ],
+        "url": "https://www.house.mn.gov/members/profile/15533"
+      }
+    ]
+  }
+}

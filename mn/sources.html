@@ -1141,7 +1141,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Sources last checked: <strong>September 29, 2026</strong></p>
+        <p class="verified">Sources last checked: <strong>November 15, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1168,12 +1168,12 @@ table.matrix code {
           <span class="credit-note">Police station, fire and EMS station and post office points (public domain).</span>
         </li>
         <li>
-          <a href="https://www.senate.mn.gov/members/index.php" target="_blank" rel="noopener">Minnesota Senate</a>
-          <span class="credit-note">The member directory the Senate card links while no roster ships.</span>
+          <a href="https://www.mnsenate.gov/members/" target="_blank" rel="noopener">Minnesota Senate</a>
+          <span class="credit-note">The Senate's own member feed, which names each senator on the Senate card.</span>
         </li>
         <li>
           <a href="https://www.house.mn.gov/members" target="_blank" rel="noopener">Minnesota House of Representatives</a>
-          <span class="credit-note">The member directory the House card links while no roster ships.</span>
+          <span class="credit-note">The House's own member list, which names each representative on the House card.</span>
         </li>
       </ul>
 <!-- ==== GENERATED:END source-credits ==== -->
@@ -1250,24 +1250,24 @@ table.matrix code {
               </tr>
               <tr id="layer-mn-senate">
                 <th scope="row"><span class="layer-name">Minnesota Senate District</span><code>mn-senate</code></th>
-                <td data-label="What it answers">The Minnesota Senate district covering the point.</td>
+                <td data-label="What it answers">The Minnesota Senate district covering the point, and the senator it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not yet shipped. The card names the district and links the Minnesota Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap mn-legislature-roster.</td>
+                <td data-label="Who it names">mn-senate-members.json, rebuilt weekly by CI from the Senate's own member feed (www.mnsenate.gov): each senator's name, party, St. Paul office and telephone, Senate e-mail address and page.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
               </tr>
               <tr id="layer-mn-house">
                 <th scope="row"><span class="layer-name">Minnesota House District</span><code>mn-house</code></th>
-                <td data-label="What it answers">The Minnesota House district covering the point.</td>
+                <td data-label="What it answers">The Minnesota House district covering the point, and the representative it elects.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">Not yet shipped — same as the Senate above; the card links the Minnesota House's own member directory. Recorded as the coverage gap mn-legislature-roster.</td>
+                <td data-label="Who it names">mn-house-members.json, rebuilt weekly by CI from the House's own member list (www.house.mn.gov/members, the tab of sitting members only): each representative's name, party, St. Paul office and telephone, House e-mail address and page.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
               </tr>
               <tr id="layer-county-commissioner">
@@ -1578,7 +1578,7 @@ table.matrix code {
       "@id": "https://districtry.com/mn/sources.html#dataset-mn-senate",
       "identifier": "mn-senate",
       "name": "Minnesota Senate District",
-      "description": "The Minnesota Senate district covering the point. Not yet shipped. The card names the district and links the Minnesota Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap mn-legislature-roster.",
+      "description": "The Minnesota Senate district covering the point, and the senator it elects. mn-senate-members.json, rebuilt weekly by CI from the Senate's own member feed (www.mnsenate.gov): each senator's name, party, St. Paul office and telephone, Senate e-mail address and page.",
       "url": "https://districtry.com/mn/sources.html#layer-mn-senate",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
@@ -1644,7 +1644,7 @@ table.matrix code {
       "@id": "https://districtry.com/mn/sources.html#dataset-mn-house",
       "identifier": "mn-house",
       "name": "Minnesota House District",
-      "description": "The Minnesota House district covering the point. Not yet shipped — same as the Senate above; the card links the Minnesota House's own member directory. Recorded as the coverage gap mn-legislature-roster.",
+      "description": "The Minnesota House district covering the point, and the representative it elects. mn-house-members.json, rebuilt weekly by CI from the House's own member list (www.house.mn.gov/members, the tab of sitting members only): each representative's name, party, St. Paul office and telephone, House e-mail address and page.",
       "url": "https://districtry.com/mn/sources.html#layer-mn-house",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
@@ -2065,10 +2065,7 @@ table.matrix code {
       <a href="https://github.com/ThursdaysFamous/districtry/issues/new" target="_blank" rel="noopener">Report a bug</a>
       <a href="https://overberg.co" target="_blank" rel="noopener">overberg.co</a>
       <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">💛 Support this project</a>
-      <!-- No "Common questions" link: this instance ships no faq.html, and a
-           relative href to a file the tree does not contain is a 404 the moment
-           the page is published. validate_instance_assets.py is the only thing
-           that says so. The link returns with the page (mn/WATCH.md). -->
+      <a href="faq.html">Common questions</a>
       <a href="../privacy.html">Privacy</a>
       <a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
