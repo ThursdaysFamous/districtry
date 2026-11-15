@@ -125,8 +125,13 @@ def margin_code(vals):
     return str(sum(1 for edge in MARGIN_BANDS if points >= edge))
 
 
-def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note, extra=None):
+def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note, extra=None,
+                  name=None):
     """Write the index and the part files.
+
+    name: the files' base name where an app keeps more than one election's
+    results (the index is `<name>.json` and the parts are under `<name>/`);
+    left out, the names are INDEX_NAME and PART_DIR.
 
     stamp:    {election, electionDate, source, read, certified, certifiedDate}
     groups:   [{id, label, layer}] in menu order; every contest's group must be one
@@ -139,6 +144,10 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
               one map's precincts), written to the index only
     Returns (number of contests, number of parts).
     """
+    if name is not None and not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,60}", name):
+        raise ResultsError("results name %r is not safe in a file name" % name)
+    index_name = name + ".json" if name else INDEX_NAME
+    part_dir = name or PART_DIR
     keys = sorted(turnout["precincts"])
     known = set(keys)
     group_ids = [g["id"] for g in groups]
@@ -204,7 +213,7 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
         "parts": [part_of(k) for k in keys],
         "contests": index,
     })
-    out_dir = os.path.join(app_data_dir, PART_DIR)
+    out_dir = os.path.join(app_data_dir, part_dir)
     if os.path.isdir(out_dir):
         for name in os.listdir(out_dir):
             if name.endswith(".json"):
@@ -217,13 +226,13 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note,
             "part": p,
             "note": ("Each precinct's turnout [registered voters, ballots cast] and, per "
                      "contest, [contest id, votes in the contest, then one count per "
-                     "choice in the order " + INDEX_NAME + " lists them]."),
+                     "choice in the order " + index_name + " lists them]."),
             "precincts": dict(sorted(precincts.items())),
         })
         with open(os.path.join(out_dir, p + ".json"), "w") as fh:
             json.dump(pdoc, fh, separators=(",", ":"), ensure_ascii=False)
             fh.write("\n")
-    with open(os.path.join(app_data_dir, INDEX_NAME), "w") as fh:
+    with open(os.path.join(app_data_dir, index_name), "w") as fh:
         json.dump(doc, fh, separators=(",", ":"), ensure_ascii=False)
         fh.write("\n")
     return len(index), len(parts)
@@ -289,9 +298,32 @@ def selftest():
             print("election-results-common selftest: %s was accepted" % why)
         except ResultsError:
             pass
+    with tempfile.TemporaryDirectory() as d:
+        write_results(d, stamp, groups, turnout, contests, lambda k: "w" + k[:2], "note")
+        write_results(d, stamp, groups, turnout, contests[:1], lambda k: "w" + k[:2], "note",
+                      name="city-results")
+        named = [
+            (sorted(os.listdir(d)), ["city-results", "city-results.json", PART_DIR, INDEX_NAME]),
+            (len(json.load(open(os.path.join(d, "city-results.json")))["contests"]), 1),
+            (len(json.load(open(os.path.join(d, INDEX_NAME)))["contests"]), 3),
+            (sorted(os.listdir(os.path.join(d, PART_DIR))), ["w01.json", "w02.json"]),
+        ]
+    for got, want in named:
+        if got != want:
+            bad.append((got, want))
+            print("election-results-common selftest: got %r, want %r" % (got, want))
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            write_results(d, stamp, groups, turnout, contests, lambda k: "w" + k[:2], "note",
+                          name="../up")
+        bad.append(("unsafe name", "accepted"))
+        print("election-results-common selftest: an unsafe name was accepted")
+    except ResultsError:
+        pass
     if bad:
         raise SystemExit(1)
-    print("election-results-common selftest: OK — %d checks and 3 refusals" % len(checks))
+    print("election-results-common selftest: OK — %d checks and 4 refusals"
+          % (len(checks) + len(named)))
 
 
 if __name__ == "__main__":
