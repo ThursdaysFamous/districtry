@@ -57,11 +57,35 @@ footer. build_county_pages.py writes both EMPTY and splices back whatever is on
 disk, so the two scripts' --checks pass in either order. A county page with no
 results keeps both regions empty, and --check holds them empty.
 
+A SECOND ELECTION ON ONE PLACE'S PAGE (2026-11-15). An app's results layer
+may hold a further election beside its own file (engine election-results
+`moreElections`): Illinois keeps Chicago's city elections that way, in
+chicago-election-results.json, beside November's in election-results.json
+(Adam, 2026-11-15, on Chicago's election night of 23 February 2027:
+"Nightly"; keeping November's results beside the city's was his choice the
+same day, "Both", against replacing them). Such a file ships
+with no contests until its election has a count, and this script then writes
+nothing for it, so the place's page is the same file it was. Once it holds a
+count the page carries BOTH elections, the later one first, each under a
+second-level heading that names it with its kinds of race one level down; the
+page's title, its opening sentence and the Next election box follow the later
+one. Every race of the further election is on
+the place's page (a city election is the city's alone), with the sentence its
+builder writes on how that kind of race is decided, and, while the publisher's
+precinct table is still filling in (the file's `reported`), how many precincts
+hold votes. Its race links name the election by its date, as the map's own
+links do (`r=<race>~<date>`), because the two elections' race ids are both
+small numbers from one office and collide. The county pages still carry the
+layer's own election alone, and in such an app their link to the map names
+that election (`race=~<date>`), since the map otherwise opens on the later
+one, which colours no county.
+
 AND THE DAILY REFRESH WRITES THEM. Each results workflow rebuilds its file
 every day until certification and opens a pull request; check_workflows()
-fails a workflow that commits an election-results.json without running this
-script and committing the pages and sitemap.xml it changes, so a refresh
-cannot ship numbers on the map that its pages contradict.
+fails a workflow that commits an election-results.json, or a further
+election's file, without running this script and committing the pages and
+sitemap.xml it changes, so a refresh cannot ship numbers on the map that its
+pages contradict.
 
     python3 scripts/build_results_pages.py           # write the pages
     python3 scripts/build_results_pages.py --check   # drift gate for CI
@@ -286,14 +310,19 @@ class Results:
     """One instance's index, with each precinct's county and each contest's
     counties worked out once."""
 
-    def __init__(self, tag):
+    def __init__(self, tag, name=None):
+        """`name` is a further election's file (notices.further_results), whose
+        every race goes on the place's page; None is the layer's own file."""
         self.tag = tag
-        path = os.path.join(REPO_ROOT, tag, "data", "app", INDEX_NAME)
+        self.extra = name is not None
+        self.name = name or INDEX_NAME[:-len(".json")]
+        path = os.path.join(REPO_ROOT, tag, "data", "app", self.name + ".json")
         with open(path, encoding="utf-8") as f:
             self.idx = json.load(f)
         self.opts = layer_options(tag)
         self.groups = [g["id"] for g in self.idx["groups"]]
         self.group_label = {g["id"]: g["label"] for g in self.idx["groups"]}
+        self.group_note = {g["id"]: g["note"] for g in self.idx["groups"] if g.get("note")}
         self.sources = {s["id"]: s for s in self.idx.get("sources") or []}
         self.county_name = {}          # county key -> display name
         self.precinct_county = self._precinct_counties()
@@ -359,7 +388,7 @@ class Results:
         return found
 
     def check_groups(self):
-        if self.tag not in COUNTY_PAGES:
+        if self.tag not in COUNTY_PAGES or self.extra:
             return
         known = PLACE_GROUPS[self.tag] | COUNTY_GROUPS[self.tag]
         both = PLACE_GROUPS[self.tag] & COUNTY_GROUPS[self.tag]
@@ -395,12 +424,31 @@ class Results:
                  bool(self.idx.get("certified")), self.idx.get("certifiedDate"),
                  self.opts["uncountedNote"])]
 
+    def counted(self, c=None):
+        """[precincts holding votes, precincts with voters] while the file says
+        its count is part done (the writer's `reported`, an election night),
+        over one race's precincts when `c` is given; None for a finished count
+        or a certified one. The card's countedOf (engine election-results)."""
+        rep = self.idx.get("reported")
+        if not rep or all(o[3] for o in self.offices()):
+            return None
+        if c is None:
+            return [rep.count("1"), len(rep) - rep.count("-")]
+        start, held, voters = c.get("from", 0), 0, 0
+        for i, ch in enumerate(c["leaders"]):
+            r = rep[start + i] if start + i < len(rep) else "-"
+            if ch == "-" or r == "-":
+                continue
+            voters += 1
+            held += r == "1"
+        return [held, voters]
+
     # -- place
     def all_counties(self):
         return sorted(set(c for c in self.precinct_county if c))
 
     def on_place_page(self, c):
-        if self.tag not in COUNTY_PAGES:
+        if self.tag not in COUNTY_PAGES or self.extra:
             return True
         if c["group"] in PLACE_GROUPS[self.tag]:
             return True
@@ -443,7 +491,7 @@ class Results:
         if self._sums is not None:
             return self._sums
         sums = {}
-        part_dir = os.path.join(REPO_ROOT, self.tag, "data", "app", "election-results")
+        part_dir = os.path.join(REPO_ROOT, self.tag, "data", "app", self.name)
         for path in sorted(glob.glob(os.path.join(part_dir, "*.json"))):
             with open(path, encoding="utf-8") as f:
                 part = json.load(f)
@@ -595,8 +643,91 @@ def join_words(items):
     return "%s and %s" % (", ".join(items[:-1]), items[-1])
 
 
-def map_link(prefix, cid):
-    return "%s#l=%s&amp;r=%s" % (prefix, LAYER_CODE, esc(cid))
+# What a search result shows of a title and a description, the limits
+# scripts/validate_serp_lengths.py holds every page to. THEY ARE WRITTEN HERE
+# AND NOT IMPORTED: that gate takes them from generate_metro_files, whose
+# import exits the process where jsonschema is not installed (SystemExit, which
+# the gate's `except Exception` does not catch), and the daily results jobs
+# that run this script install no jsonschema. A first draft imported them and
+# would have stopped every results job in the fleet. The gate measures the page
+# this writes, so a limit here larger than the gate's fails there.
+SERP_LIMITS = {"title": 60, "description": 155}
+
+
+def title_for(years, app_name):
+    """The title of a page carrying several elections: the first wording that
+    fits a search result beside this app's name. The plain one, "2027 and 2026
+    precinct election results", is one character too long beside "districtry
+    Illinois", which no check could say until the page first held a second
+    election's count: the rehearsal of an election night (2026-11-15) found
+    that validate_serp_lengths.py would have failed the first update of the
+    night for it. So a page whose elections change on a schedule chooses a
+    title that fits, and refuses to write one that does not."""
+    room = SERP_LIMITS["title"] - len(" — %s" % app_name)
+    cands = ["%s precinct election results" % join_words(years)]
+    if len(years) == 2:
+        cands.append("%s & %s precinct election results" % tuple(years))
+    cands += ["%s election results" % join_words(years), "Precinct election results"]
+    for cand in cands:
+        if len(cand) <= room:
+            return cand
+    raise PageError("no title for the elections of %s fits in %d characters beside %r — "
+                    "add a shorter wording to title_for()"
+                    % (join_words(years), SERP_LIMITS["title"], app_name))
+
+
+# A section's heading: the page's own second level where the page is one
+# election's, and one level down where the page names each election above its
+# sections (place_page with `extras`), so the outline reads election, then
+# kind of race.
+H_ALONE = "<h2>%s</h2>"
+H_UNDER = '<h3 class="results-h">%s</h3>'
+
+
+def map_link(prefix, cid, date=None):
+    """The map with one race picked. `date` names a further election's race,
+    as the map's own links do (engine election-results linkParam)."""
+    return "%s#l=%s&amp;r=%s%s" % (prefix, LAYER_CODE, esc(cid), "~" + esc(date) if date else "")
+
+
+def pinned(tag, res):
+    """What a link to the map with no race adds so it opens on THIS election:
+    nothing in an app whose results layer holds one election, and the
+    election's date where it holds a further one, since the map otherwise
+    opens on the later of them."""
+    if not notices.further_results(tag):
+        return ""
+    return "&amp;race=~%s" % esc(res.idx["electionDate"])
+
+
+def place_area(res, landing):
+    """The place whose election a file's results are. Results gathered from
+    several offices are the app's whole place; one publisher's are only the
+    area it counts, which the app's results layer names (areaName), or, for a
+    further election, the one office in its file. California's app answers
+    for the whole state, and its results are San Francisco's alone."""
+    if res.extra and len(res.sources) == 1:
+        return next(iter(res.sources.values())).get("areaName") or landing
+    return landing if res.sources else res.opts["areaName"]
+
+
+def place_counted(res, offices):
+    if res.sources and not (res.extra and len(offices) == 1):
+        return "as %d election offices across %d counties publish them" % (
+            len(offices), len(set(res.source_county.values())))
+    return "as the %s publishes them" % (offices[0][0] if res.extra else res.opts["publisher"])
+
+
+def counted_paragraph(res, area):
+    """How much of an election night's count is in, for the whole file; ""
+    for a finished count."""
+    got = res.counted()
+    if not got or got[0] >= got[1]:
+        return ""
+    whose = "%s's" % esc(area) if len(res.sources) <= 1 else "the"
+    return ('\n    <p class="results-status">Votes have been counted in %s of %s %s '
+            'precinct%s. A race below with no votes yet has not been counted.</p>'
+            % (num(got[0]), whose, num(got[1]), "" if got[1] == 1 else "s"))
 
 
 # -- the place page
@@ -604,10 +735,17 @@ def map_link(prefix, cid):
 def place_race(res, c, lead_word, opened):
     total = c["total"]
     which = list(range(len(c["choices"])))
+    # a further election's race carries its election's date in its anchor and
+    # its map link: its id is also a race id in the layer's own election
+    date = res.idx["electionDate"] if res.extra else None
     notes = []
     if total[0]:
         notes.append("Votes counted in this race: %s." % num(total[0]) + (
             multiple_note(c) or " Each share is of those votes."))
+    part = res.counted(c)
+    if part and part[0] < part[1]:
+        notes.append("Votes have been counted in %s of this race's %s precinct%s."
+                     % (num(part[0]), num(part[1]), "" if part[1] == 1 else "s"))
     if not res.place_complete(c):
         if res.sources:
             notes.append("These totals add up only the offices listed above; any part "
@@ -630,57 +768,41 @@ def place_race(res, c, lead_word, opened):
         </div>
 %(notes)s        <p class="race-map"><a href="%(map)s">See this race precinct by precinct on the map →</a></p>
       </details>
-""" % dict(id=esc(c["id"]), open=" open" if opened else "", name=esc(c["name"]),
+""" % dict(id=esc("%s-%s" % (date, c["id"]) if date else c["id"]),
+           open=" open" if opened else "", name=esc(c["name"]),
            line=esc(line), table=race_table(c, total, which, lead_word, "flow results-table"),
            notes="".join('        <p class="race-note">%s</p>\n' % n for n in notes),
-           map=map_link("./", c["id"]))
+           map=map_link("./", c["id"], date))
 
 
-def place_page(res, worksheet, metros):
-    tag, idx = res.tag, res.idx
-    brand = worksheet["brand"]
-    app_name = brand["app_name"]
-    landing = next(m["landing_name"] for m in metros if m["tag"] == tag)
-    # The place whose election this is. Results gathered from several offices
-    # are the app's whole place; one publisher's are only the area it counts,
-    # which the app's results layer names (areaName). California's app answers
-    # for the whole state, and its results are San Francisco's alone.
-    area = landing if res.sources else res.opts["areaName"]
-    title_e = election_title(idx)
-    year = str(idx.get("electionDate") or "")[:4]
-    when = long_date(idx.get("electionDate"), tag)
-    offices = res.offices()
-    certified = all(o[3] for o in offices)
-    lead_word = "Most votes" if certified else "Most votes so far"
-    status_word = "Official" if certified else "Unofficial"
+def race_sections(res, lead_word, open_first, h=H_ALONE):
+    """One section per group of races on the place's page, in the order the
+    map's race menu lists them, with the builder's sentence on how that kind
+    of race is decided where it writes one. `h` is the heading each section
+    opens with (H_ALONE, or H_UNDER on a page that names each election)."""
+    shown = [c for c in res.idx["contests"] if res.on_place_page(c)]
+    by_group = {}
+    for c in shown:
+        by_group.setdefault(c["group"], []).append(c)
+    out = []
+    first = open_first
+    for g in res.groups:
+        cs = by_group.get(g)
+        if not cs:
+            continue
+        body = "".join(place_race(res, c, lead_word, first and len(cs) <= 6) for c in cs)
+        note = ('    <p class="race-note">%s</p>\n' % esc(res.group_note[g])
+                if g in res.group_note else "")
+        out.append('  <section class="results-group">\n    %s\n%s%s  </section>\n'
+                   % (h % esc(res.group_label[g]), note, body))
+        first = False
+    return out, len(shown)
 
-    if res.sources:
-        counted = "as %d election offices across %d counties publish them" % (
-            len(offices), len(set(res.source_county.values())))
-    else:
-        counted = "as the %s publishes them" % res.opts["publisher"]
-    # The Next election box (scripts/build_election_notices.py): what the
-    # calendar says is coming after the election these results are from. It
-    # ships hidden and its own script shows it by the reader's clock, so this
-    # page is the same file every day. "" for an app with no calendar, or once
-    # these results are that election's.
-    try:
-        next_box = notices.results_box(tag, idx.get("electionDate"))
-    except notices.NoticeError as e:
-        raise PageError(str(e))
-    lede_html = next_box + (
-        '<p class="lede"><strong>%s results of %s\'s %s %s, %s.</strong> Each race lists '
-        'every choice\'s votes and share of the vote. The map colours each precinct by '
-        'who got the most votes there.</p>\n    %s'
-        % (status_word, esc(area), esc(when), esc(election_phrase(idx)),
-           esc(counted), status_paragraph(res, tag, offices)))
-    lede = dict(
-        html=lede_html,
-        cta='    <a class="cta" href="./#layers=%s">See your precinct\'s results →</a>\n'
-            '    <p class="cta-note">Opens the map with the election results on. Pick a '
-            'race, then pick a precinct.</p>' % LAYER)
 
-    # -- where the numbers come from
+def sources_section(res, tag, landing, h=H_ALONE):
+    """Where one election's numbers come from: a table of the offices where
+    the file names several, a sentence where one publisher counted it all."""
+    idx = res.idx
     src_rows = []
     for s in (idx.get("sources") or []):
         src_rows.append('      <tr><td class="who">%s</td><td><a href="%s">%s</a></td>'
@@ -689,9 +811,9 @@ def place_page(res, worksheet, metros):
                            long_date(s.get("read"), tag),
                            ("Certified %s" % long_date(s.get("certifiedDate"), tag))
                            if s.get("certified") else "Unofficial"))
-    if src_rows:
-        sources_html = """  <section>
-    <h2>Where these numbers come from</h2>
+    if src_rows and not (res.extra and len(src_rows) == 1):
+        return """  <section>
+    %(h)s
     <p>The map reads each office's own results, and these pages add them up. They are not
       all of %(landing)s: the races below count only the places in this table.</p>
     <div class="flow-table-wrap">
@@ -703,53 +825,43 @@ def place_page(res, worksheet, metros):
     </table>
     </div>
   </section>
-""" % dict(landing=esc(landing), rows="\n".join(src_rows))
-    else:
-        extra = ""
-        if any(c.get("outside") and any(c["outside"]) for c in idx["contests"]):
-            extra = (" The %s reports some votes (early, absentee and provisional ballots) "
-                     "apart from precincts: they are in each race's totals and not in the "
-                     "map's colours." % esc(res.opts["publisher"]))
-        sources_html = """  <section>
-    <h2>Where these numbers come from</h2>
+""" % dict(h=h % "Where these numbers come from", landing=esc(landing),
+           rows="\n".join(src_rows))
+    extra = ""
+    if any(c.get("outside") and any(c["outside"]) for c in idx["contests"]):
+        extra = (" The %s reports some votes (early, absentee and provisional ballots) "
+                 "apart from precincts: they are in each race's totals and not in the "
+                 "map's colours." % esc(res.opts["publisher"]))
+    one = (idx.get("sources") or [None])[0] if res.extra else None
+    return """  <section>
+    %(h)s
     <p>Every number here is from the <a href="%(src)s">%(pub)s</a>, read on %(read)s.%(extra)s</p>
   </section>
-""" % dict(src=esc(idx["source"]), pub=esc(res.opts["publisher"]),
-           read=long_date(idx.get("read"), tag), extra=extra)
+""" % dict(h=h % "Where these numbers come from",
+           src=esc(one["source"] if one else idx["source"]),
+           pub=esc(one["publisher"] if one else res.opts["publisher"]),
+           read=long_date((one or idx).get("read"), tag), extra=extra)
 
-    # -- the races
-    shown = [c for c in idx["contests"] if res.on_place_page(c)]
-    by_group = {}
-    for c in shown:
-        by_group.setdefault(c["group"], []).append(c)
-    race_sections = []
-    first = True
-    for g in res.groups:
-        cs = by_group.get(g)
-        if not cs:
-            continue
-        body = "".join(place_race(res, c, lead_word, first and len(cs) <= 6) for c in cs)
-        race_sections.append('  <section class="results-group">\n    <h2>%s</h2>\n%s  </section>\n'
-                             % (esc(res.group_label[g]), body))
-        first = False
 
-    # -- by county
-    county_html = ""
-    if tag in COUNTY_PAGES:
-        rows = []
-        for county in sorted(res.all_counties(), key=lambda k: res.county_name[k]):
-            n = sum(1 for c in idx["contests"] if county in res.contest_counties[c["id"]])
-            page = res.county_page(county)
-            name = esc(res.county_area(county))
-            if page:
-                rows.append('      <li><a href="%s/%s#election-results">%s</a> '
-                            '<span>%d race%s</span></li>'
-                            % (COUNTY_PAGES[tag], page, name, n, "" if n == 1 else "s"))
-            else:
-                rows.append('      <li>%s <span>%d race%s</span></li>'
-                            % (name, n, "" if n == 1 else "s"))
-        county_html = """  <section>
-    <h2>Results by county</h2>
+def county_list(res, tag, h=H_ALONE):
+    """The layer's own election, county by county: a link to each county
+    page's results section."""
+    if tag not in COUNTY_PAGES:
+        return ""
+    rows = []
+    for county in sorted(res.all_counties(), key=lambda k: res.county_name[k]):
+        n = sum(1 for c in res.idx["contests"] if county in res.contest_counties[c["id"]])
+        page = res.county_page(county)
+        name = esc(res.county_area(county))
+        if page:
+            rows.append('      <li><a href="%s/%s#election-results">%s</a> '
+                        '<span>%d race%s</span></li>'
+                        % (COUNTY_PAGES[tag], page, name, n, "" if n == 1 else "s"))
+        else:
+            rows.append('      <li>%s <span>%d race%s</span></li>'
+                        % (name, n, "" if n == 1 else "s"))
+    return """  <section>
+    %s
     <p>Every race on the ballot in a county, with that county's own votes, is on its page:
       the county board, the city and town offices, the school boards and the questions as well
       as the races above.</p>
@@ -757,8 +869,92 @@ def place_page(res, worksheet, metros):
 %s
     </ul>
   </section>
-""" % "\n".join(rows)
+""" % (h % "Results by county", "\n".join(rows))
 
+
+def place_page(res, worksheet, metros, extras=()):
+    """One place's results page. `extras` are the further elections the app's
+    results layer holds that have a count (Results built with their file's
+    name); with none the page is the layer's own election alone."""
+    tag, idx = res.tag, res.idx
+    brand = worksheet["brand"]
+    app_name = brand["app_name"]
+    landing = next(m["landing_name"] for m in metros if m["tag"] == tag)
+    # every election on the page, the latest first (the layer's own first on a
+    # tie); the first is the one the page's title and opening sentence name
+    elections = sorted([res] + list(extras),
+                       key=lambda r: str(r.idx.get("electionDate") or ""), reverse=True)
+    dates = [str(r.idx.get("electionDate") or "") for r in elections]
+    if len(set(dates)) != len(dates):
+        raise PageError("%s: two results files are for one election date (%s); a page "
+                        "names each election by its date" % (tag, ", ".join(dates)))
+
+    def facts(r):
+        offices = r.offices()
+        certified = all(o[3] for o in offices)
+        return dict(res=r, offices=offices, certified=certified,
+                    area=place_area(r, landing),
+                    title=election_title(r.idx), year=str(r.idx.get("electionDate") or "")[:4],
+                    when=long_date(r.idx.get("electionDate"), tag),
+                    phrase=election_phrase(r.idx), counted=place_counted(r, offices),
+                    lead_word="Most votes" if certified else "Most votes so far",
+                    status_word="Official" if certified else "Unofficial",
+                    anchor="e-" + str(r.idx.get("electionDate") or ""))
+    all_facts = [facts(r) for r in elections]
+    lead = all_facts[0]
+    several = len(all_facts) > 1
+
+    # The Next election box (scripts/build_election_notices.py): what the
+    # calendar says is coming after the latest election these results are
+    # from. It ships hidden and its own script shows it by the reader's clock,
+    # so this page is the same file every day. "" for an app with no calendar,
+    # or once these results are that election's.
+    try:
+        next_box = notices.results_box(tag, max(dates))
+    except notices.NoticeError as e:
+        raise PageError(str(e))
+    lede_html = next_box + (
+        '<p class="lede"><strong>%s results of %s\'s %s %s, %s.</strong> Each race lists '
+        'every choice\'s votes and share of the vote. The map colours each precinct by '
+        'who got the most votes there.</p>\n    %s%s'
+        % (lead["status_word"], esc(lead["area"]), esc(lead["when"]), esc(lead["phrase"]),
+           esc(lead["counted"]), status_paragraph(lead["res"], tag, lead["offices"]),
+           counted_paragraph(lead["res"], lead["area"])))
+    if several:
+        lede_html += '\n    <p class="results-also">Also on this page: %s.</p>' % join_words(
+            '<a href="#%s">%s\'s %s %s</a>' % (f["anchor"], esc(f["area"]), esc(f["when"]),
+                                               esc(f["phrase"])) for f in all_facts[1:])
+    lede = dict(
+        html=lede_html,
+        cta='    <a class="cta" href="./#layers=%s">See your precinct\'s results →</a>\n'
+            '    <p class="cta-note">Opens the map with the election results on. Pick a '
+            'race, then pick a precinct.</p>' % LAYER)
+
+    # -- each election: where its numbers come from, its races, and (the
+    # layer's own) its counties
+    blocks, n_shown = [], 0
+    h = H_UNDER if several else H_ALONE
+    for f in all_facts:
+        r = f["res"]
+        races, n = race_sections(r, f["lead_word"], f is lead, h)
+        n_shown += n
+        block = ""
+        if several:
+            # a page with more than one election names each above its races;
+            # the first one's status is the page's opening paragraph
+            status = ""
+            if f is not lead:
+                status = ('    %s%s\n' % (status_paragraph(r, tag, f["offices"]),
+                                          counted_paragraph(r, f["area"])))
+            block = ('  <section class="results-election" id="%s">\n'
+                     '    <h2>%s\'s %s %s</h2>\n%s  </section>\n\n'
+                     % (f["anchor"], esc(f["area"]), esc(f["when"]), esc(f["phrase"]), status))
+        block += sources_section(r, tag, landing, h) + "\n" + "\n".join(races)
+        if not r.extra:
+            block += "\n" + county_list(r, tag, h)
+        blocks.append(block)
+
+    certified = all(f["certified"] for f in all_facts)
     about = """  <section>
     <h2>About these results</h2>
     <p>These pages and the map read the same files, rebuilt each day from the publishers' own
@@ -775,17 +971,40 @@ def place_page(res, worksheet, metros):
 """ % dict(unofficial="certified results can differ from them" if not certified
            else "the certifying office's own record is the official one")
 
-    sections = sources_html + "\n" + "\n".join(race_sections) + "\n" + county_html + "\n" + about
+    sections = "\n".join(blocks) + "\n" + about
 
-    title = "%s precinct election results" % year
-    subtitle = ("%s results of the %s, race by race, with every precinct on the map."
-                % (status_word, title_e))
-    desc = ("%s results of the %s %s in %s: each race's candidates, votes and "
-            "share, and every precinct on the map." % (status_word, year,
-                                                      election_phrase(idx), area))
-    if len(desc) > 155:
-        desc = ("%s %s %s results in %s, race by race, with every precinct on the map."
-                % (status_word, year, election_phrase(idx), area))
+    if several:
+        years = []
+        for f in all_facts:
+            if f["year"] not in years:
+                years.append(f["year"])
+        title = title_for(years, app_name)
+        subtitle = ("%s, race by race, with every precinct on the map."
+                    % upper_first(join_words(
+                        "the %s%s" % (f["title"], " in %s" % f["area"] if f["area"] != landing else "")
+                        for f in all_facts)))
+        rest = join_words("the %s %s" % (f["year"], f["phrase"]) for f in all_facts[1:])
+        desc = ""
+        for cand in (
+                "%s results of %s's %s %s, race by race with every precinct on the map, and %s."
+                % (lead["status_word"], lead["area"], lead["year"], lead["phrase"], rest),
+                "%s %s %s results in %s, race by race and precinct by precinct, and %s."
+                % (lead["status_word"], lead["year"], lead["phrase"], lead["area"], rest),
+                "%s %s %s results in %s, race by race with every precinct on the map."
+                % (lead["status_word"], lead["year"], lead["phrase"], lead["area"])):
+            desc = cand
+            if len(desc) <= SERP_LIMITS["description"]:
+                break
+    else:
+        title = "%s precinct election results" % lead["year"]
+        subtitle = ("%s results of the %s, race by race, with every precinct on the map."
+                    % (lead["status_word"], lead["title"]))
+        desc = ("%s results of the %s %s in %s: each race's candidates, votes and "
+                "share, and every precinct on the map." % (lead["status_word"], lead["year"],
+                                                          lead["phrase"], lead["area"]))
+        if len(desc) > SERP_LIMITS["description"]:
+            desc = ("%s %s %s results in %s, race by race, with every precinct on the map."
+                    % (lead["status_word"], lead["year"], lead["phrase"], lead["area"]))
     og = desc
 
     related = related_rows(tag, landing)
@@ -795,8 +1014,9 @@ def place_page(res, worksheet, metros):
                   preserved_from_disk(page_path),
                   shared_head_block(tag, THEMEBOOT_RE, "theme boot script"),
                   shared_head_block(tag, MARK_RE, "districtry mark"), tag,
-                  extra_css=PLACE_CSS + (notices.BOX_CSS if next_box else ""))
-    return page_path, text, len(shown)
+                  extra_css=PLACE_CSS + (SEVERAL_CSS if several else "")
+                  + (notices.BOX_CSS if next_box else ""))
+    return page_path, text, n_shown
 
 
 PLACE_CSS = """/* The results pages' own few rules (scripts/build_results_pages.py): a race's
@@ -819,6 +1039,21 @@ table.results-table .lead {
 .results-counties li { margin: 0 0 6px; break-inside: avoid; line-height: 28px; }
 .results-counties span { color: var(--slate); font-size: 13.5px; margin-left: 4px; }
 .results-status { font-size: 15px; }
+"""
+
+# A page that carries more than one election (place_page's `extras`): each
+# election's heading stands apart from the race groups under it.
+SEVERAL_CSS = """main > section.results-election {
+  border-top: 2px solid var(--line-strong); padding-top: 26px; margin-block-end: 22px;
+}
+.results-election h2 { margin-bottom: 10px; }
+.results-election p:last-child { margin-bottom: 0; }
+h3.results-h {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  font-size: 20px; letter-spacing: 0.01em; line-height: 1.15; color: var(--ink);
+  margin: 0 0 12px;
+}
+.results-also { font-size: 15px; }
 """
 
 
@@ -923,18 +1158,22 @@ def county_section(res, county, landing):
 %(status)s
 <p>The votes counted in %(area)s in each race on the ballot here, as the results map reads
 them. A race that crosses the county line shows this county's votes only.</p>
-<p class="results-links"><a href="../%(page)s">All of %(landing)s's results</a> · <a href="../#layers=%(layer)s">See your precinct on the map</a></p>
+<p class="results-links"><a href="../%(page)s">All of %(landing)s's results</a> · <a href="../#layers=%(layer)s%(pin)s">See your precinct on the map</a></p>
 %(groups)s
 </section>""" % dict(title=esc(election_title(idx)), status=status_paragraph(res, tag, offices),
                      area=esc(area), page=PAGE_FILE, landing=esc(landing), layer=LAYER,
-                     groups="\n".join(groups))
+                     pin=pinned(tag, res), groups="\n".join(groups))
 
 
 # ---------------------------------------------------------------- gates
 
 def check_workflows(tags):
     """A workflow that commits a results file must rebuild these pages and
-    commit them, with the sitemap whose dates they move."""
+    commit them, with the sitemap whose dates they move. That holds for the
+    layer's own file and for a further election's (notices.further_results),
+    whose races go on the place's page the run they first hold a count.
+    Returns {(tag, file's base name): workflow}."""
+    own = INDEX_NAME[:-len(".json")]
     seen = {}
     for name in sorted(os.listdir(WORKFLOWS)):
         if not name.endswith((".yml", ".yaml")):
@@ -944,24 +1183,27 @@ def check_workflows(tags):
         if "git add" not in text:
             continue
         for tag in tags:
-            data = "%s/data/app/%s" % (tag, INDEX_NAME)
-            if data not in text:
-                continue
-            seen[tag] = name
-            need = ["scripts/build_results_pages.py", "%s/%s" % (tag, PAGE_FILE),
-                    "scripts/build_sitemap.py", "sitemap.xml"]
-            if tag in COUNTY_PAGES:
-                need.append("%s/%s" % (tag, COUNTY_PAGES[tag]))
-            missing = [n for n in need if n not in text]
-            if missing:
-                raise PageError(
-                    ".github/workflows/%s commits %s and never %s — add a step running "
-                    "python3 scripts/build_results_pages.py and python3 "
-                    "scripts/build_sitemap.py, and `git add` the pages and sitemap.xml"
-                    % (name, data, "names " + ", ".join(missing)))
-            if "fetch-depth: 0" not in text:
-                raise PageError(".github/workflows/%s rebuilds sitemap.xml, which reads "
-                                "each page's date from git, without `fetch-depth: 0`" % name)
+            for base in [own] + notices.further_results(tag):
+                data = "%s/data/app/%s.json" % (tag, base)
+                if data not in text:
+                    continue
+                seen[(tag, base)] = name
+                need = ["scripts/build_results_pages.py", "%s/%s" % (tag, PAGE_FILE),
+                        "scripts/build_sitemap.py", "sitemap.xml"]
+                # the county pages carry the layer's own election alone
+                if tag in COUNTY_PAGES and base == own:
+                    need.append("%s/%s" % (tag, COUNTY_PAGES[tag]))
+                missing = [n for n in need if n not in text]
+                if missing:
+                    raise PageError(
+                        ".github/workflows/%s commits %s and never %s — add a step running "
+                        "python3 scripts/build_results_pages.py and python3 "
+                        "scripts/build_sitemap.py, and `git add` the pages and sitemap.xml"
+                        % (name, data, "names " + ", ".join(missing)))
+                if "fetch-depth: 0" not in text:
+                    raise PageError(".github/workflows/%s rebuilds sitemap.xml, which reads "
+                                    "each page's date from git, without `fetch-depth: 0`"
+                                    % name)
     return seen
 
 
@@ -986,7 +1228,11 @@ def run(args):
         worksheet = load(worksheet_path(tag))
         check_layer(worksheet, LAYER, "%s/%s" % (tag, PAGE_FILE))
         landing = next(m["landing_name"] for m in metros if m["tag"] == tag)
-        path, text, n_place = place_page(res, worksheet, metros)
+        # the further elections the app's results layer holds; a file with no
+        # race in it yet is the stand-in the map asks for and goes on no page
+        extras = [r for r in (Results(tag, n) for n in notices.further_results(tag))
+                  if r.idx["contests"]]
+        path, text, n_place = place_page(res, worksheet, metros, extras)
         targets = [(path, text)]
         n_county = 0
         concept = COUNTY_PAGES.get(tag)
@@ -1012,9 +1258,18 @@ def run(args):
                 if body:
                     n_county += 1
                 targets.append((fpath, new))
-        if tag not in wf:
+        if (tag, res.name) not in wf:
             raise PageError("no workflow commits %s/data/app/%s, so nothing would keep "
                             "its pages current" % (tag, INDEX_NAME))
+        # A further election's file is on the place's page from the run it
+        # first holds a count, so the job that writes it must exist before
+        # that night and rebuild the page then (check_workflows held it to
+        # that); a registered file no workflow commits would stay empty.
+        for name in notices.further_results(tag):
+            if (tag, name) not in wf:
+                raise PageError("no workflow commits %s/data/app/%s.json, the further election "
+                                "the results layer registers, so its count would never be "
+                                "read or reach %s/%s" % (tag, name, tag, PAGE_FILE))
         for fpath, text in targets:
             try:
                 with open(fpath, encoding="utf-8") as f:
@@ -1030,8 +1285,10 @@ def run(args):
             with open(fpath, "w", encoding="utf-8", newline="") as f:
                 f.write(text)
             written += 1
-        summary.append("%s: %d race(s) on its page%s" % (
-            tag, n_place, ", %d county page(s) with results" % n_county if concept else ""))
+        summary.append("%s: %d race(s) on its page%s%s" % (
+            tag, n_place,
+            " from %d elections" % (1 + len(extras)) if extras else "",
+            ", %d county page(s) with results" % n_county if concept else ""))
 
     if args.check:
         for rel, current, text in drift[:5]:
