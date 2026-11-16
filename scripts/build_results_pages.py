@@ -62,8 +62,8 @@ may hold a further election beside its own file (engine election-results
 `moreElections`): Illinois keeps Chicago's city elections that way, in
 chicago-election-results.json, beside November's in election-results.json
 (Adam, 2026-11-15, on Chicago's election night of 23 February 2027:
-"Nightly"; keeping November's results beside the city's was put to him the
-same day as the recommended course and built before he answered). Such a file ships
+"Nightly"; keeping November's results beside the city's was his choice the
+same day, "Both", against replacing them). Such a file ships
 with no contests until its election has a count, and this script then writes
 nothing for it, so the place's page is the same file it was. Once it holds a
 count the page carries BOTH elections, the later one first, each under a
