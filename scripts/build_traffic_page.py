@@ -1901,15 +1901,61 @@ def bar_sum_note(bd):
                    % (WORDS[n] if n < len(WORDS) else n))
 
 
+# Said after either form of refNote, in the same words as the page's script.
+REF_LIST_FLOOR = (" That list can leave out sources that sent only a few "
+                  "visits, so the visits figure is a floor.")
+
+
 def ref_note(bd):
-    """The page's refNote for the full window, word for word."""
+    """The page's refNote for the full window, word for word.
+
+    THE COUNTER'S LIST FOR A PERIOD IS NOT EVERY SOURCE, and until 2026-11-16
+    this said "The sources chart shows every source." whenever the list was no
+    longer than the chart. Visits are the sum of that list, so the two were
+    equal by construction and the sentence could not be false by this test.
+    Measured that day on one file: the two-month list had eight rows and said
+    it had no more, while the per-day lists in the same file named twelve other
+    sources inside the window (a shared link 24 page visits, another site 11,
+    Facebook 15 under two names, a QR code 5 and seven smaller), 66 page
+    visits in the last 14 days that are in no bar and not in the visits
+    figure. The 7-day and 14-day lists left out 9 and 42 the same way. Which
+    rows the counter drops is not established (the shared link was listed at
+    34 the day before and not at 24), so the page says only what was measured:
+    the list can leave small sources out, and visits are a floor.
+    missing_sources() counts it on every run.
+    """
     fmt = "{:,}".format
     shown, visits = sum(c for _, c in bd["refs"]), bd["people"]["visits"]
     if shown == visits:
-        return "The sources chart shows every source."
+        return ("The sources chart shows every source in the counter\u2019s "
+                "list for this period." + REF_LIST_FLOOR)
     n = len(bd["refs"])
-    return ("The sources chart shows the %s largest, %s of the %s visits."
-            % (WORDS[n] if n < len(WORDS) else n, fmt(shown), fmt(visits)))
+    return ("The sources chart shows the %s largest, %s of the %s visits in "
+            "the counter\u2019s list for this period."
+            % (WORDS[n] if n < len(WORDS) else n, fmt(shown), fmt(visits))
+            + REF_LIST_FLOOR)
+
+
+def missing_sources(gc):
+    """Sources the per-day lists name that the window's own list does not.
+
+    Returns (sources, page visits, days read), or None for a file with no
+    per-day page-visit lists. It counts only the days the file keeps one by
+    one, so it is a floor on what the window's list left out.
+    """
+    days = gc.get("daily_referrers") or []
+    try:
+        listed = set(r["key"] for r in gc["slices"]["pageview"]["referrers"])
+    except (KeyError, TypeError):
+        return None
+    if not days or any("page_rows" not in d for d in days):
+        return None
+    missed = {}
+    for d in days:
+        for r in d["page_rows"]:
+            if r["key"] not in listed:
+                missed[r["key"]] = missed.get(r["key"], 0) + r["count"]
+    return len(missed), sum(missed.values()), len(days)
 
 
 def use_trend(days):
@@ -2041,6 +2087,11 @@ def main():
           "outside the US"
           % (f["visits"], f["androidVisits"], f["directVisits"], f["pageviews"],
              f["mapOpenings"], f["abroadPct"]))
+    gap = missing_sources(gc)
+    if gap and gap[1]:
+        print("sources: the window's list leaves out %d source(s) the last %d "
+              "days' own lists name, %d page visits that are in no bar and "
+              "not in the visits figure" % (gap[0], gap[2], gap[1]))
     print("use: %s reader actions (%s per map opening), %s points chosen "
           "(%s of map openings), %s layers turned on; not counted as use: "
           "%s automatic counts, %s results"
