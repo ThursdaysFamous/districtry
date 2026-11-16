@@ -53,6 +53,13 @@ WHAT IT CHECKS, because each is a claim the page makes:
      makes the same claim ("opens a pull request rather than committing").
   4. robots.txt still says what the page says about AI systems reading the
      site: the Content-Signal for `*`, read by robots_policy.py.
+  5. A workflow that merges its own pull request is one the page names. The
+     page says a scheduled job's change is "checked, reviewed and merged like
+     any other change", with one exception it describes: an election night's
+     results (Adam, 2026-11-15, "Nightly"). So every workflow running
+     `gh pr merge` must be in SELF_MERGE with why, re-audited like
+     DIRECT_PUSH, and a second one that starts merging itself fails here
+     until the prose says so.
 
 WHAT IT CANNOT CHECK. Who reviews and merges a pull request is not recorded in
 the tree, nor that a change a reader would see waits for the operator's word,
@@ -64,7 +71,7 @@ validate_robots_adoption.py, not here. The page states both as the project's pra
 practice is a change to the prose here.
 
     python3 scripts/build_ai_page.py           # write ai.html
-    python3 scripts/build_ai_page.py --check   # drift gate + the four checks
+    python3 scripts/build_ai_page.py --check   # drift gate + the five checks
 """
 
 import argparse
@@ -163,6 +170,18 @@ DIRECT_PUSH = {
     "update-traffic-data.yml":
         "GoatCounter visit counts for this site, for the traffic report; no "
         "officeholder, boundary or app file (2026-09-14)",
+}
+
+# Workflows that merge their own pull request with no review, and what the
+# page says of each. Re-audited every run: an entry FAILS when its file is
+# gone or no longer merges, and a workflow that merges and is not here FAILS.
+SELF_MERGE = {
+    "update-chicago-city-election-results.yml":
+        "Chicago's city election results on election night and the morning "
+        "after, once smoke-test.yml has passed and check_results_update.py "
+        "finds no count went down and no race, candidate or precinct is gone "
+        "(Adam, 2026-11-15: \"Nightly\"); the page's \"One kind of update goes "
+        "live with no review\" paragraph",
 }
 
 # Scripts that name an AI host as a WORD, never as an address, and why that
@@ -268,6 +287,29 @@ def check_automation():
         fail("the page says the weekly updates are read by ordinary code, and "
              "automation uses an AI service:\n  " + "\n  ".join(hits))
     return len(files)
+
+
+def check_self_merges():
+    merges = re.compile(r"\bgh\s+pr\s+merge\b")
+    names = sorted(n for n in os.listdir(WORKFLOW_DIR) if n.endswith((".yml", ".yaml")))
+    problems = []
+    for name in names:
+        if merges.search(read(os.path.join(WORKFLOW_DIR, name))) and name not in SELF_MERGE:
+            problems.append("%s merges its own pull request, and SELF_MERGE does not "
+                            "say why; the page's prose must name it too" % name)
+    for name in sorted(SELF_MERGE):
+        path = os.path.join(WORKFLOW_DIR, name)
+        if not os.path.exists(path):
+            problems.append("SELF_MERGE names %s, which no longer exists" % name)
+        elif not merges.search(read(path)):
+            problems.append("SELF_MERGE names %s, which no longer merges" % name)
+    if problems:
+        fail("the page says which scheduled job publishes with no review:\n  "
+             + "\n  ".join(problems))
+    if SELF_MERGE and "goes live with no review" not in build():
+        fail("SELF_MERGE names a workflow and the page no longer has the paragraph "
+             "that says one kind of update goes live with no review")
+    return len(SELF_MERGE)
 
 
 def check_pushes():
@@ -400,7 +442,9 @@ def body():
         decides whether to post it, and no agent schedules or posts anything.</li>
       <li><strong>Approves what readers will see.</strong> A change only the code sees can be
         merged without the person. Anything a reader would notice, such as a new county, a new
-        layer or a changed page, waits until the person says to merge it.</li>
+        layer or a changed page, waits until the person says to merge it. The person approved
+        one exception in advance: the results updates of an election night, described under
+        "What no AI does".</li>
       <li><strong>Does not read every change.</strong> The person reads what the coordinating
         agent reports and answers the questions the agents raise. For everything else, the
         project relies on the rules and on the checks below.</li>
@@ -424,6 +468,12 @@ def body():
     <p><strong>The weekly updates are read by ordinary code, not by AI.</strong> Scheduled jobs
       re-read each source and, when an officeholder changes, propose the change as a pull
       request, which is checked, reviewed and merged like any other change.</p>
+    <p><strong>One kind of update goes live with no review.</strong> On the night of an election
+      whose results the site posts, and the morning after, the job that reads the count merges
+      its own pull request once the automated checks pass. It first compares the new count with
+      the one on the site, and holds the update for review if a vote count went down, or if a
+      race, a candidate or a precinct is no longer listed. Today this applies to Chicago's city
+      elections only. After that morning, each day's update waits for review again.</p>
   </section>
 
   <section>
@@ -496,11 +546,13 @@ def main():
     served = check_served()
     automation = check_automation()
     prs = check_pushes()
+    merges = check_self_merges()
     check_signal()
     claims = ("%d served files name no AI service; %d workflow and script files use "
               "none; %d pushing workflows open a pull request and %d push directly, "
-              "each recorded; robots.txt's Content-Signal matches"
-              % (served, automation, prs, len(DIRECT_PUSH)))
+              "each recorded; %d merges its own pull request, recorded and named on "
+              "the page; robots.txt's Content-Signal matches"
+              % (served, automation, prs, len(DIRECT_PUSH), merges))
 
     page = build()
     if page.lower().count("</script") != page.lower().count("<script"):

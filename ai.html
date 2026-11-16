@@ -645,7 +645,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
         decides whether to post it, and no agent schedules or posts anything.</li>
       <li><strong>Approves what readers will see.</strong> A change only the code sees can be
         merged without the person. Anything a reader would notice, such as a new county, a new
-        layer or a changed page, waits until the person says to merge it.</li>
+        layer or a changed page, waits until the person says to merge it. The person approved
+        one exception in advance: the results updates of an election night, described under
+        "What no AI does".</li>
       <li><strong>Does not read every change.</strong> The person reads what the coordinating
         agent reports and answers the questions the agents raise. For everything else, the
         project relies on the rules and on the checks below.</li>
@@ -669,6 +671,12 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <p><strong>The weekly updates are read by ordinary code, not by AI.</strong> Scheduled jobs
       re-read each source and, when an officeholder changes, propose the change as a pull
       request, which is checked, reviewed and merged like any other change.</p>
+    <p><strong>One kind of update goes live with no review.</strong> On the night of an election
+      whose results the site posts, and the morning after, the job that reads the count merges
+      its own pull request once the automated checks pass. It first compares the new count with
+      the one on the site, and holds the update for review if a vote count went down, or if a
+      race, a candidate or a precinct is no longer listed. Today this applies to Chicago's city
+      elections only. After that morning, each day's update waits for review again.</p>
   </section>
 
   <section>
