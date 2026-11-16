@@ -323,7 +323,19 @@ jobs:
       # --require fails the step when the R2 secrets are missing rather than
       # skipping it. main only, because the assemble job also runs on branch
       # dispatches and a branch's files must never replace the live ones.
-      - name: Copy tile archives and population files to Cloudflare R2
+      #
+      # THE BOUNDARY FILES GO TOO, SINCE 2026-11-16, AND SO FAR ONLY AS COPIES
+      # (Adam's "Start" of that day on moving the map files off GitHub).
+      # Measured that day the tree after the step below was 664.6 MB, and
+      # 463.5 MB of it was 902 boundary files, the whole-file geometry each
+      # app's service worker lists as GEOMETRY_URLS. The script reads that
+      # list out of each app's sw.js in _site and copies those files beside
+      # the two folders. No map reads them there yet and GitHub Pages still
+      # publishes them: the maps are switched in a change of its own once the
+      # copies exist, and GitHub stops publishing them in a third. Rosters and
+      # election results stay with the pages, because a page and the roster
+      # it prints are published together here and could not be on two hosts.
+      - name: Copy tile archives, population files and boundary files to Cloudflare R2
         if: github.ref == 'refs/heads/main'
         timeout-minutes: 15
         env:
