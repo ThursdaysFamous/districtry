@@ -5389,6 +5389,24 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    # CALIFORNIA'S SUPERVISORS ARE COUNTY BOARDS, AND THEIR PAGES ARE HELD. The
+    # County card has named them since 2026-11-16 under Adam's rule that names
+    # added to an existing card ship once the checks pass; a county page is a
+    # new page, and his instruction for this job is one "merge" per state
+    # before any is published. So this entry is a hold and not a verdict: the
+    # change that adds California's county pages writes the adapter, lists it
+    # in INSTANCES and drops this entry. That adapter also has to read San
+    # Francisco's board from sf-supervisor-members.json, because this file
+    # leaves that county to the city's own roster.
+    "ca/data/app/ca-county-officials.json": dict(
+        date="2026-11-16",
+        reason="the boards of supervisors of California's 57 counties outside "
+               "San Francisco, from the Secretary of State's California "
+               "Roster. These ARE county boards. Their county pages are held "
+               "until Adam says \"merge\" for California's pages, so no "
+               "adapter reads the file yet; the change that adds the pages "
+               "drops this entry.",
+    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "

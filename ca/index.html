@@ -17718,15 +17718,53 @@ function initSFExplorer() {
    * service-worker cached, so this layer answers even when every third-party
    * host is down. 58 features, measured 2026-11-11.
    *
-   * NO OFFICEHOLDER YET. Each California county is governed by an elected
-   * board of supervisors and elects officers such as a sheriff, a district
-   * attorney and an assessor (Cal. Const. art. XI, sec. 1(b)). No list of any
-   * of them has been read, so the card names the county and says nobody is
-   * named here. Recorded as gap ca-county-officials. San Francisco is the
-   * exception the card states: a city and county in one, whose Board of
-   * Supervisors the Supervisor District card already names.
+   * THE CARD NAMES THE COUNTY'S BOARD OF SUPERVISORS, from the California
+   * Secretary of State's California Roster (data/app/ca-county-officials.json,
+   * built by ca/scripts/build_ca_county_officials.py and checked weekly): one
+   * supervisor per supervisorial district, five in each of the 57 counties
+   * outside San Francisco. Each county files its own entry with the Secretary
+   * of State, and the card gives the file's own date, because the Roster is a
+   * yearly publication and a supervisor who took office after that date is
+   * not in it.
+   *
+   * IT CANNOT SAY WHICH SUPERVISOR REPRESENTS THE POINT. Supervisors are
+   * elected by district and this app draws no county's supervisorial
+   * districts outside San Francisco, so the card lists the whole board and
+   * says so. The county's other elected officers (sheriff, district attorney,
+   * assessor) are not named. Both are recorded in gap ca-county-officials.
+   *
+   * SAN FRANCISCO IS NOT IN THAT FILE. It is a city and county in one, whose
+   * Board of Supervisors the Supervisor District card names from the city's
+   * own data, so its County card points there and the roster is not fetched.
+   *
+   * A roster miss degrades to a sentence naming nobody, never to an error
+   * card.
    * ---------- */
   var SF_COUNTY_GEOID = "06075";
+  var loadCaCountyOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ca-county-officials.json", {}, 2);
+  });
+  var CA_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  // "2026-06-29" -> "June 29, 2026"; null for anything else, so a malformed
+  // date drops its clause rather than printing as something it is not.
+  function caRosterDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return CA_MONTHS[Number(m[2]) - 1] + " " + String(Number(m[3])) + ", " + m[1];
+  }
+  // "The California Secretary of State's 2026 California Roster, in the file
+  // dated June 29, 2026. ..." — the sentence the County card prints.
+  function caRosterCredit(o) {
+    var source = o && o.source ? String(o.source)
+      : "the California Secretary of State's California Roster";
+    var dated = caRosterDate(o && o.fileDate);
+    return source.charAt(0).toUpperCase() + source.slice(1) +
+      (dated ? ", in the file dated " + dated : "") + ". Each county files its " +
+      "own entry with the Secretary of State. A supervisor who took office " +
+      "after that date is not shown here. This app checks every week for a " +
+      "newer file.";
+  }
 
   registerLayer({
     id: "county",
@@ -17746,11 +17784,23 @@ function initSFExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+        // San Francisco's board is named by the Supervisor District card
+        if (result.geoid != null && String(result.geoid) === SF_COUNTY_GEOID) return result;
+        // the roster's own failure is not this layer's failure: a miss
+        // degrades to the sentence naming nobody
+        return loadCaCountyOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -17760,21 +17810,59 @@ function initSFExplorer() {
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
       var sf = result.geoid != null && String(result.geoid) === SF_COUNTY_GEOID;
-      wrap.appendChild(renderFieldStack([{
-        label: "County officials",
-        value: sf
-          ? "San Francisco is a city and county in one. Its Board of " +
+      if (sf) {
+        wrap.appendChild(renderFieldStack([{
+          label: "County officials",
+          value: "San Francisco is a city and county in one. Its Board of " +
             "Supervisors, 11 members elected by district, is both the county " +
             "board and the city council, and the Supervisor District card " +
             "names yours. Its other elected officers, such as the sheriff and " +
             "the district attorney, are not named here yet."
-          : "Each California county is governed by an elected board of " +
+        }]));
+        return wrap;
+      }
+      var o = result.officials;
+      var seats = ((o && o.seats) || []).filter(function (s) {
+        return s && (s.name || s.vacant === true);
+      });
+      if (!seats.length) {
+        wrap.appendChild(renderFieldStack([{
+          label: "County officials",
+          value: "Each California county is governed by an elected board of " +
             "supervisors, and also elects officers such as a sheriff, a " +
-            "district attorney and an assessor. None of them is named here " +
-            "yet, and this app does not guess in the meantime, so the " +
-            "county's own website is the current source."
+            "district attorney and an assessor. The list of supervisors did " +
+            "not load, so no one is named here."
+        }]));
+        return wrap;
+      }
+      wrap.appendChild(renderSectionLabel(String(o.body)));
+      wrap.appendChild(renderPersonRows(seats.map(function (s) {
+        // a seat the Roster lists as vacant names nobody
+        return {
+          name: s.vacant === true && !s.name ? "Vacant" : String(s.name),
+          note: s.seat ? String(s.seat) : null
+        };
+      }), { tinted: true }));
+      wrap.appendChild(renderFieldStack([{
+        label: "Which one represents this point",
+        value: "One of these " + String(seats.length) + ". Each supervisor is " +
+          "elected from one supervisorial district, and this app does not " +
+          "draw this county's districts yet, so it cannot say which district " +
+          "this point is in. The county's own website has its district map."
+      }, {
+        label: "Other county officials",
+        value: "The county also elects officers such as a sheriff, a district " +
+          "attorney and an assessor. They are not named here yet."
+      }, {
+        label: "Where these names come from",
+        value: caRosterCredit(o)
       }]));
       return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result && result.officials && safeHttpUrl(result.officials.sourceUrl);
+      if (!url) return null;
+      return { label: "California Roster: County Officials Directory (PDF)", url: url };
     }
   });
 

@@ -286,9 +286,18 @@ NO_COUNTY_TIER = {
     "ri": "Rhode Island has had no county government since 1842. Its five "
           "counties survive as geography and as court districts, and nobody is "
           "elected to govern one, so there is no county governing body to name.",
+    # THE SECOND SENTENCE CHANGED ON 2026-11-16, when the County card began
+    # naming the supervisors of the 57 counties outside San Francisco from the
+    # Secretary of State's California Roster (ca-county-officials.json). It
+    # had read "only San Francisco names a county governing body so far". The
+    # frontier is still not scored: that waits for the county-page adapter,
+    # which is held for Adam's "merge" of California's county pages
+    # (build_county_pages.NOT_COUNTY_BOARDS).
     "ca": "California's app grew from San Francisco to the whole state on "
-          "2026-11-11 and its 58-county frontier is not scored here yet; "
-          "only San Francisco names a county governing body so far.",
+          "2026-11-11 and its 58-county frontier is not scored here yet. The "
+          "County card names the board of supervisors in the 57 counties "
+          "outside San Francisco, and the Supervisor District card names San "
+          "Francisco's.",
 }
 
 

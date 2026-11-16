@@ -112,6 +112,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "ca-county-officials.json": 57,  # The board of supervisors of each of the 57 counties outside San Francisco, keyed by county GEOID, one seat per supervisorial district, from the County Officials Directory of the California Secretary of State's California Roster (ca/scripts/build_ca_county_officials.py, checked weekly by ca-update-county-officials.yml). San Francisco is left out on purpose: its board is named by sf-supervisor-members.json from the city's own data. Nothing in the file depends on the day it was built, so a weekly run that reads the same Roster file changes nothing.
     "tribal-councils.json": 49,  # The councils of the nations whose own page names the whole of it, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "statewide-officials.json": 5,  # The officers California elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ca/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "election-results.json": 11,  # San Francisco's election results by precinct: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/p<first two digits>.json, fetched on a click and never cached by the worker. From the Department of Elections' Statement of the Vote by ca/scripts/sf_election_results_scraper.py + build_sf_election_results.py through scripts/election_results_common.py, checked daily by ca-update-election-results.yml; certified stays false until the Department certifies the results. Network-first: the count can change.
@@ -381,6 +382,10 @@ def main():
 
     check_sw_lists(repo_root, app_dir)
 
+    # 4c. the County card's roster names a board for exactly the counties the
+    # map draws, less San Francisco
+    check_county_officials(html, app_dir)
+
     # 5. the public sources page, if this instance ships one, still accounts
     # for every layer and is still reachable from the app.
     n_sourced = check_sources_page(html, repo_root)
@@ -394,6 +399,52 @@ def main():
            "" if n_sourced is None else
            ", sources page linked and covering all %d layers" % n_sourced)
     )
+
+
+def check_county_officials(html, app_dir):
+    """The County card and its roster must agree about which counties have a
+    board to name.
+
+    The card reads ca-county-officials.json for every county state-counties.json
+    draws EXCEPT San Francisco, whose board the Supervisor District card names
+    from the city's own data. So the roster must hold exactly the drawn
+    counties less that one: a drawn county with no record would have its card
+    say "the list of supervisors did not load", which is false of a file that
+    loaded; a record for San Francisco would be a second, older reading of a
+    board another file already names; and a record for a county the map does
+    not draw is unreachable. The GEOID the card skips is read out of
+    index.html, so the two cannot come to name different counties.
+    """
+    counties_path = os.path.join(app_dir, "state-counties.json")
+    roster_path = os.path.join(app_dir, "ca-county-officials.json")
+    for path in (counties_path, roster_path):
+        if not os.path.exists(path):
+            fail("%s not found — the County card's roster check cannot run"
+                 % os.path.basename(path))
+    m = re.search(r'var SF_COUNTY_GEOID = "(\d{5})";', html)
+    if not m:
+        fail("index.html no longer states SF_COUNTY_GEOID, the county whose board "
+             "the County card leaves to the Supervisor District card")
+    skipped = m.group(1)
+    with open(counties_path, encoding="utf-8") as f:
+        drawn = {str((feat.get("properties") or {}).get("GEOID") or "")
+                 for feat in json.load(f).get("features") or []}
+    with open(roster_path, encoding="utf-8") as f:
+        named = set(json.load(f))
+    if skipped not in drawn:
+        fail("SF_COUNTY_GEOID (%s) is not a county state-counties.json draws" % skipped)
+    if skipped in named:
+        fail("ca-county-officials.json carries a record for %s, whose board the "
+             "Supervisor District card already names from the city's own data" % skipped)
+    unnamed = sorted(drawn - named - {skipped})
+    if unnamed:
+        fail("count%s the map draws with no board in ca-county-officials.json, so the "
+             "County card would say the list did not load: %s"
+             % ("ies" if len(unnamed) > 1 else "y", ", ".join(unnamed)))
+    orphaned = sorted(named - drawn)
+    if orphaned:
+        fail("ca-county-officials.json names a board for count%s the map does not "
+             "draw: %s" % ("ies" if len(orphaned) > 1 else "y", ", ".join(orphaned)))
 
 
 SOURCES_PAGE = "sources.html"
