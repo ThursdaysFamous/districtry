@@ -87,29 +87,59 @@ const ROSTER_URLS = [
    * the byte ranges a tile archive is read by; Cloudflare's page hosting
    * answers a range with the whole file, measured that day).
    *
+   * THE BOUNDARY FILES FOLLOWED (Adam's "Start" of 2026-11-16): measured that
+   * day with all fifty states live, the 902 whole-file boundary sets the apps
+   * read were 463.5 MB of the 664.6 MB GitHub still published. A boundary
+   * file is one the worksheet lists under data_files.geometry, which the
+   * generator writes into the page as BOUNDARY_FILES (bare names) and into the
+   * worker as GEOMETRY_URLS, so the page, its worker and the deploy's copy
+   * (which reads the worker's list) name the same files. Rosters and election
+   * results are not among them and stay on this site: a page and the roster
+   * it prints are published together here.
+   *
    * filesUrl(path, base) is the address to fetch one of those files from.
-   * The live site reads the two folders from FILES_ORIGIN, at the path they
-   * have on this site, and only while the page itself is on FILES_SITE_HOST,
-   * so a copy served on localhost, in a test or on a preview reads its own
-   * files and never the live host's. Anything outside the two folders is left
-   * on this site. The deploy copies the folders there and then leaves them out
-   * of what GitHub Pages publishes (scripts/sync_r2_files.py,
+   * The live site reads the two folders and its boundary files from
+   * FILES_ORIGIN, at the path they have on this site, and only while the page
+   * itself is on FILES_SITE_HOST, so a copy served on localhost, in a test or
+   * on a preview reads its own files and never the live host's. Anything else
+   * is left on this site. The deploy copies the files there and leaves the two
+   * folders out of what GitHub Pages publishes (scripts/sync_r2_files.py,
    * deploy-pages.yml). Null would read every file from this site again, as
    * every page did until the switch, which is the way back if the files host
-   * fails: set it to null and stop the deploy dropping the folders, in one
+   * fails: set it to null and stop the deploy dropping the files, in one
    * change. This block is ONE copy spliced into every app's index.html and
    * sw.js (engine/shared/), so the page and its service worker cannot
    * disagree about where a file lives.
+   *
+   * The boundary paths are worked out the first time one is asked for and
+   * kept. A list that is not there yet (a `var` read before the line that
+   * sets it has run) answers "none" and is NOT kept, so an early caller cannot
+   * leave every later one reading this site; the page's one fetch helper also
+   * waits for the script to finish before it asks (fetch-retry).
    * ------------------------------------------------------------------------ */
   var FILES_ORIGIN = "https://files.districtry.com";
   var FILES_SITE_HOST = "districtry.com";
   var FILES_FOLDERS = ["/data/app/tiles/", "/data/app/population/"];
+  var FILES_BOUNDARY_PATHS = null;
+  function filesBoundaryPaths() {
+    if (FILES_BOUNDARY_PATHS) return FILES_BOUNDARY_PATHS;
+    var names = typeof BOUNDARY_FILES !== "undefined" ? BOUNDARY_FILES
+      : typeof GEOMETRY_URLS !== "undefined" ? GEOMETRY_URLS : null;
+    if (!names) return {};
+    var paths = {};
+    for (var i = 0; i < names.length; i++) {
+      var name = names[i].slice(names[i].lastIndexOf("/") + 1);
+      paths[new URL("data/app/" + name, location.href).pathname] = true;
+    }
+    return (FILES_BOUNDARY_PATHS = paths);
+  }
   function filesUrl(path, base) {
     var url = new URL(path, base);
     if (!FILES_ORIGIN || url.origin !== location.origin || location.hostname !== FILES_SITE_HOST) return url.href;
     for (var i = 0; i < FILES_FOLDERS.length; i++) {
       if (url.pathname.indexOf(FILES_FOLDERS[i]) !== -1) return FILES_ORIGIN + url.pathname + url.search;
     }
+    if (filesBoundaryPaths()[url.pathname] === true) return FILES_ORIGIN + url.pathname + url.search;
     return url.href;
   }
 /* ==== ENGINE:END files-origin ==== */
@@ -291,6 +321,49 @@ function underFolder(href, folder) {
     href.startsWith(filesUrl(folder, self.registration.scope));
 }
 
+// Boundary geometry lives at two addresses and is ONE file here. On the live
+// site the page asks the files host for it (filesUrl, the files-origin block);
+// everywhere else, and from any tab loaded before the maps were switched on
+// 2026-11-16, it asks this site. geometryKey answers either address with the
+// file's address on THIS site, which is the one key it is cached under.
+//
+// That key is why the switch needed no CACHE_NAME bump: every copy a returning
+// visitor already held was cached under its address on this site, so the
+// first request for the same file at the files host is a cache hit, offline
+// included. A bump would have made every returning visitor download every
+// boundary file again for bytes that had not changed.
+//
+// A miss is fetched from wherever filesUrl says the file lives, whichever
+// address was asked for, so a tab still running the page from before the
+// switch is served from the files host too and keeps working once this site
+// stops publishing the files. It asks with cache: "no-cache" for the reason
+// cacheOnlyElseNetwork gives.
+let GEOMETRY_KEYS = null;
+function geometryKey(href) {
+  if (!GEOMETRY_KEYS) {
+    GEOMETRY_KEYS = new Map();
+    GEOMETRY_URLS.forEach((url) => {
+      const own = new URL(url, self.registration.scope).href;
+      GEOMETRY_KEYS.set(own, own);
+      GEOMETRY_KEYS.set(filesUrl(own), own);
+    });
+  }
+  return GEOMETRY_KEYS.get(href);
+}
+function boundaryFile(key) {
+  return caches.match(key).then(
+    (cached) =>
+      cached ||
+      fetch(filesUrl(key), { cache: "no-cache" }).then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(key, clone));
+        }
+        return response;
+      })
+  );
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
 
@@ -321,9 +394,11 @@ self.addEventListener("fetch", (event) => {
 
   // Boundary geometry: changes only with a CACHE_NAME bump, so served from the
   // cache without revalidation, for instant toggles, offline use, and no bytes
-  // on a repeat visit.
-  if (inList(href, GEOMETRY_URLS)) {
-    event.respondWith(cacheOnlyElseNetwork(event.request));
+  // on a repeat visit. Asked for on this site or on the files host, it is the
+  // same file under the same key (geometryKey, above).
+  const boundary = geometryKey(href);
+  if (boundary) {
+    event.respondWith(boundaryFile(boundary));
     return;
   }
 
