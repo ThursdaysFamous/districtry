@@ -13,7 +13,7 @@ silently supersedes with a new one:
     exists. Nothing errors; the data just quietly goes stale. Ohio's
     instance reads no Socrata portal, so that list is empty here.
   * Pre-built boundary layers were downloaded at build time from Census
-    TIGERweb: the congressional map (layer 4, the 119th Congress's) and both
+    TIGERweb: the congressional map (layer 0, the 120th Congress's) and both
     chambers' maps (the 2026 state legislative layers). The check there
     is provenance: is the source we cite still reachable, and is it still the
     map the shipped file was drawn from.
@@ -34,13 +34,12 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      is present.                                           [WARN / FAIL if gone]
   4. Live service endpoints (Census TIGERweb, the USGS National Map):
      answering for Ohio, with a count at or above its floor.         [WARN]
-  5. The congressional map: congress-districts.json is TIGERweb layer 4 (the
-     119th Congress), the map the members serving until noon on 3 January 2027
-     were elected from. Ohio has a new map for the 120th Congress and the
-     November 2026 election used it, so from 1 December 2026 this check says
-     every month that the file has to be rebuilt from the 120th Congress's
-     layer that day; it also says so if layer 4 is renamed, since the builder
-     would then refuse to rebuild.                                       [WARN]
+  5. The congressional map: congress-districts.json is TIGERweb layer 0 (the
+     120th Congress), the map the November 2026 election used, whose members
+     serve until noon on 3 January 2029. From 1 December 2028 this check says
+     every month that a person has to re-read, that day, which map the
+     November 2028 election used; it also says so if layer 0 is renamed,
+     since the builder would then refuse to rebuild.                     [WARN]
   6. The two chambers' maps: TIGERweb's 2026 state legislative layers still
      carry the names the builder refuses a rebuild on, so a rolled vintage is
      read by a person a month after it appears rather than on the day
@@ -99,14 +98,14 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": LEGISLATIVE + "/4",
+        "source_url": LEGISLATIVE + "/0",
         "note": (
-            "15 congressional districts pre-built from TIGERweb's layer 4, the "
-            "119th Congress's map, by oh/scripts/build_legislative_boundaries.py: "
-            "the districts the members serving until 3 January 2027 were elected "
-            "from. Layer 0, the 120th Congress's, is the map the November 2026 "
-            "election used (13 of the 15 districts differ, measured 2026-11-11). "
-            "Check 5 below says when the map has to be re-read."
+            "15 congressional districts pre-built from TIGERweb's layer 0, the "
+            "120th Congress's map, by oh/scripts/build_legislative_boundaries.py: "
+            "the map the November 2026 election used, whose members serve from "
+            "3 January 2027 to 3 January 2029. Layer 4, the 119th Congress's, was "
+            "drawn until 3 January 2027 (13 of the 15 districts differ, measured "
+            "2026-11-16). Check 5 below says when the file has to be re-read."
         ),
     },
     {
@@ -271,10 +270,10 @@ ENDPOINTS = [
 # builder (oh/scripts/build_legislative_boundaries.py) holds the same names
 # and dates, and refuses a rebuild once either stops being true.
 CONGRESS_LAYERS = [
-    (LEGISLATIVE + "/4?f=json", "119th Congressional Districts"),
+    (LEGISLATIVE + "/0?f=json", "120th Congressional Districts"),
 ]
-CONGRESS_SERVING_UNTIL = "2027-01-03"
-CONGRESS_WARN_FROM = "2026-12-01"
+CONGRESS_SERVING_UNTIL = "2029-01-03"
+CONGRESS_WARN_FROM = "2028-12-01"
 
 # Check 6: the chambers' TIGERweb layers, with the names the builder refuses a
 # rebuild on (its LAYERS table and check_serving_map).
@@ -531,15 +530,15 @@ def check_congress_map(findings, offline, today=None):
     today = today or datetime.date.today().isoformat()
     if today >= CONGRESS_SERVING_UNTIL:
         findings.add(WARN, "us-house",
-                     "the members elected on the 119th Congress's map left office at noon "
-                     "on 3 January 2027: rebuild congress-districts.json from the TIGERweb "
-                     "layer carrying the map the 2026 election used (layer 0, the 120th Congress's), and "
+                     "the 120th Congress ended at noon on 3 January 2029: re-read which map "
+                     "the November 2028 election used and, if it is not the 120th Congress's, "
+                     "rebuild congress-districts.json from the TIGERweb layer carrying it and "
                      "change the us-house entry in oh/scripts/build_legislative_boundaries.py "
                      "— oh/WATCH.md has the steps")
     elif today >= CONGRESS_WARN_FROM:
         findings.add(WARN, "us-house",
-                     "the members elected on the 119th Congress's map leave office at noon "
-                     "on 3 January 2027; congress-districts.json is right until then and must "
+                     "the 120th Congress ends at noon on 3 January 2029; congress-districts.json "
+                     "is right until then, and which map the November 2028 election used must "
                      "be re-read that day — oh/WATCH.md has the steps")
     if offline:
         return
@@ -554,7 +553,7 @@ def check_congress_map(findings, offline, today=None):
                          "TIGERweb's layer %s is now %r, not %r: the shipped file is "
                          "unchanged, but oh/scripts/build_legislative_boundaries.py would "
                          "refuse to rebuild it until its layer table names the layer that "
-                         "carries the 119th Congress's map" % (url, name, want))
+                         "carries the 120th Congress's map" % (url, name, want))
         else:
             findings.add(OK, "us-house", "TIGERweb's layer %s is still %r" % (url, name))
 

@@ -33,11 +33,13 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      data/app file is present.                             [WARN / FAIL if gone]
   4. Live service endpoints (Census TIGERweb, the USGS National Map):
      answering for Louisiana, with a count at or above its floor.          [WARN]
-  5. The congressional map: congress-districts.json is the 119th Congress's,
-     which is right until noon on 3 January 2027 and wrong after it. From
-     1 December 2026 this check says so every month; it also says so if
-     TIGERweb's layer 4 is no longer the 119th Congress's map, since the
-     builder would then refuse to rebuild it.                             [WARN]
+  5. The congressional map: congress-districts.json is the 120th Congress's,
+     the map of Act 2 of the 2026 regular session, which the November 2026
+     election used and whose members serve until noon on 3 January 2029.
+     From 1 December 2028 this check says every month that a person has to
+     re-read, that day, which map the November 2028 election used; it also
+     says so if TIGERweb's layer 0 is no longer the 120th Congress's map,
+     since the builder would then refuse to rebuild it.                   [WARN]
   6. The parishes drawn from their own government's map (Orleans and East
      Baton Rouge): each layer is asked again, the build's way, and its name,
      description, districts and lines, and the Census Bureau's map of the
@@ -103,18 +105,20 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
         "note": (
-            "6 congressional districts pre-built from TIGERweb's layer 4, the "
-            "119th Congress's map, by la/scripts/build_legislative_boundaries.py. "
-            "LAYER 4 AND NOT LAYER 0, ON PURPOSE: Louisiana redrew for 2026 "
-            "(Act 2 of 2026) and layer 0 already carries that map, while the six "
-            "members congress-roster.json names were elected from the 2024 map "
-            "and serve until noon on 3 January 2027. Measured 2026-10-20 against "
-            "the legislature's own shapefile of the 2024 plan, layer 4 matches "
-            "every district at IoU 0.99999 or better and layer 0 keeps 76.66% of "
-            "the plan's area in the same-numbered district. Check 5 below says "
-            "when the map has to change."
+            "6 congressional districts pre-built from TIGERweb's layer 0, the "
+            "120th Congress's map, by la/scripts/build_legislative_boundaries.py: "
+            "the map of Act 2 of the 2026 regular session, which the November "
+            "2026 election used and whose members serve from 3 January 2027 to "
+            "3 January 2029. Layer 4, the 119th Congress's, was drawn until "
+            "3 January 2027; it is the map of Act 2 of the 2024 First "
+            "Extraordinary Session, and all 6 districts differ between the two "
+            "(measured 2026-11-16). The Census Bureau's block file for the 120th "
+            "Congress places all 92,180 of Louisiana's populated 2020 blocks in "
+            "the district the shipped file gives (measured 2026-11-16 by "
+            "scripts/check_congress_block_file.py). Check 5 below says when the "
+            "map has to be re-read."
         ),
     },
     {
@@ -424,10 +428,10 @@ ENDPOINTS = [
 # Check 5's dates and the layer the congressional file is drawn from. The
 # builder (la/scripts/build_legislative_boundaries.py) holds the same name and
 # date, and refuses a rebuild once either stops being true.
-CONGRESS_LAYER_URL = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4?f=json"
-CONGRESS_LAYER_NAME = "119th Congressional Districts"
-CONGRESS_SERVING_UNTIL = "2027-01-03"
-CONGRESS_WARN_FROM = "2026-12-01"
+CONGRESS_LAYER_URL = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0?f=json"
+CONGRESS_LAYER_NAME = "120th Congressional Districts"
+CONGRESS_SERVING_UNTIL = "2029-01-03"
+CONGRESS_WARN_FROM = "2028-12-01"
 
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -668,31 +672,31 @@ def check_congress_map(findings, offline, today=None):
     today = today or datetime.date.today().isoformat()
     if today >= CONGRESS_SERVING_UNTIL:
         findings.add(WARN, "us-house",
-                     "the members congress-districts.json was drawn for left office at noon "
-                     "on 3 January 2027. Rebuild it from TIGERweb's layer named '120th "
-                     "Congressional Districts' (its CD120 field), drop layer_name and "
-                     "serving_until in la/scripts/build_legislative_boundaries.py, and check "
-                     "the weekly roster has the new members — la/WATCH.md has the steps")
+                     "the 120th Congress ended at noon on 3 January 2029: re-read which map "
+                     "the November 2028 election used and, if it is not the 120th Congress's, "
+                     "rebuild congress-districts.json from the TIGERweb layer carrying it and "
+                     "change the us-house entry in la/scripts/build_legislative_boundaries.py "
+                     "— la/WATCH.md has the steps")
     elif today >= CONGRESS_WARN_FROM:
         findings.add(WARN, "us-house",
-                     "the 120th Congress takes office at noon on 3 January 2027 on the map "
-                     "Louisiana drew for 2026; congress-districts.json is the 119th's until "
-                     "then and must be rebuilt that day — la/WATCH.md has the steps")
+                     "the 120th Congress ends at noon on 3 January 2029; congress-districts.json "
+                     "is right until then, and which map the November 2028 election used must "
+                     "be re-read that day — la/WATCH.md has the steps")
     if offline:
         return
     ok, res = http_get(CONGRESS_LAYER_URL)
     if not ok:
-        findings.add(WARN, "us-house", "TIGERweb's Legislative layer 4 is not reachable (%s)" % res)
+        findings.add(WARN, "us-house", "TIGERweb's Legislative layer 0 is not reachable (%s)" % res)
         return
     name = res.get("name", "") if isinstance(res, dict) else ""
     if name != CONGRESS_LAYER_NAME:
         findings.add(WARN, "us-house",
-                     "TIGERweb's Legislative layer 4 is now %r, not %r: the shipped file is "
+                     "TIGERweb's Legislative layer 0 is now %r, not %r: the shipped file is "
                      "unchanged, but la/scripts/build_legislative_boundaries.py would refuse to "
-                     "rebuild it until its layer table names the layer that carries the 119th "
+                     "rebuild it until its layer table names the layer that carries the 120th "
                      "Congress's map" % (name, CONGRESS_LAYER_NAME))
     else:
-        findings.add(OK, "us-house", "TIGERweb's Legislative layer 4 is still %r" % name)
+        findings.add(OK, "us-house", "TIGERweb's Legislative layer 0 is still %r" % name)
 
 
 # ---- check 6: the parishes drawn from their own government's map ----------

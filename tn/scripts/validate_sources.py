@@ -82,15 +82,20 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
         "note": (
             "9 congressional districts pre-built from TIGERweb by "
-            "tn/scripts/build_legislative_boundaries.py, FROM LAYER 4 AND NOT "
-            "LAYER 0. Layer 0 is the 120th Congress map, which Tennessee redrew "
-            "in 2026 and which takes effect on 3 January 2027; layer 4 (field "
-            "CD119) is the map the sitting members were elected from. On 3 "
-            "January 2027 the builder must move to layer 0 and CD120, and it "
-            "refuses to run on layer 4 after that date."
+            "tn/scripts/build_legislative_boundaries.py from layer 0 (field "
+            "CD120), the 120th Congress's map, which Tennessee redrew in 2026, "
+            "the November 2026 election used, and whose members serve from "
+            "3 January 2027 to 3 January 2029. Layer 4 (field CD119), the 119th "
+            "Congress's map, was drawn until 3 January 2027; 7 of the 9 "
+            "districts differ between the two (measured 2026-11-16). The Census "
+            "Bureau's block file for the 120th Congress places 133,843 of "
+            "Tennessee's 133,846 populated 2020 blocks in the district the "
+            "shipped file gives (measured 2026-11-16 by "
+            "scripts/check_congress_block_file.py). The builder refuses to "
+            "build this layer on or after 3 January 2029."
         ),
     },
     {

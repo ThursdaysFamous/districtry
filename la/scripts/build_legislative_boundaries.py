@@ -18,22 +18,37 @@ here (build_la_legislature_roster.py builds those).
 DEFAULT_TARGETS DELIBERATELY INCLUDES us-house: there is no bootstrap step that
 writes congress-districts.json, so skipping it by default would ship no file.
 
-THE CONGRESSIONAL LAYER IS LAYER 4 (THE 119TH CONGRESS) UNTIL 3 JANUARY 2027,
-NOT LAYER 0. Louisiana redrew its congressional map in the 2026 regular
-session (Act 2 of 2026), and TIGERweb's layer 0, "120th Congressional
-Districts", already carries that map. Nobody has been elected from it yet: the
-six members congress-roster.json names were elected in 2024 from the map of
-Act 2 of the 2024 First Extraordinary Session (SB8), and they serve until noon
-on 3 January 2027. Measured 2026-10-20 against the legislature's own shapefile
-of that 2024 plan (redist.legis.la.gov, "Act_2_1st_ES_(2024)_-_Congress.zip"),
-in an equal-area projection: layer 4 puts 100.00% of the plan's area in the
-same-numbered district and matches every district at IoU 0.99999 or better,
-while layer 0 keeps only 76.66% of it in the same-numbered district (19.4% of
-District 6 and 43.4% of District 2). Drawing layer 0 beside these members
-would name the wrong representative across about a quarter of the state.
-check_serving_map refuses a build on or after 3 January 2027, and refuses if
-layer 4 stops being the 119th Congress's map, since TIGERweb renumbers its
-layers when a vintage rolls.
+THE CONGRESSIONAL MAP IS THE ONE THE NOVEMBER 2026 ELECTION USED, TIGERweb
+LAYER 0 (THE 120TH CONGRESS, FIELD CD120), SINCE 3 JANUARY 2027. Louisiana
+redrew its congressional map in the 2026 regular session (Act 2 of 2026), and
+the November 2026 election used it. The members elected from it took office at
+noon on 3 January 2027 and serve until 3 January 2029. Until that day this
+builder drew layer 4 (the 119th Congress), the map the members then sitting
+were elected from in 2024. Measured 2026-10-20 against the legislature's own
+shapefile of that 2024 plan (redist.legis.la.gov,
+"Act_2_1st_ES_(2024)_-_Congress.zip"), in an equal-area projection: layer 4 put
+100.00% of the plan's area in the same-numbered district and matched every
+district at IoU 0.99999 or better, while layer 0 keeps only 76.66% of it in the
+same-numbered district (19.4% of District 6 and 43.4% of District 2). The two
+maps name a different representative across about a quarter of the state, so
+this file was built ahead of 3 January 2027 and held back until that day.
+
+THE CENSUS BUREAU'S BLOCK FILE IS THE WITNESS THAT LAYER 0 IS THAT MAP. The
+builder's own gates hold the file to the layer; none of them says the layer is
+the map the election used. The Bureau's page for the 120th Congress says nine
+states (Alabama, California, Florida, Louisiana, North Carolina, Ohio,
+Tennessee, Texas and Utah) "delineated new boundaries for the 2026 election
+cycle", and its Block Equivalency File names, for every 2020 census block, the
+district the state's own liaison reported. Measured 2026-11-16 by
+scripts/check_congress_block_file.py against Louisiana's member of that file
+(dated 2026-06-02): all 92,180 populated 2020 blocks, holding all 4,657,757
+people, have their internal point in the district the file names, and the
+Bureau's file gives its districts 776,248 to 776,355 people each.
+
+check_serving_map prints a notice when this entry is built before 3 January
+2027, and refuses on or after 3 January 2029, when a person must re-read which
+map the 2028 election used. It also refuses if layer 0 stops being the 120th
+Congress's map, since TIGERweb renumbers its layers when a vintage rolls.
 
 THE TWO CHAMBERS ARE THE 2022 PLANS, AND ONE 2026 LAW IS NOT IN THEM YET.
 TIGERweb's 2026 legislative layers (1 and 2) carry the House and Senate plans
@@ -91,29 +106,28 @@ LA_FIPS = "22"
 STATE_BBOX = {"minLng": -94.25, "minLat": 28.45, "maxLng": -88.55, "maxLat": 33.2}
 
 # chamber -> how to build data/app/<out>.
-#   layer:    TIGERweb Legislative MapServer layer index (4 the 119th Congress's
+#   layer:    TIGERweb Legislative MapServer layer index (0 the 120th Congress's
 #             House map — see its entry — 1 upper, 2 lower)
 #   fields:   outFields kept from TIGERweb. The app's extractDistrictNumber reads
 #             SLDU/SLDL and CD119/CD120 directly, with a NAME fallback.
 #   where:    (optional) an extra clause ANDed onto the state filter
-#   layer_name, serving_until: (us-house only) the layer's expected name, and
-#             the date the members it was drawn for leave office
+#   layer_name, serving_from, serving_until: (us-house only) the layer's
+#             expected name, and the dates the members elected from it take
+#             office and leave it
 #   out:      the data/app file index.html fetches for this layer
 #   simplify: mapshaper Douglas-Peucker interval in METRES (keep-shapes) — see
 #             the docstring for why it is not a Visvalingam retain percentage
 #   min_features: count guard — the real district count
 LAYERS = {
     "us-house": {
-        # LAYER 4, THE 119TH CONGRESS, UNTIL 3 JANUARY 2027 — NOT LAYER 0.
-        # See the docstring: layer 0 is the 2026 plan nobody has been elected
-        # from, and layer 4 is the legislature's 2024 plan at IoU 0.99999.
-        # On 3 January 2027 switch to the layer named "120th Congressional
-        # Districts" and its CD120 field; check_serving_map checks both the
-        # layer's name and the date, so the build refuses either way.
-        "layer": 4,
-        "fields": ["CD119", "NAME", "BASENAME", "GEOID", "STATE"],
-        "layer_name": "119th Congressional Districts",
-        "serving_until": "2027-01-03",
+        # LAYER 0, THE 120TH CONGRESS: the map the 3 November 2026 election
+        # used. Its members take office at noon on 3 January 2027 and serve
+        # until 3 January 2029. See the docstring.
+        "layer": 0,
+        "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "120th Congressional Districts",
+        "serving_from": "2027-01-03",
+        "serving_until": "2029-01-03",
         "out": "congress-districts.json",
         "simplify": "interval=5",
         "min_features": 6,  # 6 Louisiana congressional districts
@@ -193,11 +207,16 @@ def check_serving_map(name, cfg, today=None):
         return
     import datetime
     today = today or datetime.date.today().isoformat()
+    if "serving_from" in cfg and today < cfg["serving_from"]:
+        print("%s: BUILT AHEAD. The members elected from %r take office on %s. "
+              "Until then the sitting members were elected from the 119th "
+              "Congress's map, so this file must not ship before that date"
+              % (name, cfg["layer_name"], cfg["serving_from"]))
     if today >= cfg["serving_until"]:
         raise RuntimeError(
-            "%s: the members drawn from %r left office on %s — switch to the "
-            "layer named '120th Congressional Districts' and its CD120 field, "
-            "then drop layer_name/serving_until" % (name, cfg["layer_name"], cfg["serving_until"]))
+            "%s: the members elected in 2026 from %r left office on %s. Re-read "
+            "which map the 2028 election used, then change this entry"
+            % (name, cfg["layer_name"], cfg["serving_until"]))
     out = subprocess.run(
         ["curl", "-sS", "--fail", "--max-time", "60",
          TIGERWEB + "/" + str(cfg["layer"]) + "?f=json"],

@@ -270,13 +270,13 @@
       "label": "U.S. House District",
       "group": "political",
       "area_rank": 2,
-      "rank_note": "52 congressional districts, pre-built statewide from TIGERweb layer 4 (the 119th Congress) until 3 January 2027",
+      "rank_note": "52 congressional districts, pre-built statewide from TIGERweb layer 0 (the 120th Congress) since 3 January 2027",
       "source": {
         "answers": "Which U.S. House district covers this address, and who represents it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 52 features, measured 2026-11-11. It is the map the sitting members were elected from in 2024. California's voters adopted a new map in November 2025 (Proposition 50) and the November 2026 election used it (TIGERweb layer 0); 44 of the 52 districts differ between the two, so the app switches maps on 3 January 2027, when the members elected from the new one take their seats. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
-            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 52 features, measured 2026-11-16. This is the map the November 2026 election used, and the members elected from it took office on 3 January 2027. California's voters adopted this map in November 2025 (Proposition 50). Until that day the app drew the 119th Congress's map (layer 4), which the members then in office were elected from in 2024; 44 of the 52 districts differ between the two maps. Checked on 2026-11-16 against the Census Bureau's block file for the 120th Congress, by the point the Bureau places inside each block: 377,587 of the 377,591 populated 2020 census blocks fall in the district that file names, and the 4 that do not are each within 20 m of a district line. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
           }
         ],
         "people": "Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.",
@@ -834,7 +834,7 @@
     ]
   },
   "sw": {
-    "cache_name": "district-explorer-shell-sf-v14",
+    "cache_name": "district-explorer-shell-sf-v15",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

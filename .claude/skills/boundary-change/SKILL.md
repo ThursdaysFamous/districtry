@@ -84,7 +84,12 @@ TIGERweb answer HTTP 200 with an error envelope, and the builder dies with
 so update `fields` in ALL THREE builders, since each instance ships its own
 congress file and cache name; the app's district-number extractor has its
 own field list and name-regex fallback. Update the `note` on the TIGERweb
-`PROVENANCE` entries in `scripts/validate_sources.py`.
+`PROVENANCE` entries in `scripts/validate_sources.py`. Which map a Congress's
+members were elected from is not in a layer's name: read it from the Census
+Bureau's block file for that Congress, and hold the rebuilt file to it with
+`python3 scripts/check_congress_block_file.py --instance il` (an operator
+step, it needs the network; nine states changed map on 3 January 2027 and
+Missouri, whose layer 0 carries a map its election did not use, did not).
 
 **Socrata year.** The CPS annual rotation is THREE copies, in this order:
 before any of them, pull one feature from the new dataset

@@ -55,7 +55,11 @@ simplified district files the apps ship and are pinned (Pennsylvania's and
 Nevada's on 2026-11-10, when they were built; Nevada's congressional map sits
 0.31% from the raw-census ideal and its Assembly map up to 5.96%): an
 uncounted number that moves, or a district further from its ideal than
-recorded, fails. Some
+recorded, fails. The congressional rows of the nine states whose map changed
+on 3 January 2027 (Alabama, California, Florida, Louisiana, North Carolina,
+Ohio, Tennessee, Texas and Utah) were measured again on 2026-11-16, on the
+120th Congress's files; two pins moved, California's down to its new worst
+district and Texas's up for the one block its row describes. Some
 plans sit far from the raw-census ideal by design (New York draws on
 prisoner-adjusted counts; several states allow 5% either way), which is why
 those tolerances are wide; they still catch a map swapped for another.
@@ -120,15 +124,18 @@ INSTANCES = {
     # to the state on 2026-11-11; its wash's lighter band is now the state
     # outline, water included, which holds every block. ITS TOLERANCES ARE THE
     # WIDEST IN THE TABLE, and that is the plan, not the outline: measured
-    # 2026-11-11 on the shipped files, congressional District 22 holds 2.880%
-    # over the raw-census ideal, Senate District 3 5.135% and Assembly District
-    # 34 6.452%. California's commission drew on counts that place an
-    # incarcerated person at their last address (Elections Code 21003), which
-    # moves people out of the districts holding the state's prisons, as New
-    # Jersey's does; that this explains each figure was not measured.
+    # 2026-11-11 on the shipped files, Senate District 3 holds 5.135% over the
+    # raw-census ideal and Assembly District 34 6.452%, and measured 2026-11-16
+    # on the 120th Congress's map, drawn since 3 January 2027, congressional
+    # District 22 holds 2.340% over it (2.880% on the 119th Congress's map,
+    # whose worst district had the same number). California's commission drew
+    # on counts that place an incarcerated person at their last address
+    # (Elections Code 21003), which moves people out of the districts holding
+    # the state's prisons, as New Jersey's does; that this explains each figure
+    # was not measured.
     "ca": {"name": "California", "state": "06", "total": 39538223, "counties": 58,
            "bbox": (-124.49, 32.52, -114.12, 42.02),
-           "maps": [("congress-districts.json", 52, 0.029), ("ca-senate-districts.json", 40, 0.055),
+           "maps": [("congress-districts.json", 52, 0.0235), ("ca-senate-districts.json", 40, 0.055),
                     ("ca-assembly-districts.json", 80, 0.065)]},
     "ny": {"name": "New York", "state": "36", "total": 20201249, "counties": 62,
            "bbox": (-79.77, 40.47, -71.77, 45.03),
@@ -240,27 +247,39 @@ INSTANCES = {
            "bbox": (-72.56, 42.69, -70.57, 45.31),
            "maps": [("congress-districts.json", 2, 0.0005), ("nh-senate-districts.json", 24, 0.055)]},
     # Texas's two chambers are separate plans, so both are held. Measured
-    # 2026-11-11 on the shipped outlines: the congressional map (the 119th
-    # Congress's, which the members serving until 3 January 2027 were elected
-    # from) sits within 0.010% of its ideal, the Senate plan's worst district is
+    # 2026-11-11 on the shipped outlines: the Senate plan's worst district is
     # 3.445% under the raw-census ideal and the House plan's 4.994% under it,
-    # each inside the 10% total deviation a state plan may carry.
+    # each inside the 10% total deviation a state plan may carry. THE
+    # CONGRESSIONAL MAP IS ALLOWED 0.10%, NOT THE 0.05% THE OTHER EQUAL-SHARE
+    # PLANS ARE, AND ONE BLOCK IS WHY. Measured 2026-11-16 on the 120th
+    # Congress's map, drawn since 3 January 2027: District 23 holds 767,491
+    # people, 504 (0.066%) over an equal share, and District 20 holds 504
+    # under; every other district is within 0.008%. Block 480291720022010 holds
+    # 504 people and its internal point lies 0.1 m from the line between the
+    # two: the Census Bureau's block file for the 120th Congress places the
+    # block in District 20, and the Bureau's own TIGERweb line, unsimplified,
+    # puts the point in District 23, as the shipped file does. The plan itself
+    # gives every district 766,986 or 766,987 people on the Bureau's file
+    # (scripts/check_congress_block_file.py). The 119th Congress's map, drawn
+    # until that day, sat within 0.010%.
     "tx": {"name": "Texas", "state": "48", "total": 29145505, "counties": 254,
            "bbox": (-106.65, 25.83, -93.5, 36.51),
-           "maps": [("congress-districts.json", 38, 0.0005), ("tx-senate-districts.json", 31, 0.035),
+           "maps": [("congress-districts.json", 38, 0.001), ("tx-senate-districts.json", 31, 0.035),
                     ("tx-house-districts.json", 150, 0.05)]},
     # Florida's two chambers are separate plans, so both are held. Measured
-    # 2026-11-11 on the shipped outlines: the congressional map (the 119th
-    # Congress's, which the members serving until 3 January 2027 were elected
-    # from) sits within 0.003% of its ideal, the Senate plan's worst district is
+    # 2026-11-11 on the shipped outlines: the Senate plan's worst district is
     # 0.969% over the raw-census ideal and the House plan's 2.378% under it.
+    # Measured 2026-11-16: the congressional map (the 120th Congress's, drawn
+    # since 3 January 2027) sits within 0.001% of its ideal; the 119th
+    # Congress's, drawn until that day, sat within 0.003%.
     "fl": {"name": "Florida", "state": "12", "total": 21538187, "counties": 67,
            "bbox": (-87.64, 24.39, -79.97, 31.01),
            "maps": [("congress-districts.json", 28, 0.0005), ("fl-senate-districts.json", 40, 0.01),
                     ("fl-house-districts.json", 120, 0.025)]},
     # Ohio's House nests three to a Senate district, so the two plans share
-    # every line. Measured 2026-11-11 on the shipped outlines: the
-    # congressional map (the 119th Congress's) sits within 0.004% of its ideal,
+    # every line. Measured 2026-11-16 on the shipped outlines: the
+    # congressional map (the 120th Congress's, drawn since 3 January 2027)
+    # sits within 0.001% of its ideal (the 119th Congress's sat within 0.004%),
     # and both legislative plans run to the 5% the state constitution allows
     # (art. XI s. 3), the Senate's worst district +4.990% and the House's
     # +4.999%, so their tolerance is that 5% and no tighter.
@@ -313,9 +332,10 @@ INSTANCES = {
     "md": {"name": "Maryland", "state": "24", "total": 6177224, "counties": 24,
            "bbox": (-79.49, 37.88, -74.98, 39.73),
            "maps": [("congress-districts.json", 8, 0.0075), ("md-senate-districts.json", 47, 0.055)]},
-    # Alabama's congressional map is the court-drawn plan of the 119th
-    # Congress, within 0.001% of its ideal; both legislative plans run to the
-    # 5% range the Legislature adopted (+4.986% and -4.983%).
+    # Alabama's congressional map is the 120th Congress's since 3 January
+    # 2027, within 0.001% of its ideal as the 119th Congress's was (measured
+    # 2026-11-16); both legislative plans run to the 5% range the Legislature
+    # adopted (+4.986% and -4.983%).
     "al": {"name": "Alabama", "state": "01", "total": 5024279, "counties": 67,
            "bbox": (-88.48, 30.14, -84.88, 35.01),
            "maps": [("congress-districts.json", 7, 0.0005), ("al-senate-districts.json", 35, 0.05),
@@ -333,9 +353,9 @@ INSTANCES = {
            "bbox": (-109.07, 36.99, -102.04, 41.01),
            "maps": [("congress-districts.json", 8, 0.0005), ("co-senate-districts.json", 35, 0.05),
                     ("co-house-districts.json", 65, 0.035)]},
-    # Utah's congressional map is the 2025 court-ordered plan of the 119th
-    # Congress layer, within 0.001% of its ideal; Senate -1.880% and House
-    # -4.637% at their worst.
+    # Utah's congressional map is the 120th Congress's since 3 January 2027,
+    # within 0.001% of its ideal as the 119th Congress's was (measured
+    # 2026-11-16); Senate -1.880% and House -4.637% at their worst.
     "ut": {"name": "Utah", "state": "49", "total": 3271616, "counties": 29,
            "bbox": (-114.06, 36.99, -109.04, 42.01),
            "maps": [("congress-districts.json", 4, 0.0005), ("ut-senate-districts.json", 29, 0.02),

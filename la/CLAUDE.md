@@ -41,15 +41,19 @@ State's list names. **Tribal Government** (`tribal-government`) draws the
 Choctaw and Tunica-Biloxi reservations, and the Coushatta's and Tunica-Biloxi's off-reservation trust
 land — and names the councils of the three nations whose own pages name them.
 
-**THE CONGRESSIONAL MAP IS TIGERweb LAYER 4 (THE 119TH CONGRESS), NOT LAYER 0, UNTIL 3 JANUARY
-2027.** Louisiana redrew its congressional map in the 2026 regular session (Act 2 of 2026), and
-layer 0, "120th Congressional Districts", already carries that map. The six members the roster
-names were elected in 2024 from the map of Act 2 of the 2024 First Extraordinary Session, and they
-represent it until noon on 3 January 2027. Measured 2026-10-20 against the legislature's own
-shapefile of that 2024 plan: layer 4 matches every district at IoU 0.99999 or better, while layer 0
-keeps only 76.66% of the plan's area in the same-numbered district. The builder refuses a build on
-or after 3 January 2027 and refuses if layer 4 stops being the 119th's map; the monthly source check
-warns from 1 December 2026; `la/WATCH.md` has the day's steps.
+**THE CONGRESSIONAL MAP IS TIGERweb LAYER 0 (THE 120TH CONGRESS) SINCE 3 JANUARY 2027.** Louisiana
+redrew its congressional map in the 2026 regular session (Act 2 of 2026), the November 2026
+election used it, and the six members elected from it took office at noon that day. Until then
+the app drew layer 4, the map of Act 2 of the 2024 First Extraordinary Session, which the members
+then sitting were elected from in 2024; all 6 districts differ between the two. Measured
+2026-10-20 against the legislature's own shapefile of that 2024 plan: layer 4 matched every
+district at IoU 0.99999 or better, while layer 0 keeps only 76.66% of the plan's area in the
+same-numbered district. The Census Bureau's block file for the 120th Congress gives all 92,180 of
+Louisiana's populated 2020 blocks the district the shipped file gives (measured 2026-11-16 by
+`scripts/check_congress_block_file.py`). The builder refuses a build on or after 3 January 2029,
+when the members elected in November 2028 take office, and refuses if layer 0 stops being the
+120th's map; the monthly source check warns from 1 December 2028; `la/WATCH.md` has the day's
+steps.
 
 **THE TWO CHAMBERS ARE THE 2022 PLANS, AND ONE 2026 LAW IS NOT IN THEM YET.** TIGERweb's 2026
 legislative layers carry the House and Senate plans of the 2022 First Extraordinary Session, which

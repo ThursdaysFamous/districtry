@@ -4835,7 +4835,7 @@ function initFloridaExplorer() {
   // keys are this metro's dataset vocabulary — re-seed them from observed
   // field names in the worksheet, keeping encoded fields out.
   var HOVER_NUMBER_KEYS = [
-    "district", "basename", "cd119", "cd120", "sldu", "sldl",
+    "district", "basename", "cd120", "cd119", "sldu", "sldl",
     "geoid", "number"
   ];
 
@@ -16589,29 +16589,35 @@ function initFloridaExplorer() {
    * roster-fetch failure degrades to the district number + directory link —
    * never an invented name.
    *
-   * LAYER 4, THE 119TH CONGRESS, UNTIL 3 JANUARY 2027. TIGERweb's layer 0
-   * carries the map for the 120th Congress, whose members were elected on
-   * 3 November 2026; measured 2026-11-11, 21 of the 28 districts differ
-   * between the two. The members serving until 3 January 2027 were elected in
-   * 2024 from layer 4's map, so that is the map drawn, and
-   * fl/scripts/build_legislative_boundaries.py refuses to build it on or
-   * after that date. ---------- */
+   * LAYER 0, THE 120TH CONGRESS, SINCE 3 JANUARY 2027. It is the map the
+   * November 2026 election used, and the members elected from it took office
+   * that day. Until then this file was TIGERweb's layer 4, the 119th
+   * Congress's map, which the members then sitting were elected from in 2024;
+   * measured 2026-11-11 on TIGERweb's own two layers, 21 of the 28 districts
+   * differ between the two (District 28 by a sliver, an
+   * intersection-over-union of 0.9995 on the shipped files). The
+   * Census Bureau's block file for the 120th Congress places all 289,652 of
+   * Florida's populated 2020 blocks in the district the shipped file gives
+   * (measured 2026-11-16 by scripts/check_congress_block_file.py).
+   * fl/scripts/build_legislative_boundaries.py records why the map changed and
+   * refuses to build this layer on or after 3 January 2029. ---------- */
   var loadCongressDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-districts.json", {}, 2);
   });
   var loadCongressRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-roster.json", {}, 2);
   });
-  // TIGERweb's numbered-district field renames each Congress: layer 4's is
-  // CD119, which the shipped file carries, and the 120th Congress's map
-  // carries CD120. extractDistrictNumber adds a name-field regex fallback
-  // behind these.
-  var CONGRESS_DISTRICT_FIELDS = ["cd119", "cd120", "cdfp", "cd"];
+  // TIGERweb's numbered-district field renames each Congress: layer 0's is
+  // CD120, which the shipped file carries since 3 January 2027. CD119 stays
+  // behind it for the older file, which a returning visitor's browser can
+  // hold until the new service worker takes over. extractDistrictNumber adds
+  // a name-field regex fallback behind these.
+  var CONGRESS_DISTRICT_FIELDS = ["cd120", "cd119", "cdfp", "cd"];
 
   registerIlgaChamber({
     id: "us-house",
     label: "U.S. House",
-    layerIndex: 4, // fallback only — loadDistricts (pre-built) is used when present
+    layerIndex: 0, // fallback only — loadDistricts (pre-built) is used when present
     loadDistricts: loadCongressDistricts,
     districtFields: CONGRESS_DISTRICT_FIELDS,
     loadRoster: loadCongressRoster,

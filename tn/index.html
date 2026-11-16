@@ -4844,7 +4844,7 @@ function initTennesseeExplorer() {
   // keys are this metro's dataset vocabulary — re-seed them from observed
   // field names in the worksheet, keeping encoded fields out.
   var HOVER_NUMBER_KEYS = [
-    "district", "basename", "cd119", "sldu", "sldl",
+    "district", "basename", "cd120", "cd119", "sldu", "sldl",
     "geoid", "number"
   ];
 
@@ -16628,8 +16628,8 @@ function initTennesseeExplorer() {
   });
 
   /* ---------- 2. U.S. House — boundary + roster join ----------
-   * Pre-built TIGERweb Legislative layer 4 geometry — the 119TH CONGRESS
-   * map, not layer 0 — (data/app/congress-districts.json, this state only)
+   * Pre-built TIGERweb Legislative layer 0 geometry, the 120th Congress's
+   * map (data/app/congress-districts.json, this state only),
    * joined by district number to a same-origin roster
    * (data/app/congress-roster.json — built by
    * tn/scripts/build_congress_roster.py from the public-domain
@@ -16640,29 +16640,34 @@ function initTennesseeExplorer() {
    * degrades to the district number + directory link — never an invented
    * name.
    *
-   * WHY THE 119TH MAP: Tennessee redrew its congressional districts in May
-   * 2026 for the November 2026 election, and nobody has been elected from
-   * the new map yet. The members this roster names were elected from the
-   * old map and serve until 3 January 2027; drawing the new one beside them
-   * would put the wrong representative on the card for most of Memphis
-   * (District 9 on the 119th map, District 5 on the 120th). The builder
-   * refuses to rebuild this file on or after that date — see
-   * tn/scripts/build_legislative_boundaries.py. ---------- */
+   * LAYER 0 SINCE 3 JANUARY 2027. It is the map the November 2026 election
+   * used, and the members elected from it took office that day. Tennessee
+   * redrew its congressional districts in 2026. Until then this file was
+   * TIGERweb's layer 4, the 119th Congress's map, which the members then
+   * sitting were elected from in 2024; measured 2026-11-16, 7 of the 9
+   * districts differ between the two. The Census Bureau's block file for the
+   * 120th Congress places 133,843 of Tennessee's 133,846 populated 2020 blocks
+   * in the district the shipped file gives (measured 2026-11-16 by
+   * scripts/check_congress_block_file.py).
+   * tn/scripts/build_legislative_boundaries.py records why the map changed and
+   * refuses to build this layer on or after 3 January 2029. ---------- */
   var loadCongressDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-districts.json", {}, 2);
   });
   var loadCongressRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/congress-roster.json", {}, 2);
   });
-  // The shipped file carries CD119 (the serving map's own field). CD120 is
-  // listed first so the switch on 3 January 2027 needs no change here;
-  // extractDistrictNumber adds a name-field regex fallback behind these.
+  // TIGERweb's numbered-district field renames each Congress: layer 0's is
+  // CD120, which the shipped file carries since 3 January 2027. CD119 stays
+  // behind it for the older file, which a returning visitor's browser can
+  // hold until the new service worker takes over. extractDistrictNumber adds
+  // a name-field regex fallback behind these.
   var CONGRESS_DISTRICT_FIELDS = ["cd120", "cd119", "cdfp", "cd"];
 
   registerIlgaChamber({
     id: "us-house",
     label: "U.S. House",
-    layerIndex: 4, // fallback only — loadDistricts (pre-built) is used when present
+    layerIndex: 0, // fallback only — loadDistricts (pre-built) is used when present
     loadDistricts: loadCongressDistricts,
     districtFields: CONGRESS_DISTRICT_FIELDS,
     loadRoster: loadCongressRoster,

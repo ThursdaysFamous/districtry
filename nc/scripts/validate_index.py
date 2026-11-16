@@ -109,7 +109,7 @@ EXPECT_LAYER_IDS = [
 GEOMETRY_FILES = {
     "metro-outline.json": (1, 1),  # The whole-North-Carolina outline for the coverage wash (loadMetroOutline), dissolved from the 100-county fabric.
     "state-counties.json": (100, 100),  # The 100 counties — the instance's offline anchor layer and the ground the coverage tests use.
-    "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 4 (CD119) until 3 January 2027.
+    "congress-districts.json": (14, 14),  # The 14 U.S. House districts, TIGERweb layer 0 (CD120), the map the November 2026 election used, drawn since 3 January 2027.
     "nc-senate-districts.json": (50, 50),  # The 50 NC Senate districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-house-districts.json": (120, 120),  # The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files.
     "nc-superior-court-districts.json": (73, 73),  # The 73 superior court districts G.S. 7A-41 writes, pre-built by nc/scripts/build_nc_court_districts.py from the kept statute text: whole counties from state-counties.json, and the nine divided counties from the 2010 Census voting districts and blocks the law lists (Douglas-Peucker at 5 m on each dividing line, and the build refuses a line that strays more than 8 m from the 2010 line it draws). 2.0 MB, 590 KB gzipped, fetched only when a reader switches the layer on.

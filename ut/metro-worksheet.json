@@ -189,8 +189,8 @@
         "answers": "The U.S. House district covering the point, and the representative holding it.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Utah, measured 2026-11-12. These are the districts the current members were elected from in 2024. TIGERweb's layer 0 carries the map for the 120th Congress, whose members were elected on 3 November 2026 and take office on 3 January 2027; measured that day, all 4 differ (the lowest intersection-over-union District 2 at 0.008), and the builder refuses to write layer 4 on or after that date. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
-            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 4 features for Utah, measured 2026-11-16. This is the map the November 2026 election used, and the members elected from it took office on 3 January 2027. Utah has a new congressional map, and the Census Bureau's page for the 120th Congress lists it among the nine states that drew new boundaries for the 2026 election cycle. Until that day the app drew the 119th Congress's map (layer 4), which the members then in office were elected from in 2024; all 4 districts differ between the two maps. Checked on 2026-11-16 against the Census Bureau's block file for the 120th Congress, by the point the Bureau places inside each block: all 46,792 populated 2020 census blocks fall in the district that file names. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
           }
         ],
         "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
@@ -429,7 +429,7 @@
         "file": "congress-districts.json",
         "min_features": 4,
         "max_features": 4,
-        "note": "The 4 U.S. House districts, TIGERweb layer 4 (CD119), the map the sitting members were elected from in 2024, drawn until 3 January 2027."
+        "note": "The 4 U.S. House districts, TIGERweb layer 0 (CD120), the map the November 2026 election used, drawn since 3 January 2027."
       },
       {
         "file": "ut-senate-districts.json",
@@ -490,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ut-shell-v4",
+    "cache_name": "districtry-ut-shell-v5",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

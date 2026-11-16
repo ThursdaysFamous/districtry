@@ -11648,7 +11648,7 @@ function initSFExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "ca-senate",         // 40 State Senate districts — the largest districts California carries below the state itself
-    "congress",          // 52 congressional districts, pre-built statewide from TIGERweb layer 4 (the 119th Congress) until 3 January 2027
+    "congress",          // 52 congressional districts, pre-built statewide from TIGERweb layer 0 (the 120th Congress) since 3 January 2027
     "county",            // 58 counties, pre-built from TIGERweb; drawn statewide
     "ca-assembly",       // 80 State Assembly districts, two for every Senate district on average, though no rule nests them
     "school-district-secondary", // 112 high school districts, each over one or more elementary districts
@@ -19210,15 +19210,23 @@ function initSFExplorer() {
     id: "congress",
     tiles: "data/app/tiles/congress.pmtiles", // vector tiles (engine tile-overlay block)
     label: "U.S. House District",
-    // LAYER 4, THE 119TH CONGRESS, UNTIL 3 JANUARY 2027. California's voters
-    // adopted a new map in November 2025 (Proposition 50) and the November
-    // 2026 election used it (TIGERweb layer 0); 44 of the 52 districts differ
-    // (measured 2026-11-11). The members sitting until 3 January 2027 were
-    // elected from the old map, which is what congress-districts.json holds;
-    // on that day the file is rebuilt from layer 0 and cd120 goes first.
-    layerIndex: 4, // fallback only — loadDistricts (pre-built) is used when present
+    // LAYER 0, THE 120TH CONGRESS, SINCE 3 JANUARY 2027. It is the map the
+    // November 2026 election used, and the members elected from it took
+    // office that day. California's voters adopted it in November 2025
+    // (Proposition 50). Until then this file was TIGERweb's layer 4, the
+    // 119th Congress's map, which the members then sitting were elected from
+    // in 2024; measured 2026-11-16, 44 of the 52 districts differ between the
+    // two. The Census Bureau's block file for the 120th Congress places
+    // 377,587 of California's 377,591 populated 2020 blocks in the district
+    // the shipped file gives (measured 2026-11-16 by
+    // scripts/check_congress_block_file.py).
+    // ca/scripts/build_legislative_boundaries.py records why the map changed
+    // and refuses to build this layer on or after 3 January 2029. cd119 stays
+    // behind cd120 for the older file, which a returning visitor's browser
+    // can hold until the new service worker takes over.
+    layerIndex: 0, // fallback only — loadDistricts (pre-built) is used when present
     loadDistricts: loadCongressDistricts,
-    districtFields: ["cd119", "cd120", "cdfp", "cd"],
+    districtFields: ["cd120", "cd119", "cdfp", "cd"],
     directoryUrl: "https://www.house.gov/representatives",
     loadRoster: loadCongressRoster,
     districtPrefix: "CA-",

@@ -10,7 +10,7 @@ The national tier and both legislative chambers, named from each chamber's own p
 
 | Group | Layer | Source |
 |---|---|---|
-| **Political** | U.S. House District (15) | U.S. Census TIGERweb boundary, the map the sitting members were elected from (the 119th Congress's, until 3 January 2027; pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI, with a seat the House Clerk lists as vacant shown as vacant |
+| **Political** | U.S. House District (15) | U.S. Census TIGERweb boundary, the map the sitting members were elected from (the 120th Congress's, since 3 January 2027; pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI, with a seat the House Clerk lists as vacant shown as vacant |
 | | Ohio Senate District (33) | TIGERweb's 2026 state legislative districts, built in one run with the House so each Senate district is exactly its three House districts (pre-built, Douglas-Peucker under an 8 m fidelity ceiling and a 2,000-point agreement gate) + the Senate's own member directory and member pages: name, party, Columbus office and telephone |
 | | Ohio House District (99) | TIGERweb's 2026 state legislative districts + the House's own member directory and member pages: name, party, Columbus office and telephone (neither chamber prints an e-mail address) |
 | **Schools** | School District (612) | TIGERweb unified school districts (city, local and exempted village), from a tile archive; identity only, the school board members recorded as a gap |
