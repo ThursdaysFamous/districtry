@@ -4288,7 +4288,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   .election-notice-certified { border-left-color: var(--card-accent); }
   .election-pick { display: flex; flex-direction: column; gap: 4px; }
-  .election-select {
+  .election-select, .election-which {
     font: inherit; font-size: 13px; color: var(--card-ink); background: var(--card-section-bg);
     border: 1px solid var(--card-btn-border); border-radius: 6px; padding: 6px 8px;
     min-height: 32px; max-width: 100%;
@@ -15607,6 +15607,24 @@ function initSFExplorer() {
    * part file per chunk of precincts with each precinct's own counts. A click
    * reads one part; the map reads only the index.
    *
+   * MORE THAN ONE ELECTION ON ONE LAYER (2026-11-15). An app whose precincts
+   * vote in elections the rest of its map does not (Illinois: Chicago's city
+   * elections) passes `moreElections`, one {indexUrl, partUrl} per further
+   * results file, each written by the same writer under its own name. The
+   * layer then shows, for a clicked precinct, the election with the latest
+   * date among those whose file lists that precinct with results, and the
+   * card offers the others in an Election menu; the reader's choice there is
+   * kept while it applies to the precinct clicked. A file with no contests (one
+   * kept ready before a count) is never offered. The map's colours and legend
+   * are the shown election's. A link writes a further election's picked race
+   * as `<contest id>~<election date>` and the layer's own file's as the bare
+   * id, as every link written before reads; a link's race also says which
+   * election to open on, where its file still has that race, and `~<date>`
+   * with no id names the election alone. With no point selected and no
+   * election named, the map shows the latest election that has results, so
+   * precincts that did not vote in it are drawn uncoloured until one is
+   * clicked. An app that passes no `moreElections` behaves exactly as before.
+   *
    * NONPARTISAN BY CONSTRUCTION. A choice's colour is its position on the
    * publisher's ballot list, never its party, from a palette with no red and
    * no blue. Every choice is listed the same way, in ballot order. Until the
@@ -15665,13 +15683,21 @@ function initSFExplorer() {
   }
 
   function registerElectionResultsLayer(opts) {
-    var indexPromise = null;
-    var parts = {};
+    // The results files: the layer's own first, then any further election's
+    // (moreElections). `n` below is always a position in this list.
+    var electionFiles = [{ indexUrl: opts.indexUrl, partUrl: opts.partUrl }].concat(opts.moreElections || []);
+    var indexPromises = [];
+    var partsBy = [];
+    var shown = 0;      // the election the map and the card are showing
+    var chosen = null;  // the election the reader picked in the card's menu, or a link named
+    var pickedBy = [];  // each election's own picked race, kept while another is shown
+    var linkWant = null; // a link's race, {id, date}, waiting for the files to say which election it is in (date null: the layer's own)
     var picked = null; // the contest id whose results colour the map
+    var refocusWhich = false; // the Election menu was just used: focus it again once the card is redrawn
 
-    function loadIndex() {
-      if (!indexPromise) {
-        indexPromise = fetchJSONWithRetry(opts.indexUrl, { timeoutMs: 15000 }).then(function (data) {
+    function loadIndexAt(n) {
+      if (!indexPromises[n]) {
+        indexPromises[n] = fetchJSONWithRetry(electionFiles[n].indexUrl, { timeoutMs: 15000 }).then(function (data) {
           var pos = {};
           (data.precincts || []).forEach(function (k, i) { pos[String(k)] = i; });
           var byId = {};
@@ -15680,23 +15706,76 @@ function initSFExplorer() {
           (data.groups || []).forEach(function (g) { groupLabel[g.id] = g; });
           var sources = {};
           (data.sources || []).forEach(function (src) { sources[String(src.id)] = src; });
-          return { data: data, pos: pos, byId: byId, groups: groupLabel, sources: sources };
+          return { n: n, data: data, pos: pos, byId: byId, groups: groupLabel, sources: sources };
         }, function (err) {
-          indexPromise = null; // asked again on the next click rather than pinned
+          indexPromises[n] = null; // asked again on the next click rather than pinned
           throw err;
         });
       }
-      return indexPromise;
+      return indexPromises[n];
+    }
+    function loadIndexes() {
+      return Promise.all(electionFiles.map(function (f, n) { return loadIndexAt(n); }));
     }
 
-    function loadPart(part) {
+    function loadPart(idx, part) {
+      var parts = partsBy[idx.n] = partsBy[idx.n] || {};
       if (!parts[part]) {
-        parts[part] = fetchJSONWithRetry(opts.partUrl(part), { timeoutMs: 15000 }).then(null, function (err) {
+        parts[part] = fetchJSONWithRetry(electionFiles[idx.n].partUrl(part), { timeoutMs: 15000 }).then(null, function (err) {
           delete parts[part];
           throw err;
         });
       }
       return parts[part];
+    }
+
+    // A file with no contests is one kept ready before a count: never shown.
+    function hasResults(idx) {
+      return !!(idx && idx.data && idx.data.contests && idx.data.contests.length);
+    }
+    // Of the elections in `ns`, the one with the latest date (the layer's own
+    // file first on a tie); null when there is none.
+    function latestOf(all, ns) {
+      var best = null;
+      ns.forEach(function (n) {
+        if (best === null || String(all[n].data.electionDate || "") > String(all[best].data.electionDate || "")) best = n;
+      });
+      return best;
+    }
+    function withResults(all) {
+      var ns = [];
+      all.forEach(function (idx) { if (hasResults(idx)) ns.push(idx.n); });
+      return ns;
+    }
+    // A link's race, once the files are here: the election it names (the one
+    // with its date, or the layer's own for a bare id) becomes the reader's
+    // choice and the race its picked race. A race that file no longer has
+    // names nothing, and the layer opens as it would with no link.
+    function settleLinkWant(all) {
+      if (!linkWant) return;
+      var want = linkWant, done = false;
+      linkWant = null;
+      all.forEach(function (idx) {
+        var named = want.date === null ? idx.n === 0 : String(idx.data.electionDate) === want.date;
+        if (done || !named || !hasResults(idx) || (want.id !== "" && !idx.byId[want.id])) return;
+        done = true;
+        chosen = idx.n;
+        // `~<date>` alone names the election and leaves the race to the layer
+        if (want.id === "") return;
+        if (idx.n === shown) picked = want.id; else pickedBy[idx.n] = want.id;
+      });
+    }
+    // Show election n: its own picked race becomes the picked race. True when
+    // this changed which election is shown.
+    function showElection(idx) {
+      var changed = idx.n !== shown;
+      if (changed) {
+        pickedBy[shown] = picked;
+        shown = idx.n;
+        picked = pickedBy[shown] === undefined ? null : pickedBy[shown];
+      }
+      resolvedIndex = idx;
+      return changed;
     }
 
     // The office that counted a precinct: the source its key names before a
@@ -15754,6 +15833,44 @@ function initSFExplorer() {
     }
     function certifiedDate(idx, contest, src) {
       return (contest && contest.certifiedDate) || (src && src.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    }
+
+    // An election night. While a publisher's precinct table is filling in,
+    // the index carries `reported`, one character per precinct: "1" holds a
+    // vote, "0" holds none, "-" has no registered voters. A finished count
+    // has no such field, and none of this says anything then.
+    function reportedAt(idx, key) {
+      var r = idx && idx.data.reported, i = key === null || key === undefined ? undefined : idx.pos[key];
+      return r && i !== undefined ? r.charAt(i) : "";
+    }
+    // How much of a race is in the count: [precincts holding votes, precincts
+    // in the race that have voters], over one office's precincts when srcId
+    // names it, else over every precinct in the race; null where the file
+    // does not say.
+    function countedOf(idx, contest, srcId) {
+      var r = idx.data.reported;
+      if (!r) return null;
+      var s = String(contest.leaders || ""), from = contest.from || 0, keys = idx.data.precincts || [];
+      var inRace = 0, counted = 0;
+      for (var i = 0; i < s.length; i++) {
+        var rep = r.charAt(from + i);
+        if (s.charAt(i) === "-" || rep === "-") continue;
+        if (srcId !== null && srcId !== undefined && sourceIdOf(idx, keys[from + i]) !== srcId) continue;
+        inRace++;
+        if (rep === "1") counted++;
+      }
+      return [counted, inRace];
+    }
+    // "Votes have been counted in 646 of Chicago's 1,291 precincts in this
+    // race.", while the count is unofficial and some precinct has none; ""
+    // otherwise. It states what the file holds and nothing about why.
+    function partCountedNote(idx, contest, src) {
+      if (certified(idx, contest, src)) return "";
+      var part = countedOf(idx, contest, src ? src.id : null);
+      if (!part || !part[1] || part[0] >= part[1]) return "";
+      return "Votes have been counted in " + part[0].toLocaleString("en-US") + " of " +
+        (src ? src.areaName + "'s " : "the ") + part[1].toLocaleString("en-US") +
+        (part[1] === 1 ? " precinct" : " precincts") + " in this race.";
     }
 
     /* ---- precincts another office counts, drawn beside the app's own ----
@@ -15915,6 +16032,13 @@ function initSFExplorer() {
       repaint();
       syncUrlHash(); // the race rides the link (linkParam below)
     }
+    // Another election has just become the one shown, with its own picked
+    // race still good: paint it, and write that race to the address, which
+    // was last written while the other election's race was the picked one.
+    function showSwitched() {
+      repaint();
+      syncUrlHash();
+    }
 
     /* ---- the legend over the map: which colour is which choice ---- */
     var legendEl = null;
@@ -15954,6 +16078,13 @@ function initSFExplorer() {
       lead.className = "dml-sub";
       lead.textContent = certified(idx, contest, null) ? "Most votes in each precinct" : "Most votes so far in each precinct";
       items.appendChild(lead);
+      var partText = partCountedNote(idx, contest, null);
+      if (partText) {
+        var partEl = document.createElement("span");
+        partEl.className = "dml-sub election-legend-part";
+        partEl.textContent = partText;
+        items.appendChild(partEl);
+      }
       var shown = {};
       for (var i = 0; i < contest.leaders.length; i++) shown[contest.leaders.charAt(i)] = true;
       contest.choices.forEach(function (name, n) {
@@ -16101,12 +16232,23 @@ function initSFExplorer() {
       // a count the publisher withholds (small-number privacy) is null; no
       // leader is named where one is withheld, because it could be the leader
       var withheld = cf.which.some(function (n) { return counts[n] === null || counts[n] === undefined; });
-      body.appendChild(raceTable(idx, contest, ballots, counts, contest.name + " in this precinct",
-        certified(idx, contest, src) ? "Most votes here" : "Most votes so far", cf.which));
+      var official = certified(idx, contest, src);
+      // On an election night a precinct the count has not reached holds
+      // zeros. A table of zeros and a turnout of 0% would read as a result,
+      // so until the count is official such a precinct gets one sentence.
+      var none = !official && reportedAt(idx, result.key) === "0";
+      if (none) {
+        body.appendChild(cardEl("p", "election-note election-none",
+          "No votes from this precinct have been counted. The numbers below are the rest of " +
+          src.areaName + "'s."));
+      } else {
+        body.appendChild(raceTable(idx, contest, ballots, counts, contest.name + " in this precinct",
+          official ? "Most votes here" : "Most votes so far", cf.which));
+      }
       var notes = [];
       if (withheld) notes.push("The " + src.publisher + " withholds some of this precinct's counts to protect the privacy" +
         " of a small number of voters, so no choice is named as having the most votes here.");
-      if (ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
+      if (!none && ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
         (contest.multiple ? " Voters could choose more than one candidate in this race, so each share is of all the votes" +
           " cast in it, not of the people who voted." : " Each share is of those votes."));
       var whole = cf.total[0];
@@ -16116,6 +16258,12 @@ function initSFExplorer() {
             electionPercent(cf.total[n + 1], whole) + ")";
         }).join(", ") + "." + (cf.beyond ? " This race reaches beyond " + src.areaName +
           ", so these totals are not the whole race." : ""));
+      var part = partCountedNote(idx, contest, src);
+      if (part) notes.push(part);
+      // how this kind of race is decided, where the builder says (a runoff
+      // when nobody has more than half, a body that seats three)
+      var kind = idx.groups[contest.group];
+      if (kind && kind.note) notes.push(String(kind.note));
       // votes counted in no precinct (absentee, early or provisional units a
       // publisher reports apart) are in the totals and on no shape of the map
       if (cf.outside && cf.outside[0] > 0 && whole > 0) {
@@ -16125,7 +16273,9 @@ function initSFExplorer() {
       }
       // a precinct whose counts are in but whose turnout the publisher has not
       // reported yet carries nulls, and says nothing about turnout
-      if (result.turnout && result.turnout[0] && result.turnout[1] !== null && result.turnout[1] !== undefined) {
+      // nor does a precinct the count has not reached, where 0 ballots is
+      // not a turnout
+      if (!none && result.turnout && result.turnout[0] && result.turnout[1] !== null && result.turnout[1] !== undefined) {
         var reg = result.turnout[0], cast = result.turnout[1];
         notes.push("Turnout in this precinct: " + cast.toLocaleString("en-US") + " ballots from " +
           reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ").");
@@ -16235,7 +16385,7 @@ function initSFExplorer() {
           var at = idx.pos[key];
           if (at !== undefined) partNames[idx.data.parts[at]] = true;
         });
-        return Promise.all(Object.keys(partNames).map(loadPart)).then(function (docs) {
+        return Promise.all(Object.keys(partNames).map(function (part) { return loadPart(idx, part); })).then(function (docs) {
           var byKey = {};
           docs.forEach(function (doc) {
             var ps = (doc && doc.precincts) || {};
@@ -16357,20 +16507,30 @@ function initSFExplorer() {
         tileFill: tileFill
       },
       query: function (point, seq) {
-        return Promise.all([queryFeatureAt(opts.load, point), loadIndex()]).then(function (got) {
+        return Promise.all([queryFeatureAt(opts.load, point), loadIndexes()]).then(function (got) {
           // a point outside the app's own precincts may be in another office's
           return got[0] || !opts.extraPrecincts ? got : extraFeatureAt(point).then(function (f) { return [f, got[1]]; });
         }).then(function (got) {
-          var feature = got[0], idx = got[1];
-          resolvedIndex = idx;
-          if (!feature) return null;
-          var raw = (feature.properties || {})[opts.keyProp];
+          var feature = got[0], all = got[1];
+          settleLinkWant(all);
+          var raw = feature ? (feature.properties || {})[opts.keyProp] : null;
           var key = raw === undefined || raw === null ? null : String(raw);
+          // the elections whose file lists this precinct with results: the
+          // reader's own choice among them, else the latest
+          var here = withResults(all).filter(function (n) { return key !== null && all[n].pos[key] !== undefined; });
+          var n = chosen !== null && here.indexOf(chosen) >= 0 ? chosen : latestOf(all, here);
+          if (n === null) n = resolvedIndex ? shown : (latestOf(all, withResults(all)) || 0);
+          var idx = all[n];
+          var switched = feature ? showElection(idx) : (resolvedIndex ? false : showElection(idx));
+          if (!feature) return null;
           var at = key === null ? undefined : idx.pos[key];
           var srcId = sourceIdOf(idx, key);
-          if (at === undefined) return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: [], turnout: null };
+          if (at === undefined) {
+            if (switched) showSwitched();
+            return { seq: seq, idx: idx, all: all, here: here, key: key, src: srcId, label: precinctLabelOf(feature), rows: [], turnout: null };
+          }
           var part = idx.data.parts[at];
-          return loadPart(part).then(function (doc) {
+          return loadPart(idx, part).then(function (doc) {
             var own = (doc.precincts || {})[key] || {};
             var rows = own.contests || [];
             // the picked race stays picked while the reader clicks around, if
@@ -16389,10 +16549,13 @@ function initSFExplorer() {
                 });
               }
               if (first !== null && first !== picked) pick(first);
+              else if (switched) showSwitched();
+            } else if (switched) {
+              showSwitched(); // another election's colours were on the map
             } else {
               drawLegend();
             }
-            return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: rows,
+            return { seq: seq, idx: idx, all: all, here: here, key: key, src: srcId, label: precinctLabelOf(feature), rows: rows,
               turnout: own.turnout || null, partRead: doc.read };
           });
         });
@@ -16400,7 +16563,46 @@ function initSFExplorer() {
       render: function (result) {
         var wrap = cardEl("div", "card-flush election-card");
         var idx = result.idx, src = sourceOf(idx, result.src);
-        wrap.appendChild(cardEl("p", "election-title", electionTitle(idx.data)));
+        if (!(result.here && result.here.length > 1)) {
+          wrap.appendChild(cardEl("p", "election-title", electionTitle(idx.data)));
+        } else {
+          // this precinct has results from more than one election: the menu
+          // names the one shown, in the title's place, and the reader's pick
+          // is kept for the precincts it applies to
+          var whichWrap = cardEl("div", "election-pick");
+          var whichId = "election-which-" + opts.id;
+          var whichLab = cardEl("label", "card-field-label", "Election");
+          whichLab.setAttribute("for", whichId);
+          whichWrap.appendChild(whichLab);
+          var which = document.createElement("select");
+          which.id = whichId;
+          // its own class, styled as the Race menu is: `select.election-select`
+          // stays the Race menu alone, for anything that looks it up
+          which.className = "election-which";
+          result.here.slice().sort(function (a, b) {
+            return String(result.all[b].data.electionDate || "").localeCompare(String(result.all[a].data.electionDate || ""));
+          }).forEach(function (n) {
+            var o = document.createElement("option");
+            o.value = String(n);
+            o.textContent = electionTitle(result.all[n].data);
+            if (n === idx.n) o.selected = true;
+            which.appendChild(o);
+          });
+          which.addEventListener("change", function () {
+            chosen = parseInt(which.value, 10);
+            refocusWhich = true;
+            var self = selfModule();
+            if (self) runLayerQuery(self); // this card again, for the chosen election
+          });
+          if (refocusWhich) {
+            // the card was drawn again because the reader used this menu:
+            // keep the keyboard where it was
+            refocusWhich = false;
+            setTimeout(function () { if (which.isConnected) which.focus(); }, 0);
+          }
+          whichWrap.appendChild(which);
+          wrap.appendChild(whichWrap);
+        }
         var notice = noticeEl(idx, picked ? idx.byId[picked] : null, src);
         wrap.appendChild(notice);
         if (!result.rows.length) {
@@ -16448,12 +16650,33 @@ function initSFExplorer() {
       },
       // the picked race rides the link as `r=<contest id>` (`race=` in the
       // long form); a link from another election names an id this file does
-      // not have, and the layer then picks its first race as it always has
+      // not have, and the layer then picks its first race as it always has.
+      // Where the layer holds more than one election, a further election's
+      // race is written `<contest id>~<election date>` and a bare id is the
+      // layer's own file's. A page that links the map for one election and
+      // no race writes `~<election date>` (build_results_pages.py).
       linkParam: {
         short: "r",
         long: "race",
-        get: function () { return picked; },
+        get: function () {
+          if (linkWant) return linkWant.date === null ? linkWant.id : linkWant.id + "~" + linkWant.date;
+          if (picked === null || shown === 0 || !resolvedIndex) return picked;
+          return picked + "~" + String(resolvedIndex.data.electionDate || "");
+        },
         set: function (v) {
+          if (electionFiles.length > 1) {
+            // which election a link's race is in is known once the files are here
+            var dated = /^(.*)~(\d{4}-\d{2}-\d{2})$/.exec(String(v));
+            linkWant = dated ? { id: dated[1], date: dated[2] } : { id: String(v), date: null };
+            if (resolvedIndex) {
+              loadIndexes().then(function (all) {
+                settleLinkWant(all);
+                if (chosen !== null && showElection(all[chosen])) repaint();
+                else if (picked !== null && resolvedIndex.byId[picked]) repaint();
+              }, function () {});
+            }
+            return;
+          }
           picked = String(v);
           if (resolvedIndex) {
             if (resolvedIndex.byId[picked]) repaint(); else picked = null;
@@ -16476,13 +16699,21 @@ function initSFExplorer() {
         if (!on) { drawLegend(); return; }
         // the map shows a race from the moment the layer is on: the one
         // already picked, or the first race in the publisher's list
-        loadIndex().then(function (idx) {
-          resolvedIndex = idx;
+        loadIndexes().then(function (all) {
+          settleLinkWant(all);
+          // the election already on the map, else the reader's choice, else
+          // the latest that has results
+          var n = resolvedIndex ? shown : chosen !== null && hasResults(all[chosen]) ? chosen : latestOf(all, withResults(all));
+          var idx = all[n === null ? 0 : n];
+          showElection(idx);
           if (picked === null || !idx.byId[picked]) {
             var first = (idx.data.contests || [])[0];
             pick(first ? first.id : null);
           } else {
             repaint();
+            // a race a link named: the address was last written before the
+            // layer was given it, so write it again with the race
+            syncUrlHash();
           }
         }, function (err) {
           console.warn("[" + opts.id + "] results index failed to load:", err);

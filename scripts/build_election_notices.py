@@ -52,7 +52,7 @@ script a page shows none of it, which is what it showed before.
 THE BOX OUTLIVES ELECTION DAY BY A WEEK, ON PURPOSE. The evening of an election
 is when a reader most needs to be told the results are not on the page yet, so
 the box stays, headed "Results not posted yet", until build_results_pages.py
-finds the results file has moved on to that election and stops writing it, or
+finds one of the app's results files holds that election and stops writing it, or
 for GRACE_DAYS if that never happens. The map's line has no such second state
 and goes at the end of election day.
 
@@ -136,26 +136,46 @@ def _read_json(path):
         return json.load(f)
 
 
+def _results_registration(tag):
+    """The app's own results layer registration, as text ("" where the app
+    registers none)."""
+    app = os.path.join(REPO_ROOT, tag, "index.html")
+    if not os.path.exists(app):
+        return ""
+    with open(app, encoding="utf-8") as f:
+        text = f.read()
+    i = text.find("registerElectionResultsLayer({")
+    return text[i:i + 4000] if i >= 0 else ""
+
+
+def further_results(tag):
+    """The further elections an app's results layer holds beside its own file
+    (engine election-results `moreElections`; Illinois keeps Chicago's city
+    elections that way), as the names of their index files under data/app,
+    read from the app's own registration rather than restated here. Such a
+    file ships with no contests until its election has a count."""
+    m = re.search(r"\bmoreElections:\s*\[(.*?)\]\s*,", _results_registration(tag), re.S)
+    return re.findall(r"indexUrl:\s*\"data/app/([a-z0-9-]+)\.json\"", m.group(1)) if m else []
+
+
 def results_publishers(tag):
-    """Every office whose results this app's shipped results file holds: the
+    """Every office whose results this app's shipped results files hold: the
     witness that a "posted" promise is about an office already read in a real
     election."""
     out = set()
     path = os.path.join(REPO_ROOT, tag, RESULTS_INDEX)
     if not os.path.exists(path):
         return out
-    idx = _read_json(path)
-    for s in idx.get("sources") or []:
-        if s.get("publisher"):
-            out.add(str(s["publisher"]))
-    app = os.path.join(REPO_ROOT, tag, "index.html")
-    with open(app, encoding="utf-8") as f:
-        text = f.read()
-    i = text.find("registerElectionResultsLayer({")
-    if i >= 0:
-        m = re.search(r"\bpublisher:\s*\"((?:[^\"\\]|\\.)*)\"", text[i:i + 4000])
-        if m:
-            out.add(json.loads('"%s"' % m.group(1)))
+    names = [RESULTS_INDEX] + [os.path.join("data", "app", n + ".json") for n in further_results(tag)]
+    for name in names:
+        if not os.path.exists(os.path.join(REPO_ROOT, tag, name)):
+            continue
+        for s in _read_json(os.path.join(REPO_ROOT, tag, name)).get("sources") or []:
+            if s.get("publisher"):
+                out.add(str(s["publisher"]))
+    m = re.search(r"\bpublisher:\s*\"((?:[^\"\\]|\\.)*)\"", _results_registration(tag))
+    if m:
+        out.add(json.loads('"%s"' % m.group(1)))
     return out
 
 

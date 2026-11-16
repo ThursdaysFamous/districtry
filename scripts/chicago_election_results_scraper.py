@@ -38,8 +38,24 @@ number of cells as the header, each candidate cell must be followed by its
 percentage cell, and the precinct rows of each ward must sum to that ward's
 Total row. A contest that fails any check fails the run.
 
+FINDING AN ELECTION'S PAGE BY ITS DATE (2026-11-15). The Board gives each
+election's results page a number that says nothing about the election (2023's
+city election is 241, its runoff 242, November 2026's general 42), and a new
+election's number is not known until the Board lists it on
+https://chicagoelections.gov/elections/results, where each entry reads
+"<year> <name> - <m>/<d>/<yy or yyyy>". `--find-date` reads that list and
+prints the number of the one entry with that date, so a job can start reading
+an election the night its page first exists. It exits 3, saying so, when no
+entry has the date yet, and fails when more than one does (a primary has a
+page per party) unless `--find-name` leaves one. The date is the Board's own
+typing: its list has carried a wrong one (the 2026 Libertarian primary under
+3/19 for 3/17), and an election listed under a wrong date is one this cannot
+find.
+
 Usage:
     python3 scripts/chicago_election_results_scraper.py --election 42 -o /tmp/results_raw.json
+    python3 scripts/chicago_election_results_scraper.py --find-date 2027-02-23
+    python3 scripts/chicago_election_results_scraper.py --selftest
 """
 
 import argparse
@@ -59,7 +75,12 @@ from scraper_common import (UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, make_fail,
 fail = make_fail("chicago-election-results-scraper")
 
 BASE = "https://chicagoelections.gov/elections/results/"
+LISTING = "https://chicagoelections.gov/elections/results"
 PACE_SECONDS = 1.0
+NOT_LISTED = 3      # --find-date's exit code when the list has no such date
+
+LISTED_RE = re.compile(r'<a href="/elections/results/(\d+)"[^>]*>(.*?)</a>', re.S)
+LISTED_DATE_RE = re.compile(r"(\d{1,2})/(\d{1,2})/(\d{4}|\d{2})\s*$")
 
 OPTION_RE = re.compile(r'<option value="(\d*)"[^>]*>(.*?)</option>', re.S)
 CONTEST_SELECT_RE = re.compile(
@@ -90,6 +111,79 @@ def rows_of(table_html):
         if cells:
             out.append(cells)
     return out
+
+
+def listed_elections(page):
+    """[(results id, label, ISO date or None)] for every election the Board's
+    results list links, in the list's order. A two-digit year is this
+    century's: the list starts in the 2000s."""
+    out = []
+    for num, label in LISTED_RE.findall(page):
+        label = clean(label)
+        m = LISTED_DATE_RE.search(label)
+        date = None
+        if m:
+            year = int(m.group(3))
+            try:
+                date = datetime.date(year if year > 99 else 2000 + year,
+                                     int(m.group(1)), int(m.group(2))).isoformat()
+            except ValueError:
+                date = None
+        out.append((int(num), label, date))
+    return out
+
+
+def find_election(page, date, name=None):
+    """The entries of the Board's list dated `date` (ISO), narrowed to those
+    whose label holds `name` when one is given."""
+    hits = [e for e in listed_elections(page) if e[2] == date]
+    if name:
+        hits = [e for e in hits if name.lower() in e[1].lower()]
+    return hits
+
+
+def read_listing():
+    require_robots_once(LISTING, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
+    req = urllib.request.Request(LISTING, headers=dict(UA_HEADERS_ROSTER_BOT))
+    with urllib.request.urlopen(req, timeout=90) as resp:
+        return resp.read().decode("utf-8", "replace")
+
+
+def selftest():
+    """The list's shapes, as read on 2026-11-15: a four-digit and a two-digit
+    year, a label with no dash before its date, several pages on one date, and
+    an entry with no date at all."""
+    page = """
+      <li><a href="/elections/results/76">2026 Primary - DEM - 3/17/2026                    </a></li>
+      <li><a href="/elections/results/77">2026 Primary - REP - 3/17/2026 </a></li>
+      <li><a href="/elections/results/42">2026 General Election - 11/3/2026 </a></li>
+      <li><a href="/elections/results/242">2023 Municipal Runoffs - 4/4/23                   </a></li>
+      <li><a href="/elections/results/241" class="x">2023 Municipal General - 2/28/23 </a></li>
+      <li><a href="/elections/results/3">2017 Municipal General 2/28/17</a></li>
+      <li><a href="/elections/results/9">Special Election</a></li>
+      <li><a href="/elections/results/10">2011 Something - 2/30/11</a></li>
+      <li><a href="/elections/results">All results</a></li>
+      <li><a href="/elections/other/5">Not a results page - 2/28/23</a></li>
+    """
+    checks = [
+        (len(listed_elections(page)) == 8, "eight results pages are listed"),
+        (find_election(page, "2023-02-28") == [(241, "2023 Municipal General - 2/28/23", "2023-02-28")],
+         "a two-digit year is read, and only a results page is taken"),
+        (find_election(page, "2026-11-03")[0][0] == 42, "a four-digit year is read"),
+        (find_election(page, "2017-02-28")[0][0] == 3, "a label with no dash before its date is read"),
+        ([e[0] for e in find_election(page, "2026-03-17")] == [76, 77], "a primary's pages share a date"),
+        ([e[0] for e in find_election(page, "2026-03-17", "rep")] == [77], "a name leaves one of them"),
+        (find_election(page, "2027-02-23") == [], "an election not listed yet is not found"),
+        (listed_elections(page)[6][2] is None, "an entry with no date has none"),
+        (listed_elections(page)[7][2] is None, "a date that is no day has none"),
+    ]
+    bad = [why for ok, why in checks if not ok]
+    for why in bad:
+        print("chicago-election-results-scraper: selftest FAIL — " + why, file=sys.stderr)
+    if bad:
+        raise SystemExit(1)
+    print("chicago-election-results-scraper: selftest OK — %d checks on the Board's list of "
+          "results pages" % len(checks))
 
 
 class Board(object):
@@ -228,10 +322,36 @@ def parse_contest(name, dialog):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--election", type=int, required=True)
-    ap.add_argument("-o", "--output", required=True)
+    ap.add_argument("--election", type=int)
+    ap.add_argument("-o", "--output")
     ap.add_argument("--only", help="comma-separated contest values, for testing")
+    ap.add_argument("--find-date", metavar="YYYY-MM-DD",
+                    help="print the results id the Board lists for this election date, "
+                         "and read nothing else; exits %d when none is listed yet" % NOT_LISTED)
+    ap.add_argument("--find-name", help="with --find-date: only an entry whose label holds this")
+    ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args()
+
+    if args.selftest:
+        return selftest()
+    if args.find_date:
+        try:
+            datetime.date.fromisoformat(args.find_date)
+        except ValueError:
+            fail("--find-date %r is not a date" % args.find_date)
+        hits = find_election(read_listing(), args.find_date, args.find_name)
+        if not hits:
+            print("chicago-election-results-scraper: the Board's list of results pages has "
+                  "no election dated %s yet" % args.find_date, file=sys.stderr)
+            raise SystemExit(NOT_LISTED)
+        if len(hits) > 1:
+            fail("the Board lists %d results pages dated %s (%s); name one with --find-name"
+                 % (len(hits), args.find_date, "; ".join("%d %s" % (e[0], e[1]) for e in hits)))
+        print("found %s as results page %d" % (hits[0][1], hits[0][0]), file=sys.stderr)
+        print(hits[0][0])
+        return
+    if args.election is None or not args.output:
+        ap.error("--election and --output are required to read an election's results")
 
     board = Board(args.election)
     require_robots_once(board.url, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)

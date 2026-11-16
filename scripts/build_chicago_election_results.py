@@ -7,6 +7,15 @@ contest is elected from, so the Election Results card can offer the races on
 the clicked precinct's ballot by layer and the map can fill each precinct by
 the choice with the most votes there.
 
+TWO KINDS OF BALLOT (2026-11-15). The November general election's contests,
+and a city election's: Mayor, Clerk, Treasurer, each ward's Alderperson and
+each police district's council, as the Board named them on its 2023 Municipal
+General page (results id 241, read through the scraper that day: 88 contests
+over 1,291 precincts, every check passing). The election's own name and date
+are read from the Board's page title, and --election-date must agree with it,
+so a read of the wrong election fails rather than being written under the
+right one's date.
+
 UNOFFICIAL UNTIL CERTIFIED. The file carries `certified: false` and the time it
 was read; the card and the map legend say so on every view. When the Board of
 Election Commissioners proclaims the official results, run the build with
@@ -37,6 +46,7 @@ Usage:
 """
 
 import argparse
+import datetime
 import json
 import os
 import re
@@ -56,8 +66,40 @@ PRECINCT_URL = ("https://data.cityofchicago.org/resource/i8fv-xe4b.json"
                 "?$select=ward_precinct&$limit=5000")
 MIN_CONTESTS = 50
 EXPECTED_PRECINCTS = 1291
-CHICAGO_UNCOUNTED = ("The Board is still counting mail ballots postmarked by Election Day that "
-                     "arrive by November 17.")
+# A mail ballot postmarked by Election Day is counted if it arrives within 14
+# days after it (10 ILCS 5/19-8(c)); for 3 November 2026 the Board's own
+# vote-by-mail page said 17 November, which is that rule.
+MAIL_BALLOT_DAYS = 14
+
+
+def uncounted_note(election_date):
+    last = datetime.date.fromisoformat(election_date) + datetime.timedelta(days=MAIL_BALLOT_DAYS)
+    return ("The Board is still counting mail ballots postmarked by Election Day that "
+            "arrive by %s %d." % (last.strftime("%B"), last.day))
+
+
+# The Board titles a results page "<year> <name> - <m>/<d>/<yy or yyyy>"
+# ("2026 General Election - 11/3/2026", "2023 Municipal General - 2/28/23").
+TITLE_RE = re.compile(r"^(\d{4}) (.+?) - (\d{1,2})/(\d{1,2})/(\d{2}|\d{4})$")
+
+
+def election_of(title, election_date):
+    """The election's name as the cards print it after its year ("General
+    Election", "Municipal General Election"), from the Board's page title,
+    which must name --election-date."""
+    m = TITLE_RE.match(str(title or "").strip())
+    if not m:
+        fail("the Board's page title %r is not '<year> <name> - <m>/<d>/<yy>'" % title)
+    year = int(m.group(5)) if len(m.group(5)) == 4 else 2000 + int(m.group(5))
+    on_page = "%04d-%02d-%02d" % (year, int(m.group(3)), int(m.group(4)))
+    if on_page != election_date:
+        fail("the Board's page is for %s (%r); --election-date says %s"
+             % (on_page, title, election_date))
+    if int(m.group(1)) != year:
+        fail("the Board's page title %r names two years" % title)
+    name = m.group(2).strip()
+    return name if re.search(r"(?i)\belection\b", name) else name + " Election"
+
 
 # (group id, label shown in the race menu, the map layer it is elected from or
 # None, a pattern the Board's contest name matches). First match wins, so the
@@ -82,11 +124,21 @@ GROUP_RULES = [
      r"^(Appellate Court Judge|Circuit Court Judge|Supreme Court Judge|Judge,? .*Circuit) \(Vacancy of .+\)$"),
     ("school-board", "Board of Education", "school-board",
      r"^(President, Board of Education|Member, Board of Education, Subdistrict \d+[AB])$"),
+    # a city election's ballot, as the Board named its contests in 2023
+    ("city", "Citywide offices", None, r"^(Mayor|Clerk|Treasurer)$"),
+    ("city-council", "City Council", "ward",
+     r"^(Alderperson|Alderman),? \d+(st|nd|rd|th) Ward$"),
+    ("police-council", "Police district councils", "ccpsa-district-council",
+     r"^Council Member, Chicago Police Department \d+(st|nd|rd|th) District$"),
 ]
+# Each police district elects a council of three (Municipal Code of Chicago
+# 2-80-070; the app's own council roster lists three seats per district), so
+# a voter may choose up to three and a share is of votes, not of voters.
+GROUP_SEATS = {"police-council": 3}
 # The menu's order: the ballot's own, top of the ticket down.
 GROUP_ORDER = ["statewide", "congress", "il-senate", "il-house", "mwrd", "county",
                "county-board", "ccbr", "regional", "judges", "judicial-subcircuit", "retention",
-               "school-board", "local", "questions"]
+               "school-board", "city", "city-council", "police-council", "local", "questions"]
 GROUP_LABELS = dict((g[0], g[1]) for g in GROUP_RULES)
 GROUP_LABELS.update({"retention": "Judges up for retention", "questions": "Ballot questions",
                      "regional": "Regional superintendents of schools", "local": "Local offices"})
@@ -121,7 +173,7 @@ def group_of(contest):
 # Contests elected from ground the Board counts all of: Chicago's own school
 # board, and ballot questions put to Chicago's voters alone. Every other group
 # reaches past the city line, and so does a question put to all of Cook County.
-CITY_ONLY_GROUPS = ("school-board",)
+CITY_ONLY_GROUPS = ("school-board", "city", "city-council", "police-council")
 
 
 def reaches_beyond(contest):
@@ -152,9 +204,84 @@ def map_precincts(path):
     return keys
 
 
+# HOW A CITY RACE IS DECIDED, which the card prints under the race so a reader
+# does not take "most votes" for "elected". From the Board's own "2027 Election
+# Information Pamphlet and Calendar" (published June 9, 2026, revised July 28,
+# 2026, "2027 Elections and offices to be filled in the City of Chicago"),
+# read 2026-11-15: mayor, clerk and treasurer need a majority of the votes
+# cast, and otherwise the two with the most votes meet in a runoff [65 ILCS
+# 20/21-5, 20/21-12]; an alderperson needs a majority in the ward, and
+# otherwise the two with the most votes meet in a supplementary election the
+# same day [65 ILCS 20/21-26]; and the three candidates with the most votes in
+# a police district are elected, with no second election [Chi. Muni. Code
+# 2-80-070(c)]. The runoff's date is the Board's, never computed: the
+# consolidated election it falls on moves when it meets Passover (10 ILCS
+# 5/2A-1.1a), so a city election whose runoff date is not here is refused
+# until its calendar has been read. 2023's is the date of the Board's own
+# "2023 Municipal Runoffs" results page.
+RUNOFF_DATES = {"2027-02-23": "2027-04-06", "2023-02-28": "2023-04-04"}
+CITY_GENERAL = "Municipal General Election"
+
+
+def group_notes(election, election_date):
+    """{group id: the sentence on how its races are decided}, for a city
+    election's first round; {} for any other election."""
+    if election != CITY_GENERAL:
+        return {}
+    if election_date not in RUNOFF_DATES:
+        fail("no runoff date for the city election of %s: read it from the Board's election "
+             "calendar and add it to RUNOFF_DATES" % election_date)
+    d = datetime.date.fromisoformat(RUNOFF_DATES[election_date])
+    runoff = "%s %d, %d" % (d.strftime("%B"), d.day, d.year)
+    majority = ("A candidate with more than half of the votes %sis elected. If no candidate has "
+                "more than half, the two with the most votes go to a runoff election on " + runoff + ".")
+    return {
+        "city": majority % "",
+        "city-council": majority % "in the ward ",
+        "police-council": "The three candidates with the most votes in the police district are elected.",
+    }
+
+
+RESULTS_INDEX = "https://chicagoelections.gov/elections/results"
+
+def write_placeholder(args):
+    """The file the app ships before the Board has published a count.
+
+    The map's results layer reads every election file it is given when it is
+    switched on, so the file has to exist from the day the app names it; with
+    no contests the layer never offers it (engine `election-results`,
+    moreElections). It is never written over a file that holds results.
+    """
+    if not args.name or args.raw or args.counties or args.certified:
+        fail("--placeholder takes --name and --election-date and nothing to build from")
+    try:
+        datetime.date.fromisoformat(args.election_date)
+    except ValueError:
+        fail("--election-date %r is not a date" % args.election_date)
+    shipped = os.path.join(args.app_data, args.name + ".json")
+    if os.path.exists(shipped) and json.load(open(shipped)).get("contests"):
+        fail("%s already holds results; a placeholder would remove them" % os.path.relpath(shipped))
+    stamp = {"election": args.placeholder, "electionDate": args.election_date,
+             "source": RESULTS_INDEX, "read": None, "certified": False, "certifiedDate": None}
+    note = ("No results yet: the Chicago Board of Election Commissioners has not published a "
+            "count for this election. The file is here so the map can ask for it; the layout "
+            "is scripts/election_results_common.py's.")
+    try:
+        write_results(args.app_data, stamp, [], {"total": [None, None], "precincts": {}}, [],
+                      lambda k: k, note, extra={"sources": []}, name=args.name)
+    except ResultsError as e:
+        fail(str(e))
+    # no precinct, so no part file: git keeps no empty directory, and the next
+    # real build makes it again
+    parts_dir = os.path.join(args.app_data, args.name)
+    if os.path.isdir(parts_dir) and not os.listdir(parts_dir):
+        os.rmdir(parts_dir)
+    print("wrote %s with no results, for the %s of %s"
+          % (os.path.relpath(shipped), args.placeholder, args.election_date), file=sys.stderr)
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("raw")
+    ap.add_argument("raw", nargs="?")
     ap.add_argument("--election-date", required=True)
     ap.add_argument("--certified", help="the date the Board proclaimed the official results")
     ap.add_argument("--precincts", help="a JSON list of the map's ward_precinct keys (offline)")
@@ -166,7 +293,21 @@ def main():
                     help="county=YYYY-MM-DD for a county whose canvass is complete")
     ap.add_argument("--app-data", default=APP_DATA,
                     help="the app's data/app directory (default: il/data/app)")
+    ap.add_argument("--name", help="the files' base name where this election is kept beside "
+                                   "another's (default: election-results)")
+    ap.add_argument("--placeholder", metavar="ELECTION",
+                    help="write a file with no results for an election the Board has not counted "
+                         "yet, named as this builder names it from the Board's page (\"Municipal "
+                         "General Election\"); needs --name and --election-date, takes no raw read")
     args = ap.parse_args()
+    if args.name and args.counties:
+        fail("--name is for an election the Board alone counts; --counties folds the "
+             "county clerks' results into the default file")
+    if args.placeholder:
+        write_placeholder(args)
+        return
+    if not args.raw:
+        fail("give the scraper's raw read, or --placeholder for an election not counted yet")
 
     raw = json.load(open(args.raw))
     allowed = map_precincts(args.precincts)
@@ -194,13 +335,15 @@ def main():
             fail("%s names no choices" % c["name"])
         if not precincts:
             fail("%s has no precincts" % c["name"])
+        group = group_of(c)
         contests.append({
             "id": c["contestId"],
             "name": c["name"],
-            "group": group_of(c),
+            "group": group,
             "choices": choices,
             "total": c["total"],
             "precincts": precincts,
+            "seats": GROUP_SEATS.get(group),
         })
     if turnout is None:
         fail("the raw read has no turnout entry")
@@ -208,18 +351,22 @@ def main():
         fail("only %d contests; expected at least %d" % (len(contests), MIN_CONTESTS))
     for c in contests:
         c["beyond"] = reaches_beyond(c)
-    sources = None
+    election = election_of(raw.get("election"), args.election_date)
     part_of = lambda k: "ward-" + k[:2]
     county_lines = []
+    # The Board's own entry rides every file, so the card reads the publisher,
+    # the reading time and the mail-ballot date from the file it is showing
+    # rather than from the app's code, which names one election's date.
+    chicago = {"id": "chicago", "publisher": "Chicago Board of Election Commissioners",
+               "areaName": "Chicago", "source": raw["source"], "read": raw["read"],
+               "certified": bool(args.certified), "certifiedDate": args.certified or None,
+               "uncountedNote": "" if args.certified else uncounted_note(args.election_date)}
+    sources = [chicago]
     if args.counties:
-        chicago = {"id": "chicago", "publisher": "Chicago Board of Election Commissioners",
-                   "areaName": "Chicago", "source": raw["source"], "read": raw["read"],
-                   "certified": bool(args.certified), "certifiedDate": args.certified or None,
-                   "uncountedNote": "" if args.certified else CHICAGO_UNCOUNTED}
         # a county's certification, once given, is kept from the shipped
         # index, so a daily run does not turn it back into unofficial
         certified = {}
-        shipped = os.path.join(args.app_data, "election-results.json")
+        shipped = os.path.join(args.app_data, "election-results.json")  # --name never comes with --counties
         if os.path.exists(shipped):
             for src in json.load(open(shipped)).get("sources") or []:
                 if src.get("id") != "chicago" and src.get("certified") and src.get("certifiedDate"):
@@ -240,8 +387,12 @@ def main():
         c.pop("_order", None)
 
     groups = [{"id": g, "label": GROUP_LABELS[g], "layer": GROUP_LAYERS[g]} for g in GROUP_ORDER]
+    notes = group_notes(election, args.election_date)
+    for g in groups:
+        if g["id"] in notes:
+            g["note"] = notes[g["id"]]
     stamp = {
-        "election": "General Election",
+        "election": election,
         "electionDate": args.election_date,
         "source": raw["source"],
         "read": raw["read"],
@@ -259,7 +410,7 @@ def main():
             "The layout is scripts/election_results_common.py's.")
     try:
         n, nparts = write_results(args.app_data, stamp, groups, turnout, contests,
-                                  part_of, note, extra={"sources": sources} if sources else None)
+                                  part_of, note, extra={"sources": sources}, name=args.name)
     except ResultsError as e:
         fail(str(e))
     if len(set(part_of(k) for k in turnout["precincts"] if ":" not in k)) != 50:
