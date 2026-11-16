@@ -1129,6 +1129,73 @@ try {
           offOk, JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
+  // ---- 1y. THE NEXT-ELECTION BLOCK IN AN APP WITH NO ELECTIONS SECTION ----
+  // (engine next-election, scripts/build_election_notices.py). The block names
+  // the next election at the selected point under the Elections heading.
+  // Wisconsin registers no election calendar and has no layer in that group,
+  // so its list has no such section: with nothing registered the block must
+  // draw nothing, and once an app names an election the block has to make the
+  // section itself, at the head of the list, and take it away again when no
+  // election is ahead. Illinois's check 1x3 holds the block's words, links and
+  // counts; this holds the one branch Illinois cannot reach, which every app
+  // with no election layer takes the day it gets a calendar. The fixture is
+  // dated in 2999 and 2001 so the check does not expire with a real election.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=${POINT}&layers=tribal-government`);
+    await cardText(page, "tribal-government");
+    const read = () => page.evaluate((ns) => {
+      const root = document.getElementById("groups-root");
+      const section = document.querySelector(".group-elections");
+      const block = document.getElementById("next-election");
+      const heading = section && section.querySelector(".group-heading");
+      return {
+        registered: !!window[ns].nextElection(),
+        section: !!section,
+        sectionShown: !!section && !section.hidden && section.getClientRects().length > 0,
+        first: !!section && root.firstElementChild === section,
+        heading: heading ? heading.textContent.trim() : null,
+        underHeading: !!block && !!heading && block.previousElementSibling === heading,
+        blockShown: !!block && !block.hidden && block.getClientRects().length > 0,
+        text: block ? block.textContent.replace(/\s+/g, " ").trim() : null,
+        blocks: document.querySelectorAll(".next-election").length,
+      };
+    }, EXPORTS_NAME);
+    const election = (id, date) => ({ id, date, timeZone: "America/Chicago",
+      area: "here", title: "Fixture election " + id, when: "the day of " + id,
+      text: "Sentence of " + id + ".", links: [] });
+    const register = (calendar) => page.evaluate(({ ns, calendar }) => {
+      window[ns].nextElection({ calendar, areas: { here: () => true } });
+    }, { ns: EXPORTS_NAME, calendar });
+
+    const bare = await read();
+    check("an app with no election calendar draws no next-election block and no Elections section",
+          !bare.registered && !bare.section && bare.blocks === 0, JSON.stringify(bare));
+
+    await register([election("ahead", "2999-01-01"), election("past", "2001-01-01")]);
+    await page.waitForFunction(() => {
+      const el = document.getElementById("next-election");
+      return el && !el.hidden;
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const named = await read();
+    check("once it names an election, the block makes the Elections section at the head of the list",
+          named.sectionShown && named.first && named.heading === "Elections" &&
+          named.underHeading && named.blockShown && named.blocks === 1 &&
+          named.text.indexOf("Fixture election ahead") !== -1 &&
+          named.text.indexOf("Fixture election past") === -1,
+          JSON.stringify(named));
+
+    await register([election("past", "2001-01-01")]);
+    await page.waitForFunction(() => {
+      const s = document.querySelector(".group-elections");
+      return !s || s.hidden;
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const gone = await read();
+    check("with no election ahead, the block and the section it made are not shown",
+          !gone.blockShown && !gone.sectionShown, JSON.stringify(gone));
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

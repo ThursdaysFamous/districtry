@@ -1178,6 +1178,125 @@ try {
     await ctx.close();
   }
 
+  // --- 1h-ter. the next election, named by the reader's clock ---------------
+  //
+  // A line under the address box in the 60 days before an election the
+  // calendar marks for the front page, and a note on the results tile naming
+  // the next election until its day has passed
+  // (scripts/build_election_notices.py). The page is the
+  // same file every day, so both SHIP hidden and a script shows them by the
+  // reader's own date in the election's time zone; with no script, or outside
+  // the dates, the page reads as it did before there was a notice. The dates
+  // are read off the page rather than written here, and "today" is stood in
+  // for at the one call the script makes, so this holds whatever the calendar
+  // names and on whatever day it runs. A calendar with nothing ahead ships no
+  // line and no note, and that is held as their absence.
+  {
+    const raw = await (await fetch(BASE + "/")).text();
+    const shipped = [...raw.matchAll(/<(p|span)\b[^>]*\bdata-election-notice\b[^>]*>/g)].map((m) => m[0]);
+    const shippedItems = [...raw.matchAll(/<span\b[^>]*\bdata-date="[^"]*"[^>]*>/g)].map((m) => m[0]);
+    check("every election notice on the front page ships hidden, for a page with no script",
+      shipped.every((t) => /\shidden>$/.test(t)) && shippedItems.every((t) => /\shidden>$/.test(t)),
+      `${shipped.length} notice(s), ${shippedItems.length} election(s)`);
+    const day = (iso, n) => {
+      const p = iso.split("-").map(Number);
+      return new Date(Date.UTC(p[0], p[1] - 1, p[2] + n)).toISOString().slice(0, 10);
+    };
+    // The front page as a reader sees it on `today` in the election's zone.
+    const on = async (today, viewport) => {
+      const ctx = await browser.newContext({ serviceWorkers: "block", ...(viewport ? { viewport } : {}) });
+      await ctx.addInitScript((t) => {
+        const real = Date.prototype.toLocaleDateString;
+        Date.prototype.toLocaleDateString = function (locale, opts) {
+          if (locale === "en-CA" && opts && opts.timeZone) return t;
+          return real.apply(this, arguments);
+        };
+      }, today);
+      const page = await ctx.newPage();
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const seen = await page.evaluate(() => {
+        const vis = (el) => !!el && el.checkVisibility();
+        const attrs = (el) => ({
+          from: el.getAttribute("data-from"), date: el.getAttribute("data-date"),
+          until: el.getAttribute("data-until"), tz: el.getAttribute("data-tz"),
+          shown: vis(el), text: el.textContent.trim(),
+          href: (el.querySelector("a") || {}).href || null,
+        });
+        const line = document.getElementById("election-line");
+        const card = document.querySelector(".search-card");
+        const note = document.querySelector(".ask-next");
+        return {
+          line: line ? {
+            shown: vis(line),
+            items: [...line.querySelectorAll("[data-date]")].map(attrs),
+            under: !!card && line.getBoundingClientRect().top >= card.getBoundingClientRect().bottom,
+            fits: line.getBoundingClientRect().right <= document.documentElement.clientWidth,
+          } : null,
+          note: note ? {
+            shown: vis(note),
+            items: [...note.querySelectorAll("[data-date]")].map(attrs),
+            tile: note.closest("details.ask").querySelector("h3").textContent.trim(),
+            text: note.textContent.trim(),
+          } : null,
+          wide: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+        };
+      });
+      await ctx.close();
+      return seen;
+    };
+    // Long before any election the calendar could name: the line is not
+    // showing (the tile's note has no first day, so it is), and the dates are
+    // read from here.
+    const quiet = await on("2001-01-01");
+    const lineItems = quiet.line ? quiet.line.items : [];
+    const noteItems = quiet.note ? quiet.note.items : [];
+    check("years before any election, the front page carries no election line",
+      (!quiet.line || !quiet.line.shown) && lineItems.every((i) => !i.shown),
+      JSON.stringify({ line: quiet.line && quiet.line.shown }));
+    if (!lineItems.length) {
+      check("the calendar marks no election for the front page, so it ships no line",
+        !quiet.line, quiet.line ? "a line with no election in it" : "no line");
+    } else {
+      const e = lineItems[0];
+      const before = await on(day(e.from, -1));
+      const first = await on(e.from);
+      const phone = await on(e.from, { width: 390, height: 844 });
+      const last = await on(e.until);
+      const after = await on(day(e.until, 1));
+      check("the election line stays hidden the day before its 60 days begin",
+        !before.line.shown && !before.line.items[0].shown, `${day(e.from, -1)}, from ${e.from}`);
+      const span = (Date.parse(e.date) - Date.parse(e.from)) / 86400000;
+      check("it shows from 60 days before election day, under the address box, naming the day",
+        first.line.shown && first.line.items[0].shown && first.line.under && span === 60 &&
+          /\b\d{4}\b/.test(first.line.items[0].text),
+        JSON.stringify({ on: e.from, days: span, under: first.line.under, text: first.line.items[0].text.slice(0, 90) }));
+      const linked = first.line.items[0].href;
+      const answer = linked ? await fetch(linked).then((r) => r.status, () => 0) : 0;
+      check("its link opens a page this site serves",
+        !!linked && linked.indexOf(BASE + "/") === 0 && answer === 200, `${linked} -> ${answer}`);
+      check("on a phone it shows under the address box without widening the page",
+        phone.line.shown && phone.line.under && phone.line.fits && !phone.wide,
+        JSON.stringify({ under: phone.line.under, fits: phone.line.fits, wide: phone.wide }));
+      check("it still shows on its last day and is gone the day after",
+        last.line.shown && last.line.items[0].shown && !after.line.shown && !after.line.items[0].shown,
+        `last ${e.until}: ${last.line.shown}; next day: ${after.line.shown}`);
+    }
+    if (!noteItems.length) {
+      check("the calendar names no election ahead, so the results tile carries no note",
+        !quiet.note, quiet.note ? "a note with no election in it" : "no note");
+    } else {
+      const n = noteItems[0];
+      const during = await on(n.date);
+      const after = await on(day(n.until, 1));
+      check("the results tile names the next election until its day has passed, and only one",
+        during.note.shown && during.note.items.filter((i) => i.shown).length === 1 &&
+          during.note.items[0].shown && /vote/i.test(during.note.tile) &&
+          !after.note.items[0].shown &&
+          (after.note.shown ? after.note.items.filter((i) => i.shown).length === 1 : true),
+        JSON.stringify({ tile: during.note.tile, text: during.note.text, after: after.note.text && after.note.shown }));
+    }
+  }
+
   // --- 1i. the worked example: six places, and who represents each --------
   //
   // Beside the address box since 2026-10-21: a place, the offices that answer

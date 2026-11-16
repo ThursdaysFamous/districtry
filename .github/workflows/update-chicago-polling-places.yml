@@ -92,7 +92,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add il/data/app/chicago-polling-places.json
+          # The map's "Where you vote" link appears once this list is for the
+          # coming election, so the app's election calendar is rebuilt beside
+          # it, on main's tip (scripts/build_election_notices.py --check fails
+          # a workflow that commits this list without doing so).
+          python3 scripts/build_election_notices.py
+          git add il/data/app/chicago-polling-places.json il/index.html
           git commit -m "Update Chicago polling places from the Board of Elections' list"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

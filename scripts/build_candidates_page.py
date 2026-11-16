@@ -66,6 +66,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import build_election_notices as notices  # noqa: E402
 from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
                            MARK_RE, preserved_from_disk, shared_head_block,
                            shell, THEMEBOOT_RE)
@@ -240,6 +241,19 @@ def build_page(data, roster, worksheet, metros):
     key_html = "\n".join('      <li><strong>%s</strong>: %s</li>' % (esc(k), esc(v))
                          for k, v in STATUS_KEY.items())
 
+    # What happens to this election's results, in the words every other place
+    # on the site uses for it (scripts/build_election_notices.py, from
+    # il/data/source/election-calendar.json). "" when the calendar holds no
+    # election on this list's date that names this page.
+    try:
+        closing = notices.candidates_closing(TAG, PAGE_FILE, data["electionDate"])
+    except notices.NoticeError as e:
+        raise PageError(str(e))
+    results_html = ""
+    if closing:
+        results_html = ('  <section id="results">\n    <h2>Results</h2>\n'
+                        '    <p>%s</p>\n  </section>\n\n' % closing)
+
     sections = """  <section id="citywide">
     <h2>Mayor, clerk and treasurer</h2>
     <p>Every Chicago voter's ballot carries these three races.</p>
@@ -268,7 +282,7 @@ def build_page(data, roster, worksheet, metros):
 %(police)s    </div>
   </section>
 
-  <section id="about-list">
+%(results)s  <section id="about-list">
     <h2>About this list</h2>
     <p>The names, their order and each status are the Chicago Board of Election Commissioners',
       from its <a href="%(src)s">candidate list</a> %(listed)s, linked from its
@@ -290,7 +304,8 @@ def build_page(data, roster, worksheet, metros):
 """ % dict(citywide=citywide, n_ward=n_ward, jump=jump, wards=ward_blocks,
            n_police=n_police, police=police_blocks, src=esc(data["sourceUrl"]),
            page=esc(data["sourcePage"]), listed=esc(listed), stamp=esc(stamp), key=key_html,
-           certify=esc(long_date(certify_by)), statute=esc(CERTIFY_STATUTE))
+           certify=esc(long_date(certify_by)), statute=esc(CERTIFY_STATUTE),
+           results=results_html)
 
     related = "\n".join([
         '      <li><a href="ward.html">Who is my alderman?</a><span>Your Chicago ward by address, '

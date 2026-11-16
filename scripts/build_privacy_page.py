@@ -562,13 +562,21 @@ def measure_address_list(src, name):
 # app?"): tapping an address on a card opens it in a map app and records
 # `address-map/<layer id>`, the layer whose card it was on, and never the
 # address, the place or the point.
+# `next-election/` joined on 2026-11-15 (engine `next-election`; Adam: "I want
+# visitors to know I'll have election results after, in the lead up to the
+# election"): once a point is selected, a block in the map's Elections section
+# names the next election held there, and following one of its links records
+# `next-election/<link>/<tag>`, the link (candidates, polling, official or
+# reminder) and the app, and never the election's place or the point. The same
+# notice on a results page, a candidates page and the front page counts
+# nothing, so the sentence about pages that are not apps stays true.
 EXPECTED_EVENTS = ["address-map/", "address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "first-use/", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "next-election/", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
                    "sponsor/", "statewide-officials/", "visit/", "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
@@ -1938,8 +1946,14 @@ def render_analytics_section(apps):
         "the layer the card belongs to, such as address-map/post-office, and never the address. "
         "Opening the list of the officials a state elects statewide sends statewide-officials/ "
         "followed by the map\u2019s tag, such as statewide-officials/il, and nothing about the point. "
-        "The front page sends that event too, as map-link-read/front/, when its address box "
-        "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
+        "Where a map names the next election at the point you picked, following one of that "
+        "block\u2019s links sends next-election/ followed by the link and the map\u2019s tag, such as "
+        "next-election/reminder/il, and nothing about the point or which election it was. The "
+        "calendar reminder that block and a results page offer is a file your own calendar app "
+        "opens: saving it sends nothing, and the link inside it ends in ref=reminder, so a "
+        "visit made from it later is counted as coming from a reminder. "
+        "The front page sends the map-link-read/ event too, as map-link-read/front/, when its "
+        "address box reads a Google Maps or Apple Maps link, and one more, example-place/ followed by the place\u2019s name, "
         "when you pick one of the places in the example beside that box; it names the "
         "example you picked and nothing about where you are. Its first-visit tip and "
         "tour send first-use/ followed by the button pressed and /front, the same family "

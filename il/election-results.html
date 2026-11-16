@@ -719,6 +719,24 @@ table.results-table .lead {
 .results-counties li { margin: 0 0 6px; break-inside: avoid; line-height: 28px; }
 .results-counties span { color: var(--slate); font-size: 13.5px; margin-left: 4px; }
 .results-status { font-size: 15px; }
+/* The Next election box (scripts/build_election_notices.py). It ships hidden
+   and the script after it shows it while an election is ahead. */
+.next-election { margin: 0 0 22px; }
+.next-election-item + .next-election-item {
+  margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.next-election-label {
+  margin: 0 0 4px; font-size: 13.5px; font-weight: 600; color: var(--accent-deep);
+}
+.next-election-what { margin: 0 0 8px; font-size: 18px; line-height: 1.3; }
+.next-election p { margin: 0 0 8px; }
+/* a row of links, so each is a box at least 24px tall (WCAG 2.5.8). Only a
+   link still shown takes the box: a bare display rule here would outrank the
+   browser's own rule for the hidden attribute, and the candidates link is
+   hidden once election day has passed. */
+.next-election-links a:not([hidden]) { display: inline-block; padding: 4px 0; margin-right: 20px; font-weight: 600; }
+.next-election-small { font-size: 14px; color: var(--slate); }
+.next-election p:last-child { margin-bottom: 0; }
 </style>
 <script>
 /* ==== ENGINE:BEGIN theme-boot ==== */
@@ -902,6 +920,50 @@ table.results-table .lead {
 <main id="page-main" tabindex="-1">
 
   <section>
+    <aside class="answer-card next-election" id="next-election" aria-label="Next election" data-election-notice hidden>
+      <div class="next-election-item" data-date="2027-02-23" data-until="2027-03-02" data-tz="America/Chicago" hidden>
+        <p class="next-election-label" data-after="Results not posted yet">Next election</p>
+        <p class="next-election-what"><strong>Chicago municipal election</strong>, Tuesday, February 23, 2027</p>
+        <p>On the ballot: mayor, city clerk, city treasurer, an alderperson in each of the 50 wards, and the police district councils.</p>
+        <p>After the polls close on Tuesday, February 23, 2027, precinct results for Chicago&#x27;s municipal election will be posted on this page as the Chicago Board of Election Commissioners publishes them. They stay marked unofficial until the Board certifies them.</p>
+        <p class="next-election-links"><a href="chicago-candidates.html" data-before>Who is running</a><a href="calendar/chicago-2027-02-23.ics">Add a reminder to my calendar</a></p>
+        <p class="next-election-small">The reminder is a calendar entry for February 24, the day after the election, that links back to this page. Saving it sends nothing to districtry.</p>
+      </div>
+    </aside>
+    <script>
+    /* Shows an election notice while it applies, by the reader's own clock in the
+       election's time zone (scripts/build_election_notices.py). The page is the
+       same file every day, so nothing in it was written from today's date. */
+    (function (root) {
+      if (!root || !root.querySelectorAll) return;
+      var boxes = root.hasAttribute("data-election-notice") ? [root] :
+        root.querySelectorAll("[data-election-notice]");
+      for (var b = 0; b < boxes.length; b++) {
+        var box = boxes[b], items = box.querySelectorAll("[data-date]"), shown = 0;
+        for (var i = 0; i < items.length; i++) {
+          if (shown && box.getAttribute("data-election-notice") === "first") break;
+          var it = items[i], now = new Date(), today = "";
+          try { today = now.toLocaleDateString("en-CA", { timeZone: it.getAttribute("data-tz") }); }
+          catch (e) { today = ""; }
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(today)) {
+            today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" +
+              ("0" + now.getDate()).slice(-2);
+          }
+          var from = it.getAttribute("data-from");
+          if ((from && today < from) || today > it.getAttribute("data-until")) continue;
+          if (today > it.getAttribute("data-date")) {
+            var late = it.querySelectorAll("[data-after]");
+            for (var j = 0; j < late.length; j++) late[j].textContent = late[j].getAttribute("data-after");
+            var gone = it.querySelectorAll("[data-before]");
+            for (var k = 0; k < gone.length; k++) gone[k].hidden = true;
+          }
+          it.hidden = false;
+          shown++;
+        }
+        if (shown) box.hidden = false;
+      }
+    })(document.currentScript.previousElementSibling);
+    </script>
     <p class="lede"><strong>Unofficial results of Illinois's November 3, 2026 general election, as 18 election offices across 16 counties publish them.</strong> Each race lists every choice's votes and share of the vote. The map colours each precinct by who got the most votes there.</p>
     <p class="results-status"><strong>Unofficial results.</strong> These numbers are not certified and will change. Each office's results were read on the date in the table below.</p>
 <!-- ==== GENERATED:BEGIN question-lookup ==== -->

@@ -5007,6 +5007,223 @@ try {
     await context.close();
   }
 
+  // ---- 1x3. The next election block (engine next-election; Adam,
+  // 2026-11-15: "I want visitors to know I'll have election results after,
+  // in the lead up to the election"). It is not a layer, so nothing in the
+  // layer checks reaches it. Most of this check registers a FIXTURE calendar
+  // through the debug namespace, with elections dated in 2999 and 2001, so it
+  // does not expire with a real election: the soonest election held at the
+  // point is the one named, under the Elections heading and above that
+  // section's layers; an election that has passed, one held somewhere else
+  // and one whose area test throws are never named; a link that is not a web
+  // address is not drawn; the polling link turns its layers on; a followed
+  // link is counted once, by link and app; and a precinct card whose polling
+  // list is for the named election closes with the calendar's own line. The
+  // app's OWN calendar is then read out of index.html and checked with the
+  // reader's date stood in for, since no real date stays before an election.
+  {
+    const gc = async (context) => {
+      await context.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await context.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const read = (page) => page.evaluate(() => {
+      const el = document.getElementById("next-election");
+      if (!el || el.hidden) return { shown: false };
+      const section = el.parentNode;
+      const next = el.nextElementSibling;
+      return {
+        shown: el.getClientRects().length > 0,
+        inElections: section.classList.contains("group-elections") && !section.hidden,
+        afterHeading: !!el.previousElementSibling && el.previousElementSibling.classList.contains("group-heading"),
+        beforeLayers: !next || !!next.querySelector(".layer-block") || next.classList.contains("layer-block") || next.classList.contains("group-cards"),
+        text: el.textContent.replace(/\s+/g, " ").trim(),
+        links: Array.from(el.querySelectorAll(".next-election-link")).map((a) =>
+          [a.tagName, a.textContent, a.getAttribute("href"), a.getAttribute("target")]),
+        blocks: document.querySelectorAll(".next-election").length
+      };
+    });
+    const election = (id, date, area, title) => ({ id, date, timeZone: "America/Chicago", area, title,
+      when: "the day of " + id, text: "Sentence of " + id + ".",
+      links: [
+        { what: "candidates", label: "Who is running", href: "chicago-candidates.html" },
+        { what: "polling", label: "Where you vote", layers: ["ward", "ward-precinct"] },
+        { what: "official", label: "Not a web address", href: "javascript:void(0)" },
+        { what: "reminder", label: "Add a reminder to my calendar", href: "calendar/" + id + ".ics", file: true }
+      ],
+      closing: { label: "Election results page", href: "election-results.html", title: "Results",
+        note: "Closing line of " + id + "." } });
+    const fixture = [
+      election("later", "2999-06-01", "here", "Later election"),
+      election("soonest", "2999-01-01", "here", "Soonest election"),
+      election("past", "2001-01-01", "here", "Past election"),
+      election("elsewhere", "2998-01-01", "elsewhere", "Election somewhere else"),
+      election("broken", "2997-01-01", "broken", "Election whose area test throws"),
+      election("unnamed", "2996-01-01", "unnamed", "Election in an area the app does not name")
+    ];
+    const register = (page, calendar) => page.evaluate(({ ns, calendar }) => {
+      window[ns].nextElection({ calendar, areas: {
+        here: () => true,
+        chicago: () => true,
+        elsewhere: () => Promise.resolve(false),
+        broken: () => { throw new Error("smoke test: this area test throws"); }
+      } });
+    }, { ns: EXPORTS_NAME, calendar });
+
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    await gc(context);
+    const page = await booted(context, `${BASE}#point=${POINT}`);
+    await register(page, fixture);
+    await page.waitForFunction(() => {
+      const el = document.getElementById("next-election");
+      return el && !el.hidden && /Soonest election/.test(el.textContent);
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const named = await read(page);
+    check("the soonest election held at the point is named under the Elections heading, above that section's layers",
+      named.shown && named.inElections && named.afterHeading && named.beforeLayers && named.blocks === 1 &&
+      named.text.indexOf("Next election here") === 0 &&
+      named.text.indexOf("Soonest election, the day of soonest") !== -1 &&
+      named.text.indexOf("Sentence of soonest.") !== -1 &&
+      !/Later|Past|somewhere else|throws|does not name/.test(named.text),
+      JSON.stringify(named));
+    const labels = (named.links || []).map((l) => l[1]);
+    const cand = (named.links || [])[0] || [], poll = (named.links || [])[1] || [], rem = (named.links || [])[2] || [];
+    check("its links are the calendar's: a page in a new tab, a button for the layers, a calendar file in place, and nothing that is not a web address",
+      labels.join("|") === "Who is running|Where you vote|Add a reminder to my calendar" &&
+      cand[0] === "A" && /\/chicago-candidates\.html$/.test(cand[2] || "") && cand[3] === "_blank" &&
+      poll[0] === "BUTTON" &&
+      rem[0] === "A" && /\/calendar\/soonest\.ics$/.test(rem[2] || "") && rem[3] === null,
+      JSON.stringify(named.links));
+    if (named.shown) {
+      // a followed link would leave the page or start a download, which is
+      // the browser's business; the count is the app's, and is made first
+      await page.evaluate(() => {
+        Array.from(document.querySelectorAll("a.next-election-link")).forEach((a) =>
+          a.addEventListener("click", (e) => e.preventDefault()));
+      });
+      await page.click("a.next-election-link[href$='soonest.ics']");
+      await page.click("button.next-election-link");
+      await page.waitForFunction(() => {
+        const w = document.getElementById("toggle-ward"), p = document.getElementById("toggle-ward-precinct");
+        return w && p && w.checked && p.checked;
+      }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const pressed = await page.evaluate(() => ({
+        on: ["ward", "ward-precinct"].map((id) => { const b = document.getElementById("toggle-" + id); return !!(b && b.checked); }),
+        counted: (window.__gcEvents || []).filter((v) => v && v.event && /^next-election\//.test(v.path)).map((v) => v.path),
+        still: !!document.getElementById("next-election") && !document.getElementById("next-election").hidden
+      }));
+      check("the polling link turns its layers on, and each followed link is counted once, by link and app",
+        pressed.on.every(Boolean) && pressed.still &&
+        pressed.counted.join() === "next-election/reminder/il,next-election/polling/il",
+        JSON.stringify(pressed));
+    }
+    // nothing ahead at this point: every election left is past, held
+    // somewhere else, or in an area whose test throws or the app does not name
+    await register(page, fixture.filter((e) => e.area !== "here"));
+    await page.waitForTimeout(800);
+    const none = await read(page);
+    const pastOnly = await (async () => {
+      await register(page, [election("past", "2001-01-01", "here", "Past election")]);
+      await page.waitForTimeout(500);
+      return read(page);
+    })();
+    check("an election that has passed, one held somewhere else and one whose area cannot be tested are not named",
+      none.shown === false && pastOnly.shown === false, JSON.stringify({ none, pastOnly }));
+    await context.close();
+
+    // The precinct card's closing line: the polling list is stubbed to an
+    // election the fixture calendar names for Chicago, and to one it does not.
+    {
+      const precincts = {};
+      for (let w = 1; w <= 50; w++) for (let n = 1; n <= 90; n++) precincts[w + "-" + n] = 0;
+      const polling = (date) => JSON.stringify({ election: "Test Election", electionDate: date, listDate: "2026-10-19",
+        lookupUrl: "https://chicagoelections.gov/voting/your-voter-information",
+        sites: [{ place: "TEST POLLING SCHOOL", address: "1 N TEST ST" }], precincts });
+      const closing = async (listDate) => {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${POINT}&layers=ward-precinct`, async (p) => {
+          await p.route("**/data/app/chicago-polling-places.json", (r) =>
+            r.fulfill({ status: 200, contentType: "application/json", body: polling(listDate) }));
+        });
+        await register(page, [election("soonest", "2999-01-01", "chicago", "Soonest election")]);
+        // the card drawn at boot was drawn before the fixture was registered
+        const [lat, lng] = POINT.split(",").map(Number);
+        await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng, { skipPan: true }),
+          { n: EXPORTS_NAME, lat, lng });
+        await page.waitForFunction(() => {
+          const c = document.getElementById("card-ward-precinct");
+          return c && /TEST POLLING SCHOOL/.test(c.textContent) && !c.querySelector(".loading-row");
+        }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+        await page.waitForTimeout(300);
+        const out = await page.evaluate(() => {
+          const c = document.getElementById("card-ward-precinct");
+          const row = c ? c.querySelector(".card-linkrow") : null;
+          const a = row ? row.querySelector("a") : null;
+          return { card: c ? c.textContent.replace(/\s+/g, " ").slice(0, 200) : null,
+            row: row ? row.textContent.replace(/\s+/g, " ").trim() : null,
+            link: a ? [a.textContent, a.href] : null };
+        });
+        await context.close();
+        return out;
+      };
+      const same = await closing("2999-01-01");
+      const other = await closing("2999-03-01");
+      check("a precinct card whose polling list is for the named election closes with the calendar's line and the results page",
+        !!same.row && same.row.indexOf("Results") === 0 && same.row.indexOf("Closing line of soonest.") !== -1 &&
+        !!same.link && same.link[0] === "Election results page" && /\/election-results\.html$/.test(same.link[1]) &&
+        /TEST POLLING SCHOOL/.test(other.card || "") && other.row === null,
+        JSON.stringify({ same, other }));
+    }
+
+    // The app's own calendar, read from the file a reader is served. The
+    // reader's date is stood in for at the one call the block reads it by
+    // (a date string in the election's time zone), so timers keep running.
+    const shipped = (() => {
+      const src = readFileSync(join(INSTANCE_DIR, "index.html"), "utf8");
+      const m = /\n  var ELECTION_CALENDAR = (\[[\s\S]*?\n  \]);\n  \/\* ==== GENERATED:END election-calendar/.exec(src);
+      return m ? JSON.parse(m[1]) : null;
+    })();
+    const own = (shipped || []).filter((e) => e.area === "chicago").sort((a, b) => (a.date < b.date ? -1 : 1))[0];
+    if (!own) {
+      check("the app's own calendar holds no Chicago election, so its own block is not checked (the fixture checks above still ran)",
+        shipped !== null, shipped === null ? "no ELECTION_CALENDAR region in index.html" : "");
+    } else {
+      const on = async (today, point) => {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        await context.addInitScript((day) => {
+          const real = Date.prototype.toLocaleDateString;
+          Date.prototype.toLocaleDateString = function (locale, opts) {
+            if (locale === "en-CA" && opts && opts.timeZone) return day;
+            return real.apply(this, arguments);
+          };
+        }, today);
+        const page = await booted(context, `${BASE}#point=${point}`);
+        await page.waitForFunction(() => {
+          const el = document.getElementById("next-election");
+          return el && !el.hidden;
+        }, null, { timeout: 6000 }).catch(() => {});
+        const out = await read(page);
+        out.selected = await page.evaluate((n) => !!window[n].state.selectedPoint, EXPORTS_NAME);
+        await context.close();
+        return out;
+      };
+      const dayAfter = new Date(Date.parse(own.date + "T12:00:00Z") + 86400000).toISOString().slice(0, 10);
+      const onTheDay = await on(own.date, POINT);
+      const after = await on(dayAfter, POINT);
+      const downstate = await on(own.date, "39.80140,-89.64360"); // Springfield
+      check("on election day a Chicago point is told about the calendar's own election, in the calendar's words",
+        onTheDay.shown && onTheDay.inElections &&
+        onTheDay.text.indexOf(own.title + ", " + own.when) !== -1 && onTheDay.text.indexOf(own.text) !== -1 &&
+        (onTheDay.links || []).map((l) => l[1]).join("|") === own.links.map((l) => l.label).join("|"),
+        JSON.stringify(onTheDay));
+      check("the day after it, and at a point outside Chicago, no election is named",
+        after.shown === false && after.selected && downstate.shown === false && downstate.selected,
+        JSON.stringify({ after, downstate }));
+    }
+  }
+
   // ---- 1y. Election results: the card, the race menu and the legend. The
   // numbers move daily until the Board certifies, so this asserts what the
   // card and legend SAY against the shipped files, never a count: the

@@ -407,6 +407,15 @@
       return { dark: n, size: code.size, version: code.version };
     },
     shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The next-election block held to a fixture: a test registers its own
+    // calendar and area tests, with an election dated far ahead or long past
+    // so the check never expires with a real one, and the block is drawn
+    // again for the selected point. With no argument it reports what is
+    // registered and whether the block is showing.
+    nextElection: function (opts) {
+      if (opts) { registerNextElection(opts); syncNextElection(); }
+      return nextElection ? { calendar: nextElection.calendar, shown: nextElection.shown } : null;
+    },
     // The current address-bar view as the boot parse reads it — ids, never
     // codes — so a test can assert what a link MEANS in either spelling.
     permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }

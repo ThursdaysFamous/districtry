@@ -1901,7 +1901,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
      cards inside its own panel (compare-stats) */
   .layer-block,
   .stats-panel,
-  .statewide-strip {
+  .statewide-strip,
+  .next-election {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -1976,6 +1977,51 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .statewide-strip-toggle { flex-wrap: wrap; row-gap: 2px; }
     .statewide-strip-label { flex-basis: 100%; }
   }
+  /* ---- the next-election block (engine next-election): under the Elections
+     heading, above that section's layers, once a point is selected. Card
+     palette, no layer stripe, since it is not a layer. */
+  .next-election {
+    margin: 0 0 10px;
+    padding: 10px 14px 8px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    color: var(--card-ink);
+  }
+  .next-election p { margin: 0 0 4px; }
+  .next-election-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--card-muted);
+  }
+  .next-election-what { font-size: 15px; line-height: 1.35; }
+  .next-election-text { font-size: 14px; line-height: 1.45; color: var(--card-body-ink); }
+  /* a row of links, so each is a box 28px tall with room between (WCAG 2.5.8) */
+  .next-election .next-election-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 18px;
+    row-gap: 2px;
+    margin: 4px 0 0;
+  }
+  .next-election-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 2px 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--card-link);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .next-election-link:hover { color: var(--card-link-hover); text-decoration: underline; }
+  .next-election-link:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; border-radius: 4px; }
   .layer-block {
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -3746,7 +3792,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   /* the collapse itself, now at every width */
   .results-col.dst-collapsed .layer-block:not(:has(input[type="checkbox"]:checked)) { display: none; }
-  .results-col.dst-collapsed .group-section:not(:has(input[type="checkbox"]:checked)) { display: none; }
+  /* A section with nothing ticked goes, unless it holds the next-election
+     block (engine next-election): that block is not a layer, so no tick could
+     keep it, and on a phone the list collapses as soon as one layer is on,
+     which is most visits. */
+  .results-col.dst-collapsed .group-section:not(:has(input[type="checkbox"]:checked)):not(:has(> .next-election:not([hidden]))) { display: none; }
+  /* On a phone the reader's own cards lead, so the Elections section, when it
+     is kept for that block alone, follows them. The order is visual only: a
+     screen reader still meets the block first, as it does on a wide screen. */
+  @media (max-width: 767px) {
+    .results-col.dst-collapsed #groups-root { display: flex; flex-direction: column; }
+    .results-col.dst-collapsed .group-elections:not(:has(input[type="checkbox"]:checked)) {
+      order: 1;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+  }
   /* ==== the phone layout (mobile review, 2026-08-21) ====================
      Everything above this point is the desktop composition. Until now the
      re-skin's LAYOUT lived entirely in one @media (min-width: 901px) — now 768,
@@ -3948,7 +4009,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
      take the design package's dark data ramp rather than the chrome violet. */
   :root[data-theme="dark"] .layer-block,
   :root[data-theme="dark"] .stats-panel,
-  :root[data-theme="dark"] .statewide-strip {
+  :root[data-theme="dark"] .statewide-strip,
+  :root[data-theme="dark"] .next-election {
     --card-accent: #6ea8ff;
     --card-link: #8db9ff;
     --card-link-hover: #b6d2ff;
@@ -3966,7 +4028,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --card-row-border: rgba(236, 233, 244, 0.06);
     --card-btn-border: rgba(110, 168, 255, 0.34);
   }
-  :root[data-theme="dark"] .statewide-strip {
+  :root[data-theme="dark"] .statewide-strip,
+  :root[data-theme="dark"] .next-election {
     background: #201d29;
     border-color: rgba(236, 233, 244, 0.10);
   }
@@ -13799,7 +13862,9 @@ function initMaineExplorer() {
         if (layers[i].group !== group.id || layers[i].subOf) continue;
         if (layerRuntime[layers[i].id].relevant !== false) { allHidden = false; break; }
       }
-      section.hidden = allHidden;
+      // the next-election block sits in the Elections section and keeps it on
+      // screen where none of its layers answers (engine next-election)
+      section.hidden = allHidden && !nextElectionHolds(group.id);
     });
     syncPanelStats();
   }
@@ -13987,6 +14052,7 @@ function initMaineExplorer() {
     });
     dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
     syncStatewideOfficials(); // the statewide officials line (engine statewide-officials)
+    syncNextElection(); // the next election at this point (engine next-election)
   }
   /* ==== ENGINE:END overlay-cards ==== */
   /* ==== ENGINE:BEGIN render-helper ==== */
@@ -16116,6 +16182,250 @@ function initMaineExplorer() {
     });
   }
   /* ==== ENGINE:END statewide-officials ==== */
+  /* ==== ENGINE:BEGIN next-election ==== */
+  /* ---------- Next election (Adam, 2026-11-15: "Most of my traffic came in
+   * the lead up to the midterms. I want visitors to know I'll have election
+   * results after, in the lead up to the election").
+   *
+   * NOT A LAYER. Once a point is selected, a short block in the Elections
+   * section of the layer list names the next election held at that point,
+   * says what districtry will do with its results, and links what the app
+   * has for it: who is running, where to vote, a calendar reminder. An app
+   * with no election layer has no Elections section, so this makes one.
+   *
+   * THE WORDS ARE NOT WRITTEN HERE. Each entry of the calendar arrives with
+   * its sentences already written by scripts/build_election_notices.py from
+   * <tag>/data/source/election-calendar.json, the file the results page, the
+   * candidates page and the front page are written from, so every place
+   * says the same thing about one election. One of three wordings applies
+   * (results will be posted here, districtry plans to post them, or
+   * districtry cannot and the office's own page is linked), and which one is
+   * a field of that file.
+   *
+   * One call per app:
+   *   registerNextElection({ calendar: ELECTION_CALENDAR, areas: { chicago: chicagoCoverage } });
+   * `areas` maps each entry's area to a test of the selected point, true or
+   * a promise of true where that election is held. An entry whose area the
+   * app does not name is never shown, and a test that throws is a no: naming
+   * an election at a point it may not cover would be a guess. An app that
+   * makes no call shows nothing.
+   *
+   * SHOWN BY THE READER'S CLOCK, through election day in the election's own
+   * time zone and not after it. With several elections ahead, the soonest
+   * one held at the point is the one named.
+   *
+   * runAllActiveLayerQueries (engine overlay-cards) calls syncNextElection on
+   * every selection, and refreshGroupVisibility asks nextElectionHolds, so
+   * the Elections section stays on screen while the block is in it even
+   * where none of its layers answers.
+   *
+   * Following one of its links is counted as next-election/<link>/<tag>
+   * (candidates, polling, official or reminder), by link and app and never
+   * by place.
+   * ---------- */
+  var nextElection = null; // { calendar, areas, el, shown } once registered
+
+  function registerNextElection(opts) {
+    // a second call replaces the first (a smoke test registers a fixture over
+    // the app's own calendar), so the block the first drew goes with it
+    if (nextElection && nextElection.el && nextElection.el.parentNode) {
+      nextElection.el.parentNode.removeChild(nextElection.el);
+    }
+    nextElection = {
+      calendar: (opts && opts.calendar) || [],
+      areas: (opts && opts.areas) || {},
+      el: null,
+      shown: false
+    };
+  }
+
+  // Today's date where the election is held, as YYYY-MM-DD.
+  function nextElectionToday(timeZone) {
+    var now = new Date(), s = "";
+    try { s = now.toLocaleDateString("en-CA", { timeZone: timeZone }); } catch (e) { s = ""; }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    return now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" +
+      ("0" + now.getDate()).slice(-2);
+  }
+
+  // The elections still ahead, election day included, soonest first.
+  function nextElectionAhead() {
+    var ne = nextElection, out = [];
+    if (!ne) return out;
+    for (var i = 0; i < ne.calendar.length; i++) {
+      var e = ne.calendar[i];
+      if (e && e.date && typeof ne.areas[e.area] === "function" &&
+          nextElectionToday(e.timeZone) <= e.date) out.push(e);
+    }
+    out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    return out;
+  }
+
+  // A calendar link is a page of this app ("chicago-candidates.html") or an
+  // office's own https address.
+  function nextElectionUrl(href) {
+    try { return safeHttpUrl(new URL(String(href), window.location.href).href); }
+    catch (e) { return null; }
+  }
+
+  // The closing line for a card about one election (a polling place card):
+  // what happens to that election's results and where to read them, as a
+  // renderLinkRow spec. null once the day has passed, or when the calendar
+  // holds no election on that date in that area.
+  function nextElectionClosing(date, area) {
+    var ahead = nextElectionAhead();
+    for (var i = 0; i < ahead.length; i++) {
+      var e = ahead[i], c = e.closing;
+      if (e.date !== date || e.area !== area || !c) continue;
+      var url = nextElectionUrl(c.href);
+      return {
+        title: String(c.title),
+        note: String(c.note),
+        links: url ? [{ label: String(c.label), url: url }] : []
+      };
+    }
+    return null;
+  }
+
+  function nextElectionLink(l) {
+    var el;
+    var count = function () {
+      trackEvent("next-election/" + String(l.what) + "/" + METRO_BRAND.instanceTag);
+    };
+    if (l.layers) {
+      // turns the layers on, parent first, with real clicks so each layer's
+      // own handlers run, and brings the last one's card into view
+      el = document.createElement("button");
+      el.type = "button";
+      el.addEventListener("click", function () {
+        count();
+        var box = null;
+        for (var i = 0; i < l.layers.length; i++) {
+          box = document.getElementById("toggle-" + l.layers[i]);
+          if (box && !box.checked) box.click();
+        }
+        var block = box && box.closest ? box.closest(".layer-block") : null;
+        if (block && block.scrollIntoView) block.scrollIntoView({ block: "nearest" });
+      });
+    } else {
+      var url = nextElectionUrl(l.href);
+      if (!url) return null;
+      el = document.createElement("a");
+      el.href = url;
+      // a calendar file is handed to the reader's calendar app; a page opens
+      // in a new tab, as every link on a card does, so the map stays
+      if (!l.file) { el.target = "_blank"; el.rel = "noopener"; }
+      el.addEventListener("click", count);
+    }
+    el.className = "next-election-link";
+    el.textContent = String(l.label);
+    return el;
+  }
+
+  function nextElectionBuild(e) {
+    var ne = nextElection, el = ne.el;
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "next-election";
+      el.id = "next-election";
+      el.setAttribute("role", "note");
+      ne.el = el;
+    }
+    el.textContent = "";
+    el.appendChild(cardEl("p", "next-election-label", "Next election here"));
+    var what = cardEl("p", "next-election-what");
+    what.appendChild(cardEl("strong", null, e.title));
+    what.appendChild(document.createTextNode(", " + String(e.when)));
+    el.appendChild(what);
+    if (e.text) el.appendChild(cardEl("p", "next-election-text", e.text));
+    var links = cardEl("p", "next-election-links");
+    for (var i = 0; i < (e.links || []).length; i++) {
+      var a = nextElectionLink(e.links[i]);
+      if (a) links.appendChild(a);
+    }
+    if (links.firstChild) el.appendChild(links);
+    return el;
+  }
+
+  // Under the Elections heading, above that section's layers. An app with no
+  // election layer has no such section (buildGroupsUI draws none for an empty
+  // group), so it is made here, first in the list, where GROUPS puts it.
+  function nextElectionPlace(el) {
+    var section = groupSections.elections;
+    var heading;
+    if (!section) {
+      var root = document.getElementById("groups-root");
+      if (!root) return false;
+      var label = "Elections";
+      for (var i = 0; i < GROUPS.length; i++) {
+        if (GROUPS[i].id === "elections") label = GROUPS[i].label;
+      }
+      section = document.createElement("section");
+      section.className = "group-section group-elections";
+      section.setAttribute("aria-labelledby", "heading-elections");
+      heading = document.createElement("h2");
+      heading.className = "group-heading";
+      heading.id = "heading-elections";
+      var dot = cardEl("span", "dot");
+      dot.setAttribute("aria-hidden", "true");
+      heading.appendChild(dot);
+      heading.appendChild(document.createTextNode(label));
+      section.appendChild(heading);
+      root.insertBefore(section, root.firstChild);
+      groupSections.elections = section;
+    }
+    heading = section.querySelector(".group-heading");
+    if (el.parentNode !== section || el.previousSibling !== heading) {
+      section.insertBefore(el, heading ? heading.nextSibling : section.firstChild);
+    }
+    return true;
+  }
+
+  function nextElectionShow(e) {
+    var ne = nextElection;
+    var shown = false;
+    if (e) {
+      var el = nextElectionBuild(e);
+      shown = nextElectionPlace(el);
+      el.hidden = !shown;
+    } else if (ne.el) {
+      ne.el.hidden = true;
+    }
+    ne.shown = shown;
+    refreshGroupVisibility();
+  }
+
+  // Asked by refreshGroupVisibility (engine overlay-cards): the Elections
+  // section stays while this block is in it.
+  function nextElectionHolds(groupId) {
+    return groupId === "elections" && !!nextElection && nextElection.shown;
+  }
+
+  function syncNextElection() {
+    var ne = nextElection;
+    if (!ne) return;
+    var point = state.selectedPoint;
+    var seq = state.sequence;
+    var ahead = point ? nextElectionAhead() : [];
+    var i = 0;
+    function tryNext() {
+      if (seq !== state.sequence) return;
+      if (i >= ahead.length) { nextElectionShow(null); return; }
+      var e = ahead[i++];
+      Promise.resolve()
+        .then(function () { return ne.areas[e.area](point); })
+        .then(function (inside) {
+          if (seq !== state.sequence) return;
+          if (inside) nextElectionShow(e);
+          else tryNext();
+        }, function (err) {
+          console.error("[next-election] area test failed, so the election is not named:", err);
+          tryNext();
+        });
+    }
+    tryNext();
+  }
+  /* ==== ENGINE:END next-election ==== */
   // Statewide officials: the line at the top of the results naming the
   // officers this state elects statewide and its two U.S. senators,
   // anywhere inside the app's widest outline.
@@ -19281,6 +19591,15 @@ function initMaineExplorer() {
       return { dark: n, size: code.size, version: code.version };
     },
     shareUrls: function () { return { link: shareLinkUrl(), qr: shareQrUrl() }; },
+    // The next-election block held to a fixture: a test registers its own
+    // calendar and area tests, with an election dated far ahead or long past
+    // so the check never expires with a real one, and the block is drawn
+    // again for the selected point. With no argument it reports what is
+    // registered and whether the block is showing.
+    nextElection: function (opts) {
+      if (opts) { registerNextElection(opts); syncNextElection(); }
+      return nextElection ? { calendar: nextElection.calendar, shown: nextElection.shown } : null;
+    },
     // The current address-bar view as the boot parse reads it — ids, never
     // codes — so a test can assert what a link MEANS in either spelling.
     permalinkState: function () { return readPermalink(location.hash.replace(/^#/, "")); }

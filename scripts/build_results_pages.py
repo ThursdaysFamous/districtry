@@ -84,6 +84,7 @@ except ImportError:                                       # pragma: no cover
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import build_election_notices as notices  # noqa: E402
 from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
                            MARK_RE, preserved_from_disk, shared_head_block,
                            shell, THEMEBOOT_RE)
@@ -658,7 +659,16 @@ def place_page(res, worksheet, metros):
             len(offices), len(set(res.source_county.values())))
     else:
         counted = "as the %s publishes them" % res.opts["publisher"]
-    lede_html = (
+    # The Next election box (scripts/build_election_notices.py): what the
+    # calendar says is coming after the election these results are from. It
+    # ships hidden and its own script shows it by the reader's clock, so this
+    # page is the same file every day. "" for an app with no calendar, or once
+    # these results are that election's.
+    try:
+        next_box = notices.results_box(tag, idx.get("electionDate"))
+    except notices.NoticeError as e:
+        raise PageError(str(e))
+    lede_html = next_box + (
         '<p class="lede"><strong>%s results of %s\'s %s %s, %s.</strong> Each race lists '
         'every choice\'s votes and share of the vote. The map colours each precinct by '
         'who got the most votes there.</p>\n    %s'
@@ -785,7 +795,7 @@ def place_page(res, worksheet, metros):
                   preserved_from_disk(page_path),
                   shared_head_block(tag, THEMEBOOT_RE, "theme boot script"),
                   shared_head_block(tag, MARK_RE, "districtry mark"), tag,
-                  extra_css=PLACE_CSS)
+                  extra_css=PLACE_CSS + (notices.BOX_CSS if next_box else ""))
     return page_path, text, len(shown)
 
 

@@ -819,7 +819,22 @@
   }
   /* the collapse itself, now at every width */
   .results-col.dst-collapsed .layer-block:not(:has(input[type="checkbox"]:checked)) { display: none; }
-  .results-col.dst-collapsed .group-section:not(:has(input[type="checkbox"]:checked)) { display: none; }
+  /* A section with nothing ticked goes, unless it holds the next-election
+     block (engine next-election): that block is not a layer, so no tick could
+     keep it, and on a phone the list collapses as soon as one layer is on,
+     which is most visits. */
+  .results-col.dst-collapsed .group-section:not(:has(input[type="checkbox"]:checked)):not(:has(> .next-election:not([hidden]))) { display: none; }
+  /* On a phone the reader's own cards lead, so the Elections section, when it
+     is kept for that block alone, follows them. The order is visual only: a
+     screen reader still meets the block first, as it does on a wide screen. */
+  @media (max-width: 767px) {
+    .results-col.dst-collapsed #groups-root { display: flex; flex-direction: column; }
+    .results-col.dst-collapsed .group-elections:not(:has(input[type="checkbox"]:checked)) {
+      order: 1;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+  }
   /* ==== the phone layout (mobile review, 2026-08-21) ====================
      Everything above this point is the desktop composition. Until now the
      re-skin's LAYOUT lived entirely in one @media (min-width: 901px) — now 768,
@@ -1021,7 +1036,8 @@
      take the design package's dark data ramp rather than the chrome violet. */
   :root[data-theme="dark"] .layer-block,
   :root[data-theme="dark"] .stats-panel,
-  :root[data-theme="dark"] .statewide-strip {
+  :root[data-theme="dark"] .statewide-strip,
+  :root[data-theme="dark"] .next-election {
     --card-accent: #6ea8ff;
     --card-link: #8db9ff;
     --card-link-hover: #b6d2ff;
@@ -1039,7 +1055,8 @@
     --card-row-border: rgba(236, 233, 244, 0.06);
     --card-btn-border: rgba(110, 168, 255, 0.34);
   }
-  :root[data-theme="dark"] .statewide-strip {
+  :root[data-theme="dark"] .statewide-strip,
+  :root[data-theme="dark"] .next-election {
     background: #201d29;
     border-color: rgba(236, 233, 244, 0.10);
   }

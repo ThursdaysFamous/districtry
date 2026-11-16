@@ -577,6 +577,26 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_candidates_page.py --check
 
+      # The notice that says where an election's results will be: the Next
+      # election box on a results page, the block under the map's Elections
+      # heading, the closing line on the candidates page and the polling place
+      # card, the front page's line and tile note, and the calendar reminder
+      # file. Every word of it is written once, from <tag>/data/source/
+      # election-calendar.json, and the builders of those pages call this script
+      # for their piece. --selftest holds the three kinds of wording, the
+      # calendars it must refuse and the reminder file's shape to fixtures;
+      # --check fails when a calendar is not one it accepts (a promise of
+      # results where none has been posted before, a link the tree does not
+      # hold), when an app or a reminder file differs from its calendar, and
+      # when a job that rewrites a list the notice reads stops rebuilding it.
+      # It never reads today's date, so it answers the same every day. Stdlib
+      # only, no network.
+      - name: Election notices match their calendars
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/build_election_notices.py --selftest
+          python3 scripts/build_election_notices.py --check
+
       # The seven Illinois counties whose board MEMBERS ride the same GIS
       # feature as the boundary, so the app fetches both in one request and no
       # roster file ever existed — which meant the gate above, which enumerates

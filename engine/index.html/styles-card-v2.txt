@@ -7,7 +7,8 @@
      cards inside its own panel (compare-stats) */
   .layer-block,
   .stats-panel,
-  .statewide-strip {
+  .statewide-strip,
+  .next-election {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -82,6 +83,51 @@
     .statewide-strip-toggle { flex-wrap: wrap; row-gap: 2px; }
     .statewide-strip-label { flex-basis: 100%; }
   }
+  /* ---- the next-election block (engine next-election): under the Elections
+     heading, above that section's layers, once a point is selected. Card
+     palette, no layer stripe, since it is not a layer. */
+  .next-election {
+    margin: 0 0 10px;
+    padding: 10px 14px 8px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    color: var(--card-ink);
+  }
+  .next-election p { margin: 0 0 4px; }
+  .next-election-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--card-muted);
+  }
+  .next-election-what { font-size: 15px; line-height: 1.35; }
+  .next-election-text { font-size: 14px; line-height: 1.45; color: var(--card-body-ink); }
+  /* a row of links, so each is a box 28px tall with room between (WCAG 2.5.8) */
+  .next-election .next-election-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 18px;
+    row-gap: 2px;
+    margin: 4px 0 0;
+  }
+  .next-election-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 2px 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--card-link);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .next-election-link:hover { color: var(--card-link-hover); text-decoration: underline; }
+  .next-election-link:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; border-radius: 4px; }
   .layer-block {
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
