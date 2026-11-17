@@ -393,6 +393,43 @@ Each has no robots.txt unless its entry says otherwise.
   Hudspeth  "Commissioner, Precinct N" or "County Commissioner Precinct N" and
             the name on the next line.
 
+And thirty of the 221st to 254th largest, the smallest counties, measured
+2026-11-17 the same way. Each has no robots.txt unless its entry says
+otherwise.
+
+  Kinney, Crockett, Lipscomb, Real, Collingsworth, Cochran, Culberson,
+  Menard, Glasscock
+            "Precinct N Commissioner" and the name on the next line.
+  Shackelford, Motley
+            "Precinct N Commissioner", a line holding only "▲", then the
+            name. Shackelford's www.co.shackelford.tx.us fails the TLS check;
+            its site is shackelfordcounty.org.
+  Sherman, Schleicher, Cottle, Sterling, Kenedy
+            "Precinct N Commissioner" and the name on the next line. Each
+            county's www.co.<county>.tx.us forwards to its current site
+            (shermancountytx.gov, schleichercounty.gov, cottlecountytx.gov,
+            sterlingcotx.gov, kenedycountytx.gov), which the specs name.
+  Hall, Roberts, King, Loving
+            "Commissioner Precinct N" and the name on the next line.
+  Throckmorton
+            "Commissioner Precinct N" and the name on the next line. The
+            county's www.co.throckmorton.tx.us does not answer;
+            throckmortoncountytx.gov forwards to throckmortoncounty.org.
+  Foard     "Commissioner Precinct N" and the name on the next line. The
+            county's www.co.foard.tx.us does not answer; its site is
+            foardcounty.texas.gov.
+  Dickens, Oldham
+            The name above "Precinct N Commissioner".
+  Irion     The name above "Precinct N Commissioner", on co.irion.tx.us,
+            whose robots.txt asks for 10 seconds between requests.
+  Armstrong "Precinct #N Commissioner <name> (806) ..." on one line; the
+            telephone number is not read.
+  Briscoe   "Commissioner, Precinct N" and the name on the next line.
+  Edwards   "Precinct N" and the name on the next line.
+  Terrell   The name, in capitals, above "PRECINCT N".
+  Borden    "PRECINCT N COMMISSIONER" and the name, in capitals, on the next
+            line.
+
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
@@ -498,6 +535,26 @@ NOT READ, AND WHY, among the 161st to 220th largest (measured 2026-11-17):
   Mills     millscountytx.gov prints precinct 2's commissioner with the first
             and last names on separate lines, and this builder reads a name
             from one line and does not join two.
+
+NOT READ, AND WHY, among the 221st to 254th largest (measured 2026-11-17):
+  Jeff Davis
+            jeffdaviscounty.texas.gov serves this client, but its page lists
+            precinct 4's seat as "Vacant", and this builder and the County
+            card name four commissioners or none, so the county waits until
+            the card can show a vacant seat or the seat is filled.
+  Kent      www.co.kent.tx.us serves this client, but its four precinct pages
+            sit under "Road and Bridge" and name a person without saying that
+            person is the commissioner. As with Calhoun, a page of that kind
+            can name a road superintendent instead, so the county waits until
+            its site says who holds the seat.
+  Stonewall www.co.stonewall.tx.us fails this client's TLS check, so its
+            robots.txt cannot be read, which RFC 9309 treats as disallowing
+            everything; the state's county host answers 403,
+            www.stonewallcounty.texas.gov does not answer, and no other site
+            of the county's was found.
+  McMullen  www.co.mcmullen.tx.us, www.mcmullencounty.texas.gov and
+            www.mcmullencountytx.gov do not answer, the state's county host
+            answers 403, and no other site of the county's was found.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -1261,6 +1318,97 @@ COUNTIES = [
     dict(geoid="48229", county="Hudspeth County", seat_word="Precinct",
          url="https://www.co.hudspeth.tx.us/page/Commissioner",
          mode="name_below", label=r"(?:County )?Commissioner,? Precinct (?P<n>[1-4])"),
+    dict(geoid="48271", county="Kinney County", seat_word="Precinct",
+         url="https://www.co.kinney.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48417", county="Shackelford County", seat_word="Precinct",
+         url="https://www.shackelfordcounty.org/page/shackelford.Commissioner",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48105", county="Crockett County", seat_word="Precinct",
+         url="https://www.co.crockett.tx.us/page/crockett.CommissionersCourt",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48295", county="Lipscomb County", seat_word="Precinct",
+         url="https://www.co.lipscomb.tx.us/page/lipscomb.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48191", county="Hall County", seat_word="Precinct",
+         url="https://www.co.hall.tx.us/page/hall.Commissioners",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48421", county="Sherman County", seat_word="Precinct",
+         url="https://www.shermancountytx.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48385", county="Real County", seat_word="Precinct",
+         url="https://www.co.real.tx.us/page/real.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48087", county="Collingsworth County", seat_word="Precinct",
+         url="https://www.co.collingsworth.tx.us/page/collingsworth.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48079", county="Cochran County", seat_word="Precinct",
+         url="https://www.co.cochran.tx.us/page/cochran.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48413", county="Schleicher County", seat_word="Precinct",
+         url="https://www.schleichercounty.gov/page/Commissioner.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48109", county="Culberson County", seat_word="Precinct",
+         url="https://www.co.culberson.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48327", county="Menard County", seat_word="Precinct",
+         url="https://www.co.menard.tx.us/page/menard.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48011", county="Armstrong County", seat_word="Precinct",
+         url="https://www.co.armstrong.tx.us/page/armstrong.Commissioners.Court",
+         mode="inline",
+         label=r"Precinct #(?P<n>[1-4]) Commissioner (?P<name>.+?) \(\d{3}\) \d{3}-\d{4}"),
+    dict(geoid="48125", county="Dickens County", seat_word="Precinct",
+         url="https://www.co.dickens.tx.us/page/dickens.Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48359", county="Oldham County", seat_word="Precinct",
+         url="https://www.co.oldham.tx.us/page/Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48235", county="Irion County", seat_word="Precinct",
+         url="https://www.co.irion.tx.us/1192/Commissioners-Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48447", county="Throckmorton County", seat_word="Precinct",
+         url="https://www.throckmortoncounty.org/page/throckmorton.commissionerscourt",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48045", county="Briscoe County", seat_word="Precinct",
+         url="https://www.co.briscoe.tx.us/page/briscoe.Commissioners.Court",
+         mode="name_below", label=r"Commissioner, Precinct (?P<n>[1-4])"),
+    dict(geoid="48137", county="Edwards County", seat_word="Precinct",
+         url="https://www.co.edwards.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])"),
+    dict(geoid="48101", county="Cottle County", seat_word="Precinct",
+         url="https://www.cottlecountytx.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48431", county="Sterling County", seat_word="Precinct",
+         url="https://www.sterlingcotx.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48173", county="Glasscock County", seat_word="Precinct",
+         url="https://www.co.glasscock.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48155", county="Foard County", seat_word="Precinct",
+         url="https://www.foardcounty.texas.gov/page/Commissioners",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48345", county="Motley County", seat_word="Precinct",
+         url="https://www.co.motley.tx.us/page/motley.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48393", county="Roberts County", seat_word="Precinct",
+         url="https://www.co.roberts.tx.us/page/roberts.Commissioners",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48443", county="Terrell County", seat_word="Precinct",
+         url="https://www.co.terrell.tx.us/page/terrell.Commissioners.Court",
+         mode="name_above", label=r"PRECINCT (?P<n>[1-4])"),
+    dict(geoid="48033", county="Borden County", seat_word="Precinct",
+         url="https://www.co.borden.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"PRECINCT (?P<n>[1-4]) COMMISSIONER"),
+    dict(geoid="48261", county="Kenedy County", seat_word="Precinct",
+         url="https://www.kenedycountytx.gov/page/kenedy.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48269", county="King County", seat_word="Precinct",
+         url="https://www.co.king.tx.us/page/king.Commissioner",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48301", county="Loving County", seat_word="Precinct",
+         url="https://www.co.loving.tx.us/page/loving.Commissioners",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
 ]
 
 _GATE = []
