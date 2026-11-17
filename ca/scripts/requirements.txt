@@ -8,6 +8,12 @@
 #   scripts/validate_sources.py        (requests — source-freshness gate)
 #   scripts/generate_metro_files.py    (jsonschema — worksheet validation)
 # validate_index.py deliberately stays stdlib and does NOT import either.
+#
+# ONE BUILDER READS A PDF: scripts/build_ca_county_officials.py (the Secretary
+# of State's County Officials Directory) needs requests and pdfplumber. Its
+# weekly job installs both from the ROOT scripts/requirements.txt, where
+# pdfplumber is pinned for the whole fleet, so it is not pinned a second time
+# here.
 requests==2.33.1
 jsonschema==4.26.0
 

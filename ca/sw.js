@@ -72,6 +72,7 @@ const GEOMETRY_URLS = [
 // and must never be served stale — network-first, with the cached copy only
 // as an offline fallback. Same freshness rule as the shell.
 const ROSTER_URLS = [
+  "./data/app/ca-county-officials.json",
   "./data/app/tribal-councils.json",
   "./data/app/statewide-officials.json",
   "./data/app/election-results.json",

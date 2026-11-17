@@ -290,14 +290,14 @@
       "area_rank": 3,
       "rank_note": "58 counties, pre-built from TIGERweb; drawn statewide",
       "source": {
-        "answers": "Which county contains the point.",
+        "answers": "Which county contains the point and, outside San Francisco, who sits on its board of supervisors.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 58 features, measured 2026-11-11. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET OUTSIDE SAN FRANCISCO. State law gives every California county a board of five supervisors, and each county elects officers such as a sheriff, a district attorney and an assessor; no list of them was read in this pass, so the card names the county only. San Francisco is a city and county whose 11 supervisors the Supervisor District card names. Recorded as gap ca-county-officials.",
+        "people": "ca-county-officials.json, checked weekly against the California Secretary of State's California Roster (the County Officials Directory of the newest edition the Secretary of State links; the 2026 edition, in a file dated 29 June 2026, when this was written): the five supervisors of each of the 57 counties outside San Francisco, one per supervisorial district, as each county filed them. The Roster is published yearly, so a supervisor who took office after the file's date is not shown, and the card gives that date. The card lists the whole board and cannot say which supervisor represents the point, because no county's supervisorial districts are drawn outside San Francisco; the county's other elected officers, such as the sheriff, the district attorney and the assessor, are not named. Both are recorded in gap ca-county-officials. San Francisco is a city and county whose 11 supervisors the Supervisor District card names from the city's own data.",
         "applies": "California — statewide, all 58 counties."
       }
     },
@@ -782,6 +782,11 @@
     ],
     "rosters": [
       {
+        "file": "ca-county-officials.json",
+        "min_keys": 57,
+        "note": "The board of supervisors of each of the 57 counties outside San Francisco, keyed by county GEOID, one seat per supervisorial district, from the County Officials Directory of the California Secretary of State's California Roster (ca/scripts/build_ca_county_officials.py, checked weekly by ca-update-county-officials.yml). San Francisco is left out on purpose: its board is named by sf-supervisor-members.json from the city's own data. Nothing in the file depends on the day it was built, so a weekly run that reads the same Roster file changes nothing."
+      },
+      {
         "file": "tribal-councils.json",
         "min_keys": 49,
         "note": "The councils of the nations whose own page names the whole of it, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
@@ -867,6 +872,11 @@
       "file": "ca-update-sf-supervisor-roster.yml",
       "purpose": "SF Board of Supervisors roster refresh (DataSF hcgx-vtsb)",
       "schedule": "Wed 13:00 UTC"
+    },
+    {
+      "file": "ca-update-county-officials.yml",
+      "purpose": "County boards of supervisors outside San Francisco (the Secretary of State's California Roster, County Officials Directory)",
+      "schedule": "Thu 13:00 UTC"
     },
     {
       "file": "ca-validate-sources.yml",

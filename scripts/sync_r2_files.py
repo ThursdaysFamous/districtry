@@ -10,8 +10,23 @@ ranges a tile archive is read by; Cloudflare's page hosting answers a range
 with the whole file (Cloudflare's own documentation, and measured that day),
 which is why the pages themselves did not move.
 
+THE BOUNDARY FILES ARE COPIED TOO, SINCE 2026-11-16 (Adam's "Start" of that day
+on moving the map files off GitHub). Measured that day with all fifty states
+live, the site without the two folders was 664.6 MB, and 463.5 MB of that was
+902 boundary files: the whole-file geometry each app's service worker lists as
+GEOMETRY_URLS and serves cache-first. They are read out of each app's sw.js IN
+THE TREE, the list the worker itself goes by, so a file is on the files host
+exactly when the worker treats its bytes as fixed until the cache name moves.
+Rosters and election results are not copied: they change weekly or daily, the
+pages that print them are rebuilt in the same change, and GitHub Pages
+publishes a page and its roster together, which two hosts cannot. THIS CHANGE
+ONLY COPIES THEM. Every map still reads its boundary files from GitHub Pages,
+which still publishes them; the maps are switched to the files host in a
+change of its own, once the copies are there to be read, and GitHub stops
+publishing them in a third.
+
 This script makes the bucket hold exactly what the deploy is about to publish
-in those folders. It reads the ASSEMBLED tree (deploy-pages.yml's _site), not
+of those files. It reads the ASSEMBLED tree (deploy-pages.yml's _site), not
 the checkout, because the assemble step is what leaves the dark instances and
 the build inputs out, and a file the deploy would not publish must not be put
 on a public host either.
@@ -23,14 +38,21 @@ on a public host either.
     every file to the minute it ran, so a date test would upload all of them
     on every publish, about 1,900 writes 14 times a day, past R2's free
     million a month.
-  * An object under one of the two folders with no file in the tree is
-    deleted, so a retired archive stops being served as it would on Pages.
-    More than MAX_DELETE_SHARE of them at once is refused unless
-    --allow-mass-delete is given, because that is what a tree assembled
+  * A MANAGED object with no file in the tree is deleted, so a retired archive
+    or boundary file stops being served as it would on Pages. Managed means
+    under one of the two folders, or a .json directly inside an app's
+    data/app/: a boundary file that leaves its worker's list (retired, or
+    reclassified as a roster) is therefore deleted too, and a roster is never
+    there to begin with. More than MAX_DELETE_SHARE of them at once is refused
+    unless --allow-mass-delete is given, because that is what a tree assembled
     wrong looks like.
   * Anything else in the bucket is left alone.
   * After the writes the bucket is listed again and every file must be there
     with its MD5, or the run fails.
+  * An app whose sw.js is missing, or carries no GEOMETRY_URLS list this
+    script can read, or lists a boundary file the tree does not hold, fails
+    the run before anything is changed. Reading "no list" as "no boundary
+    files" would delete every one of that app's copies.
 
 --probe then asks the question the copy cannot: what a reader's browser gets
 from files.districtry.com, which is the bucket's custom domain and its CORS
@@ -77,9 +99,17 @@ import xml.etree.ElementTree as ET
 BUCKET = "districtry-files"
 REGION = "auto"
 SERVICE = "s3"
-# The two folders, under any instance tag. A key outside them is never
-# uploaded, compared or deleted.
-MANAGED_RE = re.compile(r"^[a-z]{2}/data/app/(tiles|population)/.+")
+# What this script owns in the bucket, under any instance tag: the two folders,
+# and a .json directly inside an app's data/app/ (where the boundary files
+# are). A key outside that is never uploaded, compared or deleted.
+MANAGED_RE = re.compile(r"^[a-z]{2}/data/app/(?:(?:tiles|population)/.+|[^/]+\.json)$")
+FOLDER_RE = re.compile(r"^[a-z]{2}/data/app/(tiles|population)/.+")
+TAG_RE = re.compile(r"^[a-z]{2}$")
+# The worker's cache-first list, as generate_metro_files.py writes it into each
+# app's sw.js: one "./data/app/<file>" per line. Read from the tree, never from
+# a worksheet, for the reason the tree is read at all.
+GEOMETRY_LIST_RE = re.compile(r"^const GEOMETRY_URLS = \[\n(.*?)^\];", re.S | re.M)
+GEOMETRY_ENTRY_RE = re.compile(r'^\s*"\./data/app/([^"/]+\.json)",?\s*$')
 CONTENT_TYPES = {".pmtiles": "application/octet-stream", ".json": "application/json"}
 # GitHub Pages serves every file with max-age=600; the files keep that, since
 # an archive keeps its address when it is rebuilt.
@@ -196,24 +226,78 @@ class R2:
 
 # ---------- planning ----------
 
+class TreeError(Exception):
+    """The assembled tree cannot be read for what it publishes."""
+
+
+def boundary_files(tree, tag):
+    """The names of the boundary files app `tag` reads whole: its worker's
+    GEOMETRY_URLS, read from <tree>/<tag>/sw.js. Raises TreeError when the
+    list cannot be read or names a file the tree does not hold, because
+    answering "none" for an app that has some would delete its copies."""
+    sw = os.path.join(tree, tag, "sw.js")
+    if not os.path.isfile(sw):
+        raise TreeError("%s/data/app is published and %s/sw.js is not, so its boundary files cannot be listed" % (tag, tag))
+    with open(sw, encoding="utf-8") as f:
+        lists = GEOMETRY_LIST_RE.findall(f.read())
+    if len(lists) != 1:
+        raise TreeError("%s/sw.js carries %d GEOMETRY_URLS lists this script can read, not 1" % (tag, len(lists)))
+    names = []
+    for line in lists[0].splitlines():
+        if not line.strip() or line.strip().startswith("//"):
+            continue
+        m = GEOMETRY_ENTRY_RE.match(line)
+        if not m:
+            raise TreeError("%s/sw.js GEOMETRY_URLS has a line this script cannot read: %r" % (tag, line.strip()[:120]))
+        names.append(m.group(1))
+    if len(set(names)) != len(names):
+        raise TreeError("%s/sw.js GEOMETRY_URLS names a file twice" % tag)
+    missing = [n for n in names if not os.path.isfile(os.path.join(tree, tag, "data", "app", n))]
+    if missing:
+        raise TreeError("%s/sw.js lists %d boundary file(s) the tree does not hold: %s"
+                        % (tag, len(missing), ", ".join(missing[:5])))
+    return names
+
+
 def local_files(tree):
-    """{key: md5 hex} for every file under <tag>/data/app/{tiles,population}/
-    in the assembled tree."""
+    """{key: md5 hex} for every file the bucket serves: everything under
+    <tag>/data/app/{tiles,population}/ in the assembled tree, and each app's
+    boundary files (boundary_files)."""
     out = {}
+
+    def take(full):
+        key = os.path.relpath(full, tree).replace(os.sep, "/")
+        if not MANAGED_RE.match(key):
+            return
+        with open(full, "rb") as f:
+            out[key] = hashlib.md5(f.read()).hexdigest()
+
     for tag in sorted(os.listdir(tree)):
+        if not TAG_RE.match(tag) or not os.path.isdir(os.path.join(tree, tag, "data", "app")):
+            continue
         for folder in ("tiles", "population"):
             top = os.path.join(tree, tag, "data", "app", folder)
             if not os.path.isdir(top):
                 continue
             for dirpath, _, names in os.walk(top):
                 for n in names:
-                    full = os.path.join(dirpath, n)
-                    key = os.path.relpath(full, tree).replace(os.sep, "/")
-                    if not MANAGED_RE.match(key):
-                        continue
-                    with open(full, "rb") as f:
-                        out[key] = hashlib.md5(f.read()).hexdigest()
+                    take(os.path.join(dirpath, n))
+        for n in boundary_files(tree, tag):
+            take(os.path.join(tree, tag, "data", "app", n))
     return out
+
+
+def kind_of(key):
+    m = FOLDER_RE.match(key)
+    return m.group(1) if m else "boundary"
+
+
+def by_kind(keys):
+    """"282 tiles, 3192 population, 902 boundary" for a list of keys."""
+    counts = {}
+    for k in keys:
+        counts[kind_of(k)] = counts.get(kind_of(k), 0) + 1
+    return ", ".join("%d %s" % (counts[k], k) for k in ("tiles", "population", "boundary") if k in counts) or "none"
 
 
 def plan(local, remote):
@@ -266,40 +350,101 @@ def selftest():
     assert sig == "98ad721746da40c64f1a55b78f14c238d841ea1380cd77a1b5971af0ece108bd", sig
 
     local = {"il/data/app/tiles/a.pmtiles": "1", "il/data/app/tiles/b.pmtiles": "2",
-             "wi/data/app/population/index.json": "3"}
+             "wi/data/app/population/index.json": "3", "il/data/app/wards.json": "7",
+             "il/data/app/outline.json": "8"}
     remote = {"il/data/app/tiles/a.pmtiles": "1", "il/data/app/tiles/b.pmtiles": "9",
               "il/data/app/tiles/old.pmtiles": "4", "notes/readme.txt": "5",
-              "il/data/app/other.json": "6"}
+              "il/data/app/retired.json": "6", "il/data/app/outline.json": "8",
+              "il/data/app/election-results/ward-1.json": "10", "il/index.html": "11"}
     up, de, same = plan(local, remote)
-    assert up == ["il/data/app/tiles/b.pmtiles", "wi/data/app/population/index.json"], up
-    assert de == ["il/data/app/tiles/old.pmtiles"], de  # never notes/ or a file outside the folders
-    assert same == ["il/data/app/tiles/a.pmtiles"], same
+    assert up == ["il/data/app/tiles/b.pmtiles", "il/data/app/wards.json",
+                  "wi/data/app/population/index.json"], up
+    # A boundary file no worker lists any more goes, like a retired archive;
+    # never notes/, a page, or a file in a folder this script does not own.
+    assert de == ["il/data/app/retired.json", "il/data/app/tiles/old.pmtiles"], de
+    assert same == ["il/data/app/outline.json", "il/data/app/tiles/a.pmtiles"], same
     assert not MANAGED_RE.match("ga2/data/app/tiles/x") and not MANAGED_RE.match("il/data/app/tilesx")
+    for owned in ("il/data/app/wards.json", "il/data/app/tiles/a.pmtiles", "wi/data/app/population/55/001.json"):
+        assert MANAGED_RE.match(owned), owned
+    for not_owned in ("il/data/app/election-results/ward-1.json", "il/data/app/README.md", "il/data/wards.json",
+                      "il/index.html", "fleet-outlines.json", "app/data/app/x.json2", "ill/data/app/x.json"):
+        assert not MANAGED_RE.match(not_owned), not_owned
+    assert by_kind(local) == "2 tiles, 1 population, 2 boundary", by_kind(local)
     big = {"il/data/app/tiles/%d.pmtiles" % i: "x" for i in range(100)}
     assert delete_refusal(sorted(big)[:21], big, False)  # 21 of 100: refused
     assert delete_refusal(sorted(big)[:21], big, True) is None
     assert delete_refusal(sorted(big)[:5], big, False) is None  # a handful is ordinary
-    assert verify(local, {**remote, "wi/data/app/population/index.json": "3"}) == ["il/data/app/tiles/b.pmtiles"]
+    assert verify(local, {**remote, "wi/data/app/population/index.json": "3"}) == [
+        "il/data/app/tiles/b.pmtiles", "il/data/app/wards.json"]
 
+    import contextlib
+    import io
     import tempfile
+    sw = ('const CACHE_NAME = "x-v1";\n\nconst GEOMETRY_URLS = [\n%s];\n\n'
+          'const ROSTER_URLS = [\n  "./data/app/roster.json",\n];\n')
     with tempfile.TemporaryDirectory() as d:
         for rel, data in (("il/data/app/tiles/a.pmtiles", b"A"), ("il/data/app/population/17031.json", b"P"),
                           ("il/data/app/roster.json", b"R"), ("il/index.html", b"H"),
+                          ("il/data/app/wards.json", b"W"), ("il/data/app/outline.json", b"O"),
+                          ("il/data/app/unlisted.json", b"U"),
+                          ("il/data/app/election-results/ward-1.json", b"E"),
+                          ("il/sw.js", (sw % '  "./data/app/wards.json",\n  "./data/app/outline.json",\n').encode()),
+                          ("app/sw.js", b"// the launcher's worker: no list, and no data/app beside it"),
                           ("fonts/x.woff2", b"F")):
             os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True)
             with open(os.path.join(d, rel), "wb") as f:
                 f.write(data)
+        assert boundary_files(d, "il") == ["wards.json", "outline.json"]
         got = local_files(d)
+        # The two folders and the files the worker lists; never a roster, an
+        # election result, a page, or a data file no list names.
         assert got == {"il/data/app/tiles/a.pmtiles": hashlib.md5(b"A").hexdigest(),
-                       "il/data/app/population/17031.json": hashlib.md5(b"P").hexdigest()}, got
+                       "il/data/app/population/17031.json": hashlib.md5(b"P").hexdigest(),
+                       "il/data/app/wards.json": hashlib.md5(b"W").hexdigest(),
+                       "il/data/app/outline.json": hashlib.md5(b"O").hexdigest()}, got
         # A whole run against a loopback stand-in for the bucket: what is
         # uploaded, what is left alone, what is deleted, and that every request
         # was signed for the host it was sent to.
         e2e = run_against_stand_in(d)
         urls = check_files_url(got)
+        # A tree whose list cannot be read stops the run before the bucket is
+        # asked anything: each of these would otherwise read as "this app has no
+        # boundary files" and delete its copies.
+        refused = 0
+        for name, text, words in (
+                ("no list", "const ROSTER_URLS = [];\n", "0 GEOMETRY_URLS lists"),
+                ("another shape", 'const GEOMETRY_URLS = ["./data/app/wards.json"];\n', "0 GEOMETRY_URLS lists"),
+                ("a line it cannot read", sw % '  "./data/app/wards.json",\n  "data/app/outline.json",\n', "cannot read"),
+                ("a folder", sw % '  "./data/app/tiles/a.pmtiles",\n', "cannot read"),
+                ("a file twice", sw % '  "./data/app/wards.json",\n  "./data/app/wards.json",\n', "twice"),
+                ("a file the tree lacks", sw % '  "./data/app/wards.json",\n  "./data/app/gone.json",\n', "does not hold: gone.json")):
+            with open(os.path.join(d, "il", "sw.js"), "w") as f:
+                f.write(text)
+            try:
+                local_files(d)
+            except TreeError as e:
+                assert words in str(e), (name, str(e))
+                refused += 1
+            else:
+                raise AssertionError("a worker with %s was read as a list" % name)
+            with contextlib.redirect_stdout(io.StringIO()) as said:
+                assert sync(None, d) == 1, name  # ...and the run fails without touching the bucket
+            assert "nothing was changed" in said.getvalue(), said.getvalue()
+        os.remove(os.path.join(d, "il", "sw.js"))
+        try:
+            local_files(d)
+        except TreeError as e:
+            assert "sw.js is not" in str(e), str(e)
+            refused += 1
+        else:
+            raise AssertionError("an app with no worker was read as having no boundary files")
+        # An empty list is a list: an app can have no boundary file of its own.
+        with open(os.path.join(d, "il", "sw.js"), "w") as f:
+            f.write("const GEOMETRY_URLS = [\n];\n")
+        assert boundary_files(d, "il") == []
     read = run_probe_against_stand_in()
     print("sync_r2_files: selftest OK — 3 AWS signing examples, the planner, the delete guard, "
-          "the tree walk, %s, %s and %s" % (e2e, urls, read))
+          "the tree walk, %d unreadable workers refused, %s, %s and %s" % (refused, e2e, urls, read))
 
 
 FILES_BLOCK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "shared", "files-origin.txt")
@@ -326,7 +471,12 @@ def check_files_url(keys):
     cases = []
     for k in sorted(keys):
         tag, rel = k.split("/", 1)
-        cases.append(["live", "https://districtry.com/%s/" % tag, rel, "https://files.example/" + k])
+        # COPIED AHEAD OF THE SWITCH: a boundary file is in the bucket and the
+        # block does not send a map there for it yet, so every map still reads
+        # it from this site. The change that switches the maps turns this
+        # case round, and it cannot merge without doing so.
+        there = "https://files.example/" if FOLDER_RE.match(k) else "https://districtry.com/"
+        cases.append(["live", "https://districtry.com/%s/" % tag, rel, there + k])
         cases.append(["local", "http://localhost:8000/%s/" % tag, rel, "http://localhost:8000/" + k])
     cases.append(["live", "https://districtry.com/il/", "data/app/roster.json", "https://districtry.com/il/data/app/roster.json"])
     cases.append(["live", "https://districtry.com/il/", "../fleet-outlines.json", "https://districtry.com/fleet-outlines.json"])
@@ -353,7 +503,8 @@ def check_files_url(keys):
         assert origin == "https://files." + cname, "FILES_ORIGIN %r is not https://files.%s" % (origin, cname)
         for c, got in zip(cases, run(block)):
             assert got == c[3].replace("https://files.example", origin, 1), (c, got)
-    return "filesUrl run in Node asking for every file at its upload key"
+    return ("filesUrl run in Node asking for every tile and population file at its upload key "
+            "and for no boundary file yet")
 
 
 def shipped_origin():
@@ -638,7 +789,10 @@ def run_against_stand_in(tree):
     import threading
 
     store = {"il/data/app/tiles/gone.pmtiles": b"old", "notes/keep.txt": b"mine",
-             "il/data/app/population/17031.json": b"P"}   # already current
+             "il/data/app/population/17031.json": b"P",   # already current
+             "il/data/app/outline.json": b"O",            # a boundary file, already current
+             "il/data/app/retired.json": b"old",          # one no worker lists any more
+             "il/data/app/election-results/ward-1.json": b"not this script's"}
     seen = []
 
     class Handler(http.server.BaseHTTPRequestHandler):
@@ -703,10 +857,14 @@ def run_against_stand_in(tree):
         with contextlib.redirect_stdout(io.StringIO()) as out:
             assert sync(r2, tree) == 0, out.getvalue()
         assert store["il/data/app/tiles/a.pmtiles"] == b"A"
+        assert store["il/data/app/wards.json"] == b"W"             # a listed boundary file: copied
         assert "il/data/app/tiles/gone.pmtiles" not in store
-        assert store["notes/keep.txt"] == b"mine"                  # outside the folders: untouched
-        assert seen.count("PUT") == 1, seen                        # 17031.json was already current
-        assert seen.count("DELETE") == 1, seen
+        assert "il/data/app/retired.json" not in store
+        assert "il/data/app/roster.json" not in store and "il/data/app/unlisted.json" not in store
+        assert store["notes/keep.txt"] == b"mine"                  # outside what this script owns: untouched
+        assert store["il/data/app/election-results/ward-1.json"] == b"not this script's"
+        assert seen.count("PUT") == 2, seen                        # 17031.json and outline.json were current
+        assert seen.count("DELETE") == 2, seen
         seen.clear()
         with contextlib.redirect_stdout(io.StringIO()):
             assert sync(r2, tree) == 0
@@ -765,15 +923,22 @@ def run_probe(tree):
 
 
 def sync(r2, tree, dry_run=False, allow_mass_delete=False):
-    local = local_files(tree)
+    try:
+        local = local_files(tree)
+    except TreeError as e:
+        print("::error::sync_r2_files: %s; nothing was changed" % e)
+        return 1
     if not local:
-        print("::error::sync_r2_files: %s holds no file under <tag>/data/app/tiles or population" % tree)
+        print("::error::sync_r2_files: %s holds no tile archive, population file or boundary file" % tree)
         return 1
     remote = r2.list_objects()
     uploads, deletes, unchanged = plan(local, remote)
     total = sum(os.path.getsize(os.path.join(tree, k)) for k in uploads)
-    print("sync_r2_files: %d file(s) in the tree, %d unchanged in the bucket, %d to upload (%.1f MB), %d to delete"
-          % (len(local), len(unchanged), len(uploads), total / 1e6, len(deletes)))
+    held = sum(os.path.getsize(os.path.join(tree, k)) for k in local)
+    print("sync_r2_files: %d file(s) in the tree (%s; %.1f MB), %d unchanged in the bucket, "
+          "%d to upload (%s; %.1f MB), %d to delete (%s)"
+          % (len(local), by_kind(local), held / 1e6, len(unchanged), len(uploads), by_kind(uploads),
+             total / 1e6, len(deletes), by_kind(deletes)))
     for k in uploads:
         print("  upload " + k)
     for k in deletes:
