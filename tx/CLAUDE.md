@@ -91,27 +91,34 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. Two hundred and twenty-three counties are read so far, 78.9% of Texans: the
-twelve largest whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin,
-Denton, Fort Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock), sixteen of the 21st to 40th largest
-(Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
-Wichita, Gregg, Tom Green, Potter and Rockwall), nineteen of the 41st to 60th (all but
+largest county first. Two hundred and thirty counties are read so far, 87.0% of Texans: seventeen
+of the twenty largest (all but Bexar, which answers with a managed challenge, and Montgomery and Bell,
+whose robots.txt disallows every path), eighteen of the 21st to 40th (all but Brazos, which answers
+with a browser check, and Smith, which prints its names only inside sentences), nineteen of the 41st to 60th (all but
 Maverick, which has no county website this project can find), nineteen of the 61st to 80th
 (all but Erath, whose site answers this project with Cloudflare's block page), eighteen of the
 81st to 100th (all but Hale, whose robots.txt disallows every path, and Gillespie, which prints its
 commissioners only in a PDF), fifty-four of the 101st to 160th (all but Aransas, whose site
 answers with a bot check, Gaines, whose pages name no commissioner, Calhoun, whose precinct 1 page
 does not say the person is a commissioner, Gonzales, which prints one name with mismatched
-quotation marks, Comanche, which spells one name two ways, and Reeves, which refuses the project's
-client), fifty-four of the 161st to 220th (all but Dimmit, which labels two seats with several
+quotation marks, Comanche, which spells one name two ways, and Reeves, which prints its four seats
+three different ways), fifty-four of the 161st to 220th (all but Dimmit, which labels two seats with several
 precinct numbers, Jack and Delta, whose sites fail the TLS check or answer with a challenge,
 Childress and Martin, which have no county website this project can find, and Mills, which prints
 one name across two lines) and thirty-one of the 221st to 254th (all but Kent, whose pages do not
-say the person is a commissioner, and Stonewall and McMullen, whose sites answer nothing). The
-builder's docstring records each page's shape and why each of the other thirty-one counties is not
-read (Bexar, Brazos, Jack and Delta answer with a
+say the person is a commissioner, and Stonewall and McMullen, whose sites answer nothing). **SEVEN
+OF THEM ARE READ WITH A BROWSER IDENTITY**, on Adam's yes of 2026-11-17: Williamson, Hays and McLennan
+answer this project's own client with Cloudflare's block page and Brazoria, Galveston, Johnson and
+Nueces with Akamai's, on both HTTP stacks and at robots.txt alike, and each serves its page and a
+robots.txt permitting it to the fleet's Chrome client with its client hints on the standard-library
+stack, measured at the exact page and recorded in `user-agent-measurements.json`. They are read by
+`tx/scripts/tx_commissioners_browser_rung.py`, a file of their own, so that no other county site
+counts as reached by a browser string. Reeves refuses and serves the same way but is not read, for
+its layout rather than its block. The builder's docstring records each page's shape and why each of
+the other twenty-four counties is not read (Bexar, Brazos, Jack and Delta answer with a
 challenge or cannot be read and Aransas answers with a bot check, Montgomery, Bell and Hale
-disallow every path in robots.txt, eight refuse the project's client and Erath blocks it, Smith prints its names only inside sentences, Gillespie only in a PDF,
+disallow every path in robots.txt, Erath blocks the project's client and was not asked with a browser
+identity, Reeves prints its four seats three different ways, Smith prints its names only inside sentences, Gillespie only in a PDF,
 Gaines names nobody, Calhoun's precinct 1 page does not say commissioner, Gonzales and Comanche
 print a name the builder will not correct or choose between, Dimmit labels two seats with several
 precinct numbers, Mills prints one name across two lines, Kent's pages do not say commissioner, and the sites of Maverick, Childress, Martin, Stonewall and McMullen

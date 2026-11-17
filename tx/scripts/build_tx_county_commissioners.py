@@ -436,6 +436,26 @@ otherwise.
   Borden    "PRECINCT N COMMISSIONER" and the name, in capitals, on the next
             line.
 
+READ WITH A BROWSER IDENTITY (Adam's yes of 2026-11-17). These seven refuse
+this script's own client on both HTTP stacks, at the page and at robots.txt
+alike, and serve their pages and a robots.txt permitting them to the fleet's
+Chrome client with its client hints on the standard-library stack. CLAUDE.md
+allows that only where a site measurably refuses ours, with the measurement
+recorded; tx_commissioners_browser_rung.py carries both, and the seven
+entries, so that no other county site counts as read by a browser string.
+  Williamson The court page's photo caption names the whole court on one
+            line, "Commissioner Pct. N <name>" between commas.
+  Brazoria  One page per commissioner; "Commissioner <name>".
+  Nueces    One page per commissioner; the name on the line after the page's
+            "Print" link.
+  Galveston "Commissioner Precinct N" and the name on the next line, a comma
+            before it dropped.
+  McLennan  The county's home page; the name above "Precinct N Commissioner".
+  Hays      One page per commissioner; the name on the line after "Contact
+            Us".
+  Johnson   One page per commissioner; "The Honorable <name>", the honorific
+            dropped.
+
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
@@ -447,31 +467,15 @@ NOT READ, AND WHY, among the twenty largest:
             www.mctx.org and www.bellcountytx.com publish `User-agent: *` /
             `Disallow: /` (the same 210 bytes on both), which binds this
             project. Not fetched.
-  Williamson, McLennan, Hays
-            www.wilcotx.gov, www.mclennan.gov and www.hayscountytx.gov answer
-            this client with Cloudflare's "Sorry, you have been blocked" page
-            (HTTP 403) on the page and on robots.txt.
-  Brazoria, Galveston, Nueces
-            Each answers this client with Akamai's "Access Denied" (HTTP 403)
-            on the page and on robots.txt.
-  The last six refuse this project's own client. CLAUDE.md allows a browser
-  identity where a site measurably refuses ours by its fingerprint, with the
-  measurement recorded. On 2026-11-17 each of them, and Johnson below, served
-  its robots.txt and its commissioners' pages to the fleet's Chrome client
-  with its client hints (scraper_common.UA_HINTS_CHROME_126, standard-library
-  stack), each robots.txt permitting those pages, and none answered with a
-  challenge; whether to read them that way is Adam's decision, so until he
-  makes it they are recorded here and in the gap record.
+  Williamson, McLennan, Hays, Brazoria, Galveston and Nueces are read with a
+  browser identity; see above.
 
 NOT READ, AND WHY, among the 21st to 40th largest (measured 2026-11-17):
-  Hays      Above: Cloudflare's block page.
   Brazos    www.brazoscountytx.gov answers this client with a browser check
             ("Just a moment... Checking your browser", HTTP 403, a script
             that sends a browser on to the page) on the page and on
             robots.txt. A challenge is an access control and is never worked
             around, with any client.
-  Johnson   www.johnsoncountytx.org answers this client with HTTP 403 on the
-            page and on robots.txt; see the paragraph above.
   Smith     www.smith-county.com serves this client, but its precinct pages
             print each commissioner's name only inside sentences ("Christina
             Drewry took office on January 2, 2025 as ..."), which a parser
@@ -490,7 +494,8 @@ NOT READ, AND WHY, among the 61st to 80th largest (measured 2026-11-17):
   Erath     www.co.erath.tx.us answers this client with Cloudflare's
             "Attention Required!" block page (HTTP 403) on the page and on
             robots.txt, as Williamson, McLennan and Hays do. Not measured with
-            a browser identity; that waits for Adam's decision on the seven.
+            a browser identity: Adam's yes of 2026-11-17 named the seven above
+            and Reeves, not Erath.
 
 NOT READ, AND WHY, among the 81st to 100th largest (measured 2026-11-17):
   Hale      www.halecounty.org publishes `User-agent: *` / `Disallow: /` (210
@@ -515,7 +520,14 @@ NOT READ, AND WHY, among the 101st to 160th largest (measured 2026-11-17):
             than correcting.
   Reeves    www.reevescounty.org answers this client with Akamai's "Access
             Denied" (HTTP 403) on the page and on robots.txt, like Brazoria,
-            Galveston and Nueces above.
+            Galveston and Nueces above. Read with the browser identity on
+            2026-11-17 (Adam's yes), it serves its robots.txt, which permits
+            the page, and its commissioners court page, but prints the four
+            seats three different ways: two with the name below "COMMISSIONER
+            PCT. N", one with the name and a dash above it, and precinct 4 as
+            "VACANT" above the label with a literal "[name]" placeholder
+            below. No one rule reads all four, and a placeholder is not a
+            county saying the seat is empty, so the county is not read.
   Comanche  The court page spells precinct 2's commissioner two ways, "Russell
             Gilette" beside the label and "Russell Gillette" in its contact
             line, and this builder does not choose between them.
@@ -621,6 +633,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)), "script
 from robots_policy import RobotsGate  # noqa: E402  (FLEET_SHARED)
 from scraper_common import (  # noqa: E402  (FLEET_SHARED)
     UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, fetch as fetch_response)
+sys.path.insert(0, _HERE)  # the browser rung beside this file (-I drops it)
+from tx_commissioners_browser_rung import (  # noqa: E402
+    BROWSER_COUNTIES, browser_gate, fetch_browser)
 from validate_officeholder_names import (  # noqa: E402  (FLEET_SHARED)
     is_vacancy_marker, why_not_a_name)
 
@@ -682,6 +697,10 @@ MIN_NAMED = 2
 # the lines passed over must still match `between`, but there may be fewer of
 # them, as where a county prints "Commissioner, Precinct 1" on one line and
 # "Commissioner," and "Precinct 2" on two (San Jacinto).
+# `split` cuts each line into parts before any is matched (a photo caption
+# naming several people on one line). `client="browser"` reads the county with
+# the browser rung; only the counties in tx_commissioners_browser_rung.py, each
+# measured refusing the token, set it.
 COUNTIES = [
     dict(geoid="48201", county="Harris County", seat_word="Precinct",
          url="https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
@@ -1438,24 +1457,35 @@ COUNTIES = [
     dict(geoid="48301", county="Loving County", seat_word="Precinct",
          url="https://www.co.loving.tx.us/page/loving.Commissioners",
          mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
-]
+] + BROWSER_COUNTIES
 
-_GATE = []
+_GATES = {}
 _LAST = {}
 
-
-def gate():
-    """One robots.txt reader for the run, with the client that fetches; it
-    reads each host's file once."""
-    if not _GATE:
-        import requests  # the fetch below is requests too
-        _GATE.append(RobotsGate(requests.Session(), UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT))
-    return _GATE[0]
+# The two clients a county can be read with. "token" is this project's own
+# reader, which every county gets first. "browser" is the fourth rung of
+# scripts/probe_user_agents.py, given only to the counties in
+# tx_commissioners_browser_rung.py, each measured refusing the token on both
+# stacks and serving that rung (that file says what was refused and when).
 
 
-def fetch(url, label):
-    """One GET with this project's own client, after the host's robots.txt has
-    been read with that same client and asked about this address. A refusal
+def gate(client="token"):
+    """One robots.txt reader per client for the run, reading each host's file
+    once, with the same client and headers that fetch: requests and the token,
+    or the stdlib stack and the browser rung's headers."""
+    if client not in _GATES:
+        if client == "browser":
+            _GATES[client] = browser_gate()
+        else:
+            import requests  # the token fetch below is requests too
+            _GATES[client] = RobotsGate(requests.Session(), UA_ROSTER_BOT,
+                                        headers=UA_HEADERS_ROSTER_BOT)
+    return _GATES[client]
+
+
+def fetch(url, label, client="token"):
+    """One GET with the county's client, after the host's robots.txt has been
+    read with that same client and asked about this address. A refusal
     raises, so the county keeps its last record. Requests to one host are
     spaced by the Crawl-delay its robots.txt states, and by PACE_SECONDS where
     it states none (Lubbock's asks for 300 seconds). Returns bytes.
@@ -1466,17 +1496,19 @@ def fetch(url, label):
     keep that county's last record while the other counties are read; the gate
     also gives the Crawl-delay. Every address is asked about, not only the
     first on each host."""
-    ok, why = gate().allows(url)
-    print("robots.txt %s: %s" % (label, why), file=sys.stderr)
+    ok, why = gate(client).allows(url)
+    print("robots.txt %s (%s client): %s" % (label, client, why), file=sys.stderr)
     if not ok:
         raise RuntimeError("%s refuses this client: %s; nothing fetched" % (url, why))
     host = urlsplit(url).hostname
-    delay = max(PACE_SECONDS, float(gate().crawl_delay(url) or 0))
+    delay = max(PACE_SECONDS, float(gate(client).crawl_delay(url) or 0))
     wait = delay - (time.time() - _LAST.get(host, 0.0))
     if wait > 0:
         print("waiting %.0f s for %s's crawl delay" % (wait, host), file=sys.stderr)
         time.sleep(wait)
     try:
+        if client == "browser":
+            return fetch_browser(url, delay)
         return fetch_response(url, UA_HEADERS_ROSTER_BOT, timeout=60, attempts=2).content
     finally:
         _LAST[host] = time.time()
@@ -1493,7 +1525,7 @@ class Files(object):
     def name(url):
         return re.sub(r"[^A-Za-z0-9._-]+", "_", url.split("://", 1)[-1])
 
-    def get(self, url, label):
+    def get(self, url, label, client="token"):
         name = self.name(url)
         for d in (self.offline, self.save):
             if d and os.path.exists(os.path.join(d, name)):
@@ -1501,7 +1533,7 @@ class Files(object):
                     return f.read()
         if self.offline:
             raise RuntimeError("%s is not saved in %s" % (url, self.offline))
-        body = fetch(url, label)
+        body = fetch(url, label, client)
         if self.save:
             os.makedirs(self.save, exist_ok=True)
             with open(os.path.join(self.save, name), "wb") as f:
@@ -1613,6 +1645,8 @@ def readings(page, spec, where, want=0):
                 if name:
                     found.append((number(m.group("n")), name))
         return found
+    if spec.get("split"):
+        lines = [part for line in lines for part in re.split(spec["split"], line)]
     label = re.compile("^%s$" % spec["label"])
     between = re.compile("^%s$" % spec["between"]) if spec.get("between") else None
     offset = spec.get("offset", 1)
@@ -1660,7 +1694,8 @@ def read_county(spec, files):
     found = []
     for want, url in sorted(pages.items()):
         where = "%s (%s)" % (spec["county"], url)
-        page = Page(files.get(url, spec["county"]).decode("utf-8", "replace"))
+        page = Page(files.get(url, spec["county"], spec.get("client", "token"))
+                    .decode("utf-8", "replace"))
         got = readings(page, spec, where, want)
         if want:
             got = [(n, name) for n, name in got if n == want]
