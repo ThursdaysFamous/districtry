@@ -2944,8 +2944,12 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("tx-senate", "tx-house"),
         "county-boundaries": answers("county"),
-        # No commissioners court is named yet (the state-level launch names
-        # the legislature first, Adam's plan of 2026-11-10).
+        # Since 2026-11-16 the County card names each county's judge, one of
+        # the commissioners court's five members, from the Office of Court
+        # Administration's judicial directory; no commissioner is named yet.
+        # The count here is read through the county-page adapters, and
+        # Texas's pages are held for Adam's "merge"
+        # (build_county_pages.NOT_COUNTY_BOARDS), so it stays at none.
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # No city council is named yet.

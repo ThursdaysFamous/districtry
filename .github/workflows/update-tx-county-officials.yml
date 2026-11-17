@@ -1,0 +1,120 @@
+name: Update Texas county judges
+
+# Weekly check of the County card's roster (tx/data/app/tx-county-officials.json,
+# fetched by tx/index.html). Rebuilds each county's county judge from the
+# by-county listing in the Texas Office of Court Administration's judicial
+# directory and, if anything changed, opens a PR rather than committing
+# directly to main.
+#
+# A county judge presides over the county's commissioners court, so this is one
+# of its five members. The four commissioners are not in the directory, which
+# lists courts, and are not read here (gap tx-county-officials).
+#
+# THE FILE'S ADDRESS CHANGES WITH EVERY REVISION, so the builder reads the
+# directory's own page first and follows the one link to the by-county listing.
+# Two requests a run and nothing else is fetched. The builder writes a pure
+# function of the file it read (the report date printed on its pages, no run
+# date), so a week with no new file leaves the roster byte-identical and opens
+# no PR.
+#
+# robots.txt: www.txcourts.gov's `*` group (read 2026-11-16) disallows only
+# paths this job never reads. The builder reads the policy with the client its
+# fetches send and asks it about each of the two addresses before fetching
+# that address, because the file's path is not known until the page is read.
+
+on:
+  schedule:
+    - cron: "33 20 * * 3" # Wednesday 20:33 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers). Falls back to github.token
+      # when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          # Pinned below 3.15, as update-chicago-candidates.yml is: the
+          # runner's newest Python can arrive before the wheels pdfplumber's
+          # dependencies need.
+          python-version: "3.14"
+
+      # requests for the two fetches (robots.txt is read first, with the same
+      # client), pdfplumber for the listing itself, which is a PDF.
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests pdfplumber
+
+      - name: Rebuild Texas county judges data file
+        run: python3 tx/scripts/build_tx_county_officials.py
+
+      # Gate the regenerated data before it can reach a PR: the roster's own
+      # shape (254 counties, one county judge's seat each, every name a
+      # person's), then the app and every tx/data/app file, then the fleet's
+      # test that no shipped officeholder name is an office, a placeholder or
+      # a fragment.
+      - name: Validate roster + app + data files
+        run: |
+          python3 tx/scripts/build_tx_county_officials.py --check
+          python3 tx/scripts/validate_index.py tx/index.html
+          python3 scripts/validate_officeholder_names.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- tx/data/app/tx-county-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/tx-county-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with: if main gained a .github/workflows/ change
+          # meanwhile, the branch would differ from main THERE too, which
+          # GitHub reads as the push updating a workflow and refuses for a
+          # token without `workflow` scope. The rebuilt file is carried across.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # NOTHING ELSE IS REGENERATED, and that is measured rather than
+          # skipped (2026-11-16): no page prints these names yet. Texas's
+          # county pages are held (build_county_pages.NOT_COUNTY_BOARDS), no
+          # question-page table reads this roster, and about.html and
+          # docs/EAM_STATUS.md count neither. The change that adds the county
+          # pages adds their regeneration here, and build_county_pages.py
+          # --check fails this job's PR until it does.
+          git add tx/data/app/tx-county-officials.json
+          git commit -m "Update Texas county judges from the Office of Court Administration's judicial directory"
+          git push -u origin "$branch" --force
+          # Only open a PR if one isn't already open for this branch; if it is,
+          # the force-push above already updated it.
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Texas county judges from the Office of Court Administration's judicial directory" \
+              --body "Automated weekly check of the County card's roster, generated by \`tx/scripts/build_tx_county_officials.py\` from the by-county listing in the Texas Office of Court Administration's judicial directory. The builder writes only what the file says, so this opens only when the office published a new file. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -1,0 +1,3812 @@
+{
+ "48001": {
+  "county": "Anderson County",
+  "body": "Anderson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Carey G. McKinney"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48003": {
+  "county": "Andrews County",
+  "body": "Andrews County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Sam H. Jones"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48005": {
+  "county": "Angelina County",
+  "body": "Angelina County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Keith Neil Wright"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48007": {
+  "county": "Aransas County",
+  "body": "Aransas County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ray A. Garza"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48009": {
+  "county": "Archer County",
+  "body": "Archer County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Randall C. Jackson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48011": {
+  "county": "Armstrong County",
+  "body": "Armstrong County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Adam Shane Ensey"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48013": {
+  "county": "Atascosa County",
+  "body": "Atascosa County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Weldon Cude"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48015": {
+  "county": "Austin County",
+  "body": "Austin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Tim A. Lapham"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48017": {
+  "county": "Bailey County",
+  "body": "Bailey County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Charles Basil Nash"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48019": {
+  "county": "Bandera County",
+  "body": "Bandera County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard A. Evans"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48021": {
+  "county": "Bastrop County",
+  "body": "Bastrop County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Gregory Klaus"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48023": {
+  "county": "Baylor County",
+  "body": "Baylor County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rusty A. Stafford"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48025": {
+  "county": "Bee County",
+  "body": "Bee County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "George P. Morrill"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48027": {
+  "county": "Bell County",
+  "body": "Bell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David A. Blackburn"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48029": {
+  "county": "Bexar County",
+  "body": "Bexar County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Peter Sakai"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48031": {
+  "county": "Blanco County",
+  "body": "Blanco County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brett G. Bray"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48033": {
+  "county": "Borden County",
+  "body": "Borden County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Cathy York Palmer"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48035": {
+  "county": "Bosque County",
+  "body": "Bosque County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Cindy Vanlandingham"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48037": {
+  "county": "Bowie County",
+  "body": "Bowie County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bobby L. Howell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48039": {
+  "county": "Brazoria County",
+  "body": "Brazoria County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "L. (Matt) M. Sebesta, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48041": {
+  "county": "Brazos County",
+  "body": "Brazos County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Duane Peters"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48043": {
+  "county": "Brewster County",
+  "body": "Brewster County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Greg P. Henington"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48045": {
+  "county": "Briscoe County",
+  "body": "Briscoe County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Billy Rank Cogdell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48047": {
+  "county": "Brooks County",
+  "body": "Brooks County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Eric Ramos"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48049": {
+  "county": "Brown County",
+  "body": "Brown County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Shane Britton"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48051": {
+  "county": "Burleson County",
+  "body": "Burleson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Keith Schroeder"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48053": {
+  "county": "Burnet County",
+  "body": "Burnet County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bryan E. Wilson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48055": {
+  "county": "Caldwell County",
+  "body": "Caldwell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Hoppy H. Haden"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48057": {
+  "county": "Calhoun County",
+  "body": "Calhoun County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Vern Lyssy"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48059": {
+  "county": "Callahan County",
+  "body": "Callahan County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Nicki Harle"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48061": {
+  "county": "Cameron County",
+  "body": "Cameron County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Eddie Trevino, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48063": {
+  "county": "Camp County",
+  "body": "Camp County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James (AJ) Anthony Mason"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48065": {
+  "county": "Carson County",
+  "body": "Carson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dan Looten"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48067": {
+  "county": "Cass County",
+  "body": "Cass County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "R. Travis Ransom"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48069": {
+  "county": "Castro County",
+  "body": "Castro County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mandy Gfeller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48071": {
+  "county": "Chambers County",
+  "body": "Chambers County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jimmy Sylvia"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48073": {
+  "county": "Cherokee County",
+  "body": "Cherokee County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Chris Davis"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48075": {
+  "county": "Childress County",
+  "body": "Childress County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kimberly R. Jones"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48077": {
+  "county": "Clay County",
+  "body": "Clay County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mike Campbell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48079": {
+  "county": "Cochran County",
+  "body": "Cochran County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Pat S. Henry"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48081": {
+  "county": "Coke County",
+  "body": "Coke County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Hal Spain"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48083": {
+  "county": "Coleman County",
+  "body": "Coleman County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Billy D. Bledsoe"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48085": {
+  "county": "Collin County",
+  "body": "Collin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Christopher T. Hill"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48087": {
+  "county": "Collingsworth County",
+  "body": "Collingsworth County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Scot Martindale"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48089": {
+  "county": "Colorado County",
+  "body": "Colorado County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ty Prause"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48091": {
+  "county": "Comal County",
+  "body": "Comal County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kristen Hoyt"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48093": {
+  "county": "Comanche County",
+  "body": "Comanche County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Stephanie Lynn Davis"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48095": {
+  "county": "Concho County",
+  "body": "Concho County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David Eugene Dillard"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48097": {
+  "county": "Cooke County",
+  "body": "Cooke County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John O. Roane"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48099": {
+  "county": "Coryell County",
+  "body": "Coryell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Roger A. Miller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48101": {
+  "county": "Cottle County",
+  "body": "Cottle County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Karl R. Holloway"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48103": {
+  "county": "Crane County",
+  "body": "Crane County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard (Roy) Hodges"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48105": {
+  "county": "Crockett County",
+  "body": "Crockett County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Frank Tambunga"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48107": {
+  "county": "Crosby County",
+  "body": "Crosby County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rusty Forbes"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48109": {
+  "county": "Culberson County",
+  "body": "Culberson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Carlos G. Urias"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48111": {
+  "county": "Dallam County",
+  "body": "Dallam County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Wesley C. Ritchey"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48113": {
+  "county": "Dallas County",
+  "body": "Dallas County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Clay Lewis Jenkins"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48115": {
+  "county": "Dawson County",
+  "body": "Dawson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Foy O'Brien"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48117": {
+  "county": "Deaf Smith County",
+  "body": "Deaf Smith County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David (DJ) Lynn Wagner, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48119": {
+  "county": "Delta County",
+  "body": "Delta County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Tanner Bill Crutcher"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48121": {
+  "county": "Denton County",
+  "body": "Denton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Andrew T. Eads"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48123": {
+  "county": "DeWitt County",
+  "body": "DeWitt County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Daryl L. Fowler"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48125": {
+  "county": "Dickens County",
+  "body": "Dickens County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kevin L. Brendle"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48127": {
+  "county": "Dimmit County",
+  "body": "Dimmit County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Martha Alicia Gomez Ponce"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48129": {
+  "county": "Donley County",
+  "body": "Donley County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John C. Howard M.D."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48131": {
+  "county": "Duval County",
+  "body": "Duval County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Arnoldo (Guero) Cantu"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48133": {
+  "county": "Eastland County",
+  "body": "Eastland County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David M. Hullum"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48135": {
+  "county": "Ector County",
+  "body": "Ector County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dustin J. Fawcett"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48137": {
+  "county": "Edwards County",
+  "body": "Edwards County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Souli Asa Shanklin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48139": {
+  "county": "Ellis County",
+  "body": "Ellis County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Christian Wray"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48141": {
+  "county": "El Paso County",
+  "body": "El Paso County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ricardo A. Samaniego"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48143": {
+  "county": "Erath County",
+  "body": "Erath County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brandon Huckabee"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48145": {
+  "county": "Falls County",
+  "body": "Falls County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jay T. Elliott"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48147": {
+  "county": "Fannin County",
+  "body": "Fannin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Horace (Newt) Newton Cunningham III"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48149": {
+  "county": "Fayette County",
+  "body": "Fayette County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dan Mueller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48151": {
+  "county": "Fisher County",
+  "body": "Fisher County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ken B. Holt"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48153": {
+  "county": "Floyd County",
+  "body": "Floyd County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Marty C. Lucke"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48155": {
+  "county": "Foard County",
+  "body": "Foard County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mark A. Christopher"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48157": {
+  "county": "Fort Bend County",
+  "body": "Fort Bend County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "K. P. George"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48159": {
+  "county": "Franklin County",
+  "body": "Franklin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Scott Lee"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48161": {
+  "county": "Freestone County",
+  "body": "Freestone County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Lloyd Lynn Lane"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48163": {
+  "county": "Frio County",
+  "body": "Frio County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rochelle Lozano Camacho"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48165": {
+  "county": "Gaines County",
+  "body": "Gaines County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Cindy D. Therwhanger"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48167": {
+  "county": "Galveston County",
+  "body": "Galveston County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mark Henry"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48169": {
+  "county": "Garza County",
+  "body": "Garza County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Lee Norman"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48171": {
+  "county": "Gillespie County",
+  "body": "Gillespie County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Daniel D. Jones"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48173": {
+  "county": "Glasscock County",
+  "body": "Glasscock County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Billy Ray Reynolds"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48175": {
+  "county": "Goliad County",
+  "body": "Goliad County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mike Bennett"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48177": {
+  "county": "Gonzales County",
+  "body": "Gonzales County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Patrick C. Davis"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48179": {
+  "county": "Gray County",
+  "body": "Gray County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Chris Porter"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48181": {
+  "county": "Grayson County",
+  "body": "Grayson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bruce Dawsey"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48183": {
+  "county": "Gregg County",
+  "body": "Gregg County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "William (Bill) Keith Stoudt"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48185": {
+  "county": "Grimes County",
+  "body": "Grimes County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joe Fauth III"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48187": {
+  "county": "Guadalupe County",
+  "body": "Guadalupe County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kyle W. Kutscher"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48189": {
+  "county": "Hale County",
+  "body": "Hale County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David B. Mull"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48191": {
+  "county": "Hall County",
+  "body": "Hall County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ray D. Powell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48193": {
+  "county": "Hamilton County",
+  "body": "Hamilton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James Yates"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48195": {
+  "county": "Hansford County",
+  "body": "Hansford County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Tim Glass"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48197": {
+  "county": "Hardeman County",
+  "body": "Hardeman County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ronald E. Ingram"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48199": {
+  "county": "Hardin County",
+  "body": "Hardin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Wayne McDaniel"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48201": {
+  "county": "Harris County",
+  "body": "Harris County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Lina Maria Hidalgo"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48203": {
+  "county": "Harrison County",
+  "body": "Harrison County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Chad L. Sims"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48205": {
+  "county": "Hartley County",
+  "body": "Hartley County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ronnie Gordon"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48207": {
+  "county": "Haskell County",
+  "body": "Haskell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kenny Thompson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48209": {
+  "county": "Hays County",
+  "body": "Hays County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ruben Becerra"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48211": {
+  "county": "Hemphill County",
+  "body": "Hemphill County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Lisa Gale Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48213": {
+  "county": "Henderson County",
+  "body": "Henderson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Wade Mckinney"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48215": {
+  "county": "Hidalgo County",
+  "body": "Hidalgo County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard F. Cortez"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48217": {
+  "county": "Hill County",
+  "body": "Hill County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Shane P. Brassell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48219": {
+  "county": "Hockley County",
+  "body": "Hockley County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Sharla D. Baldridge"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48221": {
+  "county": "Hood County",
+  "body": "Hood County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ron E. Massingill"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48223": {
+  "county": "Hopkins County",
+  "body": "Hopkins County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Robert E. Newsom"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48225": {
+  "county": "Houston County",
+  "body": "Houston County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jim L. Lovell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48227": {
+  "county": "Howard County",
+  "body": "Howard County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Randall (Randy) Scott Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48229": {
+  "county": "Hudspeth County",
+  "body": "Hudspeth County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joanna (Jojo) Mackenzie"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48231": {
+  "county": "Hunt County",
+  "body": "Hunt County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bobby Stovall"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48233": {
+  "county": "Hutchinson County",
+  "body": "Hutchinson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Cindy Gail Irwin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48235": {
+  "county": "Irion County",
+  "body": "Irion County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Molly Criner"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48237": {
+  "county": "Jack County",
+  "body": "Jack County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brian Keith Umphress"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48239": {
+  "county": "Jackson County",
+  "body": "Jackson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jill Susan Sklar"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48241": {
+  "county": "Jasper County",
+  "body": "Jasper County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mark Wayne Allen"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48243": {
+  "county": "Jeff Davis County",
+  "body": "Jeff Davis County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Curtis E. Evans"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48245": {
+  "county": "Jefferson County",
+  "body": "Jefferson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jeff Branick"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48247": {
+  "county": "Jim Hogg County",
+  "body": "Jim Hogg County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Juan Carlos Guerra"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48249": {
+  "county": "Jim Wells County",
+  "body": "Jim Wells County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Pedro (Pete) Trevino, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48251": {
+  "county": "Johnson County",
+  "body": "Johnson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Christopher Charles Boedeker"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48253": {
+  "county": "Jones County",
+  "body": "Jones County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dale Spurgin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48255": {
+  "county": "Karnes County",
+  "body": "Karnes County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Wade J. Hedtke"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48257": {
+  "county": "Kaufman County",
+  "body": "Kaufman County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jakie Allen"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48259": {
+  "county": "Kendall County",
+  "body": "Kendall County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Shane Stolarczyk"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48261": {
+  "county": "Kenedy County",
+  "body": "Kenedy County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Chuck Burns"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48263": {
+  "county": "Kent County",
+  "body": "Kent County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Layne Coulter"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48265": {
+  "county": "Kerr County",
+  "body": "Kerr County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Robert Lee Kelly"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48267": {
+  "county": "Kimble County",
+  "body": "Kimble County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Harold (Hal) A. Rose"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48269": {
+  "county": "King County",
+  "body": "King County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Duane Lee Daniel"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48271": {
+  "county": "Kinney County",
+  "body": "Kinney County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Paul Schuster"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48273": {
+  "county": "Kleberg County",
+  "body": "Kleberg County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rudy Madrid"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48275": {
+  "county": "Knox County",
+  "body": "Knox County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard (Don) Thompson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48277": {
+  "county": "Lamar County",
+  "body": "Lamar County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brandon Young Bell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48279": {
+  "county": "Lamb County",
+  "body": "Lamb County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James M. DeLoach"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48281": {
+  "county": "Lampasas County",
+  "body": "Lampasas County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Randall J. Hoyer"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48283": {
+  "county": "La Salle County",
+  "body": "La Salle County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Leodoro Martinez III"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48285": {
+  "county": "Lavaca County",
+  "body": "Lavaca County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Keith Mudd"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48287": {
+  "county": "Lee County",
+  "body": "Lee County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Frank Malinak III"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48289": {
+  "county": "Leon County",
+  "body": "Leon County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Byron Michael Ryder"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48291": {
+  "county": "Liberty County",
+  "body": "Liberty County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jay H. Knight"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48293": {
+  "county": "Limestone County",
+  "body": "Limestone County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard L. Duncan"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48295": {
+  "county": "Lipscomb County",
+  "body": "Lipscomb County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dori Artis"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48297": {
+  "county": "Live Oak County",
+  "body": "Live Oak County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James Lynn Liska"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48299": {
+  "county": "Llano County",
+  "body": "Llano County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rob T. Hardy"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48301": {
+  "county": "Loving County",
+  "body": "Loving County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Skeet Lee Jones"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48303": {
+  "county": "Lubbock County",
+  "body": "Lubbock County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Curtis A. Parrish"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48305": {
+  "county": "Lynn County",
+  "body": "Lynn County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mike Braddock"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48307": {
+  "county": "McCulloch County",
+  "body": "McCulloch County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Frank Trull"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48309": {
+  "county": "McLennan County",
+  "body": "McLennan County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Scott M. Felton"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48311": {
+  "county": "McMullen County",
+  "body": "McMullen County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James E. Teal"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48313": {
+  "county": "Madison County",
+  "body": "Madison County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Richard Clark Osborne"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48315": {
+  "county": "Marion County",
+  "body": "Marion County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Leward J. LaFleur"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48317": {
+  "county": "Martin County",
+  "body": "Martin County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bryan W. Cox"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48319": {
+  "county": "Mason County",
+  "body": "Mason County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Sheree Hardin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48321": {
+  "county": "Matagorda County",
+  "body": "Matagorda County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bobby Seiferman"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48323": {
+  "county": "Maverick County",
+  "body": "Maverick County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ramsey Cantu"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48325": {
+  "county": "Medina County",
+  "body": "Medina County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David Mark Cashion"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48327": {
+  "county": "Menard County",
+  "body": "Menard County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brandon Corbin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48329": {
+  "county": "Midland County",
+  "body": "Midland County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Terry Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48331": {
+  "county": "Milam County",
+  "body": "Milam County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "William (Bill) Alan Whitmire"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48333": {
+  "county": "Mills County",
+  "body": "Mills County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jett J. Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48335": {
+  "county": "Mitchell County",
+  "body": "Mitchell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Michael Chris Redwine"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48337": {
+  "county": "Montague County",
+  "body": "Montague County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kevin Lee Benton"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48339": {
+  "county": "Montgomery County",
+  "body": "Montgomery County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mark Keough"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48341": {
+  "county": "Moore County",
+  "body": "Moore County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rowdy Rhoades"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48343": {
+  "county": "Morris County",
+  "body": "Morris County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Douglas Franklin Reeder"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48345": {
+  "county": "Motley County",
+  "body": "Motley County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James B. Meador"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48347": {
+  "county": "Nacogdoches County",
+  "body": "Nacogdoches County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Greg Sowell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48349": {
+  "county": "Navarro County",
+  "body": "Navarro County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Hershell (H. M.) Davenport, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48351": {
+  "county": "Newton County",
+  "body": "Newton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ronnie Cochran"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48353": {
+  "county": "Nolan County",
+  "body": "Nolan County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "George Whitley May"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48355": {
+  "county": "Nueces County",
+  "body": "Nueces County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Connie Scott"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48357": {
+  "county": "Ochiltree County",
+  "body": "Ochiltree County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Charles Kelley"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48359": {
+  "county": "Oldham County",
+  "body": "Oldham County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Shawn Ballew"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48361": {
+  "county": "Orange County",
+  "body": "Orange County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Gothia"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48363": {
+  "county": "Palo Pinto County",
+  "body": "Palo Pinto County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kevin Shane Long"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48365": {
+  "county": "Panola County",
+  "body": "Panola County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Rodger McLane"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48367": {
+  "county": "Parker County",
+  "body": "Parker County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Gary (Pat) Patrick Deen"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48369": {
+  "county": "Parmer County",
+  "body": "Parmer County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Isabel (Izzy) Carrasco"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48371": {
+  "county": "Pecos County",
+  "body": "Pecos County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joseph Martin Shuster"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48373": {
+  "county": "Polk County",
+  "body": "Polk County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Sydney Murphy"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48375": {
+  "county": "Potter County",
+  "body": "Potter County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Nancy D. Tanner"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48377": {
+  "county": "Presidio County",
+  "body": "Presidio County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jose Portillo, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48379": {
+  "county": "Rains County",
+  "body": "Rains County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brent Dean Hilliard"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48381": {
+  "county": "Randall County",
+  "body": "Randall County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Christy Dyer"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48383": {
+  "county": "Reagan County",
+  "body": "Reagan County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jim T. O'Bryan"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48385": {
+  "county": "Real County",
+  "body": "Real County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Bella Rubio"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48387": {
+  "county": "Red River County",
+  "body": "Red River County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Robert Bridges"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48389": {
+  "county": "Reeves County",
+  "body": "Reeves County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Scott W. Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48391": {
+  "county": "Refugio County",
+  "body": "Refugio County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jhiela (Gigi) Mirdamadi Poynter"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48393": {
+  "county": "Roberts County",
+  "body": "Roberts County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Mitchell D. Locke"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48395": {
+  "county": "Robertson County",
+  "body": "Robertson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joseph David Scarpinato"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48397": {
+  "county": "Rockwall County",
+  "body": "Rockwall County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Frank New"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48399": {
+  "county": "Runnels County",
+  "body": "Runnels County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Julia Miller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48401": {
+  "county": "Rusk County",
+  "body": "Rusk County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joel R. Hale"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48403": {
+  "county": "Sabine County",
+  "body": "Sabine County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Daryl D. Melton"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48405": {
+  "county": "San Augustine County",
+  "body": "San Augustine County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jeff Boyd"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48407": {
+  "county": "San Jacinto County",
+  "body": "San Jacinto County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Fritz Faulkner"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48409": {
+  "county": "San Patricio County",
+  "body": "San Patricio County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "David R. Krebs"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48411": {
+  "county": "San Saba County",
+  "body": "San Saba County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Jody Fauley"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48413": {
+  "county": "Schleicher County",
+  "body": "Schleicher County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Charles Robert Bradley"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48415": {
+  "county": "Scurry County",
+  "body": "Scurry County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dan R. Hicks, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48417": {
+  "county": "Shackelford County",
+  "body": "Shackelford County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Viertel"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48419": {
+  "county": "Shelby County",
+  "body": "Shelby County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Allison Harbison"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48421": {
+  "county": "Sherman County",
+  "body": "Sherman County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Alicia Law"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48423": {
+  "county": "Smith County",
+  "body": "Smith County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Neal Franklin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48425": {
+  "county": "Somervell County",
+  "body": "Somervell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Danny L. Chambers"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48427": {
+  "county": "Starr County",
+  "body": "Starr County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Eloy Vera"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48429": {
+  "county": "Stephens County",
+  "body": "Stephens County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Michael C. Roach"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48431": {
+  "county": "Sterling County",
+  "body": "Sterling County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Belinda Sue Counts"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48433": {
+  "county": "Stonewall County",
+  "body": "Stonewall County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ronnie Dean Moorhead"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48435": {
+  "county": "Sutton County",
+  "body": "Sutton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joseph E. Harris"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48437": {
+  "county": "Swisher County",
+  "body": "Swisher County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Michael Laken Clawson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48439": {
+  "county": "Tarrant County",
+  "body": "Tarrant County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Timothy Ohare"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48441": {
+  "county": "Taylor County",
+  "body": "Taylor County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Phil Crowley"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48443": {
+  "county": "Terrell County",
+  "body": "Terrell County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dale Lynn Carruthers"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48445": {
+  "county": "Terry County",
+  "body": "Terry County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Tony Serbantez"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48447": {
+  "county": "Throckmorton County",
+  "body": "Throckmorton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Caleb Hodges"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48449": {
+  "county": "Titus County",
+  "body": "Titus County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Brian Kent Cooper"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48451": {
+  "county": "Tom Green County",
+  "body": "Tom Green County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Lane Carter"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48453": {
+  "county": "Travis County",
+  "body": "Travis County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Andy Steven Brown"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48455": {
+  "county": "Trinity County",
+  "body": "Trinity County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Danny R. Martin"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48457": {
+  "county": "Tyler County",
+  "body": "Tyler County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Milton Powers"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48459": {
+  "county": "Upshur County",
+  "body": "Upshur County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Todd Tefteller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48461": {
+  "county": "Upton County",
+  "body": "Upton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Dusty Kilgore"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48463": {
+  "county": "Uvalde County",
+  "body": "Uvalde County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "notListed": true
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48465": {
+  "county": "Val Verde County",
+  "body": "Val Verde County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Lewis G. Owens, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48467": {
+  "county": "Van Zandt County",
+  "body": "Van Zandt County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Andrew Cleeland Reese"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48469": {
+  "county": "Victoria County",
+  "body": "Victoria County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Ben Zeller"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48471": {
+  "county": "Walker County",
+  "body": "Walker County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Colt M. Christian"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48473": {
+  "county": "Waller County",
+  "body": "Waller County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Carbett (Trey) J. Duhon III"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48475": {
+  "county": "Ward County",
+  "body": "Ward County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Greg M. Holly"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48477": {
+  "county": "Washington County",
+  "body": "Washington County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "John Lee Durrenberger"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48479": {
+  "county": "Webb County",
+  "body": "Webb County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Tano E. Tijerina"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48481": {
+  "county": "Wharton County",
+  "body": "Wharton County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Phillip Scott Spenrath"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48483": {
+  "county": "Wheeler County",
+  "body": "Wheeler County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Chalone S. Hefley"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48485": {
+  "county": "Wichita County",
+  "body": "Wichita County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "James (Jim) Michael Johnson"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48487": {
+  "county": "Wilbarger County",
+  "body": "Wilbarger County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Greg T. Tyra"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48489": {
+  "county": "Willacy County",
+  "body": "Willacy County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Aurelio (Keter) Guerra, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48491": {
+  "county": "Williamson County",
+  "body": "Williamson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Steven Snell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48493": {
+  "county": "Wilson County",
+  "body": "Wilson County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Henry (Hank) Lee Whitman, Jr."
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48495": {
+  "county": "Winkler County",
+  "body": "Winkler County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Charles M. Wolf"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48497": {
+  "county": "Wise County",
+  "body": "Wise County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Judson D. Clark"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48499": {
+  "county": "Wood County",
+  "body": "Wood County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Kevin Wayne White"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48501": {
+  "county": "Yoakum County",
+  "body": "Yoakum County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Michael C. Ybarra"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48503": {
+  "county": "Young County",
+  "body": "Young County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Edwin (Win) S. Graham IV"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48505": {
+  "county": "Zapata County",
+  "body": "Zapata County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Joe Rathmell"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ },
+ "48507": {
+  "county": "Zavala County",
+  "body": "Zavala County Commissioners Court",
+  "kind": "commissioners-court",
+  "seats": [
+   {
+    "seat": "County Judge",
+    "countywide": true,
+    "name": "Cindy Martinez-Rivera"
+   }
+  ],
+  "source": "the Texas Office of Court Administration's judicial directory",
+  "sourceUrl": "https://www.txcourts.gov/media/1462771/district-county-and-justice-court-judges-and-personnel-by-county.pdf",
+  "fileDate": "2026-05-20"
+ }
+}

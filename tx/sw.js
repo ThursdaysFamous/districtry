@@ -60,6 +60,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/tx-senate-members.json",
   "./data/app/tx-house-members.json",
+  "./data/app/tx-county-officials.json",
   "./data/app/tribal-councils.json",
   "./data/app/coverage-gaps.json",
   "./data/app/statewide-officials.json",
