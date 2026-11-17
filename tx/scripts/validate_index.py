@@ -116,6 +116,7 @@ ROSTER_FILES = {
     "congress-roster.json": 38,  # U.S. House (TX) roster, refreshed weekly by update-tx-congress-roster.yml.
     "tx-senate-members.json": 31,  # Texas Senate roster from the Senate's own member pages (senate.texas.gov), one record per district, refreshed weekly.
     "tx-house-members.json": 150,  # Texas House roster from the House's own member pages (house.texas.gov), one record per district, refreshed weekly.
+    "tx-county-officials.json": 254,  # The county judge of each of the 254 counties, keyed by county GEOID, from the by-county listing in the Texas Office of Court Administration's judicial directory (tx/scripts/build_tx_county_officials.py, checked weekly by update-tx-county-officials.yml). One seat per county: a name, a vacancy the directory states, or a county whose entry lists no county court. The four commissioners are not in the file. Nothing in it depends on the day it was built, so a weekly run that reads the same file changes nothing.
     "tribal-councils.json": 3,  # The councils of Texas's three nations, each from its own page (the Alabama-Coushatta, the Kickapoo Traditional Tribe of Texas and the Ysleta del Sur Pueblo), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "statewide-officials.json": 5,  # The officers Texas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from tx/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
@@ -413,7 +414,7 @@ def main():
         "LAYER_AREA_RANK + LAYER_SIDEBAR_RANK cover all %d ids, no inline datasets, %d well-formed "
         "METRO_EXPLORERS entries, all data/app files present and cached in "
         "exactly one sw.js list, %d dispatched counties, and a coverage ring whose %d "
-        "counties match the shipped county layer exactly%s"
+        "counties match the shipped county layer and the county roster exactly%s"
         % (n, len(EXPECT_LAYER_IDS), n_metros, n_counties, n_ring,
            "" if n_sourced is None else
            ", sources page linked and covering all %d layers" % n_sourced)
@@ -728,18 +729,22 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
     same shape, closed this after seven counties sat greyed out for two days
     with every gate in the repo green; Iowa carried the identical hole.
 
-    ONE COMPARAND, THE COUNTY GEOMETRY. This instance ships no county roster
-    yet (gap tx-county-officials), so state-counties.json, which draws the 254
-    counties, is the only file enumerating the counties its cards answer for,
-    the shape the instances without a county roster have always used. The
-    ring and the geometry must name the same counties: the wash may not grey
-    out a county whose card answers, and may not promise one the app cannot
-    draw. When a county roster ships, hold the ring to it as well, the way
-    Iowa and West Virginia do.
+    TWO COMPARANDS, AND THE ROSTER IS THE STRICTER. Until 2026-11-16 this
+    instance shipped no county roster, so state-counties.json, which draws the
+    254 counties, was the only file enumerating the counties its cards answer
+    for. tx-county-officials.json now carries one record per county (its
+    county judge, from the state courts office's judicial directory), and the
+    County card reads it for every county the map draws. So the ring, the
+    geometry and the roster must name the same counties, the way Iowa's and
+    West Virginia's do: the wash may not grey out a county whose card
+    answers, may not promise one the app cannot draw, and a county the map
+    draws with no record would have its card say "the list did not load",
+    which is false of a file that loaded.
     """
     outline_py = os.path.join(repo_root, "scripts", "build_metro_outline.py")
     counties_path = os.path.join(app_dir, "state-counties.json")
-    for path in (outline_py, counties_path):
+    roster_path = os.path.join(app_dir, "tx-county-officials.json")
+    for path in (outline_py, counties_path, roster_path):
         if not os.path.exists(path):
             fail("%s not found — the coverage-ring/county check cannot run"
                  % os.path.relpath(path, repo_root))
@@ -781,6 +786,24 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
              "the county was added to the ring too early."
              % ("ies are" if len(promised) > 1 else "y is", ", ".join(promised)))
 
+    with open(roster_path, encoding="utf-8") as f:
+        roster = json.load(f)
+    named = set()
+    for key in roster:
+        if len(key) != 5 or not key.isdigit() or not key.startswith("48"):
+            fail("tx-county-officials.json has a key that is not a Texas county "
+                 "GEOID: %r" % key)
+            return 0
+        named.add(key[-3:])
+    unnamed = sorted(drawn - named)
+    if unnamed:
+        fail("count%s the map draws with no record in tx-county-officials.json, so "
+             "the County card would say the list did not load: %s"
+             % ("ies" if len(unnamed) > 1 else "y", ", ".join(unnamed)))
+    orphaned = sorted(named - drawn)
+    if orphaned:
+        fail("tx-county-officials.json carries a record for count%s the map does "
+             "not draw: %s" % ("ies" if len(orphaned) > 1 else "y", ", ".join(orphaned)))
     return len(in_ring)
 
 

@@ -1964,6 +1964,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ca/scripts/build_ca_county_officials.py --check
 
+      # Texas's County card names each county's judge from the Office of Court
+      # Administration's judicial directory. Offline: one record for each of
+      # the 254 counties, one county judge's seat each (a name, a vacancy, or
+      # not listed, as Uvalde is), every name a person's as the fleet's name
+      # test reads it, and the directory file's address and date on each.
+      - name: TX county judges keep their shape, one seat per county
+        if: ${{ !cancelled() }}
+        run: python3 tx/scripts/build_tx_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the
