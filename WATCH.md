@@ -78,19 +78,22 @@ the download itself is a person's.
 
 ---
 
-## Per-election — Chicago city election night
+## Per-election — Chicago city election and runoff nights
 
 `update-chicago-city-election-results.yml` merges its own pull request on the night of a
-Chicago city election (CLAUDE.md, "On the night of a Chicago city election"). It cannot run
-for real before the polls close, so these rows are what stands in for a trial run.
+Chicago city election and of its runoff (CLAUDE.md, "On the night of a Chicago city
+election"). It cannot run for real before the polls close, so these rows are what stands in
+for a trial run. Each row applies to both nights: Tuesday 23 February 2027 and the runoff on
+Tuesday 6 April 2027.
 
 | When | What | Last done |
 |---|---|---|
-| After any change to the results page, the results card, `build_chicago_election_results.py` or the job, and again in the week before the election (next: Tuesday 23 February 2027) | Rehearse the night: results shaped like the night's (2023's city election under the coming election's label, kept outside this repository with the steps) are built on a scratch branch as a first count, a later count and a count that shrank, `check_results_update.py` must answer publish, publish and hold, and every check a pull request runs must pass on the first two. A check that fails there fails on the night's pull request, and that update does not go live. | 2026-11-15 (found a page title one character too long and a smoke check that wanted a table at a precinct with no votes yet; both fixed) |
-| A week before the election | Confirm `BOT_PR_TOKEN` has not expired: a pull request the job opens without it gets no checks, and the job never merges one whose checks did not run. Confirm the four dispatched starts exist (about 8 pm, 10 pm and midnight Central on election day and 7 am the next morning); the job's own crons are a backstop that GitHub starts hours late. | — |
+| After any change to the results page, the results card, `build_chicago_election_results.py` or the job, and again in the week before each election (next: Tuesday 23 February 2027, then the runoff on Tuesday 6 April 2027) | Rehearse the night: results shaped like the night's (2023's city election under the coming election's label, kept outside this repository with the steps) are built on a scratch branch as a first count, a later count and a count that shrank, `check_results_update.py` must answer publish, publish and hold, and every check a pull request runs must pass on the first two. A check that fails there fails on the night's pull request, and that update does not go live. The runoff is rehearsed the same way with 2023's runoff (results page 242) under the runoff's label, built with `--name chicago-runoff-results` on top of 2023's city election written as a certified first round, and checked with `--first-round chicago-election-results`. | City election 2026-11-15 (found a page title one character too long and a smoke check that wanted a table at a precinct with no votes yet; both fixed). Runoff 2026-11-17 |
+| A week before each election | Confirm `BOT_PR_TOKEN` has not expired: a pull request the job opens without it gets no checks, and the job never merges one whose checks did not run. Confirm the four dispatched starts exist (about 8 pm, 10 pm and midnight Central on election day and 7 am the next morning); the job's own crons are a backstop that GitHub starts hours late. | — |
 | Election day | Nothing to do before 7 pm Central: a run before the polls close reads nothing. If the Board lists the election's results page under a date other than election day, start the job by hand with `election_id`. | — |
-| When the Board proclaims the results | Start the job by hand with `certified` set to the proclamation date. That update waits for review, and the job stops refreshing once the shipped file says certified. | — |
-| Before the next city election or runoff (the runoff of 23 February 2027 is 6 April 2027) | The city results file holds ONE election. Decide where the next one's results go before writing a stand-in file for it (`--placeholder`), add its runoff date to `RUNOFF_DATES`, give it a calendar entry in `il/data/source/election-calendar.json`, and move the job's four dated crons to the new night. | — |
+| When the Board proclaims the results | Start the job by hand with `election` set to `city` or `runoff` and `certified` set to the proclamation date. That update waits for review, and that election's leg stops refreshing once its shipped file says certified. | — |
+| Before the runoff (by mid-March 2027) | The city election's results must be CERTIFIED here before the runoff night: the runoff's first count is held unless its races are the ones February's certified count sent to a runoff. If the Board has proclaimed and the shipped city file still says unofficial, run the certification row above for `city`. | — |
+| Before the next city election (2031) | Each results file holds ONE election. Decide where the next one's results go before writing stand-in files for it (`--placeholder`), add its runoff date to `RUNOFF_DATES`, give both a calendar entry in `il/data/source/election-calendar.json`, and move the job's eight dated crons to the new nights. | — |
 
 ---
 

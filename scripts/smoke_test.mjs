@@ -139,15 +139,24 @@ function check(name, ok, detail) {
 // first holds results, which is an election night, when a red check stops
 // the results going out. Check 1y6 gives its pages a city file of its own,
 // and reads the SHIPPED one on a page that takes this answer away again.
+// The city election's runoff is the THIRD election (2026-11-17) and is
+// answered empty everywhere for the same reason; check 1y7 gives its pages a
+// runoff of their own.
 const CITY_RESULTS_INDEX = /\/data\/app\/chicago-election-results\.json(\?|$)/;
 const CITY_RESULTS_PART = /\/data\/app\/chicago-election-results\/([^/?]+)\.json(\?|$)/;
-const CITY_RESULTS_EMPTY = JSON.stringify({
-  election: "Municipal General Election", electionDate: "2027-02-23",
-  source: "https://chicagoelections.gov/elections/results", read: null,
-  certified: false, certifiedDate: null, sources: [], note: "No results yet (a stand-in for the browser test).",
-  groups: [], turnout: { columns: ["registered", "ballots"], total: [null, null] },
-  precincts: [], parts: [], contests: []
-});
+const RUNOFF_RESULTS_INDEX = /\/data\/app\/chicago-runoff-results\.json(\?|$)/;
+const RUNOFF_RESULTS_PART = /\/data\/app\/chicago-runoff-results\/([^/?]+)\.json(\?|$)/;
+function emptyResults(election, electionDate) {
+  return JSON.stringify({
+    election, electionDate,
+    source: "https://chicagoelections.gov/elections/results", read: null,
+    certified: false, certifiedDate: null, sources: [], note: "No results yet (a stand-in for the browser test).",
+    groups: [], turnout: { columns: ["registered", "ballots"], total: [null, null] },
+    precincts: [], parts: [], contests: []
+  });
+}
+const CITY_RESULTS_EMPTY = emptyResults("Municipal General Election", "2027-02-23");
+const RUNOFF_RESULTS_EMPTY = emptyResults("Municipal Runoff Election", "2027-04-06");
 
 // Each check runs in its own context with service workers BLOCKED. The app's
 // SW serves data/app/* cache-first and — critically — its requests are not
@@ -169,6 +178,8 @@ async function booted(context, url, routeFn, leaves) {
   }
   await page.route(CITY_RESULTS_INDEX, (r) =>
     r.fulfill({ status: 200, contentType: "application/json", body: CITY_RESULTS_EMPTY }));
+  await page.route(RUNOFF_RESULTS_INDEX, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json", body: RUNOFF_RESULTS_EMPTY }));
   if (routeFn) await routeFn(page);
   if (leaves) {
     // A page that may hand itself to a sibling app while it boots (a link in
@@ -5408,7 +5419,10 @@ try {
       const m = /\n  var ELECTION_CALENDAR = (\[[\s\S]*?\n  \]);\n  \/\* ==== GENERATED:END election-calendar/.exec(src);
       return m ? JSON.parse(m[1]) : null;
     })();
-    const own = (shipped || []).filter((e) => e.area === "chicago").sort((a, b) => (a.date < b.date ? -1 : 1))[0];
+    const chicagoElections = (shipped || []).filter((e) => e.area === "chicago").sort((a, b) => (a.date < b.date ? -1 : 1));
+    const own = chicagoElections[0];
+    // the election after it (the runoff, 2026-11-17) and the calendar's last
+    const nextOne = chicagoElections[1] || null, lastOne = chicagoElections[chicagoElections.length - 1];
     if (!own) {
       check("the app's own calendar holds no Chicago election, so its own block is not checked (the fixture checks above still ran)",
         shipped !== null, shipped === null ? "no ELECTION_CALENDAR region in index.html" : "");
@@ -5432,18 +5446,25 @@ try {
         await context.close();
         return out;
       };
-      const dayAfter = new Date(Date.parse(own.date + "T12:00:00Z") + 86400000).toISOString().slice(0, 10);
+      const dayAfter = (d) => new Date(Date.parse(d + "T12:00:00Z") + 86400000).toISOString().slice(0, 10);
       const onTheDay = await on(own.date, POINT);
-      const after = await on(dayAfter, POINT);
+      const after = await on(dayAfter(own.date), POINT);
+      const afterLast = lastOne === own ? after : await on(dayAfter(lastOne.date), POINT);
       const downstate = await on(own.date, "39.80140,-89.64360"); // Springfield
       check("on election day a Chicago point is told about the calendar's own election, in the calendar's words",
         onTheDay.shown && onTheDay.inElections &&
         onTheDay.text.indexOf(own.title + ", " + own.when) !== -1 && onTheDay.text.indexOf(own.text) !== -1 &&
         (onTheDay.links || []).map((l) => l[1]).join("|") === own.links.map((l) => l.label).join("|"),
         JSON.stringify(onTheDay));
-      check("the day after it, and at a point outside Chicago, no election is named",
-        after.shown === false && after.selected && downstate.shown === false && downstate.selected,
-        JSON.stringify({ after, downstate }));
+      if (nextOne) {
+        check("the day after it a Chicago point is told about the calendar's next election instead, in its words",
+          after.shown && after.selected && after.text.indexOf(nextOne.title + ", " + nextOne.when) !== -1 &&
+          after.text.indexOf(own.title + ", " + own.when) === -1 && after.text.indexOf(nextOne.text) !== -1,
+          JSON.stringify(after));
+      }
+      check("the day after the calendar's last election, and at a point outside Chicago, no election is named",
+        afterLast.shown === false && afterLast.selected && downstate.shown === false && downstate.selected,
+        JSON.stringify({ afterLast, downstate }));
     }
   }
 
@@ -5870,7 +5891,8 @@ try {
   // its date, a bare race id still meaning November's, a county precinct
   // (which no city file lists) showing November with no menu, a precinct the
   // count has not reached saying so with no table of zeros, and the SHIPPED
-  // city file, on a page that reads it rather than the empty stand-in.
+  // city and runoff files, on a page that reads them rather than the empty
+  // stand-ins. Check 1y7, inside this block, adds the runoff as a third election.
   {
     const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
     const key = "47010";
@@ -6113,9 +6135,108 @@ try {
           uncounted.notes.includes(mayorNote),
           `none=${JSON.stringify(uncounted.none)} table=${uncounted.table} notes=${JSON.stringify(uncounted.notes)}`);
 
-    // the SHIPPED city file, on a page that reads it: empty before a count,
-    // so the card is November's alone; once it holds results for this
-    // precinct the card must offer both elections and show the later.
+    // ---- 1y7. The city election's RUNOFF as a third election (2026-11-17,
+    // Adam: "Build runoff"). A runoff file lists only the precincts whose
+    // ballot had a runoff race, so a precinct it lists offers three elections
+    // with the runoff shown, and a precinct it does not list still shows the
+    // city election. Its one race takes the id of the city election's Mayor
+    // (and so of November's first race here), because the Board numbers each
+    // election's races from the same small numbers: a dated link must find
+    // the runoff's race, the city election's or November's by its date alone.
+    {
+      const runoffDate = "2099-04-06", runoffTitle = "2099 Municipal Runoff Election";
+      const runoffNote = "The two candidates with the most votes in February meet in this runoff (a sentence from the test's own file).";
+      const runoffMail = "Runoff mail ballots are still being counted (a sentence from the test's own file).";
+      const runoffFile = (keys) => {
+        const read = "2099-04-07T03:00:00Z";
+        const head = {
+          election: "Municipal Runoff Election", electionDate: runoffDate,
+          source: "https://chicagoelections.gov/elections/results", read, certified: false, certifiedDate: null
+        };
+        const precincts = {};
+        keys.forEach((k) => { precincts[k] = { turnout: [1000, 400], contests: [[mayorId, 400, 210, 190]] }; });
+        return {
+          index: Object.assign({}, head, {
+            sources: [{ id: "chicago", publisher: "Chicago Board of Election Commissioners", areaName: "Chicago",
+              source: head.source, read, certified: false, certifiedDate: null, uncountedNote: runoffMail }],
+            note: "A browser-test file in scripts/election_results_common.py's layout.",
+            groups: [{ id: "city-council", label: "City Council", layer: "ward", note: runoffNote }],
+            turnout: { columns: ["registered", "ballots"], total: [1000 * keys.length, 400 * keys.length] },
+            precincts: keys, parts: keys.map(() => "ward-47"),
+            contests: [
+              { id: mayorId, name: "Alderperson 47th Ward", group: "city-council", beyond: false, multiple: false,
+                choices: ["Cy Specimen", "Di Placeholder"],
+                total: [400 * keys.length, 210 * keys.length, 190 * keys.length],
+                leaders: keys.map(() => "0").join(""), margins: keys.map(() => "1").join("") }
+            ]
+          }),
+          part: Object.assign({}, head, { part: "ward-47", note: "", precincts })
+        };
+      };
+      const withBoth = (keys) => async (pg) => {
+        await withCity("111")(pg);
+        const file = runoffFile(keys);
+        await pg.route(RUNOFF_RESULTS_INDEX, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(file.index) }));
+        await pg.route(RUNOFF_RESULTS_PART, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(file.part) }));
+      };
+      const openWith = async (hash, keys, election, race) => {
+        const pg = await booted(context, `${BASE}${hash}`, withBoth(keys));
+        await shows(pg, election, race);
+        const got = await read(pg);
+        return { pg, got };
+      };
+      const r1 = await openWith("#point=41.96660,-87.67850&layers=election-results", ["47010"], runoffTitle, mayorId);
+      const three = r1.got;
+      check("a precinct the runoff lists offers three elections, newest first, with the runoff shown",
+            three.title === "" && JSON.stringify(three.elections) === JSON.stringify([runoffTitle, cityTitle, novTitle]) &&
+            three.election === runoffTitle && three.legendTitle === runoffTitle && three.pill === "Ward 47, Precinct 10",
+            brief(three));
+      check("the runoff's card lists only its own race, with its own sentence, mail-ballot note and dated link",
+            JSON.stringify(three.races) === JSON.stringify([mayorId]) && three.race === mayorId &&
+            three.legendRace === "Alderperson 47th Ward" && three.notes.includes(runoffNote) &&
+            !three.notes.includes(mayorNote) && !three.notes.includes(wardNote) &&
+            three.notice.indexOf(runoffMail) !== -1 && three.notice.indexOf(mailNote) === -1 && three.table &&
+            three.hash.indexOf("r=" + mayorId + "~" + runoffDate) !== -1,
+            `${brief(three)} notes=${JSON.stringify(three.notes)}`);
+      const febValue = await r1.pg.$$eval("#card-election-results select.election-which option",
+        (os, want) => (os.find((o) => o.textContent === want) || {}).value, cityTitle);
+      await r1.pg.selectOption("#card-election-results select.election-which", String(febValue));
+      await shows(r1.pg, cityTitle, mayorId);
+      const feb = await read(r1.pg);
+      await r1.pg.close();
+      check("picking February in the Election menu shows February's own races, its Mayor under the same id, dated February",
+            feb.election === cityTitle && JSON.stringify(feb.races) === JSON.stringify([mayorId, wardId]) &&
+            feb.legendRace === "Mayor" && feb.notes.includes(mayorNote) && !feb.notes.includes(runoffNote) &&
+            feb.hash.indexOf("r=" + mayorId + "~" + cityDate) !== -1 && feb.focus === "election-which",
+            brief(feb));
+      const byDate = async (date, election) => {
+        const o = await openWith(`#p=41.9666,-87.6785&l=er&r=${mayorId}~${date}`, ["47010"], election, mayorId);
+        await o.pg.close();
+        return o.got;
+      };
+      const linkRunoff = await byDate(runoffDate, runoffTitle);
+      const linkFeb = await byDate(cityDate, cityTitle);
+      const linkBare = await openWith(`#p=41.9666,-87.6785&l=er&r=${mayorId}`, ["47010"], novTitle, mayorId);
+      await linkBare.pg.close();
+      check("one race id opens the runoff's race, February's Mayor or November's race according to the date the link carries",
+            linkRunoff.election === runoffTitle && linkRunoff.legendRace === "Alderperson 47th Ward" &&
+            linkFeb.election === cityTitle && linkFeb.legendRace === "Mayor" &&
+            linkBare.got.election === novTitle && linkBare.got.legendRace === novFirst.name,
+            `runoff=${brief(linkRunoff)} february=${brief(linkFeb)} bare=${brief(linkBare.got)}`);
+      const r2 = await openWith("#point=41.96660,-87.67850&layers=election-results", ["47009", "47011"], cityTitle, mayorId);
+      await r2.pg.close();
+      check("a precinct the runoff does not list (no runoff race on its ballot) shows the city election, with no runoff in the menu",
+            JSON.stringify(r2.got.elections) === JSON.stringify([cityTitle, novTitle]) && r2.got.election === cityTitle &&
+            r2.got.legendTitle === cityTitle && r2.got.table,
+            brief(r2.got));
+    }
+
+    // the SHIPPED city and runoff files, on a page that reads them: empty
+    // before a count, so the card is November's alone; once one holds results
+    // for this precinct the card must offer it beside November's and show the
+    // latest election that lists the precinct.
     // ON AN ELECTION NIGHT THIS PRECINCT MAY HOLD NO VOTE YET, and the card
     // then prints its one sentence and no table. The first draft wanted a
     // table whenever the file held races, so it failed on a rehearsed night
@@ -6123,23 +6244,29 @@ try {
     // the first update of the night off the site. The file's own `reported`
     // says which precincts hold a vote ("1"); with no `reported`, all do.
     {
-      const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/chicago-election-results.json"), "utf8"));
-      const lists = (shipped.contests || []).length > 0 && (shipped.precincts || []).includes(key);
-      const later = lists && String(shipped.electionDate) > String(idx.electionDate) ? titleOf(shipped) : novTitle;
-      const counted = !shipped.reported || shipped.reported.charAt((shipped.precincts || []).indexOf(key)) === "1";
+      const shippedOf = (name) => JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app", name), "utf8"));
+      const listing = [shippedOf("chicago-election-results.json"), shippedOf("chicago-runoff-results.json")]
+        .filter((f) => (f.contests || []).length > 0 && (f.precincts || []).includes(key) &&
+                       String(f.electionDate) > String(idx.electionDate))
+        .sort((a, b) => (String(a.electionDate) < String(b.electionDate) ? 1 : -1));
+      const latest = listing[0] || null;
+      const later = latest ? titleOf(latest) : novTitle;
+      const counted = !latest || !latest.reported || latest.reported.charAt(latest.precincts.indexOf(key)) === "1";
       const sentence = "No votes from this precinct have been counted. The numbers below are the rest of Chicago's.";
       const pg = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`, async (p) => {
         await p.route(CITY_RESULTS_INDEX, (r) => r.continue());
+        await p.route(RUNOFF_RESULTS_INDEX, (r) => r.continue());
       });
       await shows(pg, later, null);
       const got = await read(pg);
       await pg.close();
-      check(lists ? "the shipped city election file's results are offered beside November's, the later election shown" +
-                      (counted ? "" : ", this precinct not counted yet")
-                  : "the shipped city election file holds no results yet, and the card is November's alone",
-            lists ? got.elections.length === 2 && got.elections.includes(titleOf(shipped)) && got.elections.includes(novTitle) &&
-                      got.election === later && (counted ? got.table && !got.none : !got.table && got.none === sentence)
-                  : got.elections.length === 0 && got.title === novTitle && got.table,
+      check(latest ? "the shipped city election and runoff files' results are offered beside November's, the latest election shown" +
+                       (counted ? "" : ", this precinct not counted yet")
+                   : "the shipped city election and runoff files hold no results for this precinct yet, and the card is November's alone",
+            latest ? got.elections.length === listing.length + 1 && listing.every((f) => got.elections.includes(titleOf(f))) &&
+                       got.elections.includes(novTitle) && got.election === later &&
+                       (counted ? got.table && !got.none : !got.table && got.none === sentence)
+                   : got.elections.length === 0 && got.title === novTitle && got.table,
             brief(got));
     }
     await context.close();

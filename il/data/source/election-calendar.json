@@ -1,5 +1,5 @@
 {
-  "note": "The elections districtry Illinois tells readers about BEFORE they happen (Adam, 2026-11-15: \"I want visitors to know I'll have election results after, in the lead up to the election\"). scripts/build_election_notices.py reads this file and writes every place the notice appears: the Next election box on election-results.html, the line in the map's Elections section, the closing line on the candidates page and the polling place card, the front page's line, and the calendar reminder under calendar/. `kind` picks one of three wordings and is the one edit that moves a place between them: \"posted\" (results will be posted here; allowed only where this app has already posted this office's results from a real election), \"plans\" (districtry plans to post them; the office publishes a file a program may read and it has not been used in a real election yet), \"official\" (districtry cannot post them; `why` says why, and the notice links the office's own page). Only regularly scheduled elections belong here, and nothing about a special election. An entry is shown by the reader's own clock, so nothing here needs editing when election day passes; retire an entry once its results are on the results page.",
+  "note": "The elections districtry Illinois tells readers about BEFORE they happen (Adam, 2026-11-15: \"I want visitors to know I'll have election results after, in the lead up to the election\"). scripts/build_election_notices.py reads this file and writes every place the notice appears: the Next election box on election-results.html, the line in the map's Elections section, the closing line on the candidates page and the polling place card, the front page's line, and the calendar reminder under calendar/. `kind` picks one of three wordings and is the one edit that moves a place between them: \"posted\" (results will be posted here; allowed only where this app has already posted this office's results from a real election), \"plans\" (districtry plans to post them; the office publishes a file a program may read and it has not been used in a real election yet), \"official\" (districtry cannot post them; `why` says why, and the notice links the office's own page). Only regularly scheduled elections belong here, and nothing about a special election. A runoff names the election it follows in `after` and is shown only from the day after it. An entry is shown by the reader's own clock, so nothing here needs editing when election day passes; retire an entry once its results are on the results page.",
   "timeZone": "America/Chicago",
   "elections": [
     {
@@ -23,6 +23,26 @@
         "list": "data/app/chicago-polling-places.json"
       },
       "dateSource": "https://chicagoelections.gov/getting-ballot/candidates",
+      "checked": "2026-11-15"
+    },
+    {
+      "id": "chicago-2027-04-06",
+      "date": "2027-04-06",
+      "place": "Chicago",
+      "election": "municipal runoff election",
+      "ballot": "the races for mayor, city clerk, city treasurer and alderperson in which no candidate won more than half of the votes on February 23, each between its two leading candidates",
+      "area": "chicago",
+      "office": "Chicago Board of Election Commissioners",
+      "officeShort": "the Board",
+      "officialResults": "https://chicagoelections.gov/elections/results",
+      "kind": "posted",
+      "frontPage": true,
+      "after": "chicago-2027-02-23",
+      "polling": {
+        "layers": ["ward", "ward-precinct"],
+        "list": "data/app/chicago-polling-places.json"
+      },
+      "dateSource": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-08/2027%20Election%20Calendar-REV%2001-ADOPTED%2007-28-2026%20typo%20corrected.pdf",
       "checked": "2026-11-15"
     }
   ]

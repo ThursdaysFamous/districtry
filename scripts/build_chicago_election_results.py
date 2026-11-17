@@ -31,6 +31,29 @@ THE CHECKS, before anything is written:
     new kind of contest is placed by a person rather than dropped);
   - at least MIN_CONTESTS contests.
 
+A CITY ELECTION'S RUNOFF (2026-11-17, Adam: "Build runoff"). Where nobody wins
+more than half of the votes for mayor, clerk, treasurer or a ward's
+alderperson, the two with the most votes meet again on the runoff date in
+RUNOFF_DATES, and nothing else of the city election is on that ballot. The
+Board gives the runoff its own results page, titled "<year> Municipal Runoffs"
+(2023's is results id 242, read through the scraper on 2026-11-17: Mayor and 14
+wards' Alderperson races, the turnout entry over all 1,291 precincts). A build
+whose --election-date is a runoff date in RUNOFF_DATES is a runoff build, and
+three checks change:
+  - at least one contest, not MIN_CONTESTS, since a runoff can be one ward's;
+  - the file lists only the precincts with a runoff race on their ballot, so a
+    click in a ward with no runoff is answered by the city election's file
+    (engine election-results: the latest election whose file LISTS the
+    precinct), and the turnout entry need not cover the whole city;
+  - a citywide race covers every precinct on the map, and a ward's race every
+    precinct of that ward, which is what "one file per ward" asked of a city
+    election.
+Its races go in the same groups as the city election's, with a sentence saying
+how a runoff is decided, and the Board's "Municipal Runoffs" is written
+"Municipal Runoff Election". It is kept in its own file (--name
+chicago-runoff-results), beside the city election's and November's, so the
+three can be compared in the card's Election menu.
+
 THE COUNTIES (--counties, one raw read per scraper): the seven county clerks'
 precinct results are folded in beside Chicago's by
 build_il_county_election_results.py, which carries its own checks and the
@@ -43,6 +66,7 @@ Usage:
     python3 scripts/build_chicago_election_results.py /tmp/results_raw.json \
         --election-date 2026-11-03 [--certified YYYY-MM-DD] [--precincts keys.json] \
         [--counties platinum_raw.json --counties kane_raw.json]
+    python3 scripts/build_chicago_election_results.py --selftest
 """
 
 import argparse
@@ -98,6 +122,8 @@ def election_of(title, election_date):
     if int(m.group(1)) != year:
         fail("the Board's page title %r names two years" % title)
     name = m.group(2).strip()
+    if re.fullmatch(r"(?i)municipal runoffs?(?: election)?", name):
+        return RUNOFF_ELECTION
     return name if re.search(r"(?i)\belection\b", name) else name + " Election"
 
 
@@ -221,25 +247,98 @@ def map_precincts(path):
 # "2023 Municipal Runoffs" results page.
 RUNOFF_DATES = {"2027-02-23": "2027-04-06", "2023-02-28": "2023-04-04"}
 CITY_GENERAL = "Municipal General Election"
+RUNOFF_ELECTION = "Municipal Runoff Election"
+# The groups a runoff is held in, and what each race must cover: every precinct
+# on the map for a citywide office, and every precinct of its ward for an
+# alderperson (the ward number is the race name's).
+RUNOFF_GROUPS = ("city", "city-council")
+
+
+def long_date(iso):
+    d = datetime.date.fromisoformat(iso)
+    return "%s %d, %d" % (d.strftime("%B"), d.day, d.year)
+
+
+def first_round_of(runoff_date):
+    """The city election a runoff date follows, or None when the date is not
+    a runoff date in RUNOFF_DATES."""
+    for first, runoff in RUNOFF_DATES.items():
+        if runoff == runoff_date:
+            return first
+    return None
 
 
 def group_notes(election, election_date):
     """{group id: the sentence on how its races are decided}, for a city
-    election's first round; {} for any other election."""
+    election's first round and for its runoff; {} for any other election.
+
+    The runoff's sentences are the Board's own rule in its 2027 calendar
+    (read 2026-11-15): "a runoff election shall be held on April 6, 2027, when
+    only the names of the candidates receiving the highest and second highest
+    number of votes at the February 23, 2027 election" are on the ballot, and
+    the same for a ward's supplementary election."""
+    first = first_round_of(election_date)
+    if first:
+        on = long_date(first)
+        return {
+            "city": "No candidate won more than half of the votes on %s, so the two with the "
+                    "most votes meet in this runoff. The candidate with more votes is elected." % on,
+            "city-council": "No candidate won more than half of the votes in the ward on %s, so "
+                            "the two with the most votes meet in this runoff. The candidate with "
+                            "more votes is elected." % on,
+        }
     if election != CITY_GENERAL:
         return {}
     if election_date not in RUNOFF_DATES:
         fail("no runoff date for the city election of %s: read it from the Board's election "
              "calendar and add it to RUNOFF_DATES" % election_date)
-    d = datetime.date.fromisoformat(RUNOFF_DATES[election_date])
-    runoff = "%s %d, %d" % (d.strftime("%B"), d.day, d.year)
-    majority = ("A candidate with more than half of the votes %sis elected. If no candidate has "
+    runoff = long_date(RUNOFF_DATES[election_date])
+    majority =("A candidate with more than half of the votes %sis elected. If no candidate has "
                 "more than half, the two with the most votes go to a runoff election on " + runoff + ".")
     return {
         "city": majority % "",
         "city-council": majority % "in the ward ",
         "police-council": "The three candidates with the most votes in the police district are elected.",
     }
+
+
+WARD_RE = re.compile(r"(\d+)(?:st|nd|rd|th) Ward$")
+
+
+def runoff_turnout(contests, turnout, allowed):
+    """A runoff's turnout entry, cut to the precincts with a runoff race on
+    their ballot, after holding each citywide race to every precinct on the
+    map and each ward's race to every precinct of its ward. A race of any
+    other kind is kept as its group rule places it, and covers what it covers:
+    a runoff holds none, and check_results_update.py --first-round holds an
+    update with a race February does not explain, where a failed build would
+    publish nothing on the night."""
+    on_ballot = set()
+    for c in contests:
+        if c["group"] == "city":
+            want = allowed
+        elif c["group"] == "city-council":
+            ward = "%02d" % int(WARD_RE.search(c["name"]).group(1))
+            want = set(k for k in allowed if k[:2] == ward)
+        else:
+            want = None
+        got = set(c["precincts"])
+        if want is not None and got != want:
+            fail("%s: the runoff race covers %d precincts and its ground has %d (%d of them "
+                 "missing, %d outside it)" % (c["name"], len(got), len(want),
+                                              len(want - got), len(got - want)))
+        on_ballot |= got
+    missing = on_ballot - set(turnout["precincts"])
+    if missing:
+        fail("the turnout entry leaves out %d precinct(s) with a runoff race on their ballot "
+             "(the first: %s)" % (len(missing), sorted(missing)[0]))
+    kept = dict((k, v) for k, v in turnout["precincts"].items() if k in on_ballot)
+    total = turnout["total"]
+    if len(kept) != len(turnout["precincts"]):
+        # the totals over the precincts this file lists, so the turnout it
+        # states is of the ground its races cover
+        total = [sum(v[i] for v in kept.values()) for i in range(len(total))]
+    return {"total": total, "precincts": kept}
 
 
 RESULTS_INDEX = "https://chicagoelections.gov/elections/results"
@@ -279,10 +378,107 @@ def write_placeholder(args):
     print("wrote %s with no results, for the %s of %s"
           % (os.path.relpath(shipped), args.placeholder, args.election_date), file=sys.stderr)
 
+def selftest():
+    """A runoff build, on made-up reads over a made-up map of 1,291 precincts
+    in 50 wards: one with a mayoral runoff lists every precinct; one with ward
+    runoffs alone lists those wards' precincts and states their turnout; a
+    ward race short of one of its precincts fails; and a city election's read
+    with two races still fails, as it did before runoffs were built. Each is a
+    run of this script, as the workflow runs it."""
+    import shutil
+    import subprocess
+    import tempfile
+    sizes = [26 if w <= 41 else 25 for w in range(1, 51)]
+    keys = ["%02d%03d" % (w, p) for w, n in zip(range(1, 51), sizes) for p in range(1, n + 1)]
+    assert len(keys) == EXPECTED_PRECINCTS
+    wp = lambda k: "%d-%d" % (int(k[:2]), int(k[2:]))
+
+    def race(cid, name, ground, a=60, b=40):
+        return {"contestId": cid, "name": name, "columns": ["Total Votes", "Ada", "Ben"],
+                "total": [(a + b) * len(ground), a * len(ground), b * len(ground)],
+                "precincts": dict((wp(k), [a + b, a, b]) for k in ground)}
+
+    def read(title, races, turnout_keys=keys):
+        turnout = {"contestId": "", "name": "", "columns": ["Registered Voters", "Ballots Cast"],
+                   "total": [500 * len(turnout_keys), 120 * len(turnout_keys)],
+                   "precincts": dict((wp(k), [500, 120]) for k in turnout_keys)}
+        return {"source": "https://chicagoelections.gov/elections/results/0", "election": title,
+                "electionId": 0, "read": "2027-04-07T02:00:00Z", "contests": [turnout] + races}
+
+    ward = lambda n: [k for k in keys if k[:2] == "%02d" % n]
+    runoff_title = "2027 Municipal Runoffs - 4/6/27"
+    cases = [
+        ("a mayoral runoff lists every precinct, in one file per ward", "2027-04-06",
+         read(runoff_title, [race("11", "Mayor", keys), race("12", "Alderperson 4th Ward", ward(4))]),
+         dict(precincts=EXPECTED_PRECINCTS, parts=50, contests=2, ballots=120 * EXPECTED_PRECINCTS)),
+        ("ward runoffs alone list those wards' precincts and state their turnout", "2027-04-06",
+         read(runoff_title, [race("12", "Alderperson 4th Ward", ward(4)),
+                             race("13", "Alderperson 10th Ward", ward(10))]),
+         dict(precincts=len(ward(4)) + len(ward(10)), parts=2, contests=2,
+              ballots=120 * (len(ward(4)) + len(ward(10))))),
+        ("a ward's runoff short of one of its precincts fails", "2027-04-06",
+         read(runoff_title, [race("12", "Alderperson 4th Ward", ward(4)[1:])]), "4th Ward: the runoff race covers"),
+        ("a turnout entry missing a precinct a runoff race is on fails", "2027-04-06",
+         read(runoff_title, [race("12", "Alderperson 4th Ward", ward(4))],
+              [k for k in keys if k != ward(4)[0]]), "leaves out 1 precinct"),
+        ("a city election's read with two races still fails", "2027-02-23",
+         read("2027 Municipal General - 2/23/27", [race("11", "Mayor", keys),
+                                                  race("12", "Alderperson 4th Ward", ward(4))]),
+         "only 2 contests"),
+    ]
+    tmp = tempfile.mkdtemp(prefix="chicago-results-selftest-")
+    bad = []
+    try:
+        with open(os.path.join(tmp, "keys.json"), "w") as f:
+            json.dump(keys, f)
+        for n, (why, date, raw, want) in enumerate(cases):
+            app = os.path.join(tmp, "app%d" % n)
+            os.makedirs(app)
+            with open(os.path.join(tmp, "raw%d.json" % n), "w") as f:
+                json.dump(raw, f)
+            r = subprocess.run([sys.executable, os.path.abspath(__file__), os.path.join(tmp, "raw%d.json" % n),
+                                "--election-date", date, "--precincts", os.path.join(tmp, "keys.json"),
+                                "--app-data", app, "--name", "chicago-runoff-results"],
+                               capture_output=True, text=True)
+            if isinstance(want, str):
+                if r.returncode == 0 or want not in r.stderr:
+                    bad.append("%s: wanted a failure saying %r, got exit %d %r"
+                               % (why, want, r.returncode, r.stderr[-300:]))
+                continue
+            if r.returncode != 0:
+                bad.append("%s: the build failed: %s" % (why, r.stderr[-300:]))
+                continue
+            idx = json.load(open(os.path.join(app, "chicago-runoff-results.json")))
+            notes = dict((g["id"], g.get("note", "")) for g in idx["groups"])
+            got = dict(precincts=len(idx["precincts"]), parts=len(os.listdir(os.path.join(app, "chicago-runoff-results"))),
+                       contests=len(idx["contests"]), ballots=idx["turnout"]["total"][1])
+            if got != want:
+                bad.append("%s: wanted %r, got %r" % (why, want, got))
+            if idx["election"] != RUNOFF_ELECTION or idx["electionDate"] != "2027-04-06":
+                bad.append("%s: the file is for the %r of %s" % (why, idx["election"], idx["electionDate"]))
+            for g in set(c["group"] for c in idx["contests"]):
+                if "February 23, 2027" not in notes.get(g, "") or "runoff" not in notes.get(g, ""):
+                    bad.append("%s: group %s's note is %r" % (why, g, notes.get(g)))
+            if notes.get("police-council"):
+                bad.append("%s: a runoff file says how a police district council is chosen" % why)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    if first_round_of("2027-04-06") != "2027-02-23" or first_round_of("2027-02-23") is not None:
+        bad.append("first_round_of does not pair the 2027 runoff with its city election")
+    for why in bad:
+        print("build-chicago-election-results: selftest FAIL — " + why, file=sys.stderr)
+    if bad:
+        raise SystemExit(1)
+    print("build-chicago-election-results: selftest OK — %d runoff builds: every precinct with a "
+          "mayoral runoff, only the runoff wards' without one, and a race or turnout short of "
+          "its ground refused" % len(cases))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("raw", nargs="?")
-    ap.add_argument("--election-date", required=True)
+    ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--election-date")
     ap.add_argument("--certified", help="the date the Board proclaimed the official results")
     ap.add_argument("--precincts", help="a JSON list of the map's ward_precinct keys (offline)")
     ap.add_argument("--counties", action="append", default=[],
@@ -300,6 +496,10 @@ def main():
                          "yet, named as this builder names it from the Board's page (\"Municipal "
                          "General Election\"); needs --name and --election-date, takes no raw read")
     args = ap.parse_args()
+    if args.selftest:
+        return selftest()
+    if not args.election_date:
+        ap.error("--election-date is required")
     if args.name and args.counties:
         fail("--name is for an election the Board alone counts; --counties folds the "
              "county clerks' results into the default file")
@@ -311,6 +511,8 @@ def main():
 
     raw = json.load(open(args.raw))
     allowed = map_precincts(args.precincts)
+    election = election_of(raw.get("election"), args.election_date)
+    runoff = first_round_of(args.election_date) is not None
 
     turnout = None
     contests = []
@@ -324,7 +526,8 @@ def main():
         if c["contestId"] == "":
             if c["columns"] != ["Registered Voters", "Ballots Cast"]:
                 fail("the turnout entry's columns are %r" % c["columns"])
-            if set(precincts) != allowed:
+            # a runoff's turnout is checked against its races below
+            if not runoff and set(precincts) != allowed:
                 fail("the turnout entry covers %d of the map's %d precincts"
                      % (len(precincts), len(allowed)))
             turnout = {"total": c["total"], "precincts": precincts}
@@ -347,11 +550,13 @@ def main():
         })
     if turnout is None:
         fail("the raw read has no turnout entry")
-    if len(contests) < MIN_CONTESTS:
-        fail("only %d contests; expected at least %d" % (len(contests), MIN_CONTESTS))
+    least = 1 if runoff else MIN_CONTESTS
+    if len(contests) < least:
+        fail("only %d contests; expected at least %d" % (len(contests), least))
+    if runoff:
+        turnout = runoff_turnout(contests, turnout, allowed)
     for c in contests:
         c["beyond"] = reaches_beyond(c)
-    election = election_of(raw.get("election"), args.election_date)
     part_of = lambda k: "ward-" + k[:2]
     county_lines = []
     # The Board's own entry rides every file, so the card reads the publisher,
@@ -413,7 +618,8 @@ def main():
                                   part_of, note, extra={"sources": sources}, name=args.name)
     except ResultsError as e:
         fail(str(e))
-    if len(set(part_of(k) for k in turnout["precincts"] if ":" not in k)) != 50:
+    # (a runoff's races were each held to their whole ground by runoff_turnout)
+    if not runoff and len(set(part_of(k) for k in turnout["precincts"] if ":" not in k)) != 50:
         fail("the Chicago precincts do not fill one file per ward (50)")
     for line in county_lines:
         print(line, file=sys.stderr)

@@ -218,6 +218,7 @@ python3 scripts/il_cook_election_results_reader.py --check -o il/data/source/ele
 python3 scripts/chicago_election_results_scraper.py --selftest     # election night: the reader finds a Chicago election's results page by its date on a copy of the Board's list, and refuses a date two elections share
 python3 scripts/check_results_update.py --selftest     # election night: the check that lets a count go live unreviewed publishes a count that only grew, and holds one that went down or lost a race, a candidate or a precinct
 python3 scripts/wait_for_pr_checks.py --selftest     # election night: the wait reads a pull request's workflow runs, never the commit-status API, and reads no run at all as absent, never as passed
+python3 scripts/build_chicago_election_results.py --selftest     # election night: the runoff builder writes a runoff that covers only part of the city, and refuses a runoff race short of its ward or a turnout that leaves out a precinct with a runoff race
 python3 scripts/validate_robots_adoption.py --selftest   # the fetch/robots-read detector against 13 cases, including a docstring that names the seam without reaching it
 python3 scripts/probe_robots_verdicts.py --check   # the runner robots record still describes the tree
 python3 scripts/validate_robots_adoption.py             # every fetching script reads robots.txt or is in UNWIRED_AT_SWEEP; entries FAIL when orphaned or now wired, so the backlog only shrinks

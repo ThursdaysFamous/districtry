@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//districtry//election reminder//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:il-chicago-2027-04-06@districtry.com
+DTSTAMP:20261115T000000Z
+DTSTART;VALUE=DATE:20270407
+DTEND;VALUE=DATE:20270408
+SUMMARY:Chicago election results on districtry
+DESCRIPTION:Precinct results for Chicago's municipal runoff election of Apr
+ il 6\, 2027 are posted on districtry as the Chicago Board of Election Comm
+ issioners publishes them. They stay marked unofficial until the Board cert
+ ifies them.\n\nhttps://districtry.com/il/election-results.html?ref=reminde
+ r
+URL:https://districtry.com/il/election-results.html?ref=reminder
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

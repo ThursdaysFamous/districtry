@@ -56,7 +56,7 @@ different thing from one it failed.
 | hi | **EAM·** | 5 | 5/5 § | 0 | 0 | by record | 12 | all | 10 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
-| il | **EAM·** | 102 | 102/102 | 660 | 1,158 | all | 432 | all | 12 of 14 levels |
+| il | **EAM·** | 102 | 102/102 | 660 | 1,158 | all | 433 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 25 | all | 11 of 14 levels |
 | ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 22 | all | 12 of 14 levels |

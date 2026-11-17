@@ -1155,13 +1155,17 @@ jobs:
       # shipped one, published when it is further along and held when a count
       # went down or a race, candidate or precinct is gone, with where the
       # night starts and ends; and a commit's workflow runs read as passed,
-      # failed, still going or never started.
+      # failed, still going or never started. The runoff of 6 April 2027 adds
+      # two (2026-11-17): a runoff's first count holds exactly the races the
+      # certified first round sent to a runoff, between its two leaders, and
+      # the builder writes a runoff that covers only part of the city.
       - name: An election-night results update finds its page, holds a count that went down, and waits for its checks
         if: ${{ !cancelled() }}
         run: |
           python3 scripts/chicago_election_results_scraper.py --selftest
           python3 scripts/check_results_update.py --selftest
           python3 scripts/wait_for_pr_checks.py --selftest
+          python3 scripts/build_chicago_election_results.py --selftest
 
       # Adoption of that reader was per caller and unmeasured, so every count of
       # it came off a hand-written list and every one was an undercount: seven
