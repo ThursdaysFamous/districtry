@@ -16568,10 +16568,17 @@ function initTexasExplorer() {
    * the card gives the file's own report date, because a judge who took
    * office after that date is not in it.
    *
-   * THE FOUR COMMISSIONERS ARE NOT NAMED. The directory lists courts, and a
-   * commissioner holds no court; no list of them has been read. The county's
-   * other elected officers (sheriff, county clerk, tax assessor-collector)
-   * are not named either. Both are recorded in gap tx-county-officials.
+   * THE FOUR COMMISSIONERS ARE NAMED WHERE THE COUNTY'S OWN WEBSITE IS READ
+   * (data/app/tx-county-commissioners.json, built by
+   * tx/scripts/build_tx_county_commissioners.py and checked weekly), largest
+   * county first. The directory lists courts, a commissioner holds no court,
+   * and no state office lists them, so each county's own page is the source;
+   * the card names that page and the date its names were first read. A county not
+   * read yet says the commissioners are not named. This app draws no
+   * commissioner precincts, so the card never says which of the four
+   * represents the point. The county's other elected officers (sheriff,
+   * county clerk, tax assessor-collector) are not named. Both gaps are
+   * recorded in gap tx-county-officials.
    *
    * THREE STATES OF THE ONE SEAT, as the roster carries them: a name; a
    * vacancy the directory itself states; and a county whose entry lists no
@@ -16579,13 +16586,16 @@ function initTexasExplorer() {
    * county saying the seat is empty, so the card says exactly that.
    *
    * A roster miss degrades to a sentence naming nobody, never to an error
-   * card.
+   * card, and the two rosters fail apart: either can load without the other.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
   var loadTxCountyOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/tx-county-officials.json", {}, 2);
+  });
+  var loadTxCountyCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tx-county-commissioners.json", {}, 2);
   });
   var TX_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -16627,15 +16637,19 @@ function initTexasExplorer() {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
-          officials: null
+          officials: null,
+          commissioners: null
         };
-        // the roster's own failure is not this layer's failure: a miss
-        // degrades to the sentence naming nobody
-        return loadTxCountyOfficials().then(function (roster) {
-          result.officials = (roster && result.geoid != null)
-            ? roster[String(result.geoid)] || null : null;
-          return result;
-        }, function () {
+        // a roster's own failure is not this layer's failure: a miss names
+        // nobody from that roster, and the other roster still answers
+        var none = function () { return null; };
+        return Promise.all([
+          loadTxCountyOfficials().then(null, none),
+          loadTxCountyCommissioners().then(null, none)
+        ]).then(function (rosters) {
+          var key = result.geoid != null ? String(result.geoid) : null;
+          result.officials = (rosters[0] && key) ? rosters[0][key] || null : null;
+          result.commissioners = (rosters[1] && key) ? rosters[1][key] || null : null;
           return result;
         });
       });
@@ -16650,7 +16664,10 @@ function initTexasExplorer() {
       var seat = ((o && o.seats) || []).filter(function (s) {
         return s && s.seat === "County Judge";
       })[0] || null;
-      if (!seat) {
+      // the four commissioners, where the county's own website is read
+      var c = result.commissioners;
+      var commissioners = (c && c.seats && c.seats.length === 4) ? c.seats : null;
+      if (!seat && !commissioners) {
         wrap.appendChild(renderFieldStack([{
           label: "County officials",
           value: "Each Texas county is governed by a commissioners court: a " +
@@ -16662,17 +16679,31 @@ function initTexasExplorer() {
         }]));
         return wrap;
       }
+      var judgeNamed = !!(seat && (seat.name || seat.vacant === true));
       var cited = txDirectoryCited(o);
       var citedLead = cited.charAt(0).toUpperCase() + cited.slice(1);
       var rows = [];
-      wrap.appendChild(renderSectionLabel(String(o.body)));
-      if (seat.name || seat.vacant === true) {
-        wrap.appendChild(renderPersonRows([{
+      var people = [];
+      wrap.appendChild(renderSectionLabel(o && o.body ? String(o.body)
+        : String(result.name || "County") + " Commissioners Court"));
+      if (judgeNamed) {
+        people.push({
           // a seat the directory lists as vacant names nobody
           name: seat.name ? String(seat.name) : "Vacant",
           note: "County Judge"
-        }], { tinted: true }));
-      } else {
+        });
+      }
+      (commissioners || []).forEach(function (s) {
+        people.push({ name: String(s.name), note: String(s.seat) });
+      });
+      if (people.length) wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      if (!seat) {
+        rows.push({
+          label: "County judge",
+          value: "The list of county judges did not load, so no county judge " +
+            "is named here."
+        });
+      } else if (!judgeNamed) {
         // the directory's entry for this county lists no county court
         rows.push({
           label: "County judge",
@@ -16682,29 +16713,62 @@ function initTexasExplorer() {
             "the current source."
         });
       }
+      if (commissioners) {
+        rows.push({
+          label: "Which commissioner represents this point",
+          value: "Each of the four commissioners is elected from one " +
+            "commissioner precinct. This app does not draw commissioner " +
+            "precincts yet, so it cannot say which of the four represents " +
+            "this point. The county's own website shows its precincts."
+        });
+      } else {
+        rows.push({
+          label: "The rest of the commissioners court",
+          value: "The county judge is elected by the whole county and presides " +
+            "over the commissioners court. Its other four members are " +
+            "commissioners, each elected from one commissioner precinct. They " +
+            "are not named here yet, and this app does not draw commissioner " +
+            "precincts, so it could not say which of the four represents this " +
+            "point. The county's own website names them."
+        });
+      }
       rows.push({
-        label: "The rest of the commissioners court",
-        value: "The county judge is elected by the whole county and presides " +
-          "over the commissioners court. Its other four members are " +
-          "commissioners, each elected from one commissioner precinct. They " +
-          "are not named here yet, and this app does not draw commissioner " +
-          "precincts, so it could not say which of the four represents this " +
-          "point. The county's own website names them."
-      }, {
         label: "Other county officials",
         value: "The county also elects officers such as a sheriff, a county " +
           "clerk and a tax assessor-collector. They are not named here yet."
       });
-      if (seat.name || seat.vacant === true) {
+      if (judgeNamed) {
         rows.push({
           // a vacancy names nobody, so its credit is not for a name
-          label: seat.name ? "Where this name comes from" : "Where this comes from",
+          label: !seat.name ? "Where this comes from"
+            : commissioners ? "Where the county judge's name comes from"
+            : "Where this name comes from",
           value: citedLead + ". A county judge who took office after that " +
             "date is not shown here. This app checks every week for a newer " +
             "file."
         });
       }
+      if (commissioners) {
+        // asOf is the date these four names were first read; a week that
+        // reads the same names keeps it, so it is never later than the last
+        // look and the card does not call it the last look
+        var read = txDirectoryDate(c.asOf);
+        rows.push({
+          label: "Where the commissioners' names come from",
+          value: "Read from " + String(c.source || "the county's own website") +
+            ". " + (read ? "This app first found these four names there on " +
+            read + " and looks" : "This app looks") + " at the page again " +
+            "every week, so a commissioner who took office since the last " +
+            "look may not be shown yet."
+        });
+      }
       wrap.appendChild(renderFieldStack(rows));
+      var page = commissioners && safeHttpUrl(c.sourceUrl);
+      if (page) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: String(c.county || "The county") + "'s commissioners court page", url: page }]
+        }));
+      }
       return wrap;
     },
     primaryLink: function (result) {
