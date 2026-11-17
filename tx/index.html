@@ -16638,6 +16638,11 @@ function initTexasExplorer() {
    * county court at all, which is the directory naming nobody and not the
    * county saying the seat is empty, so the card says exactly that.
    *
+   * A COMMISSIONER'S SEAT THE COUNTY'S OWN PAGE LISTS AS VACANT reads
+   * "Vacant" under its seat (`vacant: true`, no name; Jeff Davis County's
+   * precinct 4, read 2026-11-17), and the credit says the page lists it so.
+   * The builder refuses a county whose page names fewer than two of the four.
+   *
    * A roster miss degrades to a sentence naming nobody, never to an error
    * card, and the two rosters fail apart: either can load without the other.
    * ---------- */
@@ -16747,7 +16752,8 @@ function initTexasExplorer() {
         });
       }
       (commissioners || []).forEach(function (s) {
-        people.push({ name: String(s.name), note: String(s.seat) });
+        // a seat the county's own page lists as vacant names nobody
+        people.push({ name: s.vacant === true ? "Vacant" : String(s.name), note: String(s.seat) });
       });
       if (people.length) wrap.appendChild(renderPersonRows(people, { tinted: true }));
       if (!seat) {
@@ -16806,13 +16812,18 @@ function initTexasExplorer() {
         // reads the same names keeps it, so it is never later than the last
         // look and the card does not call it the last look
         var read = txDirectoryDate(c.asOf);
+        var vacant = commissioners.filter(function (s) { return s.vacant === true; }).length;
         rows.push({
           label: "Where the commissioners' names come from",
           value: "Read from " + String(c.source || "the county's own website") +
-            ". " + (read ? "This app first found these four names there on " +
-            read + " and looks" : "This app looks") + " at the page again " +
-            "every week, so a commissioner who took office since the last " +
-            "look may not be shown yet."
+            ". " + (vacant === 1 ? "The page lists one seat as vacant, so no " +
+            "one is named for it. " : vacant > 1 ? "The page lists " + vacant +
+            " seats as vacant, so no one is named for them. " : "") +
+            (read ? "This app first found " + (vacant ? "these names" :
+            "these four names") + " there on " + read + " and looks"
+            : "This app looks") + " at the page again every week, so a " +
+            "commissioner who took office since the last look may not be " +
+            "shown yet."
         });
       }
       wrap.appendChild(renderFieldStack(rows));
