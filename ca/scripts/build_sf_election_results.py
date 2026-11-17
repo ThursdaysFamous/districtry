@@ -41,7 +41,10 @@ comes from the Department's ranked-choice count.
 
 WRITE-INS. Every sheet with a write-in column leaves it out of the sheet's own
 Total Votes (measured 2026-11-06, on all twelve that have one), so the build
-leaves it out too and each contest's numbers are the Department's own.
+leaves it out too and each contest's numbers are the Department's own. From
+the report of November 10, 2026 the column is zero in every precinct of all
+twelve sheets (read 2026-11-17), so leaving it out changes no number; the
+scraper reads such a sheet as not counting write-ins into Total Votes.
 
 CHOICES. Ordered by a rule that cannot lean: Yes, then No, for a measure or a
 judge; otherwise alphabetically by the name as the Department prints it, in
