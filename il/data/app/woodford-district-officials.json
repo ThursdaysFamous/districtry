@@ -127,23 +127,23 @@
       "office": {}
     },
     "Dana Fire District": {
-      "comptrollerCode": "050/020/06",
-      "filedFor": "2025",
-      "filesIn": "LaSalle",
-      "heads": [
+      "board": [
         {
           "email": "sadey63@yahoo.com",
           "name": "Karl Moore",
           "phone": "(815) 970-3129",
-          "role": "C.E.O."
+          "role": "President"
         },
         {
           "email": "msnyder_58@yahoo.com",
           "name": "Michael Snyder",
           "phone": "(815) 257-9085",
-          "role": "C.F.O."
+          "role": "Treasurer"
         }
       ],
+      "comptrollerCode": "050/020/06",
+      "filedFor": "2026",
+      "filesIn": "LaSalle",
       "kind": "fire",
       "office": {}
     },
@@ -584,7 +584,7 @@
       "office": {}
     }
   },
-  "generated": "2026-11-10T03:54:21Z",
+  "generated": "2026-11-17T04:15:57Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
