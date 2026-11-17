@@ -30,8 +30,8 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 354 hosts, of which 259 are reached by a browser-string
-caller, 125 of them measured or re-measured since — 61 on 2026-09-13 at the page a
+2026-09-12 across 364 hosts, of which 274 are reached by a browser-string
+caller, 135 of them measured or re-measured since — 61 on 2026-09-13 at the page a
 scraper reads rather than the directory above it, four county GIS services on
 2026-09-15, www.cpsboe.org on 2026-09-23, when the Chicago school board roster
 began reading it, www.scottcoil.gov on 2026-10-15 for Scott County's
@@ -43,18 +43,18 @@ www.greenvillenc.gov, www.rockymountnc.gov, www.garnernc.gov,
 www.wilsonnc.org and www.brokenarrowok.gov on 2026-10-16 for Arkansas's,
 South Carolina's, Tennessee's, North Carolina's and Oklahoma's city
 councils, and perrycountyil.gov on 2026-10-20 for Perry County's
-commissioners, and www.kossuthcounty.iowa.gov on 2026-10-26 for Kossuth's supervisors, on the stdlib stack only: 256 serve UA_ROSTER_BOT a full page, 46 refuse it and answer the
+commissioners, and www.kossuthcounty.iowa.gov on 2026-10-26 for Kossuth's supervisors, on the stdlib stack only, and seven Texas county hosts on 2026-11-17 for their commissioners (tx/scripts/tx_commissioners_browser_rung.py): 256 serve UA_ROSTER_BOT a full page, 53 refuse it and answer the
 browser string, and 9 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 54 files send a browser string; 4
+and the artifact rather than remembered): 55 files send a browser string; 4
 of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 29 reach at least one host that refuses it -- and 267 of
-the 357 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 30 reach at least one host that refuses it -- and 274 of
+the 364 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in

@@ -19,7 +19,7 @@
   "tls-chain": 1,
   "token-ok": 256,
   "token-refused": 5,
-  "token-refused-and-stack": 41
+  "token-refused-and-stack": 48
  },
  "hosts": {
   "api.us.socrata.com": {
@@ -47,7 +47,43 @@
     "ok/scripts/validate_sources.py": "self",
     "sc/scripts/validate_sources.py": "self",
     "tn/scripts/validate_sources.py": "self",
-    "ar/scripts/validate_sources.py": "self"
+    "ar/scripts/validate_sources.py": "self",
+    "ms/scripts/validate_sources.py": "self",
+    "la/scripts/validate_sources.py": "self",
+    "mo/scripts/validate_sources.py": "self",
+    "ga/scripts/validate_sources.py": "self",
+    "va/scripts/validate_sources.py": "self",
+    "wv/scripts/validate_sources.py": "self",
+    "pa/scripts/validate_sources.py": "self",
+    "nv/scripts/validate_sources.py": "self",
+    "az/scripts/validate_sources.py": "self",
+    "nj/scripts/validate_sources.py": "self",
+    "nh/scripts/validate_sources.py": "self",
+    "tx/scripts/validate_sources.py": "self",
+    "fl/scripts/validate_sources.py": "self",
+    "oh/scripts/validate_sources.py": "self",
+    "wa/scripts/validate_sources.py": "self",
+    "ma/scripts/validate_sources.py": "self",
+    "co/scripts/validate_sources.py": "self",
+    "md/scripts/validate_sources.py": "self",
+    "al/scripts/validate_sources.py": "self",
+    "or/scripts/validate_sources.py": "self",
+    "ct/scripts/validate_sources.py": "self",
+    "ut/scripts/validate_sources.py": "self",
+    "ks/scripts/validate_sources.py": "self",
+    "nm/scripts/validate_sources.py": "self",
+    "ne/scripts/validate_sources.py": "self",
+    "id/scripts/validate_sources.py": "self",
+    "hi/scripts/validate_sources.py": "self",
+    "me/scripts/validate_sources.py": "self",
+    "mt/scripts/validate_sources.py": "self",
+    "ri/scripts/validate_sources.py": "self",
+    "de/scripts/validate_sources.py": "self",
+    "sd/scripts/validate_sources.py": "self",
+    "nd/scripts/validate_sources.py": "self",
+    "ak/scripts/validate_sources.py": "self",
+    "vt/scripts/validate_sources.py": "self",
+    "wy/scripts/validate_sources.py": "self"
    }
   },
   "arcgispublicmap.co.st-clair.il.us": {
@@ -315,7 +351,43 @@
     "ok/scripts/validate_sources.py": "self",
     "sc/scripts/validate_sources.py": "self",
     "tn/scripts/validate_sources.py": "self",
-    "ar/scripts/validate_sources.py": "self"
+    "ar/scripts/validate_sources.py": "self",
+    "ms/scripts/validate_sources.py": "self",
+    "la/scripts/validate_sources.py": "self",
+    "mo/scripts/validate_sources.py": "self",
+    "ga/scripts/validate_sources.py": "self",
+    "va/scripts/validate_sources.py": "self",
+    "wv/scripts/validate_sources.py": "self",
+    "pa/scripts/validate_sources.py": "self",
+    "nv/scripts/validate_sources.py": "self",
+    "az/scripts/validate_sources.py": "self",
+    "nj/scripts/validate_sources.py": "self",
+    "nh/scripts/validate_sources.py": "self",
+    "tx/scripts/validate_sources.py": "self",
+    "fl/scripts/validate_sources.py": "self",
+    "oh/scripts/validate_sources.py": "self",
+    "wa/scripts/validate_sources.py": "self",
+    "ma/scripts/validate_sources.py": "self",
+    "co/scripts/validate_sources.py": "self",
+    "md/scripts/validate_sources.py": "self",
+    "al/scripts/validate_sources.py": "self",
+    "or/scripts/validate_sources.py": "self",
+    "ct/scripts/validate_sources.py": "self",
+    "ut/scripts/validate_sources.py": "self",
+    "ks/scripts/validate_sources.py": "self",
+    "nm/scripts/validate_sources.py": "self",
+    "ne/scripts/validate_sources.py": "self",
+    "id/scripts/validate_sources.py": "self",
+    "hi/scripts/validate_sources.py": "self",
+    "me/scripts/validate_sources.py": "self",
+    "mt/scripts/validate_sources.py": "self",
+    "ri/scripts/validate_sources.py": "self",
+    "de/scripts/validate_sources.py": "self",
+    "sd/scripts/validate_sources.py": "self",
+    "nd/scripts/validate_sources.py": "self",
+    "ak/scripts/validate_sources.py": "self",
+    "vt/scripts/validate_sources.py": "self",
+    "wy/scripts/validate_sources.py": "self"
    }
   },
   "ccpsa.chicago.gov": {
@@ -380,7 +452,11 @@
     "note": "HTTP 403"
    },
    "callers": {
-    "scripts/validate_sources.py": "self"
+    "scripts/build_chicago_election_results.py": "self",
+    "scripts/build_chicago_polling_places.py": "self",
+    "scripts/chicago_candidates_scraper.py": "self",
+    "scripts/chicago_election_results_scraper.py": "self",
+    "scripts/chicago_polling_places_scraper.py": "self"
    }
   },
   "chippewacountywi.gov": {
@@ -1178,6 +1254,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 3509583 bytes",
    "callers": {
+    "scripts/build_chicago_election_results.py": "self",
+    "scripts/build_chicago_polling_places.py": "self",
     "scripts/build_district_search.py": "self",
     "scripts/chicago_ward_scraper.py": "self",
     "scripts/validate_sources.py": "self"
@@ -1235,7 +1313,13 @@
     "ok/scripts/build_ok_legislature_roster.py": "unknown",
     "ok/scripts/validate_sources.py": "self",
     "tn/scripts/build_tn_legislature_roster.py": "self",
-    "tn/scripts/validate_sources.py": "self"
+    "tn/scripts/validate_sources.py": "self",
+    "nh/scripts/build_nh_legislature_roster.py": "self",
+    "nh/scripts/validate_sources.py": "self",
+    "hi/scripts/build_hi_legislature_roster.py": "self",
+    "hi/scripts/validate_sources.py": "self",
+    "mt/scripts/build_mt_legislature_roster.py": "self",
+    "mt/scripts/validate_sources.py": "self"
    }
   },
   "dekalbcounty.org": {
@@ -1750,6 +1834,7 @@
    "note": "requests+token HTTP 200, 9005 bytes",
    "callers": {
     "scripts/build_chicago_townships.py": "self",
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/build_municipal_ward_coverage.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/cook_county_board_scraper.py": "self",
@@ -1827,6 +1912,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 3535 bytes",
    "callers": {
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/il_gis_board_scraper.py": "self"
    },
    "measured": "2026-09-15"
@@ -2464,6 +2550,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 8029 bytes",
    "callers": {
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/build_winnebago_county_board_roster.py": "self",
     "scripts/il_gis_board_scraper.py": "self",
     "scripts/validate_sources.py": "self",
@@ -2832,6 +2919,7 @@
     "scripts/build_wayne_boundaries.py": "unknown",
     "scripts/clinton_county_board_scraper.py": "self",
     "scripts/franklin_county_board_scraper.py": "self",
+    "scripts/il_platinum_election_results_scraper.py": "self",
     "scripts/platinum_canvass.py": "self"
    }
   },
@@ -2991,6 +3079,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 123295 bytes",
    "callers": {
+    "scripts/build_rock_island_vote_centers.py": "self",
     "scripts/rock_island_municipal_officials_scraper.py": "self"
    }
   },
@@ -3122,11 +3211,14 @@
    "callers": {
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_hamilton_precincts.py": "self",
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/build_logan_park_districts.py": "self",
+    "scripts/build_macoupin_board_districts.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/build_statewide_library_districts.py": "unknown",
     "scripts/il_gis_board_scraper.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
+    "scripts/macoupin_county_board_scraper.py": "self",
     "scripts/peoria_county_board_scraper.py": "self",
     "scripts/peoria_district_officials_scraper.py": "unknown",
     "scripts/tazewell_county_board_scraper.py": "self",
@@ -3140,6 +3232,7 @@
     "ia/scripts/build_dsm_wards.py": "self",
     "ia/scripts/build_ia_aea.py": "self",
     "ia/scripts/build_ia_cc_director_districts.py": "self",
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/build_ia_community_colleges.py": "unknown",
     "ia/scripts/build_ia_precincts.py": "unknown",
     "ia/scripts/build_ia_school_director_districts.py": "self",
@@ -3147,7 +3240,17 @@
     "ia/scripts/build_ia_school_sites.py": "unknown",
     "ia/scripts/build_ia_supervisor_districts.py": "self",
     "ia/scripts/validate_sources.py": "self",
-    "ok/scripts/build_ok_commissioner_districts.py": "unknown"
+    "in/scripts/build_in_city_wards.py": "unknown",
+    "in/scripts/build_in_council_districts.py": "self",
+    "nc/scripts/build_nc_city_wards.py": "self",
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/build_ok_city_wards.py": "self",
+    "ok/scripts/build_ok_commissioner_districts.py": "unknown",
+    "ok/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_city_wards.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3166,6 +3269,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 17115 bytes",
    "callers": {
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/build_knox_board_districts.py": "browser",
     "scripts/build_macon_board_district_labels.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
@@ -3178,10 +3282,19 @@
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_alderperson_scraper.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both",
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/build_waterloo_council.py": "self",
     "ia/scripts/build_waterloo_wards.py": "self",
     "ia/scripts/validate_sources.py": "self",
-    "mi/scripts/build_mi_lansing_wards.py": "unknown"
+    "mi/scripts/build_mi_lansing_wards.py": "unknown",
+    "mi/scripts/build_mi_pontiac_wards.py": "unknown",
+    "mi/scripts/validate_sources.py": "self",
+    "sc/scripts/build_sc_city_wards.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/validate_sources.py": "self",
+    "la/scripts/build_la_city_wards.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3208,11 +3321,21 @@
     "ia/scripts/build_ia_judicial_district.py": "unknown",
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_detroit_council.py": "unknown",
+    "mi/scripts/build_mi_detroit_polling_places.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
     "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_in_city_wards.py": "unknown",
+    "nc/scripts/build_nc_city_wards.py": "self",
+    "nc/scripts/validate_sources.py": "self",
+    "ok/scripts/build_ok_city_wards.py": "self",
+    "ok/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_city_wards.py": "self",
     "tn/scripts/build_tn_commission_districts.py": "self",
-    "tn/scripts/validate_sources.py": "self"
+    "tn/scripts/build_tn_precincts.py": "self",
+    "tn/scripts/build_tn_school_board_districts.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3232,6 +3355,7 @@
    "note": "requests+token HTTP 200, 8466 bytes",
    "callers": {
     "scripts/build_douglas_boundaries.py": "unknown",
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/lake_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "self",
@@ -3242,11 +3366,19 @@
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
     "mi/scripts/build_mi_isd_districts.py": "unknown",
     "mi/scripts/build_mi_jackson_wards.py": "self",
-    "mi/scripts/build_mi_lansing_wards.py": "unknown",
     "mi/scripts/build_mi_precincts.py": "unknown",
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
     "mi/scripts/build_mi_warren_wards.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/mi_ward_common.py": "self",
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_in_council_districts.py": "self",
+    "sc/scripts/build_sc_city_wards.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_city_wards.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3271,8 +3403,16 @@
     "ny/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
     "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_in_city_wards.py": "unknown",
+    "in/scripts/build_in_council_districts.py": "self",
+    "ok/scripts/build_ok_city_wards.py": "self",
     "ok/scripts/build_ok_commissioner_districts.py": "unknown",
-    "ok/scripts/validate_sources.py": "self"
+    "ok/scripts/validate_sources.py": "self",
+    "tn/scripts/build_tn_city_wards.py": "self",
+    "tn/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3291,9 +3431,14 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 5868 bytes",
    "callers": {
+    "scripts/build_il_county_election_results.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "self",
-    "wi/scripts/build_wi_aldermanic_districts.py": "unknown"
+    "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
+    "ia/scripts/build_ia_city_wards.py": "self",
+    "mi/scripts/build_mi_bay_city_wards.py": "unknown",
+    "mi/scripts/validate_sources.py": "self",
+    "la/scripts/build_la_city_wards.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3318,7 +3463,12 @@
     "wi/scripts/build_wi_wtcs_districts.py": "self",
     "wi/scripts/validate_sources.py": "both",
     "mi/scripts/build_mi_warren_wards.py": "unknown",
-    "mi/scripts/validate_sources.py": "self"
+    "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_in_city_wards.py": "unknown",
+    "sc/scripts/build_sc_city_wards.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/validate_sources.py": "self"
    }
   },
   "services9.arcgis.com": {
@@ -3337,9 +3487,14 @@
    "note": "requests+token HTTP 200, 11210 bytes",
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "self",
+    "scripts/build_rock_island_vote_centers.py": "self",
     "scripts/validate_sources.py": "self",
     "wi/scripts/build_wi_supervisory_districts.py": "self",
-    "wi/scripts/validate_sources.py": "both"
+    "wi/scripts/validate_sources.py": "both",
+    "in/scripts/build_in_city_wards.py": "unknown",
+    "sc/scripts/build_sc_city_wards.py": "self",
+    "sc/scripts/validate_sources.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self"
    },
    "measured": "2026-09-13"
   },
@@ -3391,6 +3546,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 238759 bytes",
    "callers": {
+    "ia/scripts/build_ia_polling_places.py": "unknown",
     "ia/scripts/ia_county_auditor_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
@@ -3474,9 +3630,11 @@
    "note": "requests+token HTTP 200, 6181 bytes",
    "callers": {
     "scripts/build_block_population.py": "self",
+    "scripts/build_bond_boundaries.py": "unknown",
     "scripts/build_carroll_board_districts.py": "self",
     "scripts/build_cass_board_districts.py": "self",
     "scripts/build_chicago_townships.py": "self",
+    "scripts/build_chillicothe_wards.py": "self",
     "scripts/build_clay_boundaries.py": "unknown",
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_district_search.py": "self",
@@ -3491,6 +3649,7 @@
     "scripts/build_metro_outline.py": "self",
     "scripts/build_municipal_ward_coverage.py": "self",
     "scripts/build_ogle_board_districts.py": "self",
+    "scripts/build_partial_board_districts.py": "unknown",
     "scripts/build_place_outline.py": "self",
     "scripts/build_shelby_board_districts.py": "unknown",
     "scripts/build_statewide_library_districts.py": "unknown",
@@ -3501,6 +3660,7 @@
     "scripts/build_washington_board_districts.py": "self",
     "scripts/build_white_boundaries.py": "unknown",
     "scripts/build_woodford_board_districts.py": "self",
+    "scripts/city_ward_maps.py": "unknown",
     "scripts/il_library_contacts_scraper.py": "self",
     "scripts/isbe_precinct_fabric.py": "self",
     "scripts/mirror_tiger_tiles.py": "self",
@@ -3511,7 +3671,9 @@
     "ny/scripts/build_metro_outline.py": "self",
     "ny/scripts/build_tompkins_legislature.py": "self",
     "ny/scripts/validate_sources.py": "self",
-    "ca/scripts/build_legislative_boundaries.py": "unknown",
+    "ca/scripts/build_legislative_boundaries.py": "self",
+    "ca/scripts/build_state_counties.py": "unknown",
+    "ca/scripts/build_state_outline.py": "self",
     "ca/scripts/validate_sources.py": "self",
     "wi/scripts/build_legislative_boundaries.py": "unknown",
     "wi/scripts/build_metro_outline.py": "self",
@@ -3520,6 +3682,7 @@
     "ia/scripts/build_cedar_rapids_wards.py": "self",
     "ia/scripts/build_county_supplied_supervisor_districts.py": "self",
     "ia/scripts/build_ia_city_contact.py": "self",
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_ia_township_officers.py": "self",
     "ia/scripts/build_legislative_boundaries.py": "unknown",
@@ -3537,13 +3700,18 @@
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
     "mi/scripts/build_mi_warren_wards.py": "unknown",
     "mi/scripts/build_state_counties.py": "unknown",
+    "mi/scripts/mi_ward_common.py": "self",
     "mi/scripts/validate_sources.py": "self",
+    "in/scripts/build_in_township_officials.py": "self",
     "in/scripts/build_legislative_boundaries.py": "unknown",
     "in/scripts/build_metro_outline.py": "self",
     "in/scripts/build_state_counties.py": "unknown",
+    "in/scripts/city_ward_common.py": "self",
     "in/scripts/validate_sources.py": "self",
     "nc/scripts/build_legislative_boundaries.py": "unknown",
     "nc/scripts/build_metro_outline.py": "self",
+    "nc/scripts/build_nc_court_districts.py": "self",
+    "nc/scripts/build_nc_school_board_districts.py": "self",
     "nc/scripts/build_state_counties.py": "unknown",
     "nc/scripts/validate_sources.py": "self",
     "ok/scripts/build_legislative_boundaries.py": "unknown",
@@ -3557,11 +3725,167 @@
     "tn/scripts/build_legislative_boundaries.py": "unknown",
     "tn/scripts/build_metro_outline.py": "self",
     "tn/scripts/build_state_counties.py": "unknown",
+    "tn/scripts/build_tn_special_school_boards.py": "self",
     "tn/scripts/validate_sources.py": "self",
     "ar/scripts/build_legislative_boundaries.py": "unknown",
     "ar/scripts/build_metro_outline.py": "self",
     "ar/scripts/build_state_counties.py": "unknown",
-    "ar/scripts/validate_sources.py": "self"
+    "ar/scripts/validate_sources.py": "self",
+    "ms/scripts/build_legislative_boundaries.py": "unknown",
+    "ms/scripts/build_metro_outline.py": "self",
+    "ms/scripts/build_ms_city_councils.py": "self",
+    "ms/scripts/build_ms_city_wards.py": "self",
+    "ms/scripts/build_ms_supervisor_districts.py": "self",
+    "ms/scripts/build_state_counties.py": "unknown",
+    "ms/scripts/validate_sources.py": "self",
+    "la/scripts/build_la_city_wards.py": "self",
+    "la/scripts/build_la_local_officials.py": "unknown",
+    "la/scripts/build_la_parish_districts.py": "self",
+    "la/scripts/build_legislative_boundaries.py": "unknown",
+    "la/scripts/build_metro_outline.py": "self",
+    "la/scripts/build_state_counties.py": "unknown",
+    "la/scripts/validate_sources.py": "self",
+    "mo/scripts/build_legislative_boundaries.py": "self",
+    "mo/scripts/build_metro_outline.py": "self",
+    "mo/scripts/build_mo_commission_districts.py": "self",
+    "mo/scripts/build_state_counties.py": "unknown",
+    "mo/scripts/validate_sources.py": "self",
+    "ga/scripts/build_ga_board_districts.py": "unknown",
+    "ga/scripts/build_metro_outline.py": "self",
+    "ga/scripts/build_state_counties.py": "unknown",
+    "ga/scripts/check_ga_county_maps.py": "self",
+    "ga/scripts/validate_sources.py": "self",
+    "va/scripts/build_legislative_boundaries.py": "self",
+    "va/scripts/build_metro_outline.py": "self",
+    "va/scripts/build_state_counties.py": "unknown",
+    "va/scripts/build_va_local_officials.py": "self",
+    "va/scripts/build_va_magisterial_districts.py": "self",
+    "va/scripts/validate_sources.py": "self",
+    "wv/scripts/build_legislative_boundaries.py": "self",
+    "wv/scripts/build_metro_outline.py": "self",
+    "wv/scripts/build_state_counties.py": "unknown",
+    "wv/scripts/build_wv_city_wards.py": "self",
+    "wv/scripts/validate_sources.py": "self",
+    "pa/scripts/build_legislative_boundaries.py": "self",
+    "pa/scripts/build_metro_outline.py": "self",
+    "pa/scripts/build_state_counties.py": "unknown",
+    "pa/scripts/validate_sources.py": "self",
+    "nv/scripts/build_legislative_boundaries.py": "self",
+    "nv/scripts/build_metro_outline.py": "self",
+    "nv/scripts/build_state_counties.py": "unknown",
+    "nv/scripts/validate_sources.py": "self",
+    "az/scripts/build_legislative_boundaries.py": "self",
+    "az/scripts/build_metro_outline.py": "self",
+    "az/scripts/build_state_counties.py": "unknown",
+    "az/scripts/validate_sources.py": "self",
+    "nj/scripts/build_legislative_boundaries.py": "self",
+    "nj/scripts/build_metro_outline.py": "self",
+    "nj/scripts/build_state_counties.py": "unknown",
+    "nj/scripts/validate_sources.py": "self",
+    "nh/scripts/build_legislative_boundaries.py": "self",
+    "nh/scripts/build_metro_outline.py": "self",
+    "nh/scripts/build_state_counties.py": "unknown",
+    "nh/scripts/validate_sources.py": "self",
+    "tx/scripts/build_legislative_boundaries.py": "self",
+    "tx/scripts/build_metro_outline.py": "self",
+    "tx/scripts/build_state_counties.py": "unknown",
+    "tx/scripts/validate_sources.py": "self",
+    "fl/scripts/build_legislative_boundaries.py": "self",
+    "fl/scripts/build_metro_outline.py": "self",
+    "fl/scripts/build_state_counties.py": "unknown",
+    "fl/scripts/validate_sources.py": "self",
+    "oh/scripts/build_legislative_boundaries.py": "self",
+    "oh/scripts/build_metro_outline.py": "self",
+    "oh/scripts/build_state_counties.py": "unknown",
+    "oh/scripts/validate_sources.py": "self",
+    "wa/scripts/build_legislative_boundaries.py": "self",
+    "wa/scripts/build_metro_outline.py": "self",
+    "wa/scripts/build_state_counties.py": "unknown",
+    "wa/scripts/validate_sources.py": "self",
+    "ma/scripts/build_legislative_boundaries.py": "self",
+    "ma/scripts/build_metro_outline.py": "self",
+    "ma/scripts/build_state_counties.py": "unknown",
+    "ma/scripts/validate_sources.py": "self",
+    "co/scripts/build_legislative_boundaries.py": "self",
+    "co/scripts/build_metro_outline.py": "self",
+    "co/scripts/build_state_counties.py": "unknown",
+    "co/scripts/validate_sources.py": "self",
+    "md/scripts/build_legislative_boundaries.py": "self",
+    "md/scripts/build_metro_outline.py": "self",
+    "md/scripts/build_state_counties.py": "unknown",
+    "md/scripts/validate_sources.py": "self",
+    "al/scripts/build_legislative_boundaries.py": "self",
+    "al/scripts/build_metro_outline.py": "self",
+    "al/scripts/build_state_counties.py": "unknown",
+    "al/scripts/validate_sources.py": "self",
+    "or/scripts/build_legislative_boundaries.py": "self",
+    "or/scripts/build_metro_outline.py": "self",
+    "or/scripts/build_state_counties.py": "unknown",
+    "or/scripts/validate_sources.py": "self",
+    "ct/scripts/build_legislative_boundaries.py": "self",
+    "ct/scripts/build_metro_outline.py": "self",
+    "ct/scripts/build_state_counties.py": "unknown",
+    "ct/scripts/validate_sources.py": "self",
+    "ut/scripts/build_legislative_boundaries.py": "self",
+    "ut/scripts/build_metro_outline.py": "self",
+    "ut/scripts/build_state_counties.py": "unknown",
+    "ut/scripts/validate_sources.py": "self",
+    "ks/scripts/build_legislative_boundaries.py": "self",
+    "ks/scripts/build_metro_outline.py": "self",
+    "ks/scripts/build_state_counties.py": "unknown",
+    "ks/scripts/validate_sources.py": "self",
+    "nm/scripts/build_legislative_boundaries.py": "self",
+    "nm/scripts/build_metro_outline.py": "self",
+    "nm/scripts/build_state_counties.py": "unknown",
+    "nm/scripts/validate_sources.py": "self",
+    "ne/scripts/build_legislative_boundaries.py": "self",
+    "ne/scripts/build_metro_outline.py": "self",
+    "ne/scripts/build_state_counties.py": "unknown",
+    "ne/scripts/validate_sources.py": "self",
+    "id/scripts/build_legislative_boundaries.py": "self",
+    "id/scripts/build_metro_outline.py": "self",
+    "id/scripts/build_state_counties.py": "unknown",
+    "id/scripts/validate_sources.py": "self",
+    "hi/scripts/build_legislative_boundaries.py": "self",
+    "hi/scripts/build_metro_outline.py": "self",
+    "hi/scripts/build_state_counties.py": "unknown",
+    "hi/scripts/validate_sources.py": "self",
+    "me/scripts/build_legislative_boundaries.py": "self",
+    "me/scripts/build_metro_outline.py": "self",
+    "me/scripts/build_state_counties.py": "unknown",
+    "me/scripts/validate_sources.py": "self",
+    "mt/scripts/build_legislative_boundaries.py": "self",
+    "mt/scripts/build_metro_outline.py": "self",
+    "mt/scripts/build_state_counties.py": "unknown",
+    "mt/scripts/validate_sources.py": "self",
+    "ri/scripts/build_legislative_boundaries.py": "self",
+    "ri/scripts/build_metro_outline.py": "self",
+    "ri/scripts/build_state_counties.py": "unknown",
+    "ri/scripts/validate_sources.py": "self",
+    "de/scripts/build_legislative_boundaries.py": "self",
+    "de/scripts/build_metro_outline.py": "self",
+    "de/scripts/build_state_counties.py": "unknown",
+    "de/scripts/validate_sources.py": "self",
+    "sd/scripts/build_legislative_boundaries.py": "self",
+    "sd/scripts/build_metro_outline.py": "self",
+    "sd/scripts/build_state_counties.py": "unknown",
+    "sd/scripts/validate_sources.py": "self",
+    "nd/scripts/build_legislative_boundaries.py": "self",
+    "nd/scripts/build_metro_outline.py": "self",
+    "nd/scripts/build_state_counties.py": "unknown",
+    "nd/scripts/validate_sources.py": "self",
+    "ak/scripts/build_legislative_boundaries.py": "self",
+    "ak/scripts/build_metro_outline.py": "self",
+    "ak/scripts/build_state_counties.py": "unknown",
+    "ak/scripts/validate_sources.py": "self",
+    "vt/scripts/build_legislative_boundaries.py": "self",
+    "vt/scripts/build_metro_outline.py": "self",
+    "vt/scripts/build_state_counties.py": "unknown",
+    "vt/scripts/validate_sources.py": "self",
+    "wy/scripts/build_legislative_boundaries.py": "self",
+    "wy/scripts/build_metro_outline.py": "self",
+    "wy/scripts/build_state_counties.py": "unknown",
+    "wy/scripts/validate_sources.py": "self"
    }
   },
   "unitedstates.github.io": {
@@ -3599,7 +3923,79 @@
     "tn/scripts/build_congress_roster.py": "unknown",
     "tn/scripts/validate_sources.py": "self",
     "ar/scripts/build_congress_roster.py": "unknown",
-    "ar/scripts/validate_sources.py": "self"
+    "ar/scripts/validate_sources.py": "self",
+    "ms/scripts/build_congress_roster.py": "unknown",
+    "ms/scripts/validate_sources.py": "self",
+    "la/scripts/build_congress_roster.py": "unknown",
+    "la/scripts/validate_sources.py": "self",
+    "mo/scripts/build_congress_roster.py": "unknown",
+    "mo/scripts/validate_sources.py": "self",
+    "ga/scripts/build_congress_roster.py": "unknown",
+    "ga/scripts/validate_sources.py": "self",
+    "va/scripts/build_congress_roster.py": "unknown",
+    "va/scripts/validate_sources.py": "self",
+    "wv/scripts/build_congress_roster.py": "unknown",
+    "wv/scripts/validate_sources.py": "self",
+    "pa/scripts/build_congress_roster.py": "unknown",
+    "pa/scripts/validate_sources.py": "self",
+    "nv/scripts/build_congress_roster.py": "unknown",
+    "nv/scripts/validate_sources.py": "self",
+    "az/scripts/build_congress_roster.py": "unknown",
+    "az/scripts/validate_sources.py": "self",
+    "nj/scripts/build_congress_roster.py": "unknown",
+    "nj/scripts/validate_sources.py": "self",
+    "nh/scripts/build_congress_roster.py": "unknown",
+    "nh/scripts/validate_sources.py": "self",
+    "tx/scripts/build_congress_roster.py": "unknown",
+    "tx/scripts/validate_sources.py": "self",
+    "fl/scripts/build_congress_roster.py": "unknown",
+    "fl/scripts/validate_sources.py": "self",
+    "oh/scripts/build_congress_roster.py": "unknown",
+    "oh/scripts/validate_sources.py": "self",
+    "wa/scripts/build_congress_roster.py": "unknown",
+    "wa/scripts/validate_sources.py": "self",
+    "ma/scripts/build_congress_roster.py": "unknown",
+    "ma/scripts/validate_sources.py": "self",
+    "co/scripts/build_congress_roster.py": "unknown",
+    "co/scripts/validate_sources.py": "self",
+    "md/scripts/build_congress_roster.py": "unknown",
+    "md/scripts/validate_sources.py": "self",
+    "al/scripts/build_congress_roster.py": "unknown",
+    "al/scripts/validate_sources.py": "self",
+    "or/scripts/build_congress_roster.py": "unknown",
+    "or/scripts/validate_sources.py": "self",
+    "ct/scripts/build_congress_roster.py": "unknown",
+    "ct/scripts/validate_sources.py": "self",
+    "ut/scripts/build_congress_roster.py": "unknown",
+    "ut/scripts/validate_sources.py": "self",
+    "ks/scripts/build_congress_roster.py": "unknown",
+    "ks/scripts/validate_sources.py": "self",
+    "nm/scripts/build_congress_roster.py": "unknown",
+    "nm/scripts/validate_sources.py": "self",
+    "ne/scripts/build_congress_roster.py": "unknown",
+    "ne/scripts/validate_sources.py": "self",
+    "id/scripts/build_congress_roster.py": "unknown",
+    "id/scripts/validate_sources.py": "self",
+    "hi/scripts/build_congress_roster.py": "unknown",
+    "hi/scripts/validate_sources.py": "self",
+    "me/scripts/build_congress_roster.py": "unknown",
+    "me/scripts/validate_sources.py": "self",
+    "mt/scripts/build_congress_roster.py": "unknown",
+    "mt/scripts/validate_sources.py": "self",
+    "ri/scripts/build_congress_roster.py": "unknown",
+    "ri/scripts/validate_sources.py": "self",
+    "de/scripts/build_congress_roster.py": "unknown",
+    "de/scripts/validate_sources.py": "self",
+    "sd/scripts/build_congress_roster.py": "unknown",
+    "sd/scripts/validate_sources.py": "self",
+    "nd/scripts/build_congress_roster.py": "unknown",
+    "nd/scripts/validate_sources.py": "self",
+    "ak/scripts/build_congress_roster.py": "unknown",
+    "ak/scripts/validate_sources.py": "self",
+    "vt/scripts/build_congress_roster.py": "unknown",
+    "vt/scripts/validate_sources.py": "self",
+    "wy/scripts/build_congress_roster.py": "unknown",
+    "wy/scripts/validate_sources.py": "self"
    }
   },
   "villageofcrete.org": {
@@ -3896,11 +4292,16 @@
     "wi/scripts/validate_sources.py": "both",
     "ia/scripts/build_dsm_wards.py": "self",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
+    "mi/scripts/build_mi_bay_city_wards.py": "unknown",
+    "mi/scripts/build_mi_detroit_polling_places.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
     "mi/scripts/build_mi_lansing_wards.py": "unknown",
+    "mi/scripts/build_mi_pontiac_wards.py": "unknown",
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
-    "mi/scripts/build_mi_warren_wards.py": "unknown"
+    "mi/scripts/build_mi_warren_wards.py": "unknown",
+    "mi/scripts/mi_ward_common.py": "self",
+    "in/scripts/build_in_city_wards.py": "unknown"
    },
    "measured": "2026-09-13"
   },
@@ -3932,6 +4333,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 123218 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -3991,6 +4393,41 @@
     "scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
+  },
+  "www.brazoriacountytx.gov": {
+   "host": "www.brazoriacountytx.gov",
+   "url": "https://www.brazoriacountytx.gov/government/commissioners-court",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 140523 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 140523 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.bristoltn.gov": {
    "host": "www.bristoltn.gov",
@@ -4263,6 +4700,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 105907 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -4406,6 +4844,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 82832 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -4457,6 +4896,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 120745 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -5323,6 +5763,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 149928 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -5450,6 +5891,7 @@
    "note": "requests+token HTTP 200, 255002 bytes",
    "callers": {
     "scripts/build_calhoun_precincts.py": "unknown",
+    "scripts/build_early_voting_sites.py": "self",
     "scripts/build_stephenson_fire_districts.py": "self",
     "scripts/build_vtd_precincts.py": "unknown",
     "scripts/il_county_clerk_scraper.py": "self",
@@ -5642,6 +6084,41 @@
     "wi/scripts/wi_alderperson_scraper.py": "both"
    },
    "measured": "2026-10-01"
+  },
+  "www.galvestoncountytx.gov": {
+   "host": "www.galvestoncountytx.gov",
+   "url": "https://www.galvestoncountytx.gov/our-county/county-judge/commissioners-court",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 107278 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 107278 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.garnernc.gov": {
    "host": "www.garnernc.gov",
@@ -5910,6 +6387,41 @@
     "scripts/il_county_commissioners_scraper.py": "both"
    },
    "measured": "2026-09-13"
+  },
+  "www.hayscountytx.gov": {
+   "host": "www.hayscountytx.gov",
+   "url": "https://www.hayscountytx.gov/192/Precinct-1-Commissioner",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 99734 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 99734 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.henrycty.com": {
    "host": "www.henrycty.com",
@@ -6226,6 +6738,41 @@
     "scripts/jodaviess_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "self"
    }
+  },
+  "www.johnsoncountytx.org": {
+   "host": "www.johnsoncountytx.org",
+   "url": "https://www.johnsoncountytx.org/government/commissioners",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 130577 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 130577 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.joliet.gov": {
    "host": "www.joliet.gov",
@@ -6755,6 +7302,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 110308 bytes",
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -6835,6 +7383,37 @@
     "scripts/il_gis_board_scraper.py": "self",
     "scripts/mclean_municipal_officials_scraper.py": "browser"
    }
+  },
+  "www.mclennan.gov": {
+   "host": "www.mclennan.gov",
+   "url": "https://www.mclennan.gov/",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 157343 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 157343 bytes",
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.menardcountyil.gov": {
    "host": "www.menardcountyil.gov",
@@ -7060,6 +7639,41 @@
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "both"
    }
+  },
+  "www.nuecesco.com": {
+   "host": "www.nuecesco.com",
+   "url": "https://www.nuecesco.com/commissioners-court",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 128888 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 128888 bytes (page carries a captcha widget)",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.oakcreekwi.gov": {
    "host": "www.oakcreekwi.gov",
@@ -8120,6 +8734,7 @@
     "note": "HTTP 403"
    },
    "callers": {
+    "ia/scripts/build_ia_city_wards.py": "self",
     "ia/scripts/ia_city_council_scraper.py": "both"
    },
    "measured": "2026-10-01"
@@ -8241,6 +8856,41 @@
     "wi/scripts/wi_circuit_judges_scraper.py": "self",
     "wi/scripts/wi_coa_scraper.py": "self"
    }
+  },
+  "www.wilcotx.gov": {
+   "host": "www.wilcotx.gov",
+   "url": "https://www.wilcotx.gov/331/Commissioners-Court",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 173036 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused-and-stack",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 173036 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "tx/scripts/tx_commissioners_browser_rung.py": "browser"
+   },
+   "measured": "2026-11-17"
   },
   "www.willcountyclerk.gov": {
    "host": "www.willcountyclerk.gov",
@@ -8390,5 +9040,5 @@
    }
   }
  },
- "callers_refreshed": "2026-10-15"
+ "callers_refreshed": "2026-11-17"
 }

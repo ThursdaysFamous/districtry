@@ -451,6 +451,38 @@
   "sourceUrl": "https://www.bowiecounty.org/1194/Commissioners",
   "asOf": "2026-11-17"
  },
+ "48039": {
+  "county": "Brazoria County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jay Burridge",
+    "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court/commissioner-precinct-1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Ryan Cade",
+    "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court/commissioner-precinct-2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Stacy Adams",
+    "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court/commissioner-precinct-3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "David Linder",
+    "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court/commissioner-precinct-4"
+   }
+  ],
+  "source": "Brazoria County's own website",
+  "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court",
+  "asOf": "2026-11-17"
+ },
  "48043": {
   "county": "Brewster County",
   "seats": [
@@ -2007,6 +2039,34 @@
   "sourceUrl": "https://www.co.frio.tx.us/page/co.commissioners-court",
   "asOf": "2026-11-17"
  },
+ "48167": {
+  "county": "Galveston County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Darrell Apffel"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Joe Giusti"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Hank Dugie"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Robin Armstrong"
+   }
+  ],
+  "source": "Galveston County's own website",
+  "sourceUrl": "https://www.galvestoncountytx.gov/our-county/county-judge/commissioners-court",
+  "asOf": "2026-11-17"
+ },
  "48169": {
   "county": "Garza County",
   "seats": [
@@ -2493,6 +2553,38 @@
   ],
   "source": "Haskell County's own website",
   "sourceUrl": "https://www.haskellcountytx.gov/1209/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48209": {
+  "county": "Hays County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Debbie Gonzales Ingalsbe",
+    "sourceUrl": "https://www.hayscountytx.gov/192/Precinct-1-Commissioner"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Dr. Michelle Cohen",
+    "sourceUrl": "https://www.hayscountytx.gov/193/Precinct-2-Commissioner"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Morgan Hammer",
+    "sourceUrl": "https://www.hayscountytx.gov/194/Precinct-3-Commissioner"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Walt Smith",
+    "sourceUrl": "https://www.hayscountytx.gov/195/Precinct-4-Commissioner"
+   }
+  ],
+  "source": "Hays County's own website",
+  "sourceUrl": "https://www.hayscountytx.gov/188/Commissioners-Court-Members",
   "asOf": "2026-11-17"
  },
  "48211": {
@@ -3045,6 +3137,38 @@
   ],
   "source": "Jim Wells County's own website",
   "sourceUrl": "https://www.co.jim-wells.tx.us/page/co.commissioners",
+  "asOf": "2026-11-17"
+ },
+ "48251": {
+  "county": "Johnson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Rick Bailey",
+    "sourceUrl": "https://www.johnsoncountytx.org/government/commissioners/commissioner-precinct-1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Kenny Howell",
+    "sourceUrl": "https://www.johnsoncountytx.org/government/commissioners/commissioner-precinct-2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Mike White",
+    "sourceUrl": "https://www.johnsoncountytx.org/government/commissioners/commissioner-precinct-3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Larry Woolley",
+    "sourceUrl": "https://www.johnsoncountytx.org/government/commissioners/commissioner-precinct-4"
+   }
+  ],
+  "source": "Johnson County's own website",
+  "sourceUrl": "https://www.johnsoncountytx.org/government/commissioners",
   "asOf": "2026-11-17"
  },
  "48253": {
@@ -3811,6 +3935,34 @@
   "sourceUrl": "https://www.co.mcculloch.tx.us/page/mcculloch.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48309": {
+  "county": "McLennan County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jim Smith"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Donis \"D.L.\" Wilson"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Will Jones"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ben Perry"
+   }
+  ],
+  "source": "McLennan County's own website",
+  "sourceUrl": "https://www.mclennan.gov/",
+  "asOf": "2026-11-17"
+ },
  "48313": {
   "county": "Madison County",
   "seats": [
@@ -4285,6 +4437,38 @@
   ],
   "source": "Nolan County's own website",
   "sourceUrl": "https://www.co.nolan.tx.us/page/nolan.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48355": {
+  "county": "Nueces County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Mike Pusley",
+    "sourceUrl": "https://www.nuecesco.com/commissioners-court/commissioner-precinct-1/commissioner-pusley"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Joe A. Gonzalez",
+    "sourceUrl": "https://www.nuecesco.com/commissioners-court/commissioner-precinct-2/commissioner-gonzalez"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "John Marez",
+    "sourceUrl": "https://www.nuecesco.com/commissioners-court/commissioner-precinct-3/commissioner-marez"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Brent Chesney",
+    "sourceUrl": "https://www.nuecesco.com/commissioners-court/commissioner-precinct-4/commissioner-chesney"
+   }
+  ],
+  "source": "Nueces County's own website",
+  "sourceUrl": "https://www.nuecesco.com/commissioners-court",
   "asOf": "2026-11-17"
  },
  "48357": {
@@ -6097,6 +6281,34 @@
   ],
   "source": "Willacy County's own website",
   "sourceUrl": "https://www.willacy.gov/page/willacy.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48491": {
+  "county": "Williamson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Terry Cook"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Cynthia Long"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Valerie Covey"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Russ Boles"
+   }
+  ],
+  "source": "Williamson County's own website",
+  "sourceUrl": "https://www.wilcotx.gov/331/Commissioners-Court",
   "asOf": "2026-11-17"
  },
  "48493": {
