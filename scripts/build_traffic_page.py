@@ -252,6 +252,11 @@ ACTION_GROUPS = [
     # opened above a map's results (engine statewide-officials, 2026-11-10;
     # Adam: "count in traffic")
     ("State officials", {"statewide-officials"}),
+    # next-election/<link>/<tag>: a link followed in the "Next election
+    # here" block under a map's Elections heading (engine next-election,
+    # 2026-11-15; Adam: "I want visitors to know I'll have election results
+    # after"), first recorded 2026-11-16
+    ("Next election", {"next-election"}),
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
                "app-shortcut", "address-map"}),
 ]
@@ -528,12 +533,25 @@ def layer_scope(drawn):
 
 
 def newest_property(doc):
-    """The reporting property whose first day is latest, named and measured."""
+    """The reporting property whose first day is latest, named and measured.
+
+    None when that first day is the window's own first day, because then the
+    property was already reporting when the window began and the date is the
+    window's edge, not the day it first appeared. Both fetchers clip their
+    file to a rolling window, so once districtry.com's first day on Bing
+    (2026-09-13) left it, every property's first day read as the window's
+    start: note 7 said districtry.com first appeared on Bing on September 14,
+    15 and 16 on three successive days, and on 2026-11-17 the tie between two
+    properties starting on the same day named chidistricts.com as the newest.
+    """
     live = [(name, p) for name, p in doc["properties"].items()
             if p["impressions"] and p.get("first_date")]
     if len(live) < 2:
         return None
     name, p = max(live, key=lambda kv: kv[1]["first_date"])
+    start = (doc.get("window") or {}).get("start")
+    if start and p["first_date"] <= start:
+        return None
     host = name.split("//")[-1].strip("/").replace("sc-domain:", "")
     first = datetime.date.fromisoformat(p["first_date"])
     return {"host": host, "first": p["first_date"],
