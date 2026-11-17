@@ -91,16 +91,17 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. Forty-seven counties are read so far, 69.2% of Texans: the twelve largest
+largest county first. Sixty-six counties are read so far, 72.3% of Texans: the twelve largest
 whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin, Denton, Fort
 Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock), sixteen of the 21st to 40th largest
 (Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
-Wichita, Gregg, Tom Green, Potter and Rockwall) and nineteen of the 41st to 60th (all but
-Maverick, which has no county website this project can find). The builder's docstring records
-each page's shape and why each of the other thirteen among the sixty largest is not read (Bexar
+Wichita, Gregg, Tom Green, Potter and Rockwall), nineteen of the 41st to 60th (all but
+Maverick, which has no county website this project can find) and nineteen of the 61st to 80th
+(all but Erath, whose site answers this project with Cloudflare's block page). The builder's docstring records
+each page's shape and why each of the other fourteen among the eighty largest is not read (Bexar
 and Brazos answer with a challenge, Montgomery and Bell disallow every path in robots.txt, seven
-refuse the project's client, Smith prints its names only inside sentences, and Maverick's site
-answers nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
+refuse the project's client and Erath blocks it, Smith prints its names only inside sentences,
+and Maverick's site answers nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
 so the weekly job's time limit is an hour. Each
 record's date is the day its four names were first read, so a week with no change writes the same
 bytes; a county whose page cannot be read keeps its last record, and the weekly job's last step
