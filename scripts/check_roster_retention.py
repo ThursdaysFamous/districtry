@@ -387,7 +387,7 @@ SOURCE_KEY_PREFIX = {
 }
 
 
-def groups_of(payload, name=None):
+def groups_of(payload, name=None, cap=True):
     """{group label -> sub-payload} for a file keyed by county/district, else {}.
 
     THIS IS THE FIX FOR THE CASE THAT PROMPTED THE WHOLE CHECK. Pooled across a
@@ -400,6 +400,9 @@ def groups_of(payload, name=None):
     `name` is the file's path; a file in SOURCE_KEY_PREFIX has its keys folded
     to that width first, because there its top-level key is a seat and its
     source is a county.
+
+    `cap=False` skips the MAX_GROUPS_FOR_PER_GROUP limit; compare() asks for it
+    on the NEW side only when the base was measured per group (see there).
     """
     if not isinstance(payload, dict):
         return {}
@@ -412,12 +415,12 @@ def groups_of(payload, name=None):
         # Out of band is not silently ignored — audit_source_prefixes() fails
         # the run for it. Returning {} here only decides what this one
         # comparison does while that failure is being printed.
-        if folded and len(folded) <= MAX_GROUPS_FOR_PER_GROUP:
+        if folded and (not cap or len(folded) <= MAX_GROUPS_FOR_PER_GROUP):
             return folded
         return {}
     groups = {key: value for key, value in payload.items()
               if isinstance(value, (dict, list)) and records_in(value)}
-    if not groups or len(groups) > MAX_GROUPS_FOR_PER_GROUP:
+    if not groups or (cap and len(groups) > MAX_GROUPS_FOR_PER_GROUP):
         return {}
     return groups
 
@@ -723,7 +726,18 @@ def compare(name, old, new):
 
     # Grouped FIRST, because BOTH file-wide passes have to know what the
     # per-source pass already excuses — see excused_group_drops.
-    old_groups, new_groups = groups_of(old, name), groups_of(new, name)
+    #
+    # THE BASE DECIDES HOW A FILE IS MEASURED, so a change that carries a file
+    # past MAX_GROUPS_FOR_PER_GROUP is still measured source by source against
+    # the base it is leaving. Measured 2026-11-17: tx-county-commissioners.json
+    # went from 192 counties to 222 in one change, the capped new side returned
+    # no groups, and every one of the 192 unchanged counties was reported as
+    # VANISHED. With the cap applied to the new side only when the base was
+    # already measured whole, the counties added are new groups, the ones kept
+    # are compared one by one, and from the next change on the file is
+    # measured whole like every other file past the limit.
+    old_groups = groups_of(old, name)
+    new_groups = groups_of(new, name, cap=not old_groups)
     excused = excused_group_drops(name, old_groups, new_groups)
     excused_recs = {}
     for (_, field), n in excused.items():
