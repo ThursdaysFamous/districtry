@@ -621,10 +621,12 @@ def shipped_origin():
 # browser asks for it, with Accept-Encoding: gzip. GitHub Pages sent these
 # files compressed, and they are the bulk of what a map downloads, so a files
 # host that stopped compressing them would make every map several times slower
-# to load with nothing else to show for it. That one is the largest boundary
-# file under COMPRESSED_SAMPLE_MAX across the live apps, so the read stays
-# small.
-COMPRESSED_SAMPLE_MAX = 2 * 1024 * 1024
+# to load with nothing else to show for it. That one is the LARGEST boundary
+# file across the live apps, because that is the file whose compression
+# matters most and the one a size limit on the host's compression would drop
+# first. Measured on the day the copies first existed (2026-11-16): Kentucky's
+# precincts, 10,197,299 bytes published, arrived as 2,493,584 with gzip, so
+# the read costs about 2.5 MB a run.
 
 # This project's own token. Without one urllib sends "Python-urllib/3.x",
 # which Cloudflare's default Browser Integrity Check can refuse outright.
@@ -671,8 +673,8 @@ def _listed(value, name):
 
 def probe_sample(tree, live_tags):
     """[(key, kind)] — each live app's smallest tile archive, its population
-    index and its smallest boundary file, wherever the tree has them, and one
-    boundary file to be read compressed. Raises TreeError for an app whose
+    index and its smallest boundary file, wherever the tree has them, and the
+    largest boundary file of all, to be read compressed. Raises TreeError for an app whose
     boundary files cannot be listed."""
     out = []
     largest = None
@@ -682,9 +684,8 @@ def probe_sample(tree, live_tags):
                            for n in boundary_files(tree, tag))
             if sized:
                 out.append(("%s/data/app/%s" % (tag, sized[0][1]), "boundary"))
-            for size, n in sized:
-                if size <= COMPRESSED_SAMPLE_MAX and (largest is None or size > largest[0]):
-                    largest = (size, "%s/data/app/%s" % (tag, n))
+            if sized and (largest is None or sized[-1][0] > largest[0]):
+                largest = (sized[-1][0], "%s/data/app/%s" % (tag, sized[-1][1]))
         tiles = os.path.join(tree, tag, "data", "app", "tiles")
         if os.path.isdir(tiles):
             names = sorted((os.path.getsize(os.path.join(tiles, n)), n)
