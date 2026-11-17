@@ -202,6 +202,7 @@ def render_metro_config(w):
         a("  // Census block population index (scripts/build_block_population.py): lets")
         a("  // the comparison stats screen count people as well as area.")
         a("  var POPULATION_INDEX_URL = %s;" % js_str("data/app/" + w["population"]["index"]))
+    L.extend(render_boundary_files(w))
     a("  var SOCRATA_HOST = %s;" % js_str(w["socrata_host"]))
     a("  // Socrata app token: some metros' portals throttle anonymous requests. It is")
     a("  // a throttling identifier, not a secret — public exposure is Socrata's")
@@ -300,6 +301,38 @@ def render_metro_config(w):
     L.extend(keyed_lines(w["hover_name_keys"], "    "))
     a("  ];")
     return "\n".join(L)
+
+
+def render_boundary_files(w):
+    """BOUNDARY_FILES for one instance: the worksheet's data_files.geometry, the
+    same list sw.js gets as GEOMETRY_URLS, as BARE file names.
+
+    Bare on purpose. validate_index.py proves each data file is used by looking
+    for the text "data/app/<file>" in index.html, and a generated list spelling
+    that path for every boundary file would satisfy the check for a file no
+    layer reads. A bare name does not contain the path, so the check still
+    needs a real reference."""
+    names = [g["file"] for g in w["data_files"]["geometry"]]
+    bad = [n for n in names if "/" in n or not n.endswith(".json")]
+    if bad:
+        sys.exit("generate-metro-files: data_files.geometry names a file that is not a bare "
+                 "<name>.json, which the files host's copy cannot serve: %s" % ", ".join(bad[:5]))
+    L = []
+    a = L.append
+    a("  // The boundary files this app reads whole (the worksheet's data_files.geometry,")
+    a("  // which sw.js lists as GEOMETRY_URLS). On the live site they are read from the")
+    a("  // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly")
+    a("  // these there. Bare names, never paths: see render_boundary_files.")
+    line = "  var BOUNDARY_FILES = ["
+    for i, n in enumerate(names):
+        item = js_str(n) + ("," if i != len(names) - 1 else "")
+        if len(line) + 1 + len(item) > 96:
+            a(line)
+            line = "    " + item
+        else:
+            line += " " + item
+    a(line + " ];")
+    return L
 
 
 def render_layer_codes(w):

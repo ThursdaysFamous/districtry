@@ -14,9 +14,9 @@
 // Configure the URL with BASE_URL (default http://localhost:8000/).
 
 import { chromium } from "playwright";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, statSync } from "fs";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { dirname, extname, join } from "path";
 import { stubBasemap, realBasemapContext } from "./basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
@@ -4202,6 +4202,209 @@ try {
       JSON.stringify({ controlled, cachedOk, repeatOk, refetched })
     );
     await context.close();
+  }
+
+  // 2m. ON THE LIVE SITE A BOUNDARY FILE IS READ FROM THE FILES HOST, AND THE
+  //     SITE'S OWN COPY IS NEVER ASKED FOR (2026-11-16). The page asks for
+  //     each file in GEOMETRY_URLS at files.districtry.com, where the publish
+  //     copies it, and the worker keeps one copy under the site's address
+  //     whichever address was asked. That only happens on the live hostname,
+  //     so every other check here, which runs on localhost, cannot see it.
+  //     This one serves the checkout AS https://districtry.com/ with a
+  //     stand-in for the files host, and the stand-in site REFUSES every
+  //     boundary file, which is the site once those files stop being
+  //     published there. It holds five things: a first visit reads its
+  //     boundary files from the files host; the visit after it is the worker
+  //     reading them there; the visit after that reads none from anywhere;
+  //     a page still asking the site's address, which is a tab opened before
+  //     the switch, is answered by the worker from the files host; and a copy
+  //     the worker kept before the switch answers a request for the files
+  //     host's address, which is a returning visitor's first load after it.
+  //
+  //     THE BROWSER IS A SECOND ONE WITH A PROXY NOTHING LISTENS ON. A
+  //     request Playwright routes never reaches the proxy, so the two
+  //     stand-ins answer; anything else fails at once. Without it this check
+  //     would count a visit on the real site's analytics (the hostname is
+  //     the real one), and a service worker's update check, which no route
+  //     sees, fetched the REAL site's sw.js and replaced the worker under
+  //     test with production's, measured that day. cdnjs is let past the
+  //     proxy because a runner loads Leaflet from it; where the libraries
+  //     are vendored they are routed and it is not reached either.
+  {
+    const SITE = "https://districtry.com", FILES = "https://files.districtry.com";
+    const ROOT = dirname(INSTANCE_DIR), TAG = APP_DIR.replace(/\/$/, "");
+    const listed = readFileSync(join(INSTANCE_DIR, "sw.js"), "utf8").match(/const GEOMETRY_URLS = \[\n([\s\S]*?)^\];/m);
+    const boundary = new Set(Array.from((listed ? listed[1] : "").matchAll(/"\.\/data\/app\/([^"]+)"/g), (m) => `/${TAG}/data/app/${m[1]}`));
+    const TYPES = {
+      ".html": "text/html; charset=utf-8", ".js": "application/javascript", ".json": "application/json",
+      ".css": "text/css", ".png": "image/png", ".svg": "image/svg+xml", ".woff2": "font/woff2",
+      ".webmanifest": "application/manifest+json", ".txt": "text/plain", ".ico": "image/x-icon",
+    };
+    const fromDisk = (pathname) => {
+      let file = join(ROOT, decodeURIComponent(pathname));
+      if (!file.startsWith(ROOT)) return null;
+      if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
+      if (!existsSync(file)) return null;
+      return { body: readFileSync(file), contentType: TYPES[extname(file)] || "application/octet-stream" };
+    };
+    const live = stubBasemap(await chromium.launch({ proxy: { server: "http://127.0.0.1:9", bypass: "cdnjs.cloudflare.com" } }));
+    try {
+      const context = await live.newContext();
+      if (VENDORED_LEAFLET) {
+        await context.route("**/cdnjs.cloudflare.com/**/leaflet.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_LEAFLET.js }));
+        await context.route("**/cdnjs.cloudflare.com/**/leaflet.css", (r) =>
+          r.fulfill({ status: 200, contentType: "text/css", body: VENDORED_LEAFLET.css }));
+      }
+      if (VENDORED_MAPLIBRE) {
+        await context.route("**/cdnjs.cloudflare.com/**/maplibre-gl.min.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
+      }
+      // every boundary file that reaches the network, by who asked and where
+      let asked = [], last = Date.now();
+      const note = (route, host) => {
+        const path = new URL(route.request().url()).pathname;
+        if (!boundary.has(path)) return false;
+        asked.push({ who: route.request().serviceWorker() ? "worker" : "page", host, path });
+        last = Date.now();
+        return true;
+      };
+      await context.route(SITE + "/**", (route) => {
+        if (note(route, "site")) return route.fulfill({ status: 404, contentType: "text/plain", body: "not published here" });
+        const file = fromDisk(new URL(route.request().url()).pathname);
+        return file ? route.fulfill({ status: 200, ...file }) : route.fulfill({ status: 404, contentType: "text/plain", body: "no such file" });
+      });
+      await context.route(FILES + "/**", (route) => {
+        note(route, "files");
+        const file = fromDisk(new URL(route.request().url()).pathname);
+        const headers = { "access-control-allow-origin": SITE, vary: "Origin", "access-control-expose-headers": "Content-Range, ETag" };
+        return file
+          ? route.fulfill({ status: 200, headers, ...file })
+          : route.fulfill({ status: 404, headers, contentType: "text/plain", body: "no such file" });
+      });
+      const count = (who, host) => asked.filter((r) => r.who === who && r.host === host).length;
+      // a load has settled once no boundary file has been asked for in 1.5 s
+      const settle = async () => {
+        const until = Date.now() + QUERY_TIMEOUT;
+        last = Date.now();
+        while (Date.now() - last < 1500 && Date.now() < until) await new Promise((done) => setTimeout(done, 250));
+      };
+      const up = () => page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT }).then(() => true, () => false);
+
+      // a selected point, so the page reads the outlines its layers' coverage
+      // tests need: with none it reads two boundary files, with one about 160
+      const page = await booted(context, `${SITE}/${TAG}/#point=${POINT}`);
+      const controlled = await page
+        .waitForFunction(() => !!(navigator.serviceWorker && navigator.serviceWorker.controller), null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      await settle();
+      // Who asks on a first visit is a race the worker is free to win: it
+      // takes control of the page while the page is still loading, so these
+      // are counted together, and the worker's own are counted over both loads.
+      const first = { files: count("page", "files") + count("worker", "files"), site: count("page", "site") + count("worker", "site") };
+      const read = new Set(asked.map((r) => r.path));
+      let byWorker = count("worker", "files");
+
+      asked = [];
+      await page.reload({ waitUntil: "domcontentloaded" });
+      const secondUp = await up();
+      await settle();
+      byWorker += count("worker", "files");
+      const second = { worker_files: byWorker, page_files: count("page", "files"), site: count("page", "site") + count("worker", "site") };
+      asked.forEach((r) => read.add(r.path));
+
+      asked = [];
+      await page.reload({ waitUntil: "domcontentloaded" });
+      const thirdUp = await up();
+      await settle();
+      const third = asked.length;
+      // what the worker kept: every boundary file read so far, each under
+      // the SITE's address and readable there, and none under the files host's
+      const kept = await page.evaluate(async (a) => {
+        const out = { missing: 0, unreadable: 0, filesKeys: 0, siteKeys: 0 };
+        for (const path of a.paths) {
+          const hit = await caches.match(a.site + path);
+          if (!hit) out.missing++;
+          else if (!hit.ok || !(await hit.json())) out.unreadable++;
+        }
+        for (const name of await caches.keys()) {
+          for (const req of await (await caches.open(name)).keys()) {
+            if (a.paths.indexOf(new URL(req.url).pathname) === -1) continue;
+            if (req.url.indexOf(a.files) === 0) out.filesKeys++; else if (req.url.indexOf(a.site) === 0) out.siteKeys++;
+          }
+        }
+        return out;
+      }, { site: SITE, files: FILES, paths: Array.from(read) });
+
+      check(
+        "on the live site a first visit reads its boundary files from the files host and none from the site",
+        first.files > 0 && first.site === 0,
+        JSON.stringify(first)
+      );
+      check(
+        "on the live site the worker reads boundary files from the files host and keeps them under the site's address",
+        controlled && secondUp && second.worker_files > 0 && second.page_files === 0 && second.site === 0 &&
+          read.size > 0 && kept.missing === 0 && kept.unreadable === 0 && kept.siteKeys === read.size && kept.filesKeys === 0,
+        JSON.stringify({ controlled, secondUp, ...second, files_read: read.size, kept })
+      );
+      check(
+        "on the live site a repeat visit reads no boundary file it already holds, from either host",
+        thirdUp && third === 0,
+        JSON.stringify({ thirdUp, refetched: third, first: asked.slice(0, 3) })
+      );
+
+      // A tab opened before the switch asks the SITE's address. The worker
+      // answers it from the files host on a miss and from its copy after.
+      const fresh = Array.from(boundary).find((p) => !read.has(p));
+      asked = [];
+      const old = fresh ? await page.evaluate(async (path) => {
+        const once = async () => { const r = await fetch(path); return { status: r.status, ok: r.ok && !!(await r.json()) }; };
+        try {
+          const a = await once();
+          // the worker stores its copy after it answers, so wait for the copy
+          for (let i = 0; i < 40 && !(await caches.match(path)); i++) await new Promise((done) => setTimeout(done, 100));
+          return { a, b: await once() };
+        } catch (e) { return { error: String(e) }; }
+      }, fresh) : { error: "every boundary file was read at boot" };
+      check(
+        "a page still asking the site for a boundary file is answered by the worker from the files host, once",
+        !!old.a && old.a.ok && old.b.ok && asked.length === 1 && asked[0].who === "worker" && asked[0].host === "files" && asked[0].path === fresh,
+        JSON.stringify({ file: fresh, old, asked })
+      );
+
+      // A copy kept BEFORE the switch was fetched from the site, so it is a
+      // same-origin response under the site's address. The page now asks the
+      // files host for that file, across origins, and the worker must answer
+      // with the copy it holds and fetch nothing: this is every returning
+      // visitor's first load after the switch, and their offline copy. The
+      // stand-in site refuses boundary files, so the old copy is made from a
+      // same-origin read of another file and filed under a boundary file's
+      // address in the cache the worker's own copies are in.
+      const held = Array.from(boundary).find((p) => !read.has(p) && p !== fresh);
+      asked = [];
+      const before = held ? await page.evaluate(async (a) => {
+        try {
+          let cacheName = null;
+          for (const name of await caches.keys()) {
+            if (await (await caches.open(name)).match(a.site + a.known)) { cacheName = name; break; }
+          }
+          if (!cacheName) return { error: "no cache holds a boundary file the worker read" };
+          const own = await fetch(a.site + a.other, { cache: "no-store" });
+          const text = await own.clone().text();
+          await (await caches.open(cacheName)).put(a.site + a.held, own);
+          const got = await fetch(a.files + a.held);
+          return { stored: own.type, status: got.status, same: (await got.text()) === text && text.length > 0 };
+        } catch (e) { return { error: String(e) }; }
+      }, { site: SITE, files: FILES, held, known: Array.from(read)[0], other: `/${TAG}/data/app/coverage-gaps.json` }) : { error: "no boundary file left to stand in" };
+      check(
+        "a copy kept before the switch answers the page's request for the files host's address, with nothing fetched",
+        before.stored === "basic" && before.status === 200 && before.same === true && asked.length === 0,
+        JSON.stringify({ file: held, before, asked })
+      );
+      await context.close();
+    } finally {
+      await live.close();
+    }
   }
 
   // ==== TEMPLATE:BEGIN smoke-failure-isolation ====

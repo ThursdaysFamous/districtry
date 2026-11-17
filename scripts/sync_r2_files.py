@@ -19,11 +19,14 @@ THE TREE, the list the worker itself goes by, so a file is on the files host
 exactly when the worker treats its bytes as fixed until the cache name moves.
 Rosters and election results are not copied: they change weekly or daily, the
 pages that print them are rebuilt in the same change, and GitHub Pages
-publishes a page and its roster together, which two hosts cannot. THIS CHANGE
-ONLY COPIES THEM. Every map still reads its boundary files from GitHub Pages,
-which still publishes them; the maps are switched to the files host in a
-change of its own, once the copies are there to be read, and GitHub stops
-publishing them in a third.
+publishes a page and its roster together, which two hosts cannot. The copies
+came first, in a change of their own. THE MAPS READ THEM HERE SINCE THE CHANGE
+AFTER IT: on the live site a page asks the files host for each file in its
+BOUNDARY_FILES list and its worker for each in GEOMETRY_URLS (filesUrl in
+engine/shared/files-origin.txt; both lists are generated from one worksheet
+key, and --selftest holds every app's two to each other). GitHub Pages still
+publishes the boundary files as well, so a tab opened before the switch and
+the way back (FILES_ORIGIN null) both still work; it stops in a third change.
 
 This script makes the bucket hold exactly what the deploy is about to publish
 of those files. It reads the ASSEMBLED tree (deploy-pages.yml's _site), not
@@ -85,6 +88,7 @@ import argparse
 import base64
 import concurrent.futures
 import datetime
+import gzip
 import hashlib
 import hmac
 import os
@@ -454,7 +458,12 @@ def check_files_url(keys):
     """The page's filesUrl (engine/shared/files-origin.txt, the block every app
     and service worker carries), run in Node, must ask the files host for each
     file at the very key this script uploads it under, and must leave a page
-    anywhere but the live host, and every other file, on its own site."""
+    anywhere but the live host, and every other file, on its own site.
+
+    A boundary file is found by NAME, in the list its app carries: the page's
+    BOUNDARY_FILES (bare names) and the worker's GEOMETRY_URLS (./data/app/
+    paths), both generated from one worksheet key. Each case is therefore run
+    twice, once as the page and once as the worker, and the two must agree."""
     import json
     import shutil
     import subprocess
@@ -468,43 +477,117 @@ def check_files_url(keys):
     site = re.search(r'var FILES_SITE_HOST = "([^"]*)";', block)
     assert site and site.group(1) == cname, "FILES_SITE_HOST %r is not CNAME's %r" % (site and site.group(1), cname)
     stand_in = re.sub(r"var FILES_ORIGIN = [^;]*;", 'var FILES_ORIGIN = "https://files.example";', block)
+    # Each app's boundary files by name: every key that is not under one of
+    # the two folders is one (the caller passes exactly what the copy uploads).
+    names = {}
+    for k in sorted(keys):
+        if not FOLDER_RE.match(k):
+            tag, rel = k.split("/", 1)
+            assert rel.startswith("data/app/") and "/" not in rel[len("data/app/"):], k
+            names.setdefault(tag, []).append(rel[len("data/app/"):])
+    assert names, "the fixture holds no boundary file, so the boundary case would test nothing"
     cases = []
     for k in sorted(keys):
         tag, rel = k.split("/", 1)
-        # COPIED AHEAD OF THE SWITCH: a boundary file is in the bucket and the
-        # block does not send a map there for it yet, so every map still reads
-        # it from this site. The change that switches the maps turns this
-        # case round, and it cannot merge without doing so.
-        there = "https://files.example/" if FOLDER_RE.match(k) else "https://districtry.com/"
-        cases.append(["live", "https://districtry.com/%s/" % tag, rel, there + k])
+        # SINCE THE SWITCH (2026-11-16) every key the copy uploads is read
+        # from the files host on the live site: the two folders by their
+        # path, a boundary file by its name in the app's own list.
+        cases.append(["live", "https://districtry.com/%s/" % tag, rel, "https://files.example/" + k])
         cases.append(["local", "http://localhost:8000/%s/" % tag, rel, "http://localhost:8000/" + k])
-    cases.append(["live", "https://districtry.com/il/", "data/app/roster.json", "https://districtry.com/il/data/app/roster.json"])
-    cases.append(["live", "https://districtry.com/il/", "../fleet-outlines.json", "https://districtry.com/fleet-outlines.json"])
-    def run(src):
-        prog = ("var cases = %s; var out = [];\n"
+    some_tag = sorted(names)[0]
+    some = names[some_tag][0]
+    site = "https://districtry.com/%s/" % some_tag
+    # What must STAY on the site, on the live host: a roster; a root file; a
+    # file with a boundary file's name in a folder below data/app (an election
+    # results part); and another app's file of the same name, which is not in
+    # THIS app's list and which this app's worker would not keep.
+    cases.append(["live", site, "data/app/roster.json", site + "data/app/roster.json"])
+    cases.append(["live", site, "../fleet-outlines.json", "https://districtry.com/fleet-outlines.json"])
+    cases.append(["live", site, "data/app/election-results/" + some, site + "data/app/election-results/" + some])
+    cases.append(["live", site, "../zz/data/app/" + some, "https://districtry.com/zz/data/app/" + some])
+    # ...and a boundary file asked for with a query string keeps it.
+    cases.append(["live", site, "data/app/%s?v=2" % some, "https://files.example/%s/data/app/%s?v=2" % (some_tag, some)])
+
+    def run(src, worker):
+        # The page stands at <site>/<tag>/ with a hash a permalink would carry;
+        # the worker at <site>/<tag>/sw.js. Each carries its own list.
+        prog = ("var cases = %s, names = %s, worker = %s; var out = [];\n"
                 "cases.forEach(function (c) {\n"
-                "  var u = new URL(c[1]);\n"
-                "  var location = { origin: u.origin, hostname: u.hostname };\n"
-                "  out.push(eval(%s + '\\nfilesUrl(' + JSON.stringify(c[2]) + ', ' + JSON.stringify(c[1]) + ')'));\n"
-                "});\nprocess.stdout.write(JSON.stringify(out));" % (json.dumps(cases), json.dumps(src)))
+                "  var here = new URL(worker ? 'sw.js' : '#p=41.9,-87.6&l=wd', c[1]);\n"
+                "  var location = { origin: here.origin, hostname: here.hostname, href: here.href };\n"
+                "  var mine = names[here.pathname.split('/')[1]] || [];\n"
+                "  var lists = worker\n"
+                "    ? 'var GEOMETRY_URLS = ' + JSON.stringify(mine.map(function (n) { return './data/app/' + n; })) + ';\\n'\n"
+                "    : 'var BOUNDARY_FILES = ' + JSON.stringify(mine) + ';\\n';\n"
+                "  out.push(eval(lists + %s + '\\nfilesUrl(' + JSON.stringify(c[2]) + ', ' + JSON.stringify(c[1]) + ')'));\n"
+                "});\nprocess.stdout.write(JSON.stringify(out));"
+                % (json.dumps(cases), json.dumps(names), json.dumps(worker), json.dumps(src)))
         res = subprocess.run([node, "-e", prog], capture_output=True, text=True, timeout=60)
         assert res.returncode == 0, res.stderr
         return json.loads(res.stdout)
-    for c, got in zip(cases, run(stand_in)):
+
+    def both(src):
+        page, worker = run(src, False), run(src, True)
+        assert page == worker, [(c, a, b) for c, a, b in zip(cases, page, worker) if a != b][:3]
+        return page
+
+    for c, got in zip(cases, both(stand_in)):
         assert got == c[3], (c, got)
+    # A page with NO list (a block spliced into a page the generator gave
+    # none) sends nothing to the files host by name, and still sends the two
+    # folders there: a missing list must not throw, or no file would load.
+    prog = ("var location = { origin: 'https://districtry.com', hostname: 'districtry.com', href: 'https://districtry.com/il/' };\n"
+            "process.stdout.write(JSON.stringify(eval(%s + '\\n[filesUrl(\"data/app/x.json\", location.href), "
+            "filesUrl(\"data/app/tiles/a.pmtiles\", location.href)]')));" % json.dumps(stand_in))
+    res = subprocess.run([node, "-e", prog], capture_output=True, text=True, timeout=60)
+    assert res.returncode == 0, res.stderr
+    assert json.loads(res.stdout) == ["https://districtry.com/il/data/app/x.json",
+                                      "https://files.example/il/data/app/tiles/a.pmtiles"], res.stdout
     shipped = re.search(r"var FILES_ORIGIN = ([^;]*);", block).group(1)
     if shipped == "null":   # the way back: every file from the page's own site
-        for c, got in zip(cases, run(block)):
+        for c, got in zip(cases, both(block)):
             assert got == c[1].rstrip("/").rsplit("/", 1)[0] + "/" + c[3].split("/", 3)[3], (c, got)
     else:
         # The shipped origin is the files subdomain of the published site and
         # nothing else, so a typo in it cannot send every map somewhere else.
         origin = json.loads(shipped)
         assert origin == "https://files." + cname, "FILES_ORIGIN %r is not https://files.%s" % (origin, cname)
-        for c, got in zip(cases, run(block)):
+        for c, got in zip(cases, both(block)):
             assert got == c[3].replace("https://files.example", origin, 1), (c, got)
-    return ("filesUrl run in Node asking for every tile and population file at its upload key "
-            "and for no boundary file yet")
+    lists = check_page_lists()
+    return ("filesUrl run in Node, as the page and as the worker, asking for every tile, population "
+            "and boundary file at its upload key and for nothing else, and %s" % lists)
+
+
+PAGE_LIST_RE = re.compile(r"^  var BOUNDARY_FILES = \[(.*?)\];$", re.M | re.S)
+
+
+def check_page_lists():
+    """In the checkout, every app's page must carry the same boundary file
+    names as its worker. The copy uploads the WORKER's list; the page asks the
+    files host for the files in ITS list. A name only the page had would be
+    asked of the files host and not be there, on the live site alone, where no
+    test on localhost reads it. generate_metro_files.py writes both from one
+    worksheet key and its --check holds each to the worksheet; this holds the
+    two files to each other, as shipped."""
+    import json
+    root = os.path.join(os.path.dirname(FILES_BLOCK), "..", "..")
+    apps = 0
+    for tag in sorted(os.listdir(root)):
+        page = os.path.join(root, tag, "index.html")
+        if not (os.path.isfile(page) and os.path.isdir(os.path.join(root, tag, "data", "app"))):
+            continue
+        with open(page, encoding="utf-8") as f:
+            found = PAGE_LIST_RE.findall(f.read())
+        assert len(found) == 1, "%s/index.html carries %d BOUNDARY_FILES lists, not one" % (tag, len(found))
+        mine = json.loads("[" + found[0] + "]")
+        theirs = boundary_files(root, tag)
+        assert sorted(mine) == sorted(theirs), (
+            "%s: the page's BOUNDARY_FILES and sw.js's GEOMETRY_URLS differ: %s"
+            % (tag, sorted(set(mine) ^ set(theirs))[:5]))
+        apps += 1
+    assert apps >= 2, "found %d app(s) in the checkout" % apps
+    return "%d apps' pages listing the boundary files their workers list" % apps
 
 
 def shipped_origin():
@@ -531,6 +614,19 @@ def shipped_origin():
 # probe() checks those for a small sample: each live app's smallest archive (its
 # first and last bytes) and its population index. It reads only this project's
 # own files on this project's own host.
+#
+# SINCE THE MAPS READ THEIR BOUNDARY FILES THERE TOO (2026-11-16), the sample
+# also holds each live app's smallest boundary file, read whole with the
+# site's Origin as a page reads it, and ONE boundary file read the way a
+# browser asks for it, with Accept-Encoding: gzip. GitHub Pages sent these
+# files compressed, and they are the bulk of what a map downloads, so a files
+# host that stopped compressing them would make every map several times slower
+# to load with nothing else to show for it. That one is the LARGEST boundary
+# file across the live apps, because that is the file whose compression
+# matters most and the one a size limit on the host's compression would drop
+# first. Measured on the day the copies first existed (2026-11-16): Kentucky's
+# precincts, 10,197,299 bytes published, arrived as 2,493,584 with gzip, so
+# the read costs about 2.5 MB a run.
 
 # This project's own token. Without one urllib sends "Python-urllib/3.x",
 # which Cloudflare's default Browser Integrity Check can refuse outright.
@@ -576,10 +672,20 @@ def _listed(value, name):
 
 
 def probe_sample(tree, live_tags):
-    """[(key, kind)] — each live app's smallest tile archive and its population
-    index, wherever the tree has them."""
+    """[(key, kind)] — each live app's smallest tile archive, its population
+    index and its smallest boundary file, wherever the tree has them, and the
+    largest boundary file of all, to be read compressed. Raises TreeError for an app whose
+    boundary files cannot be listed."""
     out = []
+    largest = None
     for tag in sorted(live_tags):
+        if os.path.isdir(os.path.join(tree, tag, "data", "app")):
+            sized = sorted((os.path.getsize(os.path.join(tree, tag, "data", "app", n)), n)
+                           for n in boundary_files(tree, tag))
+            if sized:
+                out.append(("%s/data/app/%s" % (tag, sized[0][1]), "boundary"))
+            if sized and (largest is None or sized[-1][0] > largest[0]):
+                largest = (sized[-1][0], "%s/data/app/%s" % (tag, sized[-1][1]))
         tiles = os.path.join(tree, tag, "data", "app", "tiles")
         if os.path.isdir(tiles):
             names = sorted((os.path.getsize(os.path.join(tiles, n)), n)
@@ -588,13 +694,18 @@ def probe_sample(tree, live_tags):
                 out.append(("%s/data/app/tiles/%s" % (tag, names[0][1]), "tiles"))
         if os.path.isfile(os.path.join(tree, tag, "data", "app", "population", "index.json")):
             out.append(("%s/data/app/population/index.json" % tag, "population"))
+    if largest:
+        out.append((largest[1], "compressed"))
     return out
 
 
 def probe(files_origin, page_origin, tree, live_tags):
     """(problems, checked): every way the files host fails a map, for a sample."""
     problems, checked = [], 0
-    sample = probe_sample(tree, live_tags)
+    try:
+        sample = probe_sample(tree, live_tags)
+    except TreeError as e:
+        return [str(e)], 0
     if not sample:
         return ["the tree at %s holds no tile archive or population index for a live app" % tree], 0
     allowed = (page_origin, "*")
@@ -632,7 +743,29 @@ def probe(files_origin, page_origin, tree, live_tags):
         with open(os.path.join(tree, key), "rb") as f:
             data = f.read()
         url = files_origin + "/" + key
-        if kind == "population":
+        if kind == "compressed":
+            got = get(url, {"Origin": page_origin, "Accept-Encoding": "gzip"})
+            if not got:
+                continue
+            checked += 1
+            st, h, body = got
+            if st != 200:
+                problems.append("%s answered %s, not 200%s" % (key, st, _why(h, body)))
+            elif h.get("content-encoding") != "gzip":
+                problems.append("%s (%d bytes) was not sent compressed to a reader that asked for gzip "
+                                "(Content-Encoding: %r), so every map downloads its boundary files at full size"
+                                % (key, len(data), h.get("content-encoding")))
+            else:
+                try:
+                    plain = gzip.decompress(body)
+                except (OSError, EOFError) as e:
+                    plain = None
+                    problems.append("%s answered gzip that does not open: %s" % (key, e))
+                if plain is not None and plain != data:
+                    problems.append("%s answered %d bytes, compressed, that differ from the %d published"
+                                    % (key, len(plain), len(data)))
+            continue
+        if kind in ("population", "boundary"):
             got = get(url, {"Origin": page_origin})
             if not got:
                 continue
@@ -733,6 +866,15 @@ def run_probe_against_stand_in():
                 return
             if mode["fault"] == "stale":
                 data = b"x" + data[1:]
+            if "gzip" in self.headers.get("Accept-Encoding", "") and mode["fault"] != "identity":
+                body = gzip.compress(data)
+                self.send_response(200)
+                self._cors()
+                self.send_header("Content-Encoding", "gzip")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
             m = re.match(r"bytes=(\d+)-(\d+)$", self.headers.get("Range", ""))
             if m and mode["fault"] != "whole":
                 a, b = int(m.group(1)), min(int(m.group(2)), len(data) - 1)
@@ -751,24 +893,32 @@ def run_probe_against_stand_in():
         for rel, data in (("il/data/app/tiles/big.pmtiles", bytes(range(256)) * 40),
                           ("il/data/app/tiles/small.pmtiles", bytes(range(200))),
                           ("il/data/app/population/index.json", b'{"17031": 5275541}'),
+                          ("il/data/app/wards.json", b'{"type":"FeatureCollection","features":[]}' + b" " * 400),
+                          ("il/data/app/outline.json", b'{"type":"FeatureCollection"}'),
+                          ("il/data/app/roster.json", b'{"1": "A roster is never sampled"}'),
+                          ("il/sw.js", b'const GEOMETRY_URLS = [\n  "./data/app/wards.json",\n  "./data/app/outline.json",\n];\n'),
                           ("zz/data/app/tiles/dark.pmtiles", b"dark")):
             os.makedirs(os.path.dirname(os.path.join(d, rel)), exist_ok=True)
             with open(os.path.join(d, rel), "wb") as f:
                 f.write(data)
-        assert probe_sample(d, {"il"}) == [("il/data/app/tiles/small.pmtiles", "tiles"),
-                                           ("il/data/app/population/index.json", "population")]
+        assert probe_sample(d, {"il"}) == [("il/data/app/outline.json", "boundary"),
+                                           ("il/data/app/tiles/small.pmtiles", "tiles"),
+                                           ("il/data/app/population/index.json", "population"),
+                                           ("il/data/app/wards.json", "compressed")], probe_sample(d, {"il"})
         Handler.root = d
         server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         threading.Thread(target=server.serve_forever, daemon=True).start()
         host = "http://127.0.0.1:%d" % server.server_port
         try:
             problems, checked = probe(host, origin, d, {"il"})
-            assert not problems and checked == 4, (problems, checked)
+            assert not problems and checked == 6, (problems, checked)
             mode["fault"] = "drop-once"
             problems, checked = probe(host, origin, d, {"il"})
-            assert mode.get("dropped") and not problems and checked == 4, (problems, checked)
+            assert mode.get("dropped") and not problems and checked == 6, (problems, checked)
             for fault, words in (("no-cors", "preflight"), ("no-expose", "expose Content-Range"),
                                  ("whole", "not 206"), ("stale", "other bytes"),
+                                 ("stale", "outline.json answered"), ("stale", "compressed, that differ"),
+                                 ("identity", "was not sent compressed"),
                                  ("blocked", "body: Attention Required error code: 1010")):
                 mode["fault"] = fault
                 problems, _ = probe(host, origin, d, {"il"})
@@ -779,7 +929,7 @@ def run_probe_against_stand_in():
         finally:
             server.shutdown()
     return ("a read of the files host against a loopback stand-in, right, through one dropped "
-            "connection, and five ways wrong")
+            "connection, and six ways wrong")
 
 
 def run_against_stand_in(tree):

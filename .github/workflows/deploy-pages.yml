@@ -324,17 +324,22 @@ jobs:
       # skipping it. main only, because the assemble job also runs on branch
       # dispatches and a branch's files must never replace the live ones.
       #
-      # THE BOUNDARY FILES GO TOO, SINCE 2026-11-16, AND SO FAR ONLY AS COPIES
-      # (Adam's "Start" of that day on moving the map files off GitHub).
+      # THE BOUNDARY FILES GO TOO, SINCE 2026-11-16, AND THE MAPS READ THEM
+      # THERE (Adam's "Start" of that day on moving the map files off GitHub).
       # Measured that day the tree after the step below was 664.6 MB, and
       # 463.5 MB of it was 902 boundary files, the whole-file geometry each
       # app's service worker lists as GEOMETRY_URLS. The script reads that
       # list out of each app's sw.js in _site and copies those files beside
-      # the two folders. No map reads them there yet and GitHub Pages still
-      # publishes them: the maps are switched in a change of its own once the
-      # copies exist, and GitHub stops publishing them in a third. Rosters and
-      # election results stay with the pages, because a page and the roster
-      # it prints are published together here and could not be on two hosts.
+      # the two folders. The copies went first, in a change of their own;
+      # since the change after it every map on the live site asks the files
+      # host for a file its page lists as BOUNDARY_FILES, so the reason above
+      # for stopping the publish on a failed copy covers these files too.
+      # GITHUB PAGES STILL PUBLISHES THEM, and that is deliberate: a tab opened
+      # before the switch reads them here until it is reloaded, and setting
+      # FILES_ORIGIN to null is a way back for as long as they are here. They
+      # leave what GitHub publishes in a third change. Rosters and election
+      # results stay with the pages, because a page and the roster it prints
+      # are published together here and could not be on two hosts.
       - name: Copy tile archives, population files and boundary files to Cloudflare R2
         if: github.ref == 'refs/heads/main'
         timeout-minutes: 15
