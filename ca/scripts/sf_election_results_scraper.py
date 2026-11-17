@@ -210,8 +210,15 @@ def main():
         if title in titles:
             fail("%s is split across sheets, which this reader does not join" % title)
         titles.add(title)
+        # True only when a precinct shows the write-ins counted into Total
+        # Votes. A sheet whose write-in column is zero in every precinct
+        # cannot show either way, and no write-in vote is in its Total Votes
+        # whichever it is, so it reads False. Measured on the report of
+        # November 10, 2026, read 2026-11-17: all twelve sheets with a
+        # write-in column carry zero in it in every precinct, which this line
+        # used to read as True, failing the build every day from 2026-11-11.
         contests.append({"sheet": sn, "title": title, "columns": cols, "rows": rows,
-                         "writeInsInTotal": write_ins != "without"})
+                         "writeInsInTotal": write_ins == "with"})
         print("  %s: %d precincts" % (title, len(rows)), file=sys.stderr)
     if turnout is None or county_turnout is None:
         fail("the workbook has no turnout sheet")
