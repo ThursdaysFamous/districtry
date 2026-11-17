@@ -91,7 +91,7 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. A hundred and ninety-two counties are read so far, 78.7% of Texans: the
+largest county first. Two hundred and twenty-two counties are read so far, 78.9% of Texans: the
 twelve largest whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin,
 Denton, Fort Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock), sixteen of the 21st to 40th largest
 (Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
@@ -103,17 +103,20 @@ commissioners only in a PDF), fifty-four of the 101st to 160th (all but Aransas,
 answers with a bot check, Gaines, whose pages name no commissioner, Calhoun, whose precinct 1 page
 does not say the person is a commissioner, Gonzales, which prints one name with mismatched
 quotation marks, Comanche, which spells one name two ways, and Reeves, which refuses the project's
-client) and fifty-four of the 161st to 220th (all but Dimmit, which labels two seats with several
+client), fifty-four of the 161st to 220th (all but Dimmit, which labels two seats with several
 precinct numbers, Jack and Delta, whose sites fail the TLS check or answer with a challenge,
 Childress and Martin, which have no county website this project can find, and Mills, which prints
-one name across two lines). The builder's docstring records each page's shape and why each of the
-other twenty-eight among the 220 largest is not read (Bexar, Brazos, Jack and Delta answer with a
+one name across two lines) and thirty of the 221st to 254th (all but Jeff Davis, whose page lists
+one seat vacant, Kent, whose pages do not say the person is a commissioner, and Stonewall and
+McMullen, whose sites answer nothing). The builder's docstring records each page's shape and why
+each of the other thirty-two counties is not read (Bexar, Brazos, Jack and Delta answer with a
 challenge or cannot be read and Aransas answers with a bot check, Montgomery, Bell and Hale
 disallow every path in robots.txt, eight refuse the project's client and Erath blocks it, Smith prints its names only inside sentences, Gillespie only in a PDF,
 Gaines names nobody, Calhoun's precinct 1 page does not say commissioner, Gonzales and Comanche
 print a name the builder will not correct or choose between, Dimmit labels two seats with several
-precinct numbers, Mills prints one name across two lines, and the sites of Maverick, Childress and
-Martin answer nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
+precinct numbers, Mills prints one name across two lines, Jeff Davis lists a seat vacant, Kent's
+pages do not say commissioner, and the sites of Maverick, Childress, Martin, Stonewall and McMullen
+answer nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
 so the weekly job's time limit is an hour. Each
 record's date is the day its four names were first read, so a week with no change writes the same
 bytes; a county whose page cannot be read keeps its last record, and the weekly job's last step
