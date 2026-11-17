@@ -132,7 +132,13 @@ rule of 2026-11-16 that a seat a government source shows vacant is shown); the b
 naming fewer than two of the four. No commissioner precinct is drawn, so the card names all four and
 says it cannot say which represents the point. No other county officer and no municipal
 official is named yet, and the cards say so. Recorded as gaps `tx-county-officials` and
-`tx-municipal-officeholders`.
+`tx-municipal-officeholders`. **Each county whose commissioners are read has a page of its own
+since 2026-11-17** (Adam's "merge" of that day): `tx/county-commissioner/<county>.html`, 230 pages
+from `scripts/build_county_pages.py`, naming the county judge as a section above the four
+precincts. A county whose commissioners are not read has no page, because a page naming one member
+of a five-member court answers nobody searching for that court; its County card still names the
+judge. Uvalde's page says the courts office's directory names no judge there. Both weekly jobs
+regenerate the pages.
 
 **THE ZIP LAYER HIDES OUTSIDE TEXAS.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and

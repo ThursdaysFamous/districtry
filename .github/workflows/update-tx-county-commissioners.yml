@@ -48,6 +48,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # Full history: build_sitemap.py reads each page's lastmod from that
+          # file's own last commit, and a shallow clone dates every page today.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -102,12 +105,17 @@ jobs:
           # token without `workflow` scope. The rebuilt file is carried across.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          # NOTHING ELSE IS REGENERATED: no page prints these names yet.
-          # Texas's county pages are held (build_county_pages.NOT_COUNTY_BOARDS)
-          # and no question-page table reads this roster. The change that adds
-          # the county pages adds their regeneration here, and
-          # build_county_pages.py --check fails this job's PR until it does.
-          git add tx/data/app/tx-county-commissioners.json
+          # The per-county pages (tx/county-commissioner/) are GENERATED from
+          # this roster and the county judges roster, so regenerate them here or the smoke gate's
+          # `build_county_pages.py --check` fails on this PR with a page naming
+          # last week's members. llms.txt COUNTS those pages, and
+          # docs/EAM_STATUS.md the seats they name.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add tx/data/app/tx-county-commissioners.json tx/county-commissioner tx/county-commissioner.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Texas county commissioners from the counties' own websites"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

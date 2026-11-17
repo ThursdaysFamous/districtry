@@ -2948,9 +2948,9 @@ ANSWERS = {
         # the commissioners court's five members, from the Office of Court
         # Administration's judicial directory, and since 2026-11-17 the four
         # commissioners of the largest counties whose own sites are read.
-        # The count here is read through the county-page adapters, and
-        # Texas's pages are held for Adam's "merge"
-        # (build_county_pages.NOT_COUNTY_BOARDS), so it stays at none.
+        # The count here is read through the county-page adapters, and since
+        # 2026-11-17 (Adam's "merge") each county whose commissioners are read
+        # has a page, so those counties count and the rest do not.
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # No city council is named yet.
@@ -3498,9 +3498,12 @@ ANSWERS = {
         "us-house": answers("congress"),
         "state-legislature": answers("ca-senate", "ca-assembly"),
         "county-boundaries": answers("county"),
-        # San Francisco's Board of Supervisors is its county's governing body,
-        # drawn by district and named; no other county's board is named yet.
-        "county-government": Entry("open", ("supervisor-district",)),
+        # Every county's board of supervisors is named: the 57 outside San
+        # Francisco on the County card from the Secretary of State's California
+        # Roster (2026-11-16), San Francisco's on its Supervisor District card,
+        # and since 2026-11-17 (Adam's "merge") each has a county page, so the
+        # count is read through the county-page adapter as it is elsewhere.
+        "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # The same board is San Francisco's city council; no other city's
         # council is named yet.
