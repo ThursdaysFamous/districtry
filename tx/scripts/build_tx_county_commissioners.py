@@ -95,7 +95,10 @@ And nineteen of the 41st to 60th largest, measured 2026-11-17 the same way:
   Coryell   "Precinct N: <name>" on one line. No robots.txt.
   Henderson One page per commissioner; the name below "Contact Us", printed
             there as "Charles Chuck McHam" where the court page has "Charles
-            (Chuck) McHam", which the name test does not take.
+            (Chuck) McHam", which the name test did not take when this county
+            was added. It takes a nickname in brackets since the 61st to 80th
+            were added (Chambers, below); Henderson is still read from the
+            commissioners' own pages, so its record did not change.
   Walker    One page per commissioner, each precinct's road and bridge page;
             the name, a comma on a line of its own, then "Commissioner
             Precinct N". Its robots.txt asks for 300 seconds between
@@ -117,6 +120,51 @@ And nineteen of the 41st to 60th largest, measured 2026-11-17 the same way:
             No robots.txt.
   Waller    One page per commissioner; "Precinct N Commissioner - <name>" on
             one line. No robots.txt.
+
+And nineteen of the 61st to 80th largest, measured 2026-11-17 the same way:
+
+  Hardin    "Pct. N <name>" on one line, under "county commissioners Contact
+            Information". No robots.txt.
+  Navarro   "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Kerr      The name above "Kerr County Commissioner, Precinct N". The
+            county's old host, www.co.kerr.tx.us, does not answer; the court
+            page is at kerrcountytx.gov.
+  Rusk      "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Medina    "Precinct N Commissioner" (and "Commissioner Precinct 4" for the
+            fourth) with the name on the next line. No robots.txt.
+  Cherokee  "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Polk      The name above ", Precinct N, County Commissioner". The county's
+            old host, www.co.polk.tx.us, presents a certificate for another
+            name; the county's site is polktx.gov, whose robots.txt asks for 10
+            seconds between requests.
+  Lamar     The name above "Precinct N Commissioner". No robots.txt.
+  Wilson    "Precinct N Commissioner", a line holding only "▲" (an accordion's
+            arrow), then the name. No robots.txt.
+  Burnet    One page per commissioner; the name above "Precinct N
+            Commissioner". Its robots.txt asks for 10 seconds between requests.
+  Atascosa  The name above "County Commissioner – Precinct N", with
+            "(Unexpired Term)" after it for one seat.
+  Val Verde "Commissioner N" and the name on the next line, on the county's
+            home page. Its robots.txt asks for 10 seconds between requests.
+  Chambers  The name above "Commissioner Precinct N"; one is printed "William
+            (Bill) Wallace Jr.", which is why the name test takes a nickname in
+            brackets. Its robots.txt asks for 10 seconds between requests.
+  Caldwell  "Precinct N Commissioner" and the name on the next line, the
+            precincts printed in the order 1, 3, 2, 4. No robots.txt.
+  Wood      "Precinct N Commissioner", a line holding only "▲", then the
+            name. No robots.txt.
+  Kendall   The name above "Commissioner Precinct N", in the staff directory's
+            list of the county commissioners. Its robots.txt asks for 10
+            seconds between requests.
+  Cooke     "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Wharton   "Commissioner <name>, Pct N" on one line, the period after "Pct"
+            printed for one seat and not the others. No robots.txt.
+  Upshur    "Commissioner Pct N" and the name on the next line, in the court
+            page's table of county officers. No robots.txt.
 
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
@@ -167,6 +215,12 @@ NOT READ, AND WHY, among the 41st to 60th largest (measured 2026-11-17):
             answers every path asked with a 19-byte page and HTTP 404, and no
             other site of the county's was found; maverickcountytx.gov and
             maverickcounty.texas.gov do not answer.
+
+NOT READ, AND WHY, among the 61st to 80th largest (measured 2026-11-17):
+  Erath     www.co.erath.tx.us answers this client with Cloudflare's
+            "Attention Required!" block page (HTTP 403) on the page and on
+            robots.txt, as Williamson, McLennan and Hays do. Not measured with
+            a browser identity; that waits for Adam's decision on the seven.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -235,10 +289,13 @@ NOT_A_PERSON_RE = re.compile(
     r"Newsletters?|Information|Resources|Welcome|Staff|Projects|Events|News|Links|"
     r"Documents|Forms|Calendar|Videos?|Live|Online|Search|Email|Biography|Meetings?)\b", re.I)
 # The shape of a printed name: two to six words, each a capitalised word, an
-# initial, a quoted nickname or a particle, with an optional ", Jr." and the
-# like. A heading such as "Mission Statement" has this shape too, which is why
-# NOT_A_PERSON_RE and the precinct label beside it are what make a line a name.
-_WORD = r"(?:[A-ZÀ-Þ][A-Za-zÀ-ÿ'’.-]*|\"[^\"]+\"|“[^”]+”|de|del|la|los|van|von|y)"
+# initial, a nickname in quotation marks or in brackets ("William (Bill)
+# Wallace Jr.", as Chambers prints it), or a particle, with an optional ", Jr."
+# and the like. A heading such as "Mission Statement" has this shape too, which
+# is why NOT_A_PERSON_RE and the precinct label beside it are what make a line
+# a name.
+_WORD = (r"(?:[A-ZÀ-Þ][A-Za-zÀ-ÿ'’.-]*|\"[^\"]+\"|“[^”]+”|\([A-Z][^()]*\)"
+         r"|de|del|la|los|van|von|y)")
 NAME_RE = re.compile(r"^%s(?:\s+%s){1,5}(?:,\s+(?:Jr|Sr)\.?|,?\s+(?:II|III|IV))?$" % (_WORD, _WORD))
 # A courtesy title some counties print before a name; it is not part of it.
 # "Dr." is kept as printed, the fleet's practice.
@@ -451,6 +508,67 @@ COUNTIES = [
                 2: "https://www.co.waller.tx.us/page/CommCourt.Precinct2",
                 3: "https://www.co.waller.tx.us/page/CommCourt.Precinct3",
                 4: "https://www.co.waller.tx.us/page/CommCourt.Precinct4"}),
+    dict(geoid="48199", county="Hardin County", seat_word="Precinct",
+         url="https://www.hardincountytx.gov/page/CountyCommissioners", mode="inline",
+         label=r"Pct\. (?P<n>[1-4]) (?P<name>.+)"),
+    dict(geoid="48349", county="Navarro County", seat_word="Precinct",
+         url="https://www.co.navarro.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48265", county="Kerr County", seat_word="Precinct",
+         url="https://www.kerrcountytx.gov/kerr-county-all-departments/kerr-county-commissioners-court",
+         mode="name_above", label=r"Kerr County Commissioner, Precinct (?P<n>[1-4])"),
+    dict(geoid="48401", county="Rusk County", seat_word="Precinct",
+         url="https://www.ruskcountytx.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48325", county="Medina County", seat_word="Precinct",
+         url="https://www.medinatx.gov/page/Commissioners.Court", mode="name_below",
+         label=r"(?=.*Commissioner)(?:Commissioner )?Precinct (?P<n>[1-4])(?: Commissioner)?"),
+    dict(geoid="48073", county="Cherokee County", seat_word="Precinct",
+         url="https://www.co.cherokee.tx.us/ips/cms/countyoffices/commissionersCourt.html",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48373", county="Polk County", seat_word="Precinct",
+         url="https://www.polktx.gov/307/Commissioners-Court", mode="name_above",
+         label=r", Precinct (?P<n>[1-4]), County Commissioner"),
+    dict(geoid="48277", county="Lamar County", seat_word="Precinct",
+         url="https://www.lamarcountytx.gov/page/Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48493", county="Wilson County", seat_word="Precinct",
+         url="https://www.co.wilson.tx.us/page/wilson.Commissioners.Court", mode="name_below",
+         label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48053", county="Burnet County", seat_word="Precinct",
+         url="https://www.burnetcountytexas.org/1195/Elected-Officials",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner",
+         pages={1: "https://www.burnetcountytexas.org/1378/Commissioner-Pct-1",
+                2: "https://www.burnetcountytexas.org/1379/Commissioner-Pct-2",
+                3: "https://www.burnetcountytexas.org/1380/Commissioner-Pct-3",
+                4: "https://www.burnetcountytexas.org/1381/Commissioner-Pct-4"}),
+    dict(geoid="48013", county="Atascosa County", seat_word="Precinct",
+         url="https://co.atascosa.tx.us/commissioners/", mode="name_above",
+         label=r"County Commissioner – Precinct (?P<n>[1-4])(?: \(Unexpired Term\))?"),
+    dict(geoid="48465", county="Val Verde County", seat_word="Precinct",
+         url="https://www.valverdecounty.texas.gov/", mode="name_below",
+         label=r"Commissioner (?P<n>[1-4])"),
+    dict(geoid="48071", county="Chambers County", seat_word="Precinct",
+         url="https://www.chamberscountytx.gov/160/Commissioners-Court", mode="name_above",
+         label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48055", county="Caldwell County", seat_word="Precinct",
+         url="https://www.co.caldwell.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48499", county="Wood County", seat_word="Precinct",
+         url="https://www.mywoodcounty.com/page/commcourt_home", mode="name_below",
+         label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48259", county="Kendall County", seat_word="Precinct",
+         url="https://www.kendallcountytx.gov/m/directory/department?did=32", mode="name_above",
+         label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48097", county="Cooke County", seat_word="Precinct",
+         url="https://www.co.cooke.tx.us/page/cooke.CommCourt",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48481", county="Wharton County", seat_word="Precinct",
+         url="https://www.co.wharton.tx.us/page/wharton.Commissioners.Court", mode="inline",
+         label=r"Commissioner (?P<name>.+), Pct\.? (?P<n>[1-4])"),
+    dict(geoid="48459", county="Upshur County", seat_word="Precinct",
+         url="https://www.countyofupshur.com/page/commissioners_court", mode="name_below",
+         label=r"Commissioner Pct (?P<n>[1-4])"),
 ]
 
 _GATE = []
