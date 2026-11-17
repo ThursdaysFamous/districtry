@@ -686,7 +686,11 @@ try {
       const coords = pop.querySelector(".share-popover-coords").textContent;
       // the values are built at open time, AFTER the click's syncUrlHash —
       // so location.hash here is exactly the hash both strings must carry
-      const wantUrl = location.origin + location.pathname + "?ref=share" + location.hash;
+      // one layer is on, so it is the layer the link-preview page names
+      // (scripts/build_share_pages.py) and the link goes through s/<code>/
+      const sharedCode = (location.hash.match(/[#&]l=([^&,]+)/) || [])[1];
+      const wantUrl = location.origin + location.pathname +
+        (sharedCode ? "s/" + sharedCode + "/" : "") + "?ref=share" + location.hash;
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return {
         opened: true,

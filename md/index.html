@@ -7410,9 +7410,36 @@ function initMarylandExplorer() {
   // The shareable link: CURRENT origin (a preview shares the preview, exactly
   // like the old Copy-link did) + the source tag + the live hash. Any inbound
   // search — including someone else's tags — is deliberately dropped.
+  //
+  // THROUGH A LINK-PREVIEW PAGE WHILE A LAYER IS ON (Adam, 2026-11-17, "Layer
+  // words"). A preview bot never sees the hash, so every shared link used to
+  // preview as the app's general card. The link now goes through
+  // s/<code>/, a page scripts/build_share_pages.py writes for every layer,
+  // whose title and description name that layer and this state, and which
+  // replaces itself with this app at once, query and hash intact. Only the
+  // LAYER moves into the part of the address a server sees; the point stays
+  // after the #. One layer is named: the pinned one, else the most local one
+  // on (last in LAYER_AREA_RANK, the order that draws it on top). The QR and
+  // the embed keep the app's own address: a scan shows no preview, and a
+  // longer payload would only make the code denser.
+  function sharePreviewCode() {
+    var id = null;
+    if (pinnedParentId && state.layersOn[pinnedParentId]) {
+      id = pinnedParentId;
+    } else {
+      for (var i = LAYER_AREA_RANK.length - 1; i >= 0; i--) {
+        if (state.layersOn[LAYER_AREA_RANK[i]]) { id = LAYER_AREA_RANK[i]; break; }
+      }
+    }
+    return id && layerCodeOf[id] ? layerCodeOf[id] : null;
+  }
+
   function shareLinkUrl() {
     syncUrlHash(); // reflect the very latest point/layers/zoom first
-    return location.origin + location.pathname + "?ref=share" + location.hash;
+    var code = sharePreviewCode();
+    var dir = location.pathname.replace(/[^\/]*$/, "");
+    return location.origin + dir + (code ? "s/" + code + "/" : "") +
+      "?ref=share" + location.hash;
   }
 
   // The QR's own URL. Same view, but `ref=qr`, because a scan and a pasted

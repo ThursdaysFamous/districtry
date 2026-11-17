@@ -128,7 +128,7 @@ python3 scripts/build_about_page.py --check              # /about.html vs the tr
 python3 scripts/build_feedback_page.py --check           # /feedback.html, the report form every footer links, vs its generator
 python3 scripts/build_ai_page.py --check                 # /ai.html vs its generator, and its claims: no AI host served, no AI in workflows or scripts, pushes open PRs
 python3 scripts/build_help_page.py --check               # /help.html vs its generator; every control it names still carries that label in the maps
-python3 scripts/validate_analytics.py                    # which counter each page loads: GoatCounter on all but the two recorded, GA only where a worksheet declares it
+python3 scripts/validate_analytics.py                    # which counter each page loads: GoatCounter on all but the recorded exceptions, GA only where a worksheet declares it
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
 python3 scripts/build_county_pages.py --check            # the 183 per-county board pages (il 83, wi 72, ia 17, mi 11) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
@@ -141,6 +141,7 @@ python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fle
 python3 scripts/build_endpoint_inventory.py --check       # docs/ENDPOINT_INVENTORY.md vs the tree: runtime hosts, dataset counts, point transmission; also fails once the repo starts recording a term it calls unrecorded
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
 python3 scripts/build_redirect_stubs.py --check           # the 8 root shells, the /android short address and 404.html vs their sources
+python3 scripts/build_share_pages.py --check              # the link-preview page per app and layer that a shared map link opens first, vs the worksheets
 python3 scripts/build_question_forms.py --check          # every question page's address box vs that page's own .cta
 python3 scripts/build_district_search.py --check         # the "33rd ward" index: every district present, its point inside it, live sources unchanged
 node scripts/build_zip_index.mjs --check                 # each app's ZIP code index and fleet-zips.json, rebuilt from the committed ZIP archives and outlines (about a minute); a refreshed ZIP archive needs `node scripts/build_zip_index.mjs`
