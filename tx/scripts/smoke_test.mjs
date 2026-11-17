@@ -1034,25 +1034,92 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES NOBODY AND SAYS SO. No list of county officials
-  //    has been read (gap tx-county-officials), so the card must name the
-  //    county, say how a Texas county is governed and say nobody is named
-  //    rather than leave a reader to assume the list is empty. Which county
-  //    holds the Capitol is read from the shipped county file, so the fixture
-  //    moves with a rebuild.
+  // 9. THE COUNTY CARD NAMES THE COUNTY JUDGE, AND SAYS WHO IT DOES NOT NAME.
+  //    The judge comes from the state courts office's judicial directory
+  //    (tx-county-officials.json); the four commissioners and the county's
+  //    other officers are not named (gap tx-county-officials). Which county
+  //    holds the Capitol, who its judge is and the file's date are read from
+  //    the shipped files, so the fixture moves with a rebuild and a weekly
+  //    refresh.
+  //      - At the Capitol the card names the court, the judge as County
+  //        Judge, the directory and its file's date, says the four
+  //        commissioners are not named, and links the directory's file. The
+  //        footer link sits outside the card body, so it is read from the
+  //        layer's block.
+  //      - A seat the directory lists as vacant reads "Vacant" and names
+  //        nobody.
+  //      - A county whose entry lists no county court says the directory
+  //        lists no county judge, and does not call the seat vacant.
+  //      - The roster refused: the card still names the county and says the
+  //        list did not load.
   {
     const counties = shipped("state-counties.json");
+    const roster = shipped("tx-county-officials.json");
     const at = propsAt(counties, POINT)[0] || {};
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
-    const info = await cardText(page, "county");
-    const text = info.text || "";
-    const want = [/County officials/, /commissioners court/, /None of them is named here yet/];
-    const missing = want.filter((re) => !re.test(text));
-    check("the County card at the Capitol names the county and says no county official is named",
-      !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
-      `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
-    await context.close();
+    const rec = roster[String(at.GEOID)] || {};
+    const seat = (rec.seats || [])[0] || {};
+    const cardAndLink = async (routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, routeFn);
+      const info = await cardText(page, "county");
+      const links = await page.evaluate(() => {
+        const el = document.getElementById("card-county");
+        const block = el && el.closest(".layer-block");
+        return block ? Array.from(block.querySelectorAll("a[href]")).map((a) => a.href) : [];
+      });
+      await context.close();
+      return { info, text: info.text || "", links };
+    };
+    const withSeat = (change) => async (page) => {
+      const copy = JSON.parse(JSON.stringify(roster));
+      copy[String(at.GEOID)].seats = [Object.assign({ seat: "County Judge", countywide: true }, change)];
+      await page.route("**/data/app/tx-county-officials.json", (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(copy) }));
+    };
+
+    {
+      const { info, text, links } = await cardAndLink();
+      const dated = longDate(rec.fileDate);
+      const want = [
+        "County Judge", "four members are commissioners", "They are not named here yet",
+        "Where this name comes from", "judicial directory",
+        dated ? `in the file dated ${dated}` : "(no file date)",
+        "A county judge who took office after that date is not shown here",
+      ];
+      const missing = want.filter((w) => !text.includes(w));
+      check("the County card at the Capitol names the county judge, credits the directory's dated file and says the commissioners are not named",
+        !info.error && !!at.NAME && text.includes(at.NAME) && !!seat.name && text.includes(seat.name) &&
+          text.toLowerCase().includes(String(rec.body || "(no body)").toLowerCase()) &&
+          missing.length === 0 && !!rec.sourceUrl && links.includes(rec.sourceUrl),
+        `county=${at.NAME} judge=${seat.name} missing=${missing} link=${links.includes(rec.sourceUrl)} text=${text.slice(0, 120)}`);
+    }
+
+    {
+      const { info, text } = await cardAndLink(withSeat({ vacant: true }));
+      check("a county judge's seat the directory lists as vacant reads Vacant and names nobody",
+        !info.error && text.includes("Vacant") && text.includes("County Judge") &&
+          !(seat.name && text.includes(seat.name)) && !text.includes("lists no county judge"),
+        `text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const { info, text } = await cardAndLink(withSeat({ notListed: true }));
+      check("a county the directory lists no county court for says so and does not call the seat vacant",
+        !info.error && text.includes("lists no county judge for this county") &&
+          !text.includes("Vacant") && !(seat.name && text.includes(seat.name)) &&
+          text.includes("four members are commissioners"),
+        `text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const { info, text } = await cardAndLink(async (page) => {
+        await page.route("**/data/app/tx-county-officials.json", (r) => r.fulfill({ status: 503, body: "" }));
+      });
+      check("the County card names the county and says the list did not load when the roster is refused",
+        !info.error && !!at.NAME && text.includes(at.NAME) &&
+          text.includes("did not load, so no one is named here") && !(seat.name && text.includes(seat.name)),
+        `text=${text.slice(0, 160)}`);
+    }
   }
 
   // 10. TRIBAL GOVERNMENT. The nation, its seat, the land and the council
