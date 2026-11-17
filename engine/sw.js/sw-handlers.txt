@@ -174,6 +174,49 @@ function underFolder(href, folder) {
     href.startsWith(filesUrl(folder, self.registration.scope));
 }
 
+// Boundary geometry lives at two addresses and is ONE file here. On the live
+// site the page asks the files host for it (filesUrl, the files-origin block);
+// everywhere else, and from any tab loaded before the maps were switched on
+// 2026-11-16, it asks this site. geometryKey answers either address with the
+// file's address on THIS site, which is the one key it is cached under.
+//
+// That key is why the switch needed no CACHE_NAME bump: every copy a returning
+// visitor already held was cached under its address on this site, so the
+// first request for the same file at the files host is a cache hit, offline
+// included. A bump would have made every returning visitor download every
+// boundary file again for bytes that had not changed.
+//
+// A miss is fetched from wherever filesUrl says the file lives, whichever
+// address was asked for, so a tab still running the page from before the
+// switch is served from the files host too and keeps working once this site
+// stops publishing the files. It asks with cache: "no-cache" for the reason
+// cacheOnlyElseNetwork gives.
+let GEOMETRY_KEYS = null;
+function geometryKey(href) {
+  if (!GEOMETRY_KEYS) {
+    GEOMETRY_KEYS = new Map();
+    GEOMETRY_URLS.forEach((url) => {
+      const own = new URL(url, self.registration.scope).href;
+      GEOMETRY_KEYS.set(own, own);
+      GEOMETRY_KEYS.set(filesUrl(own), own);
+    });
+  }
+  return GEOMETRY_KEYS.get(href);
+}
+function boundaryFile(key) {
+  return caches.match(key).then(
+    (cached) =>
+      cached ||
+      fetch(filesUrl(key), { cache: "no-cache" }).then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(key, clone));
+        }
+        return response;
+      })
+  );
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
 
@@ -204,9 +247,11 @@ self.addEventListener("fetch", (event) => {
 
   // Boundary geometry: changes only with a CACHE_NAME bump, so served from the
   // cache without revalidation, for instant toggles, offline use, and no bytes
-  // on a repeat visit.
-  if (inList(href, GEOMETRY_URLS)) {
-    event.respondWith(cacheOnlyElseNetwork(event.request));
+  // on a repeat visit. Asked for on this site or on the files host, it is the
+  // same file under the same key (geometryKey, above).
+  const boundary = geometryKey(href);
+  if (boundary) {
+    event.respondWith(boundaryFile(boundary));
     return;
   }
 

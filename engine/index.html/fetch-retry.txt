@@ -11,7 +11,24 @@
    * (measured 2026-09-26). Now the timer covers the wait for the headers and
    * then restarts with every chunk of body, so a stalled response still
    * fails after timeoutMs of silence and a long one finishes. A browser with
-   * no streaming body reader keeps the whole-response budget. ---------- */
+   * no streaming body reader keeps the whole-response budget.
+   *
+   * A BOUNDARY FILE IS ASKED FOR WHERE IT LIVES (2026-11-16). Every data file
+   * the app reads comes through this helper, so this is the one place that
+   * sends a boundary file's request to the files host on the live site
+   * (fetchAddress and filesUrl, the files-origin block). Any other address,
+   * and every address off the live site, is handed to fetch exactly as the
+   * caller wrote it. The first attempt starts once the script that called has
+   * finished, because a caller that runs while the page's script is still
+   * being read would ask before the files-origin block's lines have run and
+   * be sent to this site for a file that is no longer published here. ---------- */
+  function fetchAddress(url) {
+    if (typeof url !== "string") return url;
+    try {
+      var own = new URL(url, document.baseURI).href, there = filesUrl(own, document.baseURI);
+      return there === own ? url : there;
+    } catch (e) { return url; }
+  }
   function readJSONBody(res, rearm) {
     if (!res.body || !res.body.getReader || typeof TextDecoder === "undefined") return res.json();
     var reader = res.body.getReader(), decoder = new TextDecoder(), text = "";
@@ -37,7 +54,7 @@
         clearTimeout(timer);
         timer = setTimeout(function () { controller.abort(); }, timeoutMs);
       }
-      return fetch(url, Object.assign({}, opts, { signal: controller.signal }))
+      return fetch(fetchAddress(url), Object.assign({}, opts, { signal: controller.signal }))
         .then(function (res) {
           if (!res.ok) throw new Error("HTTP " + res.status);
           return readJSONBody(res, rearm);
@@ -56,7 +73,7 @@
           throw err;
         });
     }
-    return attempt(retries);
+    return Promise.resolve().then(function () { return attempt(retries); });
   }
 
   /* ---------- per-attempt timeout for the big whole-boundary remote layers
