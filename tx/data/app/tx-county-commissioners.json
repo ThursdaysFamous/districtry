@@ -27,6 +27,34 @@
   "sourceUrl": "https://www.andersoncountytx.gov/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48003": {
+  "county": "Andrews County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Kerry Pack"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mark Savell"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Vernon \"Buddy\" Hobbs"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jim Waldrop"
+   }
+  ],
+  "source": "Andrews County's own website",
+  "sourceUrl": "https://www.co.andrews.tx.us/246/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
  "48005": {
   "county": "Angelina County",
   "seats": [
@@ -111,6 +139,34 @@
   "sourceUrl": "https://www.austincounty.com/page/austin.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48019": {
+  "county": "Bandera County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Troy Konvicka"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Robert A. Harris"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Jack Moseley"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jordan \"Jody\" Rutherford"
+   }
+  ],
+  "source": "Bandera County's own website",
+  "sourceUrl": "https://www.banderacounty.gov/page/cc.commissioners",
+  "asOf": "2026-11-17"
+ },
  "48021": {
   "county": "Bastrop County",
   "seats": [
@@ -171,6 +227,62 @@
   "sourceUrl": "https://www.beecounty.texas.gov/169/Commissioners-Court",
   "asOf": "2026-11-17"
  },
+ "48031": {
+  "county": "Blanco County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Tommy Weir"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Emil Ray Uecker"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Chris Liesmann"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Charles Riley"
+   }
+  ],
+  "source": "Blanco County's own website",
+  "sourceUrl": "https://www.blancocountytexas.gov/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48035": {
+  "county": "Bosque County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Billy Hall"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Terry Townley"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Larry \"Shotgun\" Philipp"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Gary Liardon"
+   }
+  ],
+  "source": "Bosque County's own website",
+  "sourceUrl": "https://www.bosquecounty.gov/174/County-Commissioners",
+  "asOf": "2026-11-17"
+ },
  "48037": {
   "county": "Bowie County",
   "seats": [
@@ -225,6 +337,34 @@
   ],
   "source": "Brown County's own website",
   "sourceUrl": "https://www.browncountytx.gov/page/brown.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48051": {
+  "county": "Burleson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Dwayne Faust"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Vincent Svec, Jr."
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "David Hildebrand"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Robert \"Bobby\" Urbanosky"
+   }
+  ],
+  "source": "Burleson County's own website",
+  "sourceUrl": "https://www.burlesoncountytx.gov/page/gov.commissioners",
   "asOf": "2026-11-17"
  },
  "48053": {
@@ -287,6 +427,34 @@
   "sourceUrl": "https://www.co.caldwell.tx.us/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48059": {
+  "county": "Callahan County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Ashley McGowen"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Bryan Farmer"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Tom Windham"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Erwin Clark"
+   }
+  ],
+  "source": "Callahan County's own website",
+  "sourceUrl": "https://newtools.cira.state.tx.us/page/callahan.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48061": {
   "county": "Cameron County",
   "seats": [
@@ -313,6 +481,34 @@
   ],
   "source": "Cameron County's own website",
   "sourceUrl": "https://www.cameroncountytx.gov/",
+  "asOf": "2026-11-17"
+ },
+ "48063": {
+  "county": "Camp County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jed Hefner"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Tommy Rozell"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Perry Weeks"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Steve Lindley"
+   }
+  ],
+  "source": "Camp County's own website",
+  "sourceUrl": "https://www.co.camp.tx.us/page/camp.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48067": {
@@ -427,6 +623,34 @@
   "sourceUrl": "https://www.collincountytx.gov/government/commissioners-court",
   "asOf": "2026-11-17"
  },
+ "48089": {
+  "county": "Colorado County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Shannon Owers"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Ryan Brandt"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Keith Neuendorff"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Darrell Gertson"
+   }
+  ],
+  "source": "Colorado County's own website",
+  "sourceUrl": "https://www.co.colorado.tx.us/page/colorado.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48091": {
   "county": "Comal County",
   "seats": [
@@ -539,6 +763,62 @@
   "sourceUrl": "https://www.dallascounty.org/government/comcrt/",
   "asOf": "2026-11-17"
  },
+ "48115": {
+  "county": "Dawson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Mark Shofner"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Ryan Webb"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Al Crisp"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Russell Cox"
+   }
+  ],
+  "source": "Dawson County's own website",
+  "sourceUrl": "https://www.co.dawson.tx.us/page/dawson.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48117": {
+  "county": "Deaf Smith County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Chris Matthews"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Jerry O'Connor"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Kevin Brown"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Roddy Allred"
+   }
+  ],
+  "source": "Deaf Smith County's own website",
+  "sourceUrl": "https://www.co.deaf-smith.tx.us/page/deafsmith.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48121": {
   "county": "Denton County",
   "seats": [
@@ -565,6 +845,62 @@
   ],
   "source": "Denton County's own website",
   "sourceUrl": "https://www.dentoncounty.gov/165/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48123": {
+  "county": "DeWitt County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Ryan Varela"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "James B. Pilchiek, Sr."
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "James Kaiser"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Brian Carson"
+   }
+  ],
+  "source": "DeWitt County's own website",
+  "sourceUrl": "https://www.co.dewitt.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48133": {
+  "county": "Eastland County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Andy Maxwell"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "James Crenshaw"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Ronnie Wilson"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Robert Rains"
+   }
+  ],
+  "source": "Eastland County's own website",
+  "sourceUrl": "https://newtools.cira.state.tx.us/page/eastland.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48135": {
@@ -659,6 +995,34 @@
   "sourceUrl": "https://www.epcounty.com/165/Commissioners-Court",
   "asOf": "2026-11-17"
  },
+ "48145": {
+  "county": "Falls County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Milton Albright"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "F.A. Green"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Jason Willberg"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Nita Wuebker"
+   }
+  ],
+  "source": "Falls County's own website",
+  "sourceUrl": "https://www.co.falls.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48147": {
   "county": "Fannin County",
   "seats": [
@@ -687,6 +1051,34 @@
   "sourceUrl": "https://www.co.fannin.tx.us/page/fannin.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48149": {
+  "county": "Fayette County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jason McBroom"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Clint Sternadel"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Harvey Berckenhoff"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Drew Brossmann"
+   }
+  ],
+  "source": "Fayette County's own website",
+  "sourceUrl": "https://www.co.fayette.tx.us/page/fayette.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48157": {
   "county": "Fort Bend County",
   "seats": [
@@ -713,6 +1105,118 @@
   ],
   "source": "Fort Bend County's own website",
   "sourceUrl": "https://www.fortbendcountytx.gov/government/departments/commissioners-court",
+  "asOf": "2026-11-17"
+ },
+ "48159": {
+  "county": "Franklin County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Joe D Stanley"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Toby Godfrey"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Scott Newsome"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Scott Smith"
+   }
+  ],
+  "source": "Franklin County's own website",
+  "sourceUrl": "https://www.co.franklin.tx.us/page/franklin.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48161": {
+  "county": "Freestone County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Andy Bonner"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Will McSwane"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Richard McGowan"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Clyde Ridge Jr."
+   }
+  ],
+  "source": "Freestone County's own website",
+  "sourceUrl": "https://www.co.freestone.tx.us/page/freestone.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48163": {
+  "county": "Frio County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Joe Vela"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mario Martinez"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Raul Carrizales"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Danny Cano"
+   }
+  ],
+  "source": "Frio County's own website",
+  "sourceUrl": "https://www.co.frio.tx.us/page/co.commissioners-court",
+  "asOf": "2026-11-17"
+ },
+ "48179": {
+  "county": "Gray County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Logan Hudson"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Lake Arrington"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "John Mark Baggerman"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jeff Haley"
+   }
+  ],
+  "source": "Gray County's own website",
+  "sourceUrl": "https://www.co.gray.tx.us/page/gray.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48181": {
@@ -1011,6 +1515,34 @@
   "sourceUrl": "https://www.co.hill.tx.us/page/hill.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48219": {
+  "county": "Hockley County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Alan Wisdom"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Larry Carter"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Seth Graf"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Tommy Clevenger"
+   }
+  ],
+  "source": "Hockley County's own website",
+  "sourceUrl": "https://www.co.hockley.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48221": {
   "county": "Hood County",
   "seats": [
@@ -1071,6 +1603,34 @@
   "sourceUrl": "https://www.hopkinscountytx.org/page/hopkins.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48225": {
+  "county": "Houston County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Gary Lovell"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Willie Kitchen"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Gene Stokes"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jimmy Henderson"
+   }
+  ],
+  "source": "Houston County's own website",
+  "sourceUrl": "https://www.co.houston.tx.us/page/houston.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48227": {
   "county": "Howard County",
   "seats": [
@@ -1125,6 +1685,62 @@
   ],
   "source": "Hunt County's own website",
   "sourceUrl": "https://www.huntcounty.net/page/hunt.commissionerscourt",
+  "asOf": "2026-11-17"
+ },
+ "48233": {
+  "county": "Hutchinson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Gary Alexander"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Dwight Kirksey"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Ben Bentley"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Chris Prock"
+   }
+  ],
+  "source": "Hutchinson County's own website",
+  "sourceUrl": "https://www.co.hutchinson.tx.us/government/commissioners-court/",
+  "asOf": "2026-11-17"
+ },
+ "48239": {
+  "county": "Jackson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Douglas Frenzel"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "WAYNE BUBELA"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "GLENN MARTIN"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "DENNIS KARL"
+   }
+  ],
+  "source": "Jackson County's own website",
+  "sourceUrl": "https://www.co.jackson.tx.us/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48241": {
@@ -1217,6 +1833,62 @@
   ],
   "source": "Jim Wells County's own website",
   "sourceUrl": "https://www.co.jim-wells.tx.us/page/co.commissioners",
+  "asOf": "2026-11-17"
+ },
+ "48253": {
+  "county": "Jones County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Roy Spalding"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Lonnie Vivian"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Danny Collett"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Joel Spraberry"
+   }
+  ],
+  "source": "Jones County's own website",
+  "sourceUrl": "https://www.co.jones.tx.us/page/jones.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48255": {
+  "county": "Karnes County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "David Wiatrek"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Benny Lyssy"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "James Rosales"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Wesley Gisler"
+   }
+  ],
+  "source": "Karnes County's own website",
+  "sourceUrl": "https://www.co.karnes.tx.us/page/karnes.Commissioners.CourtNew",
   "asOf": "2026-11-17"
  },
  "48257": {
@@ -1359,6 +2031,146 @@
   "sourceUrl": "https://www.lamarcountytx.gov/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48279": {
+  "county": "Lamb County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Cory DeBerry"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Kent Lewis"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Danny Short"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Lee Logan"
+   }
+  ],
+  "source": "Lamb County's own website",
+  "sourceUrl": "https://www.co.lamb.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48281": {
+  "county": "Lampasas County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Bobby Carroll"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Jamie Smart"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Shad Hill"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Mark Rainwater"
+   }
+  ],
+  "source": "Lampasas County's own website",
+  "sourceUrl": "https://www.co.lampasas.tx.us/page/lampasas.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48285": {
+  "county": "Lavaca County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Edward Pustka"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Wayne Faircloth"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Kenny Siegel"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Dennis W. Kocian"
+   }
+  ],
+  "source": "Lavaca County's own website",
+  "sourceUrl": "https://www.co.lavaca.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48287": {
+  "county": "Lee County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Mark Matthijetz"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Richard Wagner"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Alan Turner"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Steven Knobloch"
+   }
+  ],
+  "source": "Lee County's own website",
+  "sourceUrl": "https://www.co.lee.tx.us/page/lee.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48289": {
+  "county": "Leon County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Joey Sullivan"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Newman Paul Bing"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Tommy Cunningham"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Thomas J. Foley"
+   }
+  ],
+  "source": "Leon County's own website",
+  "sourceUrl": "https://www.co.leon.tx.us/page/leon.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48291": {
   "county": "Liberty County",
   "seats": [
@@ -1385,6 +2197,90 @@
   ],
   "source": "Liberty County's own website",
   "sourceUrl": "https://www.libertycountytx.gov/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48293": {
+  "county": "Limestone County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jody Goodman"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Micah Anderson"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Stephen Friday"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Bobby Forrest"
+   }
+  ],
+  "source": "Limestone County's own website",
+  "sourceUrl": "https://www.co.limestone.tx.us/page/limestone.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48297": {
+  "county": "Live Oak County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Richard Lee"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Randy Kopplin"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Mitchell Williams"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Lucio Morin"
+   }
+  ],
+  "source": "Live Oak County's own website",
+  "sourceUrl": "https://www.co.live-oak.tx.us/page/liveoak.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48299": {
+  "county": "Llano County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Peter R. Jones"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Linda Raschke"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Brent Richards"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jerry Don Moss"
+   }
+  ],
+  "source": "Llano County's own website",
+  "sourceUrl": "https://www.llanocounty.gov/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48303": {
@@ -1417,6 +2313,34 @@
   ],
   "source": "Lubbock County's own website",
   "sourceUrl": "https://www.lubbockcounty.gov/department/division.php?structureid=223",
+  "asOf": "2026-11-17"
+ },
+ "48313": {
+  "county": "Madison County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Steve Parrish"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Carl Wiseman"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Carl L. Cannon"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "David Pohorelsky"
+   }
+  ],
+  "source": "Madison County's own website",
+  "sourceUrl": "https://www.co.madison.tx.us/page/madison.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48321": {
@@ -1531,6 +2455,90 @@
   "sourceUrl": "https://www.milamcounty.net/government/commissioners.php",
   "asOf": "2026-11-17"
  },
+ "48337": {
+  "county": "Montague County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Roy Darden"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mike Mayfield"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Mark Murphey"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Bob Langford"
+   }
+  ],
+  "source": "Montague County's own website",
+  "sourceUrl": "https://www.co.montague.tx.us/page/montague.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48341": {
+  "county": "Moore County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Daniel Garcia"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Miles Mixon"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Dee Vaughan"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Colt Farni"
+   }
+  ],
+  "source": "Moore County's own website",
+  "sourceUrl": "https://www.co.moore.tx.us/page/moore.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48343": {
+  "county": "Morris County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Greg Frazier"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Kerry McCoy"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Michael Clair"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Todd Freeman"
+   }
+  ],
+  "source": "Morris County's own website",
+  "sourceUrl": "https://www.co.morris.tx.us/page/morris.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48347": {
   "county": "Nacogdoches County",
   "seats": [
@@ -1585,6 +2593,62 @@
   ],
   "source": "Navarro County's own website",
   "sourceUrl": "https://www.co.navarro.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48351": {
+  "county": "Newton County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Danny Bentsen"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Phillip A. White"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Prentiss Hopson"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Leanord \"Bubba\" Powell"
+   }
+  ],
+  "source": "Newton County's own website",
+  "sourceUrl": "https://www.co.newton.tx.us/page/newton.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48353": {
+  "county": "Nolan County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Terry Willman"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Seth Mahaffey"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Tommy White"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Henry Ortega Jr."
+   }
+  ],
+  "source": "Nolan County's own website",
+  "sourceUrl": "https://www.co.nolan.tx.us/page/nolan.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48361": {
@@ -1647,6 +2711,34 @@
   "sourceUrl": "https://www.co.palo-pinto.tx.us/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48365": {
+  "county": "Panola County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Billy Alexander"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "David A. Cole"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Craig M. Lawless"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Dale LaGrone"
+   }
+  ],
+  "source": "Panola County's own website",
+  "sourceUrl": "https://www.co.panola.tx.us/1192/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
  "48367": {
   "county": "Parker County",
   "seats": [
@@ -1673,6 +2765,34 @@
   ],
   "source": "Parker County's own website",
   "sourceUrl": "https://parkercountytx.gov/98/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48371": {
+  "county": "Pecos County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Francisco Ramirez"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Jerome Chavez"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Mickey Jack Perry"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Nathan Reeves"
+   }
+  ],
+  "source": "Pecos County's own website",
+  "sourceUrl": "https://www.co.pecos.tx.us/office/judge-commissioners/",
   "asOf": "2026-11-17"
  },
  "48373": {
@@ -1731,6 +2851,34 @@
   "sourceUrl": "https://newtools.cira.state.tx.us/page/potter.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48379": {
+  "county": "Rains County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jeremy Cook"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Jim Jones"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Korey Young"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Lori Northcutt"
+   }
+  ],
+  "source": "Rains County's own website",
+  "sourceUrl": "https://www.co.rains.tx.us/page/rains.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48381": {
   "county": "Randall County",
   "seats": [
@@ -1757,6 +2905,62 @@
   ],
   "source": "Randall County's own website",
   "sourceUrl": "https://www.randallcounty.gov/222/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48387": {
+  "county": "Red River County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Donnie Gentry"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "David Hutson"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Jeff Moore"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Bruce Emery"
+   }
+  ],
+  "source": "Red River County's own website",
+  "sourceUrl": "https://www.co.red-river.tx.us/page/redriver.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48395": {
+  "county": "Robertson County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Ty Rampy"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Donald Threadgill"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Chuck Hairston"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "James Taylor"
+   }
+  ],
+  "source": "Robertson County's own website",
+  "sourceUrl": "https://www.co.robertson.tx.us/page/robertson.Commissioners.Court",
   "asOf": "2026-11-17"
  },
  "48397": {
@@ -1871,6 +3075,62 @@
   "sourceUrl": "https://www.sanpatriciocountytx.gov/page/comm.court.home",
   "asOf": "2026-11-17"
  },
+ "48415": {
+  "county": "Scurry County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Terry D. Williams"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Doug Scott"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Shawn McCowen"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jeff Mitchell"
+   }
+  ],
+  "source": "Scurry County's own website",
+  "sourceUrl": "https://www.co.scurry.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48419": {
+  "county": "Shelby County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Roscoe McSwain"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Shannon Metcalf"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Stevie Smith"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Tom Bellmyer"
+   }
+  ],
+  "source": "Shelby County's own website",
+  "sourceUrl": "https://www.co.shelby.tx.us/page/shelby.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48427": {
   "county": "Starr County",
   "seats": [
@@ -1959,6 +3219,34 @@
   "sourceUrl": "https://www.taylorcounty.texas.gov/198/County-Commissioners",
   "asOf": "2026-11-17"
  },
+ "48445": {
+  "county": "Terry County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Myron Bovkoon"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Richard Cavazos"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Martin Lefevere"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ernesto Elizardo"
+   }
+  ],
+  "source": "Terry County's own website",
+  "sourceUrl": "https://www.co.terry.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48449": {
   "county": "Titus County",
   "seats": [
@@ -2043,6 +3331,62 @@
   "sourceUrl": "https://www.traviscountytx.gov/commissioners-court",
   "asOf": "2026-11-17"
  },
+ "48455": {
+  "county": "Trinity County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Tommy Park"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mike Loftin"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Neal Smith"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Steven Truss"
+   }
+  ],
+  "source": "Trinity County's own website",
+  "sourceUrl": "https://www.co.trinity.tx.us/page/trinity.Commissioners",
+  "asOf": "2026-11-17"
+ },
+ "48457": {
+  "county": "Tyler County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Joe Blacksher"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Doug Hughes"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Mike Marshall"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Charles \"Buck\" Hudson"
+   }
+  ],
+  "source": "Tyler County's own website",
+  "sourceUrl": "https://www.co.tyler.tx.us/page/tyler.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48459": {
   "county": "Upshur County",
   "seats": [
@@ -2069,6 +3413,34 @@
   ],
   "source": "Upshur County's own website",
   "sourceUrl": "https://www.countyofupshur.com/page/commissioners_court",
+  "asOf": "2026-11-17"
+ },
+ "48463": {
+  "county": "Uvalde County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "John Yeackle"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mariano Pargas, Jr."
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Roy M. Kothmann"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ronald (Ronnie) Garza"
+   }
+  ],
+  "source": "Uvalde County's own website",
+  "sourceUrl": "https://www.uvaldecounty.gov/uvalde-county-commissioners",
   "asOf": "2026-11-17"
  },
  "48465": {
@@ -2219,6 +3591,34 @@
   "sourceUrl": "https://www.co.waller.tx.us/page/CommCourt.About",
   "asOf": "2026-11-17"
  },
+ "48475": {
+  "county": "Ward County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Guy Thames"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Larry Hanna"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Billy Redmon"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Eddie Nelms"
+   }
+  ],
+  "source": "Ward County's own website",
+  "sourceUrl": "https://www.co.ward.tx.us/page/ward.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48477": {
   "county": "Washington County",
   "seats": [
@@ -2335,6 +3735,62 @@
   "sourceUrl": "https://wichitacountytx.com/locations/commissioners-court/",
   "asOf": "2026-11-17"
  },
+ "48487": {
+  "county": "Wilbarger County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Billy Taylor"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Phillip Graf"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Caul Craighead"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Josh Patterson"
+   }
+  ],
+  "source": "Wilbarger County's own website",
+  "sourceUrl": "https://www.co.wilbarger.tx.us/page/Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
+ "48489": {
+  "county": "Willacy County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Micaela \"Kelly\" Zamorano-Alaniz"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Mario Tijerina"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Henry De La Paz"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ernie Garcia"
+   }
+  ],
+  "source": "Willacy County's own website",
+  "sourceUrl": "https://www.willacy.gov/page/willacy.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48493": {
   "county": "Wilson County",
   "seats": [
@@ -2417,6 +3873,62 @@
   ],
   "source": "Wood County's own website",
   "sourceUrl": "https://www.mywoodcounty.com/page/commcourt_home",
+  "asOf": "2026-11-17"
+ },
+ "48503": {
+  "county": "Young County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Stacy Creswell"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Scott Shook"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Alan Craig"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jimmy Wiley"
+   }
+  ],
+  "source": "Young County's own website",
+  "sourceUrl": "https://www.co.young.tx.us/page/young.CommCourt",
+  "asOf": "2026-11-17"
+ },
+ "48505": {
+  "county": "Zapata County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "David R. Moya"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Pedro Morales"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Jose A. Solis"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Roberto Garza"
+   }
+  ],
+  "source": "Zapata County's own website",
+  "sourceUrl": "https://www.co.zapata.tx.us/page/zapata.Commissioners.Court",
   "asOf": "2026-11-17"
  }
 }
