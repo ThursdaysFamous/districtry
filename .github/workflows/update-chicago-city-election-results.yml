@@ -1,42 +1,57 @@
 # Chicago's CITY election results (mayor, clerk, treasurer, the 50 wards and the
-# 22 police district councils), read from the Chicago Board of Election
-# Commissioners' results page by scripts/chicago_election_results_scraper.py and
-# written to il/data/app/chicago-election-results.json plus one
-# il/data/app/chicago-election-results/ward-NN.json per ward by
-# scripts/build_chicago_election_results.py. That file is the second election
-# on Illinois's Election Results layer, beside November's election-results.json,
+# 22 police district councils) and the RUNOFF that follows them, read from the
+# Chicago Board of Election Commissioners' results pages by
+# scripts/chicago_election_results_scraper.py and written by
+# scripts/build_chicago_election_results.py: the city election to
+# il/data/app/chicago-election-results.json and the runoff to
+# il/data/app/chicago-runoff-results.json, each with one ward-NN.json per ward in
+# a folder of the same name. Those are the second and third elections on
+# Illinois's Election Results layer, beside November's election-results.json,
 # which update-chicago-election-results.yml refreshes and this job never touches.
+#
+# TWO ELECTIONS, ONE JOB. The two are read by the same steps with the same
+# checks, so they are two legs of one matrix, run one after the other, and each
+# leg decides for itself from its own file's date whether there is anything to
+# read. On 23 February the runoff's leg finds its polls not yet closed and reads
+# nothing; on 6 April the city election's leg finds its results certified and
+# reads nothing. A start by hand names one election with `election`, and must
+# when it gives `certified` or `election_id`, which belong to one election.
 #
 # ELECTION NIGHT PUBLISHES ITSELF (Adam, 2026-11-15: "Nightly"). Asked whether
 # Chicago's results on the night of 23 February 2027 should come more often
 # than the one reviewed update a day November's got, he chose three updates
 # that night (about 8 pm, 10 pm and midnight Central) and one the next morning,
-# each going live once its checks pass. So from the time the polls close until
-# noon the next day (`night`, scripts/check_results_update.py --phase) a run
-# merges its own pull request once smoke-test.yml has passed on it
+# each going live once its checks pass. The runoff of 6 April 2027 is read the
+# same way (Adam, 2026-11-17: "Build runoff"). So from the time the polls close
+# until noon the next day (`night`, scripts/check_results_update.py --phase) a
+# run merges its own pull request once smoke-test.yml has passed on it
 # (scripts/wait_for_pr_checks.py). Before the polls close a run reads nothing.
 # After that noon every update waits for a look, as each day's did after
-# November, until the Board proclaims the results and the job stops.
+# November, until the Board proclaims the results and that leg stops.
 #
 # NOTHING GOES LIVE THAT DOES NOT LOOK LIKE A COUNT IN PROGRESS. The automated
 # checks ask whether the app still works, not whether the numbers are right, so
 # scripts/check_results_update.py compares the rebuilt file with the one the
 # site ships and HOLDS the update for a look when a vote count went down
-# anywhere, a race, a candidate or a precinct is gone, a race appeared, the file
-# is for another election, or the first count of the night does not have the 3
-# citywide, 50 ward and 22 police district races this election has. A held
-# update stays an open pull request that says what looked wrong, the site keeps
-# the last count that passed, and the run ends red.
+# anywhere, a race, a candidate or a precinct is gone, a race appeared, or the
+# file is for another election. The first count of the city election must have
+# the 3 citywide, 50 ward and 22 police district races that election has. The
+# first count of the runoff must have exactly the citywide and ward races where
+# nobody won more than half in February, each between February's two leaders,
+# read from the city election's CERTIFIED file (--first-round), so the runoff
+# is held until February's results have been certified here. A held update
+# stays an open pull request that says what looked wrong, the site keeps the
+# last count that passed, and the run ends red.
 #
 # WHO STARTS IT. GitHub starts this repository's scheduled jobs three to five
 # hours late (CLAUDE.md, measured 2026-09-15), so a cron cannot be on time for
 # an election night. The project thread that owns election night starts each
-# of the four updates by workflow_dispatch, which starts in seconds. The four
-# dated crons below are the backstop if nothing dispatches: each is written
-# about four hours early, and one that starts within 100 minutes of an update
-# already live does nothing, so the backstop fills a gap and never doubles the
-# reading. A cron that starts before the polls close reads nothing. The daily
-# cron is the refresh after the night, until certification.
+# of the four updates by workflow_dispatch, which starts in seconds. The dated
+# crons below are the backstop if nothing dispatches: each is written about
+# four hours early, and one that starts within 100 minutes of an update already
+# live does nothing, so the backstop fills a gap and never doubles the reading.
+# A cron that starts before the polls close reads nothing. The daily cron is
+# the refresh after each night, until certification.
 #
 # THE BOARD'S PAGE IS FOUND BY THE ELECTION'S DATE. The results page of a new
 # election has a number nobody knows until the Board lists it, so the first run
@@ -47,8 +62,8 @@
 # list has done before.
 #
 # CERTIFYING: when the Board proclaims the official results, run this workflow
-# by hand with `certified` set to the date. That update always waits for a
-# look.
+# by hand with `election` set to that election and `certified` set to the
+# date. That update always waits for a look.
 
 name: Update Chicago city election results
 
@@ -63,8 +78,19 @@ on:
     - cron: "30 23 23 2 *"
     - cron: "30 1 24 2 *"
     - cron: "0 8 24 2 *"
+    # The night of the runoff, 6 April 2027 (Central daylight time), the same
+    # way: 3:30 pm, 5:30 pm and 7:30 pm on the 6th and 2 am on the 7th.
+    - cron: "30 20 6 4 *"
+    - cron: "30 22 6 4 *"
+    - cron: "30 0 7 4 *"
+    - cron: "0 7 7 4 *"
   workflow_dispatch:
     inputs:
+      election:
+        description: "both: each election decides from its own date whether there is anything to read. city or runoff: that election alone (required with certified or election_id)."
+        type: choice
+        options: [both, city, runoff]
+        default: both
       publish:
         description: "auto: go live once the checks pass on election night, wait for review at any other time. review: always wait for review."
         type: choice
@@ -90,14 +116,30 @@ concurrency:
   group: chicago-city-election-results
   cancel-in-progress: false
 
-env:
-  NAME: chicago-election-results
-  BRANCH: bot/chicago-city-election-results-update
-
 jobs:
   update-results:
     runs-on: ubuntu-latest
     timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - election: city
+            name: chicago-election-results
+            branch: bot/chicago-city-election-results-update
+            title: Update Chicago city election results from the Board of Elections
+            what: Chicago's city election results
+            guard: --expect city=3 --expect city-council=50 --expect police-council=22
+          - election: runoff
+            name: chicago-runoff-results
+            branch: bot/chicago-runoff-results-update
+            title: Update Chicago runoff results from the Board of Elections
+            what: The results of Chicago's runoff
+            guard: --first-round chicago-election-results
+    env:
+      NAME: ${{ matrix.name }}
+      BRANCH: ${{ matrix.branch }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -115,9 +157,24 @@ jobs:
         id: state
         env:
           CERTIFIED: ${{ github.event.inputs.certified }}
+          GIVEN_ID: ${{ github.event.inputs.election_id }}
           PUBLISH: ${{ github.event.inputs.publish }}
+          ELECTION: ${{ github.event.inputs.election }}
+          LEG: ${{ matrix.election }}
           EVENT: ${{ github.event_name }}
         run: |
+          # A certification date or a results page number belongs to one
+          # election, so a start that gives one must name it.
+          if { [ -n "$CERTIFIED" ] || [ -n "$GIVEN_ID" ]; } && [ "${ELECTION:-both}" = "both" ]; then
+            echo "::error::certified and election_id belong to one election; start the workflow again with election set to city or runoff"
+            exit 1
+          fi
+          if [ "${ELECTION:-both}" != "both" ] && [ "$ELECTION" != "$LEG" ]; then
+            echo "This start names the $ELECTION; the $LEG is left alone."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "mode=review" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           python3 scripts/check_results_update.py --name "$NAME" --phase | tee /tmp/state.txt
           phase=$(sed -n 's/^phase=//p' /tmp/state.txt)
           certified=$(sed -n 's/^certified=//p' /tmp/state.txt)
@@ -175,7 +232,7 @@ jobs:
 
       - name: Read the Board of Elections' results
         if: steps.find.outputs.listed == 'true'
-        run: python3 scripts/chicago_election_results_scraper.py --election "${{ steps.find.outputs.id }}" -o /tmp/city_results_raw.json
+        run: python3 scripts/chicago_election_results_scraper.py --election "${{ steps.find.outputs.id }}" -o /tmp/results_raw.json
 
       - name: Rebuild the results files
         if: steps.find.outputs.listed == 'true'
@@ -184,9 +241,9 @@ jobs:
           DATE: ${{ steps.state.outputs.election_date }}
         run: |
           if [ -n "$CERTIFIED" ]; then
-            python3 scripts/build_chicago_election_results.py /tmp/city_results_raw.json --name "$NAME" --election-date "$DATE" --certified "$CERTIFIED"
+            python3 scripts/build_chicago_election_results.py /tmp/results_raw.json --name "$NAME" --election-date "$DATE" --certified "$CERTIFIED"
           else
-            python3 scripts/build_chicago_election_results.py /tmp/city_results_raw.json --name "$NAME" --election-date "$DATE"
+            python3 scripts/build_chicago_election_results.py /tmp/results_raw.json --name "$NAME" --election-date "$DATE"
           fi
 
       # publish: a count further along. nothing: no vote yet, or only the
@@ -195,8 +252,7 @@ jobs:
         id: guard
         if: steps.find.outputs.listed == 'true'
         run: |
-          python3 scripts/check_results_update.py --name "$NAME" --reasons /tmp/reasons.md \
-            --expect city=3 --expect city-council=50 --expect police-council=22
+          python3 scripts/check_results_update.py --name "$NAME" --reasons /tmp/reasons.md ${{ matrix.guard }}
           cat /tmp/reasons.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Validate app + data files
@@ -211,6 +267,9 @@ jobs:
           VERDICT: ${{ steps.guard.outputs.verdict }}
           MODE: ${{ steps.state.outputs.mode }}
           DATE: ${{ steps.state.outputs.election_date }}
+          TITLE: ${{ matrix.title }}
+          WHAT: ${{ matrix.what }}
+          LEG: ${{ matrix.election }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -226,16 +285,20 @@ jobs:
           python3 scripts/build_llms_txt.py
           python3 scripts/build_sitemap.py
           # (the paths are written out, not built from $NAME, because
-          # build_results_pages.py reads this file for the results file it commits)
-          git add -A il/data/app/chicago-election-results.json il/data/app/chicago-election-results \
-            il/election-results.html llms.txt sitemap.xml
-          git commit -m "Update Chicago city election results from the Board of Elections"
+          # build_results_pages.py reads this file for the results files it commits)
+          if [ "$LEG" = "runoff" ]; then
+            git add -A il/data/app/chicago-runoff-results.json il/data/app/chicago-runoff-results
+          else
+            git add -A il/data/app/chicago-election-results.json il/data/app/chicago-election-results
+          fi
+          git add -A il/election-results.html llms.txt sitemap.xml
+          git commit -m "$TITLE"
           git push -u origin "$BRANCH" --force
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
           read=$(python3 -c "import json;print(json.load(open('il/data/app/$NAME.json')).get('read') or '')")
           {
-            echo "Chicago's city election results (the election of $DATE), as the Chicago Board of Election Commissioners published them at $read UTC."
+            echo "$WHAT (the election of $DATE), as the Chicago Board of Election Commissioners published them at $read UTC."
             echo
             echo "**What readers see:** the vote counts and the map colours for this election on the Illinois map's Election Results card and on the Illinois results page. Until the Board certifies, the map and the page say these are unofficial results that will change."
             echo
@@ -246,7 +309,7 @@ jobs:
               echo
               echo "If the Board's own page shows the same numbers, this is the Board's correction and the update can be merged after a look."
             elif [ "$MODE" = "when-green" ]; then
-              echo "**This update publishes itself once the automated checks pass.** It is an election-night update (Adam's choice of 2026-11-15: three updates that night and one the next morning, each going live once its checks pass). Compared with the count on the site, no vote count went down and no race, candidate or precinct is missing:"
+              echo "**This update publishes itself once the automated checks pass.** It is an election-night update (Adam's choice of 2026-11-15, for the runoff too on 2026-11-17: three updates that night and one the next morning, each going live once its checks pass). Compared with the count on the site, no vote count went down and no race, candidate or precinct is missing:"
               echo
               cat /tmp/reasons.md
             else
@@ -256,11 +319,15 @@ jobs:
             fi
             echo
             echo "---"
-            echo "Written by \`scripts/chicago_election_results_scraper.py\` and \`scripts/build_chicago_election_results.py\`, which fails if a ward's precincts stop adding up to the ward's total or the results stop naming the city's 1,291 precincts; compared with the shipped file by \`scripts/check_results_update.py\`. The pull request also carries the rebuilt \`il/election-results.html\`, \`llms.txt\` and \`sitemap.xml\`."
+            if [ "$LEG" = "runoff" ]; then
+              echo "Written by \`scripts/chicago_election_results_scraper.py\` and \`scripts/build_chicago_election_results.py\`, which fails if a ward's precincts stop adding up to the ward's total or a runoff race stops covering every precinct of its ward or of the city; compared with the shipped file, and with the races February's certified count sent to a runoff, by \`scripts/check_results_update.py\`. The pull request also carries the rebuilt \`il/election-results.html\`, \`llms.txt\` and \`sitemap.xml\`."
+            else
+              echo "Written by \`scripts/chicago_election_results_scraper.py\` and \`scripts/build_chicago_election_results.py\`, which fails if a ward's precincts stop adding up to the ward's total or the results stop naming the city's 1,291 precincts; compared with the shipped file by \`scripts/check_results_update.py\`. The pull request also carries the rebuilt \`il/election-results.html\`, \`llms.txt\` and \`sitemap.xml\`."
+            fi
           } > /tmp/pr_body.md
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -z "$pr" ]; then
-            gh pr create --title "Update Chicago city election results from the Board of Elections" \
+            gh pr create --title "$TITLE" \
               --body-file /tmp/pr_body.md --base main --head "$BRANCH"
             pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           else
@@ -290,7 +357,7 @@ jobs:
         run: |
           gh pr merge "${{ steps.pr.outputs.number }}" --squash \
             --match-head-commit "${{ steps.pr.outputs.sha }}" \
-            --subject "Update Chicago city election results from the Board of Elections (#${{ steps.pr.outputs.number }})"
+            --subject "${{ matrix.title }} (#${{ steps.pr.outputs.number }})"
           echo "Merged #${{ steps.pr.outputs.number }}; the publish that follows puts it on the site." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Say so when an election-night update was held

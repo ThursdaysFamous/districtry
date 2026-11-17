@@ -29,6 +29,18 @@ keeps the last file that passed, when the rebuilt file
     50 wards and 22 police district councils, and a results page missing some
     of them is one the Board is still building.
 
+A RUNOFF'S FIRST UPDATE HAS ITS OWN STAND-IN (2026-11-17, Adam: "Build
+runoff"). Which races go to Chicago's runoff is known only once the city
+election is counted: every citywide office and ward in which no candidate won
+more than half of the votes, between its two leaders. So `--first-round <name>`
+reads that election's shipped file and holds a runoff update whose citywide
+and ward races are not exactly those races, with exactly those two candidates,
+or which holds a race of any other kind. Read on 2026-11-17, the Board's 2023
+city election (results page 241) predicts its runoff (page 242) exactly: the
+Mayor and 14 wards, with the same two names in each. The first round must say
+it is certified, because the Board decides who is on the runoff ballot from
+the official count; until it is, every runoff update is held.
+
 There is NOTHING to publish when no vote has been counted (the Board lists an
 election's races before its first count) and nothing held votes before, or
 when only the reading time moved. Otherwise the verdict is PUBLISH.
@@ -50,6 +62,8 @@ update waits for a look, as each day's did after November's election.
 
     python3 scripts/check_results_update.py --name chicago-election-results \\
         --expect city=3 --expect city-council=50 --expect police-council=22
+    python3 scripts/check_results_update.py --name chicago-runoff-results \\
+        --first-round chicago-election-results
     python3 scripts/check_results_update.py --name chicago-election-results --phase
     python3 scripts/check_results_update.py --selftest
 
@@ -114,10 +128,76 @@ def precinct_holds(p):
     return bool(t[1]) or any(any(row[1:]) for row in (p or {}).get("contests") or [])
 
 
-def judge(old, new, old_parts, new_parts, expect):
+RUNOFF_GROUPS = ("city", "city-council")
+
+
+def runoff_races(first):
+    """({race name: sorted [the two candidates]}, [problem]) for the runoff a
+    city election's file `first` calls for: each citywide or ward race in
+    which no choice has more than half of the votes. A tie for second place
+    is a problem, since the file cannot say who goes on."""
+    out, problems = {}, []
+    for c in first.get("contests") or []:
+        if c.get("group") not in RUNOFF_GROUPS:
+            continue
+        total = (c.get("total") or [0])[0] or 0
+        votes = [v or 0 for v in (c.get("total") or [0])[1:]]
+        if not total or not votes or max(votes) * 2 > total:
+            continue
+        order = sorted(range(len(votes)), key=lambda i: -votes[i])
+        if len(order) < 2:
+            continue
+        if len(order) > 2 and votes[order[1]] == votes[order[2]]:
+            problems.append("'%s' has a tie for second place in the first round's file, so it "
+                            "cannot say who is in the runoff." % c["name"])
+            continue
+        out[c["name"]] = sorted([c["choices"][order[0]], c["choices"][order[1]]])
+    return out, problems
+
+
+def check_first_round(first, new_races, hold):
+    """Hold, through `hold`, a runoff whose races are not the ones its first
+    round calls for."""
+    if not first or not first.get("contests"):
+        hold("The first round's results file holds no results, so the runoff's races cannot be "
+             "checked against it.")
+        return
+    if not first.get("certified"):
+        hold("The first round's results (the %s of %s) are not marked certified, so who is in the "
+             "runoff cannot be checked against the official count. Run the city election's update "
+             "with its certification date first."
+             % (first.get("election"), first.get("electionDate")))
+    want, problems = runoff_races(first)
+    for p in problems:
+        hold(p)
+    got = {}
+    for c in new_races:
+        if c.get("group") in RUNOFF_GROUPS:
+            got[c["name"]] = sorted(c.get("choices") or [])
+        else:
+            hold("'%s' is in the runoff's results, and a runoff holds only citywide and ward races."
+                 % c["name"])
+    on = first.get("electionDate")
+    missing = sorted(set(want) - set(got))
+    extra = sorted(set(got) - set(want))
+    if missing:
+        hold("%s race(s) went to a runoff on the first round's count and are not in the results: %s."
+             % (num(len(missing)), "; ".join(missing[:4]) + ("; …" if len(missing) > 4 else "")))
+    if extra:
+        hold("%s race(s) are in the runoff's results and nobody went to a runoff in them on %s: %s."
+             % (num(len(extra)), on, "; ".join(extra[:4]) + ("; …" if len(extra) > 4 else "")))
+    for name in sorted(set(want) & set(got)):
+        if want[name] != got[name]:
+            hold("The runoff for '%s' names %s; the first round's two leaders were %s."
+                 % (name, " and ".join(got[name]), " and ".join(want[name])))
+
+
+def judge(old, new, old_parts, new_parts, expect, first=None):
     """(verdict, [reason]) for a rebuilt index `new` against the shipped `old`.
     `old_parts` and `new_parts` are {precinct key: {turnout, contests}} over
-    every part file; `expect` is {group id: number of races}."""
+    every part file; `expect` is {group id: number of races}; `first`, for a
+    runoff, is the shipped index of the election it follows ({} when that file
+    could not be read)."""
     if old is None:
         return "hold", ["No results file is shipped to compare the rebuilt one with."]
     if (old.get("electionDate"), old.get("election")) != (new.get("electionDate"), new.get("election")):
@@ -154,6 +234,8 @@ def judge(old, new, old_parts, new_parts, expect):
         if got != want:
             hold("The rebuilt file has %s race(s) of the kind '%s'. This election has %s."
                  % (num(got), group, num(want)))
+    if first is not None:
+        check_first_round(first, new_races, hold)
 
     if old_races:
         if old.get("precincts") != new.get("precincts"):
@@ -415,6 +497,62 @@ def selftest():
                   "a long list of reasons is cut at %d and says how many more: %r"
                   % (MAX_REASONS, reasons[-1:])))
 
+    # a runoff, against the city election it follows: the Mayor and Ward 2
+    # went to a runoff (nobody past half), Ward 1 did not, and the police
+    # district council has none whatever its count
+    first = {"election": "Municipal General Election", "electionDate": "2099-02-23",
+             "certified": True, "contests": [
+                 {"id": "11", "name": "Mayor", "group": "city", "choices": ["A", "B", "C"],
+                  "total": [100, 45, 35, 20]},
+                 {"id": "14", "name": "Alderperson 1st Ward", "group": "city-council",
+                  "choices": ["C", "D"], "total": [100, 70, 30]},
+                 {"id": "15", "name": "Alderperson 2nd Ward", "group": "city-council",
+                  "choices": ["E", "F", "G"], "total": [100, 50, 30, 20]},
+                 {"id": "60", "name": "Council Member, Chicago Police Department 1st District",
+                  "group": "police-council", "choices": ["H", "I", "J", "K"], "total": [100, 30, 30, 20, 20]}]}
+    empty_runoff = dict(empty, election="Municipal Runoff Election", electionDate="2099-04-06")
+
+    def runoff(races):
+        """A runoff's first count, its races as (name, group, choices)."""
+        n = dict(empty_runoff, read="2099-04-07T02:00:00Z",
+                 turnout={"columns": ["registered", "ballots"], "total": [900, 300]},
+                 precincts=["01001"], parts=["ward-01"], contests=[])
+        p = {"01001": {"turnout": [900, 300], "contests": []}}
+        for i, (name, group, choices) in enumerate(races):
+            cid = str(11 + i)
+            votes = [100 + j for j in range(len(choices))]
+            n["contests"].append({"id": cid, "name": name, "group": group, "choices": choices,
+                                  "total": [sum(votes)] + votes})
+            p["01001"]["contests"].append([cid, sum(votes)] + votes)
+        return n, p
+
+    def rcase(want, why, races, first_file=first, says=None):
+        n, p = runoff(races)
+        got, reasons = judge(empty_runoff, n, {}, p, {}, first_file)
+        ok = got == want and (says is None or any(says in r for r in reasons))
+        cases.append((ok, "runoff, %s: wanted %s%s, got %s %r" % (
+            why, want, " saying %r" % says if says else "", got, reasons)))
+
+    mayor, ward2 = ("Mayor", "city", ["B", "A"]), ("Alderperson 2nd Ward", "city-council", ["F", "E"])
+    rcase("publish", "the races the first round sent to a runoff, its two leaders in each",
+          [mayor, ward2], says="first count")
+    rcase("hold", "a race the first round sent to a runoff is missing", [mayor],
+          says="are not in the results: Alderperson 2nd Ward")
+    rcase("hold", "a race nobody went to a runoff in", [mayor, ward2, ("Alderperson 1st Ward", "city-council", ["C", "D"])],
+          says="nobody went to a runoff in them on 2099-02-23: Alderperson 1st Ward")
+    rcase("hold", "a runoff naming someone who was not one of the two leaders",
+          [("Mayor", "city", ["A", "C"]), ward2], says="The runoff for 'Mayor' names A and C")
+    rcase("hold", "a race of another kind", [mayor, ward2,
+          ("Council Member, Chicago Police Department 1st District", "police-council", ["H", "I"])],
+          says="holds only citywide and ward races")
+    rcase("hold", "a first round not certified yet", [mayor, ward2],
+          first_file=dict(first, certified=False), says="not marked certified")
+    rcase("hold", "a first round with no results", [mayor, ward2], first_file={}, says="holds no results")
+    tied = copy.deepcopy(first)
+    tied["contests"][2]["total"] = [100, 50, 25, 25]
+    rcase("hold", "a tie for second place in the first round", [mayor, ward2], first_file=tied,
+          says="tie for second place")
+
     # the night: Chicago is six hours behind UTC in February, five in April
     utc = datetime.timezone.utc
     for when, want in (((2027, 2, 23, 18, 0), "before"),      # noon on election day
@@ -450,6 +588,9 @@ def main():
     ap.add_argument("--base", default="HEAD", help="the commit holding the shipped file")
     ap.add_argument("--expect", action="append", default=[], metavar="GROUP=N",
                     help="the number of races of one kind this election has; give each kind once")
+    ap.add_argument("--first-round", metavar="NAME",
+                    help="for a runoff: the base name of the shipped results file of the election "
+                         "it follows, whose races without a majority must be the runoff's races")
     ap.add_argument("--reasons", help="also write the reasons here, one Markdown bullet each")
     ap.add_argument("--phase", action="store_true",
                     help="say where now falls for the shipped file's election, and what the "
@@ -490,7 +631,10 @@ def main():
         expect[group] = int(n)
     new, new_parts = read_new(args.app_data, args.name)
     old, old_parts = read_old(args.app_data, args.name, args.base)
-    verdict, reasons = judge(old, new, old_parts, new_parts, expect)
+    first = None
+    if args.first_round:
+        first = read_old(args.app_data, args.first_round, args.base)[0] or {}
+    verdict, reasons = judge(old, new, old_parts, new_parts, expect, first)
     for r in reasons:
         print("check-results-update: " + r)
     print("verdict: " + verdict)

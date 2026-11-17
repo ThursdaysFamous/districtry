@@ -1277,9 +1277,25 @@ try {
       check("on a phone it shows under the address box without widening the page",
         phone.line.shown && phone.line.under && phone.line.fits && !phone.wide,
         JSON.stringify({ under: phone.line.under, fits: phone.line.fits, wide: phone.wide }));
+      // the day after, the line shows only if another election's item does
+      // (a runoff's, which starts that day: 2026-11-17)
       check("it still shows on its last day and is gone the day after",
-        last.line.shown && last.line.items[0].shown && !after.line.shown && !after.line.items[0].shown,
+        last.line.shown && last.line.items[0].shown && !after.line.items[0].shown &&
+          after.line.shown === after.line.items.some((i) => i.shown),
         `last ${e.until}: ${last.line.shown}; next day: ${after.line.shown}`);
+      // An election that follows another (a runoff, `after` in the calendar)
+      // starts the day after that one rather than 60 days before its own.
+      const following = lineItems.filter((i, k) => k > 0 && day(i.date, -60) !== i.from);
+      for (const f of following) {
+        const at = lineItems.indexOf(f);
+        const eve = await on(day(f.from, -1));
+        const start = await on(f.from);
+        const firstRound = lineItems.find((i) => day(i.date, 1) === f.from);
+        check("an election that follows another shows from the day after that one, and not the day before",
+          !!firstRound && !eve.line.items[at].shown && start.line.shown && start.line.items[at].shown &&
+            !start.line.items[lineItems.indexOf(firstRound)].shown,
+          JSON.stringify({ from: f.from, date: f.date, eve: eve.line.items[at].shown, start: start.line.items[at].shown }));
+      }
     }
     if (!noteItems.length) {
       check("the calendar names no election ahead, so the results tile carries no note",

@@ -410,6 +410,7 @@ const ROSTER_URLS = [
   "./data/app/chicago-polling-places.json",
   "./data/app/election-results.json",
   "./data/app/chicago-election-results.json",
+  "./data/app/chicago-runoff-results.json",
   "./data/app/ccbr-roster.json",
   "./data/app/il-court-justices.json",
   "./data/app/il-county-clerks.json",

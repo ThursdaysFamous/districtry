@@ -62,6 +62,15 @@ opens it and nothing is sent anywhere. Its link carries ref=reminder, which the
 traffic report reads as the referrer of that later visit, so whether reminders
 bring anyone back can be seen without counting who saved one.
 
+A RUNOFF WAITS FOR THE ELECTION IT FOLLOWS (2026-11-17, Adam: "Build
+runoff"). Chicago's runoff of 6 April 2027 is held only in the races nobody won
+outright on 23 February, so an entry naming it carries `after`, the id of the
+election it follows in the same calendar, and every place this script writes
+shows it only from the day after that election: before then a reader would be
+told about a runoff nobody knows will happen. The map's line needs nothing,
+since it names the soonest election ahead and the runoff is not that until the
+first election has passed.
+
 TWO LINKS DEPEND ON OTHER FILES, IN DIFFERENT WAYS. A candidates link is
 written whenever the calendar names a candidates page, and the check FAILS when
 that page's list is for an earlier election; the link is shown only until the
@@ -105,7 +114,7 @@ ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ENTRY_KEYS = {"id", "date", "place", "election", "ballot", "area", "office", "officeShort",
               "officialResults", "kind", "why", "frontPage", "candidates", "polling",
-              "dateSource", "checked"}
+              "dateSource", "checked", "after"}
 
 
 class NoticeError(Exception):
@@ -293,7 +302,25 @@ def validate(tag, cal, where, publishers=None, files=True):
                 if missing:
                     ebad("polling.layers names %s, which this app does not register"
                          % ", ".join(missing))
+    by_id = {e["id"]: e for e in cal["elections"]}
+    for e in cal["elections"]:
+        if "after" not in e:
+            continue
+        first = by_id.get(e["after"]) if isinstance(e["after"], str) else None
+        if first is None or first is e:
+            bad("%s: after must be the id of another election in this calendar" % e["id"])
+        if first["date"] >= e["date"]:
+            bad("%s: after names %s, which is not before it" % (e["id"], first["id"]))
     return cal
+
+
+def shown_from(cal, e):
+    """The first day an entry is shown: the day after the election it follows
+    (`after`), or None for an entry shown from the start."""
+    if not e.get("after"):
+        return None
+    first = [x for x in cal["elections"] if x["id"] == e["after"]][0]
+    return (_date(first) + datetime.timedelta(days=1)).isoformat()
 
 
 _CACHE = {}
@@ -528,7 +555,7 @@ def results_box(tag, results_date):
             '%(day_after)s, the day after the election, that links back to this page. '
             'Saving it sends nothing to districtry.</p>\n'
             '      </div>\n'
-            % dict(attrs=_item_attrs(e, cal["timeZone"], _plus(e, GRACE_DAYS)),
+            % dict(attrs=_item_attrs(e, cal["timeZone"], _plus(e, GRACE_DAYS), shown_from(cal, e)),
                    after=esc(after_label(e)), title=esc(title(e)), when=esc(when(e)),
                    ballot=esc(e["ballot"]), sentence=sentence(e, "page"),
                    links="".join(links),
@@ -559,13 +586,14 @@ def candidates_closing(tag, page, election_date):
 # ---------------------------------------------------------------- the front page
 
 def _front_entries():
+    """(tag, entry, time zone, first day shown or None), soonest first."""
     out = []
     for tag in calendar_tags():
         cal = load(tag)
         for e in cal["elections"]:
-            out.append((e["date"], tag, e["id"], e, cal["timeZone"]))
+            out.append((e["date"], tag, e["id"], e, cal["timeZone"], shown_from(cal, e)))
     out.sort(key=lambda t: t[:3])
-    return [(tag, e, tz) for _, tag, _, e, tz in out]
+    return [(tag, e, tz, start) for _, tag, _, e, tz, start in out]
 
 
 def _front_href(tag, e):
@@ -577,11 +605,11 @@ def landing_line():
     marked frontPage, each shown for FRONT_PAGE_DAYS before its day. "" when
     no calendar marks one."""
     items = []
-    for tag, e, tz in _front_entries():
+    for tag, e, tz, start in _front_entries():
         if not e.get("frontPage"):
             continue
         items.append('          <span class="election-line-item" %s hidden>%s</span>\n'
-                     % (_item_attrs(e, tz, e["date"], _plus(e, -FRONT_PAGE_DAYS)),
+                     % (_item_attrs(e, tz, e["date"], max(_plus(e, -FRONT_PAGE_DAYS), start or "")),
                         sentence(e, "front", _front_href(tag, e))))
     if not items:
         return ""
@@ -596,9 +624,9 @@ def landing_tile_note():
     the soonest one a calendar names. Shown by the script landing_tile_script
     returns. "" when no calendar names one."""
     items = []
-    for tag, e, tz in _front_entries():
+    for tag, e, tz, start in _front_entries():
         items.append('<span %s hidden>Next: %s, %s</span>'
-                     % (_item_attrs(e, tz, e["date"]), esc(e["place"]), esc(short_when(e))))
+                     % (_item_attrs(e, tz, e["date"], start), esc(e["place"]), esc(short_when(e))))
     if not items:
         return ""
     # the middle dot is inside the hidden span, so the tile's count reads as
@@ -897,6 +925,19 @@ def selftest():
     refuses(cal(extra=1), "an unknown key")
     refuses(cal(ballot="mayor."), "a ballot ending in a full stop")
     refuses({"timeZone": "America/Chicago", "elections": [dict(base), dict(base)]}, "a repeated id")
+    runoff = dict(base, id="springfield-2031-04-29", date="2031-04-29", election="runoff",
+                  after="springfield-2031-04-01")
+    two = {"timeZone": "America/Chicago", "elections": [dict(base), runoff]}
+    validate("zz", two, "fixture", publishers={"Sangamon County Clerk"}, files=False)
+    check(shown_from(two, runoff) == "2031-04-02" and shown_from(two, base) is None,
+          "a runoff is shown from the day after the election it follows, and only it waits")
+    refuses({"timeZone": "America/Chicago", "elections": [dict(base), dict(runoff, after="nowhere")]},
+            "an after naming no election")
+    refuses({"timeZone": "America/Chicago",
+             "elections": [dict(base), dict(runoff, date="2031-03-01")]},
+            "an after naming a later election")
+    refuses({"timeZone": "America/Chicago", "elections": [dict(base, after=base["id"])]},
+            "an election that follows itself")
 
     posted = base
     plans = dict(base, kind="plans")
@@ -938,8 +979,8 @@ def selftest():
           "the reminder is not the same bytes twice")
     script = reveal_script("document.currentScript.previousElementSibling")
     check(script.count("</script>") == 1, "the reveal script must close exactly once")
-    print("build-election-notices: selftest OK — three wordings in five places, ten refused "
-          "calendars, the reminder file's shape")
+    print("build-election-notices: selftest OK — three wordings in five places, thirteen refused "
+          "calendars, a runoff that waits for its first round, the reminder file's shape")
 
 
 def main():

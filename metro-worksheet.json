@@ -3223,6 +3223,11 @@
         "note": "Chicago's city elections (mayor, clerk, treasurer, alderpersons and police district councils), precinct by precinct, as a second results file on the Election Results layer (moreElections), in the layout election-results.json uses; each precinct's own counts sit in chicago-election-results/ward-NN.json, fetched on a click and never cached by the worker. Holds no contests until the Chicago Board of Election Commissioners publishes a count (build_chicago_election_results.py --placeholder), and the layer does not offer it until then. Network-first: the count changes through election night and daily until certified"
       },
       {
+        "file": "chicago-runoff-results.json",
+        "min_keys": 11,
+        "note": "The runoff of Chicago's city election (mayor, clerk and treasurer where nobody won more than half in February, and the wards where no alderperson did), precinct by precinct, as a third results file on the Election Results layer (moreElections), in the layout election-results.json uses, listing only the precincts whose ballot had a runoff race so the rest still show February's; each precinct's own counts sit in chicago-runoff-results/ward-NN.json, fetched on a click and never cached by the worker. Holds no contests until the Chicago Board of Election Commissioners publishes a count (build_chicago_election_results.py --placeholder), and the layer does not offer it until then. Network-first: the count changes through election night and daily until certified"
+      },
+      {
         "file": "ccbr-roster.json",
         "min_keys": 3
       },
@@ -4089,7 +4094,7 @@
     },
     {
       "file": "update-chicago-city-election-results.yml",
-      "purpose": "Read every race's precinct results for Chicago's city election from the Chicago Board of Elections, finding the Board's results page by the election's date, and rebuild il/data/app/chicago-election-results.json and its ward files; reads nothing before the polls close and stops once the results are certified; on election night and the morning after it merges its own pull request once the checks pass, unless a vote count went down or a race, candidate or precinct is gone, in which case the update is held for a look; at any other time it opens a PR that waits for review",
+      "purpose": "Read every race's precinct results for Chicago's city election and for its runoff from the Chicago Board of Elections, finding each election's results page by its date, and rebuild il/data/app/chicago-election-results.json or il/data/app/chicago-runoff-results.json and its ward files; reads nothing before an election's polls close and stops once its results are certified, and holds the runoff's first count unless its races are the ones February's certified count sent to a runoff; on election night and the morning after it merges its own pull request once the checks pass, unless a vote count went down or a race, candidate or precinct is gone, in which case the update is held for a look; at any other time it opens a PR that waits for review",
       "schedule": "daily 12:50 UTC"
     },
     {

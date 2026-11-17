@@ -27397,10 +27397,15 @@ function initChiExplorer() {
     // click in the counties shows November's as before. The file ships with
     // no contests until the Board publishes a count
     // (build_chicago_election_results.py --placeholder), and the layer does
-    // not offer it until then.
+    // not offer it until then. The April runoff is a third file (Adam,
+    // 2026-11-17: "Build runoff") listing only the precincts whose ballot had
+    // a runoff race, so a ward with no runoff still shows February's.
     moreElections: [{
       indexUrl: "data/app/chicago-election-results.json",
       partUrl: function (part) { return "data/app/chicago-election-results/" + part + ".json"; }
+    }, {
+      indexUrl: "data/app/chicago-runoff-results.json",
+      partUrl: function (part) { return "data/app/chicago-runoff-results/" + part + ".json"; }
     }],
     publisher: "Chicago Board of Election Commissioners",
     areaName: "Chicago",
@@ -28446,6 +28451,29 @@ function initChiExplorer() {
           "what": "reminder",
           "label": "Add a reminder to my calendar",
           "href": "calendar/chicago-2027-02-23.ics",
+          "file": true
+        }
+      ],
+      "closing": {
+        "label": "Election results page",
+        "href": "election-results.html",
+        "title": "Results",
+        "note": "After the polls close, precinct results for this election will be posted on districtry as the Chicago Board of Election Commissioners publishes them."
+      }
+    },
+    {
+      "id": "chicago-2027-04-06",
+      "date": "2027-04-06",
+      "timeZone": "America/Chicago",
+      "area": "chicago",
+      "title": "Chicago municipal runoff election",
+      "when": "Tuesday, April 6, 2027",
+      "text": "After the polls close, precinct results will be posted here as the Chicago Board of Election Commissioners publishes them.",
+      "links": [
+        {
+          "what": "reminder",
+          "label": "Add a reminder to my calendar",
+          "href": "calendar/chicago-2027-04-06.ics",
           "file": true
         }
       ],

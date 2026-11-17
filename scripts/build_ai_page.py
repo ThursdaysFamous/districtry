@@ -177,11 +177,11 @@ DIRECT_PUSH = {
 # gone or no longer merges, and a workflow that merges and is not here FAILS.
 SELF_MERGE = {
     "update-chicago-city-election-results.yml":
-        "Chicago's city election results on election night and the morning "
-        "after, once smoke-test.yml has passed and check_results_update.py "
+        "Chicago's city election and runoff results on election night and the "
+        "morning after, once smoke-test.yml has passed and check_results_update.py "
         "finds no count went down and no race, candidate or precinct is gone "
-        "(Adam, 2026-11-15: \"Nightly\"); the page's \"One kind of update goes "
-        "live with no review\" paragraph",
+        "(Adam, 2026-11-15: \"Nightly\"; the runoff 2026-11-17: \"Build runoff\"); "
+        "the page's \"One kind of update goes live with no review\" paragraph",
 }
 
 # Scripts that name an AI host as a WORD, never as an address, and why that
