@@ -1953,6 +1953,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wv/scripts/build_wv_city_councils.py --check
 
+      # California's boards of supervisors outside San Francisco come from the
+      # County Officials Directory of the Secretary of State's California
+      # Roster, a PDF each county files its own entry in. This holds the
+      # shipped file to the shape it was built in, offline: one record for
+      # each of the 57 counties under its own name, San Francisco left to the
+      # city's own roster, five numbered seats in every county, and every
+      # name a person's as the fleet's name test reads it.
+      - name: CA county supervisors keep their shape and leave San Francisco to the city
+        if: ${{ !cancelled() }}
+        run: python3 ca/scripts/build_ca_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the

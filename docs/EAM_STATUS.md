@@ -47,7 +47,7 @@ different thing from one it failed.
 | al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
-| ca | **--M·** | — | — | 0 | 0 | — | 22 | all | 8 of 14 levels |
+| ca | **--M·** | — | — | 0 | 0 | — | 23 | all | 8 of 14 levels |
 | co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ct | **--M·** | — | — | 0 | 0 | — | 13 | all | 8 of 14 levels |
 | de | **EAM·** | 3 | 3/3 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
@@ -98,7 +98,7 @@ different thing from one it failed.
 than county by county. That is a weaker statement than a record
 per county, so each one is named under its state below.
 
-- **ca** — no county frontier, so E and A do not apply. California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet; only San Francisco names a county governing body so far.
+- **ca** — no county frontier, so E and A do not apply. California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet. The County card names the board of supervisors in the 57 counties outside San Francisco, and the Supervisor District card names San Francisco's.
 - **ct** — no county frontier, so E and A do not apply. Connecticut has had no county government since 1960. Its nine planning regions are councils of governments whose boards are made up of the chief elected officials of their towns, and nobody is elected to one, so there is no county governing body to name.
 - **ri** — no county frontier, so E and A do not apply. Rhode Island has had no county government since 1842. Its five counties survive as geography and as court districts, and nobody is elected to govern one, so there is no county governing body to name.
 
@@ -168,7 +168,7 @@ per county, so each one is named under its state below.
 
 ### ca — --M·
 
-- **E and A do not apply.** California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet; only San Francisco names a county governing body so far.
+- **E and A do not apply.** California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet. The County card names the board of supervisors in the 57 counties outside San Francisco, and the Supervisor District card names San Francisco's.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `ca-state-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `ca/data/app/population/`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `state-counties.json`, `supervisor-districts.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
