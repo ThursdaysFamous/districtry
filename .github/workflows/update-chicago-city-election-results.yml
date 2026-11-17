@@ -19,10 +19,11 @@
 #
 # ELECTION NIGHT PUBLISHES ITSELF (Adam, 2026-11-15: "Nightly"). Asked whether
 # Chicago's results on the night of 23 February 2027 should come more often
-# than the one reviewed update a day November's got, he chose three updates
-# that night (about 8 pm, 10 pm and midnight Central) and one the next morning,
-# each going live once its checks pass. The runoff of 6 April 2027 is read the
-# same way (Adam, 2026-11-17: "Build runoff"). So from the time the polls close
+# than the one reviewed update a day November's got, he chose updates that
+# night each going live once its checks pass, and on 2026-11-17 chose them
+# hourly: about 8, 9, 10 and 11 pm, midnight and 1 am Central, and one the next
+# morning. The runoff of 6 April 2027 is read the same way (Adam, 2026-11-17:
+# "Build runoff"). So from the time the polls close
 # until noon the next day (`night`, scripts/check_results_update.py --phase) a
 # run merges its own pull request once smoke-test.yml has passed on it
 # (scripts/wait_for_pr_checks.py). Before the polls close a run reads nothing.
@@ -46,7 +47,8 @@
 # WHO STARTS IT. GitHub starts this repository's scheduled jobs three to five
 # hours late (CLAUDE.md, measured 2026-09-15), so a cron cannot be on time for
 # an election night. The project thread that owns election night starts each
-# of the four updates by workflow_dispatch, which starts in seconds. The dated
+# update by workflow_dispatch, which starts in seconds, and never two at once
+# (the concurrency group below queues a second run behind the first). The dated
 # crons below are the backstop if nothing dispatches: each is written about
 # four hours early, and one that starts within 100 minutes of an update already
 # live does nothing, so the backstop fills a gap and never doubles the reading.
@@ -309,7 +311,7 @@ jobs:
               echo
               echo "If the Board's own page shows the same numbers, this is the Board's correction and the update can be merged after a look."
             elif [ "$MODE" = "when-green" ]; then
-              echo "**This update publishes itself once the automated checks pass.** It is an election-night update (Adam's choice of 2026-11-15, for the runoff too on 2026-11-17: three updates that night and one the next morning, each going live once its checks pass). Compared with the count on the site, no vote count went down and no race, candidate or precinct is missing:"
+              echo "**This update publishes itself once the automated checks pass.** It is an election-night update (Adam's choice of 2026-11-15, for the runoff too on 2026-11-17: hourly updates that night, chosen 2026-11-17, and one the next morning, each going live once its checks pass). Compared with the count on the site, no vote count went down and no race, candidate or precinct is missing:"
               echo
               cat /tmp/reasons.md
             else

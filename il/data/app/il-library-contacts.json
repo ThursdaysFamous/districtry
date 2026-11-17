@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-02T20:51:49Z",
+  "generated": "2026-11-16T21:02:36Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -346,7 +346,7 @@
       "url": "http://cahokialibrary.org"
     },
     "Cairo Public Library": {
-      "address": "1609 Washington Avenue",
+      "address": "1609 Washington Avenue Post Office Box 151",
       "admin": {
         "name": "Toya Wilson",
         "role": "Library Director"
@@ -558,7 +558,7 @@
       "url": "http://www.chathamlib.org"
     },
     "Cheney's Grove Township Library": {
-      "address": "204 South State Street",
+      "address": "204 South State Street Post Office Box 58",
       "admin": {
         "name": "Barb Nunamaker",
         "role": "Librarian"
@@ -683,7 +683,7 @@
       "url": "http://www.cordovalibrary.com"
     },
     "Coulterville Public Library": {
-      "address": "103 South Fourth Street",
+      "address": "103 South Fourth Street Post Office Box 373",
       "admin": {
         "name": "Ashley Mueth",
         "role": "Director"
@@ -1373,7 +1373,7 @@
       "url": "http://herrincitylibrary.org"
     },
     "Heyworth Public Library District": {
-      "address": "119 East Main Street",
+      "address": "119 East Main Street Post Office Box 469",
       "admin": {
         "name": "Lori Urban",
         "role": "Director"
@@ -1490,7 +1490,7 @@
       "url": "http://www.juliahull.org"
     },
     "Kansas Community Memorial Library": {
-      "address": "107 North Front Street",
+      "address": "107 North Front Street Post Office Box 365",
       "admin": {
         "name": "Cheyanne Furuset",
         "role": "Director"
@@ -1609,8 +1609,8 @@
     "Lewistown Carnegie Public Library District": {
       "address": "1126 North Main Street",
       "admin": {
-        "name": "Kathy Hedrick",
-        "role": "Co-Director"
+        "name": "Jaime Grove",
+        "role": "Library Director"
       },
       "city": "Lewistown",
       "phone": "(309) 547-2860",
@@ -1943,7 +1943,7 @@
       "url": "https://mvld.org/"
     },
     "Moore Memorial Library District": {
-      "address": "509 Main Street",
+      "address": "509 Main Street Post Office Box 325",
       "admin": {
         "name": "Theresa Brooks",
         "role": "Library Coordinator"
@@ -1991,8 +1991,8 @@
     "Mounds Public Library": {
       "address": "418 First Street",
       "admin": {
-        "name": "Florence Heady",
-        "role": "Director"
+        "name": "Carol Stout",
+        "role": "Board President"
       },
       "city": "Mounds",
       "phone": "(618) 745-6610"
@@ -2439,12 +2439,13 @@
       "url": "https://www.pontiac.org/505/Public-Library"
     },
     "Potomac Public Library": {
-      "address": "110 East State Street",
+      "address": "110 East State Street Post Office Box 171",
       "admin": {
         "name": "Elizabeth Osborn",
         "role": "Director"
       },
-      "city": "Potomac"
+      "city": "Potomac",
+      "phone": "(217) 286-4047"
     },
     "Prairie Creek Public Library District": {
       "address": "501 Carriage House Lane",
@@ -2659,7 +2660,7 @@
       "url": "https://savannalibrary.com"
     },
     "Schmaling Memorial Public Library District": {
-      "address": "501 Tenth Avenue",
+      "address": "501 Tenth Avenue Post Office Box 125",
       "admin": {
         "name": "Britni Hartman",
         "role": "Library Director"
@@ -2725,7 +2726,7 @@
     "Sherrard Public Library District": {
       "address": "501 3rd Street",
       "admin": {
-        "name": "Tori Drews",
+        "name": "Tori Dunn",
         "role": "Director"
       },
       "city": "Sherrard",
@@ -3260,7 +3261,7 @@
       "url": "http://www.winnebagopubliclibrary.org"
     },
     "Witt Township Memorial Library": {
-      "address": "18 North Second Street",
+      "address": "18 North Second Street Post Office Box 442",
       "admin": {
         "name": "Sue Van Ostran",
         "role": "Head Librarian"
