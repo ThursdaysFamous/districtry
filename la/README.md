@@ -10,7 +10,7 @@ The national tier, each Louisiana chamber's own member pages, and every parish's
 
 | Group | Layer | Source |
 |---|---|---|
-| **Political** | U.S. House District (6) | U.S. Census TIGERweb boundary — the 119th Congress's map, which the sitting members were elected from, until 3 January 2027 (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
+| **Political** | U.S. House District (6) | U.S. Census TIGERweb boundary — the 120th Congress's map, which the sitting members were elected from, since 3 January 2027 (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Louisiana Senate District (39) | TIGERweb Legislative boundary — the 2022 plan (pre-built, 2,000-point agreement gate and an 8 m fidelity ceiling) + the Senate's own member list and member pages: name, party, district office and e-mail address, and a vacant seat named as vacant |
 | | Louisiana House District (105) | Same boundary pair and the House's own member list and member pages |
 | | Police Jury or Council District | The Census's county subdivisions, drawn only in the 6 parishes whose current lines are confirmed, each district joined to its member on the Secretary of State's list |

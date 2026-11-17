@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "30.27467,-97.74035"; // Texas State Capitol, 1100 Congress Avenue, Austin, Travis County
 const OFFLINE = ["county", "us-house", "tx-senate", "tx-house"];
-const EXPECT_DISTRICT = { "county": "Travis County", "us-house": "37", "tx-senate": "14", "tx-house": "49" };
+const EXPECT_DISTRICT = { "county": "Travis County", "us-house": "10", "tx-senate": "14", "tx-house": "49" };
 const NEGATIVE_POINT = "28.50000,-101.50000"; // The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Texas";
 const EXPECT_LAYERS = 13;

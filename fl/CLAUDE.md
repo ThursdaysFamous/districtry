@@ -29,13 +29,16 @@ tribal land, joined to the Bureau of Indian Affairs' list and to each nation's o
 `metro-outline.json` is the state outline (two rings, 67 counties inside, measured by its
 `--check`) and the wash has no lighter band (`coverage_key` with `outside` and `edge` only).
 
-**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb LAYER 4 (THE
-119TH CONGRESS), UNTIL 3 JANUARY 2027.** Florida has a new map for the 120th Congress, which the
-November 2026 election used (layer 0, "120th Congressional Districts"). Measured 2026-11-11: 21
-of the 28 districts differ between the two (the lowest intersection-over-union District 23 at
-0.0), so they are not interchangeable. `fl/scripts/build_legislative_boundaries.py` refuses to
-build layer 4 on or after 3 January 2027; the change that day switches it to layer 0, a person's
-step, because the cards then name the members elected in 2026.
+**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM: SINCE 3 JANUARY 2027,
+TIGERweb LAYER 0 (THE 120TH CONGRESS).** Florida has a new map, which the November 2026 election
+used ("120th Congressional Districts"), and the members elected from it took office that day.
+Until then the app drew layer 4, the 119th Congress's map, which the members then sitting were
+elected from in 2024. Measured 2026-11-11: 21 of the 28 districts differ between the two (the
+lowest intersection-over-union District 23 at 0.0), so they are not interchangeable. The Census Bureau's block file for the 120th Congress gives all 289,652 of Florida's populated 2020 blocks the district the
+shipped file gives (measured 2026-11-16 by `scripts/check_congress_block_file.py`).
+`fl/scripts/build_legislative_boundaries.py` refuses to build the layer on or after
+3 January 2029, when the members elected in November 2028 take office, until a person has
+re-read which map that election used (`fl/WATCH.md`).
 
 **THE FL-20 SEAT IS VACANT, AND THE CARD SAYS SO FROM THE HOUSE CLERK'S OWN PAGE.** The
 congress-legislators roster carries 27 Florida members; the Clerk's vacancy list

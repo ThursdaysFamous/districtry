@@ -40,7 +40,7 @@
 // SF ships no on-water / county-seal marker icons (the consolidated city-county
 // has no out-of-city collar tiling), so none are precached.
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "district-explorer-shell-sf-v14";
+const CACHE_NAME = "district-explorer-shell-sf-v15";
 
 const SHELL_URLS = [
   "./",

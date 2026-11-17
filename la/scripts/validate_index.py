@@ -105,7 +105,7 @@ EXPECT_LAYER_IDS = [
 GEOMETRY_FILES = {
     "metro-outline.json": (1, 1),  # The whole-Louisiana outline for the coverage wash (loadMetroOutline), dissolved from the 64-parish fabric.
     "state-counties.json": (64, 64),  # The 64 parishes — the instance's offline anchor layer and the ground the coverage tests use.
-    "congress-districts.json": (6, 6),  # The 6 U.S. House districts, TIGERweb layer 4 (CD119), until 3 January 2027.
+    "congress-districts.json": (6, 6),  # The 6 U.S. House districts, TIGERweb layer 0 (CD120), the map the November 2026 election used, drawn since 3 January 2027.
     "la-senate-districts.json": (39, 39),  # The 39 Louisiana Senate districts.
     "la-house-districts.json": (105, 105),  # The 105 Louisiana House districts.
     "la-supreme-court-districts.json": (7, 7),  # The 7 Supreme Court districts Act 7 of 2024 enacted, from the Legislature's own shapefile (la/scripts/build_la_court_districts.py), each carrying its whole parishes and the parishes it shares.

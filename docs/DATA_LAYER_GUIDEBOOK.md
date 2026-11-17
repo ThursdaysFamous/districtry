@@ -15886,7 +15886,7 @@ California's app answered for San Francisco alone until 2026-11-11, when it grew
 
 | id | label | group | pattern | source | roster / join |
 |---|---|---|---|---|---|
-| `congress` | U.S. House District | political | Chamber | pre-built statewide (TIGERweb Legislative L4, the 119th Congress's map, STATE=06, 52 districts; L0, the Proposition 50 map, from 2027-01-03 per the `ca/WATCH.md` row) | `congress-roster.json` (weekly CI) |
+| `congress` | U.S. House District | political | Chamber | pre-built statewide (TIGERweb Legislative L0, the 120th Congress's map, which is Proposition 50's, STATE=06, 52 districts, since 2027-01-03; L4, the 119th Congress's map, before it, per the `ca/WATCH.md` row) | `congress-roster.json` (weekly CI) |
 | `ca-senate` | CA State Senate District | political | Chamber | pre-built statewide (TIGERweb L1, 40 districts) | `ca-senate-members.json` (weekly CI, OpenStates) |
 | `ca-assembly` | CA State Assembly District | political | Chamber | pre-built statewide (TIGERweb L2, 80 districts) | `ca-assembly-members.json` (weekly CI) |
 | `county` | County | geography | Polygon | pre-built (TIGERweb State_County L1, 58) | `ca-county-officials.json` (weekly CI): the five supervisors of each of the 57 counties outside San Francisco, by district, from the County Officials Directory of the Secretary of State's California Roster (a yearly publication, so the card gives the file's own date). The card lists the whole board and cannot say which supervisor represents the point, and names no other county officer (gap `ca-county-officials`) |

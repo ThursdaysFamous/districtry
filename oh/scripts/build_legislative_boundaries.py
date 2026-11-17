@@ -12,17 +12,35 @@ Like build_state_counties.py this is an occasional OPERATOR step, not weekly
 CI — re-run it on redistricting. The officeholder ROSTERS (congress-roster,
 oh-senate-members, oh-house-members) are separate; only the geometry is here.
 
-THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb
-LAYER 4 (THE 119TH CONGRESS), UNTIL 3 JANUARY 2027. Ohio redrew for the 120th
-Congress, which TIGERweb carries as layer 0 ("120th Congressional Districts").
-Measured 2026-11-11 with shapely on a 6-decimal fetch of both layers: the two
-carry the same 15 district numbers, and 13 of the 15 differ (the lowest
+THE CONGRESSIONAL MAP IS THE ONE THE NOVEMBER 2026 ELECTION USED, TIGERweb
+LAYER 0 (THE 120TH CONGRESS, FIELD CD120), SINCE 3 JANUARY 2027. Ohio redrew
+for the 120th Congress. Press reports say the Ohio Redistricting Commission
+adopted the map on 31 October 2025; the commission's own record was not read
+for this note. The members elected from it took office at noon on 3 January
+2027 and serve until 3 January 2029. Until that day this builder drew layer 4
+(the 119th Congress), the map the members then sitting were elected from in
+2024. Measured 2026-11-11 with shapely on a 6-decimal fetch of both layers: the
+two carry the same 15 district numbers, and 13 of the 15 differ (the lowest
 intersection-over-union District 15 at 0.478, then District 1 at 0.506 and
-District 7 at 0.537), so the two maps are not interchangeable. The members
-holding those seats until 3 January 2027 were elected in 2024 from layer 4's
-map, so that is the map drawn, and check_serving_map refuses on or after that
-date: the change that day is to switch this entry to layer 0 and CD120, which
-is a person's step, because the card then names the members elected in 2026.
+District 7 at 0.537), so the two maps are not interchangeable, and this file
+was built ahead of 3 January 2027 and held back until that day.
+
+THE CENSUS BUREAU'S BLOCK FILE IS THE WITNESS THAT LAYER 0 IS THAT MAP. The
+builder's own gates hold the file to the layer; none of them says the layer is
+the map the election used. The Bureau's page for the 120th Congress says nine
+states (Alabama, California, Florida, Louisiana, North Carolina, Ohio,
+Tennessee, Texas and Utah) "delineated new boundaries for the 2026 election
+cycle", and its Block Equivalency File names, for every 2020 census block, the
+district the state's own liaison reported. Measured 2026-11-16 by
+scripts/check_congress_block_file.py against Ohio's member of that file (dated
+2026-04-21): all 219,669 populated 2020 blocks, holding all 11,799,448 people,
+have their internal point in the district the file names, and the
+Bureau's file gives its districts 786,629 or 786,630 people each.
+
+check_serving_map prints a notice when this entry is built before 3 January
+2027, and refuses on or after 3 January 2029, when a person must re-read which
+map the 2028 election used. It also refuses if layer 0 stops being the 120th
+Congress's map, since TIGERweb renumbers its layers when a vintage rolls.
 
 THE TWO CHAMBERS ARE TIGERweb's 2026 STATE LEGISLATIVE DISTRICTS (layers 1
 and 2): 33 Senate and 99 House districts. Measured 2026-11-11 against
@@ -103,22 +121,25 @@ STATE_BBOX = {"minLng": -85.0, "minLat": 38.25, "maxLng": -80.35, "maxLat": 42.4
 
 # map -> how to build data/app/<out>.
 #   url:        the TIGERweb layer, filtered to Ohio
-#   fields:     outFields kept — the app's extractDistrictNumber reads CD119,
+#   fields:     outFields kept — the app's extractDistrictNumber reads CD120,
 #               SLDU and SLDL directly, with a NAME fallback
 #   layer_name: the layer's name as its service states it
-#   serving_until: (us-house only) the date the members elected from this
-#               map leave office, after which the build refuses
+#   serving_from, serving_until: (us-house only) the dates the members
+#               elected from this map take office and leave it; a build
+#               before the first prints a notice, and one on or after
+#               the second is refused
 #   out:        the data/app file index.html fetches for this layer
 #   count:      the real district count; the build refuses any other
 LAYERS = {
     "us-house": {
-        # LAYER 4, THE 119TH CONGRESS, until the members elected from it leave
-        # office. Layer 0 is the new map the 2026 election used. See the
-        # docstring.
-        "url": TIGERWEB + "/4",
-        "fields": ["CD119", "NAME", "BASENAME", "GEOID", "STATE"],
-        "layer_name": "119th Congressional Districts",
-        "serving_until": "2027-01-03",
+        # LAYER 0, THE 120TH CONGRESS: the map the 3 November 2026 election
+        # used. Its members take office at noon on 3 January 2027 and serve
+        # until 3 January 2029. See the docstring.
+        "url": TIGERWEB + "/0",
+        "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "120th Congressional Districts",
+        "serving_from": "2027-01-03",
+        "serving_until": "2029-01-03",
         "out": "congress-districts.json",
         "count": 15,  # 15 Ohio congressional districts
     },
@@ -222,11 +243,16 @@ def check_serving_map(name, cfg, today=None):
             "%s: %s is now %r, not %r — find the layer that is, and refuse "
             "rather than draw a different map" % (name, cfg["url"], got, cfg["layer_name"]))
     today = today or datetime.date.today().isoformat()
+    if "serving_from" in cfg and today < cfg["serving_from"]:
+        print("%s: BUILT AHEAD. The members elected from %r take office on %s. "
+              "Until then the sitting members were elected from the 119th "
+              "Congress's map, so this file must not ship before that date"
+              % (name, cfg["layer_name"], cfg["serving_from"]))
     if "serving_until" in cfg and today >= cfg["serving_until"]:
         raise RuntimeError(
-            "%s: the members elected in 2024 from %r left office on %s. Switch "
-            "this entry to layer 0 and CD120, the map the 2026 election used, "
-            "and set a new serving_until" % (name, cfg["layer_name"], cfg["serving_until"]))
+            "%s: the members elected in 2026 from %r left office on %s. Re-read "
+            "which map the 2028 election used, then change this entry"
+            % (name, cfg["layer_name"], cfg["serving_until"]))
 
 
 def run_mapshaper_family(source_paths, out_dir):

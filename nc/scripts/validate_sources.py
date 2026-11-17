@@ -83,17 +83,21 @@ PROVENANCE = [
     {
         "layer": "us-house",
         "app_file": "congress-districts.json",
-        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0",
         "note": (
             "14 congressional districts pre-built from TIGERweb by "
-            "nc/scripts/build_legislative_boundaries.py from layer 4, the 119th "
-            "Congress's map, because those are the districts the serving "
-            "members were elected from. Layer 0 is the 120th Congress's map, "
-            "redrawn in 2025, and it moves districts 1 and 3. On 3 January 2027 "
-            "the build switches to layer 0 and its CD120 field, and the app's "
-            "CONGRESS_DISTRICT_FIELDS already reads both."
+            "nc/scripts/build_legislative_boundaries.py from layer 0, the 120th "
+            "Congress's map, which the November 2026 election used and whose "
+            "members serve from 3 January 2027 to 3 January 2029. Session Law "
+            "2025-95 redrew Districts 1 and 3, and those two are the only "
+            "districts that differ from layer 4, the 119th Congress's map, "
+            "which was drawn until 3 January 2027 (measured 2026-11-16). The "
+            "Census Bureau's block file for the 120th Congress places 174,983 "
+            "of North Carolina's 174,988 populated 2020 blocks in the district "
+            "the shipped file gives (measured 2026-11-16 by "
+            "scripts/check_congress_block_file.py)."
         ),
-        "serving_until": "2027-01-03",
+        "serving_until": "2029-01-03",
     },
     {
         "layer": "us-house",
@@ -760,14 +764,17 @@ def check_provenance(findings, offline):
 
 # ---- check 3b: the shipped U.S. House map is the one the members serve on ---
 def check_serving_map(findings, today=None):
-    """Offline. The U.S. House file ships the 119th Congress's map until the
-    members elected from it leave office, then must move to the 120th's.
-    Nothing else would notice the date pass, so this says so every month."""
+    """Offline. The U.S. House file ships the 120th Congress's map, which the
+    November 2026 election used, and its members serve until 3 January 2029.
+    Nothing else would notice that date pass, so from then on this says every
+    month that a person has to re-read which map the November 2028 election
+    used. It also says so if the file still carries the 119th Congress's
+    field, whose members left office on 3 January 2027."""
     import datetime
     today = today or datetime.date.today().isoformat()
     for p in PROVENANCE:
         until = p.get("serving_until")
-        if not until or today < until:
+        if not until:
             continue
         fpath = os.path.join(APP_DATA_DIR, p["app_file"])
         try:
@@ -777,10 +784,17 @@ def check_serving_map(findings, today=None):
             continue
         if "CD119" in props:
             findings.add(WARN, p["layer"],
-                         "data/app/%s still draws the 119th Congress's map and its "
-                         "members left office on %s. Rebuild from the 120th "
-                         "Congress's layer (see build_legislative_boundaries.py) "
-                         "and bump the cache name." % (p["app_file"], until))
+                         "data/app/%s still draws the 119th Congress's map, whose "
+                         "members left office on 3 January 2027. Rebuild from the "
+                         "120th Congress's layer (see build_legislative_boundaries.py) "
+                         "and bump the cache name." % p["app_file"])
+        elif today >= until:
+            findings.add(WARN, p["layer"],
+                         "the members elected from the map data/app/%s draws left "
+                         "office on %s. Re-read which map the November 2028 election "
+                         "used and, if it changed, rebuild from its layer (see "
+                         "build_legislative_boundaries.py) and bump the cache name."
+                         % (p["app_file"], until))
 
 
 # ---- check 3c: a court district the law has ended is no longer drawn --------

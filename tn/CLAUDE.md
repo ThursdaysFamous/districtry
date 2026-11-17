@@ -26,13 +26,17 @@ the LIVE TIGERweb fabric (**Civil District**, **City or Town**, **School Distric
 nearest-N layers from the USGS National Map (**Police Station**, **Fire & EMS Station**,
 **Post Office**).
 
-**THE CONGRESSIONAL MAP IS THE 119TH, ON PURPOSE, UNTIL 3 JANUARY 2027.** Tennessee redrew its
-congressional districts in 2026. TIGERweb's Legislative layer 0 is now the 120th Congress map
-(field CD120), which takes effect when the next Congress sits; the members a reader can call
-today were elected from the old lines, which TIGERweb serves as layer 4 (field CD119). The
-builder reads layer 4 and REFUSES to run on it after 2027-01-03, so the switch cannot be
-forgotten into a wrong answer. North Carolina and Louisiana redrew too; the lesson is the
-fleet's.
+**THE CONGRESSIONAL MAP IS THE 120TH SINCE 3 JANUARY 2027.** Tennessee redrew its
+congressional districts in 2026, the November 2026 election used the new map (TIGERweb's
+Legislative layer 0, field CD120), and the members elected from it took office that day. Until
+then the app drew the old lines (layer 4, field CD119), which the members then sitting were
+elected from; 7 of the 9 districts differ between the two. The Census Bureau's block file for
+the 120th Congress gives 133,843 of Tennessee's 133,846 populated 2020 blocks the district the
+shipped file gives (measured 2026-11-16 by `scripts/check_congress_block_file.py`). The builder
+REFUSES to run on layer 0 on or after 2029-01-03, when the members elected in November 2028
+take office, until a person has re-read which map that election used, so a later switch cannot
+be forgotten into a wrong answer. Eight other states' maps changed on the same day; the lesson
+is the fleet's.
 
 **WHO HOLDS EACH LEGISLATIVE SEAT COMES FROM THE LEGISLATURE'S OWN MAP, NOT FROM A THIRD
 PARTY.** The Legislature publishes its district map on the state's TNMap service, and every
@@ -403,7 +407,7 @@ operator script: `metro-outline.json` (the whole-state outline for the coverage 
 against that county's own rings, all 95 correct, plus eight OUTSIDE anchors, one in each
 neighbouring state), `state-counties.json` (`tn/scripts/build_state_counties.py`), and
 `congress-districts.json`, `tn-senate-districts.json`, `tn-house-districts.json`
-(`tn/scripts/build_legislative_boundaries.py`: statewide TIGERweb, congress from layer 4,
+(`tn/scripts/build_legislative_boundaries.py`: statewide TIGERweb, congress from layer 0,
 mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement
 gate and the 25 m fidelity ceiling pass). Rosters: `congress-roster.json`
 (`tn/scripts/build_congress_roster.py`, from unitedstates/congress-legislators) and

@@ -29,13 +29,18 @@ tribal land, joined to the Bureau of Indian Affairs' list and to each nation's o
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
 `outside` and `edge` only).
 
-**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb LAYER 4 (THE
-119TH CONGRESS), UNTIL 3 JANUARY 2027.** The Legislature drew a new map in August 2025 and the
-November 2026 election used it (layer 0, "120th Congressional Districts"). Measured 2026-11-11:
-37 of the 38 districts differ between the two, the lowest intersection-over-union 0.0024, so they
-are not interchangeable. `tx/scripts/build_legislative_boundaries.py` refuses to build layer 4 on
-or after 3 January 2027; the change that day switches it to layer 0, a person's step, because the
-cards then name the members elected in 2026.
+**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM: SINCE 3 JANUARY 2027,
+TIGERweb LAYER 0 (THE 120TH CONGRESS).** The Legislature drew a new map in August 2025, the
+November 2026 election used it ("120th Congressional Districts"), and the members elected from
+it took office that day. Until then the app drew layer 4, the 119th Congress's map, which the
+members then sitting were elected from in 2024. Measured 2026-11-11: 37 of the 38 districts
+differ between the two, the lowest intersection-over-union 0.0024, so they are not
+interchangeable, and the State Capitol, the smoke test's point, moved from District 37 to
+District 10. The Census Bureau's block file for the 120th Congress gives 449,083 of Texas's 449,085 populated 2020 blocks the district the
+shipped file gives (measured 2026-11-16 by `scripts/check_congress_block_file.py`).
+`tx/scripts/build_legislative_boundaries.py` refuses to build the layer on or after
+3 January 2029, when the members elected in November 2028 take office, until a person has
+re-read which map that election used (`tx/WATCH.md`).
 
 **THE TX-23 SEAT IS VACANT, AND THE CARD SAYS SO FROM THE HOUSE CLERK'S OWN PAGE.** The
 congress-legislators roster carries 37 Texas members; the Clerk's vacancy list
@@ -122,7 +127,7 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Texas (`texas`) — https://districtry.com/tx/
 - Geocoders: address Photon (Texas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Texas-bounded, serial >=1s queue)
-- Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 10; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
 - Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 8. Debug namespace `window.TexasExplorer`.
 - Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
 - Source registry: `tx/scripts/validate_sources.py` (machine-checked monthly)

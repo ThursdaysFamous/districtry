@@ -106,7 +106,7 @@ EXPECT_LAYER_IDS = [
 GEOMETRY_FILES = {
     "metro-outline.json": (1, 1),  # The whole-Tennessee outline for the coverage wash (loadMetroOutline), dissolved from the 95-county fabric.
     "state-counties.json": (95, 95),  # The 95 counties — the instance's offline anchor layer and the ground the coverage tests use.
-    "congress-districts.json": (9, 9),  # The 9 U.S. House districts, TIGERweb layer 4 (CD119) — the map the sitting members were elected from, drawn until 3 January 2027.
+    "congress-districts.json": (9, 9),  # The 9 U.S. House districts, TIGERweb layer 0 (CD120), the map the November 2026 election used, drawn since 3 January 2027.
     "tn-senate-districts.json": (33, 33),  # The 33 Tennessee Senate districts.
     "tn-house-districts.json": (99, 99),  # The 99 Tennessee House districts.
     "tn-commission-districts.json": (859, 859),  # The 859 county commission districts in 95 counties, from the Comptroller of the Treasury's statewide layer (tn/scripts/build_tn_commission_districts.py).

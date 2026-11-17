@@ -10,7 +10,7 @@ The national tier and both legislative chambers, named from each chamber's own p
 
 | Group | Layer | Source |
 |---|---|---|
-| **Political** | U.S. House District (28) | U.S. Census TIGERweb boundary, the map the sitting members were elected from (the 119th Congress's, until 3 January 2027; pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI, with a seat the House Clerk lists as vacant shown as vacant |
+| **Political** | U.S. House District (28) | U.S. Census TIGERweb boundary, the map the sitting members were elected from (the 120th Congress's, since 3 January 2027; pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI, with a seat the House Clerk lists as vacant shown as vacant |
 | | Florida Senate District (40) | TIGERweb's 2026 state legislative districts (pre-built, Douglas-Peucker under an 8 m fidelity ceiling and a 2,000-point agreement gate) + the Senate's own member list and member pages: name, party, the senator's own e-mail address where printed, Capitol office and telephone |
 | | Florida House District (120) | TIGERweb's 2026 state legislative districts + the House's own member list and contact pages: name, party, Capitol office and telephone (the House prints no e-mail address) |
 | **Schools** | School District (67, one per county) | TIGERweb unified school districts, from a tile archive; identity only, the school board members recorded as a gap |

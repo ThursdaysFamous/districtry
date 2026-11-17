@@ -10,7 +10,7 @@ Twelve layers, the national tier every U.S. state can serve from national publis
 
 | Group | Layer | Source |
 |---|---|---|
-| **Political** | U.S. House District (9) | U.S. Census TIGERweb boundary of the 119th Congress (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
+| **Political** | U.S. House District (9) | U.S. Census TIGERweb boundary of the 120th Congress (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Tennessee Senate District (33) | TIGERweb Legislative boundary (pre-built, 2,000-point agreement gate) + each member's name and any vacancy from the Tennessee Legislature's district map on TNMap, with party, e-mail and the member's own page from [Open States](https://openstates.org) where the two agree |
 | | Tennessee House District (99) | Same boundary pair and the same two roster sources |
 | **Safety** | Police Station, Fire & EMS Station | USGS National Map structures, nearest-N by straight-line distance |
@@ -20,7 +20,7 @@ Twelve layers, the national tier every U.S. state can serve from national publis
 | | ZIP Code | TIGERweb ZCTA, fetched by the state's bounding box and hidden outside Tennessee |
 | | Post Office | USGS National Map structures, nearest-N |
 
-The congressional map is the one the sitting members were elected from. Tennessee redrew its districts in 2026, and the new map takes effect on 3 January 2027; the builder refuses to keep drawing the old one after that date.
+The congressional map is the one the sitting members were elected from. Tennessee redrew its districts in 2026, and the app has drawn the new map since 3 January 2027, when the members elected from it took office; the builder refuses to build it on or after 3 January 2029 until a person has re-read which map the November 2028 election used.
 
 This is the national tier only — the first PR of a phased bring-up, and the instance is **dark**
 while it lands: it has no `metros.json` entry and its folder is excluded from the Pages deploy,

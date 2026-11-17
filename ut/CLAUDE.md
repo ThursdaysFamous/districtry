@@ -21,12 +21,17 @@ or the Legislature's own data: **County** (`county`, all 29, Census TIGERweb, th
 `outside` and `edge` only). `ut/scripts/build_metro_outline.py --check` holds it to 29
 INSIDE anchors, one per county, and 14 OUTSIDE anchors over the state line and offshore.
 
-**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb LAYER 4 (THE
-119TH CONGRESS), UNTIL 3 JANUARY 2027.** Utah's map changed for the 120th Congress, which the
-November 2026 election used (layer 0). Measured 2026-11-12: all 4 districts differ between the two (District 2 at an intersection-over-union of 0.008, District 1 at 0.010, District 4 at 0.148 and District 3 at 0.553), so the two are not
-interchangeable. `ut/scripts/build_legislative_boundaries.py` refuses to build layer 4 on or after
-3 January 2027; the change that day switches it to layer 0 and `CD120`, a person's step, because the
-cards then name the members elected in 2026.
+**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM: SINCE 3 JANUARY 2027,
+TIGERweb LAYER 0 (THE 120TH CONGRESS).** Utah's map changed for the November 2026 election, and the
+members elected from the new one took office that day. Until then the app drew layer 4, the
+119th Congress's map, which the members then sitting were elected from in 2024. All 4
+districts differ between the two (District 2 at an intersection-over-union of 0.008, District 1
+at 0.010, District 4 at 0.148 and District 3 at 0.553; measured 2026-11-12), so the two are not
+interchangeable. The Census Bureau's block file for the 120th Congress gives all 46,792 of Utah's populated 2020 blocks the district the
+shipped file gives (measured 2026-11-16 by `scripts/check_congress_block_file.py`).
+`ut/scripts/build_legislative_boundaries.py` refuses to build the layer on or after
+3 January 2029, when the members elected in November 2028 take office, until a person has
+re-read which map that election used (`ut/WATCH.md`).
 
 **THE TWO CHAMBERS ARE TIGERweb's 2026 STATE LEGISLATIVE DISTRICTS (layers 1 and 2).**
 Measured 2026-11-12 against the 2024 vintage (layers 5 and 6): 27 of the 29 Senate districts identical and two different by slivers (District 8 at an intersection-over-union of 0.9974 and District 10 at 0.9987), and 73 of the 75 House districts identical while two differ (District 20 at 0.9889 and District 21 at 0.9981). The newer vintage is drawn. The builder refuses if a layer's name changes, since TIGERweb renumbers its

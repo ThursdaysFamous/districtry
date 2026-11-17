@@ -38,6 +38,18 @@ The 2030 statutory deadline is April 1, 2031 (13 U.S.C. 141(c): delivery "no lat
   ahead of the 2026 elections; before 2025 only two states had voluntarily redistricted mid-decade
   since 1970. California's Prop 50 (approved Nov 4, 2025) explicitly set new maps for 2026/2028/2030
   with the independent commission resuming in 2031. Treat "decennial-only" as false.
+  **WHAT THE FLEET DID ABOUT IT, 3 JANUARY 2027.** Nine of the states this fleet draws seated
+  members elected from a new congressional map that day: Alabama, California, Florida, Louisiana,
+  North Carolina, Ohio, Tennessee, Texas and Utah. Each app drew TIGERweb's layer 4 (the 119th
+  Congress) until then and draws layer 0 (the 120th) since, switched in one change. Missouri is in
+  the list above and not in the nine: the U.S. Supreme Court's order of 25 September 2026 kept its
+  November 2026 election on the 2022 map (`mo/WATCH.md`). Which map an election used is read from
+  the Census Bureau's Block Equivalency File for that Congress, never from a layer's name;
+  `scripts/check_congress_block_file.py` holds each shipped file to it, block by block (measured
+  2026-11-16: 14 of the nine states' 1,912,169 populated 2020 blocks differ, each a block whose
+  internal point lies within 35 m of a drawn district line). Each of the nine builders refuses to
+  build the layer on or after 3 January 2029, when the next Congress sits and the question has to
+  be asked again.
 - **Administrative safety-layer reorgs** — per the NYC Mayor's Office (Dec 18, 2024), the "nearly
   $105 million 116th Precinct Station House" in Rosedale is "the first, entirely new NYPD command
   established in over 10 years with the last one opening in 2013," and "the southern portion of the
@@ -165,7 +177,7 @@ Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map wa
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
-| US Congress (CA) | Decennial + mid-decade (Proposition 50, adopted November 2025) | CA Citizens Redistricting Commission; the voters for Proposition 50's map | geometry (pre-built statewide rebuild, `ca/scripts/build_legislative_boundaries.py`, then `scripts/mirror_tiger_tiles.py --refresh --only ca:congress`), roster join. The app draws TIGERweb layer 4 (the 119th Congress's map) until 3 January 2027 and layer 0 (Proposition 50's) from then: a dated `ca/WATCH.md` row |
+| US Congress (CA) | Decennial + mid-decade (Proposition 50, adopted November 2025) | CA Citizens Redistricting Commission; the voters for Proposition 50's map | geometry (pre-built statewide rebuild, `ca/scripts/build_legislative_boundaries.py`, then `scripts/build_vector_tiles.py --only ca:congress` for the tile archive, which is built from the shipped file), roster join. The app draws TIGERweb layer 0 (Proposition 50's map, the 120th Congress's) since 3 January 2027 and drew layer 4 (the 119th Congress's) before it; the builder refuses on or after 3 January 2029: a dated `ca/WATCH.md` row |
 | CA Senate / Assembly | Decennial | CA Citizens Redistricting Commission | geometry (statewide rebuild), roster join |
 | Counties, cities and towns, school districts | Rare (a city incorporating or annexing, a district unifying) | the county, LAFCO, the voters | nothing to edit: the weekly `update-tiger-tiles.yml` pull request carries a new Census vintage |
 | Supervisor districts (11) | Decennial-municipal | SF Redistricting Task Force (charter) | geometry, anchor, roster join |

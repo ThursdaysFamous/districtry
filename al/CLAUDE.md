@@ -21,12 +21,17 @@ or the Legislature's own data: **County** (`county`, all 67, Census TIGERweb, th
 `outside` and `edge` only). `al/scripts/build_metro_outline.py --check` holds it to 67
 INSIDE anchors, one per county, and 14 OUTSIDE anchors over the state line and offshore.
 
-**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb LAYER 4 (THE
-119TH CONGRESS), UNTIL 3 JANUARY 2027.** Alabama's map changed for the 120th Congress, which the
-November 2026 election used (layer 0). Measured 2026-11-12: 4 of the 7 districts differ between the two (the lowest intersection-over-union District 2 at 0.416, then District 1 at 0.583, District 7 at 0.703 and District 6 at 0.933), so the two are not
-interchangeable. `al/scripts/build_legislative_boundaries.py` refuses to build layer 4 on or after
-3 January 2027; the change that day switches it to layer 0 and `CD120`, a person's step, because the
-cards then name the members elected in 2026.
+**THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM: SINCE 3 JANUARY 2027,
+TIGERweb LAYER 0 (THE 120TH CONGRESS).** Alabama's map changed for the November 2026 election, and the
+members elected from the new one took office that day. Until then the app drew layer 4, the
+119th Congress's map, which the members then sitting were elected from in 2024. 4 of the 7
+districts differ between the two (the lowest intersection-over-union District 2 at 0.416, then
+District 1 at 0.583, District 7 at 0.703 and District 6 at 0.933; measured 2026-11-12), so the
+two are not interchangeable. The Census Bureau's block file for the 120th Congress gives all 128,366 of Alabama's populated 2020 blocks the district the
+shipped file gives (measured 2026-11-16 by `scripts/check_congress_block_file.py`).
+`al/scripts/build_legislative_boundaries.py` refuses to build the layer on or after
+3 January 2029, when the members elected in November 2028 take office, until a person has
+re-read which map that election used (`al/WATCH.md`).
 
 **THE TWO CHAMBERS ARE TIGERweb's 2026 STATE LEGISLATIVE DISTRICTS (layers 1 and 2).**
 Measured 2026-11-12 against the 2024 vintage (layers 5 and 6): the 35 Senate districts are the same map (the lowest intersection-over-union 0.99995), and 103 of the 105 House districts are identical while two differ by slivers (District 20 at 0.9982 and District 22 at 0.99975). The newer vintage is drawn. The builder refuses if a layer's name changes, since TIGERweb renumbers its
