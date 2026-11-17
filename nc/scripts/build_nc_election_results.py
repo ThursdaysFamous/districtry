@@ -30,7 +30,12 @@ WHAT A CONTEST IS. A state-run contest (Contest Type S) is one Contest Group ID
 statewide. A county-run contest (C) numbers its group ids per county, and one
 that crosses a county line (Raleigh's mayor in Wake and Durham) is printed once
 per county under the same name, so a county-run contest is its name, and its
-pieces are summed.
+pieces are summed. The counties need not list the same choices: after its
+canvass Wake listed six write-in candidates by name for Raleigh's mayor while
+Durham counted every write-in as Write-In (Miscellaneous) (measured on the file
+read 2026-11-17). A precinct is given 0 for a choice its own county does not
+list, as the State Board's own totals do, so a Durham precinct's write-ins
+stay under Miscellaneous.
 
 CHOICES. The file lists rows in no ballot order (a precinct's U.S. Senate rows
 come in a different order in each county), so the choices are ordered by a rule
@@ -52,8 +57,8 @@ THE CHECKS, before anything is written: every precinct the layer draws appears
 in the file and every key written is one the layer draws; every contest names
 one Vote For and one group from GROUP_RULES (a contest no rule recognises fails
 the build, so a new kind of contest is placed by a person rather than dropped);
-a state-run group id names one contest; every precinct lists each of its
-contest's choices once; at least MIN_CONTESTS contests.
+a state-run group id names one contest; every precinct lists once each of the
+contest's choices its own county lists; at least MIN_CONTESTS contests.
 
 Usage:
     python3 nc/scripts/build_nc_election_results.py /tmp/nc_results_raw.json \
@@ -203,7 +208,7 @@ def main():
         if c is None:
             c = contests[ident] = {"ident": ident, "name": name, "group": group_of(name),
                                    "seats": r["voteFor"], "choices": {}, "precincts": {},
-                                   "outside": {}}
+                                   "outside": {}, "byCounty": {}}
         if c["name"] != name:
             fail("state contest %s is named both %r and %r" % (r["groupId"], c["name"], name))
         if c["seats"] != r["voteFor"]:
@@ -211,6 +216,7 @@ def main():
         if not r["choice"]:
             continue
         c["choices"][r["choice"]] = True
+        c["byCounty"].setdefault(fips[r["county"]], set()).add(r["choice"])
         key = "%s-%s" % (fips[r["county"]], r["precinct"])
         if r["real"]:
             seen_real.add(key)
@@ -242,10 +248,11 @@ def main():
             continue
         precincts = {}
         for k, counts in c["precincts"].items():
-            if set(counts) != set(choices):
-                fail("%s: precinct %s lists %d of the contest's %d choices"
-                     % (c["name"], k, len(counts), len(choices)))
-            vals = [counts[ch] for ch in choices]
+            listed = c["byCounty"][k.split("-", 1)[0]]
+            if set(counts) != listed:
+                fail("%s: precinct %s lists %d of the %d choices its county lists"
+                     % (c["name"], k, len(counts), len(listed)))
+            vals = [counts.get(ch, 0) for ch in choices]
             precincts[k] = [sum(vals)] + vals
         if not precincts:
             dropped.append(c["name"])
