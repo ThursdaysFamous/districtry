@@ -75,8 +75,39 @@ Hallettsville Independent School District grades 9 to 12 (layer 1, secondary). T
 answers HTTP 500 to a whole-state request, so the mirror and the app's own fallback page it 250 at
 a time. No trustee is named yet (gap `tx-school-board-members`).
 
-**NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
-to assume the office is empty. Recorded as gaps `tx-county-officials` and
+**THE COUNTY CARD NAMES EACH COUNTY'S JUDGE, AND THE FOUR COMMISSIONERS IN THE LARGEST COUNTIES**
+(the judges since 2026-11-16, `tx/scripts/build_tx_county_officials.py`, `tx-county-officials.json`;
+the commissioners since 2026-11-17, `tx/scripts/build_tx_county_commissioners.py`,
+`tx-county-commissioners.json`). A Texas county is governed
+by a commissioners court: the county judge, elected countywide, and four commissioners, one per
+precinct. The judges come from the by-county listing in the Texas Office of Court Administration's
+judicial directory (a PDF whose address changes with each revision, so the builder reads the
+directory's page and follows its one link), which names the county judge in 253 of 254 counties;
+Uvalde's entry has no county court row, and its card says the directory names no one. The file read
+on 2026-11-16 is dated 20 May 2026, and every county judge's term ends on 31 December 2026, so from
+1 January 2027 the card names the outgoing judge wherever the seat changed hands until the office
+reissues the file; the card prints the file's date and says so. The address, town and telephone the
+directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,016 COMMISSIONERS**
+(measured 2026-11-16: the Secretary of State's election results site answers with a managed
+challenge, which is not worked around, and the Texas Association of Counties is an association, not
+a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
+largest county first. Sixty-six counties are read so far, 72.3% of Texans: the twelve largest
+whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin, Denton, Fort
+Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock), sixteen of the 21st to 40th largest
+(Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
+Wichita, Gregg, Tom Green, Potter and Rockwall), nineteen of the 41st to 60th (all but
+Maverick, which has no county website this project can find) and nineteen of the 61st to 80th
+(all but Erath, whose site answers this project with Cloudflare's block page). The builder's docstring records
+each page's shape and why each of the other fourteen among the eighty largest is not read (Bexar
+and Brazos answer with a challenge, Montgomery and Bell disallow every path in robots.txt, seven
+refuse the project's client and Erath blocks it, Smith prints its names only inside sentences,
+and Maverick's site answers nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
+so the weekly job's time limit is an hour. Each
+record's date is the day its four names were first read, so a week with no change writes the same
+bytes; a county whose page cannot be read keeps its last record, and the weekly job's last step
+fails so the miss is seen. No commissioner precinct is drawn, so the card names all four and says
+it cannot say which represents the point. No other county officer and no municipal
+official is named yet, and the cards say so. Recorded as gaps `tx-county-officials` and
 `tx-municipal-officeholders`.
 
 **THE ZIP LAYER HIDES OUTSIDE TEXAS.** A ZCTA carries no state field, so over the line the live
@@ -124,7 +155,7 @@ every other instance via `scripts/compose_app.py`.
 - Geocoders: address Photon (Texas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Texas-bounded, serial >=1s queue)
 - Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
 - Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 8. Debug namespace `window.TexasExplorer`.
-- Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
+- Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `update-tx-county-officials.yml` (Wed 20:33 UTC); `update-tx-county-commissioners.yml` (Thu 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
 - Source registry: `tx/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -188,8 +219,9 @@ others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. The chamber cards
 degrade to the district number + the chamber's own member list on a roster miss, and a vacant
-seat says it is vacant; the County, municipality and school district cards carry no roster and
-**say so on the card**. External strings always render through `sanitize()`/`textContent`.
+seat says it is vacant; the County card names the county judge, names the four commissioners
+where the county's own website is read and says they are not named elsewhere, and the municipality and school district cards carry no roster and **say so on the
+card**. External strings always render through `sanitize()`/`textContent`.
 Roster refreshes always land as PRs for review — never as direct commits to main.
 
 ## Data pipeline
@@ -207,8 +239,11 @@ compare screen counts people from Census 2020 blocks under `data/app/population/
 search reads `zip-index.json` (`scripts/build_zip_index.mjs`). Rosters: `congress-roster.json`
 (`tx/scripts/build_congress_roster.py`, from unitedstates/congress-legislators and the House
 Clerk's vacancy list) and `tx-{senate,house}-members.json`
-(`tx/scripts/build_tx_legislature_roster.py`) — count-guarded, refreshed weekly by CI as reviewed
-PRs. `scripts/validate_chamber_rosters.py` holds both chamber files to one record per seat.
+(`tx/scripts/build_tx_legislature_roster.py`) and `tx-county-officials.json`
+(`tx/scripts/build_tx_county_officials.py`, from the courts office's judicial directory) and
+`tx-county-commissioners.json` (`tx/scripts/build_tx_county_commissioners.py`, from each listed
+county's own website) —
+count-guarded, refreshed weekly by CI as reviewed PRs. `scripts/validate_chamber_rosters.py` holds both chamber files to one record per seat.
 
 robots.txt is read before the first fetch through `scripts/robots_policy.py`, with the same client
 the fetches send, and a stated Crawl-delay is honoured.

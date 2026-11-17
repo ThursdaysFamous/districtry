@@ -240,14 +240,14 @@
       "area_rank": 4,
       "rank_note": "254 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
-        "answers": "Which county contains the point.",
+        "answers": "Which county contains the point, who its county judge is and, in the largest counties, who its four commissioners are.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 254 features, measured 2026-11-11, more counties than any other state has. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Each Texas county is governed by a commissioners court — a county judge elected countywide and four commissioners, each elected from a commissioner precinct — and elects officers such as a sheriff and a county clerk; no list of them was read in this pass, so the card names the county only. Recorded as gap tx-county-officials.",
+        "people": "tx-county-officials.json, checked weekly against the by-county listing in the Texas Office of Court Administration's judicial directory (its report dated 20 May 2026 when this was written): the county judge of each county, who is elected by the whole county and presides over its commissioners court. The directory names the judge of each county's constitutional county court, who is that county judge. A county judge who took office after the file's date is not shown, and the card gives that date. One county's entry, Uvalde's, lists no county court, and its card says the directory names no county judge there rather than calling the office vacant. The four commissioners of each county, each elected from a commissioner precinct, are not in the directory. They come from tx-county-commissioners.json, read weekly from each county's own website, largest county first: 66 counties when this was written, with the date each county's names were read printed on the card. No state office lists them. The app draws no commissioner precincts, so the card never says which commissioner represents the point. The commissioners of the other counties, and every county's other elected officers, such as the sheriff and the county clerk, are not named. Both are recorded in gap tx-county-officials.",
         "applies": "Texas — statewide, all 254 counties."
       }
     },
@@ -509,6 +509,16 @@
         "note": "Texas House roster from the House's own member pages (house.texas.gov), one record per district, refreshed weekly."
       },
       {
+        "file": "tx-county-officials.json",
+        "min_keys": 254,
+        "note": "The county judge of each of the 254 counties, keyed by county GEOID, from the by-county listing in the Texas Office of Court Administration's judicial directory (tx/scripts/build_tx_county_officials.py, checked weekly by update-tx-county-officials.yml). One seat per county: a name, a vacancy the directory states, or a county whose entry lists no county court. The four commissioners are not in the file. Nothing in it depends on the day it was built, so a weekly run that reads the same file changes nothing."
+      },
+      {
+        "file": "tx-county-commissioners.json",
+        "min_keys": 62,
+        "note": "The four commissioners of each county read so far, keyed by county GEOID, from each county's own website, largest county first (tx/scripts/build_tx_county_commissioners.py, read weekly by update-tx-county-commissioners.yml). Each record names its source page and the date its four names were first read in that form; a county whose page cannot be read keeps its last record. Counties not read are not in the file."
+      },
+      {
         "file": "tribal-councils.json",
         "min_keys": 3,
         "note": "The councils of Texas's three nations, each from its own page (the Alabama-Coushatta, the Kickapoo Traditional Tribe of Texas and the Ysleta del Sur Pueblo), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
@@ -548,6 +558,16 @@
       "file": "update-tx-legislature-roster.yml",
       "purpose": "Texas Senate and House rosters (each chamber's own member pages)",
       "schedule": "Tue 20:33 UTC"
+    },
+    {
+      "file": "update-tx-county-officials.yml",
+      "purpose": "County judges (the Texas Office of Court Administration's judicial directory, by-county listing)",
+      "schedule": "Wed 20:33 UTC"
+    },
+    {
+      "file": "update-tx-county-commissioners.yml",
+      "purpose": "County commissioners (each county's own website, largest county first)",
+      "schedule": "Thu 20:33 UTC"
     },
     {
       "file": "tx-validate-sources.yml",

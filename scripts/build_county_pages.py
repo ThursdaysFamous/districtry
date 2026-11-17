@@ -5407,6 +5407,33 @@ NOT_COUNTY_BOARDS = {
                "adapter reads the file yet; the change that adds the pages "
                "drops this entry.",
     ),
+    # TEXAS'S COUNTY JUDGES ARE ONE MEMBER OF EACH COUNTY'S BOARD, AND THEIR
+    # PAGES ARE HELD for the same reason as California's: the County card has
+    # named them since 2026-11-16 under the rule that names added to an
+    # existing card ship once the checks pass, and a county page waits for
+    # Adam's "merge" for Texas. A page naming the judge alone would also name
+    # one of a five-member court, so the adapter is better written once some
+    # counties' commissioners are read from their own sites.
+    "tx/data/app/tx-county-officials.json": dict(
+        date="2026-11-16",
+        reason="each Texas county's judge, who presides over the commissioners "
+               "court, from the Texas Office of Court Administration's "
+               "judicial directory. A county board member, so a hold and not "
+               "a verdict: county pages wait until Adam says \"merge\" for "
+               "Texas's pages, and the change that adds them writes the "
+               "adapter and drops this entry.",
+    ),
+    # TEXAS'S COUNTY COMMISSIONERS are the other four members of each
+    # county's board, read from the county's own website for the largest
+    # counties since 2026-11-17, and their pages are held with the judges'.
+    "tx/data/app/tx-county-commissioners.json": dict(
+        date="2026-11-17",
+        reason="the four commissioners of each listed Texas county's "
+               "commissioners court, read from the county's own website. A "
+               "county board, so a hold and not a verdict: county pages wait "
+               "until Adam says \"merge\" for Texas's pages, and the change "
+               "that adds them writes the adapter and drops this entry.",
+    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "

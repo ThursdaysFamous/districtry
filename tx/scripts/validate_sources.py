@@ -168,6 +168,33 @@ PROVENANCE = [
     },
     {
         "layer": "county",
+        "app_file": "tx-county-officials.json",
+        "source_url": "https://www.txcourts.gov/judicial-data/judicial-directory/",
+        "note": (
+            "Each county's judge, from the by-county listing in the Texas "
+            "Office of Court Administration's judicial directory. The page "
+            "links the listing, whose address changes with each revision; "
+            "tx/scripts/build_tx_county_officials.py follows that link weekly "
+            "(update-tx-county-officials.yml). The file read on 2026-11-16 is "
+            "dated 20 May 2026 and names a county judge in 253 of 254 counties."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "tx-county-commissioners.json",
+        "source_url": "https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
+        "note": (
+            "The four commissioners of each listed county, read from that "
+            "county's own website, largest county first: twelve counties when "
+            "this was written (2026-11-17). This entry checks the largest, "
+            "Harris County's court page; tx/scripts/build_tx_county_commissioners.py "
+            "reads every listed county's page weekly "
+            "(update-tx-county-commissioners.yml), and that job's last step "
+            "fails when any county's page could not be read."
+        ),
+    },
+    {
+        "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": STATE_COUNTY,
         "note": (
