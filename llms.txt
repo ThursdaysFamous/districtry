@@ -63,6 +63,7 @@ All 58 counties: cities and towns, unified, elementary and high school districts
 
 - [California district lookup](https://districtry.com/ca/): 23 layers, statewide, San Francisco in depth.
 - [Who is my U.S. representative?](https://districtry.com/ca/congress.html)
+- [Who are my county supervisors?](https://districtry.com/ca/county-supervisor.html): links a page per county, 58 of them, each naming every member with whatever contact details that county publishes.
 - [2026 precinct election results](https://districtry.com/ca/election-results.html)
 - [Sources & data layers](https://districtry.com/ca/sources.html)
 - [Who is my CA state legislator?](https://districtry.com/ca/state-legislature.html)
@@ -323,6 +324,7 @@ All 254 counties: cities, towns and villages, school districts, ZIP codes, and t
 
 - [Texas district lookup](https://districtry.com/tx/): 13 layers, all 254 counties.
 - [Who is my U.S. representative?](https://districtry.com/tx/congress.html)
+- [Who are my county commissioners?](https://districtry.com/tx/county-commissioner.html): links a page per county, 230 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/tx/sources.html)
 - [Who is my Texas legislator?](https://districtry.com/tx/state-legislature.html)
 - [Texas district questions](https://districtry.com/tx/faq.html)

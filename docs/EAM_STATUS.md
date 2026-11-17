@@ -47,7 +47,7 @@ different thing from one it failed.
 | al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
-| ca | **--M·** | — | — | 0 | 0 | — | 23 | all | 8 of 14 levels |
+| ca | **--M·** | — | — | 296 | 296 | — | 23 | all | 9 of 14 levels |
 | co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ct | **--M·** | — | — | 0 | 0 | — | 13 | all | 8 of 14 levels |
 | de | **EAM·** | 3 | 3/3 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
@@ -85,7 +85,7 @@ different thing from one it failed.
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 23 | all | 10 of 14 levels |
-| tx | **EAM·** | 254 | 254/254 § | 0 | 0 | by record | 16 | all | 7 of 14 levels |
+| tx | **EAM·** | 254 | 254/254 § | 920 | 919 | all | 16 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -169,17 +169,18 @@ per county, so each one is named under its state below.
 ### ca — --M·
 
 - **E and A do not apply.** California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet. The County card names the board of supervisors in the 57 counties outside San Francisco, and the Supervisor District card names San Francisco's.
+  The county roster it does ship is reported and not gated: 296 district(s), 296 people named.
   The mark therefore rests on Maintained alone.
 - **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `ca-state-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `ca/data/app/population/`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `state-counties.json`, `supervisor-districts.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
   - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
+- **Does not apply here (3):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **4. The county governing body, in every county of the state** — California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet. The County card names the board of supervisors in the 57 counties outside San Francisco, and the Supervisor District card names San Francisco's.
   - **9. Townships or other general-purpose sub-county governments** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
   - **14. Township or county subdivision boundaries** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
 
@@ -708,11 +709,10 @@ this instance is in maintenance.
 
 ### tx — EAM·
 
-- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
-- **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
+- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 230 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-house-districts.json`, `tx-senate-districts.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 0 of 254 counties name a governing body
+  - **4. The county governing body, in every county of the state** — open. 230 of 254 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 119 units at 25,000+ name a governing body; unanswered: Abilene city, Allen city, Alvin city, Amarillo city, Arlington city, Austin city, Balch Springs city, Baytown city and 111 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)

@@ -593,6 +593,43 @@ INSTANCES = [
          index_provenance="each name the winner of that seat's most recent "
                           "election on the Georgia Secretary of State's official "
                           "results site, dated to it"),
+    # CALIFORNIA'S SUPERVISORS, on Adam's "merge" of 2026-11-17. Every county
+    # elects its board by district, and the app draws supervisorial districts
+    # only in San Francisco, so every other county's page opens the County
+    # layer (its record carries `cta_layers`). San Francisco's board is the
+    # City and County's one legislature, read from the city's own open data;
+    # its record names its own body.
+    dict(tag="ca", state="California", concept="county-supervisor",
+         index_page="county-supervisor.html",
+         heading="%(county)s County Board of Supervisors",
+         page_title="%(county)s County Supervisors",
+         phrase="board of supervisors", index_label="Boards of supervisors",
+         all_label="All California boards of supervisors",
+         app_name="districtry California", app_url="https://districtry.com/ca/",
+         district_word="District", member_word="Supervisor",
+         district_layer="supervisor-district",
+         adapters=("ca_supervisors",),
+         index_provenance="each name as the California Secretary of State's "
+                          "yearly California Roster lists it, and San "
+                          "Francisco's from the city's own open data"),
+    # TEXAS'S COMMISSIONERS COURTS, on Adam's "merge" of 2026-11-17: the county
+    # judge, elected countywide, and four commissioners, one per precinct. A
+    # county gets a page once its commissioners are read from its own website;
+    # the judge comes from the state courts office's directory.
+    dict(tag="tx", state="Texas", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Commissioners Court",
+         page_title="%(county)s County Commissioners Court",
+         phrase="commissioners court", index_label="Commissioners courts",
+         all_label="All Texas commissioners courts",
+         app_name="districtry Texas", app_url="https://districtry.com/tx/",
+         district_word="Precinct", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("tx_commissioners_courts",),
+         index_provenance="each county judge as the Texas Office of Court "
+                          "Administration's judicial directory lists them, and "
+                          "each commissioner as the county's own website names "
+                          "them"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -4116,6 +4153,305 @@ def wv_commissions(inst):
     return out, problems, nameless, [path], note
 
 
+CA_SOURCE_LABEL = "the California Secretary of State's California Roster"
+CA_LEDE = ("%%(county)s County's board of supervisors has %%(districts)d "
+           "members, each elected from one of the county's supervisorial "
+           "districts. These are the supervisors the California Secretary of "
+           "State's %(edition)d California Roster lists for the county. The "
+           "Roster is printed once a year, and this edition is dated %(date)s, "
+           "so a supervisor who took office since then is not listed yet.")
+CA_STANDFIRST = ("Every member of the %(heading)s, as the California Secretary "
+                 "of State's California Roster lists them.")
+CA_DESC = ("Who represents you on the %(head)s — %(named)d supervisors across "
+           "%(districts)d districts, from the Secretary of State's roster.")
+CA_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "listed by the California Secretary of State,\n"
+                 "whose California Roster is printed once a year, so a "
+                 "supervisor who took office since may not appear yet and the "
+                 "county's own website is the current word.")
+CA_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "board. The map does not draw supervisorial districts outside "
+               "San Francisco yet, so it cannot show which district an address "
+               "is in.")
+CA_SF_SOURCE_URL = "https://data.sfgov.org/d/hcgx-vtsb"
+CA_SF_LEDE = ("San Francisco's city and county are one government, and its "
+              "Board of Supervisors is that government's legislature: "
+              "%(districts)d supervisors, each elected from one district. These "
+              "are the names DataSF's Current Supervisor Districts dataset "
+              "gives, the same list the map's San Francisco supervisor card "
+              "reads.")
+CA_SF_STANDFIRST = ("Every member of the %(heading)s, from the City and County "
+                    "of San Francisco's own open data.")
+CA_SF_DESC = ("Who represents you on the %(head)s — %(named)d supervisors across "
+              "%(districts)d districts, from San Francisco's own open data.")
+CA_SF_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                    "It never guesses at who holds a seat: every name above is "
+                    "published by the City and County of San Francisco,\n"
+                    "and the list is re-read every week.")
+CA_SF_CTA_NOTE = ("Opens the map with the supervisor district and county layers "
+                  "on. Search your address or ZIP, or tap your location.")
+
+
+def ca_supervisors(inst):
+    """California: TWO files. ca-county-officials.json is keyed by county
+    GEOID ("06001"), each record one county's board of supervisors as the
+    Secretary of State's yearly California Roster lists it
+    (ca/scripts/build_ca_county_officials.py), the file the app's County card
+    reads; it leaves San Francisco out, because the city and county are one
+    government whose board the app names from the city's own open data, in
+    sf-supervisor-members.json (ca/scripts/build_sf_supervisor_roster.py),
+    keyed by district number.
+
+    EVERY CALIFORNIA COUNTY ELECTS ITS SUPERVISORS BY DISTRICT, and the Roster
+    gives each seat its district, so every page is the districted shape. The
+    app draws no supervisorial district outside San Francisco, so those pages
+    open the County layer, whose card lists the board, and say why; San
+    Francisco's opens the supervisor district layer the app does draw.
+
+    THE ROSTER IS PRINTED ONCE A YEAR, so the lede names its edition and date
+    and the disclaimer says a supervisor who took office since may not appear
+    yet. San Francisco's list is re-read every week."""
+    path = os.path.join(app_data(inst["tag"]), "ca-county-officials.json")
+    sf_path = os.path.join(app_data(inst["tag"]), "sf-supervisor-members.json")
+    out, problems, nameless = {}, [], set()
+    records = _read(path)
+    if len(records) != 57:
+        problems.append("ca-county-officials.json carries %d counties, not the "
+                        "57 California counties outside San Francisco"
+                        % len(records))
+    for geoid, rec in sorted(records.items()):
+        county = (rec.get("county") or "").strip()
+        name = re.sub(r"\s+County$", "", county)
+        body = (rec.get("body") or "").strip()
+        link = (rec.get("sourceUrl") or "").strip()
+        when = _mn_date(rec.get("fileDate"))
+        edition = rec.get("edition")
+        if not name or name == county or not body or not when or not edition \
+                or not link.startswith("https://") \
+                or rec.get("kind") != "supervisors":
+            problems.append("ca-county-officials.json %r carries no county, no "
+                            "body, no file date, no edition, no https source or "
+                            "a body that is not a board of supervisors" % geoid)
+            continue
+        if name == "San Francisco":
+            problems.append("ca-county-officials.json names San Francisco, whose "
+                            "board this page reads from sf-supervisor-members.json")
+            continue
+        districts, labels = [], set()
+        for seat in rec.get("seats") or []:
+            label = str(seat.get("district") or "").strip()
+            if not label.isdigit() or label in labels:
+                problems.append("ca %s County carries a seat with no district "
+                                "number, or two seats in one district" % name)
+                continue
+            labels.add(label)
+            person = (seat.get("name") or "").strip()
+            if seat.get("vacant"):
+                districts.append(district(label, vacancies=1))
+            elif person:
+                districts.append(district(label, [{"name": person}]))
+            else:
+                districts.append(district(label))
+        districts.sort(key=lambda d: district_sort_key(d["label"]))
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ca %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        entry = {"districts": districts,
+                 "sourceUrl": link, "source_label": CA_SOURCE_LABEL,
+                 "extras": [], "skipped": [], "slug": county_slug(name),
+                 "at_large": False, "source_file": path,
+                 "cta_layers": "county",
+                 "lede": CA_LEDE % {"edition": int(edition), "date": when},
+                 "standfirst": CA_STANDFIRST, "desc": CA_DESC,
+                 "disclaimer": CA_DISCLAIMER, "cta_note": CA_CTA_NOTE}
+        if body != "%s County Board of Supervisors" % name:
+            entry["heading"] = entry["page_title"] = body
+        out[name] = entry
+    sf = _read(sf_path)
+    districts = []
+    for label, rec in sorted(sf.items(), key=lambda kv: district_sort_key(kv[0])):
+        person = (rec.get("name") or "").strip() if isinstance(rec, dict) else ""
+        if not label.isdigit():
+            problems.append("sf-supervisor-members.json key %r is not a district "
+                            "number" % label)
+            continue
+        districts.append(district(label, [{"name": person}] if person else ()))
+    if not _count_named(districts, []):
+        problems.append("sf-supervisor-members.json names nobody")
+    else:
+        out["San Francisco"] = {
+            "districts": districts,
+            "sourceUrl": CA_SF_SOURCE_URL,
+            "source_label": "DataSF's Current Supervisor Districts dataset",
+            "extras": [], "skipped": [], "slug": county_slug("San Francisco"),
+            "at_large": False, "source_file": sf_path,
+            "heading": "San Francisco Board of Supervisors",
+            "page_title": "San Francisco Board of Supervisors",
+            "lede": CA_SF_LEDE, "standfirst": CA_SF_STANDFIRST,
+            "desc": CA_SF_DESC, "disclaimer": CA_SF_DISCLAIMER,
+            "cta_note": CA_SF_CTA_NOTE}
+    note = ("%d of California's 58 counties, the boards outside San Francisco "
+            "from the Secretary of State's California Roster and San "
+            "Francisco's from its own open data" % len(out))
+    return out, problems, nameless, [path, sf_path], note
+
+
+TX_JUDGE_LABEL = "the Texas Office of Court Administration's judicial directory"
+TX_LEDE = ("%(county)s County is governed by its commissioners court: the county "
+           "judge, elected by the whole county, who presides, and four "
+           "commissioners, each elected from one of the county's four "
+           "commissioner precincts.")
+TX_STANDFIRST = ("Every member of the %(heading)s: the county judge from the "
+                 "Texas courts office's directory, and the commissioners from "
+                 "the county's own website.")
+TX_DESC = ("Who sits on the %(head)s — the county judge and %(named)d "
+           "commissioners, from the state courts office and the county's "
+           "website.")
+TX_DESC_NO_JUDGE = ("Who sits on the %(head)s — %(named)d commissioners, from "
+                    "the county's own website.")
+TX_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: the county judge above "
+                 "is listed by the Texas Office of Court Administration and "
+                 "each commissioner by the county's own website,\n"
+                 "and the directory's date is printed above, so a judge who "
+                 "took office since may not appear yet.")
+TX_STANDFIRST_NO_JUDGE = ("The commissioners of the %(heading)s, from the "
+                          "county's own website. The Texas courts office's "
+                          "directory names no county judge for this county.")
+TX_DISCLAIMER_NO_JUDGE = ("districtry is an independent, unofficial civic "
+                          "reference.\n"
+                          "It never guesses at who holds a seat: each "
+                          "commissioner above is listed by the county's own "
+                          "website,\n"
+                          "and no county judge is listed because the Texas "
+                          "Office of Court Administration's directory names "
+                          "none.")
+TX_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "court. The map does not draw commissioner precincts yet, so it "
+               "cannot show which precinct an address is in.")
+
+
+def tx_commissioners_courts(inst):
+    """Texas: TWO files, both keyed by county GEOID ("48001") and both read by
+    the app's County card. tx-county-commissioners.json carries the four
+    commissioners of each county whose own website this project reads
+    (tx/scripts/build_tx_county_commissioners.py), each record dated to the
+    day its names were first read; tx-county-officials.json carries every
+    county's judge from the Texas Office of Court Administration's judicial
+    directory (tx/scripts/build_tx_county_officials.py), dated to the
+    directory's own file.
+
+    A PAGE PER COUNTY WHOSE COMMISSIONERS ARE READ, AND NO OTHER. A county
+    whose commissioners are not read would get a page naming one member of a
+    five-member court, which answers nobody who searches for that court, so
+    those counties have no page and the County card names their judge alone.
+
+    THE JUDGE IS ELECTED COUNTYWIDE AND THE COMMISSIONERS BY PRECINCT, so the
+    judge is a section of its own above the four precincts. Uvalde's entry in
+    the directory has no county court row, and its page says the directory
+    names no judge rather than leaving the section out silently. The app
+    draws no commissioner precinct, so every page opens the County layer and
+    says why."""
+    path = os.path.join(app_data(inst["tag"]), "tx-county-commissioners.json")
+    judges_path = os.path.join(app_data(inst["tag"]), "tx-county-officials.json")
+    out, problems, nameless = {}, [], set()
+    judges = _read(judges_path)
+    if len(judges) != 254:
+        problems.append("tx-county-officials.json carries %d counties, not "
+                        "Texas's 254" % len(judges))
+    for geoid, rec in sorted(_read(path).items()):
+        county = (rec.get("county") or "").strip()
+        name = re.sub(r"\s+County$", "", county)
+        link = (rec.get("sourceUrl") or "").strip()
+        read = _mn_date(rec.get("asOf"))
+        if not name or name == county or not read \
+                or not link.startswith("https://"):
+            problems.append("tx-county-commissioners.json %r carries no county, "
+                            "no read date or no https source" % geoid)
+            continue
+        jrec = judges.get(geoid) or {}
+        if (jrec.get("county") or "").strip() != county \
+                or jrec.get("kind") != "commissioners-court":
+            problems.append("tx %s County is in tx-county-commissioners.json and "
+                            "not as a commissioners court in "
+                            "tx-county-officials.json" % name)
+            continue
+        jdate = _mn_date(jrec.get("fileDate"))
+        jlink = (jrec.get("sourceUrl") or "").strip()
+        if not jdate or not jlink.startswith("https://"):
+            problems.append("tx-county-officials.json %r carries no file date or "
+                            "no https source" % geoid)
+            continue
+        judge = [(s.get("name") or "").strip() for s in jrec.get("seats") or []
+                 if s.get("seat") == "County Judge" and s.get("countywide") is True]
+        judge = [j for j in judge if j]
+        if len(judge) > 1:
+            problems.append("tx %s County's directory entry names %d county "
+                            "judges" % (name, len(judge)))
+            continue
+        districts, labels = [], set()
+        for seat in rec.get("seats") or []:
+            label = str(seat.get("number") or "").strip()
+            if label not in ("1", "2", "3", "4") or label in labels:
+                problems.append("tx %s County carries a seat that is not one of "
+                                "precincts 1 to 4, or two seats in one" % name)
+                continue
+            labels.add(label)
+            person = (seat.get("name") or "").strip()
+            if seat.get("vacant"):
+                districts.append(district(label, vacancies=1))
+            elif person:
+                districts.append(district(label, [{"name": person}]))
+            else:
+                districts.append(district(label))
+        districts.sort(key=lambda d: district_sort_key(d["label"]))
+        if len(districts) != 4:
+            problems.append("tx %s County lists %d commissioner precincts, not "
+                            "four" % (name, len(districts)))
+            continue
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("tx %s County names no commissioner" % name)
+            nameless.add(name)
+            continue
+        extras = ([("county-judge", "County Judge", [{"name": judge[0]}])]
+                  if judge else [])
+        source = ('The county judge: <a href="%s" rel="noopener" '
+                  'target="_blank">%s</a>, in its file dated %s. '
+                  % (esc(jlink), esc(TX_JUDGE_LABEL), esc(jdate))
+                  if judge else "")
+        source += ('The commissioners: <a href="%s" rel="noopener" '
+                   'target="_blank">%s County\'s own website</a>, first read on '
+                   '%s and re-read every week.'
+                   % (esc(link), esc(name), esc(read)))
+        entry = {"districts": districts, "extras": extras, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "source_html": source,
+                 "cta_layers": "county",
+                 "lede": TX_LEDE,
+                 "standfirst": TX_STANDFIRST if judge else TX_STANDFIRST_NO_JUDGE,
+                 "desc": TX_DESC if judge else TX_DESC_NO_JUDGE,
+                 "disclaimer": TX_DISCLAIMER if judge else TX_DISCLAIMER_NO_JUDGE,
+                 "cta_note": TX_CTA_NOTE}
+        if not judge:
+            entry["closing"] = ["The Texas Office of Court Administration's "
+                                "judicial directory, dated %s, names no county "
+                                "judge for %s County." % (jdate, name)]
+        body = (jrec.get("body") or "").strip()
+        if body != "%s County Commissioners Court" % name:
+            problems.append("tx-county-officials.json calls %s County's body %r"
+                            % (name, body))
+            continue
+        out[name] = entry
+    note = ("%d of Texas's 254 counties, the county judge from the Office of "
+            "Court Administration's judicial directory and the commissioners "
+            "from the county's own website" % len(out))
+    return out, problems, nameless, [path, judges_path], note
+
+
 # Every adapter returns (counties, problems, nameless, paths_read, note):
 #   counties    {county name: record} — the pages to write.
 #   problems    anything that should fail the build, in words.
@@ -4142,6 +4478,8 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "va_local_bodies": va_local_bodies,
             "wv_commissions": wv_commissions,
             "ga_commissioners": ga_commissioners,
+            "ca_supervisors": ca_supervisors,
+            "tx_commissioners_courts": tx_commissioners_courts,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -5389,51 +5727,6 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
-    # CALIFORNIA'S SUPERVISORS ARE COUNTY BOARDS, AND THEIR PAGES ARE HELD. The
-    # County card has named them since 2026-11-16 under Adam's rule that names
-    # added to an existing card ship once the checks pass; a county page is a
-    # new page, and his instruction for this job is one "merge" per state
-    # before any is published. So this entry is a hold and not a verdict: the
-    # change that adds California's county pages writes the adapter, lists it
-    # in INSTANCES and drops this entry. That adapter also has to read San
-    # Francisco's board from sf-supervisor-members.json, because this file
-    # leaves that county to the city's own roster.
-    "ca/data/app/ca-county-officials.json": dict(
-        date="2026-11-16",
-        reason="the boards of supervisors of California's 57 counties outside "
-               "San Francisco, from the Secretary of State's California "
-               "Roster. These ARE county boards. Their county pages are held "
-               "until Adam says \"merge\" for California's pages, so no "
-               "adapter reads the file yet; the change that adds the pages "
-               "drops this entry.",
-    ),
-    # TEXAS'S COUNTY JUDGES ARE ONE MEMBER OF EACH COUNTY'S BOARD, AND THEIR
-    # PAGES ARE HELD for the same reason as California's: the County card has
-    # named them since 2026-11-16 under the rule that names added to an
-    # existing card ship once the checks pass, and a county page waits for
-    # Adam's "merge" for Texas. A page naming the judge alone would also name
-    # one of a five-member court, so the adapter is better written once some
-    # counties' commissioners are read from their own sites.
-    "tx/data/app/tx-county-officials.json": dict(
-        date="2026-11-16",
-        reason="each Texas county's judge, who presides over the commissioners "
-               "court, from the Texas Office of Court Administration's "
-               "judicial directory. A county board member, so a hold and not "
-               "a verdict: county pages wait until Adam says \"merge\" for "
-               "Texas's pages, and the change that adds them writes the "
-               "adapter and drops this entry.",
-    ),
-    # TEXAS'S COUNTY COMMISSIONERS are the other four members of each
-    # county's board, read from the county's own website for the largest
-    # counties since 2026-11-17, and their pages are held with the judges'.
-    "tx/data/app/tx-county-commissioners.json": dict(
-        date="2026-11-17",
-        reason="the four commissioners of each listed Texas county's "
-               "commissioners court, read from the county's own website. A "
-               "county board, so a hold and not a verdict: county pages wait "
-               "until Adam says \"merge\" for Texas's pages, and the change "
-               "that adds them writes the adapter and drops this entry.",
-    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "
@@ -5529,13 +5822,6 @@ NOT_COUNTY_BOARDS = {
                "These pages are one per county board; a township is a "
                "different government below the county, and the app names its "
                "trustee and board on its own Township card.",
-    ),
-    "ca/data/app/sf-supervisor-members.json": dict(
-        date="2026-09-13",
-        reason="San Francisco's Board of Supervisors is a CITY council that "
-               "happens to be called a board of supervisors — the city and the "
-               "county are one government. It has no county siblings to index "
-               "beside, so these pages have no shape to put it in.",
     ),
 }
 
