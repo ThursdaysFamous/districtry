@@ -1034,33 +1034,51 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES THE COUNTY JUDGE, AND SAYS WHO IT DOES NOT NAME.
+  // 9. THE COUNTY CARD NAMES THE COUNTY JUDGE AND, WHERE THE COUNTY'S OWN
+  //    WEBSITE IS READ, THE FOUR COMMISSIONERS, AND SAYS WHO IT DOES NOT NAME.
   //    The judge comes from the state courts office's judicial directory
-  //    (tx-county-officials.json); the four commissioners and the county's
-  //    other officers are not named (gap tx-county-officials). Which county
-  //    holds the Capitol, who its judge is and the file's date are read from
-  //    the shipped files, so the fixture moves with a rebuild and a weekly
-  //    refresh.
+  //    (tx-county-officials.json), the commissioners from the county's own
+  //    website (tx-county-commissioners.json); the county's other officers
+  //    are not named (gap tx-county-officials). Which county holds the
+  //    Capitol, who its judge and commissioners are and both dates are read
+  //    from the shipped files, so the fixture moves with a rebuild and a
+  //    weekly refresh.
   //      - At the Capitol the card names the court, the judge as County
-  //        Judge, the directory and its file's date, says the four
-  //        commissioners are not named, and links the directory's file. The
-  //        footer link sits outside the card body, so it is read from the
-  //        layer's block.
+  //        Judge and each commissioner under its seat, credits the
+  //        directory's dated file and the county's own website with the date
+  //        its names were first read, says it cannot say which commissioner
+  //        represents the point, and links the directory's file and the
+  //        county's page. The links sit outside the card body, so they are
+  //        read from the layer's block.
   //      - A seat the directory lists as vacant reads "Vacant" and names
   //        nobody.
   //      - A county whose entry lists no county court says the directory
-  //        lists no county judge, and does not call the seat vacant.
-  //      - The roster refused: the card still names the county and says the
-  //        list did not load.
+  //        lists no county judge, does not call the seat vacant, and still
+  //        names the commissioners.
+  //      - The commissioners' file refused: the judge is named and the card
+  //        says the commissioners are not named here yet.
+  //      - The judges' file refused: the commissioners are named and the card
+  //        says the list of county judges did not load.
+  //      - Both refused: the card still names the county and says the lists
+  //        did not load.
   {
     const counties = shipped("state-counties.json");
     const roster = shipped("tx-county-officials.json");
+    const commissioners = shipped("tx-county-commissioners.json");
     const at = propsAt(counties, POINT)[0] || {};
     const rec = roster[String(at.GEOID)] || {};
     const seat = (rec.seats || [])[0] || {};
-    const cardAndLink = async (routeFn) => {
+    const court = commissioners[String(at.GEOID)] || {};
+    const names = (court.seats || []).map((s) => s.name);
+    const named = (text) => names.length === 4 && names.every((n) => text.includes(n));
+    const noneNamed = (text) => !names.some((n) => text.includes(n));
+    const refuse = (file) => (page) =>
+      page.route(`**/data/app/${file}`, (r) => r.fulfill({ status: 503, body: "" }));
+    const cardAndLink = async (...routeFns) => {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, routeFn);
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
+        for (const fn of routeFns) if (fn) await fn(pg);
+      });
       const info = await cardText(page, "county");
       const links = await page.evaluate(() => {
         const el = document.getElementById("card-county");
@@ -1080,18 +1098,26 @@ try {
     {
       const { info, text, links } = await cardAndLink();
       const dated = longDate(rec.fileDate);
+      const read = longDate(court.asOf);
       const want = [
-        "County Judge", "four members are commissioners", "They are not named here yet",
-        "Where this name comes from", "judicial directory",
+        "County Judge", ...(court.seats || []).map((s) => s.seat),
+        "cannot say which of the four represents this point",
+        "Where the county judge's name comes from", "judicial directory",
         dated ? `in the file dated ${dated}` : "(no file date)",
         "A county judge who took office after that date is not shown here",
+        "Where the commissioners' names come from",
+        `Read from ${court.source || "(no source)"}`,
+        read ? `first found these four names there on ${read}` : "(no read date)",
       ];
       const missing = want.filter((w) => !text.includes(w));
-      check("the County card at the Capitol names the county judge, credits the directory's dated file and says the commissioners are not named",
+      check("the County card at the Capitol names the county judge and the four commissioners, credits the directory's dated file and the county's own website, and links both",
         !info.error && !!at.NAME && text.includes(at.NAME) && !!seat.name && text.includes(seat.name) &&
+          named(text) && !text.includes("The rest of the commissioners court") &&
           text.toLowerCase().includes(String(rec.body || "(no body)").toLowerCase()) &&
-          missing.length === 0 && !!rec.sourceUrl && links.includes(rec.sourceUrl),
-        `county=${at.NAME} judge=${seat.name} missing=${missing} link=${links.includes(rec.sourceUrl)} text=${text.slice(0, 120)}`);
+          missing.length === 0 && !!rec.sourceUrl && links.includes(rec.sourceUrl) &&
+          !!court.sourceUrl && links.includes(court.sourceUrl),
+        `county=${at.NAME} judge=${seat.name} commissioners=${names.length} missing=${missing} ` +
+          `links=${links.includes(rec.sourceUrl)}/${links.includes(court.sourceUrl)} text=${text.slice(0, 120)}`);
     }
 
     {
@@ -1104,19 +1130,33 @@ try {
 
     {
       const { info, text } = await cardAndLink(withSeat({ notListed: true }));
-      check("a county the directory lists no county court for says so and does not call the seat vacant",
+      check("a county the directory lists no county court for says so, does not call the seat vacant, and still names the commissioners",
         !info.error && text.includes("lists no county judge for this county") &&
-          !text.includes("Vacant") && !(seat.name && text.includes(seat.name)) &&
-          text.includes("four members are commissioners"),
+          !text.includes("Vacant") && !(seat.name && text.includes(seat.name)) && named(text),
         `text=${text.slice(0, 200)}`);
     }
 
     {
-      const { info, text } = await cardAndLink(async (page) => {
-        await page.route("**/data/app/tx-county-officials.json", (r) => r.fulfill({ status: 503, body: "" }));
-      });
-      check("the County card names the county and says the list did not load when the roster is refused",
-        !info.error && !!at.NAME && text.includes(at.NAME) &&
+      const { info, text } = await cardAndLink(refuse("tx-county-commissioners.json"));
+      check("the County card names the judge and says the commissioners are not named when their file is refused",
+        !info.error && !!seat.name && text.includes(seat.name) && noneNamed(text) &&
+          text.includes("four members are commissioners") && text.includes("They are not named here yet") &&
+          text.includes("Where this name comes from"),
+        `text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const { info, text } = await cardAndLink(refuse("tx-county-officials.json"));
+      check("the County card names the commissioners and says the list of county judges did not load when the judges' file is refused",
+        !info.error && named(text) && !(seat.name && text.includes(seat.name)) &&
+          text.includes("The list of county judges did not load"),
+        `text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const { info, text } = await cardAndLink(refuse("tx-county-officials.json"), refuse("tx-county-commissioners.json"));
+      check("the County card names the county and says the lists did not load when both rosters are refused",
+        !info.error && !!at.NAME && text.includes(at.NAME) && noneNamed(text) &&
           text.includes("did not load, so no one is named here") && !(seat.name && text.includes(seat.name)),
         `text=${text.slice(0, 160)}`);
     }

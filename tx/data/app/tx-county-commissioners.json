@@ -1,0 +1,350 @@
+{
+ "48061": {
+  "county": "Cameron County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Sofia C. Benavides"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Joey Lopez"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "David A. Garza"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Gus Ruiz"
+   }
+  ],
+  "source": "Cameron County's own website",
+  "sourceUrl": "https://www.cameroncountytx.gov/",
+  "asOf": "2026-11-17"
+ },
+ "48085": {
+  "county": "Collin County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Susan Fletcher"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Cheryl Williams"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Darrell Hale"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Duncan Webb"
+   }
+  ],
+  "source": "Collin County's own website",
+  "sourceUrl": "https://www.collincountytx.gov/government/commissioners-court",
+  "asOf": "2026-11-17"
+ },
+ "48113": {
+  "county": "Dallas County",
+  "seats": [
+   {
+    "seat": "Commissioner, District 1",
+    "number": 1,
+    "name": "Dr. Theresa Daniel"
+   },
+   {
+    "seat": "Commissioner, District 2",
+    "number": 2,
+    "name": "Andy Sommerman"
+   },
+   {
+    "seat": "Commissioner, District 3",
+    "number": 3,
+    "name": "John Wiley Price"
+   },
+   {
+    "seat": "Commissioner, District 4",
+    "number": 4,
+    "name": "Dr. Elba Garcia"
+   }
+  ],
+  "source": "Dallas County's own website",
+  "sourceUrl": "https://www.dallascounty.org/government/comcrt/",
+  "asOf": "2026-11-17"
+ },
+ "48121": {
+  "county": "Denton County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Ryan Williams"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Kevin Falconer"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Bobbie J. Mitchell"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Dianne Edmondson"
+   }
+  ],
+  "source": "Denton County's own website",
+  "sourceUrl": "https://www.dentoncounty.gov/165/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48141": {
+  "county": "El Paso County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jackie Butler",
+    "sourceUrl": "https://www.epcounty.com/194/Commissioner-Precinct-1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "David Stout",
+    "sourceUrl": "https://www.epcounty.com/195/Commissioner-Precinct-2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Iliana Holguin",
+    "sourceUrl": "https://www.epcounty.com/196/Commissioner-Precinct-3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Sergio Coronado",
+    "sourceUrl": "https://www.epcounty.com/197/Commissioner-Precinct-4"
+   }
+  ],
+  "source": "El Paso County's own website",
+  "sourceUrl": "https://www.epcounty.com/165/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48157": {
+  "county": "Fort Bend County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Vincent Morales"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Grady Prestage"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Andy Meyers"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Dexter McCoy"
+   }
+  ],
+  "source": "Fort Bend County's own website",
+  "sourceUrl": "https://www.fortbendcountytx.gov/government/departments/commissioners-court",
+  "asOf": "2026-11-17"
+ },
+ "48201": {
+  "county": "Harris County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Rodney Ellis"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Adrian Garcia"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Tom S. Ramsey"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Lesley Briones"
+   }
+  ],
+  "source": "Harris County's own website",
+  "sourceUrl": "https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
+  "asOf": "2026-11-17"
+ },
+ "48215": {
+  "county": "Hidalgo County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "David L. Fuentes"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Eduardo \"Eddie\" Cantu"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Everardo Villarreal"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ellie Torres"
+   }
+  ],
+  "source": "Hidalgo County's own website",
+  "sourceUrl": "https://www.hidalgocounty.us/2179/Commissioners",
+  "asOf": "2026-11-17"
+ },
+ "48303": {
+  "county": "Lubbock County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Mike Dalby",
+    "sourceUrl": "https://www.lubbockcounty.gov/department/index.php?structureid=8"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Jason Corley",
+    "sourceUrl": "https://www.lubbockcounty.gov/department/index.php?structureid=9"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Cary Shaw",
+    "sourceUrl": "https://www.lubbockcounty.gov/department/index.php?structureid=10"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jordan Rackler",
+    "sourceUrl": "https://www.lubbockcounty.gov/department/index.php?structureid=11"
+   }
+  ],
+  "source": "Lubbock County's own website",
+  "sourceUrl": "https://www.lubbockcounty.gov/department/division.php?structureid=223",
+  "asOf": "2026-11-17"
+ },
+ "48439": {
+  "county": "Tarrant County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Roderick Miles Jr"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Alisa Simmons"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Matt Krause"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Manny Ramirez"
+   }
+  ],
+  "source": "Tarrant County's own website",
+  "sourceUrl": "https://www.tarrantcountytx.gov/en/commissioners-court.html",
+  "asOf": "2026-11-17"
+ },
+ "48453": {
+  "county": "Travis County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jeff Travillion"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Brigid Shea"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Ann Howard"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "George Morales"
+   }
+  ],
+  "source": "Travis County's own website",
+  "sourceUrl": "https://www.traviscountytx.gov/commissioners-court",
+  "asOf": "2026-11-17"
+ },
+ "48479": {
+  "county": "Webb County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jesse Gonzalez",
+    "sourceUrl": "https://www.webbcountytx.gov/175/Commissioner-Pct-1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Rosaura \"Wawi\" Tijerina",
+    "sourceUrl": "https://www.webbcountytx.gov/176/Commissioner-Pct-2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "John Galo",
+    "sourceUrl": "https://www.webbcountytx.gov/177/Commissioner-Pct-3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ricardo A. Jaime",
+    "sourceUrl": "https://www.webbcountytx.gov/178/Commissioner-Pct-4"
+   }
+  ],
+  "source": "Webb County's own website",
+  "sourceUrl": "https://www.webbcountytx.gov/170/Commissioners-Court",
+  "asOf": "2026-11-17"
+ }
+}

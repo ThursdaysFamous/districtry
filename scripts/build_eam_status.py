@@ -2946,7 +2946,8 @@ ANSWERS = {
         "county-boundaries": answers("county"),
         # Since 2026-11-16 the County card names each county's judge, one of
         # the commissioners court's five members, from the Office of Court
-        # Administration's judicial directory; no commissioner is named yet.
+        # Administration's judicial directory, and since 2026-11-17 the four
+        # commissioners of the largest counties whose own sites are read.
         # The count here is read through the county-page adapters, and
         # Texas's pages are held for Adam's "merge"
         # (build_county_pages.NOT_COUNTY_BOARDS), so it stays at none.

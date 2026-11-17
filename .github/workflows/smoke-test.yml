@@ -1973,6 +1973,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 tx/scripts/build_tx_county_officials.py --check
 
+      # Texas's County card names each listed county's four commissioners
+      # from that county's own website. Offline: every record a county the
+      # County layer draws and the builder reads, four seats numbered 1 to 4
+      # with four different names that pass the fleet's name test, and the
+      # county's own page and a read date on each.
+      - name: TX county commissioners keep their shape, four per county read
+        if: ${{ !cancelled() }}
+        run: python3 tx/scripts/build_tx_county_commissioners.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the

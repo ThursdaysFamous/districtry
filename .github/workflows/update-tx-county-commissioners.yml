@@ -1,0 +1,130 @@
+name: Update Texas county commissioners
+
+# Weekly read of the County card's commissioners roster
+# (tx/data/app/tx-county-commissioners.json, fetched by tx/index.html). Reads
+# the four commissioners of each county in the builder's COUNTIES list from
+# that county's own website and, if anything changed, opens a PR rather than
+# committing directly to main.
+#
+# No state office lists Texas's county commissioners (gap tx-county-officials),
+# so each county's own page is the source, largest county first, on Adam's
+# choice of 2026-11-17. The county judge, the court's fifth member, comes from
+# the state courts directory through update-tx-county-officials.yml.
+#
+# A COUNTY WHOSE PAGE CANNOT BE READ KEEPS ITS LAST RECORD and its date; a
+# refusal stops the fetch and never unpublishes a name already read (Adam's
+# rule of 2026-09-19). A record's date moves only when its names change, so a
+# week with no change leaves the file byte-identical and opens no PR. Because
+# a carried county changes no byte either, the builder lists the counties it
+# could not read and the LAST step fails on that list, after any PR is opened,
+# so a page that stopped reading turns the run red rather than staying quiet.
+#
+# robots.txt: the builder reads each host's policy with the client its fetches
+# send and asks it about every address before fetching it, and spaces requests
+# to one host by the Crawl-delay that host states. Lubbock County's asks for
+# 300 seconds, so its four pages take about twenty minutes of this run.
+
+on:
+  schedule:
+    - cron: "33 20 * * 4" # Thursday 20:33 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers). Falls back to github.token
+      # when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          # Pinned below 3.15, as update-tx-county-officials.yml is: the
+          # runner's newest Python can arrive before the wheels a dependency
+          # needs.
+          python-version: "3.14"
+
+      # requests for the fetches (robots.txt is read first, with the same
+      # client); the pages are parsed with the standard library.
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild Texas county commissioners data file
+        run: python3 tx/scripts/build_tx_county_commissioners.py --unread "$RUNNER_TEMP/unread.txt"
+
+      # Gate the regenerated data before it can reach a PR: the roster's own
+      # shape (four named commissioners per county, each county one the
+      # builder reads, its page and read date on every record), then the app
+      # and every tx/data/app file, then the fleet's test that no shipped
+      # officeholder name is an office, a placeholder or a fragment.
+      - name: Validate roster + app + data files
+        run: |
+          python3 tx/scripts/build_tx_county_commissioners.py --check
+          python3 tx/scripts/validate_index.py tx/index.html
+          python3 scripts/validate_officeholder_names.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- tx/data/app/tx-county-commissioners.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR
+          # every week.
+          branch="bot/tx-county-commissioners-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with: if main gained a .github/workflows/ change
+          # meanwhile, the branch would differ from main THERE too, which
+          # GitHub reads as the push updating a workflow and refuses for a
+          # token without `workflow` scope. The rebuilt file is carried across.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # NOTHING ELSE IS REGENERATED: no page prints these names yet.
+          # Texas's county pages are held (build_county_pages.NOT_COUNTY_BOARDS)
+          # and no question-page table reads this roster. The change that adds
+          # the county pages adds their regeneration here, and
+          # build_county_pages.py --check fails this job's PR until it does.
+          git add tx/data/app/tx-county-commissioners.json
+          git commit -m "Update Texas county commissioners from the counties' own websites"
+          git push -u origin "$branch" --force
+          # Only open a PR if one isn't already open for this branch; if it is,
+          # the force-push above already updated it.
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Texas county commissioners from the counties' own websites" \
+              --body "Automated weekly read of the County card's commissioners roster, generated by \`tx/scripts/build_tx_county_commissioners.py\` from each listed county's own website. A record changes only when that county's page names someone different. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
+
+      # Last, so a county that could not be read never stops the others' PR.
+      - name: Fail when a county's page could not be read
+        run: |
+          if [ -s "$RUNNER_TEMP/unread.txt" ]; then
+            echo "These counties were not read this run and keep their last record:"
+            cat "$RUNNER_TEMP/unread.txt"
+            echo "The log above says why for each one."
+            exit 1
+          fi
