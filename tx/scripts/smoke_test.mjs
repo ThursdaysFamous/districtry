@@ -1052,6 +1052,10 @@ try {
   //        read from the layer's block.
   //      - A seat the directory lists as vacant reads "Vacant" and names
   //        nobody.
+  //      - A commissioner's seat the county's own page lists as vacant
+  //        (`vacant: true`, as Jeff Davis County's precinct 4 ships) reads
+  //        "Vacant", names the other three, and the credit says the page
+  //        lists one seat as vacant.
   //      - A county whose entry lists no county court says the directory
   //        lists no county judge, does not call the seat vacant, and still
   //        names the commissioners.
@@ -1126,6 +1130,23 @@ try {
         !info.error && text.includes("Vacant") && text.includes("County Judge") &&
           !(seat.name && text.includes(seat.name)) && !text.includes("lists no county judge"),
         `text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const vacated = (court.seats || [])[3] || {};
+      const others = names.slice(0, 3);
+      const { info, text } = await cardAndLink(async (page) => {
+        const copy = JSON.parse(JSON.stringify(commissioners));
+        copy[String(at.GEOID)].seats[3] = { seat: vacated.seat, number: 4, vacant: true };
+        await page.route("**/data/app/tx-county-commissioners.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(copy) }));
+      });
+      check("a commissioner's seat the county's page lists as vacant reads Vacant, names the other three and says the page lists it vacant",
+        !info.error && others.length === 3 && others.every((n) => text.includes(n)) &&
+          !!vacated.name && !text.includes(vacated.name) && !!vacated.seat && text.includes(vacated.seat) &&
+          text.includes("Vacant") && text.includes("The page lists one seat as vacant") &&
+          text.includes("first found these names there") && !text.includes("these four names"),
+        `seat=${vacated.seat} text=${text.slice(0, 200)}`);
     }
 
     {

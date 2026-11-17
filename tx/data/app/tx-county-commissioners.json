@@ -2927,6 +2927,34 @@
   "sourceUrl": "https://www.co.jasper.tx.us/page/Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48243": {
+  "county": "Jeff Davis County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jody Adams"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Roy Hurley"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "John Davis"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "vacant": true
+   }
+  ],
+  "source": "Jeff Davis County's own website",
+  "sourceUrl": "https://www.jeffdaviscounty.texas.gov/page/jeffdavis.Commissioners.Court",
+  "asOf": "2026-11-17"
+ },
  "48245": {
   "county": "Jefferson County",
   "seats": [

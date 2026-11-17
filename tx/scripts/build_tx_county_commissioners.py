@@ -393,13 +393,19 @@ Each has no robots.txt unless its entry says otherwise.
   Hudspeth  "Commissioner, Precinct N" or "County Commissioner Precinct N" and
             the name on the next line.
 
-And thirty of the 221st to 254th largest, the smallest counties, measured
+And thirty-one of the 221st to 254th largest, the smallest counties, measured
 2026-11-17 the same way. Each has no robots.txt unless its entry says
 otherwise.
 
   Kinney, Crockett, Lipscomb, Real, Collingsworth, Cochran, Culberson,
   Menard, Glasscock
             "Precinct N Commissioner" and the name on the next line.
+  Jeff Davis
+            "Precinct N Commissioner" and the name on the next line, on
+            jeffdaviscounty.texas.gov, where www.co.jeff-davis.tx.us
+            forwards. Precinct 4's line reads "Vacant", so that seat ships
+            vacant (see A SEAT THE COUNTY LISTS AS VACANT below); the
+            telephone and e-mail address printed under it are not read.
   Shackelford, Motley
             "Precinct N Commissioner", a line holding only "▲", then the
             name. Shackelford's www.co.shackelford.tx.us fails the TLS check;
@@ -537,11 +543,6 @@ NOT READ, AND WHY, among the 161st to 220th largest (measured 2026-11-17):
             from one line and does not join two.
 
 NOT READ, AND WHY, among the 221st to 254th largest (measured 2026-11-17):
-  Jeff Davis
-            jeffdaviscounty.texas.gov serves this client, but its page lists
-            precinct 4's seat as "Vacant", and this builder and the County
-            card name four commissioners or none, so the county waits until
-            the card can show a vacant seat or the seat is filled.
   Kent      www.co.kent.tx.us serves this client, but its four precinct pages
             sit under "Road and Bridge" and name a person without saying that
             person is the commissioner. As with Calhoun, a page of that kind
@@ -556,6 +557,20 @@ NOT READ, AND WHY, among the 221st to 254th largest (measured 2026-11-17):
             www.mcmullencountytx.gov do not answer, the state's county host
             answers 403, and no other site of the county's was found.
 
+A SEAT THE COUNTY LISTS AS VACANT ships as `vacant: true` with no name, and
+the County card reads "Vacant" under it (Adam, 2026-11-16: a seat a government
+source shows vacant is shown). A seat is vacant when the line where the
+county's pattern puts the name holds only the publisher's word for an empty
+seat, by the fleet's one table (validate_officeholder_names.is_vacancy_marker);
+the `links` pattern does not read one, because a link's text there is a menu
+entry as often as a name. Three refusals keep the word from standing in for a
+misread page: a county is read only when at least MIN_NAMED of its four seats
+name a person, so a page printing the word in every seat is refused rather
+than shipped as a court nobody sits on; a precinct printed vacant in one place
+and named in another is refused by agree(); and the named seats must still be
+different people. Jeff Davis County's precinct 4 was the first, read
+2026-11-17.
+
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
 test, carry no digit and be one of four distinct names for precincts 1 to 4.
@@ -563,7 +578,7 @@ A page whose shape changes FAILS ITS PARSER rather than yielding a guess.
 
 A COUNTY WHOSE PAGE CANNOT BE READ KEEPS ITS LAST RECORD (Adam's rule of
 2026-09-19: a refusal stops the fetch and never unpublishes what was already
-read). Each record's `asOf` is the date its four names were first read in
+read). Each record's `asOf` is the date its names were first read in
 that form: a rebuild that reads the same names keeps the old date, so a week
 with no change writes the same bytes and opens no pull request. A carried
 record keeps its date too, so the date is never later than the last read, and
@@ -606,7 +621,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)), "script
 from robots_policy import RobotsGate  # noqa: E402  (FLEET_SHARED)
 from scraper_common import (  # noqa: E402  (FLEET_SHARED)
     UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, fetch as fetch_response)
-from validate_officeholder_names import why_not_a_name  # noqa: E402  (FLEET_SHARED)
+from validate_officeholder_names import (  # noqa: E402  (FLEET_SHARED)
+    is_vacancy_marker, why_not_a_name)
 
 PACE_SECONDS = 1.0
 INSTANCE_ROOT = os.path.dirname(_HERE)
@@ -638,6 +654,16 @@ NAME_RE = re.compile(r"^%s(?:\s+%s){1,5}(?:,\s+(?:Jr|Sr)\.?|,?\s+(?:II|III|IV))?
 HONORIFIC_RE = re.compile(r"^(?:The\s+)?(?:Honorable|Hon\.)\s+", re.I)
 # The label most county pages print beside a commissioner's name.
 LABEL = r"(?:County\s+)?Commissioner,?\s+(?:Precinct|Pct\.?)\s*(?P<n>[1-4])"
+# What readings() records for a seat the county prints as vacant: the line where
+# its pattern puts the name holds only the publisher's word for an empty seat
+# ("Vacant", by the fleet's one table, is_vacancy_marker). It fails NAME_RE, so
+# it can never be mistaken for a printed name, and agree() refuses a precinct
+# printed as vacant in one place and named in another.
+VACANT = "(vacant)"
+# A county is read only when at least this many of its four seats name a
+# person, so a page printing the word in every seat (a template, not four
+# vacancies) is refused rather than shipped as a court nobody sits on.
+MIN_NAMED = 2
 
 # Each county: where its names are printed and in which of four patterns.
 #   name_above  the name on the line above the precinct label
@@ -1351,6 +1377,9 @@ COUNTIES = [
     dict(geoid="48109", county="Culberson County", seat_word="Precinct",
          url="https://www.co.culberson.tx.us/page/Commissioners.Court",
          mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48243", county="Jeff Davis County", seat_word="Precinct",
+         url="https://www.jeffdaviscounty.texas.gov/page/jeffdavis.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
     dict(geoid="48327", county="Menard County", seat_word="Precinct",
          url="https://www.co.menard.tx.us/page/menard.Commissioners.Court",
          mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
@@ -1610,7 +1639,7 @@ def readings(page, spec, where, want=0):
             raise RuntimeError("%s: unknown mode %r" % (where, mode))
         if spec.get("strip"):
             raw = re.sub(spec["strip"], "", raw)
-        name = maybe_person(raw, where)
+        name = VACANT if is_vacancy_marker(raw) else maybe_person(raw, where)
         if not name:
             continue
         n = m.groupdict().get("n")
@@ -1642,12 +1671,19 @@ def read_county(spec, files):
     names = agree(found, where)
     if sorted(names) != [1, 2, 3, 4]:
         raise RuntimeError("%s: read precincts %s, not 1 to 4" % (where, sorted(names)))
-    if len(set(names.values())) != 4:
-        raise RuntimeError("%s: the four names are not four people" % where)
+    named = [v for v in names.values() if v != VACANT]
+    if len(named) < MIN_NAMED:
+        raise RuntimeError("%s: %d of the four seats name a person, fewer than %d"
+                           % (where, len(named), MIN_NAMED))
+    if len(set(named)) != len(named):
+        raise RuntimeError("%s: the names are not different people" % where)
     seats = []
     for n in (1, 2, 3, 4):
-        seat = {"seat": "Commissioner, %s %d" % (spec["seat_word"], n), "number": n,
-                "name": names[n]}
+        seat = {"seat": "Commissioner, %s %d" % (spec["seat_word"], n), "number": n}
+        if names[n] == VACANT:
+            seat["vacant"] = True
+        else:
+            seat["name"] = names[n]
         if spec.get("pages"):
             seat["sourceUrl"] = spec["pages"][n]
         seats.append(seat)
@@ -1716,14 +1752,21 @@ def shape_problems(data, drawn):
             if s.get("seat") != want:
                 problems.append("%s: seat %r, not %r" % (where, s.get("seat"), want))
             page = (spec.get("pages") or {}).get(s["number"])
-            if s.get("sourceUrl") != page or set(s) - {"seat", "number", "name", "sourceUrl"}:
+            vacant = s.get("vacant") is True
+            fields = {"seat", "number", "vacant" if vacant else "name", "sourceUrl"}
+            if s.get("sourceUrl") != page or set(s) - fields or ("vacant" in s and not vacant):
                 problems.append("%s: seat %d's fields or page address" % (where, s["number"]))
+            if vacant:
+                continue
             try:
                 names.append(person(s.get("name"), where))
             except RuntimeError as e:
                 problems.append(str(e))
-        if len(set(names)) != 4:
-            problems.append("%s: the four names are not four people" % where)
+        if len(names) < MIN_NAMED:
+            problems.append("%s: %d of the four seats name a person, fewer than %d"
+                            % (where, len(names), MIN_NAMED))
+        if len(set(names)) != len(names):
+            problems.append("%s: the names are not different people" % where)
         if set(rec) != {"county", "seats", "source", "sourceUrl", "asOf"}:
             problems.append("%s: fields %s" % (where, sorted(rec)))
     return problems
@@ -1746,9 +1789,12 @@ def check():
         print("FAIL: %s" % p, file=sys.stderr)
     if problems:
         sys.exit(1)
-    print("tx-county-commissioners: OK — %d counties, %d commissioners named from the counties' "
-          "own websites (%s)" % (len(data), 4 * len(data),
-                                ", ".join(sorted(r["county"] for r in data.values()))))
+    seats = [s for r in data.values() for s in r["seats"]]
+    vacant = sum(1 for s in seats if s.get("vacant") is True)
+    print("tx-county-commissioners: OK — %d counties, %d commissioners named and %d seat%s "
+          "listed vacant from the counties' own websites (%s)"
+          % (len(data), len(seats) - vacant, vacant, "" if vacant == 1 else "s",
+             ", ".join(sorted(r["county"] for r in data.values()))))
 
 
 def main(argv):
