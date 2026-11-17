@@ -298,6 +298,101 @@ Each has no robots.txt unless its entry says otherwise.
             name. The county's www.co.callahan.tx.us answers with a TLS error;
             its pages are on newtools.cira.state.tx.us.
 
+And fifty-four of the 161st to 220th largest, measured 2026-11-17 the same way.
+Each has no robots.txt unless its entry says otherwise.
+
+  Clay      "Precinct N County Commissioner" and the name on the next line.
+            The county's www.co.clay.tx.us does not answer; its site is
+            claycountytx.net, whose robots.txt permits the page.
+  Ochiltree "PRECINCT ONE" to "PRECINCT FOUR" and the name on the next line.
+  Runnels   The name above "Precinct N Commissioner". The county's
+            www.co.runnels.tx.us forwards to newtools.cira.state.tx.us.
+  Sabine, Marion, Stephens, Archer
+            "Precinct N Commissioner" and the name on the next line.
+  Parmer    "Commissioner, Pct N" and the name on the next line. The county's
+            www.co.parmer.tx.us fails the TLS check; its site is
+            parmercounty.texas.gov, whose robots.txt permits the page.
+  Duval     "Precinct N Commissioner" ("Precinct 1" alone for the first) and
+            the name on the next line.
+  Zavala    "Precinct N" ("Precinct 1 - 1A" for the first), a line holding
+            only "▲", then the name.
+  Brewster  "<name>, Commissioner, Precinct N" on one line. The county's
+            www.co.brewster.tx.us does not answer; its site is
+            brewstercounty.gov.
+  Somervell "Precinct N" and "Commissioner <name>" on the next line. The
+            county's www.co.somervell.tx.us does not answer; its site is
+            somervell.co, whose robots.txt asks for 10 seconds between
+            requests.
+  Mitchell  "Commissioner Precinct N" and the name on the next line.
+  Hamilton  "Precinct # N Commissioner" and the name on the next line. The
+            county's www.co.hamilton.tx.us forwards to hamiltoncountytx.gov.
+  San Augustine
+            "Commissioner Precinct N" and the name on the next line.
+  Winkler   The name above "Precinct N Commissioner". Its robots.txt asks for
+            10 seconds between requests.
+  Yoakum, Coleman
+            "Precinct N Commissioner" and the name on the next line. The
+            counties' www.co.yoakum.tx.us and www.co.coleman.tx.us forward to
+            yoakumcounty.gov and colemancounty.gov.
+  McCulloch One page per commissioner; "COUNTY COMMISSIONER PCT. N" and the
+            name on the next line.
+  Castro    "Precinct N Commissioner" and the name on the next line.
+  Dallam    One page per commissioner; below the page's menu (which ends
+            "Juvenile Probation"), "Precinct One" to "Precinct Four" and the
+            name on the next line, which for one seat carries ", Commissioner"
+            after the name; that is dropped.
+  Brooks    "Precinct #N" and the name on the next line.
+  Goliad, Swisher, Bailey, Refugio
+            "Precinct N Commissioner" and the name on the next line.
+  La Salle  The name above "Pct. N Commissioner". Its robots.txt permits the
+            page.
+  Presidio  "COMMISSIONER PCT N" and the name on the next line.
+  Garza     The name above "Precinct One" to "Precinct Four". The county's
+            www.co.garza.tx.us fails the TLS check; its site is
+            garzacounty.gov.
+  Carson, San Saba
+            "Precinct N Commissioner" and the name on the next line.
+  Lynn      The name above "Precinct N Commissioner".
+  Haskell   The name above "Precinct N Commissioner". The county's
+            www.co.haskell.tx.us fails the TLS check; its site is
+            haskellcountytx.gov, whose robots.txt asks for 10 seconds between
+            requests.
+  Floyd     "Commissioner PCT N" and the name on the next line.
+  Hartley   One page per commissioner; the name above "Commissioner Precinct
+            N" (the same words in the page's menu have no name above them).
+  Hansford  "Precinct N", a line holding only "▲", then the name.
+  Crosby    "Precinct N Commissioner" and the name on the next line.
+  Wheeler   "Precinct N Commissioner" and the name on the next line. The
+            county's www.co.wheeler.tx.us forwards to wheelercounty.texas.gov.
+  Jim Hogg  "Precinct N Commissioner", a line holding only "▲", then the
+            name.
+  Crane     "Commissioner Pct. N" and the name on the next line.
+  Kimble    "Precinct N Commissioner" and the name on the next line.
+  Mason     "Commissioner", the name, then "Precinct N"; the name above the
+            label.
+  Fisher    "Precinct #N" and the name on the next line. The county's
+            www.co.fisher.tx.us fails the TLS check; its pages are on
+            newtools.cira.state.tx.us.
+  Hardeman  "County Commissioner Precinct N" and the name on the next line.
+  Baylor    "Precinct N Commissioner", a line holding only "▲", then the
+            name.
+  Reagan    The name above "Precinct N Commissioner".
+  Hemphill  "Precinct N Commissioner" and "Commissioner <name>" on the next
+            line.
+  Sutton    The name above "Commissioner Precinct N", which one seat prints
+            over two lines ("Commissioner", then "Precinct 3"); `up_to`.
+  Knox      "Precinct N Commissioner" and the name on the next line. The
+            county's www.co.knox.tx.us does not answer; its pages are on
+            newtools.cira.state.tx.us.
+  Upton     "Precinct N Commissioner", the line "County Barn", then the name;
+            one seat prints a road address after the name on the same line,
+            and the address is dropped.
+  Concho    "Precinct N Commissioner" and the name on the next line.
+  Coke      The name above "Precinct N Commissioner".
+  Donley    "Precinct N Commissioner" and the name on the next line.
+  Hudspeth  "Commissioner, Precinct N" or "County Commissioner Precinct N" and
+            the name on the next line.
+
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
@@ -381,6 +476,28 @@ NOT READ, AND WHY, among the 101st to 160th largest (measured 2026-11-17):
   Comanche  The court page spells precinct 2's commissioner two ways, "Russell
             Gilette" beside the label and "Russell Gillette" in its contact
             line, and this builder does not choose between them.
+
+NOT READ, AND WHY, among the 161st to 220th largest (measured 2026-11-17):
+  Dimmit    dimmitcounty.org serves this client, but two of its four seats are
+            labelled with several precinct numbers ("Commissioner, Precinct
+            3&6" and "Commissioner, Precinct 4, 5, & 7"), and this builder does
+            not decide which number is the commissioner precinct. The county's
+            www.co.dimmit.tx.us does not answer.
+  Jack      jackcounty.org fails this client's TLS check, so its robots.txt
+            cannot be read, which RFC 9309 treats as disallowing everything;
+            www.jackcounty.texas.gov answers with Cloudflare's managed
+            challenge ("Just a moment..."), which is never worked around.
+  Childress, Martin
+            www.co.childress.tx.us and www.co.martin.tx.us do not answer, the
+            state's county host (newtools.cira.state.tx.us) answers 403 for
+            both, and no other site of either county's was found.
+  Delta     www.co.delta.tx.us fails this client's TLS check and the state's
+            county host answers 403. A site at www.deltacountytx.com answers
+            with Cloudflare's managed challenge, which is never worked around,
+            so whether it is the county's could not be read.
+  Mills     millscountytx.gov prints precinct 2's commissioner with the first
+            and last names on separate lines, and this builder reads a name
+            from one line and does not join two.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -967,6 +1084,183 @@ COUNTIES = [
     dict(geoid="48159", county="Franklin County", seat_word="Precinct",
          url="https://www.co.franklin.tx.us/page/franklin.Commissioners.Court", mode="name_below",
          label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48077", county="Clay County", seat_word="Precinct",
+         url="https://www.claycountytx.net/commissioners-court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) County Commissioner"),
+    dict(geoid="48357", county="Ochiltree County", seat_word="Precinct",
+         url="https://www.co.ochiltree.tx.us/page/ochiltree.Commissioners.Court",
+         mode="name_below", label=r"PRECINCT (?P<n>ONE|TWO|THREE|FOUR)"),
+    dict(geoid="48399", county="Runnels County", seat_word="Precinct",
+         url="https://newtools.cira.state.tx.us/page/runnels.Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48403", county="Sabine County", seat_word="Precinct",
+         url="https://www.co.sabine.tx.us/page/sabine.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48369", county="Parmer County", seat_word="Precinct",
+         url="https://parmercounty.texas.gov/?page_id=183",
+         mode="name_below", label=r"Commissioner, Pct (?P<n>[1-4])"),
+    dict(geoid="48131", county="Duval County", seat_word="Precinct",
+         url="https://www.co.duval.tx.us/page/duval.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])(?: Commissioner)?"),
+    dict(geoid="48315", county="Marion County", seat_word="Precinct",
+         url="https://www.co.marion.tx.us/page/marion.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48507", county="Zavala County", seat_word="Precinct",
+         url="https://www.co.zavala.tx.us/page/Commissioners",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])(?: - 1A)?", offset=2, between="▲"),
+    dict(geoid="48043", county="Brewster County", seat_word="Precinct",
+         url="https://www.brewstercounty.gov/page/comm.court.home",
+         mode="inline", label=r"(?P<name>.+), Commissioner, Precinct (?P<n>[1-4])"),
+    dict(geoid="48425", county="Somervell County", seat_word="Precinct",
+         url="https://www.somervell.co/175/Commissioners-Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])", strip=r"^Commissioner "),
+    dict(geoid="48429", county="Stephens County", seat_word="Precinct",
+         url="https://www.co.stephens.tx.us/page/stephens.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48335", county="Mitchell County", seat_word="Precinct",
+         url="https://www.co.mitchell.tx.us/page/Commissioner",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48009", county="Archer County", seat_word="Precinct",
+         url="https://www.co.archer.tx.us/page/archer.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48193", county="Hamilton County", seat_word="Precinct",
+         url="https://www.hamiltoncountytx.gov/page/hamilton.commissioners",
+         mode="name_below", label=r"Precinct # (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48405", county="San Augustine County", seat_word="Precinct",
+         url="https://www.co.san-augustine.tx.us/page/sanaugustine.Commissioners",
+         mode="name_below", label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48495", county="Winkler County", seat_word="Precinct",
+         url="https://www.co.winkler.tx.us/186/Commissioners-Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48501", county="Yoakum County", seat_word="Precinct",
+         url="https://www.yoakumcounty.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48083", county="Coleman County", seat_word="Precinct",
+         url="https://www.colemancounty.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48307", county="McCulloch County", seat_word="Precinct",
+         url="https://www.co.mcculloch.tx.us/page/mcculloch.Commissioners.Court",
+         mode="name_below", label=r"COUNTY COMMISSIONER PCT\. (?P<n>[1-4])",
+         pages={1: "https://www.co.mcculloch.tx.us/page/mcculloch.Precinct1",
+                2: "https://www.co.mcculloch.tx.us/page/mcculloch.Precinct2",
+                3: "https://www.co.mcculloch.tx.us/page/mcculloch.Precinct3",
+                4: "https://www.co.mcculloch.tx.us/page/mcculloch.Precinct4"}),
+    dict(geoid="48069", county="Castro County", seat_word="Precinct",
+         url="https://www.co.castro.tx.us/page/castro.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48111", county="Dallam County", seat_word="Precinct",
+         url="https://www.co.dallam.tx.us/county/main.shtml",
+         mode="name_below", label=r"Precinct (?P<n>One|Two|Three|Four)",
+         after="Juvenile Probation", strip=r", Commissioner$",
+         pages={1: "https://www.co.dallam.tx.us/county/pct1.shtml",
+                2: "https://www.co.dallam.tx.us/county/pct2.shtml",
+                3: "https://www.co.dallam.tx.us/county/pct3.shtml",
+                4: "https://www.co.dallam.tx.us/county/pct4.shtml"}),
+    dict(geoid="48047", county="Brooks County", seat_word="Precinct",
+         url="https://www.co.brooks.tx.us/page/brooks.CommissionersCourt",
+         mode="name_below", label=r"Precinct #(?P<n>[1-4])"),
+    dict(geoid="48175", county="Goliad County", seat_word="Precinct",
+         url="https://www.co.goliad.tx.us/page/goliad.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48437", county="Swisher County", seat_word="Precinct",
+         url="https://www.co.swisher.tx.us/page/swisher.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48017", county="Bailey County", seat_word="Precinct",
+         url="https://www.co.bailey.tx.us/page/bailey.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48391", county="Refugio County", seat_word="Precinct",
+         url="https://www.co.refugio.tx.us/page/refugio.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48283", county="La Salle County", seat_word="Precinct",
+         url="https://www.co.la-salle.tx.us/index.php/commissioners-court/county-commissioners",
+         mode="name_above", label=r"Pct\. (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48377", county="Presidio County", seat_word="Precinct",
+         url="https://www.co.presidio.tx.us/page/presidio.CountyCommissioners",
+         mode="name_below", label=r"COMMISSIONER PCT (?P<n>[1-4])"),
+    dict(geoid="48169", county="Garza County", seat_word="Precinct",
+         url="https://www.garzacounty.gov/page/cc.commissioners",
+         mode="name_above", label=r"Precinct (?P<n>One|Two|Three|Four)"),
+    dict(geoid="48065", county="Carson County", seat_word="Precinct",
+         url="https://www.co.carson.tx.us/page/carson.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48411", county="San Saba County", seat_word="Precinct",
+         url="https://www.co.san-saba.tx.us/page/sansaba.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48305", county="Lynn County", seat_word="Precinct",
+         url="https://www.co.lynn.tx.us/page/Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48207", county="Haskell County", seat_word="Precinct",
+         url="https://www.haskellcountytx.gov/1209/Commissioners-Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48153", county="Floyd County", seat_word="Precinct",
+         url="https://www.co.floyd.tx.us/page/floyd.Commissioners.Court",
+         mode="name_below", label=r"Commissioner PCT (?P<n>[1-4])"),
+    dict(geoid="48205", county="Hartley County", seat_word="Precinct",
+         url="https://www.co.hartley.tx.us/page/Commissioners.Court",
+         mode="name_above", label=r"Commissioner Precinct (?P<n>[1-4])",
+         pages={1: "https://www.co.hartley.tx.us/page/Comm.Pct1",
+                2: "https://www.co.hartley.tx.us/page/Comm.Pct2",
+                3: "https://www.co.hartley.tx.us/page/Comm.Pct3",
+                4: "https://www.co.hartley.tx.us/page/Comm.Pct4"}),
+    dict(geoid="48195", county="Hansford County", seat_word="Precinct",
+         url="https://www.co.hansford.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])", offset=2, between="▲"),
+    dict(geoid="48107", county="Crosby County", seat_word="Precinct",
+         url="https://www.co.crosby.tx.us/page/crosby.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48483", county="Wheeler County", seat_word="Precinct",
+         url="https://www.wheelercounty.texas.gov/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48247", county="Jim Hogg County", seat_word="Precinct",
+         url="https://www.co.jim-hogg.tx.us/page/jim-hogg.Commissioners",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48103", county="Crane County", seat_word="Precinct",
+         url="https://www.co.crane.tx.us/page/crane.Commissioners.Court",
+         mode="name_below", label=r"Commissioner Pct\. (?P<n>[1-4])"),
+    dict(geoid="48267", county="Kimble County", seat_word="Precinct",
+         url="https://www.co.kimble.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48319", county="Mason County", seat_word="Precinct",
+         url="https://www.co.mason.tx.us/commissioners_court/members.php",
+         mode="name_above", label=r"Precinct (?P<n>[1-4])"),
+    dict(geoid="48151", county="Fisher County", seat_word="Precinct",
+         url="https://newtools.cira.state.tx.us/page/fisher.Commissioners.Court",
+         mode="name_below", label=r"Precinct #(?P<n>[1-4])"),
+    dict(geoid="48197", county="Hardeman County", seat_word="Precinct",
+         url="https://www.co.hardeman.tx.us/page/hardeman.Commishioners",
+         mode="name_below", label=r"County Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48023", county="Baylor County", seat_word="Precinct",
+         url="https://www.co.baylor.tx.us/page/baylor.Commissioner",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48383", county="Reagan County", seat_word="Precinct",
+         url="https://www.co.reagan.tx.us/page/Commissioners",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48211", county="Hemphill County", seat_word="Precinct",
+         url="https://www.co.hemphill.tx.us/page/hemphill.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", strip=r"^Commissioner "),
+    dict(geoid="48435", county="Sutton County", seat_word="Precinct",
+         url="https://www.co.sutton.tx.us/page/sutton.Commissioners.Court",
+         mode="name_above", label=r"(?:Commissioner )?Precinct (?P<n>[1-4])", offset=2,
+         between="Commissioner", up_to=True),
+    dict(geoid="48275", county="Knox County", seat_word="Precinct",
+         url="https://newtools.cira.state.tx.us/page/knox.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48461", county="Upton County", seat_word="Precinct",
+         url="https://www.co.upton.tx.us/page/upton.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2,
+         between="County Barn", strip=r"\s+\d.*$"),
+    dict(geoid="48095", county="Concho County", seat_word="Precinct",
+         url="https://www.co.concho.tx.us/page/concho.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48081", county="Coke County", seat_word="Precinct",
+         url="https://www.co.coke.tx.us/page/Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48129", county="Donley County", seat_word="Precinct",
+         url="https://www.co.donley.tx.us/page/Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48229", county="Hudspeth County", seat_word="Precinct",
+         url="https://www.co.hudspeth.tx.us/page/Commissioner",
+         mode="name_below", label=r"(?:County )?Commissioner,? Precinct (?P<n>[1-4])"),
 ]
 
 _GATE = []
