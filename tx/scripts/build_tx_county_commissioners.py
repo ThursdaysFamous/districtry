@@ -166,6 +166,56 @@ And nineteen of the 61st to 80th largest, measured 2026-11-17 the same way:
   Upshur    "Commissioner Pct N" and the name on the next line, in the court
             page's table of county officers. No robots.txt.
 
+And eighteen of the 81st to 100th largest, measured 2026-11-17 the same way:
+
+  Jim Wells One page per commissioner; "Commissioner - Precinct N" and the
+            name on the next line. No robots.txt.
+  Brown     "Precinct N Commissioner" and the name on the next line. The
+            county's www.browncountytx.org forwards to browncountytx.gov. No
+            robots.txt.
+  Hopkins   The court page's menu names the four in links to
+            /page/hopkins.CommN, and each of those pages names its precinct
+            (measured). No robots.txt.
+  Matagorda "Precinct N Commissioner", a line holding only "▲", then the
+            name. The county's www.co.matagorda.tx.us forwards to
+            matagordatx.gov. No robots.txt.
+  Hill      One page per commissioner; "Commissioner <name>, Pct N" on one
+            line. The court page prints two of the four names inline and two on
+            the next line, which one pattern cannot hold. No robots.txt.
+  Washington
+            "Precinct N", a line holding only "▲", then "Commissioner <name>".
+            No robots.txt.
+  Fannin    "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Howard    The name above "Precinct N Commissioner". Its robots.txt asks for
+            10 seconds between requests.
+  Jasper    The name above "Precinct N Commissioner". No robots.txt.
+  Titus     "Commissioner Precinct N" and the name on the next line. No
+            robots.txt.
+  Bee       The name above "Precinct N Commissioner". The county's old host,
+            www.co.bee.tx.us, presents another county's certificate; its site
+            is beecounty.texas.gov, whose robots.txt asks for 10 seconds
+            between requests.
+  Kleberg   "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Austin    "Commissioner, Precinct N" and the name on the next line. No
+            robots.txt.
+  Grimes    "Commissioner Precinct N" and the name on the next line. The
+            county's old host, www.co.grimes.tx.us, does not answer; its site
+            is grimescountytexas.gov, whose robots.txt asks for 10 seconds
+            between requests.
+  Cass      "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Palo Pinto
+            One page per commissioner; "County Commissioner Precinct #N" and
+            the name on the next line. The court page breaks two of the four
+            labels across lines. No robots.txt.
+  San Jacinto
+            The name above "Commissioner, Precinct N", above "Precinct N
+            Commissioner", or two lines above "Precinct 2" with "Commissioner,"
+            between, which is what `up_to` is for. No robots.txt.
+  Milam     "Precinct N" and the name on the next line. No robots.txt.
+
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
@@ -221,6 +271,14 @@ NOT READ, AND WHY, among the 61st to 80th largest (measured 2026-11-17):
             "Attention Required!" block page (HTTP 403) on the page and on
             robots.txt, as Williamson, McLennan and Hays do. Not measured with
             a browser identity; that waits for Adam's decision on the seven.
+
+NOT READ, AND WHY, among the 81st to 100th largest (measured 2026-11-17):
+  Hale      www.halecounty.org publishes `User-agent: *` / `Disallow: /` (210
+            bytes), which binds this project; no other site of the county's
+            was found. Not fetched.
+  Gillespie gillespiecounty.gov serves this client, but its commissioners'
+            page names nobody; the four names are printed only in a PDF list
+            of elected officials it links, which this builder does not read.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -316,7 +374,10 @@ LABEL = r"(?:County\s+)?Commissioner,?\s+(?:Precinct|Pct\.?)\s*(?P<n>[1-4])"
 # "Commissioner " in front of it, a party letter after it). `heading` is for a
 # page that prints "Precinct N" above a block and "Commissioner" alone beside the
 # name: such a label takes the precinct of the nearest line above it that
-# matches `heading`.
+# matches `heading`. With `up_to`, `offset` is the farthest the name may be:
+# the lines passed over must still match `between`, but there may be fewer of
+# them, as where a county prints "Commissioner, Precinct 1" on one line and
+# "Commissioner," and "Precinct 2" on two (San Jacinto).
 COUNTIES = [
     dict(geoid="48201", county="Harris County", seat_word="Precinct",
          url="https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
@@ -569,6 +630,75 @@ COUNTIES = [
     dict(geoid="48459", county="Upshur County", seat_word="Precinct",
          url="https://www.countyofupshur.com/page/commissioners_court", mode="name_below",
          label=r"Commissioner Pct (?P<n>[1-4])"),
+    dict(geoid="48249", county="Jim Wells County", seat_word="Precinct",
+         url="https://www.co.jim-wells.tx.us/page/co.commissioners", mode="name_below",
+         label=r"Commissioner - Precinct (?P<n>[1-4])",
+         pages={1: "https://www.co.jim-wells.tx.us/page/co.pct.1.commissioner.page",
+                2: "https://www.co.jim-wells.tx.us/page/co.pct.2.commissioner.page",
+                3: "https://www.co.jim-wells.tx.us/page/co.pct.3.commissioner.page",
+                4: "https://www.co.jim-wells.tx.us/page/co.pct.4.commissioner.page"}),
+    dict(geoid="48049", county="Brown County", seat_word="Precinct",
+         url="https://www.browncountytx.gov/page/brown.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48223", county="Hopkins County", seat_word="Precinct",
+         url="https://www.hopkinscountytx.org/page/hopkins.Commissioners.Court", mode="links",
+         href=r"/page/hopkins\.Comm(?P<n>[1-4])$", skip=r"^Commissioners Court$"),
+    dict(geoid="48321", county="Matagorda County", seat_word="Precinct",
+         url="https://www.matagordatx.gov/page/Commissioners.Court", mode="name_below",
+         label=r"Precinct (?P<n>[1-4]) Commissioner", offset=2, between="▲"),
+    dict(geoid="48217", county="Hill County", seat_word="Precinct",
+         url="https://www.co.hill.tx.us/page/hill.Commissioners.Court", mode="inline",
+         label=r"Commissioner (?P<name>.+), Pct\.? (?P<n>[1-4])",
+         pages={1: "https://www.co.hill.tx.us/page/hill.Commissioner.Pct1",
+                2: "https://www.co.hill.tx.us/page/hill.Commissioner.Pct2",
+                3: "https://www.co.hill.tx.us/page/hill.Commissioner.Pct3",
+                4: "https://www.co.hill.tx.us/page/hill.Commissioner.Pct4"}),
+    dict(geoid="48477", county="Washington County", seat_word="Precinct",
+         url="https://www.co.washington.tx.us/page/washington.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])", offset=2, between="▲",
+         strip=r"^Commissioner "),
+    dict(geoid="48147", county="Fannin County", seat_word="Precinct",
+         url="https://www.co.fannin.tx.us/page/fannin.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48227", county="Howard County", seat_word="Precinct",
+         url="https://www.co.howard.tx.us/1215/Commissioners-Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48241", county="Jasper County", seat_word="Precinct",
+         url="https://www.co.jasper.tx.us/page/Commissioners.Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48449", county="Titus County", seat_word="Precinct",
+         url="https://www.co.titus.tx.us/page/co.commissioners", mode="name_below",
+         label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48025", county="Bee County", seat_word="Precinct",
+         url="https://www.beecounty.texas.gov/169/Commissioners-Court",
+         mode="name_above", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48273", county="Kleberg County", seat_word="Precinct",
+         url="https://www.co.kleberg.tx.us/page/kleberg.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48015", county="Austin County", seat_word="Precinct",
+         url="https://www.austincounty.com/page/austin.Commissioners.Court", mode="name_below",
+         label=r"Commissioner, Precinct (?P<n>[1-4])"),
+    dict(geoid="48185", county="Grimes County", seat_word="Precinct",
+         url="https://grimescountytexas.gov/judge-precincts", mode="name_below",
+         label=r"Commissioner Precinct (?P<n>[1-4])"),
+    dict(geoid="48067", county="Cass County", seat_word="Precinct",
+         url="https://www.co.cass.tx.us/page/cass.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48363", county="Palo Pinto County", seat_word="Precinct",
+         url="https://www.co.palo-pinto.tx.us/page/Commissioners.Court", mode="name_below",
+         label=r"County Commissioner Precinct #(?P<n>[1-4])",
+         pages={1: "https://www.co.palo-pinto.tx.us/page/Commissioner.Precinct.1",
+                2: "https://www.co.palo-pinto.tx.us/page/Commissioner.Precinct.2",
+                3: "https://www.co.palo-pinto.tx.us/page/Commissioner.Precinct.3",
+                4: "https://www.co.palo-pinto.tx.us/page/Commissioner.Precinct.4"}),
+    dict(geoid="48407", county="San Jacinto County", seat_word="Precinct",
+         url="https://www.co.san-jacinto.tx.us/page/sanjacinto.Commissioners.Court",
+         mode="name_above",
+         label=r"(?:Commissioner, )?Precinct (?P<n>[1-4])(?: Commissioner)?",
+         offset=2, between="Commissioner,", up_to=True),
+    dict(geoid="48331", county="Milam County", seat_word="Precinct",
+         url="https://www.milamcounty.net/government/commissioners.php", mode="name_below",
+         label=r"Precinct (?P<n>[1-4])"),
 ]
 
 _GATE = []
@@ -756,6 +886,10 @@ def readings(page, spec, where, want=0):
         elif mode in ("name_above", "name_below"):
             step = -1 if mode == "name_above" else 1
             j = i + step * offset
+            if spec.get("up_to") and between:
+                j = i + step
+                while abs(j - i) < offset and 0 <= j < len(lines) and between.match(lines[j]):
+                    j += step
             if not 0 <= j < len(lines):
                 continue
             gap = [lines[k] for k in range(i + step, j, step)]

@@ -309,7 +309,7 @@
             return Promise.all([
               Promise.resolve().then(function () { return load(); }),
               Promise.all(files.map(function (u) {
-                return fetch(u, { cache: "no-store" }).then(function (r) {
+                return fetch(filesUrl(u, document.baseURI), { cache: "no-store" }).then(function (r) {
                   if (!r.ok) throw new Error(u + " answered " + r.status);
                   return r.json();
                 });

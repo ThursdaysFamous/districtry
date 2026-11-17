@@ -279,14 +279,24 @@ HOUSE_LOOKUP_ROW = (
 # reads both from GitHub Pages and keeps the tile sentence on that row. The
 # host is read from the block, so a change to it changes the row, and an app
 # naming any other host fails the build.
+#
+# THE BOUNDARY FILES FOLLOWED ON 2026-11-16 (Adam's "Start" of that day on
+# moving the map files off GitHub): the whole-file geometry an app's worker
+# serves cache-first. An app reads one from the files host when its block
+# looks a file up by name (filesBoundaryPaths) AND its page carries a
+# BOUNDARY_FILES list with a name in it, so both are measured, and an app
+# whose block predates the switch keeps its boundary files on GitHub's row.
 FILES_ORIGIN_RE = re.compile(r'var FILES_ORIGIN = ("[^"]*"|null);')
+BOUNDARY_LIST_RE = re.compile(r'^  var BOUNDARY_FILES = \[\s*"', re.M)
+BOUNDARY_LOOKUP = "filesBoundaryPaths()[url.pathname]"
 FILES_HOST = "files.districtry.com"
 FILES_HOST_ROW = (
     "Cloudflare (R2)", "file hosting", "https://www.cloudflare.com/privacypolicy/",
     "The large files the maps read, served from " + FILES_HOST + ", a Cloudflare storage "
     "bucket: the ordinary web-server request for each one, with your IP address and "
     "browser. Cloudflare, not this project, keeps those logs.",
-    "Whenever a map draws a layer from vector tiles, or the comparison report counts people.",
+    "Whenever a map reads a boundary file or draws a layer from vector tiles, or the "
+    "comparison report counts people.",
     "files_host")
 
 
@@ -760,7 +770,10 @@ def measure(rel, name, url, tag):
     if origin and origin != "https://" + FILES_HOST:
         fail("%s reads its large files from %s; this page names %s" % (rel, origin, FILES_HOST))
     app["files_origin"] = origin
-    app["files_host"] = bool(origin) and (app["vector_tiles"] or app["population"])
+    # Boundary files read from the files host: the block's lookup by name and
+    # a page list with at least one name, both in the shipped page.
+    app["boundary_files"] = bool(origin) and BOUNDARY_LOOKUP in src and bool(BOUNDARY_LIST_RE.search(src))
+    app["files_host"] = bool(origin) and (app["vector_tiles"] or app["population"] or app["boundary_files"])
     app["address_list_hosts"] = measure_address_list(src, app["name"])
 
     # A layer that asks a government server about the SELECTED POINT rather than
@@ -1530,8 +1543,13 @@ def render_recipient_rows(apps):
         elif key == "files_host":
             tiled = [a["name"] for a in users if a.get("vector_tiles")]
         if label == "GitHub Pages" and not tiled and any(a.get("files_host") for a in users):
-            what += (" The vector tiles and population files the maps read are served by Cloudflare instead "
-                     "(the next row).")
+            bounded = [a for a in users if a.get("boundary_files")]
+            if bounded and len(bounded) != len([a for a in users if a.get("has_map")]):
+                fail("%d of the apps read their boundary files from %s and the rest do not; the "
+                     "GitHub Pages row has one sentence for all of them"
+                     % (len(bounded), FILES_HOST))
+            what += (" The %svector tiles and population files the maps read are served by Cloudflare instead "
+                     "(the next row)." % ("boundary files, " if bounded else ""))
         if label in ("GitHub Pages", "Cloudflare (R2)") and tiled:
             all_maps = set(mapped) if label == "GitHub Pages" else {a["name"] for a in apps if a.get("has_map")}
             where = ("every app" if set(tiled) == all_maps else
@@ -1541,6 +1559,14 @@ def render_recipient_rows(apps):
                      "to answer its card, <strong>the square of about 7 km around the point "
                      "you select</strong>." % esc(where))
         if key == "files_host":
+            bounded = [a["name"] for a in users if a.get("boundary_files")]
+            if bounded:
+                where = ("every app" if set(bounded) == {a["name"] for a in apps if a.get("has_map")}
+                         else joined(bounded))
+                what += (" In %s, a layer that reads its districts as one whole file requests "
+                         "that file by name the first time it is needed, which says which layers "
+                         "you use and, where a file holds one county&#39;s or one city&#39;s "
+                         "districts, which county or city you selected a point in." % esc(where))
             counted = [a["name"] for a in users if a.get("population")]
             if counted:
                 where = ("every app" if set(counted) == {a["name"] for a in apps if a.get("has_map")}
