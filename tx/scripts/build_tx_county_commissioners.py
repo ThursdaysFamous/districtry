@@ -18,8 +18,11 @@ largest county first. COUNTIES below is that list as far as it has been read.
 
 WHAT EACH COUNTY'S PAGE IS, MEASURED 2026-11-16 AND 2026-11-17 with this
 script's own client (scraper_common.UA_HEADERS_ROSTER_BOT on the requests
-stack), one GET each after a read of the host's robots.txt. The twelve are the
-largest counties, by the 2020 census, whose own sites serve this client:
+stack), one GET each after a read of the host's robots.txt. They are the
+largest counties, by the 2020 census, whose own sites serve this client and
+print the four names in a form a parser can hold: the first twelve measured
+2026-11-16 and 2026-11-17, and sixteen more, the 21st to 40th largest, on
+2026-11-17:
 
   Harris    The county's Precinct 4 office's page of the whole court, on the
             county's domain; the name above "Commissioner Precinct N".
@@ -43,6 +46,35 @@ largest counties, by the 2020 census, whose own sites serve this client:
   Lubbock   One page per commissioner; "County Commissioner - Precinct N" and
             the name on the next line. Its robots.txt asks for 300 seconds
             between requests, so its four pages take about twenty minutes.
+  Jefferson One page per commissioner; "Commissioner Precinct N", the line
+            "JEFFERSON COUNTY", then the name.
+  Ellis     One page per commissioner; the name above "Commissioner" in the
+            page's contact block.
+  Guadalupe "Commissioner, Pct N" and the name on the next line.
+  Midland   The court's "Members of the Court" page; the name below
+            "Commissioner Precinct N". It names an Acting County Judge.
+  Ector     "Precinct N" and "Commissioner <name>" on the next line, on the
+            county's pages at the state's CIRA host (newtools.cira.state.tx.us),
+            which publishes no robots.txt (404).
+  Comal     The name above "Commissioner, Precinct N".
+  Parker    "Commissioner Precinct N" and "Commissioner <name>" on the next
+            line; the menu prints the label again with no name, and is passed.
+  Kaufman   "Precinct N Commissioner <name>" on one line, in the page's list
+            of the court's members.
+  Taylor    One page per commissioner; the name above "Commissioner Precinct N"
+            in the page's contact block (the page's own text calls some of them
+            by surname alone, and is not read).
+  Randall   The name above ", Precinct N".
+  Grayson   One page per commissioner; "Grayson County Commissioner Precinct N"
+            and the name on the next line. No robots.txt (404).
+  Wichita   "Precinct N", "Commissioner:", then the name.
+  Gregg     One page per commissioner; "<name>, Commissioner" on one line.
+  Tom Green "Precinct N Commissioner" and the name on the next line with a
+            party letter after it ("(R)"), which is dropped. No robots.txt.
+  Potter    "Commissioner, Precinct One:" to "Four:" and the name on the next
+            line, at the state's CIRA host.
+  Rockwall  The name above "Precinct N Commissioner", in the home page's list
+            of the court.
 
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
@@ -66,6 +98,19 @@ NOT READ, AND WHY, among the twenty largest:
   identity where a site measurably refuses ours by its fingerprint, with the
   measurement recorded; none has been tried yet, so they are recorded here and
   in the gap record instead.
+
+NOT READ, AND WHY, among the 21st to 40th largest (measured 2026-11-17):
+  Hays      Above: Cloudflare's block page.
+  Brazos, Johnson
+            www.brazoscountytx.gov and www.johnsoncountytx.org answer this
+            client with HTTP 403 on the page and on robots.txt.
+  Smith     www.smith-county.com serves this client, but its precinct pages
+            print each commissioner's name only inside sentences ("Christina
+            Drewry took office on January 2, 2025 as ..."), which a parser
+            cannot read without guessing where a name ends. The county's newer
+            site, smithcounty.prod.govaccess.org, fails this client's TLS
+            check, so its robots.txt cannot be read, which RFC 9309 treats as
+            disallowing everything.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -151,7 +196,11 @@ LABEL = r"(?:County\s+)?Commissioner,?\s+(?:Precinct|Pct\.?)\s*(?P<n>[1-4])"
 #   inline      the label and the name on one line (a `name` group)
 #   links       the name as a link's text, the precinct in the link's address
 # `pages` maps each precinct to a page of its own, where a county prints each
-# commissioner on that commissioner's page; only that precinct is read there.
+# commissioner on that commissioner's page; only that precinct is read there,
+# and there a label may name no precinct ("Commissioner" alone). `offset` puts
+# the name that many lines from the label, every line between matching
+# `between`; `strip` is removed from the line before it is read as a name (a
+# "Commissioner " in front of it, a party letter after it).
 COUNTIES = [
     dict(geoid="48201", county="Harris County", seat_word="Precinct",
          url="https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
@@ -199,6 +248,74 @@ COUNTIES = [
                 2: "https://www.lubbockcounty.gov/department/index.php?structureid=9",
                 3: "https://www.lubbockcounty.gov/department/index.php?structureid=10",
                 4: "https://www.lubbockcounty.gov/department/index.php?structureid=11"}),
+    dict(geoid="48245", county="Jefferson County", seat_word="Precinct",
+         url="https://jeffersoncountytx.gov/comm_crt/CountyJudge.htm", mode="name_below",
+         label=r"Commissioner Precinct (?P<n>[1-4])", offset=2, between="JEFFERSON COUNTY",
+         pages={1: "https://jeffersoncountytx.gov/CommPrt1/main.html",
+                2: "https://jeffersoncountytx.gov/CommPrt2/main.html",
+                3: "https://jeffersoncountytx.gov/CommPrt3/main.html",
+                4: "https://jeffersoncountytx.gov/prct4/index.html"}),
+    dict(geoid="48139", county="Ellis County", seat_word="Precinct",
+         url="https://elliscountytx.gov/450/Commissioners", mode="name_above",
+         label="Commissioner",
+         pages={1: "https://elliscountytx.gov/124/Precinct-One",
+                2: "https://elliscountytx.gov/125/Precinct-Two",
+                3: "https://elliscountytx.gov/126/Precinct-Three",
+                4: "https://elliscountytx.gov/127/Precinct-Four"}),
+    dict(geoid="48187", county="Guadalupe County", seat_word="Precinct",
+         url="https://www.guadalupetx.gov/page/commcourt.home", mode="name_below",
+         label=r"Commissioner, Pct (?P<n>[1-4])"),
+    dict(geoid="48329", county="Midland County", seat_word="Precinct",
+         url="https://www.co.midland.tx.us/948/Members-of-the-Court", mode="name_below",
+         label=LABEL),
+    dict(geoid="48135", county="Ector County", seat_word="Precinct",
+         url="https://newtools.cira.state.tx.us/page/ector.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4])", strip=r"^Commissioner\s+"),
+    dict(geoid="48091", county="Comal County", seat_word="Precinct",
+         url="https://www.comalcounty.gov/164/Commissioners-Court", mode="name_above",
+         label=LABEL),
+    dict(geoid="48367", county="Parker County", seat_word="Precinct",
+         url="https://parkercountytx.gov/98/Commissioners-Court", mode="name_below",
+         label=LABEL, strip=r"^Commissioner\s+"),
+    dict(geoid="48257", county="Kaufman County", seat_word="Precinct",
+         url="https://kaufmancounty.net/159/Commissioners-Court", mode="inline",
+         label=r"Precinct (?P<n>[1-4]) Commissioner (?P<name>.+)"),
+    dict(geoid="48441", county="Taylor County", seat_word="Precinct",
+         url="https://www.taylorcounty.texas.gov/198/County-Commissioners",
+         mode="name_above", label=LABEL,
+         pages={1: "https://www.taylorcounty.texas.gov/199/Precinct-1",
+                2: "https://www.taylorcounty.texas.gov/200/Precinct-2",
+                3: "https://www.taylorcounty.texas.gov/201/Precinct-3",
+                4: "https://www.taylorcounty.texas.gov/202/Precinct-4"}),
+    dict(geoid="48381", county="Randall County", seat_word="Precinct",
+         url="https://www.randallcounty.gov/222/Commissioners-Court", mode="name_above",
+         label=r", Precinct (?P<n>[1-4])"),
+    dict(geoid="48181", county="Grayson County", seat_word="Precinct",
+         url="https://www.co.grayson.tx.us/page/cj.court", mode="name_below",
+         label=r"Grayson County Commissioner Precinct (?P<n>[1-4])",
+         pages={1: "https://www.co.grayson.tx.us/page/comp1.home",
+                2: "https://www.co.grayson.tx.us/page/comp2.home",
+                3: "https://www.co.grayson.tx.us/page/comp3.home",
+                4: "https://www.co.grayson.tx.us/page/comp4.home"}),
+    dict(geoid="48485", county="Wichita County", seat_word="Precinct",
+         url="https://wichitacountytx.com/locations/commissioners-court/", mode="name_below",
+         label=r"Precinct (?P<n>[1-4])", offset=2, between="Commissioner:"),
+    dict(geoid="48183", county="Gregg County", seat_word="Precinct",
+         url="https://greggcounty.texas.gov/government/commissioners-court", mode="inline",
+         label=r"(?P<name>.+), Commissioner",
+         pages={1: "https://greggcounty.texas.gov/government/precinct-1/commissioner-precinct-1",
+                2: "https://greggcounty.texas.gov/government/precinct-2/commissioner-precinct-2",
+                3: "https://greggcounty.texas.gov/government/precinct-3/commissioner-precinct-3",
+                4: "https://greggcounty.texas.gov/government/precinct-4/commissioner-precinct-4"}),
+    dict(geoid="48451", county="Tom Green County", seat_word="Precinct",
+         url="https://www.tomgreencountytx.gov/page/cc.CommissionersHome", mode="name_below",
+         label=r"Precinct (?P<n>[1-4]) Commissioner", strip=r"\s+\([A-Z]\)?$"),
+    dict(geoid="48375", county="Potter County", seat_word="Precinct",
+         url="https://newtools.cira.state.tx.us/page/potter.Commissioners.Court",
+         mode="name_below", label=r"Commissioner, Precinct (?P<n>One|Two|Three|Four):"),
+    dict(geoid="48397", county="Rockwall County", seat_word="Precinct",
+         url="https://www.rockwallcountytexas.com/", mode="name_above",
+         label=r"Precinct (?P<n>[1-4]) Commissioner"),
 ]
 
 _GATE = []
@@ -354,8 +471,10 @@ def number(token):
     return NUMBER_WORDS.get(token) or int(token)
 
 
-def readings(page, spec, where):
-    """Every (precinct, name) the page prints in the county's pattern."""
+def readings(page, spec, where, want=0):
+    """Every (precinct, name) the page prints in the county's pattern. On a
+    commissioner's own page (`want`, from `pages`) a label may name no
+    precinct, as "Commissioner" alone does; the page's own precinct is used."""
     found = []
     lines = page.lines
     if spec.get("after"):
@@ -373,21 +492,34 @@ def readings(page, spec, where):
                     found.append((number(m.group("n")), name))
         return found
     label = re.compile("^%s$" % spec["label"])
+    between = re.compile("^%s$" % spec["between"]) if spec.get("between") else None
+    offset = spec.get("offset", 1)
     for i, line in enumerate(lines):
         m = label.match(line)
         if not m:
             continue
         if mode == "inline":
             raw = m.group("name")
-        elif mode == "name_above":
-            raw = lines[i - 1] if i > 0 else ""
-        elif mode == "name_below":
-            raw = lines[i + 1] if i + 1 < len(lines) else ""
+        elif mode in ("name_above", "name_below"):
+            step = -1 if mode == "name_above" else 1
+            j = i + step * offset
+            if not 0 <= j < len(lines):
+                continue
+            gap = [lines[k] for k in range(i + step, j, step)]
+            if gap and not (between and all(between.match(g) for g in gap)):
+                continue
+            raw = lines[j]
         else:
             raise RuntimeError("%s: unknown mode %r" % (where, mode))
+        if spec.get("strip"):
+            raw = re.sub(spec["strip"], "", raw)
         name = maybe_person(raw, where)
-        if name:
-            found.append((number(m.group("n")), name))
+        if not name:
+            continue
+        n = m.groupdict().get("n")
+        if n is None and not want:
+            raise RuntimeError("%s: the label %r names no precinct" % (where, spec["label"]))
+        found.append((number(n) if n is not None else want, name))
     return found
 
 
@@ -398,7 +530,7 @@ def read_county(spec, files):
     for want, url in sorted(pages.items()):
         where = "%s (%s)" % (spec["county"], url)
         page = Page(files.get(url, spec["county"]).decode("utf-8", "replace"))
-        got = readings(page, spec, where)
+        got = readings(page, spec, where, want)
         if want:
             got = [(n, name) for n, name in got if n == want]
             if not got:

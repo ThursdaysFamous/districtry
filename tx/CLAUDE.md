@@ -91,11 +91,14 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. The first tranche is the twelve largest counties whose own sites serve this
-project's client (Harris, Dallas, Tarrant, Travis, Collin, Denton, Fort Bend, Hidalgo, El Paso,
-Cameron, Webb and Lubbock, 55.8% of Texans); the builder's docstring records each page's shape and
-why each of the other eight among the twenty largest is not read (Bexar is challenge-fronted,
-Montgomery and Bell disallow every path in robots.txt, and six refuse the project's client). Each
+largest county first. Twenty-eight counties are read so far, 64.2% of Texans: the twelve largest
+whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin, Denton, Fort
+Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock) and sixteen of the 21st to 40th largest
+(Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
+Wichita, Gregg, Tom Green, Potter and Rockwall). The builder's docstring records each page's shape
+and why each of the other twelve among the forty largest is not read (Bexar is challenge-fronted,
+Montgomery and Bell disallow every path in robots.txt, eight refuse the project's client, and
+Smith prints its names only inside sentences). Each
 record's date is the day its four names were first read, so a week with no change writes the same
 bytes; a county whose page cannot be read keeps its last record, and the weekly job's last step
 fails so the miss is seen. No commissioner precinct is drawn, so the card names all four and says
