@@ -392,6 +392,103 @@ try {
     }
     await context.close();
   }
+
+  // 2b2. EVERY COUNTY'S BOARD OF SUPERVISORS, on the County card. The names
+  //      expected are read from the shipped roster
+  //      (data/app/ca-county-officials.json) rather than written here, because
+  //      the Secretary of State's next edition of the California Roster
+  //      changes them and a name in this file would fail a correct rebuild.
+  //      Each case asserts that every seat the roster carries is on the card
+  //      beside its district, that the card says it cannot tell which
+  //      supervisor represents the point, and that it gives the Roster's
+  //      edition, the file's own date and a link to the file. Three places,
+  //      each a government building well inside its county: the State Capitol
+  //      (Sacramento), Los Angeles City Hall, and Fresno City Hall, whose
+  //      county files its names in capitals. San Francisco's card must name
+  //      no board and point at the Supervisor District card, and must not
+  //      fetch the roster, which leaves San Francisco out on purpose.
+  {
+    const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/ca-county-officials.json"), "utf8"));
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"];
+    const longDate = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+      return m ? `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}` : null;
+    };
+    const cases = [
+      { point: SACRAMENTO, geoid: "06067" },
+      { point: "34.05370,-118.24280", geoid: "06037" },
+      { point: "36.73780,-119.78710", geoid: "06019" },
+    ];
+    for (const c of cases) {
+      const o = roster[c.geoid];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await context.newPage();
+      await routeLeaflet(page);
+      await page.goto(`${BASE}#point=${c.point}&layers=county`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      const footer = await page.evaluate(() => {
+        const el = document.getElementById("card-county");
+        const block = el && el.closest(".layer-block");
+        return block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : [];
+      });
+      const seats = (o && o.seats) || [];
+      const nameOf = (s) => (s.vacant === true && !s.name ? "Vacant" : s.name);
+      const missing = seats.filter((s) => !text.includes(nameOf(s)) || !text.includes(s.seat)).map((s) => s.seat);
+      const capitals = seats.filter((s) => s.name && s.name === s.name.toUpperCase()).map((s) => s.seat);
+      // (the board's name is a section label, which the stylesheet draws in
+      // capitals, so it is compared without regard to case below)
+      const whichOk = text.includes(`One of these ${seats.length}.`) &&
+        text.includes("so it cannot say which district this point is in");
+      const creditOk = /Where these names come from/i.test(text) &&
+        text.includes(`${o && o.edition} California Roster`) &&
+        text.includes(`in the file dated ${longDate(o && o.fileDate)}`) &&
+        footer.includes(o && o.sourceUrl);
+      check(`the County card in ${o ? o.county : c.geoid} names all five supervisors beside their districts, says it cannot tell which one represents the point, and credits the Roster's dated file`,
+        !!o && !info.error && text.includes(o.county) && text.toLowerCase().includes(o.body.toLowerCase()) && seats.length === 5 &&
+          missing.length === 0 && capitals.length === 0 && whichOk && creditOk,
+        `seats=${seats.length} missing=${missing} capitals=${capitals} which=${whichOk} credit=${creditOk} footer=${footer.slice(0, 2)} ${text.slice(0, 100)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await context.newPage();
+      await routeLeaflet(page);
+      let asked = 0;
+      await page.route("**/data/app/ca-county-officials.json", (r) => { asked += 1; return r.continue(); });
+      await page.goto(`${BASE}#point=${POINT}&layers=county`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      check("San Francisco's County card names no board, points at the Supervisor District card, and never fetches the county roster",
+        !info.error && /San Francisco County/.test(text) && text.includes("the Supervisor District card names yours") &&
+          !/Board of Supervisors District 1\b/.test(text) && !/Where these names come from/i.test(text) && asked === 0,
+        `asked=${asked} text=${text.slice(0, 110)}`);
+      await context.close();
+    }
+    // The roster is refused, and the County card must degrade to a sentence
+    // naming nobody while the county itself still classifies: a roster
+    // failure is not the layer's failure.
+    {
+      const sacramento = roster["06067"];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await context.newPage();
+      await routeLeaflet(page);
+      await page.route("**/data/app/ca-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      await page.goto(`${BASE}#point=${SACRAMENTO}&layers=county`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      const named = (sacramento.seats || []).filter((s) => s && s.name && text.includes(s.name)).map((s) => s.name);
+      check("the County card degrades to naming nobody when the list of supervisors fails",
+        !info.error && /Sacramento County/.test(text) && /did not load, so no one is named here/.test(text) &&
+          named.length === 0,
+        `named=${named.slice(0, 2)} text=${text.slice(0, 90)}`);
+      await context.close();
+    }
+  }
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await context.newPage();

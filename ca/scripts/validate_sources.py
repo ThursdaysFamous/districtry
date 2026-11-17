@@ -148,6 +148,13 @@ PROVENANCE = [
      "app_file": "state-counties.json",
      "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1?f=json",
      "note": "TIGERweb State_County layer 1 (STATE=06), 58 counties, pre-built by build_state_counties.py; ca-state-outline.json is their dissolve (build_state_outline.py). A county line rarely moves."},
+    {"layer": "County boards of supervisors (outside San Francisco)",
+     "app_file": "ca-county-officials.json",
+     "source_url": "https://www.sos.ca.gov/administration/california-roster",
+     "note": "The California Secretary of State's California Roster; the page links each "
+             "edition's County Officials Directory, which ca/scripts/build_ca_county_officials.py "
+             "reads weekly (ca-update-county-officials.yml). Published once a year, each county "
+             "filing its own entry."},
     {"layer": "Voting center & ballot drop-off sites (SF Dept of Elections)",
      "app_file": "early-voting-sites.json",
      "source_url": "https://www.sf.gov/return-your-ballot",
