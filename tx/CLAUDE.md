@@ -91,14 +91,17 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. Twenty-eight counties are read so far, 64.2% of Texans: the twelve largest
+largest county first. Forty-seven counties are read so far, 69.2% of Texans: the twelve largest
 whose own sites serve this project's client (Harris, Dallas, Tarrant, Travis, Collin, Denton, Fort
-Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock) and sixteen of the 21st to 40th largest
+Bend, Hidalgo, El Paso, Cameron, Webb and Lubbock), sixteen of the 21st to 40th largest
 (Jefferson, Ellis, Guadalupe, Midland, Ector, Comal, Parker, Kaufman, Taylor, Randall, Grayson,
-Wichita, Gregg, Tom Green, Potter and Rockwall). The builder's docstring records each page's shape
-and why each of the other twelve among the forty largest is not read (Bexar is challenge-fronted,
-Montgomery and Bell disallow every path in robots.txt, eight refuse the project's client, and
-Smith prints its names only inside sentences). Each
+Wichita, Gregg, Tom Green, Potter and Rockwall) and nineteen of the 41st to 60th (all but
+Maverick, which has no county website this project can find). The builder's docstring records
+each page's shape and why each of the other thirteen among the sixty largest is not read (Bexar
+and Brazos answer with a challenge, Montgomery and Bell disallow every path in robots.txt, seven
+refuse the project's client, Smith prints its names only inside sentences, and Maverick's site
+answers nothing). Walker's robots.txt asks for 300 seconds between requests, as Lubbock's does,
+so the weekly job's time limit is an hour. Each
 record's date is the day its four names were first read, so a week with no change writes the same
 bytes; a county whose page cannot be read keeps its last record, and the weekly job's last step
 fails so the miss is seen. No commissioner precinct is drawn, so the card names all four and says

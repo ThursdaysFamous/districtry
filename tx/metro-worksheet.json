@@ -247,7 +247,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "tx-county-officials.json, checked weekly against the by-county listing in the Texas Office of Court Administration's judicial directory (its report dated 20 May 2026 when this was written): the county judge of each county, who is elected by the whole county and presides over its commissioners court. The directory names the judge of each county's constitutional county court, who is that county judge. A county judge who took office after the file's date is not shown, and the card gives that date. One county's entry, Uvalde's, lists no county court, and its card says the directory names no county judge there rather than calling the office vacant. The four commissioners of each county, each elected from a commissioner precinct, are not in the directory. They come from tx-county-commissioners.json, read weekly from each county's own website, largest county first: 28 counties when this was written, with the date each county's names were read printed on the card. No state office lists them. The app draws no commissioner precincts, so the card never says which commissioner represents the point. The commissioners of the other counties, and every county's other elected officers, such as the sheriff and the county clerk, are not named. Both are recorded in gap tx-county-officials.",
+        "people": "tx-county-officials.json, checked weekly against the by-county listing in the Texas Office of Court Administration's judicial directory (its report dated 20 May 2026 when this was written): the county judge of each county, who is elected by the whole county and presides over its commissioners court. The directory names the judge of each county's constitutional county court, who is that county judge. A county judge who took office after the file's date is not shown, and the card gives that date. One county's entry, Uvalde's, lists no county court, and its card says the directory names no county judge there rather than calling the office vacant. The four commissioners of each county, each elected from a commissioner precinct, are not in the directory. They come from tx-county-commissioners.json, read weekly from each county's own website, largest county first: 47 counties when this was written, with the date each county's names were read printed on the card. No state office lists them. The app draws no commissioner precincts, so the card never says which commissioner represents the point. The commissioners of the other counties, and every county's other elected officers, such as the sheriff and the county clerk, are not named. Both are recorded in gap tx-county-officials.",
         "applies": "Texas — statewide, all 254 counties."
       }
     },
@@ -515,7 +515,7 @@
       },
       {
         "file": "tx-county-commissioners.json",
-        "min_keys": 26,
+        "min_keys": 44,
         "note": "The four commissioners of each county read so far, keyed by county GEOID, from each county's own website, largest county first (tx/scripts/build_tx_county_commissioners.py, read weekly by update-tx-county-commissioners.yml). Each record names its source page and the date its four names were first read in that form; a county whose page cannot be read keeps its last record. Counties not read are not in the file."
       },
       {

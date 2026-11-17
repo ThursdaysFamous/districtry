@@ -76,6 +76,48 @@ print the four names in a form a parser can hold: the first twelve measured
   Rockwall  The name above "Precinct N Commissioner", in the home page's list
             of the court.
 
+And nineteen of the 41st to 60th largest, measured 2026-11-17 the same way:
+
+  Hunt      "Commissioner Precinct N: <name>" on one line. No robots.txt.
+  Bastrop   One page per commissioner; the name above "Commissioner Precinct
+            N". No robots.txt.
+  Bowie     "Precinct N" heads each commissioner's block, and the name sits
+            above "Commissioner" alone further down it, so that label takes
+            the precinct of the nearest "Precinct N" above it (`heading`).
+  Liberty   "Commissioner Precinct N" and the name on the next line. No
+            robots.txt.
+  Victoria  The name above "Commissioner - Precinct N (<place>)" or
+            "Commissioner, Precinct N (<place>)", in the court page's list of
+            members.
+  Angelina  "Precinct N: Commissioner <name>" on one line.
+  Orange    "Commissioner of Precinct N, <name>; <telephone>" on one line; the
+            telephone is not kept.
+  Coryell   "Precinct N: <name>" on one line. No robots.txt.
+  Henderson One page per commissioner; the name below "Contact Us", printed
+            there as "Charles Chuck McHam" where the court page has "Charles
+            (Chuck) McHam", which the name test does not take.
+  Walker    One page per commissioner, each precinct's road and bridge page;
+            the name, a comma on a line of its own, then "Commissioner
+            Precinct N". Its robots.txt asks for 300 seconds between
+            requests, Lubbock's figure, so its four pages take about fifteen
+            minutes and the weekly job's time limit is an hour.
+  Harrison  "Precinct N" and the name on the next line. No robots.txt.
+  San Patricio
+            "Commissioner Precinct N - <name>" on one line. No robots.txt.
+  Wise      "Commissioner Precinct N:" and the name on the next line.
+  Starr     "Precinct N Commissioner" and the name on the next line. No
+            robots.txt.
+  Nacogdoches
+            The name above "Precinct N Commissioner".
+  Hood      One page per commissioner; the name above "Commissioner Precinct
+            N". No robots.txt.
+  Van Zandt "Precinct N Commissioner" and the name on the next line, at the
+            state's CIRA host. No robots.txt.
+  Anderson  "County Commissioner Precinct N" and the name on the next line.
+            No robots.txt.
+  Waller    One page per commissioner; "Precinct N Commissioner - <name>" on
+            one line. No robots.txt.
+
 NOT READ, AND WHY, among the twenty largest:
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
@@ -96,14 +138,22 @@ NOT READ, AND WHY, among the twenty largest:
             on the page and on robots.txt.
   The last six refuse this project's own client. CLAUDE.md allows a browser
   identity where a site measurably refuses ours by its fingerprint, with the
-  measurement recorded; none has been tried yet, so they are recorded here and
-  in the gap record instead.
+  measurement recorded. On 2026-11-17 each of them, and Johnson below, served
+  its robots.txt and its commissioners' pages to the fleet's Chrome client
+  with its client hints (scraper_common.UA_HINTS_CHROME_126, standard-library
+  stack), each robots.txt permitting those pages, and none answered with a
+  challenge; whether to read them that way is Adam's decision, so until he
+  makes it they are recorded here and in the gap record.
 
 NOT READ, AND WHY, among the 21st to 40th largest (measured 2026-11-17):
   Hays      Above: Cloudflare's block page.
-  Brazos, Johnson
-            www.brazoscountytx.gov and www.johnsoncountytx.org answer this
-            client with HTTP 403 on the page and on robots.txt.
+  Brazos    www.brazoscountytx.gov answers this client with a browser check
+            ("Just a moment... Checking your browser", HTTP 403, a script
+            that sends a browser on to the page) on the page and on
+            robots.txt. A challenge is an access control and is never worked
+            around, with any client.
+  Johnson   www.johnsoncountytx.org answers this client with HTTP 403 on the
+            page and on robots.txt; see the paragraph above.
   Smith     www.smith-county.com serves this client, but its precinct pages
             print each commissioner's name only inside sentences ("Christina
             Drewry took office on January 2, 2025 as ..."), which a parser
@@ -111,6 +161,12 @@ NOT READ, AND WHY, among the 21st to 40th largest (measured 2026-11-17):
             site, smithcounty.prod.govaccess.org, fails this client's TLS
             check, so its robots.txt cannot be read, which RFC 9309 treats as
             disallowing everything.
+
+NOT READ, AND WHY, among the 41st to 60th largest (measured 2026-11-17):
+  Maverick  www.co.maverick.tx.us, where the county's site used to be,
+            answers every path asked with a 19-byte page and HTTP 404, and no
+            other site of the county's was found; maverickcountytx.gov and
+            maverickcounty.texas.gov do not answer.
 
 A NAME IS PRINTED AS THE COUNTY PRINTS IT, honorific and all ("Dr. Elba
 Garcia"), the fleet's practice; each must pass the fleet's officeholder-name
@@ -200,7 +256,10 @@ LABEL = r"(?:County\s+)?Commissioner,?\s+(?:Precinct|Pct\.?)\s*(?P<n>[1-4])"
 # and there a label may name no precinct ("Commissioner" alone). `offset` puts
 # the name that many lines from the label, every line between matching
 # `between`; `strip` is removed from the line before it is read as a name (a
-# "Commissioner " in front of it, a party letter after it).
+# "Commissioner " in front of it, a party letter after it). `heading` is for a
+# page that prints "Precinct N" above a block and "Commissioner" alone beside the
+# name: such a label takes the precinct of the nearest line above it that
+# matches `heading`.
 COUNTIES = [
     dict(geoid="48201", county="Harris County", seat_word="Precinct",
          url="https://cp4.harriscountytx.gov/Connect/Commissioners-Court",
@@ -316,6 +375,82 @@ COUNTIES = [
     dict(geoid="48397", county="Rockwall County", seat_word="Precinct",
          url="https://www.rockwallcountytexas.com/", mode="name_above",
          label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48231", county="Hunt County", seat_word="Precinct",
+         url="https://www.huntcounty.net/page/hunt.commissionerscourt", mode="inline",
+         label=r"Commissioner Precinct (?P<n>[1-4]): (?P<name>.+)"),
+    dict(geoid="48021", county="Bastrop County", seat_word="Precinct",
+         url="https://www.bastropcounty.gov/page/com.main", mode="name_above", label=LABEL,
+         pages={1: "https://www.bastropcounty.gov/page/com.pct_1",
+                2: "https://www.bastropcounty.gov/page/com.pct_2",
+                3: "https://www.bastropcounty.gov/page/com.pct_3",
+                4: "https://www.bastropcounty.gov/page/com.pct_4"}),
+    dict(geoid="48037", county="Bowie County", seat_word="Precinct",
+         url="https://www.bowiecounty.org/1194/Commissioners", mode="name_above",
+         label="Commissioner", heading=r"Precinct (?P<n>[1-4])"),
+    dict(geoid="48291", county="Liberty County", seat_word="Precinct",
+         url="https://www.libertycountytx.gov/page/Commissioners.Court", mode="name_below",
+         label=LABEL),
+    dict(geoid="48469", county="Victoria County", seat_word="Precinct",
+         url="https://www.victoriacountytx.gov/188/Commissioners-Court", mode="name_above",
+         label=r"Commissioner(?:,| -) Precinct (?P<n>[1-4]) \(.+\)"),
+    dict(geoid="48005", county="Angelina County", seat_word="Precinct",
+         url="https://www.angelinacounty.net/comcourt/", mode="inline",
+         label=r"Precinct (?P<n>[1-4]): Commissioner (?P<name>.+)"),
+    dict(geoid="48361", county="Orange County", seat_word="Precinct",
+         url="https://www.co.orange.tx.us/Commissioners", mode="inline",
+         label=r"Commissioner of Precinct (?P<n>[1-4]), (?P<name>[^;]+);.*"),
+    dict(geoid="48099", county="Coryell County", seat_word="Precinct",
+         url="https://coryellcountytx.gov/commissioners-court/", mode="inline",
+         label=r"Precinct (?P<n>[1-4]): (?P<name>.+)"),
+    dict(geoid="48213", county="Henderson County", seat_word="Precinct",
+         url="https://www.henderson-county.com/193/Commissioners-Court", mode="name_below",
+         label="Contact Us",
+         pages={1: "https://www.henderson-county.com/194/Commissioner-Precinct-1",
+                2: "https://www.henderson-county.com/196/Commissioner-Precinct-2",
+                3: "https://www.henderson-county.com/197/Commissioner-Precinct-3",
+                4: "https://www.henderson-county.com/198/Commissioner-Precinct-4"}),
+    dict(geoid="48471", county="Walker County", seat_word="Precinct",
+         url="https://www.co.walker.tx.us/department/index.php?structureid=6",
+         mode="name_above", label=LABEL, offset=2, between=",",
+         pages={1: "https://www.co.walker.tx.us/department/index.php?structureid=30",
+                2: "https://www.co.walker.tx.us/department/index.php?structureid=31",
+                3: "https://www.co.walker.tx.us/department/index.php?structureid=32",
+                4: "https://www.co.walker.tx.us/department/index.php?structureid=33"}),
+    dict(geoid="48203", county="Harrison County", seat_word="Precinct",
+         url="https://www.harrisoncountytexas.gov/page/CommissionerCourt", mode="name_below",
+         label=r"Precinct (?P<n>[1-4])"),
+    dict(geoid="48409", county="San Patricio County", seat_word="Precinct",
+         url="https://www.sanpatriciocountytx.gov/page/comm.court.home", mode="inline",
+         label=r"Commissioner Precinct (?P<n>[1-4]) - (?P<name>.+)"),
+    dict(geoid="48497", county="Wise County", seat_word="Precinct",
+         url="https://www.co.wise.tx.us/158/Commissioners-Court", mode="name_below",
+         label=r"Commissioner Precinct (?P<n>[1-4]):"),
+    dict(geoid="48427", county="Starr County", seat_word="Precinct",
+         url="https://www.co.starr.tx.us/page/Commissioners.Court", mode="name_below",
+         label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48347", county="Nacogdoches County", seat_word="Precinct",
+         url="https://www.nacogdochesco.gov/178/County-Commissioners", mode="name_above",
+         label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48221", county="Hood County", seat_word="Precinct",
+         url="https://www.hoodcounty.texas.gov/government/county_commissioners/index.php",
+         mode="name_above", label=LABEL,
+         pages={1: "https://www.hoodcounty.texas.gov/government/county_commissioners/com_one.php",
+                2: "https://www.hoodcounty.texas.gov/government/county_commissioners/com_two.php",
+                3: "https://www.hoodcounty.texas.gov/government/county_commissioners/com_three.php",
+                4: "https://www.hoodcounty.texas.gov/government/county_commissioners/com_four.php"}),
+    dict(geoid="48467", county="Van Zandt County", seat_word="Precinct",
+         url="https://www.vanzandtcounty.org/page/vanzandt.Commissioners.Court",
+         mode="name_below", label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48001", county="Anderson County", seat_word="Precinct",
+         url="https://www.andersoncountytx.gov/page/Commissioners.Court", mode="name_below",
+         label=LABEL),
+    dict(geoid="48473", county="Waller County", seat_word="Precinct",
+         url="https://www.co.waller.tx.us/page/CommCourt.About", mode="inline",
+         label=r"Precinct (?P<n>[1-4]) Commissioner - (?P<name>.+)",
+         pages={1: "https://www.co.waller.tx.us/page/CommCourt.Precinct1",
+                2: "https://www.co.waller.tx.us/page/CommCourt.Precinct2",
+                3: "https://www.co.waller.tx.us/page/CommCourt.Precinct3",
+                4: "https://www.co.waller.tx.us/page/CommCourt.Precinct4"}),
 ]
 
 _GATE = []
@@ -517,6 +652,11 @@ def readings(page, spec, where, want=0):
         if not name:
             continue
         n = m.groupdict().get("n")
+        if n is None and spec.get("heading"):
+            heading = re.compile("^%s$" % spec["heading"])
+            above = (heading.match(lines[k]) for k in range(i - 1, -1, -1))
+            hit = next((h for h in above if h), None)
+            n = hit.group("n") if hit else None
         if n is None and not want:
             raise RuntimeError("%s: the label %r names no precinct" % (where, spec["label"]))
         found.append((number(n) if n is not None else want, name))

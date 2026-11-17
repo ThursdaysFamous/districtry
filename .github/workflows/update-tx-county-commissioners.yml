@@ -36,7 +36,10 @@ permissions:
 jobs:
   update-roster:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # Lubbock's and Walker's robots.txt each ask for 300 seconds between
+    # requests, and each county prints its commissioners on four pages, so
+    # those two take about thirty minutes of the run between them.
+    timeout-minutes: 60
     steps:
       # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
       # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
