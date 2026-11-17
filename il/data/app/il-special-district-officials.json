@@ -99,18 +99,16 @@
               "name": "Warren Husemann",
               "phone": "(217) 455-3601",
               "role": "President"
-            }
-          ],
-          "comptrollerCode": "001/020/06",
-          "filedFor": "2025",
-          "heads": [
+            },
             {
               "email": "melmoe6@outlook.com",
               "name": "Melvin Moellring",
               "phone": "(217) 430-4511",
-              "role": "Treas./Admin."
+              "role": "Treasurer"
             }
           ],
+          "comptrollerCode": "001/020/06",
+          "filedFor": "2026",
           "office": {}
         },
         "Clayton Fire": {
@@ -499,7 +497,7 @@
             }
           ],
           "comptrollerCode": "016/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Brian McMahon",
@@ -760,26 +758,21 @@
         "MILLER WOODS FIRE PROTECTION DISTRICT": {
           "board": [
             {
-              "email": "jpbaine122@comcast.net",
+              "email": "jbaine@stegerfire.org",
               "name": "james baine",
               "phone": "(708) 768-6786",
-              "role": "President"
-            }
-          ],
-          "comptrollerCode": "016/120/06",
-          "filedFor": "2025",
-          "heads": [
+              "role": "Trustee"
+            },
             {
               "email": "james.sipple@gmail.com",
               "name": "james sipple",
               "phone": "(312) 771-9511",
-              "role": "C.F.O."
+              "role": "Trustee"
             }
           ],
-          "office": {
-            "address": "po box 233",
-            "city": "steger IL 60475"
-          }
+          "comptrollerCode": "016/120/06",
+          "filedFor": "2026",
+          "office": {}
         },
         "MOKENA FIRE PROTECTION DISTRICT": {
           "board": [
@@ -790,7 +783,7 @@
             }
           ],
           "comptrollerCode": "099/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Will",
           "heads": [
             {
@@ -1648,7 +1641,7 @@
             }
           ],
           "comptrollerCode": "016/180/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Lee Howard",
@@ -2957,26 +2950,17 @@
           }
         },
         "SUMMIT PARK DISTRICT": {
-          "board": [
-            {
-              "email": "forms@summitparks.org",
-              "name": "Juan Miguel",
-              "role": "Treasurer"
-            }
-          ],
           "comptrollerCode": "016/750/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "John Jekot",
+              "phone": "(708) 496-1012",
               "role": "Director"
             }
           ],
           "office": {
-            "address": "5700 S. Archer Road",
-            "city": "Summit IL 60501",
-            "email": "jjekot@summitparks.org",
-            "phone": "(708) 496-1012"
+            "email": "jjekot@summitparks.org"
           }
         },
         "TINLEY PARK PARK DISTRICT": {
@@ -3226,12 +3210,13 @@
               "role": "President"
             },
             {
+              "email": "jenniesmith60518@gmail.com",
               "name": "Jennie Smith",
               "role": "Sec./Treas."
             }
           ],
           "comptrollerCode": "050/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "LaSalle",
           "office": {
             "address": "PO Box 787",
@@ -5080,7 +5065,7 @@
             }
           ],
           "comptrollerCode": "022/260/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "1609 Luther Ave",
             "city": "Lombard IL 60148",
@@ -5933,20 +5918,20 @@
         "Sheldon": {
           "board": [
             {
-              "email": "HRODRUNNER8@GMAIL.COM",
-              "name": "Ken Hrodey",
-              "phone": "(815) 471-3580",
+              "email": "TRUDEAUSBODYSHOP@HOTMAIL.COM",
+              "name": "Joel Davenport",
+              "phone": "(815) 592-3239",
               "role": "President"
             },
             {
-              "email": "DMMOLTER@YAHOO.COM",
+              "email": "DIANE.MOLTER@YAHOO.COM",
               "name": "Diane Molter",
               "phone": "(815) 471-3505",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "038/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Stockland": {
@@ -6428,7 +6413,7 @@
         },
         "Countryside Fire Protection District": {
           "comptrollerCode": "049/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Charles Smith",
@@ -7408,7 +7393,7 @@
             }
           ],
           "comptrollerCode": "052/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "DIXON RURAL FIRE": {
@@ -7439,12 +7424,13 @@
               "role": "President"
             },
             {
+              "email": "jenniesmith60518@gmail.com",
               "name": "Jennie Smith",
               "role": "Sec./Treas."
             }
           ],
           "comptrollerCode": "050/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "LaSalle",
           "office": {
             "address": "PO Box 787",
@@ -7716,6 +7702,7 @@
           "filedFor": "2025",
           "heads": [
             {
+              "email": "indian4621@aol.com",
               "name": "Mark Nixon",
               "role": "Chief"
             }
@@ -7815,22 +7802,16 @@
         "Mt. Pulaski": {
           "board": [
             {
-              "name": "Steve Mason",
-              "role": "Trustee"
-            },
-            {
+              "email": "kcoers@gmail.com",
               "name": "Kevin Coers",
+              "phone": "(217) 792-5222",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "054/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Logan",
-          "office": {
-            "address": "612 E Dekalb St",
-            "city": "Mt Pulaski IL 62548",
-            "phone": "(217) 792-5222"
-          }
+          "office": {}
         },
         "Mt. Zion": {
           "board": [
@@ -7860,16 +7841,18 @@
               "name": "James Matich",
               "phone": "(217) 855-4980",
               "role": "President"
-            },
-            {
-              "email": "WESHENNE@HOTMAIL.COM",
-              "name": "Wesley Henne",
-              "phone": "(630) 561-7210",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "055/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "email": "weshenne@hotmail.com",
+              "name": "Wesley Henne",
+              "phone": "(630) 561-7210",
+              "role": "Treas./Admin."
+            }
+          ],
           "office": {}
         },
         "South Macon": {
@@ -7927,7 +7910,7 @@
         },
         "Decatur": {
           "comptrollerCode": "055/010/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "cgerhard@decparks.com",
@@ -7937,12 +7920,11 @@
             {
               "email": "lcooper@decparks.com",
               "name": "Laura Cooper",
+              "phone": "(217) 422-5919",
               "role": "C.F.O."
             }
           ],
           "office": {
-            "address": "620 Riverside Ave",
-            "city": "Decatur IL 62521",
             "phone": "(217) 422-5911"
           }
         },
@@ -8784,17 +8766,20 @@
         "BUFFALO PRAIRIE FPD": {
           "board": [
             {
+              "email": "bwintertax@gmail.com",
               "name": "Wade Hofer",
               "role": "President"
-            },
-            {
-              "email": "sboruff@hamletmutual.com",
-              "name": "Stanley Boruff",
-              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "081/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "email": "stanboruff.cla@gmail.com",
+              "name": "Stanley Boruff",
+              "role": "C.F.O."
+            }
+          ],
           "office": {
             "address": "25921 190TH AVE W",
             "city": "ILLINOIS CITY IL 61259",
@@ -9113,7 +9098,7 @@
         "CHATHAM FPD": {
           "board": [
             {
-              "email": "georgeaperkins@icloud.com",
+              "email": "george.perkins@cfd-il.com",
               "name": "George Perkins",
               "role": "President"
             },
@@ -9124,7 +9109,7 @@
             }
           ],
           "comptrollerCode": "083/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "#1 Fireman Square",
             "city": "Chatham IL 62629",
@@ -9468,9 +9453,9 @@
             }
           ],
           "comptrollerCode": "083/170/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
-            "address": "2215 E Andrew Rd",
+            "address": "2215 E Andrew Rd.",
             "city": "Sherman IL 62684",
             "email": "dhermsmeyer@shermanfire.org",
             "phone": "(217) 496-2213"
@@ -10014,19 +9999,20 @@
             {
               "email": "fire4490@yahoo.com",
               "name": "John Parke",
-              "phone": "(314) 412-1814",
               "role": "President"
             },
             {
-              "email": "wrenchmonkey.br@gmail.com",
-              "name": "Bryan Reddick",
-              "phone": "(618) 225-2875",
-              "role": "Treasurer"
+              "email": "p.bivins69@yahoo.com",
+              "name": "Paula Bivins",
+              "phone": "(618) 719-1166",
+              "role": "Secretary"
             }
           ],
           "comptrollerCode": "088/190/06",
-          "filedFor": "2025",
-          "office": {}
+          "filedFor": "2026",
+          "office": {
+            "phone": "(314) 412-1814"
+          }
         },
         "Signal Hill Fire Dept.": {
           "board": [
@@ -11012,12 +10998,8 @@
       }
     }
   },
-  "generated": "2026-11-09T22:36:58Z",
+  "generated": "2026-11-16T22:17:36Z",
   "mailGivenForTwo": {
-    "18532bdb20a6f776": [
-      "4f2cbfb3f059084a",
-      "db51a382d5f2c4c8"
-    ],
     "3110ed715344f5e2": [
       "dfbad7a9dd8a215c"
     ],
