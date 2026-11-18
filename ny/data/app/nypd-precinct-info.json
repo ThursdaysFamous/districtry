@@ -308,7 +308,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/34th-precinct.page"
 },
 "40": {
-"commander": "Inspector Scott Callahan",
+"commander": "Deputy Inspector Yoel Hidalgo",
 "station_name": "40th",
 "station_address": [
 "567 E 149th Street",
@@ -490,7 +490,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/60th-precinct.page"
 },
 "61": {
-"commander": "Deputy Inspector Joseph J. Antonio",
+"commander": "Captain Keith Gallagher",
 "station_name": "61st",
 "station_address": [
 "2575 Coney Island",
@@ -518,7 +518,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/62nd-precinct.page"
 },
 "63": {
-"commander": "Captain James Tomasulo",
+"commander": "Deputy Inspector James Tomasulo",
 "station_name": "63rd",
 "station_address": [
 "1844 Brooklyn Avenue",
@@ -616,7 +616,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/71st-precinct.page"
 },
 "72": {
-"commander": "Deputy Inspector Mobeen Yasin",
+"commander": "Captain Kenan Akaydin",
 "station_name": "72nd",
 "station_address": [
 "830 4th Avenue",
@@ -630,7 +630,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/72nd-precinct.page"
 },
 "73": {
-"commander": "Deputy Inspector Odelle D. Despot",
+"commander": "Deputy Inspector Douglas Moodie",
 "station_name": "73rd",
 "station_address": [
 "1470 East New York Avenue",
@@ -658,7 +658,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/75th-precinct.page"
 },
 "76": {
-"commander": "Deputy Inspector Tai Yuen Lee",
+"commander": "Deputy Inspector TaiYuen Lee",
 "station_name": "76th",
 "station_address": [
 "191 Union Street",
@@ -672,7 +672,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/76th-precinct.page"
 },
 "77": {
-"commander": "Inspector Omar M. Birchwood",
+"commander": "Deputy Inspector Daniel Fennessey",
 "station_name": "77th",
 "station_address": [
 "127 Utica Avenue",
@@ -686,7 +686,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/77th-precinct.page"
 },
 "78": {
-"commander": "Deputy Inspector Billy J. Morales",
+"commander": "Captain Franklyn Aizaga",
 "station_name": "78th",
 "station_address": [
 "65 6th Avenue",
@@ -868,7 +868,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/104th-precinct.page"
 },
 "105": {
-"commander": "Deputy Inspector Douglas Moodie",
+"commander": null,
 "station_name": "105th",
 "station_address": [
 "92-08 222nd Street",
@@ -896,7 +896,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/106th-precinct.page"
 },
 "107": {
-"commander": "Captain Michael Black-Larkins",
+"commander": "Deputy Inspector Michael Black-Larkins",
 "station_name": "107th",
 "station_address": [
 "71-01 Parsons Blvd.",
@@ -952,7 +952,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/110th-precinct.page"
 },
 "111": {
-"commander": "Captain Ramnauth Ramlochan",
+"commander": "Captain Ramon Polanco",
 "station_name": "111th",
 "station_address": [
 "45-06 215th Street",
@@ -966,7 +966,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/111th-precinct.page"
 },
 "112": {
-"commander": "Deputy Inspector Daniel P. Fennessey",
+"commander": null,
 "station_name": "112th",
 "station_address": [
 "68-40 Austin Street",
@@ -1036,7 +1036,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/116th-precinct.page"
 },
 "120": {
-"commander": "Inspector Eric J. Waldhelm",
+"commander": "Deputy Inspector Emmanuel Cabreja",
 "station_name": "120th",
 "station_address": [
 "78 Richmond Terrace",
