@@ -2572,12 +2572,64 @@ try {
     // The short form, held literally: `cg` is congress's permanent code, so a
     // code that moved would fail here as well as in generate_metro_files.
     check("the QR payload carries ref=qr and the same point and layers, in the short form",
-      /\?ref=qr#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.qr) && /\?ref=share#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.link),
+      /\/il\/\?ref=qr#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.qr) && /\/il\/s\/cg\/\?ref=share#p=41\.8825,-87\.6285&l=cg(&z=[\d.]+)?$/.test(urls.link),
       `${urls.qr} / ${urls.link}`);
     check("the QR keeps a white ground in the dark theme, so it still scans",
       !!drawn && drawn.ground === "#ffffff", drawn && drawn.ground);
     const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^share-qr$/.test(v.path)).map((v) => v.path));
     check("drawing the QR is counted once", events.length === 1, JSON.stringify(events));
+    await context.close();
+  }
+
+  // 1i-ter. A SHARED LINK GOES THROUGH ITS LAYER'S LINK-PREVIEW PAGE (Adam,
+  //     2026-11-17, "Layer words"). A preview bot never sees the hash, so the
+  //     copied link names one layer in its path, s/<code>/, where
+  //     scripts/build_share_pages.py writes a page whose title names that layer
+  //     and which replaces itself with the app, query and hash intact. Held
+  //     here: the link names the most local layer on, or the pinned one; the
+  //     page it names exists, previews that layer, points og:url at itself and
+  //     carries no counter; and following it lands on the app with the same
+  //     point and layers, or with that layer on when it carries no hash.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress,school-board`);
+    const local = await page.evaluate(() => window.ChiExplorer.shareUrls().link);
+    await page.close();
+    page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress,school-board&pin=congress`);
+    await page.waitForFunction(() => /[#&]c=cg(&|$)/.test(location.hash), null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const pinned = await page.evaluate(() => window.ChiExplorer.shareUrls().link);
+    check("a shared link goes through the most local layer's preview page, or the pinned layer's",
+      /\/s\/sb\/\?ref=share#p=41\.8825,-87\.6285&l=/.test(local) && /\/s\/cg\/\?ref=share#p=41\.8825,-87\.6285&l=/.test(pinned),
+      `${local} / ${pinned}`);
+    const preview = await page.evaluate(async () => {
+      const r = await fetch("s/sb/");
+      const t = r.ok ? await r.text() : "";
+      const d = new DOMParser().parseFromString(t, "text/html");
+      const meta = (sel) => { const m = d.querySelector(sel); return m ? m.getAttribute("content") : null; };
+      return { status: r.status, title: meta('meta[property="og:title"]'), url: meta('meta[property="og:url"]'),
+        noindex: meta('meta[name="robots"]'), counter: /data-goatcounter=/.test(t) };
+    });
+    check("the preview page names its layer and state, points og:url at itself and carries no counter",
+      preview.status === 200 && preview.title === "Elected School Board District map of Illinois · districtry" &&
+        preview.url === "https://districtry.com/il/s/sb/" && preview.noindex === "noindex" && !preview.counter,
+      JSON.stringify(preview));
+    await page.close();
+    page = await booted(context, `${BASE}s/cg/?ref=share#p=41.8825,-87.6285&l=cg,sb`);
+    await page.waitForURL((u) => u.pathname === new URL(BASE).pathname, { timeout: BOOT_TIMEOUT });
+    const landed = await page.evaluate(() => ({
+      search: location.search,
+      on: Object.keys(window.ChiExplorer.state.layersOn).filter((k) => window.ChiExplorer.state.layersOn[k]).sort(),
+      point: window.ChiExplorer.state.selectedPoint,
+    }));
+    check("following the preview page lands on the app with the same point, layers and share tag",
+      landed.search === "?ref=share" && landed.on.join(",") === "congress,school-board" &&
+        !!landed.point && Math.abs(landed.point.lat - 41.8825) < 1e-6,
+      JSON.stringify(landed));
+    await page.close();
+    page = await booted(context, `${BASE}s/sb/`);
+    await page.waitForURL((u) => u.pathname === new URL(BASE).pathname, { timeout: BOOT_TIMEOUT });
+    const bare = await page.evaluate(() => Object.keys(window.ChiExplorer.state.layersOn).filter((k) => window.ChiExplorer.state.layersOn[k]));
+    check("a preview page opened with no hash turns its layer on", bare.join(",") === "school-board", JSON.stringify(bare));
     await context.close();
   }
 
@@ -3759,7 +3811,11 @@ try {
       const coords = pop.querySelector(".share-popover-coords").textContent;
       // the values are built at open time, AFTER the click's syncUrlHash —
       // so location.hash here is exactly the hash both strings must carry
-      const wantUrl = location.origin + location.pathname + "?ref=share" + location.hash;
+      // one layer is on, so it is the layer the link-preview page names
+      // (scripts/build_share_pages.py) and the link goes through s/<code>/
+      const sharedCode = (location.hash.match(/[#&]l=([^&,]+)/) || [])[1];
+      const wantUrl = location.origin + location.pathname +
+        (sharedCode ? "s/" + sharedCode + "/" : "") + "?ref=share" + location.hash;
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return {
         opened: true,

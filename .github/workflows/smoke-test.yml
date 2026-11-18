@@ -656,6 +656,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_redirect_stubs.py --check
 
+      # The link-preview page a shared map link opens first: one per app and
+      # layer, so the apps that draw a preview can name the layer the sender
+      # shared (the hash, which holds the point, is never seen by them). Every
+      # worksheet layer must have its page, every page must match what the
+      # script writes, and a page no layer accounts for fails.
+      - name: Link-preview pages match the worksheets' layers
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_share_pages.py --check
+
       # The address box on the eleven question pages. It is one form generated
       # eleven times, and every per-page fact in it — the layers it opens, the
       # button's own words, the place named in the placeholder — is read off

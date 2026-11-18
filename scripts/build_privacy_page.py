@@ -1297,6 +1297,10 @@ COUNTER_EXCEPTIONS = {
         "you used last, where the visit is counted",
     "coverage-map.html":
         "the front door\u2019s iframe body, counted by the page that embeds it",
+    "<state>/s/<layer>/":
+        "the page a shared map link opens first, which names the link\u2019s "
+        "layer for the apps that show a link preview and hands straight on to "
+        "the map, where the visit is counted",
 }
 
 
@@ -1323,7 +1327,10 @@ def measure_counter_coverage(apps):
             page = f.read()
         if va.REDIRECT_SHELL.search(page):
             continue
-        (counted if va.GC_TAG.search(page) else uncounted).append(rel)
+        if va.GC_TAG.search(page):
+            counted.append(rel)
+        elif va.page_key(rel) not in uncounted:
+            uncounted.append(va.page_key(rel))
 
     if not counted:
         fail("no page on this site carries the GoatCounter tag, and the "
