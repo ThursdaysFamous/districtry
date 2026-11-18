@@ -108,12 +108,13 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (38 on 2026-10-30).
+# data/app/mo-commission-counties.json (41 on 2026-11-18).
 METRO_COUNTY_FIPS = (
-    "007", "011", "013", "021", "029", "031", "037", "041", "043", "051",
-    "053", "057", "063", "065", "067", "089", "093", "109", "113", "115",
-    "119", "125", "127", "131", "143", "157", "161", "167", "169", "173",
-    "177", "185", "186", "195", "201", "217", "219", "223",
+    "007", "011", "013", "017", "021", "029", "031", "037", "041", "043",
+    "051", "053", "057", "063", "065", "067", "089", "093", "109", "111",
+    "113", "115", "117", "119", "125", "127", "131", "143", "157", "161",
+    "167", "169", "173", "177", "185", "186", "195", "201", "217", "219",
+    "223",
 )
 STATE_FIPS = "29"
 # No dispatch entries: none of this instance's layers is county-dispatched
@@ -311,6 +312,7 @@ RING_COUNTIES = (
     "Audrain",
     "Barton",
     "Bates",
+    "Bollinger",
     "Buchanan",
     "Camden",
     "Cape Girardeau",
@@ -326,8 +328,10 @@ RING_COUNTIES = (
     "Howard",
     "Iron",
     "Lawrence",
+    "Lewis",
     "Lincoln",
     "Linn",
+    "Livingston",
     "Maries",
     "Marion",
     "McDonald",

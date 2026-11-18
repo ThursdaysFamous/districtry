@@ -32,6 +32,17 @@
   "spreadPct": 4.3,
   "unplaced2020": 0
  },
+ "29017": {
+  "county": "Bollinger County",
+  "people2020": {
+   "First District": 4422,
+   "Second District": 6145
+  },
+  "read": "2026-11-18",
+  "source": "traced",
+  "spreadPct": 32.6,
+  "unplaced2020": 0
+ },
  "29021": {
   "county": "Buchanan County",
   "people2020": {
@@ -197,6 +208,17 @@
   "spreadPct": 5.2,
   "unplaced2020": 0
  },
+ "29111": {
+  "county": "Lewis County",
+  "people2020": {
+   "Northern District": 4850,
+   "Southern District": 5182
+  },
+  "read": "2026-11-18",
+  "source": "townships",
+  "spreadPct": 6.6,
+  "unplaced2020": 0
+ },
  "29113": {
   "county": "Lincoln County",
   "people2020": {
@@ -217,6 +239,17 @@
   "read": "2026-10-30",
   "source": "townships",
   "spreadPct": 2.5,
+  "unplaced2020": 0
+ },
+ "29117": {
+  "county": "Livingston County",
+  "people2020": {
+   "Eastern District": 11975,
+   "Western District": 2582
+  },
+  "read": "2026-11-18",
+  "source": "townships",
+  "spreadPct": 129.1,
   "unplaced2020": 0
  },
  "29119": {

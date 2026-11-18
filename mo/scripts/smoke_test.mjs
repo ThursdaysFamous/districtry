@@ -128,6 +128,14 @@ const LINN_POINT = "39.93356,-93.25998";
 // shipped file draws it (shapely polylabel, 2026-10-27), traced from the
 // scan its clerk's office sent.
 const STE_GENEVIEVE_POINT = "37.81431,-90.14644";
+// The poles of inaccessibility of Bollinger's First District, traced in
+// Lorance township from the plat-book page its clerk's office sent, and of
+// Lewis's Northern and Livingston's Western Districts, whole townships from
+// the maps their clerks' offices sent, as the shipped file draws them
+// (shapely polylabel, 2026-11-18).
+const BOLLINGER_POINT = "37.20400,-90.09584";
+const LEWIS_POINT = "40.15735,-91.68940";
+const LIVINGSTON_POINT = "39.69838,-93.67201";
 // Inside the Census's 2020 Marshall 4 precinct, the half of Marshall township
 // Saline's clerk lists in the Northern District, 4.1 km from any edge.
 const SALINE_POINT = "39.1534,-93.246";
@@ -1275,7 +1283,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, DOUGLAS_POINT, LINN_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, DOUGLAS_POINT, LINN_POINT, STE_GENEVIEVE_POINT, BOLLINGER_POINT, LEWIS_POINT, LIVINGSTON_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
