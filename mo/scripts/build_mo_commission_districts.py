@@ -53,7 +53,11 @@ wrote, on 2026-10-30, that one district is the City of Cape Girardeau and the
 other the rest of the county, so the first is drawn from the city limits on
 the county's own map at SEMO GIS (CITY below). And Douglas's and Linn's
 clerks e-mailed, the same day, maps whose lines run along whole townships.
-Those 38 are SOURCES below. The other 76 counties and the City of St. Louis are not
+And Livingston's clerk's office e-mailed, on 2026-10-26, and Lewis's on
+2026-11-18, maps whose lines run along whole townships, and Bollinger's, on
+2026-11-18, a map whose line splits one township through Marble Hill, traced
+from the page like Ste. Genevieve's.
+Those 41 are SOURCES below. The other 73 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -89,7 +93,7 @@ to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
 Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files and
-Ste. Genevieve's, Audrain's and New Madrid's block lists are read from disk; shapely and
+Ste. Genevieve's, Bollinger's, Audrain's and New Madrid's block lists are read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -320,6 +324,52 @@ SOURCES = {
     # seven precincts it puts whole in one district are whole there, and the
     # 2020 populations are 9,427 and 9,052.
     "186": {"traced": "ste-genevieve-commission-blocks.json", "sent": "2026-10-27"},
+    # Bollinger's clerk's office e-mailed, on 2026-11-18, a page of a 2026
+    # Mapping Solutions plat book, "Political Townships and Commissioners'
+    # Districts Map", kept out of this repository because it is that
+    # publisher's page (SHA-256 65f3c03ed047c5e84d4d31ddd35f081f8584fd9cf394e6
+    # 193e789b20b8cadfe4). Its blue line puts Union, Whitewater, Crooked Creek
+    # and Scopus townships in the 2nd Commissioner's District and Filmore,
+    # Liberty and Wayne in the 1st, and splits Lorance township through
+    # Marble Hill, so the line was traced from the page in Lorance and each of
+    # the county's 927 2020 census blocks put on its side: the TRACED file,
+    # whose "method" says how. The Missouri Roster names the seats First and
+    # Second District.
+    "017": {"traced": "bollinger-commission-blocks.json", "sent": "2026-11-18"},
+    # Lewis's clerk's office e-mailed, on 2026-11-18, a page of a Mapping
+    # Solutions plat book with the line between the two districts drawn on
+    # it, kept out of this repository because it is that publisher's page
+    # (SHA-256 e68da9ede9c3374cb52163a3b905c779ae3ce17d7101af2c409c07ef4ea4f6f7).
+    # The line runs along township lines only: Reddish, Lyon, Dickerson and
+    # Canton townships in the Northern District and La Belle, Salem, Highland
+    # and Union in the Southern. The eight match TIGER's eight.
+    "111": {"townships": {
+                "Northern District": ["Canton", "Dickerson", "Lyon", "Reddish"],
+                "Southern District": ["Highland", "La Belle", "Salem", "Union"]},
+            "sent": "2026-11-18"},
+    # Livingston's clerk's office e-mailed, on 2026-10-26, a map of the
+    # county's townships headed by its two commissioner districts, kept out
+    # of this repository as the county's own record (SHA-256 18dd3a44de19
+    # 68bcaa6742e2d91e305413220300e47d2c099dbf15158fc37901). A red line marked
+    # Western and Eastern Commissioner District runs along township lines
+    # only: Jackson, Cream Ridge, Sampsel, Mooresville, Green, Monroe and Blue
+    # Mound townships west of it, and Medicine, Rich Hill, Wheeling,
+    # Chillicothe, Fairview and Grand River east of it. The 13 match TIGER's
+    # 13. The Eastern District holds Chillicothe and most of the county's
+    # people (11,975 to 2,582 in 2020); Chillicothe township alone holds more
+    # than half the county, so no line along whole townships divides it
+    # evenly. The county's own website says the same: its Commissioner page
+    # (livingstoncountymo.gov/commissioner, whose people list the page loads
+    # from the site's own feed, read 2026-11-18 after its robots.txt answered
+    # 404) says the Eastern District Commissioner "is elected by and
+    # represents the following townships: Chillicothe, Fairview, Grand River,
+    # Medicine, Rich Hill, and Wheeling".
+    "117": {"townships": {
+                "Eastern District": ["Chillicothe", "Fairview", "Grand River", "Medicine",
+                                     "Rich Hill", "Wheeling"],
+                "Western District": ["Blue Mound", "Cream Ridge", "Green", "Jackson",
+                                     "Monroe", "Mooresville", "Sampsel"]},
+            "sent": "2026-10-26"},
     # St. Clair's clerk's office answered on 2026-10-28 with a screenshot of
     # the county's map viewer, named "North&South Districts", kept out of
     # this repository because it is the county's image (SHA-256
