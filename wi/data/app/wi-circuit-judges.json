@@ -305,12 +305,12 @@
    {
     "branch": "1",
     "name": "Lyndsey Brunette",
-    "phone": "(715) 743-5113"
+    "phone": "(715) 743-5281"
    },
    {
     "branch": "2",
     "name": "William Bratcher",
-    "phone": "(715) 743-5282"
+    "phone": "(715) 743-5173"
    }
   ],
   "sourceUrl": "https://www.clarkcountywi.com/clerk-of-courts"
@@ -1600,6 +1600,11 @@
   ],
   "judges": [
    {
+    "branch": "1",
+    "name": "Kathryn D. Schmidt",
+    "phone": "(608) 269-8700"
+   },
+   {
     "branch": "2",
     "name": "Mark L. Goodman",
     "phone": "(608) 269-8926"
@@ -1608,9 +1613,6 @@
     "branch": "3",
     "name": "Richard Radcliffe",
     "phone": "(608) 269-8875"
-   },
-   {
-    "name": "Todd Ziegler"
    }
   ],
   "sourceUrl": "http://www.co.monroe.wi.us/departments/clerk-of-courts/"
