@@ -6435,6 +6435,13 @@
      "title": "Finance Director"
     },
     {
+     "email": "sammy.gibson@cityofglasgow.gov",
+     "first": "Sammy",
+     "last": "Gibson",
+     "phone": "(270) 651-5131",
+     "title": "City Clerk"
+    },
+    {
      "email": "guy.howie@cityofglasgow.gov",
      "first": "Guy",
      "last": "Howie",
@@ -6524,13 +6531,6 @@
      "last": "Wilkinson",
      "phone": "(270) 651-5131",
      "title": "City Council"
-    },
-    {
-     "email": "sarah.young@cityofglasgow.gov",
-     "first": "Sarah",
-     "last": "Young",
-     "phone": "(270) 651-5131",
-     "title": "City Clerk"
     }
    ],
    "phone": "(270) 651-5131",
@@ -12026,6 +12026,11 @@
     {
      "first": "",
      "last": "",
+     "title": "City Council"
+    },
+    {
+     "first": "",
+     "last": "",
      "phone": "(606) 666-7069",
      "title": "City Administrator"
     },
@@ -12061,13 +12066,6 @@
      "last": "Haddix",
      "phone": "(606) 666-2424",
      "title": "Police Chief"
-    },
-    {
-     "email": "jasonhall1999@att.net",
-     "first": "Jason",
-     "last": "Hall",
-     "phone": "(606) 270-0524",
-     "title": "City Council"
     },
     {
      "email": "debhenson1812@yahoo.com",
@@ -13082,7 +13080,7 @@
    "email": "barbara.nutt@cityoflacenter.org",
    "govType": "Commission",
    "mailCity": "La Center",
-   "name": "La Center",
+   "name": "LaCenter",
    "officials": [
     {
      "first": "",
@@ -13248,7 +13246,7 @@
    "email": "scooper@lagrangeky.net",
    "govType": "Mayor/Council",
    "mailCity": "La Grange",
-   "name": "La Grange",
+   "name": "LaGrange",
    "officials": [
     {
      "email": "mayor@lagrangeky.net",
@@ -41967,7 +41965,7 @@
  "source": {
   "counties": 120,
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-11-11",
+  "read": "2026-11-18",
   "url": "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm"
  }
 }
