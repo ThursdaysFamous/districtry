@@ -51,6 +51,7 @@
     "name": "Cindy Nava",
     "party": "Democratic",
     "email": "cindy.nava@nmlegis.gov",
+    "phone": "505-986-4736",
     "url": "https://www.nmlegis.gov/Members/Legislator?SponCode=SNACI"
   },
   "10": {
@@ -143,13 +144,17 @@
     "name": "Linda M. Trujillo",
     "party": "Democratic",
     "email": "linda.trujillo@nmlegis.gov",
-    "phone": "505-795-4324",
+    "phone": "505-986-4810",
+    "phonesExtra": [
+      "alt 505-795-4324"
+    ],
     "url": "https://www.nmlegis.gov/Members/Legislator?SponCode=STRUL"
   },
   "25": {
     "name": "Peter Wirth",
     "party": "Democratic",
     "email": "peter.wirth@nmlegis.gov",
+    "phone": "alt 505-986-4727",
     "url": "https://www.nmlegis.gov/Members/Legislator?SponCode=SWIRT"
   },
   "26": {
