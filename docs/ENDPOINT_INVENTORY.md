@@ -32,10 +32,10 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
+| `lookup.districtry.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
-districtry's own service (`services/link-lookup/main.ts`, on Deno
-Deploy). It receives **a short Google Maps or Apple Maps link**, and
+districtry's own service (`services/link-lookup/main.ts`, on Cloudflare
+Workers). It receives **a short Google Maps or Apple Maps link**, and
 only when a reader pastes one or shares one into the installed app,
 and answers with the full link it leads to.
 Every app also sends it, at `?a=`, **the street address a reader searches for

@@ -574,8 +574,8 @@ def render():
             measured = [a for a in privacy.load_apps() if a.get("tag") in tags]
             housed = [a["tag"] for a in measured if a.get("house_lookup")]
             officed = [a["tag"] for a in measured if a.get("office_house_lookup")]
-            w("districtry's own service (`services/link-lookup/main.ts`, on Deno")
-            w("Deploy). It receives **a short Google Maps or Apple Maps link**, and")
+            w("districtry's own service (`services/link-lookup/main.ts`, on Cloudflare")
+            w("Workers). It receives **a short Google Maps or Apple Maps link**, and")
             w("only when a reader pastes one or shares one into the installed app,")
             w("and answers with the full link it leads to.")
             if housed:

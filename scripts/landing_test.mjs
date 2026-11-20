@@ -665,7 +665,7 @@ try {
     let photonAsked = false;
     const lookupAsked = [];
     await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
-    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+    await page.route("**/lookup.districtry.com/**", (r) => {
       lookupAsked.push(new URL(r.request().url()).searchParams.get("u"));
       return r.fulfill({ status: 200, contentType: "application/json",
         body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
@@ -698,7 +698,7 @@ try {
     const page = await ctx.newPage();
     let lookups = 0;
     await page.route("**/photon.komoot.io/**", photonStub([]));
-    await page.route("**/link-lookup.districtry.deno.net/**", (r) => ++lookups === 1
+    await page.route("**/lookup.districtry.com/**", (r) => ++lookups === 1
       ? r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) })
       : r.fulfill({ status: 200, contentType: "application/json",
           body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) }));
@@ -721,7 +721,7 @@ try {
     const page = await ctx.newPage();
     let photonAsked = false, lookups = 0;
     await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
-    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+    await page.route("**/lookup.districtry.com/**", (r) => {
       lookups++;
       return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) });
     });
@@ -819,7 +819,7 @@ try {
       const page = await ctx.newPage();
       const asked = [], looked = [];
       await page.route("**/photon.komoot.io/**", (r) => { asked.push(new URL(r.request().url()).searchParams.get("q")); return photonStub([])(r); });
-      await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      await page.route("**/lookup.districtry.com/**", (r) => {
         looked.push(new URL(r.request().url()).searchParams.get("u"));
         return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: FULL }) });
       });

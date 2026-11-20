@@ -216,22 +216,23 @@ COMMON_RECIPIENTS = [
 # THE SHORT-LINK LOOKUP (from 2026-10-13). A short Google Maps or Apple Maps
 # link holds no position, and a browser cannot read where another site
 # redirects, so engine/shared/map-link.txt sends a pasted short link to
-# districtry's own lookup (services/link-lookup/main.ts, run on Deno Deploy),
+# districtry's own lookup (services/link-lookup/main.ts, run on Deno Deploy
+# until 2026-11 and as a Cloudflare Worker since, with its request logs off),
 # which follows it and answers with the full link. It is a recipient in its own
-# right: hosted by Deno, it sees the reader's IP address and the short link.
+# right: hosted by Cloudflare, it sees the reader's IP address and the short link.
 # Its presence is MEASURED per surface like CARTO's, so the row names exactly
 # the surfaces that carry the host, and a host change in the engine block that
 # is not made here fails the build (the row would name no surface).
-LINK_LOOKUP_HOST = "link-lookup.districtry.deno.net"
+LINK_LOOKUP_HOST = "lookup.districtry.com"
 LINK_LOOKUP_ROW = (
-    "Deno Deploy", "short map-link lookup", "https://deno.com/privacy",
+    "Cloudflare (Workers)", "short map-link lookup", "https://www.cloudflare.com/privacypolicy/",
     "Only when you paste a <strong>short</strong> Google Maps or Apple Maps link "
     "(maps.app.goo.gl, maps.apple) into a search box, or share one into the installed "
     "app: that link, sent to districtry&#39;s "
-    "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
-    "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
-    "own code stores neither; Deno, not this project, keeps whatever request logs its "
-    "platform keeps. A map link or a coordinate pair that carries its position is read in "
+    "own lookup, which runs on Cloudflare&#39;s servers, follows it to the full link and "
+    "sends that back. Cloudflare receives your IP address and the short link. The "
+    "lookup&#39;s own code stores neither, and its request logging is turned off; "
+    "Cloudflare, not this project, keeps whatever records its network keeps. A map link or a coordinate pair that carries its position is read in "
     "your browser and goes nowhere; a map link that names a place without one is searched "
     "like typed text, by the address search below.",
     "Only when you paste or share a short map link.", "link_lookup")
@@ -250,8 +251,8 @@ LINK_LOOKUP_ROW = (
 # none (engine map-link addressForLookup), and an address whose street it
 # knows is asked about with the ZIP code the street's answers carry when they
 # carry one and the address none (engine geocoder-search showStreetOnly). That
-# sends the address to Deno and from Deno to the Census Bureau, which sees
-# Deno's address and not the reader's. MEASURED from the call itself, so the
+# sends the address to the lookup's host and from it to the Census Bureau,
+# which sees the host's address and not the reader's. MEASURED from the call itself, so the
 # row names exactly the surfaces that make it: the front door reads the same
 # map-link block and carries the lookup's host, and never makes this call; an
 # address typed there is handed to the app that covers it, which does.
@@ -264,7 +265,7 @@ HOUSE_LOOKUP_ROW = (
     "know the street in that town at all, and you typed the address and sent the search "
     "(with Search or Enter, or by picking its street from the list) or a map link you paste "
     "or share carries it: the address, with its state and its street&#39;s ZIP code filled in "
-    "when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks "
+    "when you left them out, sent through districtry&#39;s lookup on Cloudflare, which asks "
     "the Census Bureau&#39;s geocoder where that number falls on the street and sends its "
     "estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, "
     "not yours. Nothing is sent this way while you are still typing.",
@@ -304,7 +305,7 @@ FILES_HOST_ROW = (
 # Census"). An app's office-pin provider (its own poiGeocodeRequest) may hand an
 # office's address to the engine's lookupAddressRanges when its usual geocoder
 # cannot place it, which sends the PUBLIC ADDRESS OF AN OFFICE A CARD SHOWS to
-# Deno and on to the Census Bureau. Which office a card shows says which
+# the lookup and on to the Census Bureau. Which office a card shows says which
 # district the reader selected, so the two rows name this use for exactly the
 # apps that make it.
 #
@@ -1083,7 +1084,7 @@ def measure_office_house_lookup(src, where):
             if not inside(m.start(), HOUSE_LOOKUP_FN):
                 fail("%s line %d: the house-number lookup's `?a=` request is made outside "
                      "%s. This page names what that request sends from where it is made, "
-                     "so call %s instead, or describe the new use here and in the Deno "
+                     "so call %s instead, or describe the new use here and in the lookup "
                      "and Census rows" % (where, line_of(m.start()), HOUSE_LOOKUP_FN,
                                           HOUSE_LOOKUP_FN))
         for m in references(code, HOUSE_LOOKUP_FN):
@@ -1095,7 +1096,7 @@ def measure_office_house_lookup(src, where):
             fail("%s line %d: %s is used outside the map's own search (ENGINE "
                  "geocoder-search) and outside %s, so an address reaches the Census "
                  "Bureau from a place this page does not describe. Describe that use "
-                 "in the Deno and Census rows and measure it here"
+                 "in the lookup and Census rows and measure it here"
                  % (where, line_of(m.start()), HOUSE_LOOKUP_FN, OFFICE_PIN_PROVIDER))
         for m in references(code, OFFICE_PIN_PROVIDER):
             if declared(m.start()):
@@ -1510,7 +1511,7 @@ def office_lookup_groups(apps):
             continue
         if not (a.get("house_lookup") and a.get("link_lookup")):
             fail("%s: its office pins call the house-number lookup, but the lookup's "
-                 "host or its `?a=` request is not in the file, so the Deno and Census "
+                 "host or its `?a=` request is not in the file, so the lookup and Census "
                  "rows would not name it" % a["file"])
         pins = [GEOCODERS[h][0] for h in a["geocoders"] if "office pins" in GEOCODERS[h][1]]
         if len(pins) != 1:

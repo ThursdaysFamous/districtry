@@ -79,7 +79,7 @@ for (const [text, want] of cases) {
 // A short link goes to the lookup, and only the short link: the URL asked is
 // the lookup's own address with the link as its one parameter, and the full
 // link it answers is read by the same parser.
-const LOOKUP = "https://link-lookup.districtry.deno.net/";
+const LOOKUP = "https://lookup.districtry.com/";
 const SHORT = "https://maps.app.goo.gl/x";
 let asked = [];
 globalThis.fetch = (url) => {
