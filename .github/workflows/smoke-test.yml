@@ -77,6 +77,7 @@ jobs:
           # The retention gate below reads each roster file as it stands at
           # the base of this change, so it needs history, not a shallow tip.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       # Conversion 2 drift gate (docs/MECHANIZATION_PLAYBOOK.md): every
       # GENERATED region must match what metro-worksheet.json generates.

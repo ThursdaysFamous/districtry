@@ -58,6 +58,7 @@ jobs:
           # full clone, where `build_sitemap.py --check` passes. A bot run on
           # 2026-09-17 shipped 241 wrong dates this way.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

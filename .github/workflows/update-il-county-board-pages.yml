@@ -42,6 +42,7 @@ jobs:
           # commit. Under a depth-1 checkout git reports the single fetched
           # commit as the last commit of every file, so every entry takes today.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"

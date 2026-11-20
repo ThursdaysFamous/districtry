@@ -44,6 +44,7 @@ jobs:
           # own last commit, which a depth-1 checkout reports as today's for
           # every page.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

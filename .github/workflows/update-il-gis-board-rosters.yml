@@ -45,6 +45,7 @@ jobs:
           # sitemap in a depth-1 clone: 243 of 243 lastmods moved, against 0 in a
           # full clone, where `build_sitemap.py --check` passes.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"

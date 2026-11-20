@@ -46,6 +46,7 @@ jobs:
           # will: it computes `behind = true_date - shipped_date` and fires only
           # at `behind >= 2`, so a date forward-dated to today is never tested.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:
