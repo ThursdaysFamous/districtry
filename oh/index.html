@@ -12164,12 +12164,32 @@ function initOhioExplorer() {
    * file, which is kept and sliced, so the reader is correct everywhere and
    * saves bytes only where ranges work. ---------- */
   var tileArchives = {};
-  function tileRangeFetcher(url) {
-    var whole = null;
+  // An archive is rebuilt under the same name, and the files host takes the
+  // new copy before the pages that go with it are live, so a reader holding
+  // the old index (in memory or in the offline worker's cache) can be handed
+  // bytes of the new file at old positions. Each range's Last-Modified is held
+  // to the first one's; a change forgets the archive (the card falls back to
+  // the whole file), and the next open asks with cache: "reload", which the
+  // worker reads as "drop what you hold of this archive" (ENGINE sw-handlers).
+  var tileArchivesChanged = {};
+  function tileRangeFetcher(url, onChanged) {
+    var whole = null, version = "", reload = !!tileArchivesChanged[url];
+    delete tileArchivesChanged[url];
     return function (offset, length) {
       if (whole) return whole.then(function (buf) { return buf.slice(offset, offset + length); });
-      return fetch(url, { headers: { Range: "bytes=" + offset + "-" + (offset + length - 1) } }).then(function (res) {
-        if (res.status === 206) return res.arrayBuffer();
+      var init = { headers: { Range: "bytes=" + offset + "-" + (offset + length - 1) } };
+      if (reload) { init.cache = "reload"; reload = false; }
+      return fetch(url, init).then(function (res) {
+        if (res.status === 206) {
+          var v = res.headers.get("Last-Modified") || "";
+          if (!version) version = v;
+          else if (v && v !== version) {
+            tileArchivesChanged[url] = true;
+            onChanged();
+            throw new Error("tile archive " + url + " changed while it was open");
+          }
+          return res.arrayBuffer();
+        }
         if (!res.ok) throw new Error("tile archive " + url + ": HTTP " + res.status);
         whole = res.arrayBuffer();
         return whole.then(function (buf) { return buf.slice(offset, offset + length); });
@@ -12251,7 +12271,7 @@ function initOhioExplorer() {
   }
   function openTileArchive(url, fetchRange) {
     if (!fetchRange && tileArchives[url]) return tileArchives[url];
-    var get = fetchRange || tileRangeFetcher(url);
+    var get = fetchRange || tileRangeFetcher(url, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
     var dirs = {}, first = null;
     var header = get(0, 16384).then(function (buf) {
       var h = parseTileHeader(buf);

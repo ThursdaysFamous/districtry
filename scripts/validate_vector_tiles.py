@@ -89,6 +89,52 @@ function ringsInside(pt, rings) {
 """
 
 
+# The page's own range reader (tileRangeFetcher), not a stand-in: an archive
+# rebuilt under the same name while a reader holds its index must be noticed
+# by its Last-Modified changing, forgotten, and re-read with cache: "reload".
+REBUILT_HARNESS = r"""
+const fs = require("fs");
+const src = fs.readFileSync(process.argv[1], "utf8");
+const bytes = fs.readFileSync(process.argv[2]);
+const api = new Function(src + "\nreturn { openTileArchive, tileFeaturesAt };")();
+let modified = "Mon, 16 Nov 2026 00:00:00 GMT";
+const asked = [];
+globalThis.fetch = (url, init) => {
+  const m = /bytes=(\d+)-(\d+)/.exec(init.headers.Range);
+  asked.push((m[1] === "0" ? "header:" : "range:") + (init.cache || "default"));
+  const body = bytes.subarray(+m[1], +m[2] + 1);
+  return Promise.resolve(new Response(body, { status: 206, headers: { "Last-Modified": modified } }));
+};
+(async () => {
+  const first = api.openTileArchive("https://files.test/a.pmtiles");
+  const h = await first.header;
+  const z = h.maxZoom, n = 2 ** z;
+  const lng = (h.bounds[0] + h.bounds[2]) / 2, lat = (h.bounds[1] + h.bounds[3]) / 2;
+  await api.tileFeaturesAt(first, { lng, lat });  // the same version reads fine
+  modified = "Fri, 20 Nov 2026 00:00:00 GMT";
+  let threw = false;
+  // a tile not yet read, so it is fetched: the version moved under the open index
+  try { await first.getTile(z, 0, 0); await first.getTile(z, n - 1, n - 1); await api.tileFeaturesAt(first, { lng: h.bounds[0], lat: h.bounds[1] }); } catch (e) { threw = /changed while it was open/.test(e.message); }
+  if (!threw) throw new Error("a range with another Last-Modified was read as the same archive");
+  await new Promise((r) => setTimeout(r, 50));  // let the forgotten archive's reads settle
+  const before = asked.length;  // opening reads the header at once
+  const second = api.openTileArchive("https://files.test/a.pmtiles");
+  if (second === first) throw new Error("the changed archive was not forgotten");
+  await api.tileFeaturesAt(second, { lng, lat });
+  const reread = asked.slice(before);
+  if (reread[0] !== "header:reload") throw new Error("the re-read did not ask past the cache: " + reread.join(", "));
+  if (reread.slice(1).some((a) => a.endsWith(":reload"))) throw new Error("more than the first re-read asked past the cache: " + reread.join(", "));
+  process.stdout.write("ok");
+})().catch((e) => { console.error(e && e.stack || e); process.exit(1); });
+"""
+
+
+def check_rebuilt(path):
+    got = subprocess.run(["node", "-e", REBUILT_HARNESS, BLOCK, path], capture_output=True, text=True)
+    if got.returncode != 0 or got.stdout != "ok":
+        fail("an archive rebuilt while open is not noticed: " + (got.stderr.strip() or got.stdout))
+
+
 def fail(msg):
     print("validate-vector-tiles: FAIL — " + msg)
     sys.exit(1)
@@ -261,6 +307,7 @@ def main():
     if not paths:
         print("validate-vector-tiles: OK — no archive is committed yet, so there is nothing the app reads")
         return
+    check_rebuilt(min(paths, key=os.path.getsize))
     failed = 0
     from concurrent.futures import ProcessPoolExecutor
     with ProcessPoolExecutor(max_workers=min(4, os.cpu_count() or 1)) as pool:
