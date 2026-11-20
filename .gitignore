@@ -69,3 +69,6 @@ dist/
 # scrape is not. UNANCHORED for the reason the Leaflet pattern above is: each
 # instance has its own scripts/ directory.
 **/scripts/.cache/
+
+# wrangler dev cache for services/link-lookup
+.wrangler/
