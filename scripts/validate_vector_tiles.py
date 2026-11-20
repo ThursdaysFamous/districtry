@@ -91,7 +91,7 @@ function ringsInside(pt, rings) {
 
 # The page's own range reader (tileRangeFetcher), not a stand-in: an archive
 # rebuilt under the same name while a reader holds its index must be noticed
-# by its Last-Modified changing, forgotten, and re-read with cache: "reload".
+# by its Last-Modified changing, forgotten, and re-read with cache: "no-store".
 REBUILT_HARNESS = r"""
 const fs = require("fs");
 const src = fs.readFileSync(process.argv[1], "utf8");
@@ -122,8 +122,8 @@ globalThis.fetch = (url, init) => {
   if (second === first) throw new Error("the changed archive was not forgotten");
   await api.tileFeaturesAt(second, { lng, lat });
   const reread = asked.slice(before);
-  if (reread[0] !== "header:reload") throw new Error("the re-read did not ask past the cache: " + reread.join(", "));
-  if (reread.slice(1).some((a) => a.endsWith(":reload"))) throw new Error("more than the first re-read asked past the cache: " + reread.join(", "));
+  if (reread[0] !== "header:no-store") throw new Error("the re-read did not ask past the cache: " + reread.join(", "));
+  if (reread.slice(1).some((a) => a.endsWith(":no-store"))) throw new Error("more than the first re-read asked past the cache: " + reread.join(", "));
   process.stdout.write("ok");
 })().catch((e) => { console.error(e && e.stack || e); process.exit(1); });
 """

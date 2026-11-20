@@ -266,8 +266,9 @@ function partial(body, type, from, to, total, modified) {
     }
   });
 }
-// The page asks with cache: "reload" after it found an archive changed under
-// it: every copy of that archive held here is from before, so drop them all.
+// The page asks with cache: "no-store" after it found an archive changed
+// under it (not "reload": Chrome gives that to every request a reloading page
+// makes): every copy of that archive held here is from before, so drop them all.
 function dropArchive(url) {
   const base = url.split("?")[0];
   return caches.open(CACHE_NAME).then((cache) =>
@@ -277,7 +278,7 @@ function dropArchive(url) {
   );
 }
 function cachedRange(request) {
-  if (request.cache === "reload") return dropArchive(request.url).then(() => rangeFromNetwork(request));
+  if (request.cache === "no-store") return dropArchive(request.url).then(() => rangeFromNetwork(request));
   const key = rangeKey(request);
   const m = /bytes=(\d+)-(\d+)/.exec(request.headers.get("range") || "");
   return caches.match(key).then((hit) => {

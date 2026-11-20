@@ -12182,7 +12182,7 @@ function initIndianaExplorer() {
   // the old index (in memory or in the offline worker's cache) can be handed
   // bytes of the new file at old positions. Each range's Last-Modified is held
   // to the first one's; a change forgets the archive (the card falls back to
-  // the whole file), and the next open asks with cache: "reload", which the
+  // the whole file), and the next open asks with cache: "no-store", which the
   // worker reads as "drop what you hold of this archive" (ENGINE sw-handlers).
   var tileArchivesChanged = {};
   function tileRangeFetcher(url, onChanged) {
@@ -12191,7 +12191,7 @@ function initIndianaExplorer() {
     return function (offset, length) {
       if (whole) return whole.then(function (buf) { return buf.slice(offset, offset + length); });
       var init = { headers: { Range: "bytes=" + offset + "-" + (offset + length - 1) } };
-      if (reload) { init.cache = "reload"; reload = false; }
+      if (reload) { init.cache = "no-store"; reload = false; }
       return fetch(url, init).then(function (res) {
         if (res.status === 206) {
           var v = res.headers.get("Last-Modified") || "";
