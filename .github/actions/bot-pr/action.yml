@@ -1,0 +1,35 @@
+# Commit what the calling step staged, push it to the bot branch, and open a
+# pull request for it, or refresh the one already open. The caller cuts the
+# branch from main, regenerates and runs `git add` itself, so the gates that
+# read a workflow's `git add` line (build_county_pages.py, build_about_page.py,
+# build_eam_status.py, validate_workflow_checkout.py and the rest) still see it.
+# Every value reaches the shell through env, never through ${{ }} inside run.
+name: Open or update a bot pull request
+description: Commit the staged files, force-push the bot branch, and open its pull request if none is open.
+inputs:
+  branch: { description: "The bot branch, already checked out by the caller", required: true }
+  commit: { description: "Commit message", required: true }
+  title: { description: "Pull request title", required: true }
+  body: { description: "Pull request body", required: true }
+  token: { description: "BOT_PR_TOKEN, so the pull request runs CI", required: true }
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        BRANCH: ${{ inputs.branch }}
+        COMMIT: ${{ inputs.commit }}
+        TITLE: ${{ inputs.title }}
+        BODY: ${{ inputs.body }}
+      run: |
+        set -euo pipefail
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git commit -m "$COMMIT"
+        git push -u origin "$BRANCH" --force
+        if [ -z "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]; then
+          gh pr create --title "$TITLE" --body "$BODY" --base main --head "$BRANCH"
+        else
+          echo "PR already open for $BRANCH; force-push refreshed it."
+        fi
