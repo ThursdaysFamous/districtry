@@ -869,7 +869,7 @@ try {
         geocoderCalls += 1;
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) });
       });
-      await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+      await p.route("**/lookup.districtry.com/**", (route) => {
         lookupAsked.push(new URL(route.request().url()).searchParams.get("u"));
         route.fulfill({ status: 200, contentType: "application/json",
           body: JSON.stringify({ url: "https://www.google.com/maps/place/Daley+Plaza/@41.8836,-87.6314,17z/data=!3m1!4b1!8m2!3d41.88395!4d-87.63022" }) });
@@ -901,7 +901,7 @@ try {
     const page = await booted(context, `${BASE}#q=${encodeURIComponent(shortLink)}`, async (p) => {
       await p.route("**/photon.komoot.io/**", (route) => route.fulfill({ status: 200, contentType: "application/json",
         body: JSON.stringify({ type: "FeatureCollection", features: [] }) }));
-      await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+      await p.route("**/lookup.districtry.com/**", (route) => {
         const u = new URL(route.request().url()).searchParams.get("u");
         const n = tries[u] = (tries[u] || 0) + 1;
         if (u === deadLink || n === 1) return route.abort("failed");
@@ -1000,7 +1000,7 @@ try {
           route.fulfill({ status: 200, contentType: "application/json",
             body: JSON.stringify({ type: "FeatureCollection", features: answer(q, bounded) }) });
         });
-        await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+        await p.route("**/lookup.districtry.com/**", (route) => {
           const u = new URL(route.request().url());
           if (u.searchParams.has("a")) {
             lookedUp.push(u.searchParams.get("a"));
@@ -1535,7 +1535,7 @@ try {
           route.fulfill({ status: 200, contentType: "application/json",
             body: JSON.stringify({ type: "FeatureCollection", features: answer ? answer(q) : [] }) });
         });
-        await p.route("**/link-lookup.districtry.deno.net/**", (route) => {
+        await p.route("**/lookup.districtry.com/**", (route) => {
           looked.push(new URL(route.request().url()).searchParams.get("u"));
           route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: WI_FULL }) });
         });

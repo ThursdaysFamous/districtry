@@ -243,7 +243,7 @@ try {
       route.fulfill({ status: c.geoStatus || 200, headers: cors, contentType: "application/json",
         body: JSON.stringify(c.geo || {}) });
     });
-    await page.route("**/link-lookup.districtry.deno.net/**", (route) => {
+    await page.route("**/lookup.districtry.com/**", (route) => {
       const a = new URL(route.request().url()).searchParams.get("a");
       censusAsked.push(a);
       const c = pinAnswers[a];

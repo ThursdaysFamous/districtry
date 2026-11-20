@@ -41,10 +41,9 @@
 // Census host publishes no robots.txt in any case (HTTP 404, read
 // 2026-10-17).
 //
-// PRIVACY. The host that runs this (Cloudflare from the switch onward, Deno
-// until then) and Google or Apple, which answer it, receive the short link.
-// The host and the Census Bureau receive the address on the address route.
-// Google, Apple and the Census Bureau see the host's address, not the
+// PRIVACY. Cloudflare, which runs this, and Google or Apple, which answer it, receive the short link.
+// Cloudflare and the Census Bureau receive the address on the address route.
+// Google, Apple and the Census Bureau see Cloudflare's address, not the
 // reader's. privacy.html must name each recipient on the day an app's
 // MAP_LINK_LOOKUP points at a route that reaches it. wrangler.toml turns
 // Cloudflare's request logs off for this Worker.
@@ -53,12 +52,11 @@
 // moves to a Cloudflare Worker, `link-lookup`, answering at
 // https://lookup.districtry.com/ (wrangler.toml). The address is on
 // districtry's own domain so that a later move changes a DNS record and not
-// every app. Until the apps switch to it, the Deno Deploy app `link-lookup`
-// in the `districtry` organization keeps answering from the version deployed
-// there; it was unlinked from this repository on 2026-10-14 because a linked
+// every app. The apps switched to it on the merge of this change. The Deno
+// Deploy app `link-lookup` in the `districtry` organization keeps answering
+// pages loaded before the switch until Deno shuts down; it was unlinked from this repository on 2026-10-14 because a linked
 // app copied the whole repository on every push (79 builds, about 15.5 GiB,
-// in 21 hours), and must not be linked again. The same file runs on both:
-// Cloudflare calls the default export, Deno the Deno.serve line at the end.
+// in 21 hours), and must not be linked again.
 //
 // DEPLOY: .github/workflows/deploy-link-lookup.yml deploys this folder to
 // Cloudflare on every push to main that changes it, after running the test,
@@ -221,6 +219,3 @@ export async function handler(req: Request): Promise<Response> {
 
 // Cloudflare Workers call this.
 export default { fetch: handler };
-
-// Deno Deploy runs this line, until the apps switch to Cloudflare.
-if (import.meta.main) Deno.serve(handler);

@@ -9484,7 +9484,7 @@ function initKansasExplorer() {
   /* A SHORT LINK holds no position: only Google or Apple knows where it
    * leads, and a page cannot ask them, because a browser does not let a page
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
-   * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
+   * lookup (services/link-lookup/main.ts, a Cloudflare Worker), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
    * A short link is sent to it only when a reader pastes one or shares one
    * into the installed app. An app's search also sends it an address a
@@ -9492,20 +9492,20 @@ function initKansasExplorer() {
    * Bureau's geocoder, when the map's own search holds the street and not
    * the house number (ENGINE geocoder-search lookupAddressRanges); the front
    * door never does.
-   * The address is the app's own name on Deno, not the suffixed address
-   * Deno also serves it at. The lookup's host receives the short link, so
+   * The address is on districtry's own domain, so a change of host is a DNS
+   * change and not an app change. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
    * here is a change there too. */
-  var MAP_LINK_LOOKUP = "https://link-lookup.districtry.deno.net/";
+  var MAP_LINK_LOOKUP = "https://lookup.districtry.com/";
 
   /* A LOOKUP THAT FAILS ONCE CAN ANSWER A MOMENT LATER. On 2026-10-14 a
    * place shared from the Google Maps app into the installed app on a phone
    * was told its short link couldn't be read, and minutes later the lookup
    * answered the same link at once, six times in a row, and on the live
    * site through the installed app's launcher at a phone's size. The
-   * lookup's own code records nothing, but Deno keeps a trace of each
-   * request for one day, in the Deno account rather than anywhere this code
-   * can read, and that request's trace, read the same day, holds one fetch:
+   * lookup's own code records nothing, but Deno, which ran it then, kept a
+   * trace of each request for one day, in the Deno account rather than
+   * anywhere this code can read, and that request's trace, read the same day, holds one fetch:
    * the lookup asked the short link's own host, which answered 404 in 107 ms.
    * That is the answer the host gives a link that does not exist ("Dynamic
    * Link Not Found", measured the same evening with a made-up one), so

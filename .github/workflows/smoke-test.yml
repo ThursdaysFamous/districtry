@@ -893,8 +893,8 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/map_link_test.mjs
 
-      # The short-link lookup is the one piece of server code, deployed by hand
-      # to Deno; its list of allowed hosts is what stops it following a link
+      # The short-link lookup is the one piece of server code, deployed to
+      # Cloudflare by deploy-link-lookup.yml; its list of allowed hosts is what stops it following a link
       # anywhere, so a pull request that breaks that list fails here first.
       - name: The short-link lookup follows only Google and Apple links
         if: ${{ !cancelled() }}
