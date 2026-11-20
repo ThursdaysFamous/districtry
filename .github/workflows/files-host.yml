@@ -38,6 +38,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
       - name: Read files.districtry.com as a map does, against main's files
         run: |
           git worktree add --detach "$RUNNER_TEMP/main" origin/main

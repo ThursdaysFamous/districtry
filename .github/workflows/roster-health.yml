@@ -42,6 +42,7 @@ jobs:
           # the comparison is skipped, and every red reads as FAILING — safe,
           # but it would put McHenry-shaped already-fixed runs back on the issue.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

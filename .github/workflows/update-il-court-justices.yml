@@ -52,6 +52,7 @@ jobs:
           # Under a depth-1 checkout every entry takes today's date and the sitemap check
           # passes on it anyway — the measurement is in update-wi-circuit-court-roster.yml.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

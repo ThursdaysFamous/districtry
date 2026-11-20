@@ -41,6 +41,7 @@ jobs:
           # fetched commit as the last commit of EVERY file, so every entry takes
           # today's date and `build_sitemap.py --check` passes on it anyway.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

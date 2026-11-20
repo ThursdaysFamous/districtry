@@ -39,6 +39,7 @@ jobs:
           # cannot silently stamp every page with today's date. Measured
           # 2026-09-19: a depth-1 clone moves 243 of 243 lastmods, a full clone 0.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

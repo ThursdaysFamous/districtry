@@ -68,6 +68,8 @@
 // hand deploy. Deno puts a revision live only once its build succeeds
 // (docs.deno.com/deploy/reference/builds, read 2026-10-17), so a wrong
 // setting leaves the current version answering.
+// Run the test first (node --experimental-strip-types --test main_test.ts, or
+// deno test); CI runs it on every pull request.
 // Then check it answers: ?u=https://example.com/ must return a 400 that names
 // short links, a real maps.app.goo.gl link must return {"url": ...}, and
 // ?a=1600 Pennsylvania Ave NW, Washington, DC 20500 must return a match.
@@ -81,6 +83,7 @@ const SHORT_HOSTS = new Set(["maps.app.goo.gl", "goo.gl", "maps.apple"]);
 // Every host a short link may pass through on its way to a full link.
 const HOP_HOSTS = /^(maps\.app\.goo\.gl|goo\.gl|maps\.apple|maps\.apple\.com|consent\.google\.[a-z.]+|(www\.|maps\.)?google\.[a-z]{2,3}(\.[a-z]{2})?)$/;
 const MAX_HOPS = 6;
+const HOP_TIMEOUT_MS = 7000; // the page gives up at 8 s and asks again, so a stuck hop must not outlive it
 const UA = "districtry-link-lookup/1.0 (+https://districtry.com/privacy.html)";
 
 const CENSUS_GEOCODER = "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress";
@@ -136,6 +139,7 @@ export async function resolve(start: URL, fetchFn: typeof fetch = fetch): Promis
       method: "GET",
       redirect: "manual",
       headers: { "User-Agent": UA, "Accept": "text/html" },
+      signal: AbortSignal.timeout(HOP_TIMEOUT_MS),
     });
     await res.body?.cancel();
     const loc = res.headers.get("location");

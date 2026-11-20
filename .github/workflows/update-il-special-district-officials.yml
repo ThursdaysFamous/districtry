@@ -70,6 +70,7 @@ jobs:
           # build_sitemap.py reads each page's lastmod from that file's own
           # last commit. A shallow clone dates every page today.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       - uses: actions/setup-python@v5
         with:

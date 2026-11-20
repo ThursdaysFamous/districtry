@@ -77,6 +77,7 @@ jobs:
           # The retention gate below reads each roster file as it stands at
           # the base of this change, so it needs history, not a shallow tip.
           fetch-depth: 0
+          filter: blob:none  # every commit, old file contents only on demand
 
       # Conversion 2 drift gate (docs/MECHANIZATION_PLAYBOOK.md): every
       # GENERATED region must match what metro-worksheet.json generates.
@@ -891,6 +892,13 @@ jobs:
       - name: Pasted map links are read as expected
         if: ${{ !cancelled() }}
         run: node scripts/map_link_test.mjs
+
+      # The short-link lookup is the one piece of server code, deployed by hand
+      # to Deno; its list of allowed hosts is what stops it following a link
+      # anywhere, so a pull request that breaks that list fails here first.
+      - name: The short-link lookup follows only Google and Apple links
+        if: ${{ !cancelled() }}
+        run: node --experimental-strip-types --test services/link-lookup/main_test.ts
 
       # A legislator card drops a map pin on the member's district office, and
       # engine/index.html/office-helpers.txt picks the address the pin is

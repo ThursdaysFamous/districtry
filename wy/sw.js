@@ -253,16 +253,32 @@ function rangeKey(request) {
   url.searchParams.set("dxrange", request.headers.get("range"));
   return url.href;
 }
-function partial(body, type, from, to, total) {
+// Last-Modified is kept on every copy because the page holds each range's to
+// the archive's first one, to notice an archive rebuilt while it was open
+// (ENGINE vector-tiles tileRangeFetcher).
+function partial(body, type, from, to, total, modified) {
   return new Response(body, {
     status: 206,
     headers: {
       "Content-Type": type || "application/octet-stream",
-      "Content-Range": "bytes " + from + "-" + to + "/" + total
+      "Content-Range": "bytes " + from + "-" + to + "/" + total,
+      "Last-Modified": modified || ""
     }
   });
 }
+// The page asks with cache: "no-store" after it found an archive changed
+// under it (not "reload": Chrome gives that to every request a reloading page
+// makes): every copy of that archive held here is from before, so drop them all.
+function dropArchive(url) {
+  const base = url.split("?")[0];
+  return caches.open(CACHE_NAME).then((cache) =>
+    cache.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k.url.split("?")[0] === base).map((k) => cache.delete(k)))
+    )
+  );
+}
 function cachedRange(request) {
+  if (request.cache === "no-store") return dropArchive(request.url).then(() => rangeFromNetwork(request));
   const key = rangeKey(request);
   const m = /bytes=(\d+)-(\d+)/.exec(request.headers.get("range") || "");
   return caches.match(key).then((hit) => {
@@ -271,7 +287,8 @@ function cachedRange(request) {
         status: 206,
         headers: {
           "Content-Type": hit.headers.get("Content-Type") || "application/octet-stream",
-          "Content-Range": hit.headers.get("X-Content-Range") || ""
+          "Content-Range": hit.headers.get("X-Content-Range") || "",
+          "Last-Modified": hit.headers.get("Last-Modified") || ""
         }
       }));
     }
@@ -279,27 +296,33 @@ function cachedRange(request) {
       if (whole && m) {
         return whole.arrayBuffer().then((buf) => {
           const from = +m[1], to = Math.min(+m[2], buf.byteLength - 1);
-          return partial(buf.slice(from, to + 1), whole.headers.get("Content-Type"), from, to, buf.byteLength);
+          return partial(buf.slice(from, to + 1), whole.headers.get("Content-Type"), from, to, buf.byteLength,
+            whole.headers.get("Last-Modified"));
         });
       }
-      return fetch(request).then((response) => {
-        const clone = response.clone();
-        if (response.status === 206) {
-          clone.arrayBuffer().then((body) =>
-            caches.open(CACHE_NAME).then((cache) => cache.put(key, new Response(body, {
-              status: 200,
-              headers: {
-                "Content-Type": clone.headers.get("Content-Type") || "application/octet-stream",
-                "X-Content-Range": clone.headers.get("Content-Range") || ""
-              }
-            })))
-          );
-        } else if (response.ok) {
-          caches.open(CACHE_NAME).then((cache) => cache.put(request.url, clone));
-        }
-        return response;
-      });
+      return rangeFromNetwork(request);
     });
+  });
+}
+function rangeFromNetwork(request) {
+  const key = rangeKey(request);
+  return fetch(request).then((response) => {
+    const clone = response.clone();
+    if (response.status === 206) {
+      clone.arrayBuffer().then((body) =>
+        caches.open(CACHE_NAME).then((cache) => cache.put(key, new Response(body, {
+          status: 200,
+          headers: {
+            "Content-Type": clone.headers.get("Content-Type") || "application/octet-stream",
+            "X-Content-Range": clone.headers.get("Content-Range") || "",
+            "Last-Modified": clone.headers.get("Last-Modified") || ""
+          }
+        })))
+      );
+    } else if (response.ok) {
+      caches.open(CACHE_NAME).then((cache) => cache.put(request.url, clone));
+    }
+    return response;
   });
 }
 
