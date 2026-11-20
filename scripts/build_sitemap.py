@@ -42,6 +42,20 @@ changefreq and priority.
     and leaves the trap; reading the working tree fixes the class. In CI the
     tree is clean, so this changes nothing there.
 
+  * NO LASTMOD AT ALL for a page rewritten every day straight on main, which
+    is traffic.html alone (NO_LASTMOD below, 2026-11-20). The daily traffic
+    report commits it to main each morning, so its true date moved every day,
+    and every branch that regenerated this file wrote the date its own base
+    had for that page. Two branches cut on different days wrote different
+    dates on the same line, and whenever the report had to move the date
+    itself (on the day the shipped one fell two days behind) every roster pull
+    request opened before it conflicted on that one line: four of seven open
+    ones on 2026-11-20, each needing a rebuild for nothing a reader sees. A
+    date that cannot stay true for a day is not worth the line, so the entry
+    carries none, which the sitemap protocol allows and which states nothing
+    rather than something stale. Its line is then the same on every branch
+    whatever day it was built, and --check fails if a date comes back.
+
   * CHANGEFREQ and PRIORITY are per page TYPE, from the table below. Google has
     ignored both since 2023; they are kept because they were already there and
     dropping them is an editorial change, not a drift fix. The table was
@@ -170,6 +184,17 @@ RULES = {
 }
 
 
+# Pages whose entry carries no lastmod, each with the reason. See NO LASTMOD
+# in the docstring. An entry naming a page the sitemap does not list FAILS
+# both paths, so a renamed or retired page cannot leave a stale exemption.
+NO_LASTMOD = {
+    "traffic.html": "rewritten every day straight on main by the daily traffic "
+                    "report, so a date here differed between branches built on "
+                    "different days and every roster pull request conflicted "
+                    "on it (2026-11-20)",
+}
+
+
 # Files with no commit yet, collected rather than printed one line at a time:
 # adding il/county-board/ put 73 of them in one run, which buried the result.
 NEW_FILES = []
@@ -229,6 +254,11 @@ def last_commit_date(rel, dirty=frozenset()):
     return out
 
 
+def loc_for(rel):
+    """The address a page serves at: an index.html serves at its directory."""
+    return BASE + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+
+
 def collect():
     dirty = _dirty()
     files = sorted(glob.glob(os.path.join(REPO, "*.html")))
@@ -242,9 +272,10 @@ def collect():
         text = open(path, encoding="utf-8", errors="replace").read()
         if REFRESH.search(text) or NOINDEX.search(text):
             continue
-        loc = BASE + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+        loc = loc_for(rel)
         freq, prio = RULES[page_type(rel)]
-        rows.append((loc, last_commit_date(rel, dirty), freq, prio))
+        mod = "" if rel in NO_LASTMOD else last_commit_date(rel, dirty)
+        rows.append((loc, mod, freq, prio))
     # Sitemap order is priority first, then path, so the file reads as a
     # ranking rather than as whatever order the filesystem returned.
     rows.sort(key=lambda r: (-float(r[3]), r[0]))
@@ -308,9 +339,11 @@ def parse_urlset(text, label):
 def render(rows):
     out = [HEADER]
     for loc, mod, freq, prio in rows:
-        out.append("  <url>\n    <loc>%s</loc>\n    <lastmod>%s</lastmod>\n"
+        # An entry in NO_LASTMOD carries an empty date and gets no element.
+        lastmod = "    <lastmod>%s</lastmod>\n" % mod if mod else ""
+        out.append("  <url>\n    <loc>%s</loc>\n%s"
                    "    <changefreq>%s</changefreq>\n    <priority>%s</priority>\n  </url>\n"
-                   % (loc, mod, freq, prio))
+                   % (loc, lastmod, freq, prio))
     out.append("</urlset>\n")
     return "".join(out)
 
@@ -330,6 +363,15 @@ def main():
         return 1
 
     rows = collect()
+    listed = {r[0] for r in rows}
+    orphans = sorted(rel for rel in NO_LASTMOD if loc_for(rel) not in listed)
+    if orphans:
+        sys.stderr.write(
+            "build-sitemap: FAIL — NO_LASTMOD names %d page(s) the sitemap does "
+            "not list: %s\n"
+            "  Remove the entry, or fix its path.\n"
+            % (len(orphans), ", ".join(orphans)))
+        return 1
     if NEW_FILES:
         sys.stderr.write(
             "build-sitemap: %d file(s) have no commit yet — dated today (%s%s)\n"
@@ -357,6 +399,13 @@ def main():
             if (got[1], got[2]) != (freq, prio):
                 problems.append("FIELDS   %s  %s/%s -> %s/%s"
                                 % (loc, got[1], got[2], freq, prio))
+            if not mod or not got[0]:
+                # One side has no date: exact, because an entry in NO_LASTMOD
+                # must carry none and every other entry must carry one.
+                if mod != got[0]:
+                    problems.append("LASTMOD  %s  %s -> %s"
+                                    % (loc, got[0] or "(none)", mod or "(none)"))
+                continue
             behind = (datetime.date.fromisoformat(mod)
                       - datetime.date.fromisoformat(got[0])).days
             if behind >= 2:
