@@ -62,7 +62,7 @@
   "11": {
     "name": "Tiffany Strout",
     "party": "Republican",
-    "email": "Tiffany.Strout@legislature.maine.gov",
+    "email": "tiffany.strout@legislature.maine.gov",
     "phone": "207-598-7043"
   },
   "12": {
@@ -80,7 +80,7 @@
   "14": {
     "name": "Gary Friedmann",
     "party": "Democratic",
-    "email": "Gary.Friedmann@legislature.maine.gov",
+    "email": "gary.friedmann@legislature.maine.gov",
     "phone": "207-460-7362"
   },
   "15": {
@@ -176,7 +176,7 @@
   "30": {
     "name": "James White",
     "party": "Republican",
-    "email": "James.White@legislature.maine.gov",
+    "email": "james.white@legislature.maine.gov",
     "phone": "207-564-7308"
   },
   "31": {
@@ -194,7 +194,7 @@
   "33": {
     "name": "Kenneth Fredette",
     "party": "Republican",
-    "email": "Kenneth.Fredette@legislature.maine.gov",
+    "email": "kenneth.fredette@legislature.maine.gov",
     "phone": "207-287-1440"
   },
   "34": {
@@ -365,7 +365,7 @@
   "62": {
     "name": "Katrina Smith",
     "party": "Republican",
-    "email": "Katrina.Smith@legislature.maine.gov",
+    "email": "katrina.smith@legislature.maine.gov",
     "phone": "207-230-9583"
   },
   "63": {
@@ -431,7 +431,7 @@
   "73": {
     "name": "Michael Soboleski",
     "party": "Republican",
-    "email": "Michael.Soboleski@legislature.maine.gov",
+    "email": "michael.soboleski@legislature.maine.gov",
     "phone": "207-400-7233"
   },
   "74": {
@@ -455,13 +455,13 @@
   "77": {
     "name": "Tammy Schmersal-Burgess",
     "party": "Republican",
-    "email": "Tammy.Schmersal-Burgess@legislature.maine.gov",
+    "email": "tammy.schmersal-burgess@legislature.maine.gov",
     "phone": "207-357-7179"
   },
   "78": {
     "name": "Rachel Henderson",
     "party": "Republican",
-    "email": "Rachel.Henderson@legislature.maine.gov",
+    "email": "rachel.henderson@legislature.maine.gov",
     "phone": "207-381-4237"
   },
   "79": {
@@ -545,7 +545,7 @@
   "92": {
     "name": "Stephen Wood",
     "party": "Republican",
-    "email": "Stephen.Wood@legislature.maine.gov",
+    "email": "stephen.wood@legislature.maine.gov",
     "phone": "207-740-3723"
   },
   "93": {
@@ -749,7 +749,7 @@
   "126": {
     "name": "Drew Gattine",
     "party": "Democratic",
-    "email": "Andrew.Gattine@legislature.maine.gov",
+    "email": "andrew.gattine@legislature.maine.gov",
     "phone": "207-409-3477"
   },
   "127": {
@@ -837,10 +837,7 @@
     "phone": "207-229-5195"
   },
   "141": {
-    "name": "Lucas Lanigan",
-    "party": "Republican",
-    "email": "Lucas.Lanigan@legislature.maine.gov",
-    "phone": "207-351-5383"
+    "asOf": "2026-11-20"
   },
   "142": {
     "name": "Anne-Marie Mastraccio",
