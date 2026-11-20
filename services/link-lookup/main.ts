@@ -1,4 +1,4 @@
-// districtry's short-link lookup, run on Deno Deploy.
+// districtry's short-link lookup, run as a Cloudflare Worker (see WHERE IT RUNS).
 //
 // WHAT IT IS FOR. A short Google Maps or Apple Maps link (maps.app.goo.gl/…,
 // goo.gl/maps/…, maps.apple/p/…) holds no position: only Google or Apple knows
@@ -41,37 +41,36 @@
 // Census host publishes no robots.txt in any case (HTTP 404, read
 // 2026-10-17).
 //
-// PRIVACY. Deno, which runs this, and Google or Apple, which answer it,
-// receive the short link. Deno and the Census Bureau receive the address on
-// the address route. Google, Apple and the Census Bureau see Deno's address,
-// not the reader's. privacy.html must name each recipient on the day an
-// app's MAP_LINK_LOOKUP points at a route that reaches it.
+// PRIVACY. The host that runs this (Cloudflare from the switch onward, Deno
+// until then) and Google or Apple, which answer it, receive the short link.
+// The host and the Census Bureau receive the address on the address route.
+// Google, Apple and the Census Bureau see the host's address, not the
+// reader's. privacy.html must name each recipient on the day an app's
+// MAP_LINK_LOOKUP points at a route that reaches it. wrangler.toml turns
+// Cloudflare's request logs off for this Worker.
 //
-// DEPLOY: the Deno Deploy app `link-lookup` in the `districtry` organization,
-// with this file as its entry point. It needs no environment variables and no
-// secrets.
-// The app is NOT linked to this repository, and must not be linked again.
-// A linked app rebuilds on every push to every branch, and each build takes
-// a full copy of the repository: 200 MiB compressed, measured with
-// `git archive` on 2026-10-14. The app was linked on 2026-10-13, and in
-// about 21 hours there were 79 builds (26 from main, 53 from work branches),
-// about 15.5 GiB. The Free plan allows 20 GiB of egress a month, and Deno
-// sent a 75% usage alert the next morning. Adam unlinked the repository on
-// 2026-10-14. The version deployed then keeps serving.
+// WHERE IT RUNS (2026-11-20). Deno Deploy shuts down in April 2027, so this
+// moves to a Cloudflare Worker, `link-lookup`, answering at
+// https://lookup.districtry.com/ (wrangler.toml). The address is on
+// districtry's own domain so that a later move changes a DNS record and not
+// every app. Until the apps switch to it, the Deno Deploy app `link-lookup`
+// in the `districtry` organization keeps answering from the version deployed
+// there; it was unlinked from this repository on 2026-10-14 because a linked
+// app copied the whole repository on every push (79 builds, about 15.5 GiB,
+// in 21 hours), and must not be linked again. The same file runs on both:
+// Cloudflare calls the default export, Deno the Deno.serve line at the end.
 //
-// To change this file, deploy it by hand from this folder, so that the folder
-// is all that is uploaded:
-//   cd services/link-lookup && deno deploy --org districtry --app link-lookup --prod
-// Since only this folder is uploaded, the app's settings in Deno's console
-// must read an empty App directory and the Entrypoint main.ts. The app was
-// set up while it read the whole repository, so check both before the first
-// hand deploy. Deno puts a revision live only once its build succeeds
-// (docs.deno.com/deploy/reference/builds, read 2026-10-17), so a wrong
-// setting leaves the current version answering.
-// Run the test first (node --experimental-strip-types --test main_test.ts, or
-// deno test); CI runs it on every pull request.
-// Then check it answers: ?u=https://example.com/ must return a 400 that names
-// short links, a real maps.app.goo.gl link must return {"url": ...}, and
+// DEPLOY: .github/workflows/deploy-link-lookup.yml deploys this folder to
+// Cloudflare on every push to main that changes it, after running the test,
+// and then checks the live address answers. It needs the repository secret
+// CLOUDFLARE_API_TOKEN (a token made from Cloudflare's "Edit Cloudflare
+// Workers" template, limited to the districtry account and zone). wrangler
+// uploads one bundled file of about 5 KiB, not the repository.
+// To deploy by hand instead: cd services/link-lookup && npx wrangler deploy.
+// Run the test first (node --experimental-strip-types --test main_test.ts);
+// CI runs it on every pull request. Then check it answers:
+// ?u=https://example.com/ must return a 400 that names short links, a real
+// maps.app.goo.gl link must return {"url": ...}, and
 // ?a=1600 Pennsylvania Ave NW, Washington, DC 20500 must return a match.
 
 const ALLOWED_ORIGINS = new Set([
@@ -220,4 +219,8 @@ export async function handler(req: Request): Promise<Response> {
   }
 }
 
+// Cloudflare Workers call this.
+export default { fetch: handler };
+
+// Deno Deploy runs this line, until the apps switch to Cloudflare.
 if (import.meta.main) Deno.serve(handler);

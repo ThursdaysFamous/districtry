@@ -1,0 +1,72 @@
+name: Deploy the short-link lookup
+
+# The short-link lookup (services/link-lookup/main.ts) is a Cloudflare Worker
+# answering at https://lookup.districtry.com/. This deploys it whenever main
+# changes that folder, so a merged fix is live without anyone deploying by
+# hand. It moved here from Deno Deploy, which shuts down in April 2027, and
+# whose hand deploys were left undone for days at a time.
+#
+# Needs the repository secret CLOUDFLARE_API_TOKEN: a Cloudflare token made
+# from the "Edit Cloudflare Workers" template, limited to the districtry
+# account and the districtry.com zone. wrangler uploads one bundled file of
+# about 5 KiB, never the repository. Nothing here writes to git.
+on:
+  push:
+    branches: [main]
+    paths: ['services/link-lookup/**', '.github/workflows/deploy-link-lookup.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-link-lookup
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: services/link-lookup
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: services/link-lookup
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: The lookup follows only Google and Apple links
+        run: node --experimental-strip-types --test main_test.ts
+
+      - name: Deploy to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          WRANGLER_SEND_METRICS: "false"
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::The repository secret CLOUDFLARE_API_TOKEN is not set, so nothing was deployed."
+            exit 1
+          fi
+          npx --yes wrangler@4.158.0 deploy
+
+      # A deploy that uploads but does not answer is not a deploy. A new
+      # custom domain can take a minute to answer, so this tries for up to
+      # three. It asks two questions whose answers never change: a link that
+      # is not a short map link gets a 400, and the White House's address
+      # gets a match from the Census Bureau.
+      - name: The live lookup answers
+        run: |
+          base=https://lookup.districtry.com/
+          for i in $(seq 1 18); do
+            code=$(curl -s -o bad.json -w '%{http_code}' -H 'Origin: https://districtry.com' "${base}?u=https://example.com/" || true)
+            [ "$code" = 400 ] && grep -q 'short' bad.json && break
+            sleep 10
+          done
+          [ "$code" = 400 ] || { echo "::error::$base answered $code to a link that is not a short map link (wanted 400)"; exit 1; }
+          curl -sf -G "$base" --data-urlencode 'a=1600 Pennsylvania Ave NW, Washington, DC 20500' -o match.json
+          grep -q '"lat"' match.json || { echo "::error::the address route found no match"; cat match.json; exit 1; }
+          echo "Answers at $base"

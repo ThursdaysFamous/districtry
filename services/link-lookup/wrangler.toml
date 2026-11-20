@@ -1,0 +1,13 @@
+# The Cloudflare Worker that runs the short-link lookup (main.ts says what it
+# does and why). Deployed by .github/workflows/deploy-link-lookup.yml.
+name = "link-lookup"
+main = "main.ts"
+compatibility_date = "2026-11-01"
+# Answer only at districtry's own address, never at a workers.dev one.
+workers_dev = false
+preview_urls = false
+routes = [{ pattern = "lookup.districtry.com", custom_domain = true }]
+
+# No request logs: the privacy page says nothing keeps the links readers share.
+[observability]
+enabled = false
