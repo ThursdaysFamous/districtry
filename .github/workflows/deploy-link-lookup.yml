@@ -59,14 +59,20 @@ jobs:
       # is not a short map link gets a 400, and the White House's address
       # gets a match from the Census Bureau.
       - name: The live lookup answers
+        # A token of our own. The first two deploys (2026-11-20) got a 403
+        # here for three minutes while the same request with curl's default
+        # User-Agent got a 400 from outside GitHub; the likeliest cause,
+        # inferred and not read from the answer, is Cloudflare's Browser
+        # Integrity Check, which sync_r2_files.py met with urllib's default.
         run: |
           base=https://lookup.districtry.com/
+          ua='districtry-deploy-check/1.0 (+https://districtry.com/)'
           for i in $(seq 1 18); do
-            code=$(curl -s -o bad.json -w '%{http_code}' -H 'Origin: https://districtry.com' "${base}?u=https://example.com/" || true)
+            code=$(curl -s -A "$ua" -o bad.json -w '%{http_code}' -H 'Origin: https://districtry.com' "${base}?u=https://example.com/" || true)
             [ "$code" = 400 ] && grep -q 'short' bad.json && break
             sleep 10
           done
-          [ "$code" = 400 ] || { echo "::error::$base answered $code to a link that is not a short map link (wanted 400)"; exit 1; }
-          curl -sf -G "$base" --data-urlencode 'a=1600 Pennsylvania Ave NW, Washington, DC 20500' -o match.json
+          [ "$code" = 400 ] || { echo "::error::$base answered $code to a link that is not a short map link (wanted 400)"; head -c 600 bad.json; exit 1; }
+          curl -sf -A "$ua" -G "$base" --data-urlencode 'a=1600 Pennsylvania Ave NW, Washington, DC 20500' -o match.json
           grep -q '"lat"' match.json || { echo "::error::the address route found no match"; cat match.json; exit 1; }
           echo "Answers at $base"
