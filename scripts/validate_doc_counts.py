@@ -192,7 +192,7 @@ HISTORICAL_COUNTS = [
                "layers, in three pull requests on one day. The running count is "
                "the Status table and the worksheet, which that same summary points at",
      "recorded": "2026-10-01"},
-    {"path": "CLAUDE.md", "name": "Wisconsin", "count": 31,
+    {"path": "docs/PROJECT_RECORD.md", "name": "Wisconsin", "count": 31,
      "reason": "A QUOTATION, not a claim: this gate's own paragraph quotes the "
                "Iowa plan's sentence \"NYC, SF, and Wisconsin (31 layers...)\" to "
                "show why a count takes the nearest instance name. Editing the "
@@ -211,7 +211,7 @@ HISTORICAL_COUNTS = [
     # took, and re-measuring to keep a byte count current is not what that
     # sentence is for: it exists to bound the QR encoder's sizing, and one more
     # layer id moves the payload by a few bytes inside a version that has room.
-    {"path": "CLAUDE.md", "name": "Illinois", "count": 40,
+    {"path": "docs/PROJECT_RECORD.md", "name": "Illinois", "count": 40,
      "reason": "Dated measurement of the longest share permalink (663 bytes, QR "
                "version 18 at L), taken with the then-40 Illinois layers all on. "
                "The figure is the reading it is; re-measuring it is a change to "
@@ -221,7 +221,7 @@ HISTORICAL_COUNTS = [
     # 42nd. The short-form permalink sizing (199 bytes, version 9 at L and 10
     # at M) was measured on 2026-10-09 with the then-41 layers all on; the
     # same reasoning as the entry above keeps it as the reading it was.
-    {"path": "CLAUDE.md", "name": "Illinois", "count": 41,
+    {"path": "docs/PROJECT_RECORD.md", "name": "Illinois", "count": 41,
      "reason": "Dated measurement of the longest short-form share permalink (199 "
                "bytes, QR version 9 at L), taken 2026-10-09 with the then-41 "
                "Illinois layers all on. The figure is the reading it is",

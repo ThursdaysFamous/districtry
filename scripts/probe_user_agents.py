@@ -1127,7 +1127,7 @@ def file_summary(inventory):
 # current figures so the fix is a copy. A file that stops carrying the
 # sentence the gate exists for FAILS as orphaned — the property ACCEPTED_DROPS
 # and EXPECTED_UNREACHABLE already have.
-DOC_COUNT_FILES = ("CLAUDE.md", "docs/DATA_LAYER_GUIDEBOOK.md", "scripts/scraper_common.py")
+DOC_COUNT_FILES = ("docs/PROJECT_RECORD.md", "docs/DATA_LAYER_GUIDEBOOK.md", "scripts/scraper_common.py")
 DOC_COUNT_PATTERNS = (
     # (figure key(s), regex over whitespace-collapsed text)
     ("files_browser", r"(\d+) files send a browser string"),
