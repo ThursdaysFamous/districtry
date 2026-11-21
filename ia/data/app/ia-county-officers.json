@@ -831,6 +831,7 @@
    }
   ],
   "treasurer": {
+   "email": "cherokeetreas@co.cherokee.ia.us",
    "name": "Rob Byers",
    "party": "Republican",
    "phone": "(712) 225-6740"
@@ -1071,7 +1072,6 @@
   }
  },
  "19047": {
-  "boardPhone": "(712) 263-5356",
   "county": "Crawford",
   "countyAttorney": {
    "email": "colin.johnson@crawfordca.org",
@@ -1090,30 +1090,7 @@
    "name": "James Steinkuehler",
    "phone": "(712) 263-2146"
   },
-  "supervisorPlan": "PLAN 1",
-  "supervisorSeats": 5,
-  "supervisors": [
-   {
-    "name": "Craig Dozark",
-    "party": "Republican"
-   },
-   {
-    "name": "Jean Heiden",
-    "party": "Republican"
-   },
-   {
-    "name": "Dave Muhlbauer",
-    "party": "Democratic"
-   },
-   {
-    "name": "Ty Rosburg",
-    "party": "Republican"
-   },
-   {
-    "name": "Kyle Schultz",
-    "party": "Republican"
-   }
-  ],
+  "supervisorsWithheld": "the county directory lists 4, and Iowa Code 331.201 allows only 3 or 5",
   "treasurer": {
    "email": "Treasurer@crawfordcounty.iowa.gov",
    "name": "Sheri Neddermeyer",
@@ -1278,7 +1255,8 @@
     "party": "Republican"
    },
    {
-    "name": "Dan Wheeler"
+    "name": "Dan Wheeler",
+    "party": "Republican"
    }
   ],
   "treasurer": {
@@ -3570,9 +3548,6 @@
   "supervisorSeats": 5,
   "supervisors": [
    {
-    "name": "Keith Jones"
-   },
-   {
     "name": "Jeff Jorgensen",
     "party": "Republican"
    },
@@ -3583,6 +3558,9 @@
    {
     "name": "Brian Shea",
     "party": "Republican"
+   },
+   {
+    "name": "Mark Shoemaker"
    },
    {
     "name": "Tim Wichman",

@@ -54,7 +54,7 @@ different thing from one it failed.
 | fl | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 19 | all | 10 of 14 levels |
 | hi | **EAM·** | 5 | 5/5 § | 0 | 0 | by record | 12 | all | 10 of 14 levels |
-| ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
+| ia | **EAM·** | 99 | 99/99 § | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,159 | all | 433 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 25 | all | 11 of 14 levels |
@@ -283,9 +283,10 @@ per county, so each one is named under its state below.
 
 ### ia — EAM·
 
+- **Examined by a statewide record:** `ia-board-chair`, `ia-polling-places` account for every county in the state, which is what Examined rests on here: 98 of 99 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (37):** re-checked on a stated cadence rather than by a job — `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `franklin-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-polling-places.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `ia/data/app/population/`, `state-counties.json`, `tama-county-outline.json`, `waterloo-wards.json`, `west-des-moines-wards.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 94 of 99 counties name a governing body and draw it where it is elected by district; 5 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **4. The county governing body, in every county of the state** — open. 93 of 99 counties name a governing body and draw it where it is elected by district; 5 more name a body elected by district whose districts are not drawn, or not matched to their members
 
 ### id — EAM·
 
