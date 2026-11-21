@@ -981,7 +981,7 @@ footer.site-footer a { color: var(--accent-deep); }
     <table class="flow">
       <thead><tr><th>District</th><th>Senator</th><th>Party</th></tr></thead>
       <tbody>
-      <tr><td>District 1</td><td class="who">Not listed</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>District 1</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 1"><span itemprop="name">Scott Houldieson</span></td><td itemprop="affiliation">Democratic</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 2</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 2"><span itemprop="name">Lonnie Randolph</span></td><td itemprop="affiliation">Democratic</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 3</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 3"><span itemprop="name">Mark Spencer</span></td><td itemprop="affiliation">Democratic</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 4</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 4"><span itemprop="name">Rodney Pol</span></td><td itemprop="affiliation">Democratic</td></tr>
@@ -1026,7 +1026,7 @@ footer.site-footer a { color: var(--accent-deep); }
       <tr itemscope itemtype="https://schema.org/Person"><td>District 43</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 43"><span itemprop="name">Randy Maxwell</span></td><td itemprop="affiliation">Republican</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 44</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 44"><span itemprop="name">Eric Koch</span></td><td itemprop="affiliation">Republican</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 45</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 45"><span itemprop="name">Chris Garten</span></td><td itemprop="affiliation">Republican</td></tr>
-      <tr><td>District 46</td><td class="who">Not listed</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>District 46</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 46"><span itemprop="name">Allissa Impink</span></td><td itemprop="affiliation">Democratic</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 47</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 47"><span itemprop="name">Gary Byrne</span></td><td itemprop="affiliation">Republican</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 48</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 48"><span itemprop="name">Daryl Schmitt</span></td><td itemprop="affiliation">Republican</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 49</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 49"><span itemprop="name">James Tomes</span></td><td itemprop="affiliation">Republican</td></tr>
@@ -1159,6 +1159,17 @@ footer.site-footer a { color: var(--accent-deep); }
       "@id": "https://districtry.com/in/state-legislature.html#body-1",
       "name": "Indiana Senate",
       "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/in/state-legislature.html#role-1-1-district-1",
+          "roleName": "Senator",
+          "namedPosition": "District 1",
+          "member": {
+            "@type": "Person",
+            "name": "Scott Houldieson",
+            "affiliation": "Democratic"
+          }
+        },
         {
           "@type": "OrganizationRole",
           "@id": "https://districtry.com/in/state-legislature.html#role-1-2-district-2",
@@ -1645,6 +1656,17 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
+          "@id": "https://districtry.com/in/state-legislature.html#role-1-46-district-46",
+          "roleName": "Senator",
+          "namedPosition": "District 46",
+          "member": {
+            "@type": "Person",
+            "name": "Allissa Impink",
+            "affiliation": "Democratic"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
           "@id": "https://districtry.com/in/state-legislature.html#role-1-47-district-47",
           "roleName": "Senator",
           "namedPosition": "District 47",
@@ -1702,7 +1724,10 @@ footer.site-footer a { color: var(--accent-deep); }
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "District 1"
+          "name": "District 1",
+          "item": {
+            "@id": "https://districtry.com/in/state-legislature.html#role-1-1-district-1"
+          }
         },
         {
           "@type": "ListItem",
@@ -2059,7 +2084,10 @@ footer.site-footer a { color: var(--accent-deep); }
         {
           "@type": "ListItem",
           "position": 46,
-          "name": "District 46"
+          "name": "District 46",
+          "item": {
+            "@id": "https://districtry.com/in/state-legislature.html#role-1-46-district-46"
+          }
         },
         {
           "@type": "ListItem",
