@@ -479,19 +479,13 @@
     "SALINA FIRE": {
       "board": [
         {
-          "email": "Larry.Kirchner@salinatwpfire.org",
-          "name": "Larry Kirchner",
-          "phone": "(815) 953-5042",
-          "role": "President"
-        },
-        {
           "name": "Melanie Bauer",
-          "phone": "(815) 383-3343",
+          "phone": "(815) 935-1411",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "046/150/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {
         "email": "melanie.bauer@salinatwpfire.org"
@@ -521,7 +515,7 @@
       "office": {}
     }
   },
-  "generated": "2026-11-15T01:23:49Z",
+  "generated": "2026-11-22T01:44:46Z",
   "mailGivenForTwo": {
     "46b876bf8dafe6a7": [
       "2448ff72c1d1403d"
