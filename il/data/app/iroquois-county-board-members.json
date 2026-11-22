@@ -13,7 +13,6 @@
     "homeTown": "Chebanse",
     "name": "Paul Ducat",
     "phone": "815-685-3196",
-    "role": "Chairman",
     "termExpires": 2026
    },
    {
@@ -53,6 +52,7 @@
     "homeTown": "Onarga",
     "name": "Kathleen Perkinson",
     "phone": "805-405-2860",
+    "role": "Vice-Chairman",
     "termExpires": 2026
    },
    {
@@ -79,7 +79,7 @@
     "homeTown": "Milford",
     "name": "Jamie Bakken",
     "phone": "217-552-6062",
-    "role": "Vice-Chairman",
+    "role": "Chairman",
     "termExpires": 2028
    },
    {
