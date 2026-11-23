@@ -2,14 +2,19 @@
   "1": {
     "members": [
       {
+        "email": "michael.smith@champaigncountyil.gov",
+        "name": "Michael Smith",
+        "party": "Republican",
+        "term": "Term Ending 11/30/2028"
+      },
+      {
         "email": "ben.crane@champaigncountyil.gov",
         "name": "Ben Crane",
         "party": "Republican",
         "term": "Term Ending 11/30/2026"
       }
     ],
-    "sourceUrl": "https://champaigncountyil.gov/countyboard/cbmembers.php",
-    "vacancies": 1
+    "sourceUrl": "https://champaigncountyil.gov/countyboard/cbmembers.php"
   },
   "10": {
     "members": [
