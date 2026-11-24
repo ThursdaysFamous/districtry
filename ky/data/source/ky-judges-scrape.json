@@ -5,11 +5,11 @@
  "pages": {
   "court-of-appeals-page": 14,
   "jefferson-circuit-court-site": 13,
-  "jefferson-district-court-site": 16,
+  "jefferson-district-court-site": 15,
   "jefferson-family-court-site": 10,
   "supreme-court-page": 7
  },
- "readOn": "2026-10-27",
+ "readOn": "2026-11-24",
  "rows": [
   {
    "court": "Supreme Court",
@@ -144,11 +144,12 @@
   {
    "court": "Court of Appeals",
    "division": 2,
+   "name": "Gregory A. Lay",
+   "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-2.aspx",
    "readFrom": "court-of-appeals-page",
    "role": "Judge",
    "tier": "appeals",
-   "unit": 3,
-   "vacant": true
+   "unit": 3
   },
   {
    "court": "Court of Appeals",
@@ -173,7 +174,7 @@
   {
    "court": "Court of Appeals",
    "division": 1,
-   "name": "Will Moynahan",
+   "name": "Lucy A. VanMeter",
    "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-1.aspx",
    "readFrom": "court-of-appeals-page",
    "role": "Judge",
@@ -1463,12 +1464,11 @@
   {
    "court": "Circuit Court",
    "division": 3,
-   "name": "Lucy A. VanMeter",
-   "profileUrl": null,
    "readFrom": "Fayette",
    "role": "Judge",
    "tier": "circuit",
-   "unit": 22
+   "unit": 22,
+   "vacant": true
   },
   {
    "court": "Circuit Court",
@@ -2495,7 +2495,7 @@
    "name": "Ann Ruttle",
    "profileUrl": null,
    "readFrom": "Kenton",
-   "role": "Chief District Judge",
+   "role": "Judge",
    "tier": "district",
    "unit": 16
   },
@@ -2505,7 +2505,7 @@
    "name": "Kenneth L. Easterling",
    "profileUrl": null,
    "readFrom": "Kenton",
-   "role": "Judge",
+   "role": "Vice-Chief District Judge",
    "tier": "district",
    "unit": 16
   },
@@ -2515,7 +2515,7 @@
    "name": "Douglas J. Grothaus",
    "profileUrl": null,
    "readFrom": "Kenton",
-   "role": "Vice-Chief District Judge",
+   "role": "Chief District Judge",
    "tier": "district",
    "unit": 16
   },
@@ -2542,12 +2542,11 @@
   {
    "court": "Circuit Court",
    "division": 1,
-   "name": "Gregory A. Lay",
-   "profileUrl": null,
    "readFrom": "Knox",
    "role": "Judge",
    "tier": "circuit",
-   "unit": 27
+   "unit": 27,
+   "vacant": true
   },
   {
    "court": "Circuit Court",
@@ -2632,12 +2631,11 @@
   {
    "court": "Circuit Court",
    "division": 1,
-   "name": "Gregory A. Lay",
-   "profileUrl": null,
    "readFrom": "Laurel",
    "role": "Judge",
    "tier": "circuit",
-   "unit": 27
+   "unit": 27,
+   "vacant": true
   },
   {
    "court": "Circuit Court",
@@ -5218,17 +5216,6 @@
    "court": "District Court",
    "division": null,
    "name": "Amber Wolf",
-   "profileUrl": null,
-   "readFrom": "jefferson-district-court-site",
-   "role": "Judge",
-   "sourceUrl": "https://jeffersondistrictcourt.com/districtcourtjudges",
-   "tier": "district",
-   "unit": 30
-  },
-  {
-   "court": "District Court",
-   "division": null,
-   "name": "Mary Jude Wolford",
    "profileUrl": null,
    "readFrom": "jefferson-district-court-site",
    "role": "Judge",
