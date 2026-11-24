@@ -2,14 +2,9 @@
  "0080": {
   "roster": [
    {
-    "name": "J. Conrad Seneca",
-    "role": "President",
-    "note": "from Cattaraugus"
-   },
-   {
     "name": "Tina Abrams",
-    "role": "Councilor",
-    "district": "Allegany"
+    "role": "President",
+    "note": "from Allegany"
    },
    {
     "name": "Rickey L. Armstrong",
@@ -17,12 +12,17 @@
     "district": "Allegany"
    },
    {
-    "name": "Joshua Becker",
+    "name": "Joshua J. Becker",
     "role": "Councilor",
     "district": "Allegany"
    },
    {
-    "name": "Josh Jimerson",
+    "name": "William Canella",
+    "role": "Councilor",
+    "district": "Allegany"
+   },
+   {
+    "name": "Jody Clark",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -32,7 +32,7 @@
     "district": "Allegany"
    },
    {
-    "name": "Odie Porter",
+    "name": "Teresa Redeye",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -52,22 +52,12 @@
     "district": "Cattaraugus"
    },
    {
-    "name": "Jeffrey Gill",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
-    "name": "Geraldine Huff",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
     "name": "Eliot Jimerson",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
    {
-    "name": "Marta Kettle",
+    "name": "Ross John, Sr.",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
@@ -82,30 +72,35 @@
     "district": "Cattaraugus"
    },
    {
+    "name": "Presley Redeye",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
+    "name": "Corbett Seneca",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
     "name": "Jonathan D. Williams",
     "role": "Councilor",
     "district": "Cattaraugus"
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-11-10.",
+  "rosterNote": "From the nation's own council page, read 2026-11-24.",
   "rosterSource": "nation",
   "rosterPage": "https://sni.org/about-our-government/council/",
-  "rosterRead": "2026-11-10",
+  "rosterRead": "2026-11-24",
   "rosterHost": null,
   "rosterMeasured": null
  },
  "0540": {
   "roster": [
    {
-    "name": "J. Conrad Seneca",
-    "role": "President",
-    "note": "from Cattaraugus"
-   },
-   {
     "name": "Tina Abrams",
-    "role": "Councilor",
-    "district": "Allegany"
+    "role": "President",
+    "note": "from Allegany"
    },
    {
     "name": "Rickey L. Armstrong",
@@ -113,12 +108,17 @@
     "district": "Allegany"
    },
    {
-    "name": "Joshua Becker",
+    "name": "Joshua J. Becker",
     "role": "Councilor",
     "district": "Allegany"
    },
    {
-    "name": "Josh Jimerson",
+    "name": "William Canella",
+    "role": "Councilor",
+    "district": "Allegany"
+   },
+   {
+    "name": "Jody Clark",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -128,7 +128,7 @@
     "district": "Allegany"
    },
    {
-    "name": "Odie Porter",
+    "name": "Teresa Redeye",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -148,22 +148,12 @@
     "district": "Cattaraugus"
    },
    {
-    "name": "Jeffrey Gill",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
-    "name": "Geraldine Huff",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
     "name": "Eliot Jimerson",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
    {
-    "name": "Marta Kettle",
+    "name": "Ross John, Sr.",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
@@ -178,30 +168,35 @@
     "district": "Cattaraugus"
    },
    {
+    "name": "Presley Redeye",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
+    "name": "Corbett Seneca",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
     "name": "Jonathan D. Williams",
     "role": "Councilor",
     "district": "Cattaraugus"
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-11-10.",
+  "rosterNote": "From the nation's own council page, read 2026-11-24.",
   "rosterSource": "nation",
   "rosterPage": "https://sni.org/about-our-government/council/",
-  "rosterRead": "2026-11-10",
+  "rosterRead": "2026-11-24",
   "rosterHost": null,
   "rosterMeasured": null
  },
  "2535": {
   "roster": [
    {
-    "name": "J. Conrad Seneca",
-    "role": "President",
-    "note": "from Cattaraugus"
-   },
-   {
     "name": "Tina Abrams",
-    "role": "Councilor",
-    "district": "Allegany"
+    "role": "President",
+    "note": "from Allegany"
    },
    {
     "name": "Rickey L. Armstrong",
@@ -209,12 +204,17 @@
     "district": "Allegany"
    },
    {
-    "name": "Joshua Becker",
+    "name": "Joshua J. Becker",
     "role": "Councilor",
     "district": "Allegany"
    },
    {
-    "name": "Josh Jimerson",
+    "name": "William Canella",
+    "role": "Councilor",
+    "district": "Allegany"
+   },
+   {
+    "name": "Jody Clark",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -224,7 +224,7 @@
     "district": "Allegany"
    },
    {
-    "name": "Odie Porter",
+    "name": "Teresa Redeye",
     "role": "Councilor",
     "district": "Allegany"
    },
@@ -244,22 +244,12 @@
     "district": "Cattaraugus"
    },
    {
-    "name": "Jeffrey Gill",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
-    "name": "Geraldine Huff",
-    "role": "Councilor",
-    "district": "Cattaraugus"
-   },
-   {
     "name": "Eliot Jimerson",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
    {
-    "name": "Marta Kettle",
+    "name": "Ross John, Sr.",
     "role": "Councilor",
     "district": "Cattaraugus"
    },
@@ -274,16 +264,26 @@
     "district": "Cattaraugus"
    },
    {
+    "name": "Presley Redeye",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
+    "name": "Corbett Seneca",
+    "role": "Councilor",
+    "district": "Cattaraugus"
+   },
+   {
     "name": "Jonathan D. Williams",
     "role": "Councilor",
     "district": "Cattaraugus"
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-11-10.",
+  "rosterNote": "From the nation's own council page, read 2026-11-24.",
   "rosterSource": "nation",
   "rosterPage": "https://sni.org/about-our-government/council/",
-  "rosterRead": "2026-11-10",
+  "rosterRead": "2026-11-24",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -315,10 +315,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-11-10.",
+  "rosterNote": "From the nation's own council page, read 2026-11-24.",
   "rosterSource": "nation",
   "rosterPage": "https://www.srmt-nsn.gov/tribal-council",
-  "rosterRead": "2026-11-10",
+  "rosterRead": "2026-11-24",
   "rosterHost": null,
   "rosterMeasured": null
  }

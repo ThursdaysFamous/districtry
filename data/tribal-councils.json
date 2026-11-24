@@ -37,7 +37,7 @@
      "role": "Tribal Council Member"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "0080": {
    "source": "nation",
@@ -48,14 +48,9 @@
    ],
    "members": [
     {
-     "name": "J. Conrad Seneca",
-     "role": "President",
-     "note": "from Cattaraugus"
-    },
-    {
      "name": "Tina Abrams",
-     "role": "Councilor",
-     "district": "Allegany"
+     "role": "President",
+     "note": "from Allegany"
     },
     {
      "name": "Rickey L. Armstrong",
@@ -63,12 +58,17 @@
      "district": "Allegany"
     },
     {
-     "name": "Joshua Becker",
+     "name": "Joshua J. Becker",
      "role": "Councilor",
      "district": "Allegany"
     },
     {
-     "name": "Josh Jimerson",
+     "name": "William Canella",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Jody Clark",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -78,7 +78,7 @@
      "district": "Allegany"
     },
     {
-     "name": "Odie Porter",
+     "name": "Teresa Redeye",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -98,22 +98,12 @@
      "district": "Cattaraugus"
     },
     {
-     "name": "Jeffrey Gill",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
-     "name": "Geraldine Huff",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
      "name": "Eliot Jimerson",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
     {
-     "name": "Marta Kettle",
+     "name": "Ross John, Sr.",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
@@ -128,12 +118,22 @@
      "district": "Cattaraugus"
     },
     {
+     "name": "Presley Redeye",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Corbett Seneca",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
      "name": "Jonathan D. Williams",
      "role": "Councilor",
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0120": {
    "source": "nation",
@@ -163,7 +163,7 @@
      "role": "Tribal Council Member at Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0125": {
    "source": "nation",
@@ -181,7 +181,7 @@
      "role": "Tribal Treasurer"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0140": {
    "source": "nation",
@@ -220,7 +220,7 @@
      "note": "the same page also spells it Connors"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0155": {
    "source": "nation",
@@ -254,7 +254,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0170": {
    "source": "nation",
@@ -284,7 +284,7 @@
      "role": "Treasurer"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0185": {
    "source": "nation",
@@ -319,7 +319,7 @@
      "email": "d.saulque@bentontribe.org"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0225": {
    "source": "nation",
@@ -352,7 +352,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "0250": {
    "source": "nation",
@@ -387,7 +387,7 @@
      "email": "christina.miller@bigpinepaiute.org"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0265": {
    "source": "nation",
@@ -417,7 +417,7 @@
      "role": "Member-at-Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0275": {
    "source": "nation",
@@ -443,7 +443,7 @@
      "role": "Tribal Secretary"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0290": {
    "source": "nation",
@@ -473,7 +473,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0325": {
    "source": "nation",
@@ -503,7 +503,7 @@
      "role": "Councilmember"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0335": {
    "source": "nation",
@@ -561,7 +561,7 @@
      "email": "mildredholmes@boisforte-nsn.gov"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0360": {
    "source": "nation",
@@ -594,7 +594,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "0435": {
    "source": "nation",
@@ -625,7 +625,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0440": {
    "source": "nation",
@@ -663,7 +663,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0510": {
    "source": "nation",
@@ -723,7 +723,7 @@
      "district": "Off-Reservation"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0525": {
    "source": "nation",
@@ -753,7 +753,7 @@
      "role": "Executive Committee Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0540": {
    "source": "nation",
@@ -764,14 +764,9 @@
    ],
    "members": [
     {
-     "name": "J. Conrad Seneca",
-     "role": "President",
-     "note": "from Cattaraugus"
-    },
-    {
      "name": "Tina Abrams",
-     "role": "Councilor",
-     "district": "Allegany"
+     "role": "President",
+     "note": "from Allegany"
     },
     {
      "name": "Rickey L. Armstrong",
@@ -779,12 +774,17 @@
      "district": "Allegany"
     },
     {
-     "name": "Joshua Becker",
+     "name": "Joshua J. Becker",
      "role": "Councilor",
      "district": "Allegany"
     },
     {
-     "name": "Josh Jimerson",
+     "name": "William Canella",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Jody Clark",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -794,7 +794,7 @@
      "district": "Allegany"
     },
     {
-     "name": "Odie Porter",
+     "name": "Teresa Redeye",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -814,22 +814,12 @@
      "district": "Cattaraugus"
     },
     {
-     "name": "Jeffrey Gill",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
-     "name": "Geraldine Huff",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
      "name": "Eliot Jimerson",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
     {
-     "name": "Marta Kettle",
+     "name": "Ross John, Sr.",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
@@ -844,12 +834,22 @@
      "district": "Cattaraugus"
     },
     {
+     "name": "Presley Redeye",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Corbett Seneca",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
      "name": "Jonathan D. Williams",
      "role": "Councilor",
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0575": {
    "source": "nation",
@@ -882,7 +882,7 @@
      "note": "the same page also describes this member as serving as Vice-Chairman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0635": {
    "source": "nation",
@@ -912,7 +912,7 @@
      "role": "Councilman-At-Large"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "0690": {
    "source": "nation",
@@ -945,7 +945,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "0695": {
    "source": "nation",
@@ -975,7 +975,8 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-13",
+   "carriedFrom": "2026-11-13"
   },
   "0735": {
    "source": "nation",
@@ -1021,7 +1022,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0760": {
    "source": "nation",
@@ -1112,7 +1113,7 @@
      "note": "Management and Budget Chair"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0780": {
    "source": "nation",
@@ -1142,7 +1143,7 @@
      "role": "Councilwoman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0820": {
    "source": "nation",
@@ -1262,7 +1263,7 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0940": {
    "source": "nation",
@@ -1322,7 +1323,7 @@
      "district": "Off-Reservation"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0955": {
    "source": "nation",
@@ -1352,7 +1353,7 @@
      "role": "Member at Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0965": {
    "source": "nation",
@@ -1411,7 +1412,7 @@
      "phone": "(208) 759-3100 ext. 1292"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "0975": {
    "source": "nation",
@@ -1440,7 +1441,8 @@
      "email": "thompson.o@duckwatertribe.org"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-13",
+   "carriedFrom": "2026-11-13"
   },
   "1010": {
    "source": "nation",
@@ -1486,7 +1488,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1055": {
    "source": "nation",
@@ -1524,7 +1526,7 @@
      "role": "Tribal Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1070": {
    "source": "nation",
@@ -1562,7 +1564,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1075": {
    "source": "nation",
@@ -1600,7 +1602,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1125": {
    "source": "nation",
@@ -1633,7 +1635,7 @@
      "district": "District II"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1135": {
    "source": "nation",
@@ -1690,7 +1692,7 @@
      "role": "Secretary"
     },
     {
-     "name": "Johnny Hemers",
+     "name": "Nichole Garcia",
      "role": "Council Member"
     },
     {
@@ -1698,11 +1700,11 @@
      "role": "Council Member"
     },
     {
-     "name": "Nichole Garcia",
+     "name": "Amanda McCord",
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1260": {
    "source": "nation",
@@ -1735,7 +1737,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "1280": {
    "source": "nation",
@@ -1773,7 +1775,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1310": {
    "source": "nation",
@@ -1890,7 +1892,7 @@
      "phone": "520-562-9756"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1340": {
    "source": "nation",
@@ -1920,7 +1922,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1370": {
    "source": "nation",
@@ -1958,7 +1960,7 @@
      "role": "Councilor"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1380": {
    "source": "nation",
@@ -1988,7 +1990,7 @@
      "role": "Tribal Representative"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1450": {
    "source": "nation",
@@ -2109,7 +2111,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "1490": {
    "source": "nation",
@@ -2171,7 +2173,7 @@
      "email": "ccarpenter@hoopa-nsn.gov"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1505": {
    "source": "nation",
@@ -2307,7 +2309,7 @@
      "district": "First Mesa Consolidated Villages"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1515": {
    "source": "nation",
@@ -2355,7 +2357,7 @@
      "phone": "707-472-2100 ext. 1408"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1545": {
    "source": "nation",
@@ -2419,7 +2421,7 @@
      "email": "Jonell.Tapija@hualapai-nsn.gov"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1550": {
    "source": "nation",
@@ -2449,7 +2451,7 @@
      "role": "Sergeant-at-Arms"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1555": {
    "source": "nation",
@@ -2482,7 +2484,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "1610": {
    "source": "nation",
@@ -2580,7 +2582,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1690": {
    "source": "nation",
@@ -2610,7 +2612,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1750": {
    "source": "nation",
@@ -2665,7 +2667,7 @@
      "termEnds": "Nov 2, 2027"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1775": {
    "source": "nation",
@@ -2695,7 +2697,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "1815": {
    "source": "nation",
@@ -2733,7 +2735,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1825": {
    "source": "state-list",
@@ -2837,7 +2839,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1895": {
    "source": "nation",
@@ -2867,7 +2869,7 @@
      "role": "Tribal Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1915": {
    "source": "nation",
@@ -2905,7 +2907,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "1940": {
    "source": "nation",
@@ -2938,7 +2940,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "1963": {
    "source": "nation",
@@ -3020,7 +3022,7 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2040": {
    "source": "nation",
@@ -3050,7 +3052,7 @@
      "role": "Secretary/Treasurer"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2055": {
    "source": "nation",
@@ -3089,7 +3091,7 @@
      "email": "dawn.pendleton@lowersioux-nsn.gov"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2070": {
    "source": "nation",
@@ -3143,7 +3145,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2085": {
    "source": "nation",
@@ -3173,7 +3175,7 @@
      "role": "Councilmember"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2130": {
    "source": "nation",
@@ -3200,7 +3202,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2150": {
    "source": "nation",
@@ -3245,7 +3247,7 @@
      "district": "Bradley District"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2175": {
    "source": "nation",
@@ -3291,7 +3293,7 @@
      "role": "Legislator"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2190": {
    "source": "nation",
@@ -3321,7 +3323,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2255": {
    "source": "nation",
@@ -3351,7 +3353,7 @@
      "role": "Tribal Representative"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2285": {
    "source": "nation",
@@ -3421,7 +3423,7 @@
      "note": "White Earth Reservation Secretary/Treasurer"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2300": {
    "source": "nation",
@@ -3520,7 +3522,7 @@
      "district": "Tucker"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2315": {
    "source": "nation",
@@ -3554,7 +3556,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2360": {
    "source": "nation",
@@ -3592,7 +3594,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2375": {
    "source": "nation",
@@ -3638,7 +3640,7 @@
      "role": "Councilmember"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2430": {
    "source": "nation",
@@ -3792,7 +3794,7 @@
      "email": "lesteryazzie@navajo-nsn.gov"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2460": {
    "source": "nation",
@@ -3830,7 +3832,7 @@
      "role": "7th Council"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2475": {
    "source": "nation",
@@ -3872,7 +3874,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2495": {
    "source": "nation",
@@ -3902,7 +3904,7 @@
      "role": "Member at Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2535": {
    "source": "nation",
@@ -3913,14 +3915,9 @@
    ],
    "members": [
     {
-     "name": "J. Conrad Seneca",
-     "role": "President",
-     "note": "from Cattaraugus"
-    },
-    {
      "name": "Tina Abrams",
-     "role": "Councilor",
-     "district": "Allegany"
+     "role": "President",
+     "note": "from Allegany"
     },
     {
      "name": "Rickey L. Armstrong",
@@ -3928,12 +3925,17 @@
      "district": "Allegany"
     },
     {
-     "name": "Joshua Becker",
+     "name": "Joshua J. Becker",
      "role": "Councilor",
      "district": "Allegany"
     },
     {
-     "name": "Josh Jimerson",
+     "name": "William Canella",
+     "role": "Councilor",
+     "district": "Allegany"
+    },
+    {
+     "name": "Jody Clark",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -3943,7 +3945,7 @@
      "district": "Allegany"
     },
     {
-     "name": "Odie Porter",
+     "name": "Teresa Redeye",
      "role": "Councilor",
      "district": "Allegany"
     },
@@ -3963,22 +3965,12 @@
      "district": "Cattaraugus"
     },
     {
-     "name": "Jeffrey Gill",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
-     "name": "Geraldine Huff",
-     "role": "Councilor",
-     "district": "Cattaraugus"
-    },
-    {
      "name": "Eliot Jimerson",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
     {
-     "name": "Marta Kettle",
+     "name": "Ross John, Sr.",
      "role": "Councilor",
      "district": "Cattaraugus"
     },
@@ -3993,12 +3985,22 @@
      "district": "Cattaraugus"
     },
     {
+     "name": "Presley Redeye",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
+     "name": "Corbett Seneca",
+     "role": "Councilor",
+     "district": "Cattaraugus"
+    },
+    {
      "name": "Jonathan D. Williams",
      "role": "Councilor",
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2560": {
    "source": "nation",
@@ -4062,7 +4064,7 @@
      "email": "khill@oneidanation.org"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2635": {
    "source": "nation",
@@ -4098,7 +4100,7 @@
      "phone": "760-891-3535"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2680": {
    "source": "nation",
@@ -4192,7 +4194,7 @@
      "phone": "520.883.5028"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2685": {
    "source": "nation",
@@ -4219,7 +4221,7 @@
      "role": "Tribal Council Member at Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2715": {
    "source": "nation",
@@ -4249,7 +4251,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2775": {
    "source": "nation",
@@ -4287,7 +4289,7 @@
      "role": "Member-at-Large"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2890": {
    "source": "nation",
@@ -4341,7 +4343,7 @@
      "role": "Member At Large"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "2910": {
    "source": "nation",
@@ -4375,7 +4377,7 @@
      "role": "Council Person IV"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2925": {
    "source": "nation",
@@ -4413,7 +4415,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "2980": {
    "source": "nation",
@@ -4475,7 +4477,7 @@
      "termEnds": "2028"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3030": {
    "source": "nation",
@@ -4510,7 +4512,7 @@
      "email": "memberatlarge@quileutetribe.com"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3040": {
    "source": "nation",
@@ -4564,7 +4566,7 @@
      "role": "7th Councilwomen"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3075": {
    "source": "state-list",
@@ -4582,7 +4584,7 @@
      "role": "Assistant Chief"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3085": {
    "source": "nation",
@@ -4645,7 +4647,7 @@
      "termEnds": "July 2027"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3095": {
    "source": "nation",
@@ -4683,7 +4685,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3115": {
    "source": "nation",
@@ -4721,7 +4723,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3145": {
    "source": "nation",
@@ -4756,7 +4758,7 @@
      "email": "kathy.council@puliklatribe.gov"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3220": {
    "source": "nation",
@@ -4794,7 +4796,7 @@
      "role": "Member-At-Large 3"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3250": {
    "source": "nation",
@@ -4845,7 +4847,7 @@
      "termEnds": "2029"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3305": {
    "source": "nation",
@@ -4875,7 +4877,7 @@
      "role": "Representative"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3320": {
    "source": "nation",
@@ -4909,7 +4911,7 @@
      "role": "Sub-Chief"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3340": {
    "source": "nation",
@@ -4962,7 +4964,7 @@
      "district": "Lehi District"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3355": {
    "source": "nation",
@@ -5025,7 +5027,8 @@
      "note": "the council block names this member without an office; the page's menu lists him under the Peridot District office"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-13",
+   "carriedFrom": "2026-11-13"
   },
   "3520": {
    "source": "nation",
@@ -5059,7 +5062,7 @@
      "role": "Delegate"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3540": {
    "source": "nation",
@@ -5089,7 +5092,7 @@
      "role": "Business Committee Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3635": {
    "source": "nation",
@@ -5176,7 +5179,7 @@
      "phone": "906-440-8294"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3665": {
    "source": "nation",
@@ -5209,7 +5212,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "3680": {
    "source": "nation",
@@ -5231,7 +5234,7 @@
      "role": "Secretary/Treasurer"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3735": {
    "source": "nation",
@@ -5269,7 +5272,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3750": {
    "source": "nation",
@@ -5319,7 +5322,7 @@
      "note": "the council block lists this member with no term, unlike the others"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3780": {
    "source": "nation",
@@ -5354,7 +5357,7 @@
      "email": "gshipman@shoalwaterbay-nsn.gov"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3825": {
    "source": "nation",
@@ -5411,7 +5414,7 @@
      "email": "gwilbur@skokomish.org"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3855": {
    "source": "nation",
@@ -5449,7 +5452,7 @@
      "role": "Councilwoman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3860": {
    "source": "nation",
@@ -5499,7 +5502,7 @@
      "role": "Council"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3870": {
    "source": "nation",
@@ -5529,7 +5532,7 @@
      "role": "Sergeant of Arms"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "3885": {
    "source": "state-list",
@@ -5562,7 +5565,7 @@
      "role": "Council Member II"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "3980": {
    "source": "nation",
@@ -5622,7 +5625,7 @@
      "district": "Off-Reservation"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4000": {
    "source": "nation",
@@ -5656,7 +5659,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4015": {
    "source": "nation",
@@ -5694,7 +5697,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "4060": {
    "source": "nation",
@@ -5734,7 +5737,7 @@
      "role": "Member At-Large, Lassen County"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4090": {
    "source": "nation",
@@ -5772,7 +5775,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4110": {
    "source": "nation",
@@ -5802,7 +5805,7 @@
      "role": "Tribal Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4130": {
    "source": "nation",
@@ -5835,7 +5838,7 @@
      "district": "Brighton"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "4180": {
    "source": "nation",
@@ -5870,7 +5873,7 @@
      "email": "jjthompson@timbisha.com"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4200": {
    "source": "nation",
@@ -6056,7 +6059,8 @@
      "termEnds": "6/2027"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-13",
+   "carriedFrom": "2026-11-13"
   },
   "4255": {
    "source": "nation",
@@ -6090,7 +6094,7 @@
      "role": "Tribal Council"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4275": {
    "source": "nation",
@@ -6120,7 +6124,7 @@
      "role": "Council Member Seat #2"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4290": {
    "source": "nation",
@@ -6158,7 +6162,7 @@
      "role": "Board Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4315": {
    "source": "nation",
@@ -6198,7 +6202,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "4405": {
    "source": "nation",
@@ -6244,7 +6248,7 @@
      "role": "Trustee"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4445": {
    "source": "nation",
@@ -6279,7 +6283,7 @@
      "phone": "(320) 564-6329"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "4500": {
    "source": "nation",
@@ -6317,7 +6321,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4515": {
    "source": "nation",
@@ -6362,7 +6366,7 @@
      "email": "swilliams@wrpt.org"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4560": {
    "source": "nation",
@@ -6422,7 +6426,7 @@
      "district": "Off-Reservation"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4595": {
    "source": "nation",
@@ -6459,7 +6463,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "4625": {
    "source": "nation",
@@ -6523,7 +6527,7 @@
      "email": "ireta.frazier@winnebagotribe.com"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "4665": {
    "source": "nation",
@@ -6583,7 +6587,7 @@
      "district": "Off-Reservation"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4690": {
    "source": "nation",
@@ -6663,7 +6667,7 @@
      "note": "Yakama name ‘Piyalaashanmay’"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4708": {
    "source": "nation",
@@ -6709,7 +6713,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4725": {
    "source": "nation",
@@ -6747,7 +6751,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4755": {
    "source": "nation",
@@ -6793,7 +6797,7 @@
      "role": "Councilman"
     }
    ],
-   "read": "2026-11-12"
+   "read": "2026-11-24"
   },
   "4760": {
    "source": "nation",
@@ -6855,7 +6859,7 @@
      "email": "JamieEHolt@yuroktribe.nsn.us"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "4785": {
    "source": "nation",
@@ -6897,7 +6901,7 @@
      "role": "Councilwoman"
     }
    ],
-   "read": "2026-11-13"
+   "read": "2026-11-24"
   },
   "9230": {
    "source": "nation",
@@ -6944,7 +6948,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   },
   "9260": {
    "source": "nation",
@@ -6986,7 +6990,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-11-10"
+   "read": "2026-11-24"
   }
  }
 }
