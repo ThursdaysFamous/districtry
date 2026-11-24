@@ -77,20 +77,12 @@
             {
               "email": "NJANSSEN@MIDWESTACCOUNTINGINC.COM",
               "name": "Nathan Janssen",
-              "phone": "(217) 509-0204",
+              "phone": "(618) 623-2801",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "001/010/06",
-          "filedFor": "2025",
-          "heads": [
-            {
-              "email": "NJANSSEN@MIDWESTACCOUNTINGINC.COM",
-              "name": "Nathan Janssen",
-              "phone": "(217) 509-0204",
-              "role": "Treas./Admin."
-            }
-          ],
+          "filedFor": "2026",
           "office": {}
         },
         "Central Adams Fire": {
@@ -255,19 +247,20 @@
         "Ursa Fire": {
           "board": [
             {
-              "name": "Paul Woodworth",
-              "phone": "(217) 964-2165",
-              "role": "Trustee"
+              "email": "krosevol@adams.net",
+              "name": "Kim Rosevold",
+              "phone": "(217) 964-2293",
+              "role": "Sec./Treas."
             },
             {
-              "email": "norton@adams.net",
+              "email": "krosevol@adams.net",
               "name": "Kim Rosevold",
-              "phone": "(217) 919-7969",
-              "role": "Sec./Treas."
+              "phone": "(217) 964-2293",
+              "role": "Trustee"
             }
           ],
           "comptrollerCode": "001/110/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "email": "ursafire@adams.net"
           }
@@ -1841,7 +1834,7 @@
             }
           ],
           "comptrollerCode": "099/030/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Will",
           "office": {
             "address": "140 Oak Street",
@@ -2867,7 +2860,7 @@
         },
         "SCHAUMBURG PARK DISTRICT": {
           "comptrollerCode": "016/710/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "tlafrenere@parkfun.com",
@@ -4213,7 +4206,7 @@
         },
         "Wood Dale": {
           "comptrollerCode": "022/240/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "pjohl@wdfd.org",
@@ -4246,7 +4239,7 @@
             }
           ],
           "comptrollerCode": "022/250/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "1517 S Meyers Rd",
             "city": "Lombard IL 60148",
@@ -4946,7 +4939,7 @@
         },
         "Westmont": {
           "comptrollerCode": "022/220/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Robert Fleck",
@@ -5972,7 +5965,7 @@
             }
           ],
           "comptrollerCode": "038/190/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Woodland": {
@@ -6323,22 +6316,22 @@
           "office": {}
         },
         "Arden Shore South Fire Protection District": {
-          "board": [
+          "comptrollerCode": "049/016/06",
+          "filedFor": "2026",
+          "heads": [
             {
               "email": "jontomek@gmail.com",
-              "name": "Jon Tomek",
+              "name": "Jonathan Tomek",
               "phone": "(847) 702-6184",
-              "role": "President"
+              "role": "C.E.O."
             },
             {
               "email": "wwsloan@yahoo.com",
               "name": "Walter Sloan",
               "phone": "(847) 609-4631",
-              "role": "Treasurer"
+              "role": "Direc./Treas."
             }
           ],
-          "comptrollerCode": "049/016/06",
-          "filedFor": "2025",
           "office": {}
         },
         "Barrington Countryside Fire Protection District": {
@@ -7531,7 +7524,7 @@
             }
           ],
           "comptrollerCode": "098/060/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Whiteside",
           "office": {
             "phone": "(815) 400-9496"
@@ -7583,24 +7576,24 @@
         "Bethany": {
           "board": [
             {
-              "email": "JMCLAIN228@GMAIL.COM",
-              "name": "Jackie McLain",
+              "email": "trusteebfpd64@gmail.com",
+              "name": "Jackie Mclain",
               "role": "President"
             }
           ],
           "comptrollerCode": "070/020/06",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "filesIn": "Moultrie",
           "heads": [
             {
-              "email": "TNTELLIS05@YAHOO.COM",
-              "name": "Tracy Ellis",
+              "name": "Sherry Risley",
               "role": "Treas./Admin."
             }
           ],
           "office": {
-            "address": "530 E MAIN",
-            "city": "BETHANY IL 61914",
+            "address": "530 E Main",
+            "city": "Bethany IL 61914",
+            "email": "sherry.risley@bethany-fire.com",
             "phone": "(217) 665-3726"
           }
         },
@@ -8054,23 +8047,20 @@
           }
         },
         "St. Jacob Park District": {
-          "comptrollerCode": "057/025/12",
-          "filedFor": "2025",
-          "heads": [
+          "board": [
             {
               "email": "mnungesser@hometel.com",
               "name": "Mike Nungesser",
-              "role": "C.E.O."
-            },
-            {
-              "name": "Suzanna Busher",
-              "role": "C.F.O."
+              "phone": "(618) 520-7522",
+              "role": "President"
             }
           ],
+          "comptrollerCode": "057/025/12",
+          "filedFor": "2026",
           "office": {
-            "address": "509 Dakotah St",
-            "city": "St Jacob IL 62281",
-            "phone": "(618) 644-9212"
+            "address": "239 West Main St",
+            "city": "St. Jacob IL 62281",
+            "phone": "(618) 772-8352"
           }
         },
         "Tri-Township Park District": {
@@ -8527,13 +8517,13 @@
         "WOODSTOCK FIRE RESCUE": {
           "board": [
             {
-              "email": "PBURKE@WFRD.ORG",
+              "email": "pburke@wfrd.org",
               "name": "Patrick Burke",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "063/140/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "MHEDGES@WFRD.ORG",
@@ -9283,20 +9273,20 @@
         "LOAMI  FPD": {
           "board": [
             {
-              "email": "katieboehme314@gmail.com",
-              "name": "Katie Boehme (Humphreys)",
-              "phone": "(217) 331-8030",
-              "role": "Secretary"
-            },
-            {
               "email": "lewisag1@gmail.com",
               "name": "Doug Lewis",
               "phone": "(217) 836-1239",
               "role": "Treasurer"
+            },
+            {
+              "email": "Katieboehme314@gmail.com",
+              "name": "Katie Boehme",
+              "phone": "(217) 331-8030",
+              "role": "Secretary"
             }
           ],
           "comptrollerCode": "083/100/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "MECHANICSBURG FPD": {
@@ -9432,7 +9422,7 @@
             }
           ],
           "comptrollerCode": "083/160/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "700 E Main St",
             "city": "Rochester IL 62563",
@@ -10226,7 +10216,7 @@
             }
           ],
           "comptrollerCode": "087/020/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Neponset Fire Department": {
@@ -10342,9 +10332,10 @@
       "fire": {
         "Cedarville Fire": {
           "comptrollerCode": "089/010/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
+              "email": "darrelheck@gmail.com",
               "name": "darrell heck",
               "phone": "(815) 238-2969",
               "role": "C.E.O."
@@ -10505,17 +10496,17 @@
         "Pearl City Fire": {
           "board": [
             {
-              "email": "jacekeeling1974@gmail.com",
-              "name": "Larry Johnson",
-              "role": "Treasurer"
-            },
-            {
               "name": "Brent Schneider",
               "role": "President"
+            },
+            {
+              "email": "ljohnson1974@hotmail.com",
+              "name": "Larry Johnson",
+              "role": "Treasurer"
             }
           ],
           "comptrollerCode": "089/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "300 Station Street",
             "city": "Pearl City IL 61062",
@@ -10829,7 +10820,7 @@
             }
           ],
           "comptrollerCode": "098/060/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "phone": "(815) 400-9496"
           }
@@ -10956,11 +10947,11 @@
         },
         "Sterling Park": {
           "comptrollerCode": "098/030/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Larry Schuldt",
-              "role": "C.E.O."
+              "role": "Executive"
             },
             {
               "email": "jjacobs@sterlingparks.org",
@@ -10969,10 +10960,8 @@
             }
           ],
           "office": {
-            "address": "1913 3rd Ave",
-            "city": "Sterling IL 61081",
             "email": "lschuldt@sterlingparks.org",
-            "phone": "(815) 622-6225"
+            "phone": "(815) 622-6200"
           }
         },
         "Walnut Park": {
@@ -10998,7 +10987,7 @@
       }
     }
   },
-  "generated": "2026-11-16T22:17:36Z",
+  "generated": "2026-11-24T00:06:43Z",
   "mailGivenForTwo": {
     "3110ed715344f5e2": [
       "dfbad7a9dd8a215c"
