@@ -56,8 +56,9 @@ clerks e-mailed, the same day, maps whose lines run along whole townships.
 And Livingston's clerk's office e-mailed, on 2026-10-26, and Lewis's on
 2026-11-18, maps whose lines run along whole townships, and Bollinger's, on
 2026-11-18, a map whose line splits one township through Marble Hill, traced
-from the page like Ste. Genevieve's.
-Those 41 are SOURCES below. The other 73 counties and the City of St. Louis are not
+from the page like Ste. Genevieve's. And Cedar's, on 2026-11-23, a township
+map whose line runs along whole townships.
+Those 42 are SOURCES below. The other 72 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -347,6 +348,30 @@ SOURCES = {
                 "Northern District": ["Canton", "Dickerson", "Lyon", "Reddish"],
                 "Southern District": ["Highland", "La Belle", "Salem", "Union"]},
             "sent": "2026-11-18"},
+    # Cedar's county clerk's voter registration office (the clerk is the
+    # county's election authority) answered the letter on 2026-11-23 with the
+    # Assessor's office's copy of the county's "Political Townships of Cedar
+    # County" map (marked "Copyright Cedar County, MO", so not kept here;
+    # SHA-256 80c95c75b8c3c0593181c376ddcb32f3ff7489f0260c4d0bf4393f491afe6501)
+    # with a red line drawn on it, marked Northern and Southern Commission.
+    # The same office wrote that day: "The Associate commissioners boundaries
+    # are the off set through the middle of the map", and that it had
+    # combined the Washington and Jefferson precincts, Madison and North Linn,
+    # and Box and Cedar. The map's typed labels put Washington north of the
+    # line and Washington-Jefferson south of it, so the combined precinct may
+    # lie on both sides; the line is drawn as the map draws it, and the card
+    # says it is not checked against election records. The line runs along
+    # township lines only: Box, Cedar and
+    # Washington north of it, Benton, Jefferson, Linn and Madison south of
+    # it, and the seven match TIGER's seven. Measured 2026-11-24 by lining
+    # the scan up with TIGER's county corners (an affine fit, eight corners,
+    # 104-291 m residuals): every red pixel inside the county lies within
+    # 456 m of TIGER's line between those townships (median 150 m), the
+    # line's step around Jefferson township included.
+    "039": {"townships": {
+                "Northern District": ["Box", "Cedar", "Washington"],
+                "Southern District": ["Benton", "Jefferson", "Linn", "Madison"]},
+            "sent": "2026-11-23"},
     # Livingston's clerk's office e-mailed, on 2026-10-26, a map of the
     # county's townships headed by its two commissioner districts, kept out
     # of this repository as the county's own record (SHA-256 18dd3a44de19
