@@ -24,9 +24,16 @@ came first, in a change of their own. THE MAPS READ THEM HERE SINCE THE CHANGE
 AFTER IT: on the live site a page asks the files host for each file in its
 BOUNDARY_FILES list and its worker for each in GEOMETRY_URLS (filesUrl in
 engine/shared/files-origin.txt; both lists are generated from one worksheet
-key, and --selftest holds every app's two to each other). GitHub Pages still
-publishes the boundary files as well, so a tab opened before the switch and
-the way back (FILES_ORIGIN null) both still work; it stops in a third change.
+key, and --selftest holds every app's two to each other). GitHub Pages published
+the boundary files as well for a week, so a tab opened before the switch kept
+working. --leave-out stops that (the third change): after the copy it removes
+from the assembled tree both folders and every boundary file except those a
+page at the site's root names (the front page's and coverage map's outlines,
+which are not apps and read this site), so GitHub Pages publishes none of the
+rest. Reading the boundary files from this site again now means publishing
+them here again as well as sending filesUrl back to this site for them, in one
+change. FILES_ORIGIN null on its own would also send the tile archives and
+populations back here, which would take the site past GitHub Pages' 1 GB.
 
 This script makes the bucket hold exactly what the deploy is about to publish
 of those files. It reads the ASSEMBLED tree (deploy-pages.yml's _site), not
@@ -82,6 +89,7 @@ says so and does nothing, unless --require is given.
     python3 scripts/sync_r2_files.py --tree _site            # sync
     python3 scripts/sync_r2_files.py --tree _site --dry-run  # list, change nothing
     python3 scripts/sync_r2_files.py --tree _site --probe    # read the files host as a map does
+    python3 scripts/sync_r2_files.py --tree _site --leave-out  # remove what the files host serves from the tree
     python3 scripts/sync_r2_files.py --selftest
 """
 import argparse
@@ -93,6 +101,7 @@ import hashlib
 import hmac
 import os
 import re
+import shutil
 import sys
 import time
 import urllib.error
@@ -331,6 +340,55 @@ def verify(local, remote):
     return sorted(k for k, md5 in local.items() if remote.get(k) != md5)
 
 
+# ---------- leaving the files out of what GitHub Pages publishes ----------
+
+ROOT_PAGE_FILE_RE = re.compile(r"\b([a-z]{2}/data/app/[A-Za-z0-9_.-]+\.json)\b")
+
+
+def root_page_files(tree):
+    """Instance data files a page at the site's root names: every
+    <tag>/data/app/<name>.json in an .html file directly inside `tree`. Those
+    pages (the front page's outlines and example rosters, the coverage map's
+    outlines) are not apps, carry no filesUrl, and read this site."""
+    out = set()
+    for n in sorted(os.listdir(tree)):
+        full = os.path.join(tree, n)
+        if n.endswith(".html") and os.path.isfile(full):
+            with open(full, encoding="utf-8") as f:
+                out.update(ROOT_PAGE_FILE_RE.findall(f.read()))
+    return out
+
+
+def leave_to_files_host(tree):
+    """Remove from the assembled tree everything the files host serves (both
+    folders and every boundary file) except the boundary files a root page
+    reads. Returns (files removed, bytes removed, kept keys). Raises TreeError
+    when a file a root page names is missing afterwards or a removed file is
+    still there; run it after the copy, which reads the same tree."""
+    named = root_page_files(tree)
+    served = local_files(tree)
+    kept = sorted(k for k in served if kind_of(k) == "boundary" and k in named)
+    gone = [k for k in served if k not in kept]
+    size = 0
+    for k in gone:
+        full = os.path.join(tree, k)
+        size += os.path.getsize(full)
+        os.remove(full)
+    for tag in os.listdir(tree):
+        for folder in ("tiles", "population"):
+            top = os.path.join(tree, tag, "data", "app", folder)
+            if TAG_RE.match(tag) and os.path.isdir(top):
+                shutil.rmtree(top)
+    missing = sorted(k for k in named if not os.path.isfile(os.path.join(tree, k)))
+    if missing:
+        raise TreeError("a root page names %d file(s) the published tree no longer holds: %s"
+                        % (len(missing), ", ".join(missing[:5])))
+    left = [k for k in gone if os.path.exists(os.path.join(tree, k))]
+    if left:
+        raise TreeError("%d file(s) the files host serves are still in the published tree" % len(left))
+    return len(gone), size, kept
+
+
 # ---------- selftest ----------
 
 def selftest():
@@ -411,6 +469,36 @@ def selftest():
         # was signed for the host it was sent to.
         e2e = run_against_stand_in(d)
         urls = check_files_url(got)
+        # Leaving the files out of what GitHub publishes: both folders and every
+        # boundary file go, bar one a root page names; a roster, a page and a
+        # data file no list names stay. A root page naming a file the tree
+        # lacks afterwards stops the deploy.
+        with open(os.path.join(d, "index.html"), "w") as f:
+            f.write('<script>var o = "il/data/app/outline.json", r = "il/data/app/roster.json";</script>')
+        t = os.path.join(d, "..", os.path.basename(d) + "-leave-out")
+        shutil.copytree(d, t)
+        try:
+            count, size, kept = leave_to_files_host(t)
+            assert (count, size, kept) == (3, 3, ["il/data/app/outline.json"]), (count, size, kept)
+            assert not os.path.exists(os.path.join(t, "il", "data", "app", "tiles"))
+            assert not os.path.exists(os.path.join(t, "il", "data", "app", "population"))
+            for stays in ("il/data/app/outline.json", "il/data/app/roster.json", "il/data/app/unlisted.json",
+                          "il/data/app/election-results/ward-1.json", "il/index.html", "il/sw.js", "index.html"):
+                assert os.path.isfile(os.path.join(t, stays)), stays
+            assert not os.path.exists(os.path.join(t, "il", "data", "app", "wards.json"))
+            shutil.rmtree(t)
+            shutil.copytree(d, t)
+            with open(os.path.join(t, "coverage-map.html"), "w") as f:
+                f.write('fetch("il/data/app/nothere.json")')
+            try:
+                leave_to_files_host(t)
+            except TreeError as e:
+                assert "il/data/app/nothere.json" in str(e), str(e)
+            else:
+                raise AssertionError("a root page naming a file the tree lacks was let through")
+        finally:
+            shutil.rmtree(t, ignore_errors=True)
+            os.remove(os.path.join(d, "index.html"))
         # A tree whose list cannot be read stops the run before the bucket is
         # asked anything: each of these would otherwise read as "this app has no
         # boundary files" and delete its copies.
@@ -448,7 +536,7 @@ def selftest():
         assert boundary_files(d, "il") == []
     read = run_probe_against_stand_in()
     print("sync_r2_files: selftest OK — 3 AWS signing examples, the planner, the delete guard, "
-          "the tree walk, %d unreadable workers refused, %s, %s and %s" % (refused, e2e, urls, read))
+          "the tree walk, leaving the files out, %d unreadable workers refused, %s, %s and %s" % (refused, e2e, urls, read))
 
 
 FILES_BLOCK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "shared", "files-origin.txt")
@@ -699,8 +787,10 @@ def probe_sample(tree, live_tags):
     return out
 
 
-def probe(files_origin, page_origin, tree, live_tags):
-    """(problems, checked): every way the files host fails a map, for a sample."""
+def probe(files_origin, page_origin, tree, live_tags, timings=None):
+    """(problems, checked): every way the files host fails a map, for a sample.
+    Each GET is appended to `timings`, when given, as (kind, key, ms, bytes,
+    cache status, Cloudflare location)."""
     problems, checked = [], 0
     try:
         sample = probe_sample(tree, live_tags)
@@ -710,12 +800,18 @@ def probe(files_origin, page_origin, tree, live_tags):
         return ["the tree at %s holds no tile archive or population index for a live app" % tree], 0
     allowed = (page_origin, "*")
 
-    def get(url, headers):
+    def get(url, headers, kind):
+        t0 = time.monotonic()
         try:
-            return _http("GET", url, headers)
+            got = _http("GET", url, headers)
         except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
             problems.append("%s could not be reached: %s" % (url, e))
             return None
+        if timings is not None:
+            h = got[1]
+            timings.append((kind, url[len(files_origin) + 1:], (time.monotonic() - t0) * 1000, len(got[2]),
+                            h.get("cf-cache-status") or "-", (h.get("cf-ray") or "").rpartition("-")[2] or "-"))
+        return got
 
     first_tile = next((k for k, kind in sample if kind == "tiles"), None)
     if first_tile:
@@ -744,7 +840,7 @@ def probe(files_origin, page_origin, tree, live_tags):
             data = f.read()
         url = files_origin + "/" + key
         if kind == "compressed":
-            got = get(url, {"Origin": page_origin, "Accept-Encoding": "gzip"})
+            got = get(url, {"Origin": page_origin, "Accept-Encoding": "gzip"}, kind)
             if not got:
                 continue
             checked += 1
@@ -766,7 +862,7 @@ def probe(files_origin, page_origin, tree, live_tags):
                                     % (key, len(plain), len(data)))
             continue
         if kind in ("population", "boundary"):
-            got = get(url, {"Origin": page_origin})
+            got = get(url, {"Origin": page_origin}, kind)
             if not got:
                 continue
             checked += 1
@@ -781,7 +877,7 @@ def probe(files_origin, page_origin, tree, live_tags):
             continue
         size = len(data)
         for a, b in ((0, min(126, size - 1)), (max(0, size - 64), size - 1)):
-            got = get(url, {"Origin": page_origin, "Range": "bytes=%d-%d" % (a, b)})
+            got = get(url, {"Origin": page_origin, "Range": "bytes=%d-%d" % (a, b)}, kind)
             if not got:
                 break
             checked += 1
@@ -910,8 +1006,13 @@ def run_probe_against_stand_in():
         threading.Thread(target=server.serve_forever, daemon=True).start()
         host = "http://127.0.0.1:%d" % server.server_port
         try:
-            problems, checked = probe(host, origin, d, {"il"})
+            timings = []
+            problems, checked = probe(host, origin, d, {"il"}, timings)
             assert not problems and checked == 6, (problems, checked)
+            # Every GET is timed (the preflight is not), and each kind gets a line.
+            assert sorted(t[0] for t in timings) == ["boundary", "compressed", "population", "tiles", "tiles"], timings
+            lines = read_times(timings)
+            assert len(lines) == 4 and lines[0].startswith("read times, boundary: 1 read(s)"), lines
             mode["fault"] = "drop-once"
             problems, checked = probe(host, origin, d, {"il"})
             assert mode.get("dropped") and not problems and checked == 6, (problems, checked)
@@ -1034,7 +1135,12 @@ def main():
     ap.add_argument("--probe", action="store_true",
                     help="read a sample from the files host the way a map on the site does, "
                          "and compare it with --tree; needs no credentials")
+    ap.add_argument("--leave-out", action="store_true",
+                    help="remove from --tree what the files host serves, bar the boundary files a "
+                         "root page reads, so GitHub Pages does not publish it; run after the copy")
     a = ap.parse_args()
+    if a.leave_out:
+        return run_leave_out(a.tree)
     if a.selftest:
         selftest()
         return 0
@@ -1056,6 +1162,42 @@ def main():
     return sync(R2(*env), a.tree, a.dry_run, a.allow_mass_delete)
 
 
+def run_leave_out(tree):
+    def mb(n):
+        return "%.1f MB" % (n / 1e6)
+    try:
+        before = sum(os.path.getsize(os.path.join(d, n)) for d, _, ns in os.walk(tree) for n in ns)
+        count, size, kept = leave_to_files_host(tree)
+    except (TreeError, OSError) as e:
+        print("::error::sync_r2_files: " + str(e))
+        return 1
+    print("sync_r2_files: left %d file(s), %s, to the files host; the published tree went from %s to %s"
+          % (count, mb(size), mb(before), mb(before - size)))
+    print("sync_r2_files: kept %d boundary file(s) a root page reads: %s"
+          % (len(kept), ", ".join(kept)))
+    return 0
+
+
+def read_times(timings):
+    """Lines saying how long the files host took to answer each kind of read
+    from wherever this ran; the deploy runs it on GitHub's runners in the
+    United States. Each read opens its own connection, so a time includes the
+    connection setup a browser pays once per host."""
+    out = []
+    for kind in ("boundary", "compressed", "population", "tiles"):
+        rows = sorted((r for r in timings if r[0] == kind), key=lambda r: r[2])
+        if not rows:
+            continue
+        caches, places = {}, sorted({r[5] for r in rows})
+        for r in rows:
+            caches[r[4]] = caches.get(r[4], 0) + 1
+        out.append("read times, %s: %d read(s) on new connections, median %.0f ms, slowest %.0f ms (%s, %d bytes); "
+                   "cache %s; served from %s"
+                   % (kind, len(rows), rows[len(rows) // 2][2], rows[-1][2], rows[-1][1], rows[-1][3],
+                      ", ".join("%s %d" % kv for kv in sorted(caches.items())), ", ".join(places)))
+    return out
+
+
 def run_probe(tree):
     origin = shipped_origin()
     if not origin:
@@ -1063,7 +1205,10 @@ def run_probe(tree):
         return 0
     repo = os.path.join(os.path.dirname(FILES_BLOCK), "..", "..")
     cname = open(os.path.join(repo, "CNAME")).read().strip()
-    problems, checked = probe(origin, "https://" + cname, tree, live_tags_of(repo))
+    timings = []
+    problems, checked = probe(origin, "https://" + cname, tree, live_tags_of(repo), timings)
+    for line in read_times(timings):
+        print("sync_r2_files: " + line)
     for p in problems:
         print("::error::sync_r2_files: " + p)
     if problems:
