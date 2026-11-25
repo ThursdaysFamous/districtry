@@ -91,10 +91,11 @@ directory prints beside each judge are not kept. **NO STATE OFFICE LISTS THE 1,0
 (measured 2026-11-16: the Secretary of State's election results site answers with a managed
 challenge, which is not worked around, and the Texas Association of Counties is an association, not
 a government), so on Adam's choice of 2026-11-17 they are read from each county's own website,
-largest county first. Two hundred and thirty counties are read so far, 87.0% of Texans: seventeen
+largest county first. Two hundred and thirty-seven counties are named so far, 99.1% of Texans, and
+two hundred and thirty-one of them are read weekly: seventeen
 of the twenty largest (all but Bexar, which answers with a managed challenge, and Montgomery and Bell,
-whose robots.txt disallows every path), eighteen of the 21st to 40th (all but Brazos, which answers
-with a browser check, and Smith, which prints its names only inside sentences), nineteen of the 41st to 60th (all but
+whose robots.txt disallows every path), nineteen of the 21st to 40th (all but Brazos, which answers
+with a browser check; Smith since 2026-11-25, when its precinct pages began printing a contact block), nineteen of the 41st to 60th (all but
 Maverick, which has no county website this project can find), nineteen of the 61st to 80th
 (all but Erath, whose site answers this project with Cloudflare's block page), eighteen of the
 81st to 100th (all but Hale, whose robots.txt disallows every path, and Gillespie, which prints its
@@ -114,11 +115,17 @@ robots.txt permitting it to the fleet's Chrome client with its client hints on t
 stack, measured at the exact page and recorded in `user-agent-measurements.json`. They are read by
 `tx/scripts/tx_commissioners_browser_rung.py`, a file of their own, so that no other county site
 counts as reached by a browser string. Reeves refuses and serves the same way but is not read, for
-its layout rather than its block. The builder's docstring records each page's shape and why each of
-the other twenty-four counties is not read (Bexar, Brazos, Jack and Delta answer with a
-challenge or cannot be read and Aransas answers with a bot check, Montgomery, Bell and Hale
-disallow every path in robots.txt, Erath blocks the project's client and was not asked with a browser
-identity, Reeves prints its four seats three different ways, Smith prints its names only inside sentences, Gillespie only in a PDF,
+its layout rather than its block. **SIX ARE READ ONCE, BY HAND**, on Adam's yes of 2026-11-25:
+Bexar, Brazos, Erath and Aransas (a challenge, a browser check, a block page and a bot check for this
+project's reader) and Montgomery and Bell (robots.txt disallows every path, which Adam allowed reading
+once) were read that day in Adam's own Chrome, where none showed a check page, and ship from
+`tx/data/source/tx-county-commissioners-read-once.json` as that file gives them. The weekly job
+never fetches them; the card and the county page say the names were read once on that date and are
+not re-read every week, so a seat that changes hands on 1 January 2027 shows the old name until
+someone reads the page again the same way and edits the entry. The builder's docstring records each
+page's shape and why each of the other seventeen counties is not named (Jack and Delta answer with a
+challenge or cannot be read, Hale disallows every path in robots.txt, Reeves prints its four seats
+three different ways, Gillespie prints its names only in a PDF,
 Gaines names nobody, Calhoun's precinct 1 page does not say commissioner, Gonzales and Comanche
 print a name the builder will not correct or choose between, Dimmit labels two seats with several
 precinct numbers, Mills prints one name across two lines, Kent's pages do not say commissioner, and the sites of Maverick, Childress, Martin, Stonewall and McMullen
@@ -133,7 +140,7 @@ naming fewer than two of the four. No commissioner precinct is drawn, so the car
 says it cannot say which represents the point. No other county officer and no municipal
 official is named yet, and the cards say so. Recorded as gaps `tx-county-officials` and
 `tx-municipal-officeholders`. **Each county whose commissioners are read has a page of its own
-since 2026-11-17** (Adam's "merge" of that day): `tx/county-commissioner/<county>.html`, 230 pages
+since 2026-11-17** (Adam's "merge" of that day): `tx/county-commissioner/<county>.html`, 237 pages
 from `scripts/build_county_pages.py`, naming the county judge as a section above the four
 precincts. A county whose commissioners are not read has no page, because a page naming one member
 of a five-member court answers nobody searching for that court; its County card still names the

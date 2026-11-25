@@ -1063,6 +1063,9 @@ try {
   //      - A county whose entry lists no county court says the directory
   //        lists no county judge, does not call the seat vacant, and still
   //        names the commissioners.
+  //      - A county read once by hand (`readOnce`, as Bexar ships) says its
+  //        names were read once on that date and does not promise a weekly
+  //        look.
   //      - The commissioners' file refused: the judge is named and the card
   //        says the commissioners are not named here yet.
   //      - The judges' file refused: the commissioners are named and the card
@@ -1151,6 +1154,21 @@ try {
           text.includes("Vacant") && text.includes("The page lists one seat as vacant") &&
           text.includes("first found these names there") && !text.includes("these four names"),
         `seat=${vacated.seat} text=${text.slice(0, 200)}`);
+    }
+
+    {
+      const read = longDate(court.asOf);
+      const { info, text } = await cardAndLink(async (page) => {
+        const copy = JSON.parse(JSON.stringify(commissioners));
+        copy[String(at.GEOID)].readOnce = true;
+        await page.route("**/data/app/tx-county-commissioners.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(copy) }));
+      });
+      check("a county whose commissioners were read once says so, with the date, and does not promise a weekly look",
+        !info.error && named(text) && !!read &&
+          text.includes(`these names were read there once, on ${read}`) &&
+          text.includes("are not checked again every week") && !text.includes("again every week, so a"),
+        `read=${read} text=${text.slice(0, 200)}`);
     }
 
     {

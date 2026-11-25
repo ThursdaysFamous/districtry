@@ -83,6 +83,35 @@
   "sourceUrl": "https://www.angelinacounty.net/comcourt/",
   "asOf": "2026-11-17"
  },
+ "48007": {
+  "county": "Aransas County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Jack Chaney"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Leslie \"Bubba\" Casterline"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Pat Rousseau"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Bob Dupnik"
+   }
+  ],
+  "source": "Aransas County's own website",
+  "sourceUrl": "https://www.aransascountytx.gov/commissioners/",
+  "asOf": "2026-11-25",
+  "readOnce": true
+ },
  "48009": {
   "county": "Archer County",
   "seats": [
@@ -339,6 +368,68 @@
   "sourceUrl": "https://www.beecounty.texas.gov/169/Commissioners-Court",
   "asOf": "2026-11-17"
  },
+ "48027": {
+  "county": "Bell County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Russell Schneider"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Bobby Whitson"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Greg Reynolds"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Louie Minor"
+   }
+  ],
+  "source": "Bell County's own website",
+  "sourceUrl": "https://www.bellcountytx.com/county_government/commissioners_court/index.php",
+  "asOf": "2026-11-25",
+  "readOnce": true
+ },
+ "48029": {
+  "county": "Bexar County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Rebeca Clay-Flores",
+    "sourceUrl": "https://www.bexar.org/commissionerpct1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Justin Rodriguez",
+    "sourceUrl": "https://www.bexar.org/commissionerpct2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Grant Moody",
+    "sourceUrl": "https://www.bexar.org/commissionerpct3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Tommy Calvert",
+    "sourceUrl": "https://www.bexar.org/commissionerpct4"
+   }
+  ],
+  "source": "Bexar County's own website",
+  "sourceUrl": "https://www.bexar.org/146/Commissioners-Court",
+  "asOf": "2026-11-25",
+  "readOnce": true
+ },
  "48031": {
   "county": "Blanco County",
   "seats": [
@@ -482,6 +573,39 @@
   "source": "Brazoria County's own website",
   "sourceUrl": "https://www.brazoriacountytx.gov/government/commissioners-court",
   "asOf": "2026-11-17"
+ },
+ "48041": {
+  "county": "Brazos County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Bentley Nettles",
+    "sourceUrl": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-1/"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Chuck Konderla",
+    "sourceUrl": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-2/"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Fred Brown",
+    "sourceUrl": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-3/"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Wanda J. Watson",
+    "sourceUrl": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-4/"
+   }
+  ],
+  "source": "Brazos County's own website",
+  "sourceUrl": "https://brazoscountytx.gov/commissioners-court/",
+  "asOf": "2026-11-25",
+  "readOnce": true
  },
  "48043": {
   "county": "Brewster County",
@@ -1758,6 +1882,35 @@
   "source": "El Paso County's own website",
   "sourceUrl": "https://www.epcounty.com/165/Commissioners-Court",
   "asOf": "2026-11-17"
+ },
+ "48143": {
+  "county": "Erath County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Dee Stephens"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Albert Ray"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Sherman Edwards"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Jim Buck"
+   }
+  ],
+  "source": "Erath County's own website",
+  "sourceUrl": "https://www.co.erath.tx.us/246/Commissioners",
+  "asOf": "2026-11-25",
+  "readOnce": true
  },
  "48145": {
   "county": "Falls County",
@@ -4243,6 +4396,35 @@
   "sourceUrl": "https://www.co.montague.tx.us/page/montague.Commissioners.Court",
   "asOf": "2026-11-17"
  },
+ "48339": {
+  "county": "Montgomery County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Robert C. Walker"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "Charlie Riley"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "Ritch Wheeler"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Matt Gray"
+   }
+  ],
+  "source": "Montgomery County's own website",
+  "sourceUrl": "https://www.mctx.org/departments/departments_a_-_c/commissioner_s_court/county_commissioners/index.php",
+  "asOf": "2026-11-25",
+  "readOnce": true
+ },
  "48341": {
   "county": "Moore County",
   "seats": [
@@ -5370,6 +5552,38 @@
   "source": "Sherman County's own website",
   "sourceUrl": "https://www.shermancountytx.gov/page/Commissioners.Court",
   "asOf": "2026-11-17"
+ },
+ "48423": {
+  "county": "Smith County",
+  "seats": [
+   {
+    "seat": "Commissioner, Precinct 1",
+    "number": 1,
+    "name": "Christina Drewry",
+    "sourceUrl": "https://www.smith-county.com/281/Precinct-1"
+   },
+   {
+    "seat": "Commissioner, Precinct 2",
+    "number": 2,
+    "name": "John Moore",
+    "sourceUrl": "https://www.smith-county.com/280/Precinct-2"
+   },
+   {
+    "seat": "Commissioner, Precinct 3",
+    "number": 3,
+    "name": "J Scott Herod",
+    "sourceUrl": "https://www.smith-county.com/279/Precinct-3"
+   },
+   {
+    "seat": "Commissioner, Precinct 4",
+    "number": 4,
+    "name": "Ralph Caraway Sr.",
+    "sourceUrl": "https://www.smith-county.com/278/Precinct-4"
+   }
+  ],
+  "source": "Smith County's own website",
+  "sourceUrl": "https://www.smith-county.com/275/Commissioners-Court",
+  "asOf": "2026-11-25"
  },
  "48425": {
   "county": "Somervell County",
