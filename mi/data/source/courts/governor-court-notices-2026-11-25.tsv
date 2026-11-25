@@ -1,0 +1,22 @@
+# Appointments to the Court of Appeals and the circuit courts, 2025-01-01 to 2026-11-25, from the
+# Governor's press releases (https://www.michigan.gov/whitmer/news/press-releases/<date>/<slug>), read
+# 2026-11-25 with this project's own token after robots.txt (the host allows it). The site's search
+# feed does not list every release (paged in full it returned 2,926 of the 3,552 it counts), so this
+# list is what could be found, not proof that nothing else happened. The one Attorney General
+# release is from https://www.michigan.gov/ag/news/press-releases/2026/08/19/department-of-attorney-generals-criminal-trials-division-chief-appointed-as-3rd-circuit-court-judge
+# court is "coa<district>" or "circuit<number>". starts is the notice's own date where it gives one.
+# date	court	appointee	replaces	starts	release
+2025-02-14	circuit30	Patti Tremblay	Joyce Draganchuk (resigned)		whitmer-announces-tremblay-appointed-to-the-bench
+2025-04-23	coa1	Mariam Bazzi	Noah Hood (appointed to the Supreme Court)		whitmer-makes-appointments-to-the-michigan-supreme-court-michigan-court-of-appeals
+2025-04-23	coa2	Christopher Trebilcock	Mark Cavanagh (resigned)		whitmer-makes-appointments-to-the-michigan-supreme-court-michigan-court-of-appeals
+2025-04-23	coa3	Daniel Korobkin	Jane Markey (resigned)		whitmer-makes-appointments-to-the-michigan-supreme-court-michigan-court-of-appeals
+2025-05-15	circuit3	Aliyah Sabree	Charles Hegarty (vacated the seat)		whitmer-makes-appointments-to-the-bench
+2025-05-15	circuit3	Nicole Castka	Mariam Bazzi (resigned)		whitmer-makes-appointments-to-the-bench
+2026-01-06	circuit16	Tanya Grillo	Diane Druzinski (resigned)		whitmer-makes-appointments-to-the-bench
+2026-03-18	coa1	Andrew Lievense	Kirsten Frank Kelly (resigned)		whitmer-makes-appointment-to-the-michigan-court-of-appeals-first-district
+2026-04-01	circuit4	Allison Bates	Thomas D. Wilson (resigned)		whitmer-makes-appointments-to-the-bench
+2026-04-01	circuit15	Zachary Stempien	William O'Grady (resigned)		whitmer-makes-appointments-to-the-bench
+2026-08-06	circuit37	Jason Bomia	Brian K. Kirkham (resigned)		whitmer-makes-appointment-to-the-bench
+2026-08-19	circuit3	Robyn N. Liddell			(Attorney General release, above)
+2026-11-09	coa3	Dan Osher	Christopher Yates (resigned)		whitmer-announces-appointments-to-the-bench
+2026-11-24	circuit16	Jevona Fudge	Tracey Yokich (resigning to retire)	2026-12-14	whitmer-makes-appointment-to-the-bench
