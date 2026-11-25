@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-mn-shell-v15";
+const CACHE_NAME = "districtry-mn-shell-v16";
 
 const SHELL_URLS = [
   "./",
@@ -69,6 +69,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/mn-senate-members.json",
   "./data/app/mn-house-members.json",
+  "./data/app/mn-judicial-judges.json",
   "./data/app/mn-county-commissioners.json",
   "./data/app/mn-swcd-supervisors.json",
   "./data/app/mn-city-councils.json",
