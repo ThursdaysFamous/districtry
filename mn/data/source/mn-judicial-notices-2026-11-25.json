@@ -1,0 +1,44 @@
+{
+  "read": "2026-11-25",
+  "note": "The Governor's own notices about district court seats, read on 2026-11-25 in Adam's own Chrome, because the Governor's judicial pages send this project's scripted client to a Radware ShieldSquare bot check (validate.perfdrive.com), which is never worked around. No check page appeared in that browser. Read: the judicial appointments page's 'Current Judicial Vacancies' list, every item on pages 1 to 4 of its news list (newest 2026-10-12, oldest 2025-09-26), and the Governor's press releases page for items after 2026-10-12. These are the cross-check for mn-judicial-directory-2026-11-25.txt, which on that day still listed judges these notices say were being replaced. A name the page printed in full is under 'replaces'; where only the start of a predecessor's name was read, it is under 'replaces_prefix', and the builder refuses to run if such a prefix could be a judge the directory lists in that district.",
+  "sources": {
+    "vacancies": "https://mn.gov/governor/appointments/judicialappointments/",
+    "news": "https://mn.gov/governor/appointments/judicialappointments/judicialnews.jsp",
+    "press": "https://mn.gov/governor/newsroom/press-releases/"
+  },
+  "current_vacancies": {
+    "text": "One vacancy in the Third Judicial District. One vacancy in the Tenth Judicial District.",
+    "districts": [3, 10]
+  },
+  "appointments": [
+    {"date": "2025-09-26", "district": 5, "appointee": "Stefanie Menning", "replaces_prefix": "Allison L"},
+    {"date": "2025-10-17", "district": 6, "appointee": "Nathan LaCoursiere", "replaces_prefix": "Eric L"},
+    {"date": "2025-11-07", "district": 1, "appointee": "Ryan Bies", "replaces": "Vicki Vial Taylor"},
+    {"date": "2026-01-09", "district": 7, "appointee": "Heidi Hovis", "replaces_prefix": "Daniel A"},
+    {"date": "2026-01-14", "district": 10, "appointee": "Madelyn Adams", "replaces": "John P. Dehen"},
+    {"date": "2026-01-14", "district": 10, "appointee": "Jennifer Bovitz"},
+    {"date": "2026-01-29", "district": 8, "appointee": "John Fitzgerald", "replaces_prefix": "Jennifer K"},
+    {"date": "2026-02-11", "district": 5, "appointee": "Susan DeVos", "replaces_prefix": "Krista J"},
+    {"date": "2026-03-10", "district": 3, "appointee": "Holli Mayer", "replaces": "Ross L. Leuning"},
+    {"date": "2026-04-09", "district": 9, "appointee": "Max Schafer-LaCoursiere", "replaces_prefix": "Anne M"},
+    {"date": "2026-04-09", "district": 9, "appointee": "Symon Schindler-Syme", "replaces_prefix": "Jeffrey S"},
+    {"date": "2026-05-22", "district": 10, "appointee": "Nathan Sosinski", "replaces": "Suzanne Bollman"},
+    {"date": "2026-05-22", "district": 10, "appointee": "Stacy St George", "replaces": "Walter M. Kaminsky"},
+    {"date": "2026-05-22", "district": 10, "appointee": "Kathryn Fodness", "replaces": "Douglas B. Meslow"},
+    {"date": "2026-06-12", "district": 4, "appointee": "Theresa Bea", "replaces_prefix": "Laurie J"},
+    {"date": "2026-06-12", "district": 4, "appointee": "Nicole Blissenbach", "replaces": "Bev Benson"},
+    {"date": "2026-06-12", "district": 4, "appointee": "Sean Cahill", "replaces_prefix": "Edward T"},
+    {"date": "2026-07-31", "district": 7, "appointee": "Luke Godzala", "replaces": "William J. Cashman"},
+    {"date": "2026-07-31", "district": 7, "appointee": "Laura Welle", "replaces": "Gail T. Kulick"},
+    {"date": "2026-08-20", "district": 2, "appointee": "Wesley Abrahamson", "replaces": "Reynaldo A. Aligada, Jr."},
+    {"date": "2026-08-20", "district": 2, "appointee": "Devona Wells", "replaces": "Joy D. Bartscher"},
+    {"date": "2026-09-23", "district": 5, "appointee": "Jeremy Blackwelder", "replaces": "Tricia B. Zimmer", "replaces_note": "the late"},
+    {"date": "2026-09-23", "district": 5, "appointee": "Aaron Zurek", "replaces": "Gregory J. Anderson"},
+    {"date": "2026-10-30", "district": 4, "appointee": "Peter Goss", "replaces": "Matthew G. Frank"},
+    {"date": "2026-11-06", "district": 6, "appointee": "Vicky Wanta", "replaces": "Leslie E. Beiers"}
+  ],
+  "vacancies": [
+    {"date": "2026-09-17", "district": 10, "seat_of": "John A. Bowen", "reason": "appointment to the Minnesota Court of Appeals", "stage": "The Commission on Judicial Selection recommended candidates to the Governor on November 2, 2026."},
+    {"date": "2026-11-06", "district": 3, "seat_of": "Karen R. Duncan", "reason": "retirement", "stage": "Applications for the seat opened the same day."}
+  ]
+}

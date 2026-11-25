@@ -569,24 +569,22 @@ EXPECTED_UNREACHABLE = {
         "rung the board-roles scraper actually serves from",
     "adamscountyil.gov":
         "Akamai \"Access Denied\" — same posture as McHenry and Kendall",
-    # THE MINNESOTA JUDICIAL BRANCH, and the one entry here whose card links a
-    # host the project reads NOTHING from. The mn `mn-judicial-district` card
-    # names the district and the judgeship count state law authorizes for it,
-    # names no judge, and links the court so a reader's own browser can go and
-    # look — which it can, because a managed challenge is cleared by a person's
-    # browser and not by this checker. Measured 2026-10-01 on `/` and
-    # `/Find-Courts.aspx`, all four rungs of the ladder (the districtry token
-    # and a pinned Chrome string with its client hints, each on the stdlib
-    # client and on requests): 403 every time, Server `cloudflare`, a `__cf_bm`
-    # cookie, a `CF-RAY` header and "Just a moment..." in the body. That is an
-    # access control and nothing here works around one, so the roster is
-    # recorded as gap `mn-judicial-roster` instead. The inversion earns its keep
-    # the usual way: the day this host answers is the day that roster becomes
-    # buildable.
+    # THE MINNESOTA JUDICIAL BRANCH. The mn `mn-judicial-district` card links
+    # the court's Judicial Officer Directory, and no script here reads it.
+    # Measured 2026-10-01 on `/` and `/Find-Courts.aspx`, all four rungs of the
+    # ladder (the districtry token and a pinned Chrome string with its client
+    # hints, each on the stdlib client and on requests): 403 every time, Server
+    # `cloudflare`, a `__cf_bm` cookie, a `CF-RAY` header and "Just a moment..."
+    # in the body. That is an access control and nothing here works around one.
+    # The judges the card names were read ONCE, on 2026-11-25, in a person's
+    # own browser (mn/data/source/, gap `mn-judicial-roster`), which a managed
+    # challenge does not stop and this checker cannot be. The inversion earns
+    # its keep the usual way: the day this host answers is the day a weekly
+    # roster job becomes possible.
     "mncourts.gov":
         "Cloudflare managed challenge (\"Just a moment...\", __cf_bm and CF-RAY "
         "present) on every path and every client rung — which is also why the "
-        "judicial card names no judge",
+        "judicial card's judges are a dated reading rather than a weekly one",
     # THE ONE HERE WHOSE PAGE THIS REPO STILL READS EVERY WEEK. Fond du Lac's
     # County Board Supervisors directory is Akamai-denied to this client on
     # every path and both schemes, and its twenty-five supervisors ship anyway
