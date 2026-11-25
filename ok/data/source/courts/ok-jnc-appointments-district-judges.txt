@@ -1,0 +1,26 @@
+# Oklahoma Judicial Nominating Commission, "Governor Appointments to
+# Judicial Positions", the District Judge rows, read 2026-11-25 from
+# https://okjnc.com/documents/governor-appointments.pdf (201,099 bytes,
+# SHA-256 024a95a33714410c33048bc295caadeb27db63d4a40afccb0101e39cb68a1dc9,
+# Last-Modified Thu, 28 May 2026) with this project's own client. Its last
+# row is dated 2026-01-30. The Commission's home page, read the same day
+# (Last-Modified 17 Nov 2026), lists one open vacancy, an associate
+# district judge in LeFlore County, and no district judge.
+# date | position as printed | name as printed
+2020-09-17 | District Judge, Okmulgee Co., Ofc 3 | Pandee A. Ramirez
+2020-10-16 | District Judge, Tulsa Co., Ofc 9 | James R. Huber
+2020-11-12 | District Judge, Tulsa & Pawnee, Ofc 5 | Michelle Bodine-Keely
+2021-04-05 | District Judge, Oklahoma Co., Ofc 13 | Kristina N. Kirkpatrick
+2021-04-05 | District Judge, Oklahoma Co., Ofc 9 | Anthony L. Bonner, Jr.
+2021-08-09 | District Judge, Oklahoma Co., Ofc 2 | Kaitlyn G. Allen
+2021-10-11 | District Judge, Oklahoma Co., Ofc 6 | Charles "Brent" Dishman
+2023-08-03 | District Judge, 3rd J.D., Ofc. 1 | Rafe R. Hall
+2023-10-09 | District Judge, Tulsa Co., Ofc. 9 | Richard L. Hathcoat
+2023-12-06 | District Judge, Cleveland Co., Ofc. 4 | Julia Lynne McGuire
+2024-06-27 | District Judge, Lincoln Co., Ofc. 1 | Sarah Lynne Bridge
+2024-10-04 | District Judge, Seminole Co., Ofc. 1 | Brett William Butner
+2024-11-13 | District Judge, Custer Co., Ofc. 1 | Donna Lynn Dirickson
+2024-12-16 | District Judge, Payne & Logan Counties, Ofc. 1 | Jason A. Reese
+2025-06-10 | District Judge, Oklahoma Co., Ofc. 1 | Lydia Yvonne Green
+2025-06-26 | District Judge, Creek Co., Ofc. 1 | Robert Getchell
+2025-10-16 | District Judge, Carter Co., Ofc. 1 | Carson Michael Brooks
