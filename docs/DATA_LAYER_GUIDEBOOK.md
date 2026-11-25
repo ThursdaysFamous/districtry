@@ -256,23 +256,6 @@ trusted.
       "wanted": "One line from the County Clerk: does Sandusky precinct still exist, or was it folded into another? Current precinct boundaries in any form would answer it too."
     },
     {
-      "id": "aurora-council-contact",
-      "concept": "Municipal council contact",
-      "area": "Aurora (Kane, DuPage, Kendall and Will counties)",
-      "counties": [
-        "kane",
-        "will",
-        "dupage",
-        "kendall"
-      ],
-      "kind": "blocked",
-      "layer": "municipality",
-      "summary": "Aurora's 12 council members show with the right ward, but with no phone number or e-mail address.",
-      "why": "The city's site opens normally in a browser but refuses automated visits, and the ward map data carries no contact details.",
-      "blocker": "Re-checked 31 Jul 2026, when the old blocker had genuinely lifted: Aurora had moved to www.aurora.il.us, the new site answered, and all 12 aldermen's pages published a city e-mail address and the Alderman's Office phone. The ward boundary data carries no officeholder details, so contact has to come from those 12 pages, and reading them was queued rather than done. RE-MEASURED 2026-08-20: THE WINDOW CLOSED FIRST. www.aurora.il.us now answers 403 Access Denied to every path tried — the root, /government, /government/city-council, /residents and /directory.aspx, 374 to 405 bytes each — and the refusal is AKAMAI's: the body carries Akamai's own error reference and errors.edgesuite.net, and the response carries the ak_p server-timing header. That is the Joliet class, a flat WAF deny rather than a challenge a browser works through, so this stopped being queued work and became a sourcing block. CHECKED WHO ANSWERED, because this project's own rule is that a 403 from an egress proxy is not a 403 from a site: the proxy reported the tunnel established and the denial is the origin's. THE READER IS UNAFFECTED AND THAT DISTINCTION IS THE POINT — the card's link (aurora-il.org, which 301s to www.aurora.il.us) opens normally in a real browser; what is refused is the automated read, so this is a sourcing block and not a broken link, and the link gate is right to treat a roster-carried 403 as ordinary. A DECOY TO NAME BEFORE IT COSTS SOMEONE THE BUILD: cityofaurora.org redirects to aurorane.gov, the City of Aurora NEBRASKA — the browncountyil.org / Clay-County-Missouri class of wrong-state hit, and the obvious thing to type for Illinois's second-largest city.",
-      "wanted": "Phone and e-mail for the 12 aldermen — a council directory from any of the four county clerks Aurora spans would do it."
-    },
-    {
       "id": "blocked-crawlers",
       "concept": "County board rosters",
       "area": "McHenry, Kendall and DeKalb",
@@ -5825,6 +5808,30 @@ card beside it. The record's blocker as it stood at retirement follows.
 > FIXED THE SAME DAY, HAVING BEEN RECORDED HERE AND LEFT: build_ia_county_officers.py's module docstring said "Seven counties fail one or both (measured 2026-08-28)" and named Henry. It now states the count the builder prints rather than a figure beside it.
 >
 > ASK: ASKED 2026-10-01 -- sent to the county's elections office mailbox, elections@pottcounty-ia.gov, which is the address ia-county-auditors.json carries for the Auditor, with the letter addressed to Auditor Mary Ann Hanusa by name; it did not go to a mailbox of her own. Confirmed in the operator's own sent folder at 14:54:03 UTC. One letter asking for the board's size and its members, which is the only route left here, the county's own site being shut to every client. No answer yet; the follow-up falls due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. A record earns nothing toward the fourth test until that letter has been refused, or followed up once and met thirty days of silence, so the `covers` tag here names which level is open and claims nothing closed, and the `ask` block says `pending` for the same reason. ASK LEDGER CORRECTED 2026-10-30 from the mailbox, read by the Letters thread: Adam sent the follow-up on 2026-10-26 13:41 UTC. Auditor Mary Ann Hanusa replied the same day, 20:44 UTC, naming five supervisors (Susan Miller, Keith Jones, Tim Wichman, Jeff Jorgensen, Brian Shea), and at 21:25 UTC, asked which district each represents: "The Supervisors are elected at- large, and do not represent individual districts." So the board is five, elected at large, and the names are obtainable from the county's own Auditor and not yet shipped. The covers tag is removed because an answered ask claims nothing; the open level is now this project's work.
+
+## Closed record — Aurora's aldermen's phones and e-mails (opened 2026-07-31, closed 2026-11-25)
+
+This was the `aurora-council-contact` gap in the Illinois block above. Aurora's
+12 aldermen showed on the ward and municipality cards with no phone or e-mail,
+because the city's site refuses automated visits and its ward map carries no
+contact details.
+
+CLOSED 2026-11-25. On Adam's 2026-11-25 go-ahead (one-off reads in his own
+browser of public pages that turn away our reader, including pages robots.txt
+asks crawlers to stay off), the city's Elected officials page
+(https://www.aurora.il.us/Elected-officials) was read once in his Chrome. It
+loaded with no check page. Each of the 12 cards prints one phone number and one
+`@aurora.il.us` e-mail beside that alderman alone, no two numbers repeat, and
+none equals the city hall line, so all 24 values are the members' own under
+this project's contact rule. All 12 names matched the county directory's
+roster, ward for ward. The snapshot is
+`il/data/source/aurora-council-2026-11-25.json`, passed to
+`build_municipal_officials_roster.py` as an `--enrich` payload by the weekly
+municipal workflow; nothing re-fetches it, so it can only fill contact the
+county left empty, and refreshing it means reading the page again. The record's
+blocker as it stood at retirement follows.
+
+> Re-checked 31 Jul 2026, when the old blocker had genuinely lifted: Aurora had moved to www.aurora.il.us, the new site answered, and all 12 aldermen's pages published a city e-mail address and the Alderman's Office phone. The ward boundary data carries no officeholder details, so contact has to come from those 12 pages, and reading them was queued rather than done. RE-MEASURED 2026-08-20: THE WINDOW CLOSED FIRST. www.aurora.il.us now answers 403 Access Denied to every path tried — the root, /government, /government/city-council, /residents and /directory.aspx, 374 to 405 bytes each — and the refusal is AKAMAI's: the body carries Akamai's own error reference and errors.edgesuite.net, and the response carries the ak_p server-timing header. That is the Joliet class, a flat WAF deny rather than a challenge a browser works through, so this stopped being queued work and became a sourcing block. CHECKED WHO ANSWERED, because this project's own rule is that a 403 from an egress proxy is not a 403 from a site: the proxy reported the tunnel established and the denial is the origin's. THE READER IS UNAFFECTED AND THAT DISTINCTION IS THE POINT — the card's link (aurora-il.org, which 301s to www.aurora.il.us) opens normally in a real browser; what is refused is the automated read, so this is a sourcing block and not a broken link, and the link gate is right to treat a roster-carried 403 as ordinary. A DECOY TO NAME BEFORE IT COSTS SOMEONE THE BUILD: cityofaurora.org redirects to aurorane.gov, the City of Aurora NEBRASKA — the browncountyil.org / Clay-County-Missouri class of wrong-state hit, and the obvious thing to type for Illinois's second-largest city.
 
 ## Closed record — Whiteside County's fire and park districts (opened 2026-09-05, closed 2026-10-30)
 

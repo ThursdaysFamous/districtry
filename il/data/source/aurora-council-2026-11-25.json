@@ -1,0 +1,104 @@
+{
+ "_about": "Aurora's 12 aldermen as the City of Aurora's own Elected officials page printed them (https://www.aurora.il.us/Elected-officials), read once on 2026-11-25 in the project owner's own browser: the city's site turns away automated visits and its robots.txt asks crawlers to stay off that page, and the owner allowed a one-off read of it on 2026-11-25. Each card prints one phone number and one e-mail address beside that alderman alone. Nothing re-fetches this: it is passed to build_municipal_officials_roster.py as an --enrich payload, so it can only fill a phone or e-mail the county directory left empty. Refreshing it means reading the page again and replacing this file.",
+ "read": "2026-11-25",
+ "county": "Kane",
+ "directory_url": "https://www.aurora.il.us/Elected-officials",
+ "officials": [
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Keith Larson",
+   "district": "At Large",
+   "person_phone": "331-758-4582",
+   "person_email": "larsonk@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Will White",
+   "district": "At Large",
+   "person_phone": "331-329-2981",
+   "person_email": "whitew@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Daniel Barreiro",
+   "district": "Ward 1",
+   "person_phone": "331-758-4731",
+   "person_email": "barreirod@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Juany Garza",
+   "district": "Ward 2",
+   "person_phone": "630-256-3022",
+   "person_email": "garzaj@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Ted Mesiacos",
+   "district": "Ward 3",
+   "person_phone": "331-452-3479",
+   "person_email": "mesiacost@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Jonathan Núñez",
+   "district": "Ward 4",
+   "person_phone": "331-758-0202",
+   "person_email": "nunezj@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Carl Franco",
+   "district": "Ward 5",
+   "person_phone": "630-631-4296",
+   "person_email": "francoc@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Michael B. Saville",
+   "district": "Ward 6",
+   "person_phone": "630-896-9895",
+   "person_email": "savillem@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Javier Bañuelos",
+   "district": "Ward 7",
+   "person_phone": "331-758-0972",
+   "person_email": "banuelosj@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Patty Smith",
+   "district": "Ward 8",
+   "person_phone": "630-341-1176",
+   "person_email": "smithpc@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Edward J. Bugg",
+   "district": "Ward 9",
+   "person_phone": "630-886-1615",
+   "person_email": "bugge@aurora.il.us"
+  },
+  {
+   "jurisdiction": "City of Aurora",
+   "office": "Alderperson",
+   "name": "Shweta Baid",
+   "district": "Ward 10",
+   "person_phone": "630-256-3030",
+   "person_email": "sbaid@aurora.il.us"
+  }
+ ]
+}
