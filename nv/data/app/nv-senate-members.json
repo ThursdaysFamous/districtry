@@ -25,6 +25,7 @@
     "name": "Rochelle T. Nguyen",
     "party": "Democratic",
     "email": "Rochelle.Nguyen@sen.state.nv.us",
+    "phone": "work (725) 999-2669",
     "capitolOffice": [
       "Room 2132",
       "Mail during session: c/o Nevada Senate, 401 South Carson Street, Carson City, NV 89701-4747",
@@ -56,15 +57,10 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Senate/Current/5"
   },
   "6": {
-    "name": "Nicole J. Cannizzaro",
-    "party": "Democratic",
-    "email": "Nicole.Cannizzaro@sen.state.nv.us",
-    "capitolOffice": [
-      "Room 1221",
-      "Mail during session: c/o Nevada Senate, 401 South Carson Street, Carson City, NV 89701-4747",
-      "(775) 684-1406"
-    ],
-    "url": "https://www.leg.state.nv.us/App/Legislator/A/Senate/Current/6"
+    "vacant": true,
+    "vacantWhy": "The Nevada Senate's page for this seat reads Vacant.",
+    "sourceUrl": "https://www.leg.state.nv.us/App/Legislator/A/Senate/Current/6",
+    "asOf": "2026-11-25"
   },
   "7": {
     "name": "Roberta Lange",
