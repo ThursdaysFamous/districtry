@@ -26,7 +26,7 @@
   }
  ],
  "office": {
-  "contactUrl": "https://www.battlecreekmi.gov/formcenter/Contact-Commissioners-Civic-Boards-38/Contact-Commissioners-Form-45",
+  "contactUrl": "https://www.battlecreekmi.gov/formcenter/allcategories-0/45",
   "label": "City Hall",
   "lines": [
    "10 N. Division St.",
@@ -36,7 +36,7 @@
  },
  "seats": 9,
  "seatsPerWard": 1,
- "sourceUrl": "https://www.battlecreekmi.gov/380/City-Commission",
+ "sourceUrl": "https://www.battlecreekmi.gov/m/directory/department?did=31",
  "wards": {
   "1": [
    {

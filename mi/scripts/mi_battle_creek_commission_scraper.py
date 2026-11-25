@@ -19,19 +19,27 @@ The Mayor, elected citywide." So the PROSE and the CARD LIST are two witnesses
 to one fact, and this refuses to write unless they agree — nine stated, nine
 published, five of them wards.
 
-THE PAGE IS h-card MICROFORMAT, WHICH IS WHY THIS IS SAFE TO PARSE. Every
-commissioner is one `<li class="widgetItem h-card">` carrying its own
-`p-name`, `p-job-title` ("Commissioner, Ward N" / "Mayor, At-Large"), `p-tel`
-and `p-link`. The parser keys off that block and never off document order —
-which matters here more than usual, because THE WARDS ARE NOT IN ORDER ON THE
-PAGE: they render 5, 2, 1, 3, 4, interleaved with the at-large seats. A flat
-read that paired each name with the nearest preceding ward label would put
-Jenasia Morris in Ward 5 rather than Ward 2. That is the Franklin County grid
-trap this project already has on record, and the fix is the same: read each
-member's own block.
+THE MEMBER CARDS LEFT THE COMMISSION PAGE IN NOVEMBER 2026. Measured
+2026-11-25: /380/City-Commission still carries the composition prose but no
+member h-cards (the run of that week failed with 0 cards), and its "Meet Your
+Commissioners" page (/1080) is photo links only. The same nine people, titles,
+phones and shared contact form are on the city's staff directory department
+"Mayor & City Commission" (PEOPLE below), which is where /1080's photos and
+the old cards' profile links both lead. So the prose is read from PAGE and the
+people from PEOPLE: two pages, one city, the same two witnesses.
 
-NO PER-MEMBER E-MAIL EXISTS AND NONE IS INVENTED. Each card's `u-email` slot
-links the city's SHARED contact form — the identical href on all nine, with
+EACH MEMBER IS ONE DIRECTORY ROW, WHICH IS WHY THIS IS SAFE TO PARSE. Every
+person is one `<li class="list-group-item ...">` carrying its own profile link
+(`employee?eid=N`) and name, a title ("Commissioner, Ward N" / "Mayor,
+At-Large"), a `tel:` link and a contact link. The parser keys off that block
+and never off document order — the directory lists the at-large seats and
+wards interleaved (the old cards rendered wards 5, 2, 1, 3, 4). A flat read
+that paired each name with the nearest preceding ward label would misplace
+members. That is the Franklin County grid trap this project already has on
+record, and the fix is the same: read each member's own block.
+
+NO PER-MEMBER E-MAIL EXISTS AND NONE IS INVENTED. Each row's contact link
+is the city's SHARED contact form — the identical href on all nine, with
 only the visible label differing ("Contact form" on eight, "Email" on one). An
 address common to every member belongs to the body, so it is hoisted like Grand
 Rapids's switchboard; a member row never carries it. If the city ever publishes
@@ -52,24 +60,32 @@ import os
 import re
 import subprocess
 import sys
+import time
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))), "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED -- validate_workflow_deps)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, ".cache", "mi_battle_creek_commission.json")
 
 SITE = "https://www.battlecreekmi.gov"
-PAGE = SITE + "/380/City-Commission"
+PAGE = SITE + "/380/City-Commission"                       # the composition prose
+PEOPLE = SITE + "/m/directory/department?did=31"          # the members
+# shortcut: robots.txt states `Crawl-delay: 10` for `*` (read 2026-11-25); if the
+# city raises it, raise this.
+CRAWL_DELAY = 10
 UA = "districtry/1.0 (civic data; +https://districtry.com)"
 
 EXPECT_WARDS = ("1", "2", "3", "4", "5")
 EXPECT_SEATS = 9
 
-# The h-card block. Non-greedy to the closing </li>, so blocks cannot merge.
-CARD_RE = re.compile(r'<li class="[^"]*\bh-card\b[^"]*">(.*?)</li>', re.S)
-NAME_RE = re.compile(r'class="[^"]*\bp-name\b[^"]*"[^>]*>\s*(.*?)\s*</', re.S)
-JOB_RE = re.compile(r'class="[^"]*\bp-job-title\b[^"]*"[^>]*>\s*(.*?)\s*</', re.S)
-TEL_RE = re.compile(r'href="tel:([0-9+]+)"')
-LINK_RE = re.compile(r'class="[^"]*\bp-link\b[^"]*"[^>]*>\s*<a href="([^"]+)"')
-MAIL_RE = re.compile(r'class="[^"]*\bu-email\b[^"]*"[^>]*>\s*<a href="([^"]+)"')
+# One directory row. Non-greedy to the closing </li>, so rows cannot merge.
+CARD_RE = re.compile(r'<li class="list-group-item[^"]*">(.*?)</li>', re.S)
+NAME_RE = re.compile(r'<a href="([^"]*employee\?eid=\d+)"[^>]*>\s*(.*?)\s*</a>', re.S)
+JOB_RE = re.compile(r'class="d-sm-block d-none">\s*(.*?)\s*</div>', re.S)
+TEL_RE = re.compile(r'href="tel:([0-9+()\-. ]+),?"')
+MAIL_RE = re.compile(r'<a href="((?:/formcenter/|mailto:)[^"]+)"')
 WARD_RE = re.compile(r"\bWard\s*([1-9])\b", re.I)
 
 # The city's own composition sentence, the second witness to `seats`.
@@ -117,19 +133,20 @@ def parse(page):
     for block in CARD_RE.findall(page):
         job = text(JOB_RE.search(block).group(1)) if JOB_RE.search(block) else ""
         if not job:
-            continue                      # staff cards on the page carry no title slot
-        name = text(NAME_RE.search(block).group(1)) if NAME_RE.search(block) else ""
+            continue                      # a row with no title slot is not a seat
+        link = NAME_RE.search(block)
+        name = text(link.group(2)) if link else ""
         if not name:
-            fail("an h-card carries the title %r but no p-name — the page's markup "
-                 "has changed" % job)
-        tel, link, mail = TEL_RE.search(block), LINK_RE.search(block), MAIL_RE.search(block)
+            fail("a directory row carries the title %r but no named profile link — "
+                 "the page's markup has changed" % job)
+        tel, mail = TEL_RE.search(block), MAIL_RE.search(block)
         ward = WARD_RE.search(job)
         members.append({
             "name": name,
             "role": job,
             "ward": ward.group(1) if ward else None,
             "phone": _phone(tel.group(1)) if tel else None,
-            "profileUrl": _abs(link.group(1)) if link else None,
+            "profileUrl": _abs(htmllib.unescape(link.group(1))),
             "contactUrl": _abs(htmllib.unescape(mail.group(1))) if mail else None,
         })
     return members
@@ -159,20 +176,25 @@ def stated_composition(page):
 def main():
     argparse.ArgumentParser(description=__doc__,
                             formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
-    print("Fetching Battle Creek's commission page…", file=sys.stderr)
-    try:
-        page = get(PAGE)
-    except Exception as exc:                                  # noqa: BLE001
-        fail("could not read %s: %s. NOTE: a 403 on some OTHER page id says "
-             "nothing about this one — the first pass at this city recorded exactly "
-             "that mistake." % (PAGE, exc))
-    if "h-card" not in page:
-        fail("%s no longer carries h-card markup — the parser keys off it, and "
-             "guessing at document order is what the ward ordering on this page "
-             "(5, 2, 1, 3, 4) punishes" % PAGE)
+    pages = {}
+    for url in (PAGE, PEOPLE):
+        require_robots_once(url, UA, label="mi-battle-creek-commission")
+        if pages:
+            time.sleep(CRAWL_DELAY)
+        print("Fetching %s…" % url, file=sys.stderr)
+        try:
+            pages[url] = get(url)
+        except Exception as exc:                              # noqa: BLE001
+            fail("could not read %s: %s. NOTE: a 403 on some OTHER page id says "
+                 "nothing about this one — the first pass at this city recorded "
+                 "exactly that mistake." % (url, exc))
+    if "list-group-item" not in pages[PEOPLE]:
+        fail("%s no longer carries one directory row per person — the parser keys "
+             "off that block, and guessing at document order is what the "
+             "interleaved ward order punishes" % PEOPLE)
 
-    members = parse(page)
-    stated = stated_composition(page)
+    members = parse(pages[PEOPLE])
+    stated = stated_composition(pages[PAGE])
 
     # WITNESS 1 (the prose) against WITNESS 2 (the published cards).
     if stated["total"] != EXPECT_SEATS:
@@ -220,7 +242,7 @@ def main():
             m.pop("contactUrl", None)
 
     office = {"label": "City Hall", "lines": list(OFFICE_LINES)}
-    ph = OFFICE_PHONE_RE.search(text(page))
+    ph = OFFICE_PHONE_RE.search(text(pages[PAGE]))
     if ph:
         office["phone"] = ph.group(1)
     if any(m.get("phone") == office.get("phone") for m in members):
@@ -232,7 +254,7 @@ def main():
                                       m["name"], m["phone"] or "(no phone)"),
               file=sys.stderr)
 
-    payload = {"sourceUrl": PAGE, "seats": stated["total"], "members": members,
+    payload = {"sourceUrl": PEOPLE, "seats": stated["total"], "members": members,
                "office": office}
     if shared:
         payload["contactUrl"] = shared
