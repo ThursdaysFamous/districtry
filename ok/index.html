@@ -17120,13 +17120,18 @@ function initOklahomaExplorer() {
    * MEAN AREA 6,963 km2 against the Senate's 3,771, which puts the layer
    * second in the area rank, under the U.S. House.
    *
-   * NOBODY IS NAMED YET: the roster names each judge beside their home town,
-   * which this project never copies, and reading the names alone and keeping
-   * them current between rosters is its own change (gap
-   * ok-judicial-district-judges). The card links the roster.
+   * THE JUDGES ARE NAMED SINCE 2026-11-25 (ok-district-judges.json, built
+   * offline by ok/scripts/build_ok_district_judges.py): the roster's names,
+   * the Governor's appointments since it was compiled from the Judicial
+   * Nominating Commission's list, and who takes each office in January 2027
+   * from the Election Board's April 2026 candidate list and its official 2026
+   * results. Nothing refreshes it, so the card gives the date it was read.
    * ---------- */
   var loadOkJudicialDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ok-judicial-districts.json", {}, 2);
+  });
+  var loadOkDistrictJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-district-judges.json", {}, 2);
   });
   var OK_OFFICER_ROSTER =
     "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf";
@@ -17184,15 +17189,23 @@ function initOklahomaExplorer() {
       return unit == null ? null : "Judicial District " + unit;
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadOkJudicialDistricts, point).then(function (feature) {
+      // The judges file failing is not this layer failing: the district still
+      // answers, and the card says who elects each office.
+      return Promise.all([
+        queryFeatureAt(loadOkJudicialDistricts, point),
+        loadOkDistrictJudges().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
+        var unit = okJudicialUnit(feature);
         var result = {
           seq: seq,
-          unit: okJudicialUnit(feature),
+          unit: unit,
           counties: findPropCI(props, ["counties"]),
           authority: findPropCI(props, ["authority"]),
           electorates: okElectorates(findPropCI(props, ["offices"])),
+          bench: (parts[1] && unit != null) ? parts[1][unit] || null : null,
           county: null
         };
         if (result.electorates.length < 2) return result;
@@ -17246,12 +17259,21 @@ function initOklahomaExplorer() {
           return { label: okOfficePhrase(g.offices), value: "Elected by " + okCountyPhrase(g.counties) };
         })));
       }
+      var bench = result.bench;
+      var read = bench ? okElectionDate(bench.read) : null;
+      // no read date, no names: a list that cannot say when it was read is not shown
+      var held = (read && bench.offices) || [];
       var rows = [
         {
           label: "Who holds each office",
-          value: "This app does not name the judges yet. The State Election " +
-            "Board's roster, linked below, lists who held each office when it " +
-            "was published in March 2025."
+          value: held.length
+            ? "Below, as of " + read + ": the State Election Board's roster of " +
+              "March 2025, with the Governor's appointments since then. Where " +
+              "the 2026 election chose someone else, that person is named too; " +
+              "the new term starts in January 2027."
+            : "This app does not name the judges yet. The State Election " +
+              "Board's roster, linked below, lists who held each office when it " +
+              "was published in March 2025."
         },
         {
           label: "The court",
@@ -17264,6 +17286,35 @@ function initOklahomaExplorer() {
         rows.push({ label: "Drawn from", value: String(result.authority) });
       }
       wrap.appendChild(renderFieldStack(rows));
+      var people = held.map(function (o) {
+        var notes = [];
+        if (okElectionDate(o.appointed)) {
+          notes.push("Appointed by the Governor on " + okElectionDate(o.appointed) + ".");
+        }
+        if (o.next && o.next.name) {
+          notes.push("From January 2027: " + String(o.next.name) + (o.next.how === "elected"
+            ? ", elected in 2026." : ", the only candidate who filed in 2026."));
+        }
+        if (o.noVote === true) {
+          notes.push("The Election Board's official 2026 results show no vote " +
+            "for this office, so who holds it from January 2027 is not shown.");
+        }
+        return { name: String(o.name), badge: "Office " + String(o.office),
+          note: notes.length ? notes.join(" ") : null };
+      });
+      if (people.length > 8) {
+        // Oklahoma County has 15 offices and Tulsa's district 14: the bench
+        // goes behind one expander so the card stays a card (closed by default)
+        var det = cardEl("details", "card-row-b");
+        var summary = document.createElement("summary");
+        summary.appendChild(cardEl("span", null, String(people.length) + " district judges"));
+        summary.appendChild(cardDetailsHint());
+        det.appendChild(summary);
+        det.appendChild(renderPersonRows(people));
+        wrap.appendChild(det);
+      } else if (people.length) {
+        wrap.appendChild(renderPersonRows(people));
+      }
       return wrap;
     },
     primaryLink: function () {

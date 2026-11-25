@@ -1,0 +1,98 @@
+# Oklahoma State Election Board, "Candidates for Elective Office 2026",
+# filed April 1-3, 2026, compiled as of 5:00 p.m. April 3, 2026, section
+# DISTRICT JUDGE, read 2026-11-25 from
+# https://www.oklahoma.gov/content/dam/ok/en/elections/candidate-filing-archives/2026-candidate-filing-archives/2026-candidate-list-book.pdf
+# (4,297,847 bytes, SHA-256
+# c5e56857e341527dba9535d13be7c109ccadebe575f5f71f2000d3467c8ff5fe) with this project's own client.
+# Each office, the candidate's number and the name exactly as printed. The
+# home town printed beside each name is NOT copied. The Election Board's
+# list of 2026 withdrawals (read the same day,
+# https://oklahoma.gov/elections/candidates/2026-candidate-filing-information/2026-candidate-withdrawals.html)
+# names no district judge candidate.
+District 1, Office 1 | 00471 | JON KEITH PARSLEY
+District 2, Office 1 | 00363 | DONNA L. DIRICKSON
+District 3, Office 1 | 00403 | RAFE HALL
+District 4, Office 1 | 00126 | JUSTIN PAUL EILERS
+District 4, Office 2 | 00130 | PAUL K. WOODWARD
+District 4, Office 2 | 00231 | ERIC EDWARDS
+District 4, Office 3 | 00257 | JASON A. SEIGARS
+District 5, Office 1 | 00355 | NEIL WEST
+District 5, Office 1 | 00362 | CHRISTINE GALBRAITH
+District 5, Office 1 | 00415 | STEVEN W. CROW
+District 5, Office 1 | 00458 | TOMMY SIMS
+District 5, Office 2 | 00434 | CARRIE E. HIXON
+District 5, Office 3 | 00342 | JAY WALKER
+District 5, Office 4 | 00204 | SCOTT MEADERS
+District 5, Office 5 | 00184 | GRANT D. SHEPERD
+District 6, Office 1 | 00077 | KORY KIRKLAND
+District 7, Office 1 | 00414 | LYDIA Y. GREEN
+District 7, Office 2 | 00203 | KAITLYN GRACE ALLEN
+District 7, Office 3 | 00196 | AMY PALUMBO
+District 7, Office 4 | 00396 | KENNETH M. STONER
+District 7, Office 5 | 00098 | NATALIE MAI
+District 7, Office 6 | 00249 | BRENT DISHMAN
+District 7, Office 7 | 00014 | CINDY H. TRUONG
+District 7, Office 8 | 00021 | HEATHER COYLE
+District 7, Office 9 | 00261 | ANTHONY L. BONNER JR.
+District 7, Office 10 | 00070 | SUSAN C. STALLINGS
+District 7, Office 10 | 00417 | WARREN C. PLUNK
+District 7, Office 11 | 00103 | RICHARD C. OGDEN
+District 7, Office 12 | 00046 | SHEILA D. STINSON
+District 7, Office 13 | 00071 | K. NIKKI KIRKPATRICK
+District 7, Office 14 | 00088 | KATHRYN RUTH SAVAGE
+District 7, Office 15 | 00048 | DON ANDREWS
+District 8, Office 1 | 00121 | ROB DAVIS
+District 8, Office 1 | 00343 | SCOTT LOFTIS
+District 8, Office 1 | 00392 | LEE TURNER
+District 9, Office 1 | 00297 | KATHERINE ELDER THOMAS
+District 10, Office 1 | 00002 | STUART TATE
+District 11, Office 1 | 00397 | RUSSELL C. VACLAW
+District 12, Office 1 | 00244 | SHAWN TAYLOR
+District 12, Office 2 | 00119 | LARA RUSSELL
+District 12, Office 3 | 00118 | STEPHEN R. PAZZO JR.
+District 13, Office 1 | 00233 | JENNIFER ELLIS McAFFREY
+District 14, Office 1 | 00023 | CAROLINE WALL
+District 14, Office 1 | 00582 | TOM SAWYER
+District 14, Office 2 | 00282 | SHARON K. HOLMES
+District 14, Office 3 | 00159 | TRACY PRIDDY
+District 14, Office 4 | 00161 | DUSTIN ALLEN
+District 14, Office 4 | 00245 | PHILLIP PEAK
+District 14, Office 4 | 00289 | LORETTA RADFORD
+District 14, Office 5 | 00040 | MICHELLE BODINE KEELY
+District 14, Office 6 | 00096 | KELLY MORGAN GREENOUGH
+District 14, Office 7 | 00102 | WILLIAM DAVID LaFORTUNE, SR.
+District 14, Office 8 | 00123 | DOUG DRUMMOND
+District 14, Office 9 | 00059 | RICHARD L. HATHCOAT
+District 14, Office 10 | 00129 | DAWN MOODY
+District 14, Office 11 | 00128 | APRIL SEIBERT
+District 14, Office 12 | 00171 | KEVIN GRAY
+District 14, Office 12 | 00602 | CHRISTOPHER CAMP
+District 14, Office 13 | 00097 | DAVID GUTEN
+District 14, Office 14 | 00175 | KURT GLASSCO
+District 15, Office 1 | 00142 | TIM KING
+District 15, Office 2 | 00235 | DOUGLAS KIRKLEY
+District 15, Office 3 | 00234 | WILL COSNER
+District 15, Office 4 | 00402 | BRET A. SMITH
+District 16, Office 1 | 00451 | JONATHAN K. SULLIVAN
+District 17, Office 1 | 00336 | EMILY MAXWELL
+District 18, Office 1 | 00482 | MIKE HOGAN
+District 19, Office 1 | 00302 | MARK R. CAMPBELL
+District 20, Office 1 | 00082 | CARSON M. BROOKS
+District 20, Office 2 | 00083 | WALLACE COPPEDGE
+District 21, Office 1 | 00410 | MICHAEL TUPPER
+District 21, Office 2 | 00359 | LEAH EDWARDS
+District 21, Office 3 | 00280 | THAD BALKMAN
+District 21, Office 4 | 00149 | LYNNE McGUIRE
+District 21, Office 5 | 00174 | JEFF VIRGIN
+District 22, Office 1 | 00095 | BRETT W. BUTNER
+District 22, Office 2 | 00107 | STEVE KESSINGER
+District 23, Office 1 | 00208 | SARAH L. BRIDGE
+District 23, Office 2 | 00087 | JOSEPH COSTA
+District 23, Office 2 | 00538 | TROY AUSTIN OFFICER
+District 24, Office 1 | 00198 | ROBERT J. GETCHELL
+District 24, Office 2 | 00269 | LAWRENCE W. PARISH
+District 24, Office 3 | 00317 | PANDEE RAMIREZ
+District 24, Office 4 | 00205 | KELLY HAKE
+District 25, Office 1 | 00461 | D. CLAY MOWDY
+District 26, Office 1 | 00325 | PAUL HESSE
+District 26, Office 2 | 00150 | KHRISTAN STRUBHAR
