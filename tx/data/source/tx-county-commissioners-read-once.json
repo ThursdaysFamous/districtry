@@ -1,0 +1,95 @@
+{
+ "about": "Texas county commissioners read ONCE, by a person's browser (Adam's own Chrome, through Claude in Chrome), from each county's own website, for counties this project's weekly reader does not read. Adam allowed these one-off reads on 2026-11-25: a public page his browser opens normally, stopping at anything that needs a click, a captcha or a sign-in, and reading once a site whose robots.txt asks automated readers to stay out. None of the six showed a check page in his browser on 2026-11-25. The weekly job never fetches these counties; tx/scripts/build_tx_county_commissioners.py ships each entry as it stands here, dated readOn, and the card says the names were read once and are not re-read weekly. `printed` is the text the page printed for each seat. To refresh a county, read its page again the same way and change its entry and readOn.",
+ "counties": [
+  {
+   "geoid": "48029",
+   "county": "Bexar County",
+   "url": "https://www.bexar.org/146/Commissioners-Court",
+   "pages": {
+    "1": "https://www.bexar.org/commissionerpct1",
+    "2": "https://www.bexar.org/commissionerpct2",
+    "3": "https://www.bexar.org/commissionerpct3",
+    "4": "https://www.bexar.org/commissionerpct4"
+   },
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.bexar.org answered this project's reader with Cloudflare's managed challenge on two of three reads (2026-11-16).",
+   "seats": [
+    {"number": 1, "name": "Rebeca Clay-Flores", "printed": "Precinct 1 Commissioner Rebeca Clay-Flores"},
+    {"number": 2, "name": "Justin Rodriguez", "printed": "Precinct 2 Commissioner Justin Rodriguez"},
+    {"number": 3, "name": "Grant Moody", "printed": "Precinct 3 Commissioner Grant Moody"},
+    {"number": 4, "name": "Tommy Calvert", "printed": "Commissioner Tommy Calvert, Precinct 4"}
+   ]
+  },
+  {
+   "geoid": "48339",
+   "county": "Montgomery County",
+   "url": "https://www.mctx.org/departments/departments_a_-_c/commissioner_s_court/county_commissioners/index.php",
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.mctx.org's robots.txt publishes User-agent: * / Disallow: /, which binds this project's reader.",
+   "seats": [
+    {"number": 1, "name": "Robert C. Walker", "printed": "Commissioner Precinct 1 / Commissioner Robert C. Walker"},
+    {"number": 2, "name": "Charlie Riley", "printed": "Commissioner Precinct 2 / Commissioner Charlie Riley"},
+    {"number": 3, "name": "Ritch Wheeler", "printed": "Commissioner Precinct 3 / Commissioner Ritch Wheeler"},
+    {"number": 4, "name": "Matt Gray", "printed": "Commissioner Precinct 4 / Commissioner Matt Gray"}
+   ]
+  },
+  {
+   "geoid": "48027",
+   "county": "Bell County",
+   "url": "https://www.bellcountytx.com/county_government/commissioners_court/index.php",
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.bellcountytx.com's robots.txt publishes User-agent: * / Disallow: /, which binds this project's reader.",
+   "seats": [
+    {"number": 1, "name": "Russell Schneider", "printed": "Russell Schneider, County Commissioner, Precinct 1"},
+    {"number": 2, "name": "Bobby Whitson", "printed": "Bobby Whitson, County Commissioner, Precinct 2"},
+    {"number": 3, "name": "Greg Reynolds", "printed": "Greg Reynolds, County Commissioner, Precinct 3"},
+    {"number": 4, "name": "Louie Minor", "printed": "Louie Minor, County Commissioner, Precinct 4"}
+   ]
+  },
+  {
+   "geoid": "48041",
+   "county": "Brazos County",
+   "url": "https://brazoscountytx.gov/commissioners-court/",
+   "pages": {
+    "1": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-1/",
+    "2": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-2/",
+    "3": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-3/",
+    "4": "https://brazoscountytx.gov/commissioners-court/commissioner-precinct-4/"
+   },
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.brazoscountytx.gov answered this project's reader with a browser check on the page and on robots.txt (2026-11-17).",
+   "seats": [
+    {"number": 1, "name": "Bentley Nettles", "printed": "Commissioner: Precinct 1 / Bentley Nettles"},
+    {"number": 2, "name": "Chuck Konderla", "printed": "Commissioner: Precinct 2 / Chuck Konderla"},
+    {"number": 3, "name": "Fred Brown", "printed": "Commissioner: Precinct 3 / Fred Brown"},
+    {"number": 4, "name": "Wanda J. Watson", "printed": "Commissioner: Precinct 4 / Wanda J. Watson"}
+   ]
+  },
+  {
+   "geoid": "48143",
+   "county": "Erath County",
+   "url": "https://www.co.erath.tx.us/246/Commissioners",
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.co.erath.tx.us answered this project's reader with Cloudflare's block page on the page and on robots.txt (2026-11-17).",
+   "seats": [
+    {"number": 1, "name": "Dee Stephens", "printed": "Precinct 1 / Commissioner Dee Stephens"},
+    {"number": 2, "name": "Albert Ray", "printed": "Precinct 2 / Commissioner Albert Ray"},
+    {"number": 3, "name": "Sherman Edwards", "printed": "Precinct 3 / Commissioner Sherman Edwards"},
+    {"number": 4, "name": "Jim Buck", "printed": "Precinct 4 / Commissioner Jim Buck"}
+   ]
+  },
+  {
+   "geoid": "48007",
+   "county": "Aransas County",
+   "url": "https://www.aransascountytx.gov/commissioners/",
+   "readOn": "2026-11-25",
+   "whyNotWeekly": "www.aransascountytx.gov answered this project's reader with an Imperva bot check (2026-11-17).",
+   "seats": [
+    {"number": 1, "name": "Jack Chaney", "printed": "Precinct 1-1A Commissioner / Jack Chaney"},
+    {"number": 2, "name": "Leslie \"Bubba\" Casterline", "printed": "Precinct 2 Commissioner / Leslie \"Bubba\" Casterline"},
+    {"number": 3, "name": "Pat Rousseau", "printed": "Precinct 3 Commissioner / Pat Rousseau"},
+    {"number": 4, "name": "Bob Dupnik", "printed": "Precinct 4 Commissioner / Bob Dupnik"}
+   ]
+  }
+ ]
+}

@@ -21,8 +21,8 @@ script's own client (scraper_common.UA_HEADERS_ROSTER_BOT on the requests
 stack), one GET each after a read of the host's robots.txt. They are the
 largest counties, by the 2020 census, whose own sites serve this client and
 print the four names in a form a parser can hold: the first twelve measured
-2026-11-16 and 2026-11-17, and sixteen more, the 21st to 40th largest, on
-2026-11-17:
+2026-11-16 and 2026-11-17, sixteen more, the 21st to 40th largest, on
+2026-11-17, and Smith, on 2026-11-25:
 
   Harris    The county's Precinct 4 office's page of the whole court, on the
             county's domain; the name above "Commissioner Precinct N".
@@ -75,6 +75,11 @@ print the four names in a form a parser can hold: the first twelve measured
             line, at the state's CIRA host.
   Rockwall  The name above "Precinct N Commissioner", in the home page's list
             of the court.
+  Smith     One page per commissioner; the name below "Contact Us". On
+            2026-11-17 its precinct pages printed the names only inside
+            sentences; measured 2026-11-25, www.smith-county.com prints that
+            contact block on each, and serves this client. Its robots.txt asks
+            for 10 seconds between requests.
 
 And nineteen of the 41st to 60th largest, measured 2026-11-17 the same way:
 
@@ -456,7 +461,22 @@ entries, so that no other county site counts as read by a browser string.
   Johnson   One page per commissioner; "The Honorable <name>", the honorific
             dropped.
 
-NOT READ, AND WHY, among the twenty largest:
+READ ONCE, BY A PERSON'S BROWSER (Adam's yes of 2026-11-25). Six counties
+this script does not fetch ship from tx/data/source/
+tx-county-commissioners-read-once.json, read on 2026-11-25 in Adam's own
+Chrome as he would read them by hand: Bexar, Brazos, Erath and Aransas, whose
+sites answer this script with a challenge, a block page or a bot check (below),
+and Montgomery and Bell, whose robots.txt asks every automated reader to stay
+out, which Adam allowed reading once. None showed a check page in that browser.
+Each record is the file's entry as it stands, dated `readOn` and marked
+`readOnce`, so the card says the names were read once and are not re-read
+weekly. The weekly job never fetches these hosts and never lists them unread,
+and --check holds each shipped record to the file. A seat that changes hands
+(new terms begin 1 January 2027) shows the old name until someone reads the
+page again the same way and edits the entry.
+
+NOT READ BY THIS SCRIPT, AND WHY, among the twenty largest (Bexar, Montgomery
+and Bell are read once instead; see READ ONCE above):
   Bexar     www.bexar.org answered two of three reads with Cloudflare's managed
             challenge ("Just a moment..."). A host that challenges is
             challenge-fronted for every path, and getting in on the reads where
@@ -470,19 +490,13 @@ NOT READ, AND WHY, among the twenty largest:
   Williamson, McLennan, Hays, Brazoria, Galveston and Nueces are read with a
   browser identity; see above.
 
-NOT READ, AND WHY, among the 21st to 40th largest (measured 2026-11-17):
+NOT READ BY THIS SCRIPT, AND WHY, among the 21st to 40th largest (measured
+2026-11-17; Brazos is read once instead, see READ ONCE above):
   Brazos    www.brazoscountytx.gov answers this client with a browser check
             ("Just a moment... Checking your browser", HTTP 403, a script
             that sends a browser on to the page) on the page and on
             robots.txt. A challenge is an access control and is never worked
             around, with any client.
-  Smith     www.smith-county.com serves this client, but its precinct pages
-            print each commissioner's name only inside sentences ("Christina
-            Drewry took office on January 2, 2025 as ..."), which a parser
-            cannot read without guessing where a name ends. The county's newer
-            site, smithcounty.prod.govaccess.org, fails this client's TLS
-            check, so its robots.txt cannot be read, which RFC 9309 treats as
-            disallowing everything.
 
 NOT READ, AND WHY, among the 41st to 60th largest (measured 2026-11-17):
   Maverick  www.co.maverick.tx.us, where the county's site used to be,
@@ -490,7 +504,8 @@ NOT READ, AND WHY, among the 41st to 60th largest (measured 2026-11-17):
             other site of the county's was found; maverickcountytx.gov and
             maverickcounty.texas.gov do not answer.
 
-NOT READ, AND WHY, among the 61st to 80th largest (measured 2026-11-17):
+NOT READ BY THIS SCRIPT, AND WHY, among the 61st to 80th largest (measured
+2026-11-17; Erath is read once instead, see READ ONCE above):
   Erath     www.co.erath.tx.us answers this client with Cloudflare's
             "Attention Required!" block page (HTTP 403) on the page and on
             robots.txt, as Williamson, McLennan and Hays do. Not measured with
@@ -505,7 +520,8 @@ NOT READ, AND WHY, among the 81st to 100th largest (measured 2026-11-17):
             page names nobody; the four names are printed only in a PDF list
             of elected officials it links, which this builder does not read.
 
-NOT READ, AND WHY, among the 101st to 160th largest (measured 2026-11-17):
+NOT READ, AND WHY, among the 101st to 160th largest (measured 2026-11-17;
+Aransas is read once instead, see READ ONCE above):
   Aransas   www.aransascountytx.gov answers with an Imperva (Incapsula) bot
             check, which is an access control and is not worked around.
   Gaines    The commissioners court page and the county's phone directory name
@@ -609,7 +625,8 @@ Usage:
 
 --check reads the SHIPPED file and nothing else, offline and with the
 standard library alone: every record a county the County layer draws and
-COUNTIES lists, four seats numbered 1 to 4 with four distinct names that pass
+COUNTIES lists (or the read-once file gives, and then exactly as it gives it),
+four seats numbered 1 to 4 with four distinct names that pass
 the fleet's name test, its source address one COUNTIES gives, and a dated
 `asOf`. It proves the file is what a build writes; it never proves a county
 has not changed its page since.
@@ -644,6 +661,10 @@ INSTANCE_ROOT = os.path.dirname(_HERE)
 DEFAULT_OUT_DIR = os.path.join(INSTANCE_ROOT, "data", "app")
 OUT_NAME = "tx-county-commissioners.json"
 COUNTIES_FILE = os.path.join(DEFAULT_OUT_DIR, "state-counties.json")
+# Counties read once in a person's browser (see READ ONCE above): shipped as the
+# file gives them, never fetched by this script.
+READ_ONCE_FILE = os.path.join(INSTANCE_ROOT, "data", "source",
+                              "tx-county-commissioners-read-once.json")
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # A precinct printed as a word, in any case ("Precinct One", "PRECINCT ONE"),
 # or as a Roman numeral ("PRECINCT III", Leon).
@@ -816,6 +837,13 @@ COUNTIES = [
     dict(geoid="48397", county="Rockwall County", seat_word="Precinct",
          url="https://www.rockwallcountytexas.com/", mode="name_above",
          label=r"Precinct (?P<n>[1-4]) Commissioner"),
+    dict(geoid="48423", county="Smith County", seat_word="Precinct",
+         url="https://www.smith-county.com/275/Commissioners-Court", mode="name_below",
+         label="Contact Us",
+         pages={1: "https://www.smith-county.com/281/Precinct-1",
+                2: "https://www.smith-county.com/280/Precinct-2",
+                3: "https://www.smith-county.com/279/Precinct-3",
+                4: "https://www.smith-county.com/278/Precinct-4"}),
     dict(geoid="48231", county="Hunt County", seat_word="Precinct",
          url="https://www.huntcounty.net/page/hunt.commissionerscourt", mode="inline",
          label=r"Commissioner Precinct (?P<n>[1-4]): (?P<name>.+)"),
@@ -1730,6 +1758,33 @@ def read_county(spec, files):
     }
 
 
+def read_once():
+    """{GEOID: entry} from READ_ONCE_FILE."""
+    with open(READ_ONCE_FILE, encoding="utf-8") as f:
+        return {e["geoid"]: e for e in json.load(f)["counties"]}
+
+
+def read_once_record(entry):
+    """The shipped record for a county read once, or raise. All four seats must
+    name a person: a read-once page printing a vacancy has no entry shape yet."""
+    where = "%s (read once, %s)" % (entry.get("county"), entry.get("url"))
+    names = {s["number"]: person(s["name"], where) for s in entry["seats"]}
+    if sorted(names) != [1, 2, 3, 4] or len(set(names.values())) != 4:
+        raise RuntimeError("%s: not four different names for precincts 1 to 4" % where)
+    if not ISO_DATE_RE.match(str(entry.get("readOn", ""))):
+        raise RuntimeError("%s: readOn %r is not a date" % (where, entry.get("readOn")))
+    pages = entry.get("pages") or {}
+    seats = []
+    for n in (1, 2, 3, 4):
+        seat = {"seat": "Commissioner, Precinct %d" % n, "number": n, "name": names[n]}
+        if pages:
+            seat["sourceUrl"] = pages[str(n)]
+        seats.append(seat)
+    return {"county": entry["county"], "seats": seats,
+            "source": "%s's own website" % entry["county"], "sourceUrl": entry["url"],
+            "asOf": entry["readOn"], "readOnce": True}
+
+
 def counties():
     """{GEOID: NAME} for the 254 counties the County layer draws."""
     with open(COUNTIES_FILE) as f:
@@ -1754,16 +1809,32 @@ def build(files, previous, today):
         rec["asOf"] = old["asOf"] if same else today
         out[spec["geoid"]] = rec
         fresh.append(spec["county"])
+    for geoid, entry in read_once().items():
+        out[geoid] = read_once_record(entry)  # a bad entry is this repo's error: raise
     return out, fresh, carried, unread
 
 
 def shape_problems(data, drawn):
     problems = []
     listed = {c["geoid"]: c for c in COUNTIES}
+    once = read_once()
+    for geoid in sorted(set(once) & set(listed)):
+        problems.append("%s: both read weekly and read once" % geoid)
+    for geoid in sorted(set(once) - set(data)):
+        problems.append("%s: read once and not shipped" % geoid)
     for geoid, rec in data.items():
         where = "%s (%s)" % (geoid, rec.get("county") if isinstance(rec, dict) else "?")
         if geoid not in drawn:
             problems.append("%s: not a county the County layer draws" % where)
+            continue
+        if geoid in once:
+            try:
+                want = read_once_record(once[geoid])
+            except (RuntimeError, KeyError, TypeError) as e:
+                problems.append("%s: read-once entry: %s" % (where, e))
+                continue
+            if rec != want or rec["county"] != drawn[geoid]:
+                problems.append("%s: not the record the read-once file gives" % where)
             continue
         spec = listed.get(geoid)
         if not spec:
@@ -1862,8 +1933,8 @@ def main(argv):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(dict(sorted(data.items())), f, indent=1, ensure_ascii=False)
         f.write("\n")
-    print("Wrote %s (%d counties: %d read now%s)"
-          % (path, len(data), len(fresh),
+    print("Wrote %s (%d counties: %d read now, %d read once%s)"
+          % (path, len(data), len(fresh), len(read_once()),
              ", carried: " + ", ".join(carried) if carried else ""))
 
 
