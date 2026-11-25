@@ -89,7 +89,20 @@ TITLES = ("Lt. Gov. ", "Lieutenant Governor ", "Representative ", "Senator ",
 # The share of named seats Open States must enrich. Measured at every named
 # seat on 2026-10-10; a join that stops matching is the Brown County shape,
 # where the seat count holds and the contact detail silently goes.
+#
+# It is measured only over seats whose member is the one the shipped file
+# already names. After the 3 November 2026 general the state's map named 20
+# new House members and one new senator, and Open States still named the
+# members they replaced (read 2026-11-25: 79 of 99 House seats matched), so
+# the guard refused the whole refresh and the cards kept naming members who
+# had left. A broken join still shows on the unchanged seats; a new member
+# ships with the state's name alone until Open States lists them, and the
+# guard counts only seats that already carry party for the same member.
 MIN_JOIN_SHARE = 0.9
+# A refresh where fewer than this share of named seats keep their member is a
+# source that changed shape, not an election: 20 of 99 House seats and 1 of 33
+# Senate seats changed in November 2026.
+MIN_UNCHANGED_SHARE = 0.5
 
 INSTANCE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(INSTANCE_ROOT, "data", "app")
@@ -255,11 +268,25 @@ def main():
                   % (len(named), cfg["label"], cfg["expected"]), file=sys.stderr)
             sys.exit(1)
         joined = sum(1 for m in named if m.get("party"))
-        if joined < MIN_JOIN_SHARE * len(named):
-            print("FAIL: Open States matched only %d of %d named %s seats — the "
-                  "join has stopped working, and shipping would strip party, "
-                  "e-mail and page from the cards"
-                  % (joined, len(named), cfg["label"]), file=sys.stderr)
+        previous = load_previous(out_path)
+        unchanged = [k for k, m in roster.items() if m.get("name")
+                     and (previous.get(k) or {}).get("name") == m["name"]]
+        if len(unchanged) < MIN_UNCHANGED_SHARE * len(named):
+            print("FAIL: only %d of %d named %s seats keep the member the shipped "
+                  "file names — that is the source changing shape, not an "
+                  "election" % (len(unchanged), len(named), cfg["label"]),
+                  file=sys.stderr)
+            sys.exit(1)
+        # Seats that already carry party for the same member: a new member
+        # who shipped name-only stays out until Open States lists them.
+        enriched = [k for k in unchanged if previous[k].get("party")]
+        kept = sum(1 for k in enriched if roster[k].get("party"))
+        if kept < MIN_JOIN_SHARE * len(enriched):
+            print("FAIL: Open States matched only %d of the %d %s seats that "
+                  "already carry party for the same member — the join has "
+                  "stopped working, and shipping would strip party, e-mail and "
+                  "page from the cards" % (kept, len(enriched), cfg["label"]),
+                  file=sys.stderr)
             sys.exit(1)
         for note in notes:
             print("  note: " + note, file=sys.stderr)
