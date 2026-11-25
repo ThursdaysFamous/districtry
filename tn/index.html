@@ -16858,13 +16858,20 @@ function initTennesseeExplorer() {
    * MEAN AREA 3,409 km2 against the Senate's 3,306, which puts the layer
    * second in the area rank, under the U.S. House.
    *
-   * NOBODY IS NAMED: no list of the judges or the district attorneys by
-   * district has been read (gap tn-judicial-district-officers). The card says
-   * who elects them and links the district attorney's page the conference's
-   * county list sends the district to.
+   * THE JUDGES ARE NAMED FROM THE STATE COURTS' DIRECTORY, read once on
+   * 2026-11-25 in the operator's own Chrome (the courts' site turns away this
+   * project's reader), with the seven people the courts' own notices show hold
+   * no district seat taken out, and the 20th checked against Nashville's own
+   * trial courts' page (tn/scripts/build_tn_trial_judges.py). There is no
+   * weekly job, so the card says the date it was read. The district attorneys
+   * are not named yet (gap tn-judicial-district-officers); the card links the
+   * district attorney's page the conference's county list sends the district to.
    * ---------- */
   var loadTnJudicialDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/tn-judicial-districts.json", {}, 2);
+  });
+  var loadTnTrialJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-trial-judges.json", {}, 2);
   });
   var TN_DA_CONFERENCE = "https://tennesseeda.gov/";
 
@@ -16897,15 +16904,23 @@ function initTennesseeExplorer() {
       return unit == null ? null : "Judicial District " + unit;
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadTnJudicialDistricts, point).then(function (feature) {
+      // The judges file failing is not this layer failing: the district still
+      // answers, and the card falls back to saying who elects the judges.
+      return Promise.all([
+        queryFeatureAt(loadTnJudicialDistricts, point),
+        loadTnTrialJudges().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
+        var unit = tnJudicialUnit(feature);
         return {
           seq: seq,
-          unit: tnJudicialUnit(feature),
+          unit: unit,
           counties: findPropCI(props, ["counties"]),
           authority: findPropCI(props, ["authority"]),
-          url: findPropCI(props, ["url"])
+          url: findPropCI(props, ["url"]),
+          bench: (parts[1] && unit != null) ? parts[1][unit] || null : null
         };
       });
     },
@@ -16917,12 +16932,20 @@ function initTennesseeExplorer() {
           : "Unknown judicial district",
         note: tnCountyPhrase(result.counties)
       }));
+      var bench = result.bench;
+      var read = bench ? tnReadDate(bench.read) : null;
+      // no read date, no names: a list that cannot say when it was read is not shown
+      var judges = (read && bench.judges) || [];
       var rows = [
         {
           label: "Judges",
           value: "The district's voters elect its circuit judges and " +
-            "chancellors, each for an eight-year term. This app does not " +
-            "name them yet."
+            "chancellors, each for an eight-year term." + (judges.length
+              ? " Below are the judges the state courts' directory listed " +
+                "for the district on " + read + ", leaving out anyone the " +
+                "courts' own notices say has left. A judge who took office " +
+                "after that date is not shown."
+              : " This app does not name them yet.")
         },
         {
           label: "District attorney general",
@@ -16942,6 +16965,31 @@ function initTennesseeExplorer() {
         rows.push({ label: "Drawn from", value: String(result.authority) });
       }
       wrap.appendChild(renderFieldStack(rows));
+      var people = judges.map(function (j) {
+        return { name: String(j.name), badge: j.office ? String(j.office) : null };
+      });
+      ((read && bench.vacancies) || []).forEach(function (v) {
+        people.push({ name: "Vacant", badge: String(v.office), note: String(v.note),
+          links: v.url ? [{ label: "The courts' notice", url: String(v.url) }] : [] });
+      });
+      if (people.length > 8) {
+        // Davidson lists 20 and Shelby 26: the bench goes behind one expander
+        // so the card stays a card (expanders default closed, fleet convention)
+        var det = cardEl("details", "card-row-b");
+        var summary = document.createElement("summary");
+        summary.appendChild(cardEl("span", null, String(judges.length) + " judges"));
+        summary.appendChild(cardDetailsHint());
+        det.appendChild(summary);
+        det.appendChild(renderPersonRows(people));
+        wrap.appendChild(det);
+      } else if (people.length) {
+        wrap.appendChild(renderPersonRows(people));
+      }
+      if (people.length && bench.page) {
+        wrap.appendChild(renderLinkRow({
+          links: [{ label: "State courts' judge directory", url: String(bench.page) }]
+        }));
+      }
       return wrap;
     },
     primaryLink: function (result) {
