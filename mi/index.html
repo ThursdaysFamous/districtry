@@ -17842,18 +17842,68 @@ function initMichiganExplorer() {
    * 57 circuits — and witnessed county for county by the Michigan Manual
    * 2025-2026. mi/scripts/build_mi_courts.py carries both lists and the gates.
    *
-   * NEITHER CARD NAMES A JUDGE, and each says why. The court system's own site
-   * (www.courts.michigan.gov) publishes `User-agent: *` / `Disallow: /`, so it
-   * is linked for a reader and never read by this project; the only statewide
-   * list that can be read is the Michigan Manual, a December 2025 snapshot
-   * printed every two years. Gap mi-judge-roster. ---------- */
-  var loadMiCoaDistricts = makeCached(function () {
-    return fetchJSONWithRetry("data/app/mi-court-of-appeals-districts.json", {}, 2);
+   * THE JUDGES ARE A DATED READING, NOT A WEEKLY ONE. The court system's own
+   * site (www.courts.michigan.gov) publishes `User-agent: *` / `Disallow: /`,
+   * so no script reads it. On 2026-11-25 its Court of Appeals district pages
+   * and trial court directory were read once in Adam's own browser, checked
+   * against the Michigan Manual 2025-2026 and the Governor's appointment
+   * notices, and built offline by mi/scripts/build_mi_judges.py into
+   * data/app/mi-judges.json (gap mi-judge-roster). That file is a roster,
+   * network-first, merged onto the cache-first court geometry by the loader
+   * (the tribal-councils pattern); a roster miss leaves the card naming the
+   * district and linking the court. The card says the date it was read. */
+  var loadMiJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-judges.json", {}, 2);
   });
-  var loadMiCircuitCourts = makeCached(function () {
-    return fetchJSONWithRetry("data/app/mi-circuit-courts.json", {}, 2);
-  });
-  var MI_COURTS_LINK = { label: "Michigan courts", url: "https://www.courts.michigan.gov/" };
+  function miCourtLoader(url, rosterKey, idProp) {
+    return makeCached(function () {
+      return Promise.all([
+        fetchJSONWithRetry(url, {}, 2),
+        loadMiJudges().catch(function () { return null; })
+      ]).then(function (parts) {
+        var roster = parts[1] && parts[1][rosterKey];
+        if (roster) parts[0].features.forEach(function (f) {
+          var bench = roster[String(f.properties[idProp])];
+          if (bench) f.properties.bench = { judges: bench.judges || [], notes: bench.notes || [], read: parts[1].read };
+        });
+        return parts[0];
+      });
+    });
+  }
+  var loadMiCoaDistricts = miCourtLoader("data/app/mi-court-of-appeals-districts.json", "courtOfAppeals", "DISTRICT");
+  var loadMiCircuitCourts = miCourtLoader("data/app/mi-circuit-courts.json", "circuits", "CIRCUIT");
+  // carries the merged roster into the result without printing a row of its own
+  var MI_BENCH_FIELD = { name: "bench", keys: ["bench"], when: function () { return false; } };
+  function miNoBench(result) { return !result.bench; }
+
+  function miBench(result) {
+    var bench = result.bench;
+    if (!bench) return null;
+    var frag = document.createDocumentFragment();
+    var people = bench.judges.map(function (j) {
+      var note = j.note ? String(j.note) : (j.termEnds ? "Term ends " + statewideDate(j.termEnds) : null);
+      return { name: String(j.name), badge: j.role ? String(j.role) : null, note: note };
+    });
+    if (people.length > 3) { // Wayne lists 57, so a long bench sits behind one expander, closed
+      var det = cardEl("details", "card-row-b");
+      var summary = document.createElement("summary");
+      summary.appendChild(cardEl("span", null, people.length + " judges"));
+      summary.appendChild(cardDetailsHint());
+      det.appendChild(summary);
+      det.appendChild(renderPersonRows(people));
+      frag.appendChild(det);
+    } else if (people.length) {
+      frag.appendChild(renderPersonRows(people));
+    }
+    var rows = bench.notes.map(function (n) { return { label: "Note", value: String(n) }; });
+    rows.push({
+      label: "As of",
+      value: "Read from the court's own pages on " + statewideDate(bench.read) + ". Judges " +
+        "elected on November 3, 2026 begin their terms on January 1, 2027."
+    });
+    frag.appendChild(renderFieldStack(rows));
+    return frag;
+  }
 
   registerPolygonLayer({
     id: "mi-court-of-appeals",
@@ -17865,13 +17915,17 @@ function initMichiganExplorer() {
     fields: [
       { name: "name", label: "District", keys: ["name"], primary: true },
       { name: "countyCount", label: "Counties in this district", keys: ["county_count"] },
+      MI_BENCH_FIELD,
       { label: "Judges",
         value: "Elected by the voters of this district on a nonpartisan " +
-               "ballot, for six-year terms. This app does not name them yet: " +
-               "the state court system's website asks automated tools not to " +
-               "read it." }
+               "ballot, for six-year terms." },
+      { label: "Who they are", when: miNoBench,
+        value: "Not listed here. Open the link below for the court's own list." }
     ],
-    primaryLink: function () { return MI_COURTS_LINK; }
+    people: miBench,
+    primaryLink: function () {
+      return { label: "Court of Appeals judges", url: "https://www.courts.michigan.gov/courts/court-of-appeals/judges/current-judges/" };
+    }
   });
 
   registerPolygonLayer({
@@ -17884,13 +17938,17 @@ function initMichiganExplorer() {
     fields: [
       { name: "name", label: "Circuit", keys: ["name"], primary: true },
       { name: "counties", label: "Covers", keys: ["counties"] },
+      MI_BENCH_FIELD,
       { label: "Judges",
         value: "Elected by the voters of this circuit on a nonpartisan " +
-               "ballot, for six-year terms. This app does not name them yet: " +
-               "the state court system's website asks automated tools not to " +
-               "read it." }
+               "ballot, for six-year terms." },
+      { label: "Who they are", when: miNoBench,
+        value: "Not listed here. Open the link below for the court's own directory." }
     ],
-    primaryLink: function () { return MI_COURTS_LINK; }
+    people: miBench,
+    primaryLink: function () {
+      return { label: "Trial court directory", url: "https://www.courts.michigan.gov/trial-court-directory/" };
+    }
   });
 
   /* ---------- 10b. Intermediate School District — the state's own map ----------

@@ -437,8 +437,10 @@ ROBOTS_DECLINED = {
         "same answer both ways; its Last-Modified header is the time of the "
         "request, so it says nothing about how long the rule has stood. The mi "
         "Court of Appeals and circuit court cards LINK the state court system for "
-        "a reader, and no Michigan builder reads this host, which is why those "
-        "cards name no judge (gap mi-judge-roster)",
+        "a reader, and no Michigan builder reads this host. The judges those "
+        "cards name were read once, on 2026-11-25, in a person's own browser "
+        "(mi/data/source/courts/, gap mi-judge-roster), which this checker "
+        "cannot be",
     "courts.michigan.gov":
         "the bare host 301s robots.txt to www.courts.michigan.gov, whose file "
         "refuses every client. Measured 2026-10-01. See the www entry",

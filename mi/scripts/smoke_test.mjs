@@ -502,6 +502,13 @@ try {
         info.text.slice(0, 70)
       );
     }
+    // The two court cards name their judges from mi-judges.json, merged onto
+    // the boundaries by the loader: one judge each at the Capitol is the witness.
+    for (const [id, judge] of [["mi-court-of-appeals", "Michael F. Gadola"], ["mi-circuit-court", "Rosemarie E. Aquilina"]]) {
+      const names = await page.evaluate((cid) =>
+        [...document.querySelectorAll("#card-" + cid + " .card-person-name")].map((n) => n.textContent), id);
+      check(`${id} card names its judges (${judge})`, names.includes(judge), names.slice(0, 3).join(", ") || "(none)");
+    }
     await context.close();
   }
 

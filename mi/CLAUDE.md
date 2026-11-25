@@ -40,8 +40,10 @@ the done standard's court and special-district levels. **Court of Appeals Distri
 **Circuit Court** (57) are unions of whole counties whose lists are set in statute (MCL 600.302
 and MCL 600.501-600.557); `mi/scripts/build_mi_courts.py` embeds those lists and dissolves the
 shipped county file, so nothing new is fetched and `--check` rebuilds both offline. Their judges
-are elected by district and are not named, because the court system's own site refuses every
-automated client (gap `mi-judge-roster`). **Intermediate School District** (56) is the state's own
+are elected by district. The court system's own site asks every automated client to stay out, so
+the judges were read once in Adam's own browser on 2026-11-25 and are a dated file,
+`data/app/mi-judges.json` (`mi/scripts/build_mi_judges.py`, gap `mi-judge-roster`; re-read steps
+in `WATCH.md`). **Intermediate School District** (56) is the state's own
 Michigan Geographic Framework layer, built by `mi/scripts/build_mi_isd_districts.py`; it is
 LAND-ONLY, so a mid-lake point is in no ISD, and its card says how the board is chosen without
 naming anyone (gap `mi-isd-board-members`). Michigan elects no school board by district, which is

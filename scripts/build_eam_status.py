@@ -1845,8 +1845,8 @@ ANSWERS = {
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
         # Built 2026-10-01 from statute as unions of whole counties; the judges
-        # are not named (gap mi-judge-roster: the court system's site refuses
-        # every client).
+        # are named from one reading in a person's browser on 2026-11-25 (gap
+        # mi-judge-roster: the court system's site asks every client to stay out).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
