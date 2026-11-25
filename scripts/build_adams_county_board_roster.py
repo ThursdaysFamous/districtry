@@ -44,6 +44,7 @@ Usage:
 """
 
 import argparse
+import datetime
 import json
 import os
 import re
@@ -97,7 +98,10 @@ def scrape_to_temp():
 def build(raw):
     problems = []
     elections = raw.get("elections") or []
-    ok = [e for e in elections if e.get("status") == "ok"]
+    # A canvass whose winners have not yet taken their seats is not the board.
+    today = datetime.date.today().isoformat()
+    ok = [e for e in elections
+          if e.get("status") == "ok" and e.get("seated", "") <= today]
     if not ok:
         raise SystemExit("build-adams-board: no readable canvass; refusing to write")
 
@@ -149,7 +153,7 @@ def build(raw):
     # The elections this file could NOT read, named rather than omitted, so the
     # weekly run and any reader of the data file can see which cycle is missing.
     unread = [{"election": e["label"], "status": e.get("status"), "url": e.get("url")}
-              for e in elections if e.get("status") != "ok"]
+              for e in elections if e not in ok]
     if unread:
         board["unreadElections"] = unread
     out["board"] = board

@@ -272,7 +272,7 @@ PROVENANCE = [
     {
         "layer": "city-ward",
         "app_file": "mi-battle-creek-commission-members.json",
-        "source_url": "https://www.battlecreekmi.gov/380/City-Commission",
+        "source_url": "https://www.battlecreekmi.gov/m/directory/department?did=31",
         "note": (
             "Battle Creek's City Commission -- nine seats: one commissioner from each of "
             "five wards, three at large, and the Mayor. Built by "
@@ -282,11 +282,13 @@ PROVENANCE = [
             "403 and is not this city's page; /380/City-Commission answers 200. A 403 from "
             "an invented path is a fact about the guess, not about the site, whose "
             "robots.txt permits general crawling. "
-            "The page is h-card microformat and is parsed per block, never by document "
-            "order -- it renders wards 5, 2, 1, 3, 4. The city states its own composition "
-            "in prose on the same page, and the scraper refuses to write unless that prose "
-            "and the published cards agree. No per-member e-mail exists: every card's "
-            "contact slot is one shared city form, hoisted to the body."
+            "Since November 2026 the members are read from the city's staff directory "
+            "department 'Mayor & City Commission' (the cards left /380 that month); "
+            "/380 still states the composition in prose, and the scraper refuses to "
+            "write unless that prose and the directory rows agree. Each row is parsed "
+            "per block, never by document order -- the wards are interleaved. No "
+            "per-member e-mail exists: every row's contact link is one shared city "
+            "form, hoisted to the body."
         ),
     },
     {
