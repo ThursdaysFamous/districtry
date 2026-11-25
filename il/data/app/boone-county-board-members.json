@@ -26,16 +26,11 @@
         "termExpires": 2026
       }
     ],
+    "seats": 4,
     "sourceUrl": "https://www.boonecountyil.gov/government/county_board_members.php"
   },
   "2": {
     "members": [
-      {
-        "email": "rcurry@boonecountyil.gov",
-        "name": "Ryan Curry",
-        "phone": "815-985-0676",
-        "termExpires": 2028
-      },
       {
         "email": "kjohnson@boonecountyil.gov",
         "name": "Karl Johnson",
@@ -55,6 +50,7 @@
         "termExpires": 2028
       }
     ],
+    "seats": 4,
     "sourceUrl": "https://www.boonecountyil.gov/government/county_board_members.php"
   },
   "3": {
@@ -85,6 +81,7 @@
         "termExpires": 2028
       }
     ],
+    "seats": 4,
     "sourceUrl": "https://www.boonecountyil.gov/government/county_board_members.php"
   }
 }

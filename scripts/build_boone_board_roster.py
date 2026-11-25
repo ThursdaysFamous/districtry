@@ -66,9 +66,14 @@ def main():
     if sorted(roster) != sorted(EXPECT_DISTRICTS):
         fail("parsed districts %s, expected exactly %s" % (sorted(roster), list(EXPECT_DISTRICTS)))
     for d, entry in roster.items():
-        if len(entry["members"]) != EXPECT_MEMBERS_PER_DISTRICT:
+        # One seat short is how the page shows a member who left (District 2,
+        # 2026-11: Ryan Curry's row gone, no vacancy printed); the card says
+        # "1 of 4 seats not listed" from `seats`. Two short is a parse break.
+        n = len(entry["members"])
+        if not EXPECT_MEMBERS_PER_DISTRICT - 1 <= n <= EXPECT_MEMBERS_PER_DISTRICT:
             fail("district %s has %d members, the county seats exactly %d"
-                 % (d, len(entry["members"]), EXPECT_MEMBERS_PER_DISTRICT))
+                 % (d, n, EXPECT_MEMBERS_PER_DISTRICT))
+        entry["seats"] = EXPECT_MEMBERS_PER_DISTRICT
         entry["members"].sort(key=lambda m: m["name"].split()[-1])
     # Roles pass through verbatim, but a value outside the body's two titles
     # or the same title on two rows means the markup changed — a human look.
@@ -81,9 +86,9 @@ def main():
     emails = sum(1 for v in roster.values() for m in v["members"] if m.get("email"))
     terms = sum(1 for v in roster.values() for m in v["members"] if m.get("termExpires"))
     if phones < MIN_PHONES:
-        fail("only %d/12 members carry a phone (floor %d)" % (phones, MIN_PHONES))
+        fail("only %d members carry a phone (floor %d)" % (phones, MIN_PHONES))
     if emails < MIN_EMAILS:
-        fail("only %d/12 members carry an e-mail (floor %d)" % (emails, MIN_EMAILS))
+        fail("only %d members carry an e-mail (floor %d)" % (emails, MIN_EMAILS))
     if terms < MIN_TERMS:
         fail("only %d/12 members carry a term-expiry year (floor %d)" % (terms, MIN_TERMS))
 
@@ -91,9 +96,10 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(roster, f, indent=2, ensure_ascii=False, sort_keys=True)
         f.write("\n")
-    print("boone-board-roster: wrote %s — 3 districts x 4 members "
+    print("boone-board-roster: wrote %s — 3 districts, %d of 12 seats named "
           "(%d phones, %d e-mails, %d terms%s)"
-          % (os.path.relpath(out_path, REPO_ROOT), phones, emails, terms,
+          % (os.path.relpath(out_path, REPO_ROOT),
+             sum(len(v["members"]) for v in roster.values()), phones, emails, terms,
              "; " + ", ".join("%s %s" % (r, n) for r, n in sorted(roles)) if roles else ""))
 
 
