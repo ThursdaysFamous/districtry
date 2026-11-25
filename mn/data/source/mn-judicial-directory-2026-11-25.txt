@@ -1,0 +1,311 @@
+# Minnesota Judicial Branch, Judicial Officer Directory — every active judicial officer, read 2026-11-25.
+# Source: https://mncourts.gov/about-the-courts/judicialdirectory (the page fills itself from its own
+# search feed; read at 100 results per page, five pages, 436 officers, in Adam's own Chrome, because
+# the host serves a Cloudflare managed challenge to every scripted client this project has).
+# No challenge page appeared in that browser. Nothing here is fetched again by any script or workflow.
+# One line per officer the directory places in a district court, plus the four whose card names no
+# district: district number | title (CJ = Chief Judge, ACJ = Assistant Chief Judge, blank = Judge) |
+# name as printed | the county the card names (the judge's chambers).
+# The four lines with no district are senior judges (each one's own page sits under senior-judges/
+# and says "assigned to serve statewide as Senior Judge"); the builder leaves them out.
+# Referees (22), senior judges (91), Supreme Court (7) and Court of Appeals (19) officers were read
+# and are not carried. The lines below this header are byte-for-byte what the page gave, checked by
+# SHA-256 against the browser's own copy at read time; build_mn_judicial_judges.py re-checks it.
+# sha256: 6e2354fed4fd18784a5980d09cc29bb7928454d5c41ff05e309dd191445e5506
+||Amy R. Brosnahan|
+||Charlene W. Hatcher|
+||Eric Hylden|
+||Krista K. Martin|
+1|CJ|Christopher Jon Lehmann|Dakota
+1|ACJ|Charles Webber|Scott
+1||Christopher D. Bates|Dakota
+1||Douglas C. Bayley|Goodhue
+1||Ryan J. Bies|Dakota
+1||Patrick M. Biren|Goodhue
+1||Eric J. Braaten|Carver
+1||Jamie L. Cork|Dakota
+1||Amber R. Donley|Sibley
+1||Dannia L. Edwards|Dakota
+1||Bryce A.D. Ehrman|Dakota
+1||Martin S. Fallon|Carver
+1||Patrick Goggins|Le Sueur
+1||Kathryn Iverson|Dakota
+1||Adam Johnson|Dakota
+1||Lauren M. Johnson|Scott
+1||Colleen G. King|Scott
+1||David Lutz|Dakota
+1||Zachary Lyngaas|Scott
+1||Jessica J.W. Maher|McLeod
+1||Krista M. Marks|Dakota
+1||Michael J. Mayer|Dakota
+1||Cynthia L. McCollum|Carver
+1||Luis Morales|Dakota
+1||Ann M. Offermann|Dakota
+1||Tanya O. O’Brien|Dakota
+1||Tracy Perzel|Dakota
+1||Matthew Schmidt|Dakota
+1||Stacey E. Sorensen Green|Dakota
+1||Kelly A. Staples|Dakota
+1||Tori K. Stewart|Goodhue
+1||Paula D. Vraa|Scott
+1||Richelle M. Wahi|Dakota
+1||Michael D. Wentzell|Carver
+1||Christian S. Wilton|Scott
+1||Jody L. Winters|McLeod
+2|CJ|Sara Grewing|Ramsey
+2|ACJ|Kelly L. Olmstead|Ramsey
+2||Wesley J Abrahamson|Ramsey
+2||Jessica Bierwerth|Ramsey
+2||David C. Brown|Ramsey
+2||Timothy Carey|Ramsey
+2||Leonardo Castro|Ramsey
+2||Kellie M. Charles|Ramsey
+2||Victoria Gardner|Ramsey
+2||Thomas A. Gilligan, Jr.|Ramsey
+2||Andrew Gordon|Ramsey
+2||DeAnne M. Hilgers|Ramsey
+2||Mark Ireland|Ramsey
+2||Veena Iyer|Ramsey
+2||Jacob Kraus|Ramsey
+2||Richard H. Kyle Jr.|Ramsey
+2||Maria Mitchell|Ramsey
+2||Timothy Mulrooney|Ramsey
+2||Laura Nelson|Ramsey
+2||Edward Sheu|Ramsey
+2||Stephen L. Smith|Ramsey
+2||Nicole J. Starr|Ramsey
+2||Stacy Deery Stennes|Ramsey
+2||Jennifer Verdeja|Ramsey
+2||Sophia Y. Vuelo|Ramsey
+2||Devona L. Wells|Ramsey
+2||Adam C. Yang|Ramsey
+2||Der Yang|Ramsey
+2||P. Paul Yang|Ramsey
+3|CJ|Christine A. Long|Rice
+3|ACJ|Christa M. Daily|Olmsted
+3||Jacob C. Allen|Olmsted
+3||Karie M. Anderson|Rice
+3||Joseph A. Bueltel|Steele
+3||Nancy Buytendorp|Winona
+3||Jeremy Clinefelter|Fillmore
+3||Karen R. Duncan|Steele
+3||Erin Lindhart Felten|Olmsted
+3||Debra A. Groehler|Dodge
+3||Carol M. Hanks|Waseca
+3||Lisa R. Hayne|Olmsted
+3||Christy Hormann|Freeborn
+3||Jeffrey M. Johnson|Rice
+3||Pamela A. W. King|Olmsted
+3||Jeffrey M. Kritzer|Mower
+3||Ross Leuning|Freeborn
+3||Dwight Luhmann|Winona
+3||Natalie S. Martinez|Mower
+3||Christopher A. Neisen|Wabasha
+3||Kevin H. Siefken|Mower
+3||Christina K. Stevens|Olmsted
+3||Carmaine M. Sturino|Houston
+3||Kathy M. Wallace|Olmsted
+4|CJ|Kerry W. Meyer|Hennepin
+4|ACJ|Mark J. Kappelhoff|Hennepin
+4||Julie E. Allyn|Hennepin
+4||Jamie Anderson|Hennepin
+4||Anna Andow|Hennepin
+4||Shereen M. Askalani|Hennepin
+4||Luis A. Bartolomei|Hennepin
+4||Theresa E. Bea|Hennepin
+4||Gina M. Brandt|Hennepin
+4||Michael K. Browne|Hennepin
+4||Susan N. Burke|Hennepin
+4||Michael E. Burns|Hennepin
+4||Sean P. Cahill|Hennepin
+4||Marta M. Chou|Hennepin
+4||Thomas J. Conley|Hennepin
+4||Lois Regnier Conroy|Hennepin
+4||Theresa Couri|Hennepin
+4||Julia Dayton Klein|Hennepin
+4||Todd M. Fellman|Hennepin
+4||Matthew Frank|Hennepin
+4||Tamara Garcia|Hennepin
+4||Michelle A. Hatcher|Hennepin
+4||Melissa J. Houghtaling|Hennepin
+4||Juan G. Hoyos|Hennepin
+4||Sarah Hudleston|Hennepin
+4||Rachel Hughey|Hennepin
+4||Karen A. Janisch|Hennepin
+4||Lisa K. Janzen|Hennepin
+4||Joseph R. Klein|Hennepin
+4||William H. Koch|Hennepin
+4||Carolina A. Lamas|Hennepin
+4||Francis Magill|Hennepin
+4||Bruce D. Manning|Hennepin
+4||Daniel C. Moreno|Hennepin
+4||Nelson Peralta|Hennepin
+4||Jeannice M. Reding|Hennepin
+4||Patrick D. Robben|Hennepin
+4||Colette Routel|Hennepin
+4||Christian M. Sande|Hennepin
+4||Paul R. Scoggin|Hennepin
+4||Bridget Ann Sullivan|Hennepin
+4||Laura Thomas|Hennepin
+4||Maximillia Utley|Hennepin
+4||Sarah S. West|Hennepin
+4||Angela Willms|Hennepin
+4||Terri D. Yellowhammer|Hennepin
+4||Nicole Blissenbach|Hennepin
+4||Sydnee N. Woods|Hennepin
+4||Jean E. Burdorf|Hennepin
+4||John Lucas|Hennepin
+4||Mariam Mokri|Hennepin
+4||Dean C. Eyler|Hennepin
+4||Emily J. Froehle|Hennepin
+4||Kristen Marttila|Hennepin
+4||Jane Maschka|Hennepin
+4||Dominick D. Mathews|Hennepin
+4||Rachna Sullivan|Hennepin
+4||Jennifer L. Olson|Hennepin
+4||Carrie Ryan Gallia|Hennepin
+4||Andrew Tweeten|Hennepin
+4||Matt Wilcox|Hennepin
+5|CJ|Darci J. Bentz|Jackson
+5|ACJ|Troy G. Timmerman|Faribault
+5||Gregory Anderson|Blue Earth
+5||Mark E. Betters|Blue Earth
+5||Michelle A. Dietrich|Lyon
+5||Robert A. Docherty|Brown
+5||Stephen J. Ferrazzano II|Watonwan
+5||Paul J. Gunderson|Nicollet
+5||Sherry Haley|Nobles
+5||Kayla M. Johnson|Pipestone
+5||Andrea Lieser|Blue Earth
+5||Patrick Rohland|Redwood
+5||Michael D. Trushenski|Martin
+5||Kristine Weeks|Blue Earth
+5||Christina M. Wietzema|Cottonwood
+5||Stefanie L. Menning|Nicollet
+5||Susan DeVos|Blue Earth
+6|CJ|Rachel C. Sullivan|St. Louis
+6|ACJ|Theresa M. Neo|St. Louis
+6||Michelle M. Anderson|St. Louis
+6||Leslie E. Beiers|St. Louis
+6||Jill Eichenwald|St. Louis
+6||Jessica J. Fralich|St. Louis
+6||Robert C. Friday|St. Louis
+6||Steven B. Hanke|Lake
+6||Nicole L. Hopps|St. Louis
+6||Nathan LaCoursiere|St. Louis
+6||Amy E. Lukasavitz|Carlton
+6||Bhupesh Pattni|St. Louis
+6||Shawn L. Pearson|St. Louis
+6||Andrew R. Peterson|St. Louis
+6||Shawn B. Reed|St. Louis
+6||Rebekka Stumme|Carlton
+7|CJ|Michael D. Fritz|Becker
+7|ACJ|Shan C. Wang|Stearns
+7||Sharon Grewell Benson|Otter Tail
+7||William J. Cashman|Stearns
+7||Timothy M. Churchwell|Douglas
+7||Douglas B. Clark|Wadena
+7||Michelle L. Clark|Douglas
+7||Leah J. duCharme|Clay
+7||Matthew E. Engelking|Stearns
+7||Luke T. Godzala|Stearns
+7||Mark J. Herzing|Mille Lacs
+7||Johnathan Judd|Otter Tail
+7||Gail T. Kulick|Mille Lacs
+7||Michelle Winkis Lawson|Becker
+7||Michael D. Leeser|Clay
+7||Mary B. Mahler|Stearns
+7||Tammy L. Merkins|Clay
+7||Kevin M. Miller|Otter Tail
+7||Laura Moehrle|Stearns
+7||Andrew Pearson|Stearns
+7||Matthew M. Quinn|Mille Lacs
+7||Robert J. Raupp|Benton
+7||Jade M. Rosenfeldt|Clay
+7||Karl Schmidt|Benton
+7||Heidi E. Schultz|Stearns
+7||Gretchen D. Thilmony|Becker
+7||Ole Tvedten|Stearns
+7||Laura Welle|Mille Lacs
+7||Nathaniel Welte|Stearns
+7||Antoinette C. Wetzel|Morrison
+7||Meriel Lester|Morrison
+7||Heidi Hovis|Todd
+8|CJ|Rodney C. Hanson|Kandiyohi
+8|ACJ|Laurence J. Stratton|Renville
+8||Stephanie L. Beckman|Meeker
+8||Amy J. Doll|Grant
+8||Keith Helgeson|Yellow Medicine
+8||Melissa J. Listug|Pope
+8||Benjamin Pieh|Chippewa
+8||Stephen J. Wentzell|Kandiyohi
+8||Benjamin R Wilcox|Stevens
+8||Allison T. Whalen|Swift
+8||John P Fitzgerald|Kandiyohi
+9|CJ|Jana M. Austad|Cass
+9|ACJ|Matti Adam|Beltrami
+9||Patricia Alander Aanes|Crow Wing
+9||Jeanine R. Brand|Beltrami
+9||Heidi M. Chandler|Itasca
+9||Annie P. Claesson-Huseby|Beltrami
+9||Kristine R. DeMay|Crow Wing
+9||Seamus P. Duffy|Mahnomen
+9||Charles D. Halverson|Crow Wing
+9||Corey A. Harbott|Polk
+9||David F. Hermerding|Crow Wing
+9||Kathryn Lorsbach|Hubbard
+9||Matthew Mallie|Crow Wing
+9||Sarah L. McBroom|Itasca
+9||John G. Melbye|Beltrami
+9||Max W. Schafer-LaCoursiere|Marshall
+9||Eric Schieferdecker|Clearwater
+9||Symon Schindler-Syme|Polk
+9||Jerrod Shermoen|Koochiching
+9||Christopher J. Strandlie|Cass
+9||Kimberly A. Wimmer|Itasca
+9||Tamara L. Yon|Pennington
+9||Daniel M. Hawley|Aitkin
+9||Michael P. Grover|Roseau
+10|CJ|Elizabeth H. Strand|Wright
+10|ACJ|Sean C. Gibbs|Anoka
+10||Madelyn A. Adams|Anoka
+10||Jennifer S. Bovitz|Sherburne
+10||Helen R. Brosnahan|Washington
+10||Suzanne M. Brown|Anoka
+10||Brianne J. Buccicone|Anoka
+10||Justin M. Collins|Anoka
+10||Michele A. Davis|Anoka
+10||Carrie Doom|Isanti
+10||Bridgid E. Dowdal|Chisago
+10||Patrick W. Flanagan|Washington
+10||Kathryn A. Fodness|Chisago
+10||Juanita C. Freeman|Washington
+10||Gregory G. Galler|Washington
+10||Francis Green III|Washington
+10||Sheridan Hawley|Washington
+10||Stoney L. Hiljus|Pine
+10||John D. Klossner|Isanti
+10||Thomas R. Lehmann|Anoka
+10||Tricia Loehr|Anoka
+10||Karin L. McCarthy|Anoka
+10||Catherine McPherson|Wright
+10||Siv Mjanger|Washington
+10||Kevin J. Mueller|Anoka
+10||Jennifer D. Peterson|Anoka
+10||Laura A. Pietan|Washington
+10||Heather Pipenhagen|Sherburne
+10||Melissa Saterbak|Anoka
+10||Todd R. Schoffelman|Anoka
+10||Karen B. Schommer|Anoka
+10||Jesse L. Seabrooks II|Washington
+10||Nathan Sosinski|Wright
+10||Jennifer L. Stanfield|Anoka
+10||Kristi D. Stanislawski|Sherburne
+10||Jason R. Steffen|Pine
+10||Dyanna L. Street|Anoka
+10||Geoffrey W. Tenney|Wright
+10||Catherine Trevino|Chisago
+10||Kari Willis|Wright
+10||Viet-Hanh Winchell|Washington
+10||Heather M. Wynn|Pine
+10||Jacob Fischmann|Kanabec

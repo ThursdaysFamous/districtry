@@ -508,7 +508,7 @@ measured until the next run describes it.
 | wi | 92 | 268 | 5 |
 | ia | 72 | 57 | 0 |
 | mi | 40 | 71 | 1 |
-| mn | 33 | 27 | 0 |
+| mn | 33 | 28 | 0 |
 | ky | 33 | 21 | 0 |
 | in | 24 | 24 | 0 |
 | nc | 40 | 22 | 0 |

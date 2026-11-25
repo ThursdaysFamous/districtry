@@ -18027,18 +18027,26 @@ function initMinnesotaExplorer() {
    * vote in, unlike Illinois, where a judge is elected from a subcircuit and
    * then sits circuit-wide.
    *
-   * NO JUDGE IS NAMED AND THE CARD SAYS SO. The statute authorizes 287
-   * judgeships across the ten districts and the card prints that district's
-   * own authorized count, which is a number of POSITIONS rather than of
-   * people: subd. 4 lets the supreme court abolish or transfer a vacant one.
-   * The only publisher of the people found is www.mncourts.gov, which serves
-   * a Cloudflare managed challenge to every client this project has — an
-   * access control, never worked around (measured 2026-10-01; gap
-   * mn-judicial-roster). The card links the court so a reader's own browser,
-   * which clears the challenge as any person's does, can go and look.
+   * The statute authorizes 287 judgeships across the ten districts and the
+   * card prints that district's own authorized count, which is a number of
+   * POSITIONS rather than of people: subd. 4 lets the supreme court abolish or
+   * transfer a vacant one.
+   *
+   * THE JUDGES ARE A DATED READING, NOT A WEEKLY ONE. www.mncourts.gov serves
+   * a Cloudflare managed challenge to every scripted client this project has
+   * (measured 2026-10-01), which is never worked around. On 2026-11-25 the
+   * court's Judicial Officer Directory was read once in Adam's own browser,
+   * with the Governor's appointment and vacancy notices as the cross-check,
+   * because the directory still listed judges already being replaced
+   * (mn/scripts/build_mn_judicial_judges.py; data/app/mn-judicial-judges.json;
+   * gap mn-judicial-roster). The card says the date it was read. A roster
+   * miss degrades to the district identity and the directory link.
    * ---------- */
   var loadMnJudicialDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mn-judicial-districts.json", {}, 2);
+  });
+  var loadMnJudicialJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-judicial-judges.json", {}, 2);
   });
 
   registerLayer({
@@ -18057,7 +18065,13 @@ function initMinnesotaExplorer() {
       return props.name != null ? String(props.name) : null;
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadMnJudicialDistricts, point).then(function (feature) {
+      // The roster's failure is not this layer's failure: the district still
+      // answers, and a roster miss degrades to the identity card.
+      return Promise.all([
+        queryFeatureAt(loadMnJudicialDistricts, point),
+        loadMnJudicialJudges().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
         return {
@@ -18066,7 +18080,8 @@ function initMinnesotaExplorer() {
           name: props.name,
           counties: props.counties || [],
           judges: props.authorizedJudges,
-          chambers: props.chambers || []
+          chambers: props.chambers || [],
+          bench: (parts[1] && props.district != null) ? parts[1][String(props.district)] || null : null
         };
       });
     },
@@ -18093,13 +18108,13 @@ function initMinnesotaExplorer() {
           "supreme court may hold a vacant one open, abolish it, or move it " +
           "to another district."
       });
-      rows.push({
-        label: "Who holds them",
-        value: "Not listed here. Minnesota's court system publishes its judges, " +
-          "but its website turns away every automated request this project " +
-          "makes, so no name can be shown without a person reading it off the " +
-          "page. Open the link below and the court will answer your own browser."
-      });
+      var bench = result.bench;
+      if (!bench || !bench.judges || !bench.judges.length) {
+        rows.push({
+          label: "Who holds them",
+          value: "Not listed here. Open the link below for the court's own directory of judges."
+        });
+      }
       if (result.chambers.length) {
         rows.push({
           label: result.chambers.length === 1 ? "Permanent chambers" : "Permanent chambers",
@@ -18111,9 +18126,33 @@ function initMinnesotaExplorer() {
         rows.push({ label: "Counties in it", value: counties.join(", ") });
       }
       wrap.appendChild(renderFieldStack(rows));
+      if (bench && bench.judges && bench.judges.length) {
+        var manyCounties = counties.length > 1; // a one-county district needs no chambers line
+        var people = bench.judges.map(function (j) {
+          var note = [manyCounties ? j.chambers : null, j.note].filter(Boolean).join(". ");
+          return { name: String(j.name), badge: j.role ? String(j.role) : null, note: note || null };
+        });
+        // 11 to 61 judges a district — behind one expander, closed by default
+        var det = cardEl("details", "card-row-b");
+        var summary = document.createElement("summary");
+        summary.appendChild(cardEl("span", null, people.length + " judges sitting"));
+        summary.appendChild(cardDetailsHint());
+        det.appendChild(summary);
+        det.appendChild(renderPersonRows(people));
+        wrap.appendChild(det);
+        var notes = (bench.notes || []).map(function (n) { return { label: "Note", value: String(n) }; });
+        notes.push({
+          label: "As of",
+          value: "Read from the court's directory on " + (mnElectionDate(bench.read) || String(bench.read)) + ", and checked " +
+            "against the Governor's appointment and vacancy notices. New terms start in January."
+        });
+        wrap.appendChild(renderFieldStack(notes));
+      }
       return wrap;
     },
-    primaryLink: function () {
+    primaryLink: function (result) {
+      var url = safeHttpUrl(result.bench && result.bench.sourceUrl);
+      if (url) return { label: "Judicial Officer Directory", url: url };
       return {
         label: "Minnesota Judicial Branch",
         url: "https://www.mncourts.gov/"
