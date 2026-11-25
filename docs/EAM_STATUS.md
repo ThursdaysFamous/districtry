@@ -85,7 +85,7 @@ different thing from one it failed.
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 24 | all | 10 of 14 levels |
-| tx | **EAM·** | 254 | 254/254 § | 920 | 919 | all | 16 | all | 7 of 14 levels |
+| tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -709,10 +709,10 @@ this instance is in maintenance.
 
 ### tx — EAM·
 
-- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 230 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 237 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-house-districts.json`, `tx-senate-districts.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 230 of 254 counties name a governing body
+  - **4. The county governing body, in every county of the state** — open. 237 of 254 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 119 units at 25,000+ name a governing body; unanswered: Abilene city, Allen city, Alvin city, Amarillo city, Arlington city, Austin city, Balch Springs city, Baytown city and 111 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
