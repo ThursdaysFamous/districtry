@@ -57,8 +57,11 @@ And Livingston's clerk's office e-mailed, on 2026-10-26, and Lewis's on
 2026-11-18, maps whose lines run along whole townships, and Bollinger's, on
 2026-11-18, a map whose line splits one township through Marble Hill, traced
 from the page like Ste. Genevieve's. And Cedar's, on 2026-11-23, a township
-map whose line runs along whole townships.
-Those 42 are SOURCES below. The other 72 counties and the City of St. Louis are not
+map whose line runs along whole townships. And Grundy's clerk listed, on
+2026-11-25, the townships and Trenton wards in each district, drawn like
+Saline's from TIGER's townships and, inside Trenton township, the 2020
+voting districts of the city's four wards.
+Those 43 are SOURCES below. The other 71 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -294,6 +297,29 @@ SOURCES = {
                 "Northern District": ["Marshall 3", "Marshall 4"],
                 "Southern District": ["Marshall 1", "Marshall 2"]}},
             "listed": "2026-10-23"},
+    # Grundy's county clerk (Courtney Campbell, the county's election
+    # authority) answered the letter on 2026-11-25 that no GIS file exists,
+    # listed the townships and Trenton wards in each district, and sent a
+    # page of a 2026 Mapping Solutions plat book, "Political Townships with
+    # Commissioners' Districts", kept out of this repository because it is
+    # that publisher's page (SHA-256 ea297fbe1046ac8a95f48338dfc356c6e36bd27b
+    # c7bb9e2a56786589cad82b8d). District 1: Taylor, Madison, Jefferson,
+    # Jackson and Wilson townships and Trenton Wards 1 and 4; District 2:
+    # Washington, Harrison, Franklin, Lincoln, Myers, Liberty and Marion
+    # townships and Trenton Wards 2 and 3. The roster prints First and Second
+    # District. Trenton township is not in her list because its precincts are
+    # the city's four wards: the Census's 2020 Trenton Ward 1-4 voting
+    # districts tile Trenton township, and the map's red line crosses it
+    # through the city as their line does. Trenton may have redrawn its wards
+    # since 2020, which this does not see.
+    "079": {"townships": {
+                "First District": ["Jackson", "Jefferson", "Madison", "Taylor", "Wilson"],
+                "Second District": ["Franklin", "Harrison", "Liberty", "Lincoln", "Marion",
+                                    "Myers", "Washington"]},
+            "precincts": {"Trenton": {
+                "First District": ["Trenton Ward 1", "Trenton Ward 4"],
+                "Second District": ["Trenton Ward 2", "Trenton Ward 3"]}},
+            "listed": "2026-11-25"},
     # Wayne's clerk's office answered on 2026-10-26 with a map of the county's
     # ten townships (a 2014 Mapping Solutions plat page, kept out of this
     # repository because it is that firm's work; SHA-256 5e415b83d49c7409ba

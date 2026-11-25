@@ -141,6 +141,12 @@ const LIVINGSTON_POINT = "39.69838,-93.67201";
 // it (shapely polylabel, 2026-11-24); TIGERweb names Box township, Cedar
 // County there (control: the State Capitol answers Jefferson township, Cole).
 const CEDAR_POINT = "37.82582,-93.99197";
+// The pole of inaccessibility of Grundy's First District inside Trenton
+// township, the part its clerk lists as Trenton Wards 1 and 4, as the shipped
+// file draws it (shapely polylabel, 2026-11-25); TIGERweb names Trenton
+// township and the 2020 Trenton Ward 4 precinct there (control: the State
+// Capitol answers Jefferson township, Cole).
+const GRUNDY_POINT = "40.06156,-93.52863";
 // Inside the Census's 2020 Marshall 4 precinct, the half of Marshall township
 // Saline's clerk lists in the Northern District, 4.1 km from any edge.
 const SALINE_POINT = "39.1534,-93.246";
@@ -1288,7 +1294,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, DOUGLAS_POINT, LINN_POINT, STE_GENEVIEVE_POINT, BOLLINGER_POINT, LEWIS_POINT, LIVINGSTON_POINT, CEDAR_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, DOUGLAS_POINT, LINN_POINT, STE_GENEVIEVE_POINT, BOLLINGER_POINT, LEWIS_POINT, LIVINGSTON_POINT, CEDAR_POINT, GRUNDY_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);

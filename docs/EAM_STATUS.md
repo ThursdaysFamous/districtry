@@ -426,7 +426,7 @@ per county, so each one is named under its state below.
 
 - **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mo-commission-counties.json`, `mo-commission-districts.json`, `mo-house-districts.json`, `mo-senate-districts.json`, `mo-state-outline.json`, `mo/data/app/population/`, `state-counties.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 42 of 114 counties name a governing body and draw it where it is elected by district; 72 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **4. The county governing body, in every county of the state** — open. 43 of 114 counties name a governing body and draw it where it is elected by district; 71 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
