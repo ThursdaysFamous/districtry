@@ -30,9 +30,10 @@ town its own site gives, Covelo and Brooks (`seatFromNation`), with a line on th
 the town came from; only the town is carried. Yocha Dehe's own site could not be read from this
 project's sandbox, so its card keeps the Bureau's address as the nation's site. The Greenville
 Rancheria the Bureau lists with a state and no city, so its card gives the state alone. The Bureau
-lists no website for 28 of the 98 nations, and the addresses it lists for ten more no longer reach
+lists no website for 28 of the 98 nations, and the addresses it lists for twelve more no longer reach
 the nation (no DNS record, a parked domain, a gambling site, an HTTP 500, or a casino or resort page
-that does not give the government), so on Adam's ruling of 2026-11-13 those cards link no site, or,
+that does not give the government), so on Adam's rulings of 2026-11-13 and 2026-11-25 (Chemehuevi
+and San Pasqual, both parked) those cards link no site, or,
 for the Pit River Tribe, the tribe's own site at pitrivertribe.gov (`websiteWithdrawn`). The Census draws tribal districts on one piece, the Yurok
 Reservation (Orick, Pecwan, Requa and Weitchpec), named on its card. The file is 1.12 MB (258 KB
 gzipped) at the Census's own detail, smaller than Arizona's simplified file, so it is not

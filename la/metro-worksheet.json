@@ -713,7 +713,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-la-shell-v6",
+    "cache_name": "districtry-la-shell-v7",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -113,9 +113,10 @@ its council of nine, carried in `data/tribal-council-browser-reads.json`, not re
 the card says so. **THE MICCOSUKEE CARD NAMES NOBODY**: the tribe's site is its casino and resort
 site and gives nothing of its government (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`, gap
 `fl-tribal-government`). The card's "(official)" link is the
-Bureau of Indian Affairs' listing, as in every instance: the Miccosukee's (tribe.miccosukee.com)
-had no DNS record that day and the Seminole's (www.seminoletribe.com) failed TLS from this
-project's sandbox (`fl/WATCH.md`).
+Bureau of Indian Affairs' listing, as in every instance, except the Miccosukee's: the Bureau lists
+tribe.miccosukee.com, which had no DNS record on 2026-11-12 or 2026-11-25, so on Adam's ruling of
+2026-11-25 ("withdraw") that card links no site (`websiteWithdrawn`). The Seminole's
+listing (www.seminoletribe.com) failed TLS from this project's sandbox (`fl/WATCH.md`).
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;

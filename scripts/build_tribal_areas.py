@@ -268,9 +268,9 @@ ROSTER_BLOCKED = {
         "measured": "2026-11-25",
         "why": "www.miccosukee.com, read by hand in a web browser on 2026-11-25, "
                "is the tribe's casino and resort site and gives nothing of the "
-               "tribe's government. The address the Bureau of Indian Affairs lists "
-               "for the tribe, which this card links, had no DNS record on "
-               "2026-11-12. No name is carried.",
+               "tribe's government, and the address the Bureau of Indian Affairs "
+               "lists for the tribe had no DNS record on 2026-11-12 or 2026-11-25, "
+               "so the card links no site. No name is carried.",
     },
     # Washington, Arizona, Nevada and California, measured 2026-11-13 with
     # tribal_council_scraper.py's client (robots.txt read first, then the
@@ -503,9 +503,7 @@ ROSTER_BLOCKED = {
         "host": "www.kaibabpaiute-nsn.gov",
         "measured": "2026-11-13",
         "why": "The band's own Tribal Council page names no council member (read "
-               "2026-11-13), so no name is carried. The address the Bureau of "
-               "Indian Affairs lists for the band's council, which this card "
-               "links, answered HTTP 404 the same day.",
+               "2026-11-13), so no name is carried.",
     },
     "1850": {
         "host": "www.lajollaindians.com",

@@ -3538,9 +3538,10 @@ ANSWERS = {
         # page, two of them with the card saying which seat the page leaves
         # out, and since 2026-11-25 four more, read once by hand in a web
         # browser (one, Pechanga, leaving out a seat); each of the others says
-        # why it names nobody, and ten whose
+        # why it names nobody, and twelve whose
         # Bureau-listed site no longer reaches them link no site of the
-        # Bureau's (gap ca-tribal-government).
+        # Bureau's, two of them (Chemehuevi, San Pasqual) since 2026-11-25
+        # (gap ca-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),
