@@ -1059,8 +1059,8 @@ try {
   //       - The Hollywood Reservation names the same council: the tribe has
   //         one council for all its land.
   //       - The Miccosukee Reservation names nobody and says why: the tribe's
-  //         own site answered this project with an automated challenge page,
-  //         which is not worked around.
+  //         site, read once by hand in a web browser on 2026-11-25, is its
+  //         casino and resort site and gives nothing of its government.
   //       - The councils file is refused: the land still answers, naming the
   //         tribe and nobody on its council.
   //       - The State Capitol is on no tribal land, and the card says so in
@@ -1126,10 +1126,12 @@ try {
       const land = propsAt(areas, MICCOSUKEE);
       const p = land[0] || {};
       const c = await at(MICCOSUKEE);
-      check("the Miccosukee Reservation names nobody and says the tribe's site answered with a challenge page",
+      check("the Miccosukee Reservation names nobody and says the tribe's site, read by hand, gives nothing of its government",
         land.length === 1 && !councils[p.aiannh] && !c.error &&
           c.by("Tribal government") === "Miccosukee Tribe of Indians" &&
-          c.by("Why no names").indexOf("challenge page") !== -1 &&
+          c.by("Why no names") === p.rosterWhy &&
+          p.rosterWhy.indexOf("read by hand in a web browser") !== -1 &&
+          p.rosterWhy.indexOf("No name is carried") !== -1 &&
           !c.text.includes("From the nation's own council page"),
         `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
     }

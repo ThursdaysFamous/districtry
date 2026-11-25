@@ -324,6 +324,128 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "2985": {
+  "roster": [
+   {
+    "name": "Grant Johnson",
+    "role": "President"
+   },
+   {
+    "name": "Ronald Johnson",
+    "role": "Vice President"
+   },
+   {
+    "name": "Valentina Mgeni",
+    "role": "Secretary"
+   },
+   {
+    "name": "Constance Campbell",
+    "role": "Treasurer"
+   },
+   {
+    "name": "George Taylor Jr.",
+    "role": "Assistant Secretary Treasurer"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://prairieisland.org/our-government",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "3100": {
+  "roster": [
+   {
+    "name": "Darrell G. Seki, Sr.",
+    "role": "Chairman"
+   },
+   {
+    "name": "Robert L. May",
+    "role": "Tribal Secretary"
+   },
+   {
+    "name": "Vernelle R. Lussier",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Thomas Barrett",
+    "role": "District Representative",
+    "district": "Little Rock"
+   },
+   {
+    "name": "Lisa R. Beaulieu",
+    "role": "District Representative",
+    "district": "Little Rock"
+   },
+   {
+    "name": "Glenda Martin",
+    "role": "District Representative",
+    "district": "Ponemah"
+   },
+   {
+    "name": "Eugene Standingcloud",
+    "role": "District Representative",
+    "district": "Ponemah"
+   },
+   {
+    "name": "Robert \"Bob\" Smith",
+    "role": "District Representative",
+    "district": "Red Lake"
+   },
+   {
+    "name": "Clem H. May Sr.",
+    "role": "District Representative",
+    "district": "Red Lake"
+   },
+   {
+    "name": "Allen D. Pemberton",
+    "role": "District Representative",
+    "district": "Redby"
+   },
+   {
+    "name": "Harold E. Graves, Jr.",
+    "role": "District Representative",
+    "district": "Redby"
+   },
+   {
+    "name": "Gerald Spears",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Percy L. Spears",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Henry Sutton",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Arlan Jourdain, Sr.",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Gerald May, Sr.",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Michael Loud",
+    "role": "Hereditary Chief"
+   },
+   {
+    "name": "Dan King",
+    "role": "Hereditary Chief"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.redlakenation.org/tribal-council-members/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "3680": {
   "roster": [
    {

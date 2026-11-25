@@ -246,6 +246,88 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "1460": {
+  "roster": [
+   {
+    "name": "Darlene Hollum",
+    "role": "Chairwoman",
+    "phone": "360-780-0459",
+    "email": "Darlene.Hollum@hohtribe-nsn.org"
+   },
+   {
+    "name": "Maria Lopez",
+    "role": "Vice Chairwoman",
+    "phone": "360-780-0747",
+    "email": "maria.lopez@hohtribe-nsn.org"
+   },
+   {
+    "name": "Tahnee Hudson",
+    "role": "Secretary",
+    "phone": "360-780-0559",
+    "email": "tahnee.hudson@hohtribe-nsn.org"
+   },
+   {
+    "name": "Josie Ward",
+    "role": "Treasurer",
+    "phone": "360-593-5780",
+    "email": "josie.ward@hohtribe-nsn.org"
+   },
+   {
+    "name": "Rosetta Leitka",
+    "role": "Member",
+    "email": "rosetta.leitka@hohtribe-nsn.org"
+   },
+   {
+    "name": "Cynthia Sheriff",
+    "role": "Member",
+    "email": "Cynthia.Sheriff@hohtribe-nsn.org"
+   },
+   {
+    "name": "Walter Ward-Bos",
+    "role": "Member",
+    "phone": "360-780-0278",
+    "email": "walter.ward-bos@hohtribe-nsn.org"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://hohtribe-nsn.org/government/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1735": {
+  "roster": [
+   {
+    "name": "Glen D. Nenema",
+    "role": "Chairman and CEO"
+   },
+   {
+    "name": "Curt Holmes",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Nick Pierre",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sonny Bigsmoke",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jim Nenema",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://kalispeltribe.com/our-government",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "2040": {
   "roster": [
    {
@@ -566,6 +648,45 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "3000": {
+  "roster": [
+   {
+    "name": "Bill Sterud",
+    "role": "Chairman"
+   },
+   {
+    "name": "Anna Bean",
+    "role": "Vice Chairwoman"
+   },
+   {
+    "name": "Sylvia Miller",
+    "role": "Council Member"
+   },
+   {
+    "name": "Annette Bryan",
+    "role": "Council Member"
+   },
+   {
+    "name": "Fred Dillon",
+    "role": "Council Member"
+   },
+   {
+    "name": "Tim Reynon",
+    "role": "Council Member"
+   },
+   {
+    "name": "Amber Hayward",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.puyalluptribe-nsn.gov/about-our-tribe/tribal-council/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "3030": {
   "roster": [
    {
@@ -802,6 +923,45 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "3955": {
+  "roster": [
+   {
+    "name": "Kris Peters",
+    "role": "Chairman"
+   },
+   {
+    "name": "Taylor Krise",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Jim Peters",
+    "role": "Secretary"
+   },
+   {
+    "name": "Joshua Whitener",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Tyler Johns",
+    "role": "Council Member"
+   },
+   {
+    "name": "Greg Lehman",
+    "role": "Council Member"
+   },
+   {
+    "name": "Cameron Henry",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://squaxinisland.org/government/tribal-council/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "4000": {
   "roster": [
    {
@@ -834,6 +994,72 @@
   "rosterSource": "nation",
   "rosterPage": "https://www.stillaguamish.com/departmentprogramservice/tribal-government/",
   "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4075": {
+  "roster": [
+   {
+    "name": "Steve Edwards, yal le ka but",
+    "role": "Chair",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Brian Porter, ya qua leouse",
+    "role": "Vice Chair",
+    "termEnds": "2031"
+   },
+   {
+    "name": "Jeremy Wilbur, kuts bat soot",
+    "role": "Treasurer",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Rodney John, sa-ba-shal-good",
+    "role": "Secretary",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Aurelia Bailey, qws tan ya",
+    "role": "Senator",
+    "termEnds": "2027"
+   },
+   {
+    "name": "Barbara James, t̕alə q talə ll",
+    "role": "Senator",
+    "termEnds": "2028"
+   },
+   {
+    "name": "Bruce James Jr., yellakabol",
+    "role": "Senator",
+    "termEnds": "2029"
+   },
+   {
+    "name": "Alana Quintasket, siwəlcəʔ",
+    "role": "Senator",
+    "termEnds": "2030"
+   },
+   {
+    "name": "Fred Cayou, nu-was-ke-luk",
+    "role": "Senator",
+    "termEnds": "2030"
+   },
+   {
+    "name": "Greg Edwards, spi sta yup ton",
+    "role": "Senator",
+    "termEnds": "2031"
+   },
+   {
+    "name": "Tandy Wilbur, kaniʔtəd",
+    "role": "Senator",
+    "termEnds": "2031"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.swinomish-nsn.gov/swinomish-tribal-senate",
+  "rosterRead": "2026-11-25",
   "rosterHost": null,
   "rosterMeasured": null
  },

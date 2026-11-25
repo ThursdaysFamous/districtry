@@ -1527,11 +1527,11 @@ try {
   // Community's from two measurements by one publisher (BIA's National LAR
   // covering its interior point as "L'Anse Ontonagon", and exactly one BIA
   // seat point inside the Census L'Anse Reservation), so this check is what
-  // proves a reader standing there is told a government at all. It also
-  // covers the ROSTER_BLOCKED wording, which Wisconsin's own check cannot:
-  // this nation's host answers some requests with a managed challenge, which
-  // is an access control and is never worked around, and the card has to say
-  // that rather than go quiet. The point is shapely's representative point for
+  // proves a reader standing there is told a government at all. The nation's
+  // site answers this project's reader with a managed challenge, so its
+  // council was read once by hand in a web browser on 2026-11-25; the card
+  // names every member the councils file carries for this land and says how
+  // the names were read. The point is shapely's representative point for
   // the shipped area, verified interior against the file's own even-odd
   // reading (2026-10-01).
   {
@@ -1551,16 +1551,14 @@ try {
     // would be naming a government that is filed nowhere
     const land = by("Land") === "Ontonagon Reservation";
     const seat = by("Seat of government") === "Baraga, MI";
-    const why = by("Why no names");
-    const whyOk = why.indexOf("managed challenge") !== -1 &&
-                  why.indexOf("not worked around") !== -1 &&
-                  /\d{4}-\d{2}-\d{2}/.test(why);
-    const noRoster = card.text.indexOf("Council member") === -1;
-    const ok = nation && land && seat && whyOk && noRoster;
-    check("the Ontonagon Reservation names the Keweenaw Bay Indian Community and says why no council member",
+    const council = (JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/tribal-councils.json"), "utf8"))["2580"] || {}).roster || [];
+    const named = council.length === 12 && council.every((m) => card.text.indexOf(m.name) !== -1);
+    const byHand = card.text.indexOf("read by hand in a web browser") !== -1 && !by("Why no names");
+    const ok = nation && land && seat && named && byHand;
+    check("the Ontonagon Reservation names the Keweenaw Bay Indian Community, its whole council, and that the names were read by hand",
           ok, `nation=${nation} land=${JSON.stringify(by("Land"))} ` +
               `seat=${JSON.stringify(by("Seat of government"))} ` +
-              `why=${JSON.stringify(why.slice(0, 90))}`);
+              `council=${council.length} named=${named} byHand=${byHand}`);
 
     const page2 = await booted(
       context, `${BASE}#point=${POINT}&layers=tribal-government`);

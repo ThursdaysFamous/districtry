@@ -1,4 +1,50 @@
 {
+ "3280": {
+  "roster": [
+   {
+    "name": "Lucie Roberts",
+    "role": "Chair",
+    "termEnds": "November 2029"
+   },
+   {
+    "name": "Mike Stacey",
+    "role": "Vice Chair",
+    "termEnds": "November 2027"
+   },
+   {
+    "name": "Jarvis Bear",
+    "role": "Treasurer",
+    "termEnds": "November 2029"
+   },
+   {
+    "name": "Zach Old Bear",
+    "role": "Member",
+    "termEnds": "November 2027"
+   },
+   {
+    "name": "Drayton Timberwolf",
+    "role": "Member",
+    "termEnds": "November 2029"
+   },
+   {
+    "name": "Demetreus Wanatee",
+    "role": "Member",
+    "termEnds": "November 2027"
+   },
+   {
+    "name": "Paige Young Bear-Brown",
+    "role": "Member",
+    "termEnds": "November 2029"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.meskwaki.org/about-us/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "4625": {
   "roster": [
    {

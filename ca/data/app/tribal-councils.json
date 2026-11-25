@@ -1,4 +1,35 @@
 {
+ "0020": {
+  "roster": [
+   {
+    "name": "Jeff L. Grubbe",
+    "role": "Chairman"
+   },
+   {
+    "name": "Anthony W. Purnel",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Savana R. Saubel",
+    "role": "Secretary-Treasurer"
+   },
+   {
+    "name": "Vincent Gonzales III",
+    "role": "Member"
+   },
+   {
+    "name": "Moraino J. Patencio",
+    "role": "Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.aguacaliente.org/tribal-council",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "0120": {
   "roster": [
    {
@@ -1074,6 +1105,41 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "2745": {
+  "roster": [
+   {
+    "name": "MARK A. MACARRO",
+    "role": "Tribal Chairman"
+   },
+   {
+    "name": "AMY MINNIEAR",
+    "role": "Treasurer"
+   },
+   {
+    "name": "MARC LUKER",
+    "role": "Councilman"
+   },
+   {
+    "name": "JOSEPH \"JOE\" MURPHY",
+    "role": "Councilman"
+   },
+   {
+    "name": "RAYMOND BASQUEZ Jr.",
+    "role": "Councilman"
+   },
+   {
+    "name": "MICHAEL VASQUEZ",
+    "role": "Councilman"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week. The page says the council has six members and a chairperson, and names the chairperson and five of the six members.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.pechanga-nsn.gov/tribal-government/pechanga-tribal-council",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "2775": {
   "roster": [
    {
@@ -1544,6 +1610,46 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "3985": {
+  "roster": [
+   {
+    "name": "Kim Gentry",
+    "role": "Tribal Chairwoman"
+   },
+   {
+    "name": "Glenda Jacob McGill",
+    "role": "Vice Chair",
+    "note": "the page writes the office \"At Vice Chair\""
+   },
+   {
+    "name": "Elayne Muro",
+    "role": "Member Treasurer"
+   },
+   {
+    "name": "Robyn Larose",
+    "role": "Tribal Secretary"
+   },
+   {
+    "name": "Yolanda Torres",
+    "role": "Member at Large"
+   },
+   {
+    "name": "Marlene Adam",
+    "role": "Member at Large"
+   },
+   {
+    "name": "Robert Muro Sr",
+    "role": "Member at Large"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.stewartspoint.org/wp2/tribal-council/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "4060": {
   "roster": [
    {
@@ -1754,6 +1860,61 @@
   "rosterSource": "nation",
   "rosterPage": "https://trinidad-rancheria.org/tribal-council/",
   "rosterRead": "2026-11-13",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4300": {
+  "roster": [
+   {
+    "name": "Neil Peyron",
+    "role": "Chairperson",
+    "email": "Neil.Peyron@Tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Nick Martinez",
+    "role": "Vice-Chairman",
+    "email": "Nick.Martinez@Tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Amanda Sierra",
+    "role": "Secretary",
+    "email": "Amanda.Sierra@Tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Michele McDarment",
+    "role": "Treasurer",
+    "email": "Michele.McDarment@tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Shine Nieto",
+    "role": "Member",
+    "email": "Shine.Nieto@Tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Amanda Peyron",
+    "role": "Member",
+    "email": "Amanda.Peyron@tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Ryan Garfield",
+    "role": "Member",
+    "email": "Ryan.Garfield@tulerivertribe-nsn.gov"
+   },
+   {
+    "name": "Heather Teran",
+    "role": "Member"
+   },
+   {
+    "name": "Douglas Vera",
+    "role": "Member",
+    "email": "Douglas.Vera@tulerivertribe-nsn.gov"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://tulerivertribe-nsn.gov/council/",
+  "rosterRead": "2026-11-25",
   "rosterHost": null,
   "rosterMeasured": null
  },

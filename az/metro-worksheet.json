@@ -519,7 +519,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-az-shell-v5",
+    "cache_name": "districtry-az-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
