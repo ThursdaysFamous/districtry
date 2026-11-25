@@ -81,13 +81,6 @@
     "clerkPhone": "(217) 277-2150",
     "note": "Names come from Adams County's certified election canvasses. The county's own board page cannot be read by an automated client, so no per-member phone or e-mail is published here.",
     "resultsUrl": "https://platinumelectionresults.com/history",
-    "sourceUrl": "https://www.adamscountyil.gov/county-board",
-    "unreadElections": [
-      {
-        "election": "November 2026 general",
-        "status": "not published",
-        "url": "https://platinumelectionresults.com/history/reports/summary/2026_ge/54"
-      }
-    ]
+    "sourceUrl": "https://www.adamscountyil.gov/county-board"
   }
 }

@@ -80,6 +80,37 @@ BOARD = {
 
 PARTY_LETTER = {"REP": "R", "DEM": "D"}
 
+# THE NOVEMBER 2026 GENERAL, which refilled the fourteen seats the 2022 general
+# did: two races per district, every winner unopposed. Certified by County Clerk
+# Ryan A. Niekamp on 17 November 2026 ("Canvass Cert.pdf", 9 pages, pages 4-5).
+# The county's site refuses every automated client, so this was read by a person
+# in a browser on 25 November 2026 and transcribed by eye; it is never fetched.
+# District 3's first race had NO CANDIDATE FILED (0 votes), so that seat is not
+# named here: the canvass does not say who fills it. Members take their seats on
+# 7 December 2026, the first Monday of December, and are not shown before then.
+CANVASS_2026 = {
+    "status": "ok",
+    "label": "November 2026 general",
+    "year": 2026,
+    "seated": "2026-12-07",
+    "url": "https://www.adamscountyil.gov/home/showpublisheddocument/14169/639305268852570000",
+    "districts": {d: [{"seats": len(names),
+                       "candidates": [{"name": n, "party": "REP"} for n in names]}]
+                  for d, names in {
+                      "1": ["CHAD DOWNS", "BRUCE C. TERSTEGE"],
+                      "2": ["RYAN HINKAMPER", "BARBARA J FLETCHER"],
+                      "3": ["MARK DIETRICH"],
+                      "4": ["TRAVIS L. COOLEY", "M. STEVE MCQUEEN"],
+                      "5": ["TIM FINLAY", "JON MCCOY"],
+                      "6": ["JOHN R. GUNTHER", "BRADLEY W. POULTER"],
+                      "7": ["JOE ZANGER", "RUSSELL E. HINKAMPER"],
+                  }.items()},
+    # Shown on the card in place of the "elected in a separate cycle" note.
+    "notes": {"3": ("2 of this district's 3 seats named. The November 2026 "
+                    "ballot had no candidate for the third seat, and no source "
+                    "this project can read names who fills it.")},
+}
+
 
 name_case = platinum_canvass.name_case
 
@@ -104,6 +135,10 @@ def build(raw):
           if e.get("status") == "ok" and e.get("seated", "") <= today]
     if not ok:
         raise SystemExit("build-adams-board: no readable canvass; refusing to write")
+    # Checked after the refusal above, so a run that cannot read the 2024
+    # canvass still fails rather than shipping 2026's members alone.
+    if CANVASS_2026["seated"] <= today:
+        ok.insert(0, CANVASS_2026)
 
     # Newest-first: the first canvass that carries a district seats its
     # most-recently-elected member. Adams's 2024 general is single-seat, so this
@@ -149,11 +184,13 @@ def build(raw):
             "seats": SEATS_PER_DISTRICT,
             "sourceUrl": members[0]["sourceUrl"],
         }
+        if CANVASS_2026 in ok and dnum in CANVASS_2026["notes"]:
+            out[dnum]["note"] = CANVASS_2026["notes"][dnum]
     board = dict(BOARD)
     # The elections this file could NOT read, named rather than omitted, so the
     # weekly run and any reader of the data file can see which cycle is missing.
     unread = [{"election": e["label"], "status": e.get("status"), "url": e.get("url")}
-              for e in elections if e not in ok]
+              for e in elections if e.get("status") != "ok"]
     if unread:
         board["unreadElections"] = unread
     out["board"] = board

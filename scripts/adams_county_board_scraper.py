@@ -36,12 +36,11 @@ NOT PUBLISHED ANYWHERE THIS PROJECT CAN READ — platinum returns an empty
 one-page PDF for Adams for 2022 (and for 2021 and 2023), Clarity 404s the
 county outright, and the county's own results page is behind the same WAF as
 its board page. So this pipeline names ONE of each district's three members and
-says so on the card. The November 2026 general refilled those fourteen seats,
-and the vendor does not carry it either (Adams has published nothing there
-since its 2025 consolidated; measured 2026-11-25), so the scraper fetches the
-2026 slug every run and reports it as NOT PUBLISHED rather than skipping it:
-the day the county publishes it there, the weekly run surfaces fourteen new
-members instead of silently continuing to ship seven.
+says so on the card. The November 2026 general refilled those fourteen seats
+(less one with no candidate); the vendor does not carry it (Adams has published
+nothing there since its 2025 consolidated; measured 2026-11-25), so the county's
+own certified canvass, read by a person, is carried in the builder and names
+them from 7 December 2026.
 
 SEAT COUNT IS NOT PRINTED IN A GENERAL CANVASS and is therefore never assumed.
 Where the county prints "(Vote for not more than N)" that N is parsed. Where it
@@ -79,14 +78,9 @@ RESULTS_HOME = "https://platinumelectionresults.com/history"
 # currently returns an empty file for it — see the module docstring.
 SEATING_ELECTIONS = [
     {"slug": "2024_ge", "year": 2024, "label": "November 2024 general"},
-    # The November 2026 general filled the fourteen seats the 2022 general did
-    # (two per district); those members take their seats on the first Monday
-    # of December, so a canvass is not read before that date. The vendor has
-    # carried nothing for Adams since the 2025 consolidated (its 2022 file is an
-    # empty placeholder and its 2026 primary and general are absent), so this
-    # entry is the tripwire for the county coming back to it.
-    {"slug": "2026_ge", "year": 2026, "label": "November 2026 general",
-     "seated": "2026-12-07"},
+    # The November 2026 general is not here: the vendor has carried nothing for
+    # Adams since the 2025 consolidated, and the county's certified canvass is
+    # carried in build_adams_county_board_roster.py (CANVASS_2026).
 ]
 
 # A report smaller than this is the vendor's empty one-page placeholder (its

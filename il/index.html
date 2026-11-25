@@ -20128,11 +20128,11 @@ function initChiExplorer() {
   var loadAdamsCountyBoard = makeCached(function () {
     return loadAdamsLayer("Web_Voting_Data", 2, "DIST_NAME", "board districts");
   });
-  // Adams's roster does NOT come from the county — its board page is a flat
-  // Akamai deny — but from the county's own certified canvasses, which name one
-  // of each district's three members (the November 2024 cycle). The other two
-  // per district were seated in November 2022, a canvass nothing readable
-  // publishes, so the card says which seats it is naming and which it is not.
+  // Adams's roster does NOT come from the county's board page — a flat Akamai
+  // deny — but from its certified canvasses: November 2024 names one member per
+  // district, and November 2026 (read by a person, carried in the builder)
+  // names the other two from 7 December 2026, less District 3's seat that had
+  // no candidate. The card says which seats it is naming and which it is not.
   var loadAdamsBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/adams-county-board-members.json", {}, 2);
   });
@@ -34400,6 +34400,9 @@ function initChiExplorer() {
           if (!result.rosterLoaded) {
             // A fetch failure must never read as "the county names nobody".
             note = "The member list could not be loaded just now.";
+          } else if (members.length && seats > members.length && result.entry.note) {
+            // Set by the builder where the 2026 canvass shows why a seat is unnamed.
+            note = String(result.entry.note);
           } else if (members.length && seats > members.length) {
             note = members.length + " of this district's " + seats +
               " seats named — the member elected in 2024. Adams elects the other " +
