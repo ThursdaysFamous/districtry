@@ -164,16 +164,10 @@ SEATS = {
 # seat filled since by appointment by the look of the page. Each entry names
 # the results winner it was read against, and it FAILS once that seat names
 # anybody else, so a later election cannot leave a stale note behind.
-CITY_PAGE_SAYS = {
-    ("2702908", "Ward 3", "Joyce Poshusta"): (
-        "Oballa Oballa", "https://www.ci.austin.mn.us/city-council"),
-    ("2722814", "Ward 1", "Tom Tillberry"): (
-        "Luke Cardona",
-        "https://www.fridleymn.gov/Your-Government/City-Council-Commissions/"
-        "Meet-Your-City-Council"),
-    ("2747680", "At Large", "Susan Olson"): (
-        "Katie Wrich", "https://www.oakdalemn.gov/317/City-Council"),
-}
+# All three entries RETIRED 2026-11-25: the 3 Nov 2026 results fill each seat
+# (Austin Ward 3 Kris Heichel, Fridley Ward 1 Emily Villanueva, Oakdale At
+# Large Christine Fountaine/Jennifer Kimlinger), so no appointment note applies.
+CITY_PAGE_SAYS = {}
 CITY_PAGES_READ = "2026-10-07"
 
 OFFICE_RE = re.compile(

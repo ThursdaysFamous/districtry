@@ -126,7 +126,9 @@ FORM_NOTES = {
 #   e-mail is jgilliam@christiancountyky.gov, and the county's own page
 #   (christiancountyky.gov/county-judge-executive, read 2026-10-11) says "Jerry
 #   Gilliam was elected Christian County's Judge/Executive".
-NAME_FIXES = {("Christian", "2", "Gilliam"): "Jerry"}
+#   RETIRED 2026-11-25: the 19 Nov run found the directory no longer prints
+#   "2" there, so the map is empty.
+NAME_FIXES = {}
 
 # Floors, measured 2026-10-11 on the first full read: 120 counties, 680 named
 # fiscal court members (118 judge/executives, 520 magistrates, 42

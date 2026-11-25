@@ -109,9 +109,9 @@ MAX_DIRECTORY_DRIFT = 2  # tolerated per-direction directory/card row drift mid-
 #
 # audit_email_corrections() FAILS when an entry stops being needed, so this
 # cannot outlive the typo it exists for -- the ACCEPTED_DROPS discipline.
-BOARD_EMAIL_CORRECTIONS = {
-    "distric1-2@shelbycounty-il.gov": "district1-2@shelbycounty-il.gov",
-}
+# RETIRED 2026-11-25: the 19 Nov run found coboard.aspx now prints
+# district1-2@ itself, so the county fixed its own page and the map is empty.
+BOARD_EMAIL_CORRECTIONS = {}
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
