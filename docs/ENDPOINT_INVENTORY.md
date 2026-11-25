@@ -512,7 +512,7 @@ measured until the next run describes it.
 | ky | 33 | 21 | 0 |
 | in | 24 | 24 | 0 |
 | nc | 40 | 22 | 0 |
-| ok | 32 | 20 | 0 |
+| ok | 32 | 21 | 0 |
 | sc | 36 | 21 | 0 |
 | tn | 34 | 23 | 0 |
 | ar | 28 | 21 | 0 |

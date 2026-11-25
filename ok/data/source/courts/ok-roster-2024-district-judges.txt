@@ -1,0 +1,87 @@
+# Oklahoma State Election Board, "Roster of Oklahoma State and County
+# Officers, Elected at the General Election November 5, 2024, Including
+# Holdover State Officials", published March 18, 2025, section DISTRICT
+# JUDGES, read 2026-11-25 from
+# https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf
+# (460,946 bytes, SHA-256
+# f8e6d97e5a40e13b3d03e4cce6fb75747e6276e1287950bb64890dbbbcb965d3, the
+# same file read on 2026-10-16) with this project's own client.
+# Each office and the name printed under it. The home town printed after
+# the name is NOT copied: this project never writes an officeholder's home
+# town. The roster lags: it still lists Aletia Haynes Timmons, who retired
+# on March 3, 2025 (the Judicial Nominating Commission's vacancy notice).
+District 1, Office 1 | Jon K. Parsley
+District 2, Office 1 | Donna Lynn Dirickson
+District 3, Office 1 | Rafe R. Hall
+District 4, Office 1 | Justin P. Eilers
+District 4, Office 2 | Paul K. Woodward
+District 4, Office 3 | Tom L. Newby
+District 5, Office 1 | Emmit Tayloe
+District 5, Office 2 | G. Brent Russell
+District 5, Office 3 | Jay Walker
+District 5, Office 4 | Scott Meaders
+District 5, Office 5 | Grant D. Sheperd
+District 6, Office 1 | Kory Kirkland
+District 7, Office 1 | Aletia Haynes Timmons
+District 7, Office 2 | Kaitlyn Allen
+District 7, Office 3 | Amy Palumbo
+District 7, Office 4 | Kenneth M. Stoner
+District 7, Office 5 | Natalie Mai
+District 7, Office 6 | C. Brent Dishman
+District 7, Office 7 | Cindy H. Truong
+District 7, Office 8 | Heather Coyle
+District 7, Office 9 | Anthony L. Bonner, Jr.
+District 7, Office 10 | Susan Stallings
+District 7, Office 11 | Richard C. Ogden
+District 7, Office 12 | Sheila D. Stinson
+District 7, Office 13 | K. Nikki Kirkpatrick
+District 7, Office 14 | Kathryn Ruth Savage
+District 7, Office 15 | Don Andrews
+District 8, Office 1 | Lee Turner
+District 9, Office 1 | Jason A. Reese
+District 10, Office 1 | Stuart L. Tate
+District 11, Office 1 | Linda S. Thomas
+District 12, Office 1 | Shawn Taylor
+District 12, Office 2 | Lara Russell
+District 12, Office 3 | Stephen R. Pazzo, Jr.
+District 13, Office 1 | Jennifer McAffrey
+District 14, Office 1 | Caroline Wall
+District 14, Office 2 | Sharon K. Holmes
+District 14, Office 3 | Tracy Priddy
+District 14, Office 4 | Daman Cantrell
+District 14, Office 5 | Michelle Lee Bodine-Keely
+District 14, Office 6 | Kelly Morgan Greenough
+District 14, Office 7 | Bill LaFortune
+District 14, Office 8 | Doug Drummond
+District 14, Office 9 | Richard L. Hathcoat
+District 14, Office 10 | Dawn Moody
+District 14, Office 11 | Rebecca Nightingale
+District 14, Office 12 | Kevin Gray
+District 14, Office 13 | David A. Guten
+District 14, Office 14 | Kurt Glassco
+District 15, Office 1 | Tim King
+District 15, Office 2 | Douglas Kirkley
+District 15, Office 3 | Jeff Payton
+District 15, Office 4 | Bret A. Smith
+District 16, Office 1 | Jonathan K. Sullivan
+District 17, Office 1 | Emily Maxwell Herron
+District 18, Office 1 | Michael Hogan
+District 19, Office 1 | Mark R. Campbell
+District 20, Office 1 | Dennis Morris
+District 20, Office 2 | Wallace Coppedge
+District 21, Office 1 | Michael David Tupper
+District 21, Office 2 | Leah Edwards
+District 21, Office 3 | Thad Balkman
+District 21, Office 4 | Julia Lynne Race McGuire
+District 21, Office 5 | Jeff Virgin
+District 22, Office 1 | Brett William Butner
+District 22, Office 2 | Steve Kessinger
+District 23, Office 1 | Sarah Lynn Bridge
+District 23, Office 2 | John G. Canavan, Jr.
+District 24, Office 1 | Douglas W. Golden
+District 24, Office 2 | Lawrence W. Parish
+District 24, Office 3 | Pandee Ramirez
+District 24, Office 4 | Kelly Hake
+District 25, Office 1 | D. Clay Mowdy
+District 26, Office 1 | Paul Hesse
+District 26, Office 2 | Khristan Strubhar
