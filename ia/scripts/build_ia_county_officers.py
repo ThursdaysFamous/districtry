@@ -77,6 +77,7 @@ Usage:
     python3 ia/scripts/build_ia_county_officers.py --check
 """
 
+import datetime
 import json
 import os
 import re
@@ -180,6 +181,46 @@ MAX_DIVERGENCES = 12
 DIVERGENCE_RESOLVED = {
     ("Sac", "sheriff"): ("isac", "https://www.saccountyiowa.gov/sheriff"),
 }
+
+# ISAC NAMES A SUPERVISOR-ELECT BEFORE THE TERM STARTS. After the 3 November
+# 2026 general election ISAC put the District 1 winner in Taylor's table in place
+# of the member who still holds the seat, so the County card named him early and
+# the district roster could not find him on the county's page (it stopped the
+# weekly supervisor run from 14 Nov). Keyed (county, name ISAC prints) -> who
+# serves until `until`, the day the entry stops applying and the build fails so
+# that someone retires it. Party is ISAC's own, as this file shipped it for that
+# person until 7 Nov 2026. Not every newcomer is early: Pottawattamie's Mark
+# Shoemaker took office on 17 Nov 2026, because he replaced an appointee
+# (pottcounty-ia.gov news, 18 Nov), so he is not here. Check the county's own
+# page before adding an entry.
+SUPERVISOR_ELECT = {
+    ("Taylor", "Rick Cabbage"): {
+        "serving": "Ronald Fitzgerald", "party": "R", "until": "2027-01-01",
+        "witness": "taylorcounty.iowa.gov: the board page names Ronald Fitzgerald "
+                   "for District 1 and the 24 Nov 2026 agenda still heads District 1 "
+                   "with him; the certified 2026 general (electionresults.iowa.gov/"
+                   "IA/Taylor/127164) elects Rick Cabbage in District 1 for the term "
+                   "that begins in January 2027",
+    },
+}
+
+
+def seat_serving_members(county, sups, today):
+    """Swap a supervisor-elect ISAC already lists for the member still serving.
+    Returns (rows, keys used). Raises once an entry's date has passed."""
+    out, used = [], set()
+    for r in sups:
+        key = (county, r["name"])
+        pin = SUPERVISOR_ELECT.get(key)
+        if pin:
+            if today >= pin["until"]:
+                raise RuntimeError(
+                    "SUPERVISOR_ELECT[%r] ran until %s and the new term has begun -- "
+                    "drop the entry" % (key, pin["until"]))
+            r = dict(r, name=pin["serving"], party=pin["party"])
+            used.add(key)
+        out.append(r)
+    return out, used
 
 
 def expand_party(code, county, office):
@@ -746,8 +787,24 @@ def selftest():
         if got != want:
             bad.append("%s -> %r, wanted %r" % (label, got, want))
         print("  %-4s %s" % ("OK" if got == want else "FAIL", label))
+    # the supervisor-elect swap: before its date the serving member ships with
+    # the party pinned for them; on its date the build refuses
+    rows = [{"name": "Jack Beggs", "party": "R"}, {"name": "Rick Cabbage", "party": "R"}]
+    got, used = seat_serving_members("Taylor", rows, "2026-11-25")
+    want = ([{"name": "Jack Beggs", "party": "R"},
+             {"name": "Ronald Fitzgerald", "party": "R"}], {("Taylor", "Rick Cabbage")})
+    try:
+        seat_serving_members("Taylor", rows, "2027-01-01")
+        expired = "no refusal"
+    except RuntimeError:
+        expired = "refused"
+    for label, g, w in (("supervisor-elect swapped for the serving member", (got, used), want),
+                        ("supervisor-elect entry refuses on its date", expired, "refused")):
+        if g != w:
+            bad.append("%s -> %r, wanted %r" % (label, g, w))
+        print("  %-4s %s" % ("OK" if g == w else "FAIL", label))
     total = (len(DISPLAY_CASES) + len(PARTY_JOIN_CASES)
-             + len(SUPERVISOR_ADDRESS_CASES) + len(own))
+             + len(SUPERVISOR_ADDRESS_CASES) + len(own) + 2)
     if bad:
         sys.exit("build-ia-county-officers --selftest: FAIL — %d case(s): %s"
                  % (len(bad), "; ".join(bad)))
@@ -826,6 +883,8 @@ def main():
     scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
     page_emails = 0
     pins_used = set()
+    elects_used = set()
+    today = datetime.date.today().isoformat()
     withheld_detail = []
     # Every name this build strips a leading honorific from, printed so the
     # edit is reviewable rather than silent -- it changes a NAME, and a name
@@ -998,7 +1057,9 @@ def main():
             filled[key] += 1
 
         # ---- supervisors: two independent gates, both must pass
-        sups = [r for r in rows if r["office"] == SUPERVISOR_OFFICE]
+        sups, used = seat_serving_members(
+            county, [r for r in rows if r["office"] == SUPERVISOR_OFFICE], today)
+        elects_used |= used
         seats = seats_by_geoid.get(geoid)
         reason = None
         if len(sups) not in LEGAL_BOARD_SIZES:
@@ -1176,6 +1237,12 @@ def main():
         raise RuntimeError(
             "DIVERGENCE_RESOLVED pins %s, but those sources no longer disagree -- "
             "drop the pin" % (stale_pins,))
+
+    stale_elects = sorted(set(SUPERVISOR_ELECT) - elects_used)
+    if stale_elects:
+        raise RuntimeError(
+            "SUPERVISOR_ELECT names %s, but ISAC no longer lists them -- drop the "
+            "entry" % (stale_elects,))
 
     emails = sum(1 for v in directory.values() for k, _ in OFFICES
                  if isinstance(v.get(k), dict) and v[k].get("email"))
