@@ -1,0 +1,199 @@
+# Tennessee Administrative Office of the Courts, "Trial Court Judges": the
+# judge directory behind https://www.tncourts.gov/courts/circuit-criminal-chancery-courts/judges
+# Read ONCE on 2026-11-25 in the operator's own Chrome (Adam's yes of that day:
+# a site that refuses this project's reader may be read once by hand, and a
+# browser check that clears by itself may be passed). No check page appeared;
+# robots.txt (User-agent: *) disallows only Drupal's admin, search and login
+# paths, none of them read here. This project's own reader still meets the
+# managed challenge measured 2026-10-09, so no weekly job reads this site.
+#
+# The directory's own list, all 28 pages of 25 (/judges1, every judge type,
+# 700 rows), kept to its four trial-court types: Chancellor 35, Circuit Court
+# Judge 98, Criminal Court Judge 39, Probate Court Judge 2 = 174 rows, copied
+# exactly as the table prints them. Columns, tab-separated: name, the judge's
+# page on www.tncourts.gov, office, counties, district. The directory leaves
+# the district blank for the 32nd (its district filter stops at 31) and one
+# shell page has no county or district.
+#
+# THE DIRECTORY IS NOT CURRENT. Read against the courts' own appointment and
+# vacancy notices (tncourts-notices-2026-11-25.tsv), it still lists seven
+# people who hold no district seat: four retired judges, the prior holders of
+# the two seats the courts declared vacant, and a senior judge.
+# tn/scripts/build_tn_trial_judges.py takes them out, each citing its notice,
+# and refuses to run if any no longer matches a row here. It adds nobody: the
+# 2025 appointees missing from it are missing from Nashville's own list too
+# (nashville-trial-courts-judges-2026-11-25.txt).
+Emily F. Abbott	/courts/circuit-criminal-chancery-courts/judges/emily-f-abbott	Criminal Court Judge	Knox	6
+Carlyn L. Addison	/courts/juvenile-family-courts/judges/carlyn-l-addison	Criminal Court Judge	Shelby	30
+William "Bill" T. Ailor	/courts/circuit-criminal-chancery-courts/judges/william-t-ailor	Circuit Court Judge	Knox	6
+Donald (Don) H. Allen	/courts/circuit-criminal-chancery-courts/judges/donald-h-allen	Circuit Court Judge	Chester, Henderson, Madison	26
+Justin C. Angel	/courts/circuit-criminal-chancery-courts/judges/justin-c-angel	Circuit Court Judge	Franklin, Grundy, Bledsoe, Marion, Rhea, Sequatchie	12
+Richard B. Armstrong Jr.	/courts/circuit-criminal-chancery-courts/judges/richard-b-armstrong-jr	Chancellor	Knox	6
+Elizabeth C. Asbury	/courts/circuit-criminal-chancery-courts/judges/elizabeth-c-asbury	Chancellor	Claiborne, Fentress, Campbell, Scott, Union	8
+Jeffrey M. Atherton	/courts/circuit-criminal-chancery-courts/judges/jeffrey-m-atherton	Chancellor	Hamilton	11
+Kyle Atkins	/courts/circuit-criminal-chancery-courts/judges/kyle-atkins	Circuit Court Judge	Chester, Henderson, Madison	26
+Jo Atwood	/courts/circuit-criminal-chancery-courts/judges/jo-atwood	Circuit Court Judge	Rutherford, Cannon	16
+Khadija Babb	/courts/circuit-criminal-chancery-courts/judges/khadija-babb	Criminal Court Judge	Davidson	20
+Javier M. Bailey II	/courts/circuit-criminal-chancery-courts/judges/javier-m-bailey-ii	Criminal Court Judge	Shelby	30
+Jeremy D. Ball	/courts/circuit-criminal-chancery-courts/judges/jeremy-d-ball-0	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+Jeremy D. Ball	/courts/circuit-criminal-chancery-courts/judges/jeremy-d-ball	Circuit Court Judge		
+Robert Bateman	/courts/circuit-criminal-chancery-courts/judges/robert-bateman	Circuit Court Judge	Montgomery, Robertson	19
+Caleb Bayless	/courts/circuit-criminal-chancery-courts/judges/caleb-bayless	Circuit Court Judge	Giles, Lawrence, Maury, Wayne	22
+J. B. Bennett	/courts/circuit-criminal-chancery-courts/judges/j-b-bennett	Circuit Court Judge	Hamilton	11
+Joseph P. Binkley Jr.	/courts/circuit-criminal-chancery-courts/judges/joseph-p-binkley	Circuit Court Judge	Davidson	20
+Cheryl A. Blackburn	/courts/circuit-criminal-chancery-courts/judges/cheryl-blackburn	Criminal Court Judge	Davidson	20
+Carolyn Wade Blackett	/courts/circuit-criminal-chancery-courts/judges/carolyn-wade-blackett	Criminal Court Judge	Shelby	30
+Beth Boniface	/courts/circuit-criminal-chancery-courts/judges/beth-boniface	Circuit Court Judge	Greene, Hamblen, Hancock, Hawkins	3
+J. Brent Bradberry	/courts/circuit-criminal-chancery-courts/judges/j-brent-bradberry	Circuit Court Judge	Decatur, Benton, Hardin, Henry, Carroll	24
+Wesley Bray	/courts/circuit-criminal-chancery-courts/judges/wesley-thomas-bray	Criminal Court Judge	Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, White	13
+David Briley	/courts/circuit-criminal-chancery-courts/judges/david-briley	Circuit Court Judge	Davidson	20
+Thomas White Brothers	/courts/circuit-criminal-chancery-courts/judges/thomas-white-brothers	Circuit Court Judge	Davidson	20
+Jerri S. Bryant	/courts/circuit-criminal-chancery-courts/judges/jerri-s-bryant	Chancellor	McMinn, Bradley, Monroe, Polk	10
+M. Wyatt Burk	/courts/circuit-criminal-chancery-courts/judges/m-wyatt-burk	Circuit Court Judge	Bedford, Lincoln, Marshall, Moore	17
+Clara W. Byrd	/courts/circuit-criminal-chancery-courts/judges/clara-w-byrd	Circuit Court Judge	Jackson, Macon, Smith, Trousdale, Wilson	15
+John Harvey Cameron Jr.	/courts/judges/john-cam-cameron	Circuit Court Judge	Franklin, Grundy, Bledsoe, Marion, Rhea, Sequatchie	12
+Robert T. Carter	/courts/circuit-criminal-chancery-courts/judges/robert-t-carter	Circuit Court Judge	Coffee	14
+Cynthia Chappell	/courts/circuit-criminal-chancery-courts/judges/cynthia-chappell	Criminal Court Judge	Davidson	20
+Tony A. Childress	/courts/circuit-criminal-chancery-courts/judges/tony-childress	Chancellor	Dyer, Lake	29
+Carol Chumney	/courts/circuit-criminal-chancery-courts/judges/carol-j-chumney-0	Circuit Court Judge	Shelby	30
+Lee V. Coffee	/courts/judges/lee-v-coffee	Criminal Court Judge	Shelby	30
+William "Bill" C. Cole	/courts/circuit-criminal-chancery-courts/judges/william-c-cole	Chancellor	Fayette, Hardeman, Lauderdale, McNairy, Tipton	25
+Michael Collins	/courts/circuit-criminal-chancery-courts/judges/michael-collins	Circuit Court Judge	Jackson, Macon, Smith, Trousdale, Wilson	15
+Suzanne Cook	/courts/circuit-criminal-chancery-courts/judges/suzanne-sweet-cook	Circuit Court Judge	Carter, Johnson, Unicoi, Washington	1
+Felicia Corbin Johnson	/courts/circuit-criminal-chancery-courts/judges/felicia-corbin-johnson	Circuit Court Judge	Shelby	30
+Jennifer Coats Covellis	/courts/circuit-criminal-chancery-courts/judges/jennifer-coats-covellis	Chancellor	Chester, Henderson, Madison	26
+James "J. B." B. Cox	/courts/circuit-criminal-chancery-courts/judges/james-b-cox	Chancellor	Bedford, Lincoln, Marshall, Moore	17
+Chris Craft	/courts/judges/chris-craft	Criminal Court Judge	Shelby	30
+Angelita Blackshear Dalton	/courts/circuit-criminal-chancery-courts/judges/angelita-blackshear-dalton	Criminal Court Judge	Davidson	20
+Damita Dandridge	/courts/circuit-criminal-chancery-courts/judges/damita-dandridge-0	Circuit Court Judge	Shelby	30
+Benjamin "Ben" Dean	/courts/circuit-criminal-chancery-courts/judges/ben-dean	Chancellor	Montgomery, Robertson	19
+Dawn C Deaner	/courts/circuit-criminal-chancery-courts/judges/dawn-c-deaner	Criminal Court Judge	Davidson	20
+Sandra Donaghy	/courts/circuit-criminal-chancery-courts/judges/sandra-nc-donaghy	Criminal Court Judge	McMinn, Bradley, Monroe, Polk	10
+Jahari M. Dowdy	/courts/circuit-criminal-chancery-courts/judges/jahari-m-dowdy	Criminal Court Judge	Shelby	30
+Steve R. Dozier	/courts/judges/steve-r-dozier	Criminal Court Judge	Davidson	20
+David R. Duggan	/courts/circuit-criminal-chancery-courts/judges/david-r-duggan	Circuit Court Judge	Blount	5
+John F. Dugger Jr.	/courts/judges/john-f-dugger	Criminal Court Judge	Hamblen	3
+Amanda B. Dunn	/courts/circuit-criminal-chancery-courts/judges/amanda-b-dunn	Criminal Court Judge	Hamilton	11
+Forest A. Durard Jr.	/courts/circuit-criminal-chancery-courts/judges/forest-durard-jr	Circuit Court Judge	Bedford, Lincoln, Marshall, Moore	17
+Terry A. Fann	/courts/circuit-criminal-chancery-courts/judges/terry-fann	Circuit Court Judge	Rutherford, Cannon	16
+Jennifer Fitzgerald	/courts/circuit-criminal-chancery-courts/judges/jennifer-fitzgerald-0	Criminal Court Judge	Shelby	30
+Pamela A. Fleenor	/courts/circuit-criminal-chancery-courts/judges/pamela-fleenor	Chancellor	Hamilton	11
+Henry Daniel Forrester	/courts/circuit-criminal-chancery-courts/judges/henry-daniel-forrester	Chancellor	Anderson	7
+Andrew Mark Freiberg	/courts/circuit-criminal-chancery-courts/judges/andrew-mark-freiberg	Circuit Court Judge	McMinn, Bradley, Monroe, Polk	10
+W. Christopher Frulla	/courts/circuit-criminal-chancery-courts/judges/w-christopher-frulla	Circuit Court Judge	Shelby	30
+Adrienne Fry	/courts/circuit-criminal-chancery-courts/judges/adrienne-fry	Circuit Court Judge	Montgomery, Robertson	19
+Shawn C. Fry	/courts/circuit-criminal-chancery-courts/judges/shawn-c-fry	Criminal Court Judge	Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, White	13
+James Gass	/courts/circuit-criminal-chancery-courts/judges/james-l-gass	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+Dee David Gay	/courts/judges/dee-david-gay	Criminal Court Judge	Sumner	18
+Kathleen Gomes	/courts/circuit-criminal-chancery-courts/judges/kathleen-gomes	Probate Court Judge	Shelby	30
+Bill Goodman	/courts/circuit-criminal-chancery-courts/judges/william-r-bill-goodman	Circuit Court Judge	Montgomery, Robertson	19
+James (Jim) F. Goodwin	/courts/judges/james-f-goodwin	Criminal Court Judge	Sullivan	2
+G. Scott Green	/courts/circuit-criminal-chancery-courts/judges/g-scott-green	Criminal Court Judge	Knox	6
+Bruce Griffey	/courts/circuit-criminal-chancery-courts/judges/bruce-irwin-griffey	Circuit Court Judge	Decatur, Benton, Hardin, Henry, Carroll	24
+Paul Hagerman	/courts/circuit-criminal-chancery-courts/judges/paul-hagerman	Criminal Court Judge	Shelby	30
+Tammy M. Harrington	/courts/circuit-criminal-chancery-courts/judges/tammy-m-harrington	Circuit Court Judge	Blount	5
+Mark Hayes	/courts/circuit-criminal-chancery-courts/judges/mark-l-hayes	Circuit Court Judge	Dyer, Lake	29
+Christopher Heagerty	/courts/judges/christopher-d-heagerty	Chancellor	Knox	6
+Andra Hedrick	/courts/circuit-criminal-chancery-courts/judges/andra-hedrick	Circuit Court Judge	Davidson	20
+Kyle E. Hedrick	/courts/circuit-criminal-chancery-courts/judges/kyle-e-hedrick	Circuit Court Judge	Hamilton	11
+Julie Carrell Heffington	/courts/circuit-criminal-chancery-courts/judges/julie-carrell-heffington	Circuit Court Judge	Giles, Lawrence, Maury, Wayne	22
+Gina C. Higgins	/courts/circuit-criminal-chancery-courts/judges/gina-c-higgins	Circuit Court Judge	Shelby	30
+Deana Hood	/courts/circuit-criminal-chancery-courts/judges/deana-c-hood	Circuit Court Judge	Williamson	21
+Vicki H. Hoover	/courts/judges/vicki-h-hoover-2	Chancellor	Henry	24
+Joseph Howell	/courts/circuit-criminal-chancery-courts/judges/joseph-t-howell	Circuit Court Judge	Chester, Henderson, Madison	26
+Rhynette N. Hurd	/courts/circuit-criminal-chancery-courts/judges/rhynette-northcross-hurd	Circuit Court Judge	Shelby	30
+Lynne T. Ingram	/courts/circuit-criminal-chancery-courts/judges/lynne-t-ingram	Circuit Court Judge	Davidson	20
+Douglas T. Jenkins	/courts/circuit-criminal-chancery-courts/judges/douglas-t-jenkins	Chancellor	Greene, Hamblen, Hancock, Hawkins	3
+JoeDae L. Jenkins	/courts/circuit-criminal-chancery-courts/judges/joedae-l-jenkins	Chancellor	Shelby	30
+Michael Jenne	/courts/circuit-criminal-chancery-courts/judges/michael-e-jenne	Circuit Court Judge	McMinn, Bradley, Monroe, Polk	10
+Deanna Bell Johnson	/courts/circuit-criminal-chancery-courts/judges/deanna-bell-johnson	Circuit Court Judge	Williamson	21
+James Jones Jr.	/courts/circuit-criminal-chancery-courts/judges/james-jones	Criminal Court Judge	Shelby	30
+Brody Kane	/courts/circuit-criminal-chancery-courts/judges/brody-neill-kane	Criminal Court Judge	Jackson, Macon, Smith, Trousdale, Wilson	15
+Yolanda R. Kight-Brown	/courts/circuit-criminal-chancery-courts/judges/yolanda-r-kight	Circuit Court Judge	Shelby	30
+Caroline Knight	/courts/circuit-criminal-chancery-courts/judges/caroline-e-knight	Circuit Court Judge	Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, White	13
+William K. Lane III	/courts/circuit-criminal-chancery-courts/judges/william-k-lane-iii	Circuit Court Judge	Hickman, Lewis, Perry	
+James (Eddie) Edwin Lauderback	/courts/circuit-criminal-chancery-courts/judges/james-edwin-lauderback	Circuit Court Judge	Carter, Johnson, Unicoi, Washington	1
+Suzanne M. Lockert-Mash	/courts/circuit-criminal-chancery-courts/judges/suzanne-m-lockert-mash	Circuit Court Judge	Cheatham, Dickson, Houston, Humphreys, Stewart	23
+William Lockhart	/courts/circuit-criminal-chancery-courts/judges/william-lockhart	Circuit Court Judge	Coffee	14
+Kimberly S. Lund	/courts/circuit-criminal-chancery-courts/judges/kimberly-s-lund	Chancellor	Montgomery, Robertson	19
+W. Michael Maloan	/courts/circuit-criminal-chancery-courts/judges/w-michael-maloan	Chancellor	Obion, Weakley	27
+Corletra F. Mance	/courts/circuit-criminal-chancery-courts/judges/corletra-f-mance	Circuit Court Judge	Davidson	20
+Michael Mansfield	/courts/circuit-criminal-chancery-courts/judges/michael-mansfield	Chancellor	Crockett, Gibson, Haywood	28
+Anne Martin	/courts/circuit-criminal-chancery-courts/judges/anne-c-martin	Chancellor	Davidson	20
+John McAfee	/courts/circuit-criminal-chancery-courts/judges/john-d-mcafee	Circuit Court Judge	Claiborne, Fentress, Campbell, Scott, Union	8
+Amanda McClendon	/courts/circuit-criminal-chancery-courts/judges/amanda-mcclendon	Circuit Court Judge	Davidson	20
+J. Weber McCraw	/courts/circuit-criminal-chancery-courts/judges/j-weber-mccraw	Circuit Court Judge	Fayette, Hardeman, McNairy	25
+Tom McFarland	/courts/circuit-criminal-chancery-courts/judges/tom-mcfarland	Chancellor	Loudon, Meigs, Morgan, Roane	9
+Gary McKenzie	/courts/circuit-criminal-chancery-courts/judges/gary-s-mckenzie	Criminal Court Judge	Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, White	13
+Greg McMillan	/courts/circuit-criminal-chancery-courts/judges/greg-mcmillan	Circuit Court Judge	Knox	6
+Alexander McVeagh	/courts/circuit-criminal-chancery-courts/judges/alexander-mcveagh	Circuit Court Judge	Hamilton	11
+E. Jerome Melson	/courts/circuit-criminal-chancery-courts/judges/e-jerome-melson	Circuit Court Judge	Knox	6
+Jennifer Johnson Mitchell	/courts/circuit-criminal-chancery-courts/judges/jennifer-j-mitchell	Criminal Court Judge	Shelby	30
+Carter Moore	/courts/circuit-criminal-chancery-courts/judges/carter-s-moore	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+Patricia Head Moskal	/courts/circuit-criminal-chancery-courts/judges/patricia-head-moskal	Chancellor	Davidson	20
+I'Ashea Myles	/courts/circuit-criminal-chancery-courts/judges/iashea-l-myles	Chancellor	Davidson	20
+A. Blake Neill	/courts/circuit-criminal-chancery-courts/judges/blake-neill	Circuit Court Judge	Fayette, Hardeman, McNairy	25
+Jennifer Nichols	/courts/judges/jennifer-s-nichols	Circuit Court Judge	Sumner	18
+Adrienne Ogle	/courts/circuit-criminal-chancery-courts/judges/adrienne-ogle	Circuit Court Judge		4
+Adrienne Waters Ogle	/courts/juvenile-family-courts/judges/adrienne-waters-ogle	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+Rex Henry Ogle	/courts/circuit-criminal-chancery-courts/judges/rex-henry-ogle	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+Kathryn Wall Olita	/courts/circuit-criminal-chancery-courts/judges/kathryn-wall-olita	Circuit Court Judge	Montgomery, Robertson	19
+Louis W. Oliver	/courts/circuit-criminal-chancery-courts/judges/louis-w-oliver-iii	Chancellor	Sumner	18
+Jeff Parham	/courts/circuit-criminal-chancery-courts/judges/jeff-parham	Circuit Court Judge	Obion, Weakley	27
+J. Russell Parkes	/courts/circuit-criminal-chancery-courts/judges/j-russell-parkes	Circuit Court Judge	Giles, Lawrence, Maury, Wayne	22
+Jessica Parrish	/courts/circuit-criminal-chancery-courts/judges/jessica-parrish	Circuit Court Judge	Lawrence	22
+Boyd M. Patterson	/courts/judges/boyd-patterson	Criminal Court Judge	Hamilton	11
+Alex Pearson	/courts/circuit-criminal-chancery-courts/judges/alex-e-pearson	Circuit Court Judge	Greene, Hamblen, Hancock, Hawkins	3
+Jennifer Peck	/courts/circuit-criminal-chancery-courts/judges/jennifer-peck	Circuit Court Judge	Hamilton	11
+Clayburn Peeples	/courts/circuit-criminal-chancery-courts/judges/clayburn-peeples	Circuit Court Judge	Crockett, Gibson, Haywood	28
+Mike Pemberton	/courts/circuit-criminal-chancery-courts/judges/mike-pemberton	Circuit Court Judge	Loudon, Meigs, Morgan, Roane	9
+Russell T. Perkins	/courts/circuit-criminal-chancery-courts/judges/russell-t-perkins	Chancellor	Davidson	20
+David Pool	/courts/circuit-criminal-chancery-courts/judges/david-l-pool-0	Criminal Court Judge	Shelby	30
+Kasey Pride	/courts/circuit-criminal-chancery-courts/judges/kasey-culbreath	Chancellor	Fayette, Hardeman, Lauderdale, McNairy, Tipton	25
+Katherine Priester	/courts/circuit-criminal-chancery-courts/judges/katie-priester	Chancellor	Sullivan	2
+Jeff D. Rader	/courts/general-sessions-courts/judges/jeff-d-rader	Circuit Court Judge	Cocke, Grainger, Jefferson, Sevier	4
+John C. Rambo	/courts/circuit-criminal-chancery-courts/judges/john-c-rambo	Chancellor	Carter, Johnson, Unicoi, Washington	1
+Lisa Rice	/courts/judges/lisa-nidiffer-rice	Criminal Court Judge	Carter, Johnson, Unicoi, Washington	1
+William Ridley	/courts/circuit-criminal-chancery-courts/judges/william-ridley	Circuit Court Judge	Clay, Cumberland, DeKalb, Overton, Pickett, Putnam, White	13
+James "Jim" Ripley	/courts/circuit-criminal-chancery-courts/judges/jim-ripley	Chancellor	Cocke, Grainger, Jefferson, Blount, Sevier	5
+Phillip Robinson	/courts/circuit-criminal-chancery-courts/judges/phillip-robinson	Circuit Court Judge	Davidson	20
+William "Bill" Rogers	/courts/circuit-criminal-chancery-courts/judges/william-bill-k-rogers	Circuit Court Judge	Sullivan	2
+S. Curtis Rose	/courts/judges/s-curtis-rose	Circuit Court Judge	Sullivan	2
+Hector Sanchez	/node/8672165	Criminal Court Judge	Knox	6
+Darrell L. Scarlett	/courts/circuit-criminal-chancery-courts/judges/darrell-l-scarlett	Circuit Court Judge	Rutherford	16
+J. Michael Sharp	/courts/circuit-criminal-chancery-courts/judges/j-michael-sharp	Circuit Court Judge	McMinn, Bradley, Monroe, Polk	10
+Bradley Sherman	/courts/circuit-criminal-chancery-courts/judges/bradley-sherman	Circuit Court Judge	Franklin, Grundy, Bledsoe, Marion, Rhea, Sequatchie	12
+Lawrence Scott Shults	/courts/circuit-criminal-chancery-courts/judges/lawrence-scott-shults	Criminal Court Judge	Carter, Johnson, Unicoi, Washington	1
+Paula L. Skahan	/courts/judges/paula-l-skahan	Criminal Court Judge	Shelby	30
+Charles "C.K." K. Smith	/courts/circuit-criminal-chancery-courts/judges/charles-k-smith	Chancellor	Jackson, Macon, Smith, Trousdale, Wilson	15
+Jennifer L. Smith	/courts/circuit-criminal-chancery-courts/judges/jennifer-l-smith	Criminal Court Judge	Davidson	20
+Christopher V. Sockwell	/courts/circuit-criminal-chancery-courts/judges/christopher-v-sockwell	Circuit Court Judge	Giles, Lawrence, Maury, Wayne	22
+Michael Spitzer	/courts/circuit-criminal-chancery-courts/judges/michael-e-spitzer	Circuit Court Judge	Lewis	
+Ryan Spitzer	/courts/circuit-criminal-chancery-courts/judges/ryan-m-spitzer	Circuit Court Judge	Anderson	7
+Larry Bart Stanley Jr.	/courts/circuit-criminal-chancery-courts/judges/larry-bart-stanley	Circuit Court Judge	Van Buren, Warren	31
+Mark S. Stapleton	/courts/circuit-criminal-chancery-courts/judges/mark-s-stapleton	Circuit Court Judge	Greene, Hamblen, Hancock, Hawkins	3
+Barry A. Steelman	/courts/judges/barry-steelman	Criminal Court Judge	Hamilton	11
+Deborah Stevens	/courts/circuit-criminal-chancery-courts/judges/deborah-c-stevens	Circuit Court Judge	Knox	6
+Melanie Taylor Jefferson	/courts/circuit-criminal-chancery-courts/judges/melanie-taylor-jefferson-0	Chancellor	Shelby	30
+D. Kelly Thomas Jr.	/courts/court-criminal-appeals/judges/d-kelly-thomas-jr-retired-2022	Criminal Court Judge	Knox	6
+Joe Thompson	/courts/circuit-criminal-chancery-courts/judges/joe-h-thompson	Circuit Court Judge	Sumner	18
+Lonnie Thompson	/courts/general-sessions-courts/judges/lonnie-thompson	Chancellor	Shelby	30
+Ronald Thurman	/courts/circuit-criminal-chancery-courts/judges/ronald-thurman	Chancellor	Putnam	13
+Barry Ross Tidwell	/courts/circuit-criminal-chancery-courts/judges/barry-tidwell	Circuit Court Judge	Rutherford	16
+Joseph Townsend	/courts/circuit-criminal-chancery-courts/judges/joe-townsend-0	Probate Court Judge	Shelby	30
+Ashleigh Travis	/courts/circuit-criminal-chancery-courts/judges/ashleigh-travis	Circuit Court Judge	Montgomery, Robertson	19
+Joshua C. Turnbow	/courts/circuit-criminal-chancery-courts/judges/joshua-c-turnbow	Circuit Court Judge	Cheatham, Dickson, Houston, Humphreys, Stewart	23
+James "Jimmy" Turner	/courts/circuit-criminal-chancery-courts/judges/james-turner	Circuit Court Judge	Rutherford, Cannon	16
+David Veile	/courts/circuit-criminal-chancery-courts/judges/david-veile	Circuit Court Judge	Williamson	21
+Zachary Walden	/courts/circuit-criminal-chancery-courts/judges/zachary-r-walden	Criminal Court Judge	Claiborne, Fentress, Campbell, Scott, Union	8
+Joel Wallace	/courts/circuit-criminal-chancery-courts/judges/joel-wallace	Circuit Court Judge	Montgomery, Robertson	19
+Larry J. Wallace	/courts/circuit-criminal-chancery-courts/judges/larry-j-wallace	Circuit Court Judge	Cheatham, Dickson, Houston, Humphreys, Stewart	23
+John F. Weaver	/courts/circuit-criminal-chancery-courts/judges/john-f-weaver	Chancellor	Knox	6
+Jeffery "Jeff" H. Wicks	/courts/judges/jeff-wicks	Criminal Court Judge	Loudon, Meigs, Morgan, Roane	9
+Stephanie J. Williams	/courts/circuit-criminal-chancery-courts/judges/stephanie-j-williams	Circuit Court Judge	Davidson	20
+Melissa Willis	/courts/circuit-criminal-chancery-courts/judges/melissa-thomas-willis	Chancellor	Franklin, Grundy, Bledsoe, Marion, Rhea, Sequatchie	12
+Howard W. Wilson	/courts/circuit-criminal-chancery-courts/judges/howard-w-wilson	Chancellor	Rutherford, Cannon	16
+David Wolfe	/courts/circuit-criminal-chancery-courts/judges/david-dee-wolfe	Circuit Court Judge	Cheatham, Dickson, Houston, Humphreys, Stewart	23
+Joseph "Woody" Woodruff	/courts/circuit-criminal-chancery-courts/judges/joseph-woodruff	Circuit Court Judge	Williamson	21
+Cedrick D. Wooten	/courts/circuit-criminal-chancery-courts/judges/cedrick-d-wooten-0	Circuit Court Judge	Shelby	30
+Marques T. Young	/courts/circuit-criminal-chancery-courts/judges/marques-t-young	Criminal Court Judge	Shelby	30

@@ -560,6 +560,24 @@ try {
           missing.length ? `${missing.length} of ${want.length} missing in: ${text.slice(0, 160)}` : `${want.length} shown`);
       }
     }
+    // 2a'. THE JUDICIAL CARD NAMES THE ANCHOR DISTRICT'S JUDGES from the
+    //      shipped file (read once by hand), with the date it was read.
+    //      The names sit behind a closed expander, so this reads textContent.
+    {
+      const id = "tn-judicial-district";
+      await cardText(page, id);
+      const got = await page.evaluate(async (d) => {
+        const r = await fetch("data/app/tn-trial-judges.json").then((x) => x.json());
+        const names = ((r[d] || {}).judges || []).map((j) => String(j.name));
+        const el = document.getElementById("card-tn-judicial-district");
+        const text = el ? el.textContent : "";
+        return { names: names, missing: names.filter((n) => !text.includes(n)),
+          dated: /directory listed for the district on \d{1,2} [A-Z][a-z]+ \d{4}/.test(text) };
+      }, EXPECT_DISTRICT[id]);
+      check(`${id} card names every judge the file lists for District ${EXPECT_DISTRICT[id]}, with the read date`,
+        got.names.length > 0 && got.missing.length === 0 && got.dated,
+        `${got.names.length} listed, ${got.missing.length} missing, dated ${got.dated}`);
+    }
     await context.close();
   }
 
