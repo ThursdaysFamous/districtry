@@ -149,6 +149,11 @@ TITLE_ALIASES = {
 LOCALITY_CORRECTIONS = {
     # unit code:  (locality as filed, locality to ship)
     "016/490/12": ("Norrideg", "Norridge"),      # Norridge Park District, 2026 filing
+    # Three library districts' 2026 filings, corrected on Adam's "fix" of
+    # 2026-11-25; each 2025 filing gave the locality shipped here.
+    "071/030/10": ("Julia Hull District Libra", "Stillman Valley"),  # library name in the city cell
+    "092/009/10": ("PO Box 99", "Oakwood"),      # Oakwood PLD, post-office box in the city cell
+    "051/030/10": ("LAWRENCECVILLE", "LAWRENCEVILLE"),  # Lawrence PLD, typo
 }
 
 SLOTS = 4                        # A Contact Person, B CEO, C CFO, D Purchasing Agent
