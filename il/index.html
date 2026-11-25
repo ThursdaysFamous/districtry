@@ -32104,8 +32104,10 @@ function initChiExplorer() {
             var feature = findFeatureContaining(results[0], point);
             if (!feature) return null;
             var district = findPropCI(feature.properties || {}, ["district"]);
-            var entry = district != null ? results[1][String(district)] : null;
-            return { seq: seq, district: district, entry: entry };
+            var roster = results[1];
+            var entry = district != null ? roster[String(district)] : null;
+            return { seq: seq, district: district, entry: entry,
+                     rosterLoaded: !!(roster && Object.keys(roster).length) };
           });
         },
         render: function (result) {
@@ -32113,7 +32115,7 @@ function initChiExplorer() {
           var wrap = cardEl("div", "card-flush");
           wrap.appendChild(renderBodyIntro({
             title: "Boone County Board",
-            note: boardCountNote(members.length, null)
+            note: withShortfall(boardCountNote(members.length, null), result)
           }));
           if (members.length) {
             wrap.appendChild(renderPersonRows(members.map(function (m) {
