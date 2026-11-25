@@ -1,6 +1,6 @@
 {
  "askedAbout": {},
- "readOn": "2026-10-27",
+ "readOn": "2026-11-24",
  "source": {
   "countyPages": "https://www.kycourts.gov/Courts/County-Information/Pages/<County>.aspx",
   "courtOfAppeals": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/default.aspx",
@@ -63,8 +63,9 @@
      {
       "court": "Court of Appeals",
       "division": 2,
-      "role": "Judge",
-      "vacant": true
+      "name": "Gregory A. Lay",
+      "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/3rd-Appellate-District-Division-2.aspx",
+      "role": "Judge"
      }
     ]
    },
@@ -91,7 +92,7 @@
      {
       "court": "Court of Appeals",
       "division": 1,
-      "name": "Will Moynahan",
+      "name": "Lucy A. VanMeter",
       "profileUrl": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/5th-Appellate-District-Division-1.aspx",
       "role": "Judge"
      },
@@ -416,8 +417,8 @@
      {
       "court": "Circuit Court",
       "division": 3,
-      "name": "Lucy A. VanMeter",
-      "role": "Judge"
+      "role": "Judge",
+      "vacant": true
      },
      {
       "court": "Circuit Court",
@@ -530,8 +531,8 @@
      {
       "court": "Circuit Court",
       "division": 1,
-      "name": "Gregory A. Lay",
-      "role": "Judge"
+      "role": "Judge",
+      "vacant": true
      },
      {
       "court": "Circuit Court",
@@ -1414,19 +1415,19 @@
       "court": "District Court",
       "division": 1,
       "name": "Ann Ruttle",
-      "role": "Chief District Judge"
+      "role": "Judge"
      },
      {
       "court": "District Court",
       "division": 2,
       "name": "Kenneth L. Easterling",
-      "role": "Judge"
+      "role": "Vice-Chief District Judge"
      },
      {
       "court": "District Court",
       "division": 3,
       "name": "Douglas J. Grothaus",
-      "role": "Vice-Chief District Judge"
+      "role": "Chief District Judge"
      }
     ]
    },
@@ -1702,11 +1703,6 @@
      {
       "court": "District Court",
       "name": "Lisa L. Langford",
-      "role": "Judge"
-     },
-     {
-      "court": "District Court",
-      "name": "Mary Jude Wolford",
       "role": "Judge"
      },
      {

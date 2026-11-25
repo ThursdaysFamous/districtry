@@ -108,13 +108,13 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (41 on 2026-11-18).
+# data/app/mo-commission-counties.json (43 on 2026-11-25).
 METRO_COUNTY_FIPS = (
-    "007", "011", "013", "017", "021", "029", "031", "037", "041", "043",
-    "051", "053", "057", "063", "065", "067", "089", "093", "109", "111",
-    "113", "115", "117", "119", "125", "127", "131", "143", "157", "161",
-    "167", "169", "173", "177", "185", "186", "195", "201", "217", "219",
-    "223",
+    "007", "011", "013", "017", "021", "029", "031", "037", "039", "041",
+    "043", "051", "053", "057", "063", "065", "067", "079", "089", "093",
+    "109", "111", "113", "115", "117", "119", "125", "127", "131", "143",
+    "157", "161", "167", "169", "173", "177", "185", "186", "195", "201",
+    "217", "219", "223",
 )
 STATE_FIPS = "29"
 # No dispatch entries: none of this instance's layers is county-dispatched
@@ -317,6 +317,7 @@ RING_COUNTIES = (
     "Camden",
     "Cape Girardeau",
     "Cass",
+    "Cedar",
     "Chariton",
     "Christian",
     "Cole",
@@ -325,6 +326,7 @@ RING_COUNTIES = (
     "DeKalb",
     "Dent",
     "Douglas",
+    "Grundy",
     "Howard",
     "Iron",
     "Lawrence",

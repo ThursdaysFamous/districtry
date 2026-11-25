@@ -759,6 +759,25 @@ RETURNS_ROSTERS = {
         # "For County Commissioner Seat A" and also "For Commissioner Seat D";
         # the letter is what identifies the seat, not the wording around it.
         "seat_pattern": r"Commissioner\s+Seat\s+([A-E])\b",
+        "contest_pattern": r"(County\s+Commissioner|Commissioner\s+Seat)\b",
+        # THE VENDOR RE-PUBLISHED ITS OLD UNION FILES AFTER THE 3 NOV 2026
+        # ELECTION and two of their seat labels changed (read 2026-11-25; the
+        # refresh last composed five on 2026-10-31). Keyed by election and the
+        # winner as printed; each value is the seat the COUNTY's own document
+        # gives, and an entry that stops matching a contest fails the run.
+        "seat_corrections": {
+            # Vendor now prints "SEAT E (6-YEAR TERM)". The county's own
+            # Official Ballot for 3 Nov 2020 (published by Clerk Lance
+            # Meisenheimer) prints "FOR COUNTY COMMISSIONER / SEAT B /
+            # (6-YEAR TERM)" over Bobby Toler Jr. and Darryl G. Harvell, and
+            # Seat B is the only commissioner contest on the 2026 ballot,
+            # which is when a seat filled in 2020 for six years comes up.
+            ("2020_ge", "DARRYL G. HARVELL"): "B",
+            # Vendor now prints "AT LARGE" with no letter. Until 2026-10-31 the
+            # same vendor file read "Seat C", and the other four seats are
+            # each held by another contest, so C is the only letter left.
+            ("2022_ge", "DAVID GOULD"): "C",
+        },
         "office": {
             "label": "Union County Courthouse",
             "address": "309 West Market Street, Jonesboro, IL 62952",
@@ -776,7 +795,9 @@ RETURNS_ROSTERS = {
         # because a re-elected member holds ONE seat, not two (James "Jim" Marlo
         # won in both 2018 and 2024, which is also what proves the six-year term).
         "seat_pattern": None,
-        "contest_pattern": r"For\s+County\s+Commissioner\b",
+        # Not anchored on "For": since Nov 2026 the vendor's 2022 file titles
+        # the contest plain "COUNTY COMMISSIONER".
+        "contest_pattern": r"\bCounty\s+Commissioner\b",
         "office": {
             "label": "Williamson County Courthouse",
             "address": "407 North Monroe Street, Marion, IL 62959",
@@ -1733,6 +1754,7 @@ def build_from_returns(key, spec, session, fail):
     seat_re = re.compile(spec["seat_pattern"], re.I) if spec.get("seat_pattern") else None
     contest_re = re.compile(spec.get("contest_pattern") or spec.get("seat_pattern"), re.I)
 
+    corrections = dict(spec.get("seat_corrections") or {})
     members = []
     by_seat = {}
     seen_names = set()
@@ -1740,6 +1762,13 @@ def build_from_returns(key, spec, session, fail):
     for slug in slugs:
         text, size = platinum_canvass.fetch_report(slug, spec["countyId"], session)
         if not text:
+            if slug == slugs[0]:
+                # A general held this year or last that the vendor does not carry:
+                # its winners take their seats in December and this roster cannot
+                # see them, so say so on every run rather than go quietly stale.
+                print("county-commissioners: WARN — %s: no %s canvass on %s; seats "
+                      "filled at that election are not read" % (key, slug,
+                      platinum_canvass.RESULTS_HOME), file=sys.stderr)
             continue
         name = platinum_canvass.county_name(text)
         if not name:
@@ -1752,32 +1781,43 @@ def build_from_returns(key, spec, session, fail):
         countywide = max((c["precincts"] or 0) for c in found) if found else 0
         read.append(slug)
         for contest in found:
-            if not contest_re.search(contest["title"]) or not contest["candidates"]:
+            # Since Nov 2026 the vendor's older files print the county's raw HTML
+            # inside a title ("<div><b>FOR COUNTY COMMISSIONER</b></div>...").
+            title = re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", " ", contest["title"])))
+            if not contest_re.search(title) or not contest["candidates"]:
                 continue
             # THE GATE: an at-large seat is voted in every precinct the canvass
             # reports for anything. A districted contest counts fewer.
             if not countywide or contest["precincts"] != countywide:
                 fail("%s: %r was counted in %s of %d precincts — that is a DISTRICT "
                      "contest, and this county is on the at-large County card"
-                     % (key, contest["title"][:60], contest["precincts"], countywide))
+                     % (key, title[:60], contest["precincts"], countywide))
             winner = contest["candidates"][0]
             election = "elected %s (certified canvass)" % slug[:4]
             if seat_re:
-                m = seat_re.search(contest["title"])
-                if not m:
-                    fail("%s: %r carries no seat letter" % (key, contest["title"][:60]))
-                seat = m.group(1).upper()
+                seat = corrections.pop((slug, winner["name"].upper()), None)
+                if not seat:
+                    m = seat_re.search(title)
+                    if not m:
+                        fail("%s: %r carries no seat letter" % (key, title[:60]))
+                    seat = m.group(1).upper()
                 if seat in by_seat:
                     continue                      # an older election for a seat already filled
                 by_seat[seat] = {"name": platinum_canvass.name_case(winner["name"]), "seat": "Seat " + seat,
                                  "party": winner["party"][:1], "since": int(slug[:4]),
                                  "districtSource": election}
             else:
-                if winner["name"] in seen_names or len(members) >= spec["expect"]:
+                # Case-blind: the vendor prints 2018's winner "James \"Jim\" Marlo"
+                # and 2024's "JAMES \"JIM\" MARLO" — one person, one seat.
+                if winner["name"].upper() in seen_names or len(members) >= spec["expect"]:
                     continue
-                seen_names.add(winner["name"])
+                seen_names.add(winner["name"].upper())
                 members.append({"name": platinum_canvass.name_case(winner["name"]), "party": winner["party"][:1],
                                 "since": int(slug[:4]), "districtSource": election})
+    stale = [k for k in corrections if k[0] in read]
+    if stale:
+        fail("%s: seat_corrections %r no longer match a contest winner; re-read "
+             "the vendor's file and drop or fix them" % (key, stale))
     if seat_re:
         members = [by_seat[k] for k in sorted(by_seat)]
     if len(members) != spec["expect"]:

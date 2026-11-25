@@ -6,14 +6,14 @@
     "name": "Kimi S. Bender",
     "party": "Democratic",
     "phone": "309-259-0402",
-    "seatNote": "Appointed 05/12/2026 — will run for full term in 12/2026",
-    "termExpires": 2026
+    "termExpires": 2030
    },
    {
     "email": "garlischfarms@gmail.com",
     "name": "Scott Garlisch",
     "party": "Republican",
     "phone": "217-414-8470",
+    "role": "Vice-Chairman",
     "termExpires": 2028
    },
    {
@@ -21,20 +21,20 @@
     "name": "Ronald Knollenberg",
     "party": "Republican",
     "phone": "217-482-5351",
+    "role": "Chairman",
     "termExpires": 2028
    },
    {
-    "email": "djhouse@casscomm.com",
-    "name": "Dorothy J. Kreiling",
+    "email": "dansleaford@gmail.com",
+    "name": "Daniel J. Sleaford",
     "party": "Republican",
-    "phone": "309-597-2124",
-    "role": "Vice-Chairman",
-    "termExpires": 2026
+    "phone": "309-657-2204",
+    "termExpires": 2030
    }
   ],
   "rosterPdf": "https://masoncountyil.gov/wp-content/uploads/2026/05/Board-Members-.pdf",
   "sourceUrl": "https://masoncountyil.gov/county-board/",
-  "transcribed": "2026-08-02"
+  "transcribed": "2026-11-25"
  },
  "2": {
   "members": [
@@ -47,11 +47,10 @@
    },
    {
     "email": "adamsarnes11@gmail.com",
-    "name": "Adam Sarnes",
+    "name": "Adam P. Sarnes",
     "party": "Democratic",
     "phone": "309-338-8319",
-    "seatNote": "Seat vacant 11/03/2025 — will run for full term in 2026",
-    "termExpires": 2026
+    "termExpires": 2030
    },
    {
     "email": "athomson.mcboard@gmail.com",
@@ -61,16 +60,15 @@
     "termExpires": 2028
    },
    {
-    "email": "kr44walker@gmail.com",
-    "name": "Kenneth Walker",
+    "email": "urish8@gmail.com",
+    "name": "Nicholas Urish",
     "party": "Democratic",
-    "phone": "309-360-1723",
-    "role": "Chairman",
-    "termExpires": 2026
+    "phone": "309-368-5251",
+    "termExpires": 2030
    }
   ],
   "rosterPdf": "https://masoncountyil.gov/wp-content/uploads/2026/05/Board-Members-.pdf",
   "sourceUrl": "https://masoncountyil.gov/county-board/",
-  "transcribed": "2026-08-02"
+  "transcribed": "2026-11-25"
  }
 }

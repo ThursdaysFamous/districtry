@@ -4423,10 +4423,15 @@ def tx_commissioners_courts(inst):
                   'target="_blank">%s</a>, in its file dated %s. '
                   % (esc(jlink), esc(TX_JUDGE_LABEL), esc(jdate))
                   if judge else "")
+        # readOnce: read by hand once, because the weekly check does not read
+        # that site (tx-county-commissioners-read-once.json)
         source += ('The commissioners: <a href="%s" rel="noopener" '
-                   'target="_blank">%s County\'s own website</a>, first read on '
-                   '%s and re-read every week.'
-                   % (esc(link), esc(name), esc(read)))
+                   'target="_blank">%s County\'s own website</a>, %s.'
+                   % (esc(link), esc(name),
+                      "read once on %s, because this project's weekly check does "
+                      "not read that site, and not re-read every week" % esc(read)
+                      if rec.get("readOnce") is True else
+                      "first read on %s and re-read every week" % esc(read)))
         entry = {"districts": districts, "extras": extras, "skipped": [],
                  "slug": county_slug(name), "at_large": False,
                  "source_file": path, "source_html": source,

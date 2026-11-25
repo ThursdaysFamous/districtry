@@ -56,8 +56,12 @@ clerks e-mailed, the same day, maps whose lines run along whole townships.
 And Livingston's clerk's office e-mailed, on 2026-10-26, and Lewis's on
 2026-11-18, maps whose lines run along whole townships, and Bollinger's, on
 2026-11-18, a map whose line splits one township through Marble Hill, traced
-from the page like Ste. Genevieve's.
-Those 41 are SOURCES below. The other 73 counties and the City of St. Louis are not
+from the page like Ste. Genevieve's. And Cedar's, on 2026-11-23, a township
+map whose line runs along whole townships. And Grundy's clerk listed, on
+2026-11-25, the townships and Trenton wards in each district, drawn like
+Saline's from TIGER's townships and, inside Trenton township, the 2020
+voting districts of the city's four wards.
+Those 43 are SOURCES below. The other 71 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -293,6 +297,29 @@ SOURCES = {
                 "Northern District": ["Marshall 3", "Marshall 4"],
                 "Southern District": ["Marshall 1", "Marshall 2"]}},
             "listed": "2026-10-23"},
+    # Grundy's county clerk (Courtney Campbell, the county's election
+    # authority) answered the letter on 2026-11-25 that no GIS file exists,
+    # listed the townships and Trenton wards in each district, and sent a
+    # page of a 2026 Mapping Solutions plat book, "Political Townships with
+    # Commissioners' Districts", kept out of this repository because it is
+    # that publisher's page (SHA-256 ea297fbe1046ac8a95f48338dfc356c6e36bd27b
+    # c7bb9e2a56786589cad82b8d). District 1: Taylor, Madison, Jefferson,
+    # Jackson and Wilson townships and Trenton Wards 1 and 4; District 2:
+    # Washington, Harrison, Franklin, Lincoln, Myers, Liberty and Marion
+    # townships and Trenton Wards 2 and 3. The roster prints First and Second
+    # District. Trenton township is not in her list because its precincts are
+    # the city's four wards: the Census's 2020 Trenton Ward 1-4 voting
+    # districts tile Trenton township, and the map's red line crosses it
+    # through the city as their line does. Trenton may have redrawn its wards
+    # since 2020, which this does not see.
+    "079": {"townships": {
+                "First District": ["Jackson", "Jefferson", "Madison", "Taylor", "Wilson"],
+                "Second District": ["Franklin", "Harrison", "Liberty", "Lincoln", "Marion",
+                                    "Myers", "Washington"]},
+            "precincts": {"Trenton": {
+                "First District": ["Trenton Ward 1", "Trenton Ward 4"],
+                "Second District": ["Trenton Ward 2", "Trenton Ward 3"]}},
+            "listed": "2026-11-25"},
     # Wayne's clerk's office answered on 2026-10-26 with a map of the county's
     # ten townships (a 2014 Mapping Solutions plat page, kept out of this
     # repository because it is that firm's work; SHA-256 5e415b83d49c7409ba
@@ -347,6 +374,30 @@ SOURCES = {
                 "Northern District": ["Canton", "Dickerson", "Lyon", "Reddish"],
                 "Southern District": ["Highland", "La Belle", "Salem", "Union"]},
             "sent": "2026-11-18"},
+    # Cedar's county clerk's voter registration office (the clerk is the
+    # county's election authority) answered the letter on 2026-11-23 with the
+    # Assessor's office's copy of the county's "Political Townships of Cedar
+    # County" map (marked "Copyright Cedar County, MO", so not kept here;
+    # SHA-256 80c95c75b8c3c0593181c376ddcb32f3ff7489f0260c4d0bf4393f491afe6501)
+    # with a red line drawn on it, marked Northern and Southern Commission.
+    # The same office wrote that day: "The Associate commissioners boundaries
+    # are the off set through the middle of the map", and that it had
+    # combined the Washington and Jefferson precincts, Madison and North Linn,
+    # and Box and Cedar. The map's typed labels put Washington north of the
+    # line and Washington-Jefferson south of it, so the combined precinct may
+    # lie on both sides; the line is drawn as the map draws it, and the card
+    # says it is not checked against election records. The line runs along
+    # township lines only: Box, Cedar and
+    # Washington north of it, Benton, Jefferson, Linn and Madison south of
+    # it, and the seven match TIGER's seven. Measured 2026-11-24 by lining
+    # the scan up with TIGER's county corners (an affine fit, eight corners,
+    # 104-291 m residuals): every red pixel inside the county lies within
+    # 456 m of TIGER's line between those townships (median 150 m), the
+    # line's step around Jefferson township included.
+    "039": {"townships": {
+                "Northern District": ["Box", "Cedar", "Washington"],
+                "Southern District": ["Benton", "Jefferson", "Linn", "Madison"]},
+            "sent": "2026-11-23"},
     # Livingston's clerk's office e-mailed, on 2026-10-26, a map of the
     # county's townships headed by its two commissioner districts, kept out
     # of this repository as the county's own record (SHA-256 18dd3a44de19

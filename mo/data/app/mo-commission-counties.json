@@ -87,6 +87,17 @@
   "spreadPct": 11.0,
   "unplaced2020": 0
  },
+ "29039": {
+  "county": "Cedar County",
+  "people2020": {
+   "Northern District": 7380,
+   "Southern District": 6808
+  },
+  "read": "2026-11-24",
+  "source": "townships",
+  "spreadPct": 8.1,
+  "unplaced2020": 0
+ },
  "29041": {
   "county": "Chariton County",
   "people2020": {
@@ -173,6 +184,17 @@
   "read": "2026-10-30",
   "source": "townships",
   "spreadPct": 15.7,
+  "unplaced2020": 0
+ },
+ "29079": {
+  "county": "Grundy County",
+  "people2020": {
+   "First District": 4395,
+   "Second District": 5413
+  },
+  "read": "2026-11-25",
+  "source": "listed",
+  "spreadPct": 20.8,
   "unplaced2020": 0
  },
  "29089": {

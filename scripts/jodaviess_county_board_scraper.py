@@ -68,6 +68,7 @@ import sys
 import time
 
 import requests
+from city_councils import cf_decode  # noqa: E402
 from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
     require_robots_once,
     UA_ROSTER_BOT,
@@ -120,10 +121,15 @@ LINK_RE = re.compile(
     r'(.*?)</a>', re.S | re.I)
 MEMBER_URL = BASE + "/m/directory/employee?eid=%s"
 # "LaDon Trost (R), Chair" / "Lynn L. Gallagher (D)" — name, party, role.
-NAME_RE = re.compile(r"^(.*?)\s*\(([RD])\)\s*(?:,\s*(.+))?$")
+# Party optional since 2026-11-21: the county prints Sabrina Schultz-McClain
+# with no letter, and a letter the county does not print is not ours to add.
+NAME_RE = re.compile(r"^(.*?)\s*(?:\(([RD])\))?\s*(?:,\s*(.+))?$")
 TERM_RE = re.compile(r"Term:?\s*(\d{4})\s*(?:to|[-–])\s*(\d{4})", re.I)
 DISTRICT_RE = re.compile(r"District\s+(\d+)\s*[:–-]", re.I)
 EMAIL_RE = re.compile(r'id="staff-email".*?mailto:\s*([^"?\s>]+)', re.S | re.I)
+# Since 2026-11 Cloudflare rewrites the mailto into an email-protection href.
+EMAIL_DIV_RE = re.compile(r'id="staff-email".*?</div>', re.S | re.I)
+CF_HREF_RE = re.compile(r'email-protection#([0-9a-fA-F]+)')
 PHONE_RE = re.compile(r'id="staff-phone".*?</div>', re.S | re.I)
 PHONE_NUM_RE = re.compile(r"\d{3}-\d{3}-\d{4}")
 DIR_TITLE_RE = re.compile(
@@ -186,9 +192,14 @@ def parse_board_page(page):
             sys.exit(1)
         rec = {"district": district,
                "name": nm.group(1).strip(),
-               "party": nm.group(2),
                "eid": int(link.group(2)),
                "url": MEMBER_URL % link.group(2)}
+        if not rec["name"]:
+            print("jodaviess-scraper: FAIL — member label %r carries no name"
+                  % label, file=sys.stderr)
+            sys.exit(1)
+        if nm.group(2):
+            rec["party"] = nm.group(2)
         if nm.group(3):
             rec["role"] = nm.group(3).strip()
         if term_str:
@@ -223,6 +234,11 @@ def enrich_from_directory(rec):
     email = EMAIL_RE.search(page)
     if email:
         rec["email"] = html.unescape(email.group(1)).strip()
+    else:
+        div = EMAIL_DIV_RE.search(page)
+        cf = CF_HREF_RE.search(div.group(0)) if div else None
+        if cf:
+            rec["email"] = cf_decode(cf.group(1))
     phseg = PHONE_RE.search(page)
     if phseg:
         phone = PHONE_NUM_RE.search(phseg.group(0))

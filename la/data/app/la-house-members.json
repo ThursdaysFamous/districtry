@@ -985,7 +985,7 @@
     "party": "Democratic",
     "email": "hse083@legis.la.gov",
     "districtOffice": [
-      "6641 Westbank Expwy.",
+      "6641 Westbank Expy.",
       "Suite D",
       "Marrero, LA 70072",
       "(504) 349-8788"
@@ -1086,10 +1086,16 @@
     "url": "https://house.louisiana.gov/H_Reps/members.aspx?ID=91"
   },
   "92": {
-    "vacant": true,
-    "vacantWhy": "The Louisiana House of Representatives lists this seat as vacant on its members page.",
-    "sourceUrl": "https://house.louisiana.gov/H_Reps/H_Reps_FullInfo",
-    "asOf": "2026-10-20"
+    "name": "Gregory W. Carroll",
+    "party": "Democratic",
+    "email": "hse092@legis.la.gov",
+    "districtOffice": [
+      "1800 Williams Blvd.",
+      "Suite D",
+      "Kenner, LA 70062",
+      "(504) 465-3479"
+    ],
+    "url": "https://house.louisiana.gov/H_Reps/members.aspx?ID=92"
   },
   "93": {
     "name": "Alonzo L. Knox",
@@ -1122,7 +1128,7 @@
     "districtOffice": [
       "P. O. Box 1354",
       "Livingston, LA 70754",
-      "225-686-7500"
+      "(225) 686-7500"
     ],
     "url": "https://house.louisiana.gov/H_Reps/members.aspx?ID=95"
   },

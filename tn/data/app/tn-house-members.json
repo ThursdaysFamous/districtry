@@ -6,10 +6,7 @@
     "url": "https://tnhousegop.org/members/representative-john-crawford/"
   },
   "2": {
-    "name": "Bud Hulsey",
-    "party": "Republican",
-    "email": "rep.bud.hulsey@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H2"
+    "name": "Gart Stidham"
   },
   "3": {
     "name": "Timothy Hill",
@@ -42,10 +39,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H7"
   },
   "8": {
-    "name": "Jerome Moon",
-    "party": "Republican",
-    "email": "rep.jerome.moon@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H8"
+    "name": "Jordan Henderson"
   },
   "9": {
     "name": "Gary Hicks",
@@ -60,10 +54,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H10"
   },
   "11": {
-    "name": "Jeremy Faison",
-    "party": "Republican",
-    "email": "rep.jeremy.faison@capitol.tn.gov",
-    "url": "https://tnhousegop.org/members/representative-jeremy-faison/"
+    "name": "Kenny Cody"
   },
   "12": {
     "name": "Fred Atchley",
@@ -72,10 +63,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H12&ga=114"
   },
   "13": {
-    "name": "Robert Stevens",
-    "party": "Republican",
-    "email": "rep.robert.stevens@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H13"
+    "name": "Brett Windrow"
   },
   "14": {
     "name": "Jason Zachary",
@@ -102,10 +90,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H17"
   },
   "18": {
-    "name": "Elaine Davis",
-    "party": "Republican",
-    "email": "rep.elaine.davis@capitol.tn.gov",
-    "url": "https://tnhousegop.org/members/representative-elaine-davis/"
+    "name": "Bryan Goldberg"
   },
   "19": {
     "name": "Dave Wright",
@@ -180,16 +165,10 @@
     "url": "https://tnhousegop.org/members/representative-esther-helton-haynes/"
   },
   "31": {
-    "vacant": true,
-    "vacantWhy": "The Tennessee Legislature's own district map, published on the state's TNMap service, lists this seat as vacant.",
-    "sourceUrl": "https://tnmap.tn.gov/arcgis/rest/services/ADMINISTRATIVE_BOUNDARIES/LEGISLATIVE_DISTRICTS/MapServer/1/query?where=DISTRICT%3D%2731%27&outFields=DISTRICT%2CNAME&returnGeometry=false&f=json",
-    "asOf": "2026-10-10"
+    "name": "Andy J Swafford"
   },
   "32": {
-    "name": "Monty Fritts",
-    "party": "Republican",
-    "email": "rep.monty.fritts@capitol.tn.gov",
-    "url": "https://tnhousegop.org/members/representative-monty-fritts/"
+    "name": "Jack L Stockton"
   },
   "33": {
     "name": "Rick Scarbrough",
@@ -198,10 +177,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H33"
   },
   "34": {
-    "name": "Tim Rudd",
-    "party": "Republican",
-    "email": "rep.tim.rudd@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H34"
+    "name": "Owen Farnsworth"
   },
   "35": {
     "name": "William Slater",
@@ -210,10 +186,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H35"
   },
   "36": {
-    "name": "Dennis Powers",
-    "party": "Republican",
-    "email": "rep.dennis.powers@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H36"
+    "name": "Noah Smith"
   },
   "37": {
     "name": "Charlie Baum",
@@ -264,10 +237,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H44"
   },
   "45": {
-    "name": "Johnny Garrett",
-    "party": "Republican",
-    "email": "rep.johnny.garrett@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H45"
+    "name": "Brian Stewart"
   },
   "46": {
     "name": "Clark Boyd",
@@ -288,10 +258,7 @@
     "url": "https://tnhousegop.org/members/representative-bryan-terry/"
   },
   "49": {
-    "name": "Mike Sparks",
-    "party": "Republican",
-    "email": "rep.mike.sparks@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H49"
+    "name": "Connie Casha"
   },
   "50": {
     "name": "Bo Mitchell",
@@ -348,10 +315,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H58"
   },
   "59": {
-    "name": "Caleb Hemmer",
-    "party": "Democratic",
-    "email": "rep.caleb.hemmer@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H59"
+    "name": "Mark Proctor"
   },
   "60": {
     "name": "Shaundelle Brooks",
@@ -444,10 +408,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H74"
   },
   "75": {
-    "name": "Michael Lankford",
-    "party": "Republican",
-    "email": "rep.michael.lankford@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H75"
+    "name": "Allie Phillips"
   },
   "76": {
     "name": "Tandy Darby",
@@ -462,10 +423,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H77"
   },
   "78": {
-    "name": "Mary Littleton",
-    "party": "Republican",
-    "email": "rep.mary.littleton@capitol.tn.gov",
-    "url": "https://tnhousegop.org/members/representative-mary-littleton/"
+    "name": "Perry Kennan"
   },
   "79": {
     "name": "Brock Martin",
@@ -474,16 +432,10 @@
     "url": "https://tnhousegop.org/members/representative-brock-martin/"
   },
   "80": {
-    "name": "Johnny Shaw",
-    "party": "Democratic",
-    "email": "rep.johnny.shaw@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H80"
+    "name": "Andrea Bond Johnson"
   },
   "81": {
-    "name": "Debra Moody",
-    "party": "Republican",
-    "email": "rep.debra.moody@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H81"
+    "name": "Brett A Giannini"
   },
   "82": {
     "name": "Chris Hurt",
@@ -498,10 +450,7 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H83"
   },
   "84": {
-    "vacant": true,
-    "vacantWhy": "The Tennessee Legislature's own district map, published on the state's TNMap service, lists this seat as vacant.",
-    "sourceUrl": "https://tnmap.tn.gov/arcgis/rest/services/ADMINISTRATIVE_BOUNDARIES/LEGISLATIVE_DISTRICTS/MapServer/1/query?where=DISTRICT%3D%2784%27&outFields=DISTRICT%2CNAME&returnGeometry=false&f=json",
-    "asOf": "2026-10-10"
+    "name": "Matthew Szalaj"
   },
   "85": {
     "name": "Jesse Chism",
@@ -552,10 +501,7 @@
     "url": "https://tnhousegop.org/members/representative-todd-warner/"
   },
   "93": {
-    "name": "T. J. Hardaway",
-    "party": "Democratic",
-    "email": "rep.tj.hardaway@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/LegislatorInfo/Member?district=H93"
+    "name": "John Bradley"
   },
   "94": {
     "name": "Ron M. Gant",
@@ -570,16 +516,10 @@
     "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H95"
   },
   "96": {
-    "name": "Gabby Salinas",
-    "party": "Democratic",
-    "email": "rep.gabby.salinas@capitol.tn.gov",
-    "url": "https://wapp.capitol.tn.gov/apps/legislatorinfo/member.aspx?district=H96&ga=114"
+    "name": "Telisa Franklin"
   },
   "97": {
-    "name": "John Gillespie",
-    "party": "Republican",
-    "email": "rep.john.gillespie@capitol.tn.gov",
-    "url": "https://tnhousegop.org/members/representative-john-gillespie/"
+    "name": "Jesse Huseth"
   },
   "98": {
     "name": "Antonio Parkinson",

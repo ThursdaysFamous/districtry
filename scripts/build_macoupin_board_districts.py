@@ -7,41 +7,53 @@ WHY THIS COUNTY WAS STUCK, AND WHAT UNSTUCK IT. The gap record said the county
 publishes district maps a person can read and no data behind them, and that
 was true of every channel it had checked: the Socrata portal
 (data.macoupincountyil.gov, 61 assets, precincts and school districts only) and
-the Clerk's Map Room (PDFs). Re-checked 2026-10-15, the county ALSO publishes an
-ArcGIS Online service, GIS_Layers, owned by the county's own account
-(`acoe_macoupin`), behind its public property map at macoupin-il.bhamaps.com.
-Its layer 3, "Board Districts", is nine polygons keyed `boarddistrict` 1-9, last
-edited 2026-09. The item carries no licence text and the map's print template
-reads "(c) Macoupin County, 2024"; nothing restricts reuse or display.
+the Clerk's Map Room (PDFs). Re-checked 2026-10-15, the county ALSO publishes
+boundaries in ArcGIS Online, owned by its own account (`acoe_macoupin`), behind
+its public property map at macoupin-il.bhamaps.com. The item carries no licence
+text and the map's print template reads "(c) Macoupin County, 2024"; nothing
+restricts reuse or display.
+
+THE LAYER MOVED, AND THE OLD ONE WAS THE PRE-2022 MAP (2026-11-25). Until
+2026-11-16 the source was GIS_Layers layer 3, "Board Districts". On 2026-11-16
+the county deleted that service and published Macoupin_Reference_Boundaries,
+whose layer 2, "County Board Districts", is nine polygons keyed `BoardDistr`
+"District 1" .. "District 9". Districts 1, 2, 7, 8 and 9 are the same shapes
+(areas equal to within 50 square feet); 3, 4, 5 and 6 are not, and the
+difference is exactly the change Ordinance O-2021.06 made to the 2012-2021 map,
+as the Clerk's redistricting page states it: District 3 loses Shipman 2 to
+District 6, and District 4 loses Cahokia 1 and 4 to District 5 and gains
+Cahokia 5. So the deleted layer still drew the 2012-2021 lines on that edge,
+and from 2026-10-15 to this rebuild the app showed 1,337 people (Census 2020)
+in the wrong district. Three readings confirm the new layer is the adopted
+plan: the Clerk's Map Room PDFs of Districts 3, 4 and 5 (dated 11/15/21 and
+11/19/21) draw the same lines; the county's 3 November 2026 results put every
+vote cast in current Cahokia 1 in the District 5 race and none of Cahokia 2's
+in it; and the Citizen's Guide (January 2025) list below now agrees on Cahokia
+too.
 
 THREE WITNESSES, none of which is the layer itself:
 
   1. THE CENSUS 2020 VOTING DISTRICTS NEST IN IT. Ordinance O-2021.06 (passed
      18-0 on 9 Nov 2021) writes the plan in the 2005-2021 precinct lines, and
      the Census 2020 voting districts ARE that fabric: every one of the 61 lies
-     in exactly one of the county's nine polygons (the worst at 98.8% of its
+     in exactly one of the county's nine polygons (the worst at 99.6% of its
      area, the rest edge slivers between two independently digitised
      linework sets). That composition is pinned below as VTD_COMPOSITION and
      re-measured on every run, so a redraw of the county's layer fails here.
   2. THE COUNTY'S OWN PRECINCT LIST AGREES. The Citizen's Guide to Macoupin
      County (macoupincountyil.gov, January 2025) lists each district's current
      precincts: Staunton 1-4 in District 1, Bunker Hill 1-3, Dorchester and
-     Hilyard in 2, Brighton 1-3 and "Eastern Half of Shipman" in 3, and so on.
-     Overlaid on the county's current precinct layer (layer 4), 41 of its 45
-     precincts fall wholly in the district the Guide lists, Shipman divides
-     east/west between 3 and 6 as the Guide says, and Girard 1 and 2 divide
-     between 7 and 9, which the Guide writes "Portion of Girard 1 & 2". The one
-     difference is CAHOKIA: the Guide lists current Cahokia 1 in District 5 and
-     Cahokia 2 in 4, while the layer runs the line through both. The ordinance
-     explains it — the line follows the OLD Cahokia precincts (old 1, 2 and 4
-     in District 4; old 3 and 5 in 5, exactly as witness 1 measures), which the
-     county has since re-drawn — so the Guide's list is the coarse statement
-     and the layer is the line. Measured once, not re-run: the Guide is a PDF
-     and witness 1 already pins the same composition.
+     Hilyard in 2, Brighton 1-3 and "Eastern Half of Shipman" in 3, Cahokia 2
+     in 4, Cahokia 1 in 5, and so on. Overlaid on the county's current
+     precinct layer (layer 3 of the same service), Cahokia 1 and 2 each fall
+     wholly in the district the Guide lists, Shipman divides between 3 and 6
+     as the Guide says, and Girard 1 and 2 divide between 7 and 9, which the
+     Guide writes "Portion of Girard 1 & 2". Measured once, not re-run: the
+     Guide is a PDF and witness 1 already pins the same composition.
   3. THE POPULATIONS ADD UP TO THE PERSON. The county's 2020 population,
      44,967, is placed exactly once across the nine districts, and each
      district's block sum equals its voting districts' sum exactly. The spread
-     is +10.6% to -6.3% of the 4,996 ideal, which is the plan as drawn and is
+     is +10.6% to -6.8% of the 4,996 ideal, which is the plan as drawn and is
      printed rather than smoothed.
 
 The geometry ships UNSIMPLIFIED (6,215 vertices) at six decimals, so the
@@ -55,6 +67,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -76,31 +89,34 @@ EXPECT_DISTRICTS = 9
 SEATS_PER_DISTRICT = 2
 
 LAYER_URL = ("https://services.arcgis.com/LYDdxoqTV7fw9teL/arcgis/rest/services/"
-             "GIS_Layers/FeatureServer/3")
-SOURCE_LABEL = ("Macoupin County GIS, Board Districts (GIS_Layers layer 3), "
-                "plan of Ordinance O-2021.06")
-# The layer's own Shape__Area per district (square metres, Web Mercator), as
-# shipped 2026-10-15. The weekly roster job re-reads these without geometry and
+             "Macoupin_Reference_Boundaries/FeatureServer/2")
+KEY_FIELD = "BoardDistr"
+SOURCE_LABEL = ("Macoupin County GIS, County Board Districts "
+                "(Macoupin_Reference_Boundaries layer 2), plan of Ordinance O-2021.06")
+# The layer's own Shape__Area per district (in the service's own units, which
+# measure as square feet), as shipped 2026-11-25. The weekly roster job re-reads these without geometry and
 # fails when any moves, which is the cheapest way to see a redraw: a change to
 # a district's line changes its area. A redraw that moved a line and kept every
 # area to the square metre would pass, and nothing cheaper can see it.
-DISTRICT_AREAS = {"1": 509224873, "2": 3027856527, "3": 1814710089,
-                  "4": 1276693943, "5": 1270599452, "6": 9285804008,
-                  "7": 1862872288, "8": 863699733, "9": 4278424939}
+DISTRICT_AREAS = {"1": 509224874, "2": 3027856528, "3": 1524607856,
+                  "4": 667675155, "5": 1879618241, "6": 9575906241,
+                  "7": 1862872290, "8": 863699685, "9": 4278424983}
 
-# Census 2020 voting districts by district, as measured 2026-10-15. Each must
+# Census 2020 voting districts by district, as measured 2026-11-25 (Shipman 2,
+# Cahokia 1, 4 and 5 moved from the 2026-10-15 reading of the deleted layer). Each must
 # put at least MIN_NEST of its area in the district named here.
 VTD_COMPOSITION = {
     "1": ["STAUNTON 1", "STAUNTON 2", "STAUNTON 3", "STAUNTON 4", "STAUNTON 5"],
     "2": ["BUNKER HILL 1", "BUNKER HILL 2", "BUNKER HILL 3", "DORCHESTER 1",
           "DORCHESTER 2", "HILLYARD"],
-    "3": ["BRIGHTON 1", "BRIGHTON 2", "BRIGHTON 3", "SHIPMAN 1", "SHIPMAN 2"],
-    "4": ["CAHOKIA 1", "CAHOKIA 2", "CAHOKIA 4", "MT. OLIVE 1", "MT. OLIVE 2",
+    "3": ["BRIGHTON 1", "BRIGHTON 2", "BRIGHTON 3", "SHIPMAN 1"],
+    "4": ["CAHOKIA 2", "CAHOKIA 5", "MT. OLIVE 1", "MT. OLIVE 2",
           "MT. OLIVE 3", "MT. OLIVE 4", "MT. OLIVE 5", "MT. OLIVE 6"],
-    "5": ["CAHOKIA 3", "CAHOKIA 5", "GILLESPIE 1", "GILLESPIE 2", "GILLESPIE 3",
-          "GILLESPIE 4", "GILLESPIE 5", "GILLESPIE 6"],
+    "5": ["CAHOKIA 1", "CAHOKIA 3", "CAHOKIA 4", "GILLESPIE 1", "GILLESPIE 2",
+          "GILLESPIE 3", "GILLESPIE 4", "GILLESPIE 5", "GILLESPIE 6"],
     "6": ["BARR", "BIRD", "CHESTERFIELD", "NORTH PALMYRA", "POLK", "SCOTTVILLE",
-          "SHIPMAN 3", "SOUTH OTTER", "SOUTH PALMYRA", "WESTERN MOUND"],
+          "SHIPMAN 2", "SHIPMAN 3", "SOUTH OTTER", "SOUTH PALMYRA",
+          "WESTERN MOUND"],
     "7": ["GIRARD 1", "NORTH OTTER", "VIRDEN 1", "VIRDEN 2", "VIRDEN 3", "VIRDEN 4"],
     "8": ["CARLINVILLE 2", "CARLINVILLE 3", "CARLINVILLE 4", "CARLINVILLE 5",
           "CARLINVILLE 6"],
@@ -108,18 +124,31 @@ VTD_COMPOSITION = {
           "NILWOOD 2", "SHAWS POINT"],
 }
 EXPECT_VTDS = 61
-# The worst measured share was 0.9879 (Cahokia 5); 0.98 is the floor below it.
+# The worst measured share was 0.9879 on the deleted layer (2026-10-15) and is
+# 0.996 on its replacement (2026-11-25, Cahokia 5); 0.98 stays the floor.
 MIN_NEST = 0.98
-# Census block population by district, measured 2026-10-15 from the shipped
+# Census block population by district, measured 2026-11-25 from the shipped
 # population file. Re-asserted exactly; a moved line moves people.
-EXPECT_POP = {"1": 5526, "2": 5288, "3": 4864, "4": 4695, "5": 5231,
-              "6": 4705, "7": 4861, "8": 5116, "9": 4681}
+EXPECT_POP = {"1": 5526, "2": 5288, "3": 4655, "4": 4857, "5": 5069,
+              "6": 4914, "7": 4861, "8": 5116, "9": 4681}
+# Two points the deleted pre-2022 layer put in Districts 4 and 3 and the
+# adopted plan puts in 5 (Cahokia 1) and 6 (Shipman 2), so a build from a
+# stale copy of the old lines fails here.
+SENTINELS = {(39.13129, -89.72776): "5", (39.11348, -90.11859): "6"}
 # Districts against the Census 2020 county outline. The county's own linework
 # and TIGER's differ by a hairline band (0.028% of the county, measured).
 MAX_OVERLAP_M2 = 50.0
 MIN_COVERED = 0.995
 
 fail = make_fail("macoupin-board")
+
+
+def district_key(value):
+    """'District 4' -> '4'; anything else comes back unchanged and fails the
+    caller's key check."""
+    text = str(value or "").strip()
+    match = re.match(r"^District\s+(\d+)$", text)
+    return match.group(1) if match else text
 
 
 def fetch_districts():
@@ -129,7 +158,7 @@ def fetch_districts():
                         label="il-build-macoupin-board-districts")
     import requests
     resp = requests.get(url, headers=UA_HEADERS_ROSTER_BOT, timeout=90, params={
-        "where": "1=1", "outFields": "boarddistrict", "returnGeometry": "true",
+        "where": "1=1", "outFields": KEY_FIELD, "returnGeometry": "true",
         "outSR": "4326", "f": "geojson"})
     resp.raise_for_status()
     data = resp.json() or {}
@@ -162,7 +191,7 @@ def main():
 
     districts = {}
     for f in fetch_districts():
-        key = str((f.get("properties") or {}).get("boarddistrict") or "").strip()
+        key = district_key((f.get("properties") or {}).get(KEY_FIELD))
         if key not in VTD_COMPOSITION:
             fail("the county layer carries a district keyed %r" % key)
         if key in districts:
@@ -219,6 +248,12 @@ def main():
 
     # The app's own even-odd test, on the rounded output.
     V.verify_point_in_rings(VTD_COMPOSITION, vtds, features, point_in_rings, fail)
+    for (lat, lng), want in SENTINELS.items():
+        got = [f["properties"]["district"] for f in features
+               if point_in_rings(lat, lng, V.rings_of(f["geometry"]))]
+        if got != [want]:
+            fail("%.5f,%.5f lands in %s, the adopted plan puts it in District %s"
+                 % (lat, lng, got or "no district", want))
 
     payload = {"type": "FeatureCollection", "features": features}
     ideal = COUNTY_POP_2020 / float(EXPECT_DISTRICTS)

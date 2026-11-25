@@ -38,3 +38,26 @@ rests on the selector and the Comptroller's map alone.
 **THE DISTRICT PAGES ALSO NAME EACH DISTRICT ATTORNEY GENERAL** (the 21st's
 reads "Stacey B. Edmonson, 21st District Attorney General"). The court layer
 does not carry them yet; that is gap `tn-judicial-district-officers`.
+
+## The judges (read 2026-11-25)
+
+Three more files are what `tn/scripts/build_tn_trial_judges.py` reads to name
+each district's circuit, chancery, criminal and probate judges in
+`tn/data/app/tn-trial-judges.json`. tncourts.gov still answers this project's
+reader with a managed challenge, so on Adam's yes of 2026-11-25 the first two
+were read ONCE by hand in his own Chrome, where no check page appeared; no
+script reads that site.
+
+| file | what it is |
+|---|---|
+| `tncourts-trial-judges-2026-11-25.tsv` | the courts' judge directory, all 28 pages, kept to its four trial-court types: 174 rows as printed. |
+| `tncourts-notices-2026-11-25.tsv` | the courts' own notices that show seven of those rows hold no district seat (four retirements, the prior holders of two seats declared vacant, a senior judge), with the sentences relied on. |
+| `nashville-trial-courts-judges-2026-11-25.txt` | Nashville's own trial courts' list of its judges, read with this project's reader: the control the 20th District must equal. |
+
+**THE DIRECTORY LAGS THE COURTS' OWN NOTICES**, which is why it is corrected and
+not shipped as read, and **A NOTICE TAKES A NAME OUT AND NEVER PUTS ONE IN**:
+three people appointed in 2025 are missing from the directory, and Nashville's
+page lacks two of them as well, because an appointee stands at the next August
+election and may not have won it. Both are data-publishing hurdles: the state's
+own list of its trial judges is not kept current, and its site turns away
+automated readers.

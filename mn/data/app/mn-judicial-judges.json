@@ -1,0 +1,1272 @@
+{
+ "1": {
+  "judges": [
+   {
+    "name": "Christopher Jon Lehmann",
+    "role": "Chief Judge",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Charles Webber",
+    "role": "Assistant Chief Judge",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "Christopher D. Bates",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Douglas C. Bayley",
+    "chambers": "Goodhue County"
+   },
+   {
+    "name": "Ryan J. Bies",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Patrick M. Biren",
+    "chambers": "Goodhue County"
+   },
+   {
+    "name": "Eric J. Braaten",
+    "chambers": "Carver County"
+   },
+   {
+    "name": "Jamie L. Cork",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Amber R. Donley",
+    "chambers": "Sibley County"
+   },
+   {
+    "name": "Dannia L. Edwards",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Bryce A.D. Ehrman",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Martin S. Fallon",
+    "chambers": "Carver County"
+   },
+   {
+    "name": "Patrick Goggins",
+    "chambers": "Le Sueur County"
+   },
+   {
+    "name": "Stacey E. Sorensen Green",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Kathryn Iverson",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Adam Johnson",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Lauren M. Johnson",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "Colleen G. King",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "David Lutz",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Zachary Lyngaas",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "Jessica J.W. Maher",
+    "chambers": "McLeod County"
+   },
+   {
+    "name": "Krista M. Marks",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Michael J. Mayer",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Cynthia L. McCollum",
+    "chambers": "Carver County"
+   },
+   {
+    "name": "Luis Morales",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Tanya O. O’Brien",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Ann M. Offermann",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Tracy Perzel",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Matthew Schmidt",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Kelly A. Staples",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Tori K. Stewart",
+    "chambers": "Goodhue County"
+   },
+   {
+    "name": "Paula D. Vraa",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "Richelle M. Wahi",
+    "chambers": "Dakota County"
+   },
+   {
+    "name": "Michael D. Wentzell",
+    "chambers": "Carver County"
+   },
+   {
+    "name": "Christian S. Wilton",
+    "chambers": "Scott County"
+   },
+   {
+    "name": "Jody L. Winters",
+    "chambers": "McLeod County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "2": {
+  "judges": [
+   {
+    "name": "Sara Grewing",
+    "role": "Chief Judge",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Kelly L. Olmstead",
+    "role": "Assistant Chief Judge",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Wesley J Abrahamson",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Jessica Bierwerth",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "David C. Brown",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Timothy Carey",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Leonardo Castro",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Kellie M. Charles",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Victoria Gardner",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Thomas A. Gilligan, Jr.",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Andrew Gordon",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "DeAnne M. Hilgers",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Mark Ireland",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Veena Iyer",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Jacob Kraus",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Richard H. Kyle Jr.",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Maria Mitchell",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Timothy Mulrooney",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Laura Nelson",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Edward Sheu",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Stephen L. Smith",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Nicole J. Starr",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Stacy Deery Stennes",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Jennifer Verdeja",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Sophia Y. Vuelo",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Devona L. Wells",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Adam C. Yang",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "Der Yang",
+    "chambers": "Ramsey County"
+   },
+   {
+    "name": "P. Paul Yang",
+    "chambers": "Ramsey County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "3": {
+  "judges": [
+   {
+    "name": "Christine A. Long",
+    "role": "Chief Judge",
+    "chambers": "Rice County"
+   },
+   {
+    "name": "Christa M. Daily",
+    "role": "Assistant Chief Judge",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Jacob C. Allen",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Karie M. Anderson",
+    "chambers": "Rice County"
+   },
+   {
+    "name": "Joseph A. Bueltel",
+    "chambers": "Steele County"
+   },
+   {
+    "name": "Nancy Buytendorp",
+    "chambers": "Winona County"
+   },
+   {
+    "name": "Jeremy Clinefelter",
+    "chambers": "Fillmore County"
+   },
+   {
+    "name": "Karen R. Duncan",
+    "chambers": "Steele County",
+    "note": "The Governor's office announced on November 6, 2026 that this judge is retiring. Applications for the seat opened the same day."
+   },
+   {
+    "name": "Erin Lindhart Felten",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Debra A. Groehler",
+    "chambers": "Dodge County"
+   },
+   {
+    "name": "Carol M. Hanks",
+    "chambers": "Waseca County"
+   },
+   {
+    "name": "Lisa R. Hayne",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Christy Hormann",
+    "chambers": "Freeborn County"
+   },
+   {
+    "name": "Jeffrey M. Johnson",
+    "chambers": "Rice County"
+   },
+   {
+    "name": "Pamela A. W. King",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Jeffrey M. Kritzer",
+    "chambers": "Mower County"
+   },
+   {
+    "name": "Ross Leuning",
+    "chambers": "Freeborn County",
+    "note": "The Governor appointed Holli Mayer on March 10, 2026 to replace this judge."
+   },
+   {
+    "name": "Dwight Luhmann",
+    "chambers": "Winona County"
+   },
+   {
+    "name": "Natalie S. Martinez",
+    "chambers": "Mower County"
+   },
+   {
+    "name": "Christopher A. Neisen",
+    "chambers": "Wabasha County"
+   },
+   {
+    "name": "Kevin H. Siefken",
+    "chambers": "Mower County"
+   },
+   {
+    "name": "Christina K. Stevens",
+    "chambers": "Olmsted County"
+   },
+   {
+    "name": "Carmaine M. Sturino",
+    "chambers": "Houston County"
+   },
+   {
+    "name": "Kathy M. Wallace",
+    "chambers": "Olmsted County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "4": {
+  "judges": [
+   {
+    "name": "Kerry W. Meyer",
+    "role": "Chief Judge",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Mark J. Kappelhoff",
+    "role": "Assistant Chief Judge",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Julie E. Allyn",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Jamie Anderson",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Anna Andow",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Shereen M. Askalani",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Luis A. Bartolomei",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Theresa E. Bea",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Nicole Blissenbach",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Gina M. Brandt",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Michael K. Browne",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Jean E. Burdorf",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Susan N. Burke",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Michael E. Burns",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Sean P. Cahill",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Marta M. Chou",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Thomas J. Conley",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Lois Regnier Conroy",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Theresa Couri",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Dean C. Eyler",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Todd M. Fellman",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Matthew Frank",
+    "chambers": "Hennepin County",
+    "note": "The Governor appointed Peter Goss on October 30, 2026 to replace this judge."
+   },
+   {
+    "name": "Emily J. Froehle",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Carrie Ryan Gallia",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Tamara Garcia",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Michelle A. Hatcher",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Melissa J. Houghtaling",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Juan G. Hoyos",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Sarah Hudleston",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Rachel Hughey",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Karen A. Janisch",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Lisa K. Janzen",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Joseph R. Klein",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Julia Dayton Klein",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "William H. Koch",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Carolina A. Lamas",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "John Lucas",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Francis Magill",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Bruce D. Manning",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Kristen Marttila",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Jane Maschka",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Dominick D. Mathews",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Mariam Mokri",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Daniel C. Moreno",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Jennifer L. Olson",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Nelson Peralta",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Jeannice M. Reding",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Patrick D. Robben",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Colette Routel",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Christian M. Sande",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Paul R. Scoggin",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Bridget Ann Sullivan",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Rachna Sullivan",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Laura Thomas",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Andrew Tweeten",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Maximillia Utley",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Sarah S. West",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Matt Wilcox",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Angela Willms",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Sydnee N. Woods",
+    "chambers": "Hennepin County"
+   },
+   {
+    "name": "Terri D. Yellowhammer",
+    "chambers": "Hennepin County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "5": {
+  "judges": [
+   {
+    "name": "Darci J. Bentz",
+    "role": "Chief Judge",
+    "chambers": "Jackson County"
+   },
+   {
+    "name": "Troy G. Timmerman",
+    "role": "Assistant Chief Judge",
+    "chambers": "Faribault County"
+   },
+   {
+    "name": "Gregory Anderson",
+    "chambers": "Blue Earth County",
+    "note": "The Governor appointed Aaron Zurek on September 23, 2026 to replace this judge."
+   },
+   {
+    "name": "Mark E. Betters",
+    "chambers": "Blue Earth County"
+   },
+   {
+    "name": "Jeremy Blackwelder",
+    "note": "Appointed by the Governor on September 23, 2026. The court's directory does not list this judge yet."
+   },
+   {
+    "name": "Susan DeVos",
+    "chambers": "Blue Earth County"
+   },
+   {
+    "name": "Michelle A. Dietrich",
+    "chambers": "Lyon County"
+   },
+   {
+    "name": "Robert A. Docherty",
+    "chambers": "Brown County"
+   },
+   {
+    "name": "Stephen J. Ferrazzano II",
+    "chambers": "Watonwan County"
+   },
+   {
+    "name": "Paul J. Gunderson",
+    "chambers": "Nicollet County"
+   },
+   {
+    "name": "Sherry Haley",
+    "chambers": "Nobles County"
+   },
+   {
+    "name": "Kayla M. Johnson",
+    "chambers": "Pipestone County"
+   },
+   {
+    "name": "Andrea Lieser",
+    "chambers": "Blue Earth County"
+   },
+   {
+    "name": "Stefanie L. Menning",
+    "chambers": "Nicollet County"
+   },
+   {
+    "name": "Patrick Rohland",
+    "chambers": "Redwood County"
+   },
+   {
+    "name": "Michael D. Trushenski",
+    "chambers": "Martin County"
+   },
+   {
+    "name": "Kristine Weeks",
+    "chambers": "Blue Earth County"
+   },
+   {
+    "name": "Christina M. Wietzema",
+    "chambers": "Cottonwood County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "6": {
+  "judges": [
+   {
+    "name": "Rachel C. Sullivan",
+    "role": "Chief Judge",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Theresa M. Neo",
+    "role": "Assistant Chief Judge",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Michelle M. Anderson",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Leslie E. Beiers",
+    "chambers": "St. Louis County",
+    "note": "The Governor appointed Vicky Wanta on November 6, 2026 to replace this judge."
+   },
+   {
+    "name": "Jill Eichenwald",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Jessica J. Fralich",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Robert C. Friday",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Steven B. Hanke",
+    "chambers": "Lake County"
+   },
+   {
+    "name": "Nicole L. Hopps",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Nathan LaCoursiere",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Amy E. Lukasavitz",
+    "chambers": "Carlton County"
+   },
+   {
+    "name": "Bhupesh Pattni",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Shawn L. Pearson",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Andrew R. Peterson",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Shawn B. Reed",
+    "chambers": "St. Louis County"
+   },
+   {
+    "name": "Rebekka Stumme",
+    "chambers": "Carlton County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "7": {
+  "judges": [
+   {
+    "name": "Michael D. Fritz",
+    "role": "Chief Judge",
+    "chambers": "Becker County"
+   },
+   {
+    "name": "Shan C. Wang",
+    "role": "Assistant Chief Judge",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Sharon Grewell Benson",
+    "chambers": "Otter Tail County"
+   },
+   {
+    "name": "Timothy M. Churchwell",
+    "chambers": "Douglas County"
+   },
+   {
+    "name": "Douglas B. Clark",
+    "chambers": "Wadena County"
+   },
+   {
+    "name": "Michelle L. Clark",
+    "chambers": "Douglas County"
+   },
+   {
+    "name": "Leah J. duCharme",
+    "chambers": "Clay County"
+   },
+   {
+    "name": "Matthew E. Engelking",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Luke T. Godzala",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Mark J. Herzing",
+    "chambers": "Mille Lacs County"
+   },
+   {
+    "name": "Heidi Hovis",
+    "chambers": "Todd County"
+   },
+   {
+    "name": "Johnathan Judd",
+    "chambers": "Otter Tail County"
+   },
+   {
+    "name": "Michelle Winkis Lawson",
+    "chambers": "Becker County"
+   },
+   {
+    "name": "Michael D. Leeser",
+    "chambers": "Clay County"
+   },
+   {
+    "name": "Meriel Lester",
+    "chambers": "Morrison County"
+   },
+   {
+    "name": "Mary B. Mahler",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Tammy L. Merkins",
+    "chambers": "Clay County"
+   },
+   {
+    "name": "Kevin M. Miller",
+    "chambers": "Otter Tail County"
+   },
+   {
+    "name": "Laura Moehrle",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Andrew Pearson",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Matthew M. Quinn",
+    "chambers": "Mille Lacs County"
+   },
+   {
+    "name": "Robert J. Raupp",
+    "chambers": "Benton County"
+   },
+   {
+    "name": "Jade M. Rosenfeldt",
+    "chambers": "Clay County"
+   },
+   {
+    "name": "Karl Schmidt",
+    "chambers": "Benton County"
+   },
+   {
+    "name": "Heidi E. Schultz",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Gretchen D. Thilmony",
+    "chambers": "Becker County"
+   },
+   {
+    "name": "Ole Tvedten",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Laura Welle",
+    "chambers": "Mille Lacs County"
+   },
+   {
+    "name": "Nathaniel Welte",
+    "chambers": "Stearns County"
+   },
+   {
+    "name": "Antoinette C. Wetzel",
+    "chambers": "Morrison County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "8": {
+  "judges": [
+   {
+    "name": "Rodney C. Hanson",
+    "role": "Chief Judge",
+    "chambers": "Kandiyohi County"
+   },
+   {
+    "name": "Laurence J. Stratton",
+    "role": "Assistant Chief Judge",
+    "chambers": "Renville County"
+   },
+   {
+    "name": "Stephanie L. Beckman",
+    "chambers": "Meeker County"
+   },
+   {
+    "name": "Amy J. Doll",
+    "chambers": "Grant County"
+   },
+   {
+    "name": "John P Fitzgerald",
+    "chambers": "Kandiyohi County"
+   },
+   {
+    "name": "Keith Helgeson",
+    "chambers": "Yellow Medicine County"
+   },
+   {
+    "name": "Melissa J. Listug",
+    "chambers": "Pope County"
+   },
+   {
+    "name": "Benjamin Pieh",
+    "chambers": "Chippewa County"
+   },
+   {
+    "name": "Stephen J. Wentzell",
+    "chambers": "Kandiyohi County"
+   },
+   {
+    "name": "Allison T. Whalen",
+    "chambers": "Swift County"
+   },
+   {
+    "name": "Benjamin R Wilcox",
+    "chambers": "Stevens County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "9": {
+  "judges": [
+   {
+    "name": "Jana M. Austad",
+    "role": "Chief Judge",
+    "chambers": "Cass County"
+   },
+   {
+    "name": "Matti Adam",
+    "role": "Assistant Chief Judge",
+    "chambers": "Beltrami County"
+   },
+   {
+    "name": "Patricia Alander Aanes",
+    "chambers": "Crow Wing County"
+   },
+   {
+    "name": "Jeanine R. Brand",
+    "chambers": "Beltrami County"
+   },
+   {
+    "name": "Heidi M. Chandler",
+    "chambers": "Itasca County"
+   },
+   {
+    "name": "Kristine R. DeMay",
+    "chambers": "Crow Wing County"
+   },
+   {
+    "name": "Seamus P. Duffy",
+    "chambers": "Mahnomen County"
+   },
+   {
+    "name": "Michael P. Grover",
+    "chambers": "Roseau County"
+   },
+   {
+    "name": "Charles D. Halverson",
+    "chambers": "Crow Wing County"
+   },
+   {
+    "name": "Corey A. Harbott",
+    "chambers": "Polk County"
+   },
+   {
+    "name": "Daniel M. Hawley",
+    "chambers": "Aitkin County"
+   },
+   {
+    "name": "David F. Hermerding",
+    "chambers": "Crow Wing County"
+   },
+   {
+    "name": "Annie P. Claesson-Huseby",
+    "chambers": "Beltrami County"
+   },
+   {
+    "name": "Max W. Schafer-LaCoursiere",
+    "chambers": "Marshall County"
+   },
+   {
+    "name": "Kathryn Lorsbach",
+    "chambers": "Hubbard County"
+   },
+   {
+    "name": "Matthew Mallie",
+    "chambers": "Crow Wing County"
+   },
+   {
+    "name": "Sarah L. McBroom",
+    "chambers": "Itasca County"
+   },
+   {
+    "name": "John G. Melbye",
+    "chambers": "Beltrami County"
+   },
+   {
+    "name": "Eric Schieferdecker",
+    "chambers": "Clearwater County"
+   },
+   {
+    "name": "Jerrod Shermoen",
+    "chambers": "Koochiching County"
+   },
+   {
+    "name": "Christopher J. Strandlie",
+    "chambers": "Cass County"
+   },
+   {
+    "name": "Symon Schindler-Syme",
+    "chambers": "Polk County"
+   },
+   {
+    "name": "Kimberly A. Wimmer",
+    "chambers": "Itasca County"
+   },
+   {
+    "name": "Tamara L. Yon",
+    "chambers": "Pennington County"
+   }
+  ],
+  "notes": [],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ },
+ "10": {
+  "judges": [
+   {
+    "name": "Elizabeth H. Strand",
+    "role": "Chief Judge",
+    "chambers": "Wright County"
+   },
+   {
+    "name": "Sean C. Gibbs",
+    "role": "Assistant Chief Judge",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Madelyn A. Adams",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Jennifer S. Bovitz",
+    "chambers": "Sherburne County"
+   },
+   {
+    "name": "Helen R. Brosnahan",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Suzanne M. Brown",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Brianne J. Buccicone",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Justin M. Collins",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Michele A. Davis",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Carrie Doom",
+    "chambers": "Isanti County"
+   },
+   {
+    "name": "Bridgid E. Dowdal",
+    "chambers": "Chisago County"
+   },
+   {
+    "name": "Jacob Fischmann",
+    "chambers": "Kanabec County"
+   },
+   {
+    "name": "Patrick W. Flanagan",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Kathryn A. Fodness",
+    "chambers": "Chisago County"
+   },
+   {
+    "name": "Juanita C. Freeman",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Gregory G. Galler",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Stacy St George",
+    "note": "Appointed by the Governor on May 22, 2026. The court's directory does not list this judge yet."
+   },
+   {
+    "name": "Francis Green III",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Sheridan Hawley",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Stoney L. Hiljus",
+    "chambers": "Pine County"
+   },
+   {
+    "name": "John D. Klossner",
+    "chambers": "Isanti County"
+   },
+   {
+    "name": "Thomas R. Lehmann",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Tricia Loehr",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Karin L. McCarthy",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Catherine McPherson",
+    "chambers": "Wright County"
+   },
+   {
+    "name": "Siv Mjanger",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Kevin J. Mueller",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Jennifer D. Peterson",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Laura A. Pietan",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Heather Pipenhagen",
+    "chambers": "Sherburne County"
+   },
+   {
+    "name": "Melissa Saterbak",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Todd R. Schoffelman",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Karen B. Schommer",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Jesse L. Seabrooks II",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Nathan Sosinski",
+    "chambers": "Wright County"
+   },
+   {
+    "name": "Jennifer L. Stanfield",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Kristi D. Stanislawski",
+    "chambers": "Sherburne County"
+   },
+   {
+    "name": "Jason R. Steffen",
+    "chambers": "Pine County"
+   },
+   {
+    "name": "Dyanna L. Street",
+    "chambers": "Anoka County"
+   },
+   {
+    "name": "Geoffrey W. Tenney",
+    "chambers": "Wright County"
+   },
+   {
+    "name": "Catherine Trevino",
+    "chambers": "Chisago County"
+   },
+   {
+    "name": "Kari Willis",
+    "chambers": "Wright County"
+   },
+   {
+    "name": "Viet-Hanh Winchell",
+    "chambers": "Washington County"
+   },
+   {
+    "name": "Heather M. Wynn",
+    "chambers": "Pine County"
+   }
+  ],
+  "notes": [
+   "One seat is vacant: John A. Bowen left it on appointment to the Minnesota Court of Appeals. The Commission on Judicial Selection recommended candidates to the Governor on November 2, 2026.",
+   "Rebecca A. Waxse won seat 38 on November 3, 2026 and takes office on January 4, 2027."
+  ],
+  "read": "2026-11-25",
+  "sourceUrl": "https://mncourts.gov/about-the-courts/judicialdirectory"
+ }
+}

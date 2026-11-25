@@ -24,14 +24,14 @@
     },
     "ALPHA PARK LBRY DIST (Dist # 062)": {
       "comptrollerCode": "072/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
           "name": "Amy Harris",
           "role": "Director"
         },
         {
-          "email": "Aliesha@alphapark.org",
+          "email": "aliesha@alphapark.org",
           "name": "Aliesha Sullivan",
           "role": "Manager"
         }
@@ -202,7 +202,7 @@
         }
       ],
       "comptrollerCode": "072/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "library",
       "office": {
         "address": "302 S First St",
@@ -407,7 +407,7 @@
       }
     }
   },
-  "generated": "2026-11-16T00:34:51Z",
+  "generated": "2026-11-23T01:16:56Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

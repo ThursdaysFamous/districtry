@@ -111,11 +111,12 @@ EXPECT_SEATS = 447
 # Seats the results files name nobody for, with the reason. An entry that
 # becomes named, or a new unnamed seat with no entry, fails the build — so
 # this table cannot rot in either direction.
+# Swift|2 retired 2026-11-25: the 3 Nov 2026 results name its winner.
 KNOWN_UNNAMED = {
-    "Swift|2": "no contest for this district appears in any results file "
-                  "the Secretary of State published since the 2022 general",
     "Kanabec|2": "won by write-in votes in the 2024 general (measured "
                  "2026-10-06); the results name write-ins only as WRITE-IN",
+    "Murray|4": "won by write-in votes in the 2026 general (measured "
+                "2026-11-25); the results name write-ins only as WRITE-IN",
 }
 MIN_NAMED = EXPECT_SEATS - len(KNOWN_UNNAMED)
 

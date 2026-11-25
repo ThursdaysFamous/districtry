@@ -42,7 +42,10 @@
    "name": "Mike Chaney",
    "url": "https://www.mid.ms.gov/",
    "headers": "browser",
-   "note": "www.mid.ms.gov closed the connection on our token and served a browser on 2026-11-10."
+   "note": "www.mid.ms.gov closed the connection on our token and served a browser on 2026-11-10. Since 2026-11-19 the home page names him only as \"Commissioner Chaney\".",
+   "match": [
+    "Commissioner Chaney"
+   ]
   }
  ]
 }

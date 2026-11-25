@@ -20,8 +20,8 @@ the City of St. Louis, Census TIGERweb, the state outline the lighter wash cover
 governing body and its other elected officers), **U.S. House** (8 districts, TIGERweb geometry
 joined to the public-domain unitedstates/congress-legislators roster), **Missouri Senate** and
 **Missouri House** (34 and 163 districts, the state's own maps of the 2022 plans joined to each
-chamber's own publications), **County Commission District** (`county-commissioner`, 82 districts
-in the 41 counties whose own published maps, files or clerks give the lines, joined to the County card's roster),
+chamber's own publications), **County Commission District** (`county-commissioner`, 86 districts
+in the 43 counties whose own published maps, files or clerks give the lines, joined to the County card's roster),
 the TIGERweb fabric, drawn and answered from tile files this site serves (`scripts/mirror_tiger_tiles.py`) — **Township** (`county-subdivision`, 1,394,
 shown under the County layer), **City, Town or Village** (`municipality`, 947), **School District
 (Unified)** (445), **School District (Elementary)** (71) and **ZIP Code** — and three nearest-N layers
@@ -82,7 +82,7 @@ two commission districts are drawn by its commission "without dividing municipal
 (RSMo 49.010), and no statewide map of them was found. Townships are not a substitute: tested
 against three counties' own maps on 2026-10-21, Franklin's twelve townships fall whole inside its
 districts, while Buchanan splits 2 of 12 and Clay 2 of 7. Since 2026-10-23 the County Commission
-District layer draws 41 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
+District layer draws 43 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
 21 from the commissioner district layer of the county's own map viewer, Cole from MidMO GIS's
 download, Lawrence from its posted map, whose line runs along whole townships drawn from TIGER, and Cass
 from the shapefile its GIS office e-mailed on 2026-10-23 (kept as sent in `mo/data/source/raw/`, held
@@ -98,10 +98,14 @@ district joined to the roster's seat by name. Since 2026-11-18 it also draws Liv
 clerks' offices e-mailed on 2026-10-26 and 2026-11-18, whose lines run along whole townships, drawn from TIGER's
 townships, and Bollinger, from the plat page its clerk's office e-mailed on 2026-11-18, whose line splits Lorance
 township through Marble Hill and was traced from the page onto Census blocks (`mo/data/source/bollinger-commission-blocks.json`;
-the scans are not committed, only their SHA-256 in the builder). **The card says the line is not checked against the
+the scans are not committed, only their SHA-256 in the builder). Since 2026-11-24 it also draws Cedar, from the township
+map its clerk's voter registration office e-mailed on 2026-11-23, whose red line runs along whole townships,
+drawn from TIGER's townships. Since 2026-11-25 it also draws Grundy, from its clerk's list of the townships and
+Trenton wards in each district, sent with a plat page whose red line follows them, drawn from TIGER's townships and,
+inside Trenton township, the Census Bureau's 2020 Trenton Ward 1-4 voting districts, which tile it. **The card says the line is not checked against the
 county's election records**, because no viewer dates its lines and Missouri sets no redistricting
 date; the Secretary of State's per-jurisdiction precinct reports (SUN0000590, not ordered) would be
-that check. The layer hides in the other 73 counties and the City of St. Louis, which stay in gap
+that check. The layer hides in the other 71 counties and the City of St. Louis, which stay in gap
 `mo-county-commission-district-lines`; a county joins when its own map proves the lines.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 445 unified and 71 elementary

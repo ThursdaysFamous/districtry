@@ -362,6 +362,13 @@ def build_chamber(chamber, pages, previous, today):
         url = SITE + row["path"]
         member_page = pages.get("%s/%s.html" % (cfg["path"].lower(),
                                                 row["path"].rsplit("/", 1)[1]), url)
+        tm = TITLE_RE.search(member_page)
+        if tm and re.match(r"^District \d+: Vacant$", clean(tm.group(1))):
+            # The Legislature's own page for the seat says vacant (Senate 6, Nov 2026).
+            seats[district] = vacancy("%s's page for this seat reads Vacant." % cfg["body"],
+                                      url, previous, district, today)
+            notes.append("%s: the seat's page reads Vacant, shipped as vacant" % where)
+            continue
         member = {"name": member_name(chamber, member_page, row, where)}
         if row["party"]:
             member["party"] = row["party"]

@@ -161,6 +161,15 @@ def main():
     print("  %d officer address(es) taken off as given beside two people, "
           "in this roster's filings or another's" % shared_mail)
 
+    # A LIBRARY'S OWN SITE KEEPS ITS BOARD WHERE IT NAMES MORE OF IT than the
+    # filing does (Adam, 2026-11-25, "fix"): Auburn's FY2025 filing names one
+    # trustee and its own page, read 2026-11-02, names all five. The filing
+    # still supplies the office and the appointed officers; only its board
+    # comes off, so the trustees file and the card keep the fuller list and no
+    # library carries two boards. If the site stops naming more, the filing's
+    # board returns on the next run.
+    keep_fuller_site_boards(libraries)
+
     _, where = shipped_cards(statewide_library_counties())
     cards = sum(len(where.get(name) or []) for name in libraries)
     orphans = sorted(name for name in libraries if not where.get(name))
@@ -278,6 +287,7 @@ def main():
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)
+    hand_off_trustees({n for n, r in libraries.items() if (r or {}).get("board")})
     print("build-il-library-district-officials: wrote %s — %d librar(ies) on %d "
           "card(s), %d board officer(s), %d appointed, %d with an office, %d "
           "with a telephone, %d officer(s) with their own telephone (%d with a "
@@ -287,6 +297,42 @@ def main():
              with_phone, officer_phones["withPhone"],
              officer_phones["withSecond"], officer_emails["withEmail"],
              library_lines))
+
+
+def keep_fuller_site_boards(libraries):
+    path = os.path.join(APP_DIR, "il-library-trustees.json")
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as fh:
+        site = json.load(fh).get("libraries") or {}
+    for name in sorted(libraries):
+        record = libraries[name]
+        filed = (record or {}).get("board") or []
+        named = (site.get(name) or {}).get("board") or []
+        if filed and len(named) > len(filed):
+            del record["board"]
+            print("  kept the site's board: %s's own page names %d, its filing "
+                  "%d" % (name, len(named), len(filed)))
+
+
+def hand_off_trustees(filed):
+    """A library that starts filing leaves the website-read trustees file in
+    the same run (Auburn, 2026-11-15): the filing is the better source, and
+    validate_index fails while both name a board."""
+    path = os.path.join(APP_DIR, "il-library-trustees.json")
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as fh:
+        site = json.load(fh)
+    gone = sorted(n for n in site.get("libraries") or {} if n in filed)
+    if not gone:
+        return
+    for name in gone:
+        del site["libraries"][name]
+        print("  handed off: %s now files a board, removed from %s"
+              % (name, os.path.basename(path)))
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(json.dumps(site, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
 
 
 if __name__ == "__main__":
