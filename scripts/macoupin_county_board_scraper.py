@@ -41,8 +41,10 @@ scraper sends: measured 2026-10-15, the list, text and robots requests all
 answer this token in full (the list 595 KB, the same bytes a browser string
 gets). The robots.txt read uses the same headers.
 
-THE TRIPWIRE re-reads the county's Board Districts layer (GIS_Layers layer 3)
-without geometry: its nine `boarddistrict` keys and each one's Shape__Area,
+THE TRIPWIRE re-reads the county's County Board Districts layer
+(Macoupin_Reference_Boundaries layer 2 since 2026-11-25; the GIS_Layers service
+it replaced was deleted 2026-11-16) without geometry: its nine `BoardDistr`
+keys and each one's Shape__Area,
 which the builder compares against what shipped.
 
 Usage:
@@ -62,6 +64,9 @@ from macoupin_municipal_officials_scraper import (  # noqa: E402  (one reader of
     AT_LARGE_LEGEND, AT_LARGE_LEGEND_KEY, DETAIL_PAUSE, DETAIL_URL, LIST_URL,
     OFFICIALS_PAGE, TEXT_URL, election_year, strip_jsonp,
 )
+from build_macoupin_board_districts import (  # noqa: E402  (one layer, one address)
+    KEY_FIELD, LAYER_URL, district_key,
+)
 from scraper_common import (  # noqa: E402  (shared machinery -- do not fork)
     UA_HEADERS_ROSTER_BOT,
     make_fail,
@@ -79,8 +84,7 @@ CHAIR_DISTRICT = "Appointed County Officers"
 CHAIR_TITLE = "Macoupin County Board Chair"
 SEAT_TITLE = re.compile(r"^Board Member District (\d+)$")
 
-LAYER_QUERY = ("https://services.arcgis.com/LYDdxoqTV7fw9teL/arcgis/rest/services/"
-               "GIS_Layers/FeatureServer/3/query")
+LAYER_QUERY = LAYER_URL + "/query"
 
 
 def get(url, params=None):
@@ -169,14 +173,14 @@ def read_second_emails(seats):
 
 
 def read_layer():
-    data = get(LAYER_QUERY, {"where": "1=1", "outFields": "boarddistrict,Shape__Area",
+    data = get(LAYER_QUERY, {"where": "1=1", "outFields": KEY_FIELD + ",Shape__Area",
                              "returnGeometry": "false", "f": "json"}).json() or {}
     if data.get("error"):
         fail("the county's Board Districts layer answered an error: %r" % data["error"])
     out = {}
     for feat in data.get("features") or []:
         attrs = feat.get("attributes") or {}
-        key = str(attrs.get("boarddistrict") or "").strip()
+        key = district_key(attrs.get(KEY_FIELD))
         if key in out:
             fail("the Board Districts layer carries district %r twice" % key)
         out[key] = attrs.get("Shape__Area")

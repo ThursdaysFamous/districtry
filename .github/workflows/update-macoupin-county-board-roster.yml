@@ -15,7 +15,8 @@ name: Update Macoupin County Board roster
 #    that record, which also carries the holder's residence, is read.
 #
 # 2. THE REDISTRICTING TRIPWIRE. The shipped boundary is the county's own Board
-#    Districts layer (GIS_Layers layer 3) as it stood on 2026-10-15. The same run
+#    County Board Districts layer (Macoupin_Reference_Boundaries layer 2) as it
+#    stood on 2026-11-25, which replaced the deleted GIS_Layers layer 3. The same run
 #    re-reads that layer's nine districts and each one's area, without geometry,
 #    and FAILS if any has moved. A red run here means the county redrew its
 #    districts and build_macoupin_board_districts.py must be re-run and its
