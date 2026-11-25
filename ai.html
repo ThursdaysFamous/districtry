@@ -624,10 +624,17 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       check fails any new script that skips this step, and an older script that does not do it
       yet is recorded until it is fixed. A captcha or other challenge is never worked around. An
       agent checking a source by hand follows the same rules.</p>
-    <p>There is one exception. To find the contact address of a government office for a letter,
+    <p>There are two exceptions. To find the contact address of a government office for a letter,
       an agent may read pages that robots.txt asks automated readers to skip. It keeps nothing
       from them except the address it puts in the letter, and it still never gets past a
       captcha.</p>
+    <p>Second, since 25 November 2026, when a government or tribal site turns automated readers
+      away and a piece of public information is missing here because of it, an agent may open
+      that site's public page once in the project owner's own web browser, the way a person
+      would, and read it. That includes pages robots.txt asks automated readers to skip, and
+      pages that show a browser check which clears by itself. The agent stops at any captcha,
+      any check that asks for a click, and any page that says access is denied. No weekly script
+      reads a site this way.</p>
   </section>
 
   <section>
