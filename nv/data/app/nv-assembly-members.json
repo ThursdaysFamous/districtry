@@ -2,6 +2,7 @@
   "1": {
     "name": "Alexis E. Esparza",
     "party": "Democratic",
+    "email": "alexis.esparza@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8509"
@@ -9,8 +10,9 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/1"
   },
   "2": {
-    "name": "Kamilah Bywaters",
+    "name": "Kamilah A. Bywaters",
     "party": "Democratic",
+    "email": "kamilah.bywaters@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8827"
@@ -18,20 +20,15 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/2"
   },
   "3": {
-    "name": "Selena Torres-Fossett",
-    "party": "Democratic",
-    "email": "Selena.Torres@asm.state.nv.us",
-    "phone": "work (725) 333-6325",
-    "capitolOffice": [
-      "Room 4114",
-      "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
-      "(775) 684-8599"
-    ],
-    "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/3"
+    "vacant": true,
+    "vacantWhy": "The Nevada Assembly's page for this seat reads Vacant.",
+    "sourceUrl": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/3",
+    "asOf": "2026-11-25"
   },
   "4": {
     "name": "Eileen Eady",
     "party": "Democratic",
+    "email": "eileen.eady@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8829"
@@ -62,8 +59,9 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/6"
   },
   "7": {
-    "name": "Cameron \"C.H.\" Miller",
+    "name": "C.H. Miller",
     "party": "Democratic",
+    "email": "ch.miller@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8587"
@@ -85,6 +83,7 @@
   "9": {
     "name": "Ryan Hampton",
     "party": "Democratic",
+    "email": "ryan.hampton@asm.state.nv.us",
     "phone": "work (702) 670-2405",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
@@ -127,8 +126,9 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/12"
   },
   "13": {
-    "name": "Daniel Andrews",
+    "name": "Daniel J. Andrews",
     "party": "Democratic",
+    "email": "daniel.andrews@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8853"
@@ -150,6 +150,7 @@
   "15": {
     "name": "Miguel Dávila",
     "party": "Democratic",
+    "email": "miguel.davila@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8835"
@@ -191,7 +192,7 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/18"
   },
   "19": {
-    "name": "Jason Patchett",
+    "name": "Jason B. Patchett",
     "party": "Republican",
     "email": "jason.patchett@asm.state.nv.us",
     "capitolOffice": [
@@ -225,19 +226,19 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/21"
   },
   "22": {
-    "name": "Melissa R. Hardy",
-    "party": "Republican",
-    "email": "Melissa.Hardy@asm.state.nv.us",
+    "name": "Shenea Booth",
+    "party": "Democratic",
+    "email": "shenea.booth@asm.state.nv.us",
     "capitolOffice": [
-      "Room 3105D",
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8823"
     ],
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/22"
   },
   "23": {
-    "name": "Denise D. Fanning",
+    "name": "Denise Daniels Fanning",
     "party": "Republican",
+    "email": "denise.fanning@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8503"
@@ -303,6 +304,8 @@
   "29": {
     "name": "Alex J. Pereszlenyi",
     "party": "Democratic",
+    "email": "alex.pereszlenyi@asm.state.nv.us",
+    "phone": "work (702) 577-6391",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8855"
@@ -368,6 +371,7 @@
   "35": {
     "name": "Joe Spica",
     "party": "Democratic",
+    "email": "joe.spica@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8573"
@@ -420,8 +424,9 @@
     "url": "https://www.leg.state.nv.us/App/Legislator/A/Assembly/Current/39"
   },
   "40": {
-    "name": "Julie A. Butler",
+    "name": "Julie Butler",
     "party": "Republican",
+    "email": "julie.butler@asm.state.nv.us",
     "phone": "work (775) 230-6587",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
@@ -432,6 +437,7 @@
   "41": {
     "name": "Vinny Spotleson",
     "party": "Democratic",
+    "email": "vinny.spotleson@asm.state.nv.us",
     "capitolOffice": [
       "Mail during session: c/o Nevada Assembly, 401 South Carson Street, Carson City, NV 89701-4747",
       "(775) 684-8821"
