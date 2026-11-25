@@ -36,10 +36,12 @@ NOT PUBLISHED ANYWHERE THIS PROJECT CAN READ — platinum returns an empty
 one-page PDF for Adams for 2022 (and for 2021 and 2023), Clarity 404s the
 county outright, and the county's own results page is behind the same WAF as
 its board page. So this pipeline names ONE of each district's three members and
-says so on the card. It is deliberately built to notice if that changes: the
-scraper fetches the 2022 slug every run, and reports it as EMPTY rather than
-skipping it, so the day the county backfills it the weekly run surfaces
-fourteen new members instead of silently continuing to ship seven.
+says so on the card. The November 2026 general refilled those fourteen seats,
+and the vendor does not carry it either (Adams has published nothing there
+since its 2025 consolidated; measured 2026-11-25), so the scraper fetches the
+2026 slug every run and reports it as NOT PUBLISHED rather than skipping it:
+the day the county publishes it there, the weekly run surfaces fourteen new
+members instead of silently continuing to ship seven.
 
 SEAT COUNT IS NOT PRINTED IN A GENERAL CANVASS and is therefore never assumed.
 Where the county prints "(Vote for not more than N)" that N is parsed. Where it
@@ -77,7 +79,14 @@ RESULTS_HOME = "https://platinumelectionresults.com/history"
 # currently returns an empty file for it — see the module docstring.
 SEATING_ELECTIONS = [
     {"slug": "2024_ge", "year": 2024, "label": "November 2024 general"},
-    {"slug": "2022_ge", "year": 2022, "label": "November 2022 general"},
+    # The November 2026 general filled the fourteen seats the 2022 general did
+    # (two per district); those members take their seats on the first Monday
+    # of December, so a canvass is not read before that date. The vendor has
+    # carried nothing for Adams since the 2025 consolidated (its 2022 file is an
+    # empty placeholder and its 2026 primary and general are absent), so this
+    # entry is the tripwire for the county coming back to it.
+    {"slug": "2026_ge", "year": 2026, "label": "November 2026 general",
+     "seated": "2026-12-07"},
 ]
 
 # A report smaller than this is the vendor's empty one-page placeholder (its
@@ -99,7 +108,11 @@ TIMEOUT = 60
 # use "#". The district number is read from the trailing digits, never from the
 # label's shape.
 CONTEST_TITLE_RE = re.compile(r"^COUNTY BOARD (?:DISTRICT\s*|#\s*)?(\d+)$", re.IGNORECASE)
-BOARD_OFFICE_RE = re.compile(r"^FOR MEMBER(?:SHIP)? (?:OF|TO) THE (?:COUNTY )?BOARD", re.IGNORECASE)
+# The vendor re-rendered the 2024 general in November 2026 and the office line
+# changed from "FOR MEMBER OF THE COUNTY BOARD" to "FOR COUNTY BOARD", with the
+# district on its own line below; the weekly run then read 0 districts. Both
+# wordings are accepted.
+BOARD_OFFICE_RE = re.compile(r"^FOR (?:MEMBER(?:SHIP)? (?:OF|TO) THE (?:COUNTY )?BOARD|COUNTY BOARD)", re.IGNORECASE)
 VOTE_FOR_RE = re.compile(r"\(Vote for (?:not more than )?(ONE|TWO|THREE|\d+)\)", re.IGNORECASE)
 WORD_NUMBERS = {"ONE": 1, "TWO": 2, "THREE": 3}
 
@@ -269,6 +282,12 @@ def main():
             continue
         data = resp.content
         record["bytes"] = len(data)
+        if not data.startswith(b"%PDF"):
+            # An election the vendor does not carry answers with its site's
+            # HTML home page (measured for 2026_ge/54 on 2026-11-25), not a 404.
+            record["status"] = "not published"
+            elections.append(record)
+            continue
         if len(data) < MIN_REAL_REPORT_BYTES:
             # The vendor's placeholder. Recorded, never treated as "no contests".
             record["status"] = "empty"

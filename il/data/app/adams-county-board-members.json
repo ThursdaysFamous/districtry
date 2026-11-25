@@ -84,9 +84,9 @@
     "sourceUrl": "https://www.adamscountyil.gov/county-board",
     "unreadElections": [
       {
-        "election": "November 2022 general",
-        "status": "empty",
-        "url": "https://platinumelectionresults.com/history/reports/summary/2022_ge/54"
+        "election": "November 2026 general",
+        "status": "not published",
+        "url": "https://platinumelectionresults.com/history/reports/summary/2026_ge/54"
       }
     ]
   }
