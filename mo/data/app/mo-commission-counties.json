@@ -186,6 +186,17 @@
   "spreadPct": 15.7,
   "unplaced2020": 0
  },
+ "29079": {
+  "county": "Grundy County",
+  "people2020": {
+   "First District": 4395,
+   "Second District": 5413
+  },
+  "read": "2026-11-25",
+  "source": "listed",
+  "spreadPct": 20.8,
+  "unplaced2020": 0
+ },
  "29089": {
   "county": "Howard County",
   "people2020": {
