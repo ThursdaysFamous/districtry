@@ -112,7 +112,10 @@ CHAMBERS = {
 # the office and the telephone alike. A field every row carries going missing
 # is the Brown County shape: the row count holds and the contact goes.
 MIN_OFFICE_SHARE = 0.9
-MIN_PHONE_SHARE = 0.9
+# 0.85 since 2026-11-25: 110 of 124 House rows carry one; the 14 without are
+# members elected 3 Nov whose pages print only the Columbia P.O. box so far
+# (Brooks, District 12, read that day). Raise back to 0.9 once they fill in.
+MIN_PHONE_SHARE = 0.85
 # A floor on the members' own numbers from the Home Address block, across both
 # chambers: 91 of 170 carried one on 2026-10-17. A parse that stops finding
 # them has broken; members do not take a third of them down in a year.

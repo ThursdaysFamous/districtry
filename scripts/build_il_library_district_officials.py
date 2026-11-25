@@ -278,6 +278,7 @@ def main():
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)
+    hand_off_trustees({n for n, r in libraries.items() if (r or {}).get("board")})
     print("build-il-library-district-officials: wrote %s — %d librar(ies) on %d "
           "card(s), %d board officer(s), %d appointed, %d with an office, %d "
           "with a telephone, %d officer(s) with their own telephone (%d with a "
@@ -287,6 +288,26 @@ def main():
              with_phone, officer_phones["withPhone"],
              officer_phones["withSecond"], officer_emails["withEmail"],
              library_lines))
+
+
+def hand_off_trustees(filed):
+    """A library that starts filing leaves the website-read trustees file in
+    the same run (Auburn, 2026-11-15): the filing is the better source, and
+    validate_index fails while both name a board."""
+    path = os.path.join(APP_DIR, "il-library-trustees.json")
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as fh:
+        site = json.load(fh)
+    gone = sorted(n for n in site.get("libraries") or {} if n in filed)
+    if not gone:
+        return
+    for name in gone:
+        del site["libraries"][name]
+        print("  handed off: %s now files a board, removed from %s"
+              % (name, os.path.basename(path)))
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(json.dumps(site, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
 
 
 if __name__ == "__main__":
