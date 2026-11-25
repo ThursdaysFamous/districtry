@@ -598,6 +598,14 @@ try {
         info.text.includes(c.want);
       check(`ok-judicial-district tells ${c.name} County which District 14 offices it elects`,
         !info.error && /District 14\b/.test(info.text) && said, info.text.slice(0, 160));
+      // The 14 judges sit behind a closed expander, so read textContent, not
+      // innerText: one judge by name and one office changing hands in January.
+      const bench = await page.evaluate(() =>
+        (document.getElementById("card-ok-judicial-district") || {}).textContent || "");
+      check(`ok-judicial-district names District 14's judges for ${c.name} County`,
+        bench.includes("14 district judges") && bench.includes("Kurt Glassco") &&
+          bench.includes("From January 2027: Loretta Radford, elected in 2026."),
+        bench.slice(0, 160));
       await context.close();
     }
   }

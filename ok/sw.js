@@ -69,6 +69,7 @@ const ROSTER_URLS = [
   "./data/app/ok-conservation-offices.json",
   "./data/app/ok-conservation-directors.json",
   "./data/app/ok-city-councils.json",
+  "./data/app/ok-district-judges.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

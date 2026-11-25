@@ -20,9 +20,24 @@ project's own client, after reading robots.txt at every hop.
 | `ok-roster-2024-district-judge-offices.txt` | every district judge office (75 of them) under its district, with the counties whose voters elect it |
 | `ok-roster-2024-key-to-districts.txt` | each of the 77 counties' district judge district, from the roster's own key; the build requires it to agree with the offices on every county |
 
-**NO NAME AND NO HOME TOWN IS COPIED.** The roster prints each judge's name and
-home town under the office heading. Only the heading is kept: these maps name no
-judge yet, and this project never writes an officeholder's home town.
+**NO HOME TOWN IS COPIED.** The roster prints each judge's name and home town
+under the office heading. The two files above keep only the heading. Since
+2026-11-25 `ok-roster-2024-district-judges.txt` keeps the name too, for the
+Judicial District card, and still never the home town: this project never
+writes an officeholder's home town.
+
+## The judges' names (read 2026-11-25)
+
+`ok/scripts/build_ok_district_judges.py` builds `ok/data/app/ok-district-judges.json`
+from these, offline. Each file's header says where and how it was read.
+
+| file | what it settles |
+|---|---|
+| `ok-roster-2024-district-judges.txt` | the name the roster prints under each of the 75 offices (same PDF and hash as above) |
+| `ok-jnc-appointments-district-judges.txt` | the Judicial Nominating Commission's list of the Governor's district judge appointments, to lay those made since the roster over it |
+| `ok-candidates-2026-district-judges.txt` | every candidate who filed for each office in April 2026 (the Election Board's candidate list) |
+| `ok-results-2026-district-judges.txt` | the Election Board's official 2026 results for every district judge race, read once by hand in a browser because the results site refuses this project's reader |
+| `oscn-adair-district-judges-2026-11-25.txt` | the four District 15 judges on the courts' own Adair County page, the one court page read (by hand, in a browser); the build must name the same four |
 
 **WHY NOT THE STATUTES.** The districts are set in the Oklahoma Statutes, and
 both of the state's publishers of them refuse this project in robots.txt: the

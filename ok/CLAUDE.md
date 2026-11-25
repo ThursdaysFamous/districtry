@@ -123,8 +123,17 @@ one office is elected by five counties and two by the other four, in District 12
 elected by all three counties and the others by parts, and in District 14 nine offices are elected
 by Pawnee and Tulsa and five by Tulsa alone. So each district ships its offices with their
 electorates, and the card says which offices the clicked county votes for rather than claiming
-every judge answers to every county. It names nobody (gap `ok-judicial-district-judges`) and links
-the roster. The appellate courts are not drawn: the roster lists their districts but not whether a
+every judge answers to every county. **SINCE 2026-11-25 IT NAMES EVERY OFFICE'S JUDGE**
+(`ok-district-judges.json`, built offline by `ok/scripts/build_ok_district_judges.py`, whose
+`--check` runs inside this builder's): the roster's names, never their home towns, with the
+Governor's appointments since then from the Judicial Nominating Commission's list, and, where the
+2026 election chose someone else, the person who takes the office in January 2027, from the
+Election Board's April 2026 candidate list and its official results (read once by hand in Adam's
+Chrome; the results site refuses this project's reader). No weekly job, so the card dates the list
+and gap `ok-judicial-district-judges` stays open. District 7, Office 10 had no 2026 vote. 2026
+results put District 14's Office 4 to 52 precincts and the Pawnee-and-Tulsa offices to 261, so the
+offices the roster lists for Tulsa alone may be elected by parts of the county, which this layer
+does not draw (recorded in the gap). The appellate courts are not drawn: the roster lists their districts but not whether a
 retention vote is held in the district or across the state, and the constitution that says so
 could not be read. The re-check, after each November general election, is in `ok/WATCH.md`.
 

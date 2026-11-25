@@ -1,0 +1,37 @@
+# Oklahoma State Election Board, official results, every DISTRICT JUDGE
+# race on the statewide results list of the June 16, August 25 and
+# November 3, 2026 elections, read 2026-11-25 from
+# https://results.okelections.us/OKER/?elecDate=20260616 (and =20260825,
+# =20261103). That site answers this project's own client with HTTP 403
+# (ok/WATCH.md), so it was read once, by hand, in the operator's own Chrome
+# (Adam's rule of 2026-11-25), where it loaded with no check page. Each
+# page says "Official Results".
+# The August 25 runoff primary carried no district judge race. Offices with
+# one candidate in April 2026 appear on no ballot. District 7, Office 10
+# had two candidates and appears on neither the June nor the November
+# ballot; no withdrawal for it is listed.
+# date | office | precincts reporting | candidate as printed | total votes | percent
+2026-06-16 | District 5, Office 1 | 84 of 84 | NEIL WEST | 8188 | 40.16
+2026-06-16 | District 5, Office 1 | 84 of 84 | STEVEN W. CROW | 4272 | 20.95
+2026-06-16 | District 5, Office 1 | 84 of 84 | TOMMY SIMS | 2279 | 11.18
+2026-06-16 | District 5, Office 1 | 84 of 84 | CHRISTINE GALBRAITH | 5650 | 27.71
+2026-06-16 | District 8, Office 1 | 41 of 41 | ROB DAVIS | 3663 | 35.81
+2026-06-16 | District 8, Office 1 | 41 of 41 | SCOTT LOFTIS | 3287 | 32.13
+2026-06-16 | District 8, Office 1 | 41 of 41 | LEE TURNER | 3279 | 32.06
+2026-06-16 | District 14, Office 4 | 52 of 52 | PHILLIP PEAK | 3160 | 19.89
+2026-06-16 | District 14, Office 4 | 52 of 52 | DUSTIN ALLEN | 5680 | 35.75
+2026-06-16 | District 14, Office 4 | 52 of 52 | LORETTA RADFORD | 7047 | 44.36
+2026-11-03 | District 4, Office 2 | 57 of 57 | ERIC EDWARDS | 7632 | 36.04
+2026-11-03 | District 4, Office 2 | 57 of 57 | PAUL K. WOODWARD | 13547 | 63.96
+2026-11-03 | District 5, Office 1 | 84 of 84 | NEIL WEST | 20402 | 58.38
+2026-11-03 | District 5, Office 1 | 84 of 84 | CHRISTINE GALBRAITH | 14547 | 41.62
+2026-11-03 | District 8, Office 1 | 41 of 41 | ROB DAVIS | 7979 | 55.61
+2026-11-03 | District 8, Office 1 | 41 of 41 | SCOTT LOFTIS | 6368 | 44.39
+2026-11-03 | District 14, Office 1 | 261 of 261 | TOM SAWYER | 68787 | 41.61
+2026-11-03 | District 14, Office 1 | 261 of 261 | CAROLINE WALL | 96535 | 58.39
+2026-11-03 | District 14, Office 4 | 52 of 52 | LORETTA RADFORD | 15796 | 52.59
+2026-11-03 | District 14, Office 4 | 52 of 52 | DUSTIN ALLEN | 14242 | 47.41
+2026-11-03 | District 14, Office 12 | 261 of 261 | CHRISTOPHER CAMP | 60971 | 37.86
+2026-11-03 | District 14, Office 12 | 261 of 261 | KEVIN GRAY | 100057 | 62.14
+2026-11-03 | District 23, Office 2 | 50 of 50 | TROY AUSTIN OFFICER | 17709 | 66.48
+2026-11-03 | District 23, Office 2 | 50 of 50 | JOSEPH COSTA | 8928 | 33.52
