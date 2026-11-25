@@ -2,9 +2,9 @@
  "001-1": {
   "county": "Aitkin",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "J. Mark Wedel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Timothy Catlin",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "001-2": {
@@ -18,9 +18,9 @@
  "001-3": {
   "county": "Aitkin",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Travis J. Leiviska",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Patrick Murphy",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "001-4": {
@@ -34,41 +34,51 @@
  "001-5": {
   "county": "Aitkin",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Michael L. Kearney",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "003-1": {
   "county": "Anoka",
   "district": 1,
-  "election": "2024-11-05",
+  "election": "2026-11-03",
   "name": "John Heinrich",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
-  "special": true
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false
  },
  "003-2": {
   "county": "Anoka",
+  "countySays": {
+   "name": "Julie Braastad",
+   "publisher": "Anoka County",
+   "sourceUrl": "https://gisservices.co.anoka.mn.us/anoka_gis/rest/services/OpenData_Political/MapServer/4"
+  },
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Julie Braastad",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Brian Kirkham",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "003-3": {
   "county": "Anoka",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jeff Reinert",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "003-4": {
   "county": "Anoka",
+  "countySays": {
+   "name": "Scott Schulte",
+   "publisher": "Anoka County",
+   "sourceUrl": "https://gisservices.co.anoka.mn.us/anoka_gis/rest/services/OpenData_Political/MapServer/4"
+  },
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Scott Schulte",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jerry Koch",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "003-5": {
@@ -98,17 +108,17 @@
  "005-1": {
   "county": "Becker",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Erica Jepson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "005-2": {
   "county": "Becker",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David Meyer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "005-3": {
@@ -138,9 +148,9 @@
  "007-1": {
   "county": "Beltrami",
   "district": 1,
-  "election": "2024-11-05",
+  "election": "2026-11-03",
   "name": "Craig Gaasvig",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "007-2": {
@@ -154,9 +164,9 @@
  "007-3": {
   "county": "Beltrami",
   "district": 3,
-  "election": "2024-11-05",
+  "election": "2026-11-03",
   "name": "Scott Winger",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "007-4": {
@@ -186,17 +196,17 @@
  "009-2": {
   "county": "Benton",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Edward \"Ed\" Popp",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "009-3": {
   "county": "Benton",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Steve Heinen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Steven J. Heinen",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "009-4": {
@@ -218,17 +228,17 @@
  "011-1": {
   "county": "Big Stone",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Chad Zimmel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "011-2": {
   "county": "Big Stone",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Wade Athey",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "011-3": {
@@ -250,17 +260,17 @@
  "011-5": {
   "county": "Big Stone",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jeff Klages",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "013-1": {
   "county": "Blue Earth",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Patty O'Connor",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "013-2": {
@@ -274,25 +284,25 @@
  "013-3": {
   "county": "Blue Earth",
   "district": 3,
-  "election": "2024-11-05",
-  "name": "Mark Piepho",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
-  "special": false
+  "election": "2026-11-03",
+  "name": "Dave Karge",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": true
  },
  "013-4": {
   "county": "Blue Earth",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Kevin Paap",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "013-5": {
   "county": "Blue Earth",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Kip Bruender",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "015-1": {
@@ -306,9 +316,9 @@
  "015-2": {
   "county": "Brown",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Anton (Tony) Berg",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "015-3": {
@@ -322,17 +332,17 @@
  "015-4": {
   "county": "Brown",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Brian H Braun",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Brian H. Braun",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "015-5": {
   "county": "Brown",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Jeff Veerkamp",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jeffrey Veerkamp",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "017-1": {
@@ -346,9 +356,9 @@
  "017-2": {
   "county": "Carlton",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Marv Bodie",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tony Compo",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "017-3": {
@@ -362,9 +372,9 @@
  "017-4": {
   "county": "Carlton",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Susan (Sue) Zmyslony",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Mark Thell",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "017-5": {
@@ -386,9 +396,9 @@
  "019-2": {
   "county": "Carver",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tom Workman",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "019-3": {
@@ -402,25 +412,25 @@
  "019-4": {
   "county": "Carver",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tim Lynch",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "019-5": {
   "county": "Carver",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "John P. Fahey",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "021-1": {
   "county": "Cass",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Neal Gaalswyk",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "021-2": {
@@ -434,17 +444,17 @@
  "021-3": {
   "county": "Cass",
   "district": 3,
-  "election": "2024-11-05",
-  "name": "Rusty Lilyquist",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
-  "special": false
+  "election": "2026-11-03",
+  "name": "Aaron Young",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": true
  },
  "021-4": {
   "county": "Cass",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Scott D Bruns",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tyler Seifert",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "021-5": {
@@ -458,9 +468,9 @@
  "023-1": {
   "county": "Chippewa",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Matt Gilbertson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "023-2": {
@@ -490,33 +500,33 @@
  "023-5": {
   "county": "Chippewa",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David Lieser",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "025-1": {
   "county": "Chisago",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Jim Swenson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tim MacMillan",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "025-2": {
   "county": "Chisago",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Rick Greene",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Chris DuBose",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "025-3": {
   "county": "Chisago",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Marlys Dunne",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Marlys L. Dunne",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "025-4": {
@@ -554,17 +564,17 @@
  "027-3": {
   "county": "Clay",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jenny L. Mongeau",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "027-4": {
   "county": "Clay",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Kevin Campbell",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Scott Steffes",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "027-5": {
@@ -578,9 +588,9 @@
  "029-1": {
   "county": "Clearwater",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mark Titera",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "029-2": {
@@ -594,9 +604,9 @@
  "029-3": {
   "county": "Clearwater",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Stuart Dukek",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "029-4": {
@@ -610,17 +620,17 @@
  "029-5": {
   "county": "Clearwater",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mark Larson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "031-1": {
   "county": "Cook",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Debra White",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Debra K. White",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "031-2": {
@@ -634,9 +644,9 @@
  "031-3": {
   "county": "Cook",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David Mills",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "031-4": {
@@ -650,17 +660,17 @@
  "031-5": {
   "county": "Cook",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Ginny Storlie",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Christopher Homyak",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "033-1": {
   "county": "Cottonwood",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Larry Anderson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "033-2": {
@@ -674,9 +684,9 @@
  "033-3": {
   "county": "Cottonwood",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Donna L Gravley",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Donna L. Gravley",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "033-4": {
@@ -690,9 +700,9 @@
  "033-5": {
   "county": "Cottonwood",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tom Appel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "035-1": {
@@ -706,25 +716,25 @@
  "035-2": {
   "county": "Crow Wing",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jon W. Lubke",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "035-3": {
   "county": "Crow Wing",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Steve Barrows",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tad A. Erickson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "035-4": {
   "county": "Crow Wing",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Rosemary R. Franzen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Rosemary Franzen",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "035-5": {
@@ -738,25 +748,25 @@
  "037-1": {
   "county": "Dakota",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mike Slavik",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "037-2": {
   "county": "Dakota",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Joe Atkins",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "037-3": {
   "county": "Dakota",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Laurie Halverson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "037-4": {
@@ -778,9 +788,9 @@
  "037-6": {
   "county": "Dakota",
   "district": 6,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mary Liz Holberg",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "037-7": {
@@ -802,25 +812,25 @@
  "039-2": {
   "county": "Dodge",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tim Tjosaas",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "039-3": {
   "county": "Dodge",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Rodney Peterson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "James Checkel",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "039-4": {
   "county": "Dodge",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Rhonda Toquam",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "039-5": {
@@ -842,9 +852,9 @@
  "041-2": {
   "county": "Douglas",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Tim Kalina",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Julie Anderson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "041-3": {
@@ -858,17 +868,17 @@
  "041-4": {
   "county": "Douglas",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Charlie Meyer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "041-5": {
   "county": "Douglas",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Shane A. Schmidt",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Shane Schmidt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "043-1": {
@@ -882,9 +892,9 @@
  "043-2": {
   "county": "Faribault",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Greg Young",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "043-3": {
@@ -898,9 +908,9 @@
  "043-4": {
   "county": "Faribault",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Tom Loveall",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jacob Kral",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "043-5": {
@@ -922,9 +932,9 @@
  "045-2": {
   "county": "Fillmore",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Randy Dahl",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "045-3": {
@@ -938,9 +948,9 @@
  "045-4": {
   "county": "Fillmore",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Duane Bakke",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Justin Redalen",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "045-5": {
@@ -962,9 +972,9 @@
  "047-2": {
   "county": "Freeborn",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Dawn C. Kaasa",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Dawn Kaasa",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "047-3": {
@@ -978,9 +988,9 @@
  "047-4": {
   "county": "Freeborn",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Christopher Niles Shoff",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "047-5": {
@@ -1002,9 +1012,9 @@
  "049-2": {
   "county": "Goodhue",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Brad Anderson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Chad Ryan",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "049-3": {
@@ -1018,9 +1028,9 @@
  "049-4": {
   "county": "Goodhue",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Jason Majerus",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Kevin Dather",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "049-5": {
@@ -1042,9 +1052,9 @@
  "051-2": {
   "county": "Grant",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dwight Walvatne",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "051-3": {
@@ -1058,9 +1068,9 @@
  "051-4": {
   "county": "Grant",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bill LaValley",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "051-5": {
@@ -1082,25 +1092,25 @@
  "053-2": {
   "county": "Hennepin",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Irene Fernando",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "053-3": {
   "county": "Hennepin",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Marion Greene",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "053-4": {
   "county": "Hennepin",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Angela Conley",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "053-5": {
@@ -1138,9 +1148,9 @@
  "055-2": {
   "county": "Houston",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Eric Johnson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "055-3": {
@@ -1154,9 +1164,9 @@
  "055-4": {
   "county": "Houston",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bob Schuldt",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "055-5": {
@@ -1170,9 +1180,9 @@
  "057-1": {
   "county": "Hubbard",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "David J. De La Hunt",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "David De La Hunt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "057-2": {
@@ -1186,9 +1196,9 @@
  "057-3": {
   "county": "Hubbard",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Tom Krueger",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Cory Aukes",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "057-4": {
@@ -1202,9 +1212,9 @@
  "057-5": {
   "county": "Hubbard",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Ted Van Kempen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "059-1": {
@@ -1218,9 +1228,9 @@
  "059-2": {
   "county": "Isanti",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bill Berg",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "059-3": {
@@ -1242,17 +1252,17 @@
  "059-5": {
   "county": "Isanti",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Kristi LaRowe",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Kristi L. LaRowe",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "061-1": {
   "county": "Itasca",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Cory Smith",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Lonny Witkofsky",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "061-2": {
@@ -1266,9 +1276,9 @@
  "061-3": {
   "county": "Itasca",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "John A. Johnson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Robert Preble",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "061-4": {
@@ -1282,9 +1292,9 @@
  "061-5": {
   "county": "Itasca",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Casey Venema",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "063-1": {
@@ -1298,25 +1308,25 @@
  "063-2": {
   "county": "Jackson",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Don Wachal",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jay Moore",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "063-3": {
   "county": "Jackson",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Roger D. Pohlman",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "063-4": {
   "county": "Jackson",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Phil Nasby",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "063-5": {
@@ -1330,9 +1340,9 @@
  "065-1": {
   "county": "Kanabec",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Peter Ripka",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "065-2": {
@@ -1346,9 +1356,9 @@
  "065-3": {
   "county": "Kanabec",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Wendy Caswell",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Kevin Troupe",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "065-4": {
@@ -1362,17 +1372,17 @@
  "065-5": {
   "county": "Kanabec",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tom Roeschlein",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "067-1": {
   "county": "Kandiyohi",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "George \"Corky\" Berg",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Nathan Robert Streed",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "067-2": {
@@ -1386,9 +1396,9 @@
  "067-3": {
   "county": "Kandiyohi",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dale H. Anderson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "067-4": {
@@ -1402,9 +1412,9 @@
  "067-5": {
   "county": "Kandiyohi",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Duane Anderson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "069-1": {
@@ -1426,9 +1436,9 @@
  "069-3": {
   "county": "Kittson",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Loren Younggren",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "069-4": {
@@ -1442,25 +1452,25 @@
  "069-5": {
   "county": "Kittson",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Ryan Swenson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Justin Peterson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "071-1": {
   "county": "Koochiching",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Destry Hell",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Timothy Mathews",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "071-2": {
   "county": "Koochiching",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Ricky Roche",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "071-3": {
@@ -1474,9 +1484,9 @@
  "071-4": {
   "county": "Koochiching",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jason Sjoblom",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "071-5": {
@@ -1498,9 +1508,9 @@
  "073-2": {
   "county": "Lac qui Parle",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "DeRon J. Brehmer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "DeRon Brehmer",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "073-3": {
@@ -1514,9 +1524,9 @@
  "073-4": {
   "county": "Lac qui Parle",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Benjamin Bothun",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Ben Bothun",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "073-5": {
@@ -1530,10 +1540,10 @@
  "075-1": {
   "county": "Lake",
   "district": 1,
-  "election": "2023-11-07",
+  "election": "2026-11-03",
   "name": "Joe Baltich",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20231107/cntyRaces.txt",
-  "special": true
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false
  },
  "075-2": {
   "county": "Lake",
@@ -1546,17 +1556,17 @@
  "075-3": {
   "county": "Lake",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Richard \"Rick\" Hogenson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "075-4": {
   "county": "Lake",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jeremy Michael Hurd",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "075-5": {
@@ -1570,9 +1580,9 @@
  "077-1": {
   "county": "Lake of the Woods",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "James \"Buck\" Nordlof",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Dennis Pletcher",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "077-2": {
@@ -1586,9 +1596,9 @@
  "077-3": {
   "county": "Lake of the Woods",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Joe Grund",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Joseph Grund",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "077-4": {
@@ -1618,9 +1628,9 @@
  "079-2": {
   "county": "Le Sueur",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Danny O'Keefe",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "079-3": {
@@ -1634,17 +1644,17 @@
  "079-4": {
   "county": "Le Sueur",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David Preisler",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "079-5": {
   "county": "Le Sueur",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Steve \"Gump\" Rohlfing",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tina King",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "081-1": {
@@ -1658,9 +1668,9 @@
  "081-2": {
   "county": "Lincoln",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Michael \"Mic\" VanDeVere",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "081-3": {
@@ -1674,9 +1684,9 @@
  "081-4": {
   "county": "Lincoln",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Joseph Drietz",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Joe Drietz",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "081-5": {
@@ -1690,9 +1700,9 @@
  "083-1": {
   "county": "Lyon",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Thomas Dean Andries",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Thomas D Andries",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "083-2": {
@@ -1706,9 +1716,9 @@
  "083-3": {
   "county": "Lyon",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Paul Graupmann",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "083-4": {
@@ -1738,9 +1748,9 @@
  "085-2": {
   "county": "McLeod",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Doug Krueger",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "085-3": {
@@ -1762,9 +1772,9 @@
  "085-5": {
   "county": "McLeod",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Joe Nagel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tom Dahl",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "087-1": {
@@ -1778,25 +1788,25 @@
  "087-2": {
   "county": "Mahnomen",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David Geray",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "087-3": {
   "county": "Mahnomen",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Larry Olson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tyler Anderson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "087-4": {
   "county": "Mahnomen",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Karen Ahmann",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Joe Swiers",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "087-5": {
@@ -1810,9 +1820,9 @@
  "089-1": {
   "county": "Marshall",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jim \"Ducky\" Duckstad",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "089-2": {
@@ -1826,9 +1836,9 @@
  "089-3": {
   "county": "Marshall",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Larry P. Nybladh",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "089-4": {
@@ -1842,9 +1852,9 @@
  "089-5": {
   "county": "Marshall",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Gary Kiesow",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Gary A. Kiesow",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "091-1": {
@@ -1858,9 +1868,9 @@
  "091-2": {
   "county": "Martin",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jaime Bleess",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "091-3": {
@@ -1874,9 +1884,9 @@
  "091-4": {
   "county": "Martin",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Richard Koons",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Richard Allan Koons",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "091-5": {
@@ -1890,9 +1900,9 @@
  "093-1": {
   "county": "Meeker",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Beth Oberg",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Andy Carlson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "093-2": {
@@ -1922,9 +1932,9 @@
  "093-5": {
   "county": "Meeker",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Steven Schmitt",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Steve Schmitt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "095-1": {
@@ -1938,9 +1948,9 @@
  "095-2": {
   "county": "Mille Lacs",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dan Whitcomb",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "095-3": {
@@ -1954,9 +1964,9 @@
  "095-4": {
   "county": "Mille Lacs",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Roger Tellinghuisen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jennae Hoffman",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "095-5": {
@@ -1994,17 +2004,17 @@
  "097-4": {
   "county": "Morrison",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Robert (Bobby) Kasper",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Deb Gruber",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "097-5": {
   "county": "Morrison",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Greg Blaine",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "099-1": {
@@ -2026,25 +2036,25 @@
  "099-3": {
   "county": "Mower",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Jerry Reinartz",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jason Duffy",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "099-4": {
   "county": "Mower",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dan Sparks",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "099-5": {
   "county": "Mower",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Michael Ankeny",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Mike Ankeny",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "101-1": {
@@ -2066,18 +2076,18 @@
  "101-3": {
   "county": "Murray",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Dennis Welgraven",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Tyson VanPeursem",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "101-4": {
   "county": "Murray",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Jackie Meier",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
-  "special": false
+  "election": "2026-11-03",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false,
+  "unnamed": "the seat was won by write-in votes, which the results do not name"
  },
  "101-5": {
   "county": "Murray",
@@ -2090,9 +2100,9 @@
  "103-1": {
   "county": "Nicollet",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Marie Dranttel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "103-2": {
@@ -2106,9 +2116,9 @@
  "103-3": {
   "county": "Nicollet",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jack Kolars",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "103-4": {
@@ -2122,9 +2132,9 @@
  "103-5": {
   "county": "Nicollet",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Kurt Zins",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "105-1": {
@@ -2138,9 +2148,9 @@
  "105-2": {
   "county": "Nobles",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Gene Metz",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "105-3": {
@@ -2162,9 +2172,9 @@
  "105-5": {
   "county": "Nobles",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Chris Dybevick",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "107-1": {
@@ -2178,25 +2188,25 @@
  "107-2": {
   "county": "Norman",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Jesse M. Lee",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Josh Mathsen",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "107-3": {
   "county": "Norman",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Steve Jacobson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Andrew Jossund",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "107-4": {
   "county": "Norman",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Lee Ann Hall",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "John Hintz",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "107-5": {
@@ -2218,9 +2228,9 @@
  "109-2": {
   "county": "Olmsted",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "David H. Senjem",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "109-3": {
@@ -2234,9 +2244,9 @@
  "109-4": {
   "county": "Olmsted",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Brian Mueller",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "109-5": {
@@ -2250,10 +2260,10 @@
  "109-6": {
   "county": "Olmsted",
   "district": 6,
-  "election": "2024-11-05",
+  "election": "2026-11-03",
   "name": "Bob Hopkins",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
-  "special": true
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false
  },
  "109-7": {
   "county": "Olmsted",
@@ -2274,9 +2284,9 @@
  "111-2": {
   "county": "Otter Tail",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Wayne Donald Johnson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Wayne D. Johnson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "111-3": {
@@ -2290,9 +2300,9 @@
  "111-4": {
   "county": "Otter Tail",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Robert (Bob) Lahman",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jim Stewart",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "111-5": {
@@ -2322,17 +2332,17 @@
  "113-3": {
   "county": "Pennington",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Neil Peterson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "113-4": {
   "county": "Pennington",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Roy Sourdif",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "113-5": {
@@ -2346,17 +2356,17 @@
  "115-1": {
   "county": "Pine",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Stephen Hallan",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Abbie Raudabaugh",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "115-2": {
   "county": "Pine",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Joshua Mohr",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "115-3": {
@@ -2378,9 +2388,9 @@
  "115-5": {
   "county": "Pine",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Matt Ludwig",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jon Dorau",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "117-1": {
@@ -2394,9 +2404,9 @@
  "117-2": {
   "county": "Pipestone",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Doug Nagel",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Thomas Haag",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "117-3": {
@@ -2410,9 +2420,9 @@
  "117-4": {
   "county": "Pipestone",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Daniel Wildermuth",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jaime Guardado Jr.",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "117-5": {
@@ -2434,9 +2444,9 @@
  "119-2": {
   "county": "Polk",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Warren Strandell",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Curtis Knutson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "119-3": {
@@ -2450,9 +2460,9 @@
  "119-4": {
   "county": "Polk",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Joan K Lee",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Michael (Mike) Wedin",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "119-5": {
@@ -2466,9 +2476,9 @@
  "121-1": {
   "county": "Pope",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Paul Gremmels",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "121-2": {
@@ -2490,17 +2500,17 @@
  "121-4": {
   "county": "Pope",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Larry Lindor",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "121-5": {
   "county": "Pope",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Paul Wildman",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "123-1": {
@@ -2521,39 +2531,39 @@
  },
  "123-3": {
   "county": "Ramsey",
-  "countySays": {
-   "name": "Garrison McMurtrey",
-   "publisher": "Ramsey County",
-   "sourceUrl": "https://gis.ramseycountymn.gov/server/rest/services/Boundary/BOUND_CommissionerDistrict2022_ViewOnly/FeatureServer/25"
-  },
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Trista MatasCastillo",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Garrison McMurtrey",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "123-4": {
   "county": "Ramsey",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Rena Moran",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "123-5": {
   "county": "Ramsey",
+  "countySays": {
+   "name": "Rafael Ortega",
+   "publisher": "Ramsey County",
+   "sourceUrl": "https://gis.ramseycountymn.gov/server/rest/services/Boundary/BOUND_CommissionerDistrict2022_ViewOnly/FeatureServer/25"
+  },
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Rafael E. Ortega",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Rebecca Noecker",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "123-6": {
   "county": "Ramsey",
   "district": 6,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mai Chong Xiong",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "123-7": {
@@ -2567,9 +2577,9 @@
  "125-1": {
   "county": "Red Lake",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Anthony  \"Chuck\" Flage",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Casey J. Klipping",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "125-2": {
@@ -2583,17 +2593,17 @@
  "125-3": {
   "county": "Red Lake",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Delane John Dudycha",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Eric Mickelson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "125-4": {
   "county": "Red Lake",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Allen Remick",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "125-5": {
@@ -2615,17 +2625,17 @@
  "127-2": {
   "county": "Redwood",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "James Salfer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Heidi Wersal",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "127-3": {
   "county": "Redwood",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Dennis Groebner",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Al Kokesch",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "127-4": {
@@ -2655,9 +2665,9 @@
  "129-2": {
   "county": "Renville",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "John Robinson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "129-3": {
@@ -2671,9 +2681,9 @@
  "129-4": {
   "county": "Renville",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Greg Snow",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "129-5": {
@@ -2703,17 +2713,17 @@
  "131-3": {
   "county": "Rice",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Gerald G. Hoisington",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Sam Temple",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "131-4": {
   "county": "Rice",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Steve Underdahl",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "131-5": {
@@ -2735,9 +2745,9 @@
  "133-2": {
   "county": "Rock",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Stan Williamson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Keith Elbers",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "133-3": {
@@ -2751,9 +2761,9 @@
  "133-4": {
   "county": "Rock",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Sherri Thompson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "133-5": {
@@ -2767,9 +2777,9 @@
  "135-1": {
   "county": "Roseau",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Glenda Phillipe",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Laura Phillipe Larson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "135-2": {
@@ -2783,9 +2793,9 @@
  "135-3": {
   "county": "Roseau",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Levi M. Novacek",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Levi M Novacek",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "135-4": {
@@ -2799,17 +2809,22 @@
  "135-5": {
   "county": "Roseau",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Daryl Wicklund",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "137-1": {
   "county": "St. Louis",
+  "countySays": {
+   "name": "Annie Harala",
+   "publisher": "St. Louis County",
+   "sourceUrl": "https://gis.stlouiscountymn.gov/server2/rest/services/GeneralUse/Open_Data/MapServer/21"
+  },
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Annie Harala",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Kris Eilers",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "137-2": {
@@ -2831,9 +2846,9 @@
  "137-4": {
   "county": "St. Louis",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Paul McDonald",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "137-5": {
@@ -2846,10 +2861,15 @@
  },
  "137-6": {
   "county": "St. Louis",
+  "countySays": {
+   "name": "Keith Nelson",
+   "publisher": "St. Louis County",
+   "sourceUrl": "https://gis.stlouiscountymn.gov/server2/rest/services/GeneralUse/Open_Data/MapServer/21"
+  },
   "district": 6,
-  "election": "2022-11-08",
-  "name": "Keith Nelson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Timothy Mattson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "137-7": {
@@ -2871,9 +2891,9 @@
  "139-2": {
   "county": "Scott",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Tom Wolf",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jim Muelken",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "139-3": {
@@ -2887,17 +2907,17 @@
  "139-4": {
   "county": "Scott",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dave Beer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "139-5": {
   "county": "Scott",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Jon Ulrich",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Drew Christensen",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "141-1": {
@@ -2911,25 +2931,25 @@
  "141-2": {
   "county": "Sherburne",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Raeanne Danielowski",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "141-3": {
   "county": "Sherburne",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Gregg Felber",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Mark Swanson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "141-4": {
   "county": "Sherburne",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Gary H. Gray",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Gary Howard Gray",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "141-5": {
@@ -2943,17 +2963,17 @@
  "143-1": {
   "county": "Sibley",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Peter Koch",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "John G Pioske",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "143-2": {
   "county": "Sibley",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Christian Lilienthal",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "143-3": {
@@ -2975,17 +2995,17 @@
  "143-5": {
   "county": "Sibley",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Steve Saxton",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "A. Bradley \"Brad\" DeBoer",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "145-1": {
   "county": "Stearns",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tarryl L. Clark",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "145-2": {
@@ -2999,18 +3019,18 @@
  "145-3": {
   "county": "Stearns",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jeff Bertram",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "145-4": {
   "county": "Stearns",
   "district": 4,
-  "election": "2025-11-04",
+  "election": "2026-11-03",
   "name": "Bob Johnson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/cntyRaces.txt",
-  "special": true
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false
  },
  "145-5": {
   "county": "Stearns",
@@ -3023,17 +3043,17 @@
  "147-1": {
   "county": "Steele",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "James Brady",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Gary Spatenka",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "147-2": {
   "county": "Steele",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "John Glynn",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "147-3": {
@@ -3063,17 +3083,17 @@
  "149-1": {
   "county": "Stevens",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bob Kopitzke",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "149-2": {
   "county": "Stevens",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jeanne Ennen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "149-3": {
@@ -3095,9 +3115,9 @@
  "149-5": {
   "county": "Stevens",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Patricia Lesmeister Nelson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "151-1": {
@@ -3111,7 +3131,10 @@
  "151-2": {
   "county": "Swift",
   "district": 2,
-  "unnamed": "no contest for this district appears in any results file the Secretary of State published since the 2022 general"
+  "election": "2026-11-03",
+  "name": "Edward Pederson",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
+  "special": false
  },
  "151-3": {
   "county": "Swift",
@@ -3124,9 +3147,9 @@
  "151-4": {
   "county": "Swift",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Larry Mahoney",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "151-5": {
@@ -3148,9 +3171,9 @@
  "153-2": {
   "county": "Todd",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Tim Denny",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "153-3": {
@@ -3164,9 +3187,9 @@
  "153-4": {
   "county": "Todd",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Lew Noska",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "153-5": {
@@ -3188,9 +3211,9 @@
  "155-2": {
   "county": "Traverse",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Kayla R. Schmidt",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Kayla Schmidt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "155-3": {
@@ -3204,9 +3227,9 @@
  "155-4": {
   "county": "Traverse",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Jerrel Olson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "David Salberg",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "155-5": {
@@ -3228,9 +3251,9 @@
  "157-2": {
   "county": "Wabasha",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Rick Powers",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "157-3": {
@@ -3244,25 +3267,25 @@
  "157-4": {
   "county": "Wabasha",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Mike Wobbe",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "157-5": {
   "county": "Wabasha",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Cheryl McGrath Key",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Cory Kubista",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "159-1": {
   "county": "Wadena",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Ron Noon",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "159-2": {
@@ -3276,9 +3299,9 @@
  "159-3": {
   "county": "Wadena",
   "district": 3,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bill Stearns",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "159-4": {
@@ -3292,9 +3315,9 @@
  "159-5": {
   "county": "Wadena",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Jon Kangas",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "161-1": {
@@ -3316,25 +3339,25 @@
  "161-3": {
   "county": "Waseca",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Blair Nelson",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Brad Milbrath",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "161-4": {
   "county": "Waseca",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "DeAnne (De) Malterer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Curt Keyes",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "161-5": {
   "county": "Waseca",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Brad Krause",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "163-1": {
@@ -3348,9 +3371,9 @@
  "163-2": {
   "county": "Washington",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Stan Karwoski",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "163-3": {
@@ -3364,17 +3387,17 @@
  "163-4": {
   "county": "Washington",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Karla Bigham",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "163-5": {
   "county": "Washington",
   "district": 5,
-  "election": "2022-11-08",
-  "name": "Michelle Clasen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Brian McCoy",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "165-1": {
@@ -3388,9 +3411,9 @@
  "165-2": {
   "county": "Watonwan",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Bill B. Miller",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "165-3": {
@@ -3404,9 +3427,9 @@
  "165-4": {
   "county": "Watonwan",
   "district": 4,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Scott Westman",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "165-5": {
@@ -3428,9 +3451,9 @@
  "167-2": {
   "county": "Wilkin",
   "district": 2,
-  "election": "2022-11-08",
-  "name": "Jon Green",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Jamie Rezac",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "167-3": {
@@ -3444,9 +3467,9 @@
  "167-4": {
   "county": "Wilkin",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Rick Busko",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "James Jawaski",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "167-5": {
@@ -3460,17 +3483,17 @@
  "169-1": {
   "county": "Winona",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Chris Meyer",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "169-2": {
   "county": "Winona",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Dwayne Voegeli",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "169-3": {
@@ -3492,17 +3515,17 @@
  "169-5": {
   "county": "Winona",
   "district": 5,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Marcia L. Ward",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "171-1": {
   "county": "Wright",
   "district": 1,
-  "election": "2022-11-08",
-  "name": "Tina Diedrick",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Christine A Husom",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "171-2": {
@@ -3516,17 +3539,17 @@
  "171-3": {
   "county": "Wright",
   "district": 3,
-  "election": "2022-11-08",
-  "name": "Jeanne Holland",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Ryan Dunlap",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "171-4": {
   "county": "Wright",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Nadine Schoen",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Drew Scherber",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "171-5": {
@@ -3540,17 +3563,17 @@
  "173-1": {
   "county": "Yellow Medicine",
   "district": 1,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "Greg Renneke",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "173-2": {
   "county": "Yellow Medicine",
   "district": 2,
-  "election": "2022-11-08",
+  "election": "2026-11-03",
   "name": "John Berends",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "173-3": {
@@ -3564,9 +3587,9 @@
  "173-4": {
   "county": "Yellow Medicine",
   "district": 4,
-  "election": "2022-11-08",
-  "name": "Ronald J Antony",
-  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+  "election": "2026-11-03",
+  "name": "Ron Antony",
+  "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20261103/cntyRaces.txt",
   "special": false
  },
  "173-5": {
