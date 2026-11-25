@@ -267,7 +267,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tx/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -1335,7 +1335,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tx/county-commissioner.html</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -10298,6 +10298,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/tx/county-commissioner/aransas.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tx/county-commissioner/archer.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -10352,6 +10358,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/tx/county-commissioner/bell.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/bexar.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tx/county-commissioner/blanco.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -10378,6 +10396,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/brazoria.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/brazos.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10648,6 +10672,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/ellis.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/erath.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -11174,6 +11204,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/tx/county-commissioner/montgomery.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tx/county-commissioner/moore.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -11410,6 +11446,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/sherman.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/smith.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -16674,7 +16674,10 @@ function initTexasExplorer() {
    * county first. The directory lists courts, a commissioner holds no court,
    * and no state office lists them, so each county's own page is the source;
    * the card names that page and the date its names were first read. A county not
-   * read yet says the commissioners are not named. This app draws no
+   * read yet says the commissioners are not named. A county whose site the
+   * weekly check does not read, read once by hand instead (`readOnce`, from
+   * tx/data/source/tx-county-commissioners-read-once.json, 2026-11-25), says
+   * the names were read once on that date and are not re-read every week. This app draws no
    * commissioner precincts, so the card never says which of the four
    * represents the point. The county's other elected officers (sheriff,
    * county clerk, tax assessor-collector) are not named. Both gaps are
@@ -16866,11 +16869,17 @@ function initTexasExplorer() {
             ". " + (vacant === 1 ? "The page lists one seat as vacant, so no " +
             "one is named for it. " : vacant > 1 ? "The page lists " + vacant +
             " seats as vacant, so no one is named for them. " : "") +
+            // readOnce: read by hand once, because the weekly check does not
+            // read that site, so the card must not promise a weekly look
+            (c.readOnce === true ? "This app's weekly check does not read " +
+            "that site, so these names were read there once" + (read ? ", on " +
+            read : "") + ", and are not checked again every week. A " +
+            "commissioner who took office since then is not shown." :
             (read ? "This app first found " + (vacant ? "these names" :
             "these four names") + " there on " + read + " and looks"
             : "This app looks") + " at the page again every week, so a " +
             "commissioner who took office since the last look may not be " +
-            "shown yet."
+            "shown yet.")
         });
       }
       wrap.appendChild(renderFieldStack(rows));
