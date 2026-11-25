@@ -70,6 +70,7 @@ const ROSTER_URLS = [
   "./data/app/tn-commissioners.json",
   "./data/app/tn-city-councils.json",
   "./data/app/tn-special-school-boards.json",
+  "./data/app/tn-trial-judges.json",
   "./data/app/coverage-gaps.json",
   "./data/app/tribal-councils.json",
 ];
