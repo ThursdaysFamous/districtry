@@ -758,13 +758,6 @@ RESULTS_ROSTERS = {
         "evidence": "won 1 and 3 in the 2024 general; ran in 2 in the 2026 "
                     "primary",
     },
-    "Floyd": {
-        "districts": {"1": "Gloria Carr", "3": "Boyd Campbell"},
-        "byElimination": "2",
-        "evidence": "won 1 and 3 in the 2024 general (Boyd Campbell ran in 3 "
-                    "again in the 2026 primary); district 2's 2026 primary "
-                    "named nobody on the board",
-    },
     "Guthrie": {
         "districts": {"2": "Brian Johnson", "3": "Maggie Armstrong",
                       "4": "Steve Smith", "5": "Mike Dickson"},
@@ -801,12 +794,8 @@ RESULTS_ROSTERS = {
         "evidence": "won 3 and 4 in the 2024 general; ran in 1, 2 and 5 in "
                     "the 2026 primary",
     },
-    "Warren": {
-        "districts": {"1": "Brian C.S. Arnold", "2": "Aaron DeKock",
-                      "3": "Travis DeWitt", "4": "Stephanie Erickson",
-                      "5": "Crystal McIntyre"},
-        "evidence": "won all five in the 2024 general",
-    },
+    # Floyd and Warren RETIRED 2026-11-25: the scraper keys each county's own
+    # page now (Floyd's agrees with the results on 1 and 3 and names 2).
 }
 RESULTS_READ_ON = "2026-10-26"
 RESULTS_CARD_NOTE = (

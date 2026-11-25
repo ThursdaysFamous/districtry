@@ -82,7 +82,9 @@ DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 
 
 def member_obj(rec):
-    member = {"name": rec["name"], "party": rec["party"]}
+    member = {"name": rec["name"]}
+    if rec.get("party"):
+        member["party"] = rec["party"]
     role = (rec.get("role") or "").strip()
     if role:
         member["role"] = ROLE_ALIASES.get(role.lower(), role)
@@ -102,6 +104,7 @@ def main():
     vacant = payload.get("vacancies") or []
 
     roster = {}
+    with_party = 0
     for rec in records:
         district = str(rec.get("district") or "").strip()
         name = (rec.get("name") or "").strip()
@@ -111,11 +114,15 @@ def main():
         slot = roster.setdefault(district,
                                  {"members": [], "sourceUrl": SOURCE_URL})
         slot["members"].append(member_obj(rec))
-        if not party:
-            print("build-jodaviess-board: FAIL — %s carries no party letter; "
-                  "every named member on the county's page does, so this is a "
-                  "parse break" % name, file=sys.stderr)
-            sys.exit(1)
+        if party:
+            with_party += 1
+    # One member printed without a letter is the county's choice (2026-11-21);
+    # most of the board without one is a parse break.
+    if records and with_party < len(records) - 2:
+        print("build-jodaviess-board: FAIL — only %d of %d members carry a party "
+              "letter; the county prints one for nearly all, so this is a parse "
+              "break" % (with_party, len(records)), file=sys.stderr)
+        sys.exit(1)
     for v in vacant:
         district = str(v.get("district") or "").strip()
         if not district:
