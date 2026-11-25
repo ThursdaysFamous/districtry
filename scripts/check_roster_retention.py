@@ -282,6 +282,14 @@ ACCEPTED_DROPS = {
         "the directory was the only surface a reader could check a name "
         "against; the per-district pages name them, so each seat cites its own "
         "page instead. Jackson still carries this field and is still watched.",
+
+    # Mason County, Illinois. The two notes were the Clerk's own words about
+    # how two members reached mid-term seats ("will run for full term in
+    # 2026"); both ran and won, and the Clerk's sheet now lists them with
+    # terms to 2030 and no note at all.
+    "il/data/app/mason-county-board-members.json:seatNote":
+        "2026-11-25 -- Bender and Sarnes won full terms on 3 Nov; the Clerk's "
+        "sheet, read that day, carries a note on none of its 8 rows.",
 }
 
 
