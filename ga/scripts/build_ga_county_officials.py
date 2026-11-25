@@ -187,6 +187,9 @@ SEAT_NAMES = {
     ("fannin", "County BOE (Galloway)"): "Galloway seat",
     ("fannin", "County BOE - Bearden - Rep"): "Bearden seat",
     ("fannin", "County BOE - Cole - Rep"): "Cole seat",
+    # The 3 Nov 2026 general names the same two seats without the party.
+    ("fannin", "County BOE - Bearden"): "Bearden seat",
+    ("fannin", "County BOE - Cole"): "Cole seat",
     # Glascock's two numbered districts carry the town each is named for.
     ("glascock", "County Commission - District 1 Gibson"): "District 1",
     ("glascock", "County Commission - District 3 Mitchell"): "District 3",

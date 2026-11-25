@@ -186,6 +186,10 @@ def parse_list(page):
     """[(chamber, district, href, name, email)] from the member list."""
     rows = []
     for block in ROW_SPLIT.split(page)[1:]:
+        # Since November 2026 the list also carries members-elect for the 2027
+        # session ("Representative-Elect"); they are not in office yet.
+        if re.search(r'(?:Representative|Senator)-Elect\s*<a ', block):
+            continue
         link = ROW_LINK_RE.search(block)
         chamber = ROW_CHAMBER_RE.search(block)
         district = ROW_DISTRICT_RE.search(block)
