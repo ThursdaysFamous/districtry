@@ -276,9 +276,16 @@ def check_composition(warnings):
     """
     turnout = get(TURNOUT_URL)
     match = re.search(r"([\d,]+)\s*\n?\s*Total Precincts", re.sub(r"<[^>]+>", "\n", turnout))
-    if not match:
+    # Since November 2026 the page prints no "Total Precincts" line; its
+    # precincts-reporting chart (not, partially, fully reported) sums to it.
+    pie = re.search(r"var dcc3 = \[(.*?)\];", turnout, re.S)
+    pie_ys = re.findall(r"\by:\s*(\d+)", pie.group(1)) if pie else []
+    if match:
+        total = int(match.group(1).replace(",", ""))
+    elif len(pie_ys) == 3:
+        total = sum(int(y) for y in pie_ys)
+    else:
         fail("could not read the live precinct count from %s" % TURNOUT_URL)
-    total = int(match.group(1).replace(",", ""))
     if total != EXPECTED_TOTAL_PRECINCTS:
         fail("the Clerk's system now reports %d precincts, not %d — Franklin "
              "has re-precincted and data/app/franklin-precincts.json no longer "
