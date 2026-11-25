@@ -42,7 +42,7 @@
 | De Witt | 17039 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `dewitt-township-officials` (data-quality); `statewide-library-officials` (no-source) |
 | DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `blocked-crawlers` (blocked); `county-source-library-officials` (no-source) |
 | Douglas | 17041 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| DuPage | 17043 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `county-source-library-officials` (no-source); `dupage-municipal-phones` (data-quality); `dupage-ward-cities` (no-source); `fire-park-district-officers` (no-source) |
+| DuPage | 17043 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `county-source-library-officials` (no-source); `dupage-municipal-phones` (data-quality); `dupage-ward-cities` (no-source); `fire-park-district-officers` (no-source) |
 | Edgar | 17045 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Edwards | 17047 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Effingham | 17049 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `effingham-municipal-officials` (no-source); `fire-park-district-officers` (no-source) |
@@ -65,9 +65,9 @@
 | Jersey | 17083 | dispatch | districted | `county-board`, `library-district` | 3 — `jersey-county-board-districts` (no-source); `jodaviess-jersey-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Jo Daviess | 17085 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Johnson | 17087 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Kane | 17089 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 1 — `aurora-council-contact` (blocked) |
+| Kane | 17089 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
 | Kankakee | 17091 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `kankakee-city-wards` (no-source); `kankakee-municipal-officials` (no-source); `kankakee-special-districts` (data-quality); `momence-ward-geometry` (no-source) |
-| Kendall | 17093 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 5 — `aurora-council-contact` (blocked); `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `plano-ward-officials` (no-source) |
+| Kendall | 17093 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `blocked-crawlers` (blocked); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source); `plano-ward-officials` (no-source) |
 | Knox | 17095 | dispatch | districted | `county-board`, `library-district` | 3 — `knox-precinct-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | LaSalle | 17099 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 5 — `lasalle-board-districts-stale` (no-source); `lasalle-municipal-wards` (no-source); `ogle-lasalle-special-districts` (no-source); `statewide-library-officials` (no-source); `wenona-two-clerks-disagree` (data-quality) |
 | Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
@@ -116,7 +116,7 @@
 | Wayne | 17191 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | White | 17193 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `statewide-library-officials` (no-source); `white-special-districts` (no-source) |
 | Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `statewide-library-officials` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-district-boards` (no-source) |
-| Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `aurora-council-contact` (blocked); `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked); `will-municipal-directory-freeze` (blocked) |
+| Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked); `will-municipal-directory-freeze` (blocked) |
 | Williamson | 17199 | dispatch | at-large — County card | `library-district` | 3 — `captcha-county-commissioner-contact` (blocked); `statewide-library-officials` (no-source); `williamson-precinct-geometry` (no-source) |
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
 | Woodford | 17203 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `woodford-special-district-boards` (data-quality) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 99 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

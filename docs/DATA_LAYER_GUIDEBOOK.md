@@ -256,23 +256,6 @@ trusted.
       "wanted": "One line from the County Clerk: does Sandusky precinct still exist, or was it folded into another? Current precinct boundaries in any form would answer it too."
     },
     {
-      "id": "aurora-council-contact",
-      "concept": "Municipal council contact",
-      "area": "Aurora (Kane, DuPage, Kendall and Will counties)",
-      "counties": [
-        "kane",
-        "will",
-        "dupage",
-        "kendall"
-      ],
-      "kind": "blocked",
-      "layer": "municipality",
-      "summary": "Aurora's 12 council members show with the right ward, but with no phone number or e-mail address.",
-      "why": "The city's site opens normally in a browser but refuses automated visits, and the ward map data carries no contact details.",
-      "blocker": "Re-checked 31 Jul 2026, when the old blocker had genuinely lifted: Aurora had moved to www.aurora.il.us, the new site answered, and all 12 aldermen's pages published a city e-mail address and the Alderman's Office phone. The ward boundary data carries no officeholder details, so contact has to come from those 12 pages, and reading them was queued rather than done. RE-MEASURED 2026-08-20: THE WINDOW CLOSED FIRST. www.aurora.il.us now answers 403 Access Denied to every path tried — the root, /government, /government/city-council, /residents and /directory.aspx, 374 to 405 bytes each — and the refusal is AKAMAI's: the body carries Akamai's own error reference and errors.edgesuite.net, and the response carries the ak_p server-timing header. That is the Joliet class, a flat WAF deny rather than a challenge a browser works through, so this stopped being queued work and became a sourcing block. CHECKED WHO ANSWERED, because this project's own rule is that a 403 from an egress proxy is not a 403 from a site: the proxy reported the tunnel established and the denial is the origin's. THE READER IS UNAFFECTED AND THAT DISTINCTION IS THE POINT — the card's link (aurora-il.org, which 301s to www.aurora.il.us) opens normally in a real browser; what is refused is the automated read, so this is a sourcing block and not a broken link, and the link gate is right to treat a roster-carried 403 as ordinary. A DECOY TO NAME BEFORE IT COSTS SOMEONE THE BUILD: cityofaurora.org redirects to aurorane.gov, the City of Aurora NEBRASKA — the browncountyil.org / Clay-County-Missouri class of wrong-state hit, and the obvious thing to type for Illinois's second-largest city.",
-      "wanted": "Phone and e-mail for the 12 aldermen — a council directory from any of the four county clerks Aurora spans would do it."
-    },
-    {
       "id": "blocked-crawlers",
       "concept": "County board rosters",
       "area": "McHenry, Kendall and DeKalb",
@@ -3514,15 +3497,15 @@ trusted.
       },
       {
             "id": "tn-judicial-district-officers",
-            "concept": "Trial court judges and district attorneys",
+            "concept": "District attorneys general",
             "area": "Tennessee — all 32 judicial districts",
             "counties": [],
             "kind": "no-source",
             "layer": "tn-judicial-district",
-            "summary": "Your Judicial District card says which district you are in and who elects its judges and district attorney, and names none of them yet.",
-            "why": "The district attorneys' own pages name each one, and this app does not read them yet. No list of the judges by district has been read: the courts' own website turns away automated requests.",
-            "wanted": "Nothing from a reader for the district attorneys, which is ours to build. For the judges, a list of each district's circuit judges and chancellors that this project can read.",
-            "blocker": "MEASURED 2026-10-16. The 32 districts are drawn from the District Attorneys General Conference's own county selector (requested at tennesseeda.gov, served at www.tndagc.org), checked against 31 of the 32 district pages and against the Comptroller's FY2019 judicial map, which differs only in the 21st, later split into the 21st and 32nd (tn/scripts/build_tn_judicial_districts.py, sources in tn/data/source/courts/). EVERY DISTRICT PAGE READ NAMES ITS DISTRICT ATTORNEY GENERAL — the 21st's reads \"Stacey B. Edmonson, 21st District Attorney General\" — so the district attorneys are ours to build, as a weekly roster from the same pages, which needs a new refresh workflow. District 2's page leads to the district attorney's own site, sullivancountyda.com, whose robots.txt answered HTTP 521 on 2026-10-16 (disallow-all under RFC 9309), so that one district needs a second route. THE JUDGES ARE HARDER: the courts' own site, www.tncourts.gov, answers every request, robots.txt included, with a managed challenge (re-read 2026-10-16 with the districtry token), which this project never works around, and no other list of circuit judges and chancellors by district has been read. THE STATUTE WAS NOT READ EITHER: the public copy of the Tennessee Code is published by LexisNexis, and the General Assembly's own site, capitol.tn.gov, admits eight named search and archive crawlers in robots.txt and refuses every other client (re-read 2026-10-16). All three are data-publishing hurdles."
+            "summary": "Your Judicial District card names the district's judges and says who elects its district attorney general, and does not name the district attorney yet.",
+            "why": "The district attorneys' own pages name each one, and this app does not read them yet.",
+            "wanted": "Nothing from a reader: the district attorneys are ours to build, from their own pages.",
+            "blocker": "MEASURED 2026-10-16. The 32 districts are drawn from the District Attorneys General Conference's own county selector (requested at tennesseeda.gov, served at www.tndagc.org), checked against 31 of the 32 district pages and against the Comptroller's FY2019 judicial map, which differs only in the 21st, later split into the 21st and 32nd (tn/scripts/build_tn_judicial_districts.py, sources in tn/data/source/courts/). EVERY DISTRICT PAGE READ NAMES ITS DISTRICT ATTORNEY GENERAL — the 21st's reads \"Stacey B. Edmonson, 21st District Attorney General\" — so the district attorneys are ours to build, as a weekly roster from the same pages, which needs a new refresh workflow. District 2's page leads to the district attorney's own site, sullivancountyda.com, whose robots.txt answered HTTP 521 on 2026-10-16 (disallow-all under RFC 9309), so that one district needs a second route. THE JUDGES ARE NAMED SINCE 2026-11-25. The courts' own site, www.tncourts.gov, answers this project's reader with a managed challenge (measured 2026-10-09 and 2026-10-16), and on 2026-11-25, on Adam's yes of that day, its judge directory was read once by hand in his own Chrome, where no check page appeared; its robots.txt disallows only admin, search and login paths. The directory proved out of date: against the courts' own notices it listed four judges who had retired, the prior holders of the two seats the courts had declared vacant, and a senior judge, and it lacked three 2025 appointees, two of whom Nashville's own trial courts' page also lacks. So the card names the directory's judges less those seven, prints the two seats as vacant, adds nobody from an appointment notice, and requires the 20th District to equal Nashville's page (tn/scripts/build_tn_trial_judges.py; snapshots in tn/data/source/courts/). There is no weekly refresh, because the site still refuses this project's reader; the re-check is in tn/WATCH.md. THE STATUTE WAS NOT READ: the public copy of the Tennessee Code is published by LexisNexis, and the General Assembly's own site, capitol.tn.gov, admits eight named search and archive crawlers in robots.txt and refuses every other client (re-read 2026-10-16). A court directory that lags its own announcements, and a court site that refuses automated readers, are data-publishing hurdles."
       },
       {
             "id": "warren-commission-phone-area-code",
@@ -5825,6 +5808,30 @@ card beside it. The record's blocker as it stood at retirement follows.
 > FIXED THE SAME DAY, HAVING BEEN RECORDED HERE AND LEFT: build_ia_county_officers.py's module docstring said "Seven counties fail one or both (measured 2026-08-28)" and named Henry. It now states the count the builder prints rather than a figure beside it.
 >
 > ASK: ASKED 2026-10-01 -- sent to the county's elections office mailbox, elections@pottcounty-ia.gov, which is the address ia-county-auditors.json carries for the Auditor, with the letter addressed to Auditor Mary Ann Hanusa by name; it did not go to a mailbox of her own. Confirmed in the operator's own sent folder at 14:54:03 UTC. One letter asking for the board's size and its members, which is the only route left here, the county's own site being shut to every client. No answer yet; the follow-up falls due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. A record earns nothing toward the fourth test until that letter has been refused, or followed up once and met thirty days of silence, so the `covers` tag here names which level is open and claims nothing closed, and the `ask` block says `pending` for the same reason. ASK LEDGER CORRECTED 2026-10-30 from the mailbox, read by the Letters thread: Adam sent the follow-up on 2026-10-26 13:41 UTC. Auditor Mary Ann Hanusa replied the same day, 20:44 UTC, naming five supervisors (Susan Miller, Keith Jones, Tim Wichman, Jeff Jorgensen, Brian Shea), and at 21:25 UTC, asked which district each represents: "The Supervisors are elected at- large, and do not represent individual districts." So the board is five, elected at large, and the names are obtainable from the county's own Auditor and not yet shipped. The covers tag is removed because an answered ask claims nothing; the open level is now this project's work.
+
+## Closed record — Aurora's aldermen's phones and e-mails (opened 2026-07-31, closed 2026-11-25)
+
+This was the `aurora-council-contact` gap in the Illinois block above. Aurora's
+12 aldermen showed on the ward and municipality cards with no phone or e-mail,
+because the city's site refuses automated visits and its ward map carries no
+contact details.
+
+CLOSED 2026-11-25. On Adam's 2026-11-25 go-ahead (one-off reads in his own
+browser of public pages that turn away our reader, including pages robots.txt
+asks crawlers to stay off), the city's Elected officials page
+(https://www.aurora.il.us/Elected-officials) was read once in his Chrome. It
+loaded with no check page. Each of the 12 cards prints one phone number and one
+`@aurora.il.us` e-mail beside that alderman alone, no two numbers repeat, and
+none equals the city hall line, so all 24 values are the members' own under
+this project's contact rule. All 12 names matched the county directory's
+roster, ward for ward. The snapshot is
+`il/data/source/aurora-council-2026-11-25.json`, passed to
+`build_municipal_officials_roster.py` as an `--enrich` payload by the weekly
+municipal workflow; nothing re-fetches it, so it can only fill contact the
+county left empty, and refreshing it means reading the page again. The record's
+blocker as it stood at retirement follows.
+
+> Re-checked 31 Jul 2026, when the old blocker had genuinely lifted: Aurora had moved to www.aurora.il.us, the new site answered, and all 12 aldermen's pages published a city e-mail address and the Alderman's Office phone. The ward boundary data carries no officeholder details, so contact has to come from those 12 pages, and reading them was queued rather than done. RE-MEASURED 2026-08-20: THE WINDOW CLOSED FIRST. www.aurora.il.us now answers 403 Access Denied to every path tried — the root, /government, /government/city-council, /residents and /directory.aspx, 374 to 405 bytes each — and the refusal is AKAMAI's: the body carries Akamai's own error reference and errors.edgesuite.net, and the response carries the ak_p server-timing header. That is the Joliet class, a flat WAF deny rather than a challenge a browser works through, so this stopped being queued work and became a sourcing block. CHECKED WHO ANSWERED, because this project's own rule is that a 403 from an egress proxy is not a 403 from a site: the proxy reported the tunnel established and the denial is the origin's. THE READER IS UNAFFECTED AND THAT DISTINCTION IS THE POINT — the card's link (aurora-il.org, which 301s to www.aurora.il.us) opens normally in a real browser; what is refused is the automated read, so this is a sourcing block and not a broken link, and the link gate is right to treat a roster-carried 403 as ordinary. A DECOY TO NAME BEFORE IT COSTS SOMEONE THE BUILD: cityofaurora.org redirects to aurorane.gov, the City of Aurora NEBRASKA — the browncountyil.org / Clay-County-Missouri class of wrong-state hit, and the obvious thing to type for Illinois's second-largest city.
 
 ## Closed record — Whiteside County's fire and park districts (opened 2026-09-05, closed 2026-10-30)
 

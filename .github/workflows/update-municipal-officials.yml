@@ -722,6 +722,11 @@ jobs:
           add "${{ steps.scrape_lake_cities.outcome }}" round-lake-beach enrich /tmp/round-lake-beach_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" vernon-hills     enrich /tmp/vernon-hills_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" waukegan         enrich /tmp/waukegan_council.json
+          # Aurora's aldermen's phones and e-mails: a committed snapshot of the
+          # city's own page, read once by hand on 2026-11-25 (the site refuses
+          # automated visits). Nothing fetches it, so it cannot fail; it only
+          # fills contact the county directory left empty.
+          enrich+=(il/data/source/aurora-council-2026-11-25.json)
 
           # The shipped roster is the preserve source, so read it BEFORE the
           # builder overwrites it in place.
