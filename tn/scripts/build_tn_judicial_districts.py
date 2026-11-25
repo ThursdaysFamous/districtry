@@ -175,6 +175,10 @@ def main():
     if args.check:
         wcc.check("tn", LABEL, tilings())
         print("%s: OK" % LABEL)
+        # The judges the same card names are a second file; CI runs this
+        # --check, so it holds that file too.
+        import build_tn_trial_judges  # noqa: E402
+        build_tn_trial_judges.run_check()
     else:
         wcc.build("tn", LABEL, tilings())
 

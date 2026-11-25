@@ -84,7 +84,7 @@ different thing from one it failed.
 | ri | **--M·** | — | — | 0 | 0 | — | 13 | all | 9 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
-| tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 23 | all | 10 of 14 levels |
+| tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 24 | all | 10 of 14 levels |
 | tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
@@ -698,7 +698,7 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `tn-conservation-boards`, `tn-county-commissioners` account for every county in the state, which is what Examined rests on here: 61 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Watched, not rewritten:** `tn/data/app/tn-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Watched, not rewritten:** `tn/data/app/tn-special-school-boards.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tn/data/app/population/`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-school-board-from-commission.json`, `tn-senate-districts.json`
+- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tn/data/app/population/`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-school-board-from-commission.json`, `tn-senate-districts.json`, `tn-trial-judges.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 61 of 95 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city. A record declares this level and earns nothing: `tn-municipal-officeholders` (4740000) — KGIS, the mapping agency of the City of Knoxville, Knox County and the Knoxville Utilities Board (kgis@kgis.org) was asked on 2026-10-17 and has not answered; the record earns nothing until a thread writes the outcome
