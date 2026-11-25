@@ -158,7 +158,7 @@
      "title": "County Clerk"
     },
     {
-     "email": "rickeyf7@msn.com",
+     "email": "r.cookseyf7@gmail.com",
      "first": "Rickey",
      "last": "Cooksey",
      "phone": "(270) 622-7527",
@@ -358,18 +358,18 @@
      "title": "County Magistrate"
     },
     {
+     "email": "jcampbell50@brtc.net",
+     "first": "James",
+     "last": "Campbell",
+     "phone": "(270) 335-3691",
+     "title": "County Jailer"
+    },
+    {
      "email": "ballardjex@brtc.net",
      "first": "Todd",
      "last": "Cooper",
      "phone": "(270) 335-5176",
      "title": "County Judge Executive"
-    },
-    {
-     "email": "bcjail@brtc.net",
-     "first": "Eric",
-     "last": "Coppess",
-     "phone": "(270) 335-3691",
-     "title": "County Jailer"
     },
     {
      "first": "Sonnie L.",
@@ -393,7 +393,7 @@
     {
      "email": "farmin4@yahoo.com",
      "first": "Ryan",
-     "last": "Hendrick",
+     "last": "Hedrick",
      "phone": "(270) 349-3847",
      "title": "County Magistrate"
     },
@@ -1326,10 +1326,11 @@
      "title": "County Clerk"
     },
     {
+     "email": "hargis.epperson@breathitt.org",
      "first": "Hargis",
      "last": "Epperson",
      "phone": "(606) 666-3800",
-     "title": "County Coroner"
+     "title": "County Judge Executive"
     },
     {
      "email": "joelgross94@yahoo.com",
@@ -1339,13 +1340,20 @@
      "title": "County Jailer"
     },
     {
+     "email": "jasonhall1999@att.net",
+     "first": "Jason",
+     "last": "Hall",
+     "phone": "(606) 270-0524",
+     "title": "County Coroner"
+    },
+    {
      "first": "John",
      "last": "Hollan",
      "phone": "(606) 666-3800",
      "title": "County Sheriff"
     },
     {
-     "email": "Edie.Lisk@outlook.com",
+     "email": "edie.lisk@breathitt.org",
      "first": "Edie",
      "last": "Lisk",
      "phone": "(502) 370-1668",
@@ -1376,13 +1384,6 @@
      "last": "Miller",
      "phone": "(606) 666-4400",
      "title": "County Attorney"
-    },
-    {
-     "email": "bcjudgenoble@yahoo.com",
-     "first": "Jeff",
-     "last": "Noble",
-     "phone": "(606) 666-3800",
-     "title": "County Judge Executive"
     },
     {
      "email": "brendafterry@icloud.net",
@@ -1859,7 +1860,7 @@
     },
     {
      "email": "n.knight@callkyso.com",
-     "first": "Ncky",
+     "first": "Nicky",
      "last": "Knight",
      "phone": "(270) 753-3151",
      "title": "County Sheriff"
@@ -1879,7 +1880,7 @@
      "title": "County Magistrate"
     },
     {
-     "email": "trobinson@callowayky.com",
+     "email": "trobinson@callowaycountyky.gov",
      "first": "Tonya",
      "last": "Robinson",
      "phone": "(270) 753-4030",
@@ -2036,9 +2037,9 @@
      "title": "County Attorney"
     },
     {
-     "email": "becky.martin@ky.gov",
-     "first": "Becky",
-     "last": "Martin",
+     "email": "lindsey.lemons@ky.gov",
+     "first": "Lindsey",
+     "last": "Lemons",
      "phone": "(270) 628-3233",
      "title": "County Clerk"
     },
@@ -2314,7 +2315,7 @@
      "title": "County Magistrate"
     },
     {
-     "email": "m.richards@windstream.net",
+     "email": "treasurer@caseycountyky.gov",
      "first": "Melissa",
      "last": "Richards",
      "phone": "(606) 787-8311",
@@ -2414,7 +2415,7 @@
     },
     {
      "email": "jgilliam@christiancountyky.gov",
-     "first": "2",
+     "first": "Jerry",
      "last": "Gilliam",
      "phone": "(270) 887-4100",
      "title": "County Judge Executive"
@@ -2796,7 +2797,7 @@
      "title": "County Magistrate"
     },
     {
-     "email": "jeffcindyhorses@hotmail.com",
+     "email": "cindythrasher55@aol.com",
      "first": "Cindy",
      "last": "Thrasher",
      "phone": "(606) 387-4633",
@@ -3823,7 +3824,7 @@
     },
     {
      "email": "hulin.timothy@yahoo.com",
-     "first": "Darrin",
+     "first": "Darren",
      "last": "Hulin",
      "phone": "(270) 236-2594",
      "title": "County Coroner"
@@ -3911,7 +3912,7 @@
      "title": "County Attorney"
     },
     {
-     "email": "treasurer@gallatinky.org",
+     "email": "treasurer@gallatinky.gov",
      "first": "Lesa",
      "last": "Bullard",
      "phone": "(859) 567-5691",
@@ -4159,6 +4160,13 @@
      "title": "County Coroner"
     },
     {
+     "email": "kmitts@grantco.org",
+     "first": "Keisha",
+     "last": "Mitts",
+     "phone": "(859) 823-0251",
+     "title": "County Treasurer"
+    },
+    {
      "email": "jriley@grantco.org",
      "first": "Jacqalynn",
      "last": "Riley",
@@ -4178,13 +4186,6 @@
      "last": "Switzer",
      "phone": "(859) 824-3333",
      "title": "County Sheriff"
-    },
-    {
-     "email": "peupdike@grantco.org",
-     "first": "Peggy",
-     "last": "Updike",
-     "phone": "(859) 823-0251",
-     "title": "County Treasurer"
     }
    ],
    "phone": "(859) 823-7561",
@@ -4984,7 +4985,7 @@
      "title": "County Judge Executive"
     },
     {
-     "email": "hctreasurer@hcfcky.com",
+     "email": "hctreasurer@hcfcky.org",
      "first": "Melody",
      "last": "McClure",
      "phone": "(852) 347-7136",
@@ -5730,7 +5731,7 @@
    "mailCity": "Nicholasville",
    "officials": [
     {
-     "email": "canglin@jessamineco.com",
+     "email": "canglin@jessamineky.gov",
      "first": "Chris",
      "last": "Anglin",
      "phone": "(859) 724-7394",
@@ -5942,7 +5943,7 @@
      "title": "County Jailer"
     },
     {
-     "email": "kurt.greivenkamp@kentoncounty.org",
+     "email": "kurt.greivenkamp@kentoncountyky.gov",
      "first": "Kurt",
      "last": "Greivenkamp",
      "phone": "(859) 392-1444",
@@ -8939,13 +8940,6 @@
      "title": "County Magistrate"
     },
     {
-     "email": "crlcpa@att.net",
-     "first": "Charles",
-     "last": "Lewis",
-     "phone": "(270) 338-1709",
-     "title": "County Treasurer"
-    },
-    {
      "email": "m.mcgehee@muhlenbergcountyky.org",
      "first": "Mack",
      "last": "McGehee",
@@ -8958,6 +8952,13 @@
      "last": "McKinney",
      "phone": "(270) 338-4664",
      "title": "County PVA"
+    },
+    {
+     "email": "l.montgomery@muhlenbergcountyky.org",
+     "first": "Laura",
+     "last": "Montgomery",
+     "phone": "(270) 338-1709",
+     "title": "County Treasurer"
     },
     {
      "email": "jailer@muhlenbergdetention.com",
@@ -9448,7 +9449,7 @@
     {
      "email": "barbara.winters@ky.gov",
      "first": "Barbara",
-     "last": "Winters",
+     "last": "Winters Dietrich",
      "phone": "(502) 229-9320",
      "title": "County PVA"
     },
@@ -12121,7 +12122,7 @@
      "title": "County Clerk"
     },
     {
-     "email": "wolfecofc@gmail.com",
+     "email": "porter@wolfecountyky.com",
      "first": "Porter",
      "last": "Harris",
      "phone": "(606) 668-3040",
@@ -12303,7 +12304,7 @@
  },
  "source": {
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-10-29",
+  "read": "2026-11-25",
   "url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm"
  }
 }
