@@ -146,25 +146,11 @@ POP_VINTAGE = "Census 2020"
 # rather than a read: each entry is a measurement of a named host on a named day,
 # and `check` refuses to ship an area that names nobody and explains nothing.
 # An entry leaves by the council becoming readable, never by being deleted.
+# On 2026-11-25 seventeen entries left that way: their pages were read once by
+# hand in Adam's Chrome, on his ruling of that day, and the councils are in
+# data/tribal-council-browser-reads.json. The pages tried that day and still
+# not carried say what the browser showed, dated 2026-11-25.
 ROSTER_BLOCKED = {
-    "1410": {
-        "host": "hannahville.net",
-        "measured": "2026-10-01",
-        "why": "The nation's own site is the authority for its council, and that "
-               "host is recorded as answering some requests with a managed "
-               "challenge and others normally (challenged 3 of 6 reads across "
-               "two clients, measured 2026-09-29). Getting in on the reads where "
-               "a control happens to be off is working around it, so no name is "
-               "carried and the card links the nation instead.",
-    },
-    "1880": {
-        "host": "kbic-nsn.gov",
-        "measured": "2026-10-01",
-        "why": "The nation's own site is the authority for its council, and that "
-               "host is recorded as answering some requests with a managed "
-               "challenge (measured 2026-09-29). An access control is not worked "
-               "around, so no name is carried and the card links the nation.",
-    },
     "1960": {
         "host": "lrboi-nsn.gov",
         "measured": "2026-10-01",
@@ -173,15 +159,6 @@ ROSTER_BLOCKED = {
                "answer HTTP 200 at /member-only-error, measured 2026-10-01. That "
                "is the nation's own decision about its own roll, so no name is "
                "carried and the card links the nation.",
-    },
-    "2580": {
-        "host": "kbic-nsn.gov",
-        "measured": "2026-10-01",
-        "why": "The Ontonagon Reservation is held by the same government as the "
-               "L'Anse Reservation, whose own site is recorded as answering some "
-               "requests with a managed challenge (measured 2026-09-29). An "
-               "access control is not worked around, so no name is carried and "
-               "the card links the nation.",
     },
     "1355": {
         "host": "www.grandportage.com",
@@ -199,15 +176,6 @@ ROSTER_BLOCKED = {
                "three District Representatives) without naming who holds those "
                "seats (read 2026-10-10), so no name is carried and the card links "
                "the band.",
-    },
-    "2985": {
-        "host": "www.prairieisland.org",
-        "measured": "2026-10-10",
-        "why": "The community's website could not be read from where this project "
-               "is built, because its security certificate could not be checked "
-               "(2026-10-10). Whether the fault is the site's or this project's "
-               "connection is not settled, so no name is carried and the card links "
-               "the community.",
     },
     "2555": {
         "host": "www.oneidaindiannation.com",
@@ -258,36 +226,19 @@ ROSTER_BLOCKED = {
     },
     "2550": {
         "host": "www.omaha-nsn.gov",
-        "measured": "2026-10-10",
+        "measured": "2026-11-25",
         "why": "The tribe's website, as the Bureau of Indian Affairs lists it, "
-               "could not be reached from where this project is built (2026-10-10), "
-               "so its rules for automated readers could not be read and nothing "
-               "was fetched. No name is carried and the card links the tribe.",
-    },
-    "3280": {
-        "host": "www.meskwaki.org",
-        "measured": "2026-10-10",
-        "why": "The tribe's own site answered both this project's robots.txt "
-               "request and its front page with an automated challenge page "
-               "(2026-10-10). A check like that is not worked around, so no name "
-               "is carried and the card links the tribe.",
+               "could not be reached from where this project is built (2026-10-10) "
+               "or in a web browser (2026-11-25): the address has no DNS record. "
+               "No name is carried and the card links the tribe.",
     },
     "3015": {
         "host": "ebci.com",
-        "measured": "2026-10-10",
-        "why": "The tribe's website could not be read from where this project is "
-               "built, because its security certificate could not be checked "
-               "(2026-10-10). Whether the fault is the site's or this project's "
-               "connection is not settled, so no name is carried and the card links "
-               "the tribe.",
-    },
-    "3100": {
-        "host": "www.redlakenation.org",
-        "measured": "2026-09-29",
-        "why": "The nation's own site is the authority for its council, and that "
-               "site answered this project's robots.txt request with an automated "
-               "challenge page (measured 2026-09-29). A check like that is not "
-               "worked around, so no name is carried and the card links the nation.",
+        "measured": "2026-11-25",
+        "why": "The tribe's website shows a certificate warning in a web browser "
+               "too, with or without the www (2026-11-25), so the fault is the "
+               "site's. A security warning is not clicked through, so no name is "
+               "carried and the card links the tribe.",
     },
     # Measured 2026-10-20 with tribal_council_scraper.py's client. The Bureau
     # lists koasatiheritage.org, whose robots.txt allows every path and whose
@@ -313,41 +264,19 @@ ROSTER_BLOCKED = {
     # miccosukee.com, which answered a Cloudflare challenge page ("Just a
     # moment...").
     "2240": {
-        "host": "miccosukee.com",
-        "measured": "2026-11-12",
-        "why": "www.miccosukee.com answered this project with an automated "
-               "challenge page (2026-11-12), and a check like that is not worked "
-               "around, so no name is carried. The address the Bureau of Indian "
-               "Affairs lists for the tribe, which this card links, had no DNS "
-               "record the same day.",
-    },
-    # Measured 2026-11-12 with the same client: the address the Bureau lists,
-    # www.poarchcreekindians.org (no robots.txt), forwards with a 301 to
-    # www.pci-nsn.gov; pci-nsn.gov's robots.txt (169 bytes) allows every path,
-    # and its front page answered HTTP 403 with a Cloudflare challenge page
-    # ("Just a moment..."). The Poarch Band is seated
-    # in Alabama and holds only a 0.007 km2 sliver in Florida; its council
-    # belongs with Alabama's tribal land, where this is measured again.
-    "2865": {
-        "host": "pci-nsn.gov",
-        "measured": "2026-11-12",
-        "why": "The tribe's own site, where the address the Bureau of Indian "
-               "Affairs lists forwards, answered this project with an automated "
-               "challenge page (2026-11-12). A check like that is not worked "
-               "around, so no name is carried and the card links the tribe.",
+        "host": "www.miccosukee.com",
+        "measured": "2026-11-25",
+        "why": "www.miccosukee.com, read by hand in a web browser on 2026-11-25, "
+               "is the tribe's casino and resort site and gives nothing of the "
+               "tribe's government, and the address the Bureau of Indian Affairs "
+               "lists for the tribe had no DNS record on 2026-11-12 or 2026-11-25, "
+               "so the card links no site. No name is carried.",
     },
     # Washington, Arizona, Nevada and California, measured 2026-11-13 with
     # tribal_council_scraper.py's client (robots.txt read first, then the
     # page). Each nation whose own page names its whole council is in
     # data/tribal-councils.json; these are the rest. A nation with several
     # pieces of land has one entry per piece, saying the same thing.
-    "0020": {
-        "host": "www.aguacaliente.org",
-        "measured": "2026-11-13",
-        "why": "The band's own site answered this project with HTTP 403, a refusal "
-               "(2026-11-13). A refusal is not worked around, so no name is "
-               "carried and the card links the band.",
-    },
     "0095": {
         "host": "www.bia.gov",
         "measured": "2026-11-13",
@@ -402,11 +331,13 @@ ROSTER_BLOCKED = {
     },
     "0450": {
         "host": "www.campo-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The band's own site could not say whether automated readers may "
-               "read it: its robots.txt answered HTTP 500 (2026-11-13), which this "
-               "project reads as a refusal, so nothing was fetched. No name is "
-               "carried and the card links the band.",
+        "measured": "2026-11-25",
+        "why": "The band's own Executive Committee page, read by hand in a web "
+               "browser on 2026-11-25, names four members (a chairperson, a vice "
+               "chairperson, a secretary and one committee member) and does not "
+               "say how many seats the committee has. A council is carried only "
+               "where its page names or lists as vacant all of its seats, or all "
+               "but one, so the card links the band.",
     },
     "0495": {
         "host": "www.barona-nsn.gov",
@@ -427,10 +358,11 @@ ROSTER_BLOCKED = {
     },
     "0585": {
         "host": "www.chemehuevi.net",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site answered this project with HTTP 403, a "
-               "refusal (2026-11-13). A refusal is not worked around, so no name "
-               "is carried and the card links the tribe.",
+        "measured": "2026-11-25",
+        "why": "The address the Bureau of Indian Affairs lists for the tribe "
+               "showed a parked domain with nothing of the tribe's on it, read by "
+               "hand in a web browser on 2026-11-25, and this project has found no "
+               "other site of the tribe's own, so no name is carried.",
     },
     "0620": {
         "host": "chickenranchrancheria.org",
@@ -477,11 +409,10 @@ ROSTER_BLOCKED = {
     },
     "1065": {
         "host": "leaningrock.org",
-        "measured": "2026-11-13",
-        "why": "The band's own site could not say whether automated readers may "
-               "read it: its robots.txt request had its connection reset "
-               "(2026-11-13), which this project reads as a refusal, so nothing "
-               "was fetched. No name is carried.",
+        "measured": "2026-11-25",
+        "why": "The band's own site, read by hand in a web browser on 2026-11-25, "
+               "names a past chairman and no current council member, so no name is "
+               "carried.",
     },
     "1140": {
         "host": "www.wmat.us",
@@ -500,11 +431,13 @@ ROSTER_BLOCKED = {
                "carried.",
     },
     "1195": {
-        "host": "www.fortindependence.com",
-        "measured": "2026-11-13",
-        "why": "The community's own site asks automated readers not to read it "
-               "(its robots.txt disallows every path, read 2026-11-13), so nothing "
-               "was fetched. No name is carried and the card links the community.",
+        "host": "fortindependence.com",
+        "measured": "2026-11-25",
+        "why": "The community's own government page, read once by hand in a web "
+               "browser on 2026-11-25, names three officers, does not say how many "
+               "seats its board has, and carries a letter from the board written "
+               "in 2020. It cannot be shown to name today's whole board, so no "
+               "name is carried and the card links the community.",
     },
     "1210": {
         "host": "www.bia.gov",
@@ -516,11 +449,10 @@ ROSTER_BLOCKED = {
     },
     "1220": {
         "host": "www.ftmcdowell.org",
-        "measured": "2026-11-13",
-        "why": "The nation's own site could not say whether automated readers may "
-               "read it: its robots.txt answered HTTP 503 (2026-11-13), which this "
-               "project reads as a refusal, so nothing was fetched. No name is "
-               "carried and the card links the nation.",
+        "measured": "2026-11-25",
+        "why": "The nation's site did not load in a web browser either "
+               "(2026-11-25), so nothing could be read and no name is carried. The "
+               "card links the nation.",
     },
     "1395": {
         "host": "www.bia.gov",
@@ -538,18 +470,11 @@ ROSTER_BLOCKED = {
                "when it searched on 2026-11-13, so no name is carried.",
     },
     "1440": {
-        "host": "www.havasupaitribe.com",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site answered this project with HTTP 403, a "
-               "refusal (2026-11-13). A refusal is not worked around, so no name "
-               "is carried and the card links the tribe.",
-    },
-    "1460": {
-        "host": "www.hohtribe-nsn.org",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site answered this project with an automated "
-               "verification page (2026-11-13). A check like that is not worked "
-               "around, so no name is carried and the card links the tribe.",
+        "host": "www.havasupai-nsn.gov",
+        "measured": "2026-11-25",
+        "why": "The tribe's site forwards to www.havasupai-nsn.gov, which answered "
+               "a web browser with an error page from its hosting service on "
+               "2026-11-25, so nothing could be read and no name is carried.",
     },
     "1560": {
         "host": "www.bia.gov",
@@ -578,17 +503,7 @@ ROSTER_BLOCKED = {
         "host": "www.kaibabpaiute-nsn.gov",
         "measured": "2026-11-13",
         "why": "The band's own Tribal Council page names no council member (read "
-               "2026-11-13), so no name is carried. The address the Bureau of "
-               "Indian Affairs lists for the band's council, which this card "
-               "links, answered HTTP 404 the same day.",
-    },
-    "1735": {
-        "host": "kalispeltribe.com",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site could not say whether automated readers may "
-               "read it: its robots.txt answered HTTP 500 (2026-11-13), which this "
-               "project reads as a refusal, so nothing was fetched. No name is "
-               "carried and the card links the tribe.",
+               "2026-11-13), so no name is carried.",
     },
     "1850": {
         "host": "www.lajollaindians.com",
@@ -688,14 +603,6 @@ ROSTER_BLOCKED = {
                "only in pictures, with no names in its text (read 2026-11-13), so "
                "no name is carried and the card links the rancheria.",
     },
-    "2745": {
-        "host": "www.pechanga-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The band's own site could not say whether automated readers may "
-               "read it: its robots.txt answered HTTP 503 (2026-11-13), which this "
-               "project reads as a refusal, so nothing was fetched. No name is "
-               "carried and the card links the band.",
-    },
     "2820": {
         "host": "pinolevillepomonation.org",
         "measured": "2026-11-13",
@@ -714,13 +621,6 @@ ROSTER_BLOCKED = {
                "the tribe had no DNS record the same day, so the card does not "
                "link it.",
     },
-    "3000": {
-        "host": "www.puyalluptribe-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site answered this project with an automated "
-               "verification page (2026-11-13). A check like that is not worked "
-               "around, so no name is carried and the card links the tribe.",
-    },
     "3010": {
         "host": "plpt.nsn.us",
         "measured": "2026-11-13",
@@ -730,9 +630,10 @@ ROSTER_BLOCKED = {
     },
     "3020": {
         "host": "www.qvir.com",
-        "measured": "2026-11-13",
-        "why": "The community's own site answered this project with HTTP 403, a "
-               "refusal (2026-11-13). A refusal is not worked around, so no name "
+        "measured": "2026-11-25",
+        "why": "The community's own site answered a web browser too with a check "
+               "page that asks the visitor to tick a box to prove they are human "
+               "(2026-11-25). This project does not answer such checks, so no name "
                "is carried and the card links the community.",
     },
     "3070": {
@@ -753,12 +654,10 @@ ROSTER_BLOCKED = {
     },
     "3165": {
         "host": "www.rincontribe.org",
-        "measured": "2026-11-13",
-        "why": "The band's website could not be read from where this project is "
-               "built, because the secure connection to it could not be set up "
-               "(2026-11-13). Whether the fault is the site's or this project's "
-               "connection is not settled, so no name is carried and the card "
-               "links the band.",
+        "measured": "2026-11-25",
+        "why": "The band's site did not load in a web browser either, at its own "
+               "address or without the www (2026-11-25), so nothing could be read "
+               "and no name is carried. The card links the band.",
     },
     "3185": {
         "host": "pitrivertribe.gov",
@@ -792,17 +691,18 @@ ROSTER_BLOCKED = {
     },
     "3460": {
         "host": "www.sanpasqualtribe.com",
-        "measured": "2026-11-13",
-        "why": "The band's own site answered this project with HTTP 403, a refusal "
-               "(2026-11-13). A refusal is not worked around, so no name is "
-               "carried and the card links the band.",
+        "measured": "2026-11-25",
+        "why": "The address the Bureau of Indian Affairs lists for the band showed "
+               "a parked domain with nothing of the band's on it, read by hand in "
+               "a web browser on 2026-11-25, and this project has found no other "
+               "site of the band's own, so no name is carried.",
     },
     "3525": {
         "host": "www.santarosacahuilla-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The band's own site answered with a page that has no content "
-               "beyond its title (read 2026-11-13), so no name is carried and the "
-               "card links the band.",
+        "measured": "2026-11-25",
+        "why": "The band's own site shows only its name and a copyright line, in a "
+               "web browser too (2026-11-25), so no name is carried and the card "
+               "links the band.",
     },
     "3550": {
         "host": "iipaynationofsantaysabel-nsn.gov",
@@ -826,25 +726,11 @@ ROSTER_BLOCKED = {
     },
     "3940": {
         "host": "www.spokanetribe.com",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site answered this project with HTTP 403, a "
-               "refusal (2026-11-13). A refusal is not worked around, so no name "
-               "is carried and the card links the tribe.",
-    },
-    "3955": {
-        "host": "squaxinisland.org",
-        "measured": "2026-11-13",
-        "why": "The tribe's council page answered this project's reader with a "
-               "page whose only text is its title (2026-11-13), so no name could "
-               "be read from it. No name is carried and the card links the tribe.",
-    },
-    "3985": {
-        "host": "stewartspoint.org",
-        "measured": "2026-11-13",
-        "why": "The band's own site could not be read (2026-11-13): its front "
-               "page forwards in a loop, and the address the Bureau of Indian "
-               "Affairs lists answered HTTP 500, so the card does not link it. "
-               "No name is carried.",
+        "measured": "2026-11-25",
+        "why": "The tribe's own council page, read by hand in a web browser on "
+               "2026-11-25, heads its list of the five council members \"2023-24 "
+               "Council Assignments\", so it may not be today's council. No name is "
+               "carried and the card links the tribe.",
     },
     "4030": {
         "host": "www.bia.gov",
@@ -853,27 +739,12 @@ ROSTER_BLOCKED = {
                "Colony, and this project found no site of the colony's own when it "
                "searched on 2026-11-13, so no name is carried.",
     },
-    "4045": {
-        "host": "www.summitlaketribe.org",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site could not say whether automated readers may "
-               "read it: its robots.txt request had its connection reset "
-               "(2026-11-13), which this project reads as a refusal, so nothing "
-               "was fetched. No name is carried.",
-    },
-    "4075": {
-        "host": "www.swinomish-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The community's own site answered this project with HTTP 403, a "
-               "refusal (2026-11-13). A refusal is not worked around, so no name "
-               "is carried and the card links the community.",
-    },
     "4095": {
         "host": "www.wiyot.com",
-        "measured": "2026-11-13",
-        "why": "The tribe's own site asks automated readers not to read it (its "
-               "robots.txt disallows every path, read 2026-11-13), so nothing was "
-               "fetched. No name is carried and the card links the tribe.",
+        "measured": "2026-11-25",
+        "why": "The tribe's site shows a certificate warning in a web browser "
+               "(2026-11-25), and a security warning is not clicked through, so "
+               "nothing was read and no name is carried. The card links the tribe.",
     },
     "4235": {
         "host": "www.bia.gov",
@@ -881,15 +752,6 @@ ROSTER_BLOCKED = {
         "why": "The Bureau of Indian Affairs lists no website for the Tonto Apache "
                "Tribe, and this project found no site of the tribe's own when it "
                "searched on 2026-11-13, so no name is carried.",
-    },
-    "4300": {
-        "host": "www.tulerivertribe-nsn.gov",
-        "measured": "2026-11-13",
-        "why": "The tribe's website could not be read from where this project is "
-               "built, because its security certificate could not be checked "
-               "(2026-11-13). Whether the fault is the site's or this project's "
-               "connection is not settled, so no name is carried and the card "
-               "links the tribe.",
     },
     "4330": {
         "host": "www.mewuk.com",
@@ -1088,7 +950,8 @@ COUNCILS = os.path.join(REPO, "data", "tribal-councils.json")
 # PHOTO order (Menominee's and Forest County Potawatomi's captions read left to
 # right), which is no order a reader can use.
 _OFFICE_RANK = [
-    (r"^(?:tribal )?(?:chair(?:man|woman|person)?|president|chief)$", 0),
+    # "Tribal Chair & CEO" (Poarch Creek) and "Chairman and CEO" (Kalispel)
+    (r"^(?:tribal )?(?:chair(?:man|woman|person)?|president|chief)(?: (?:&|and) ceo)?$", 0),
     (r"^vice[- ]|^sub-chief$|^assistant chief$", 1),
     (r"legislative leader", 2),
     (r"secretary|treasurer", 3),
@@ -1127,7 +990,13 @@ def _roster_note(rec):
         return ("Named by the %s's list of Wisconsin tribal officials, updated %s, "
                 "because the nation publishes no council of its own. Read %s."
                 % (rec["publisher"], rec["listUpdated"], when))
-    if rec.get("carriedFrom"):
+    if rec.get("readBy") == "browser":
+        # read once by hand on Adam's ruling of 2026-11-25
+        # (tribal_council_scraper.py's BROWSER_READS), never re-read weekly
+        note = ("From the nation's own council page, read by hand in a web browser "
+                "on %s, because this project's weekly reader cannot read that site. "
+                "It is not re-read each week." % when)
+    elif rec.get("carriedFrom"):
         note = ("From the nation's own council page, last read %s; the page could "
                 "not be read on the most recent weekly run." % when)
     else:
@@ -2468,6 +2337,12 @@ def selftest():
         "list of example tribes, read 2026-10-30. The tribe publishes no council of "
         "its own, and the list names no council member."), officers["rosterNote"]
     assert roster_props("0002", {"0001": rec}) is None
+    by_hand = roster_props("0001", {"0001": dict(rec, readBy="browser", read="2026-11-25",
+                                                 partial="One seat is not named.")})
+    assert by_hand["rosterNote"] == (
+        "From the nation's own council page, read by hand in a web browser on "
+        "2026-11-25, because this project's weekly reader cannot read that site. "
+        "It is not re-read each week. One seat is not named."), by_hand["rosterNote"]
 
     assert _districts_note([], "otsa") == "None. The Census draws no tribal subdivision on this area."
     assert _districts_note(["d%d" % i for i in range(13)], "otsa") == (

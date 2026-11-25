@@ -506,7 +506,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the thirteen nations publish one this project can read; for the other four the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the thirteen nations publish one this project can read weekly; the Red Lake Band's and the Prairie Island Indian Community's were read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read those sites, and dated on the card (data/tribal-council-browser-reads.json). For the other two the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
         "applies": "Minnesota — 22 areas across 13 nations. Most points in the state are on no tribal land."
       }
     }
@@ -729,7 +729,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v15",
+    "cache_name": "districtry-mn-shell-v16",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

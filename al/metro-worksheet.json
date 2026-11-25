@@ -319,7 +319,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "No council is named yet. The Poarch Band's own site answered this project with an automated challenge page (2026-11-12), which is never worked around, so its card says so (ROSTER_BLOCKED in scripts/build_tribal_areas.py); this app has not read a council list for the MOWA Band and has no site of its own to link, and its card says so (ROSTER_NOT_SOUGHT). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the Poarch Band. The MOWA Band is not in that directory, because the United States does not recognize it, so its name and its seat (Mount Vernon) come from the Alabama Indian Affairs Commission's list of the tribes the State of Alabama recognizes (read 2026-11-13), and its card says so and links that list; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The Poarch Band's Tribal Council, from the band's own page at pci-nsn.gov, read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site, and dated on the card (data/tribal-council-browser-reads.json). This app has not read a council list for the MOWA Band and has no site of its own to link, and its card says so (ROSTER_NOT_SOUGHT). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json) for the Poarch Band. The MOWA Band is not in that directory, because the United States does not recognize it, so its name and its seat (Mount Vernon) come from the Alabama Indian Affairs Commission's list of the tribes the State of Alabama recognizes (read 2026-11-13), and its card says so and links that list; the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Alabama — the 3 pieces of land above, most of it in Escambia and Washington counties. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -478,6 +478,11 @@
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 1,
+        "note": "The council of the Poarch Band of Creek Indians, from the band's own page, keyed by the Census AIANNH code of its land (2865) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json. The band's site turns this project's weekly reader away, so the council was read once by hand in a web browser on 2026-11-25 (data/tribal-council-browser-reads.json) and the card gives that date. The same council Florida's card names for the trust land's sliver there. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Alabama elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from al/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
@@ -485,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-al-shell-v2",
+    "cache_name": "districtry-al-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

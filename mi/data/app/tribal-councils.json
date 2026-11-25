@@ -69,6 +69,65 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "1410": {
+  "roster": [
+   {
+    "name": "Kenneth Meshigaud",
+    "role": "Chairperson"
+   },
+   {
+    "name": "Elaine Meshigaud",
+    "role": "Vice Chairperson"
+   },
+   {
+    "name": "Anna Larson",
+    "role": "Secretary"
+   },
+   {
+    "name": "Tessa Keshick",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Robin Halfaday",
+    "role": "Council Member"
+   },
+   {
+    "name": "Lisa Little",
+    "role": "Council Member"
+   },
+   {
+    "name": "Christopher Halfaday",
+    "role": "Council Member"
+   },
+   {
+    "name": "Amanda Hess",
+    "role": "Council Member"
+   },
+   {
+    "name": "Lexie Keshick, Sr.",
+    "role": "Council Member"
+   },
+   {
+    "name": "James Smith",
+    "role": "Council Member"
+   },
+   {
+    "name": "Alicia Bertrand",
+    "role": "Council Member"
+   },
+   {
+    "name": "Parker Trudeau",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://hannahville.net/tribal-council/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "1550": {
   "roster": [
    {
@@ -206,6 +265,65 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "1880": {
+  "roster": [
+   {
+    "name": "Everett Ekdahl, Jr.",
+    "role": "President"
+   },
+   {
+    "name": "Tony Loonsfoot",
+    "role": "Vice-President"
+   },
+   {
+    "name": "Elizabeth “Liz” Julio",
+    "role": "Secretary"
+   },
+   {
+    "name": "Toni J. Minton",
+    "role": "Assistant Secretary"
+   },
+   {
+    "name": "Dale F. Goodreau",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Theodore “Austin” Ayres",
+    "role": "Council Member"
+   },
+   {
+    "name": "Doreen G. Blaker",
+    "role": "Council Member"
+   },
+   {
+    "name": "Robert R.D. Curtis, Jr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sue Ellen “Suzie” Elmblad",
+    "role": "Council Member"
+   },
+   {
+    "name": "Rodney Loonsfoot",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sam Loonsfoot",
+    "role": "Council Member"
+   },
+   {
+    "name": "Mathew J. Shalifoe, Jr.",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.kbic-nsn.gov/tribal-governance/tribal-council/",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "1963": {
   "roster": [
    {
@@ -331,6 +449,65 @@
   "rosterSource": "nation",
   "rosterPage": "https://gunlaketribe-nsn.gov/about/tribal-council/",
   "rosterRead": "2026-11-10",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "2580": {
+  "roster": [
+   {
+    "name": "Everett Ekdahl, Jr.",
+    "role": "President"
+   },
+   {
+    "name": "Tony Loonsfoot",
+    "role": "Vice-President"
+   },
+   {
+    "name": "Elizabeth “Liz” Julio",
+    "role": "Secretary"
+   },
+   {
+    "name": "Toni J. Minton",
+    "role": "Assistant Secretary"
+   },
+   {
+    "name": "Dale F. Goodreau",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Theodore “Austin” Ayres",
+    "role": "Council Member"
+   },
+   {
+    "name": "Doreen G. Blaker",
+    "role": "Council Member"
+   },
+   {
+    "name": "Robert R.D. Curtis, Jr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sue Ellen “Suzie” Elmblad",
+    "role": "Council Member"
+   },
+   {
+    "name": "Rodney Loonsfoot",
+    "role": "Council Member"
+   },
+   {
+    "name": "Sam Loonsfoot",
+    "role": "Council Member"
+   },
+   {
+    "name": "Mathew J. Shalifoe, Jr.",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.kbic-nsn.gov/tribal-governance/tribal-council/",
+  "rosterRead": "2026-11-25",
   "rosterHost": null,
   "rosterMeasured": null
  },

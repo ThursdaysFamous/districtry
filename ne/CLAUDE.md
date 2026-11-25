@@ -74,8 +74,8 @@ the Census draws there. The Winnebago Tribe's card names its council of nine, th
 already names for the reservation's Iowa part, read weekly from the tribe's own page by
 `scripts/tribal_council_scraper.py` into this app's own network-first `tribal-councils.json`; if
 that file fails to load, the card still names the tribe and names nobody. The Omaha Tribe's site
-could not be reached from where this project is built (2026-10-10, `ROSTER_BLOCKED`), so its card
-says so; the other five nations' councils are not carried yet (`ROSTER_NOT_SOUGHT` in
+could not be reached from where this project is built (2026-10-10) or in a web browser
+(2026-11-25), its address having no DNS record (`ROSTER_BLOCKED`), so its card says so; the other five nations' councils are not carried yet (`ROSTER_NOT_SOUGHT` in
 `scripts/build_tribal_areas.py`), recorded in gap `ne-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE NEBRASKA.** A ZCTA carries no state field, so over the line the

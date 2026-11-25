@@ -319,7 +319,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "The Seminole Tribe of Florida's Tribal Council, its Chairman, its President and Vice-Chairwoman and a representative from each of the Hollywood, Big Cypress and Brighton reservations, from the tribe's own page at semtribe.com, read weekly by scripts/tribal_council_scraper.py and dated on the card. The Miccosukee Tribe's site (miccosukee.com) and the Poarch Band's (pci-nsn.gov) answered this project with an automated challenge page, which is not worked around, so those cards name nobody and say why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The Seminole Tribe of Florida's Tribal Council, its Chairman, its President and Vice-Chairwoman and a representative from each of the Hollywood, Big Cypress and Brighton reservations, from the tribe's own page at semtribe.com, read weekly by scripts/tribal_council_scraper.py and dated on the card. The Poarch Band's Tribal Council, from the band's own page at pci-nsn.gov, was read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site, and is dated on the card (data/tribal-council-browser-reads.json). The Miccosukee Tribe's card names nobody and says why: miccosukee.com is the tribe's casino and resort site and gives nothing of its government. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Florida — the eleven pieces of land above, in Broward, Collier, Escambia, Glades, Hendry, Highlands, Hillsborough, Miami-Dade and St. Lucie counties. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -490,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-fl-shell-v2",
+    "cache_name": "districtry-fl-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

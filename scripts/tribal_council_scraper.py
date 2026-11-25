@@ -90,6 +90,16 @@ list and its own biographies disagree about one member's district (the list
 says "District 3", the biography "At-Large District 2"), so no Saginaw
 district is carried at all.
 
+READ ONCE BY HAND IN A BROWSER (Adam, 2026-11-25). Some nations' sites
+turn this project's reader away, or draw their council only in a browser.
+Adam allowed a one-off read of such a public page in his own Chrome, past a
+check page that clears by itself but never past one that needs a click, a
+captcha or a sign-in. What was read is kept in
+data/tribal-council-browser-reads.json, with the date, and copied into the
+councils file on every run; this module never fetches those pages, so the
+card says the names were read by hand and when. A read leaves that file by
+the page becoming readable here (give it a NATIONS entry) or by a new read.
+
 PRESERVE, NEVER DELETE (Adam's ruling, 2026-09-19). A nation whose page cannot
 be read this week keeps its last-read council with the date it was last read,
 which the card prints. A refusal stops the fetch and never unpublishes. A
@@ -116,6 +126,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, "data", "tribal-councils.json")
+BROWSER_READS = os.path.join(REPO, "data", "tribal-council-browser-reads.json")
 
 WI_DOA_LIST = "https://doa.wi.gov/DIR/Tribal-Leaders.pdf"
 VA_SOC_LIST = "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/"
@@ -2873,32 +2884,33 @@ STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon
 # council offices (its War Captain and Alguacil are council seats); trustee is
 # the Umatilla board's, speaker the Navajo Nation Council's, delegate the
 # Tachi Yokut council's and the Navajo Nation's, and parliamentarian Sherwood
-# Valley's
+# Valley's; senator is the Swinomish Senate's, and "At Large" alone Poarch Creek's
 _ROLE_OK = re.compile(r"(chair|president|chief|secretary|treasurer|member|representative|"
                       r"director|legislator|councilor|council|sergeant|chaplain|leader|"
                       r"governor|cacique|captain|alguacil|trustee|speaker|delegate|"
-                      r"parliamentarian)", re.I)
+                      r"parliamentarian|senator|at large)", re.I)
 _ROLE_WORDS = re.compile(r"^(chair|vice|secretary|treasurer|council|member|president|"
                          r"representative|director|legislator|councilor)\b", re.I)
 
 
-def validate(code, members):
-    want = NATIONS[code]["seats"]
+def validate(code, members, spec=None):
+    spec = spec or NATIONS[code]
+    want = spec["seats"]
     if len(members) != want:
         raise ValueError("%s: read %d member(s), the page states %d"
-                         % (NATIONS[code]["nation"], len(members), want))
+                         % (spec["nation"], len(members), want))
     names = [m["name"] for m in members]
     if len(set(names)) != len(names):
-        raise ValueError("%s: a name appears twice: %r" % (NATIONS[code]["nation"], names))
+        raise ValueError("%s: a name appears twice: %r" % (spec["nation"], names))
     for m in members:
         if (not m["name"] or _ROLE_WORDS.match(m["name"]) or len(m["name"]) > 60
                 or re.search(r"[\d@&/]", m["name"]) or len(m["name"].split()) < 2):
-            raise ValueError("%s: %r is not a name" % (NATIONS[code]["nation"], m["name"]))
+            raise ValueError("%s: %r is not a name" % (spec["nation"], m["name"]))
         if not m["role"] or not _ROLE_OK.search(m["role"]):
             # a role this module does not recognise as an office is the
             # cheapest sign a parser has walked off its block into a menu
             raise ValueError("%s: %r is not an office (for %r)"
-                             % (NATIONS[code]["nation"], m["role"], m["name"]))
+                             % (spec["nation"], m["role"], m["name"]))
     return members
 
 
@@ -2928,6 +2940,23 @@ def fetch_page(url):
     with _pacer().hold(url):
         resp = S.fetch(url, S.UA_HEADERS_ROSTER_BOT, timeout=40, attempts=3)
     return resp.content
+
+
+def browser_reads():
+    """The councils read once by hand in a browser, keyed by AIANNH code, in
+    the councils file's own shape. Never fetched here (see the docstring)."""
+    if not os.path.exists(BROWSER_READS):
+        return {}
+    out = {}
+    for r in json.load(open(BROWSER_READS))["reads"]:
+        rec = {"source": "nation", "page": r["page"], "pages": [r["page"]],
+               "members": validate(r["codes"][0], [_m(**m) for m in r["members"]], r),
+               "read": r["read"], "readBy": "browser"}
+        if r.get("partial"):
+            rec["partial"] = r["partial"]
+        for code in r["codes"]:
+            out[code] = rec
+    return out
 
 
 def run(from_dir=None, today=None):
@@ -2993,11 +3022,12 @@ def run(from_dir=None, today=None):
                                                 prior[code].get("read")))
             else:
                 failed.append("%s %s: %s" % (code, spec["nation"], exc))
+    councils.update(browser_reads())
     if failed:
         raise SystemExit("tribal-councils: never read and not readable now:\n  "
                          + "\n  ".join(failed))
     doc = {"note": NOTE,
-           "councils": councils}
+           "councils": dict(sorted(councils.items()))}
     with open(OUT, "w") as fh:
         json.dump(doc, fh, indent=1, ensure_ascii=False)
         fh.write("\n")
@@ -3302,6 +3332,10 @@ def selftest():
         if spec.get("stateList"):
             assert spec["pages"] == [STATE_LISTS[spec["stateList"]]["page"]], code
     assert set(PARSERS) | set(STATE_LIST_HEADINGS) == set(NATIONS)
+    # a page read by hand is never also fetched, and passes the same tests
+    reads = browser_reads()
+    assert not (set(reads) & set(NATIONS)), sorted(set(reads) & set(NATIONS))
+    assert all(r["readBy"] == "browser" and r["read"] for r in reads.values())
     print("tribal-council-scraper --selftest: OK — %d nation(s), %d parser(s), "
           "%d from the state list" % (len(NATIONS), len(PARSERS), len(STATE_LIST_HEADINGS)))
     return True

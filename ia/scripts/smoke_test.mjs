@@ -1006,9 +1006,11 @@ try {
   }
   // ---- Tribal Government. The Winnebago Tribe's land crosses from Nebraska, so its card names the
   // council from the tribe's own page and says the census count covers the
-  // whole reservation; the Meskwaki site answers with a challenge page, so its
-  // card must say why it names nobody. Points are shapely's representative point
-  // for the part of each shipped parcel inside the state (2026-10-10).
+  // whole reservation. The Meskwaki site answers this project's reader with a
+  // challenge page, so its council was read once by hand in a web browser on
+  // 2026-11-25; its card names every member the councils file carries and says
+  // how the names were read. Points are shapely's representative point for the
+  // part of each shipped parcel inside the state (2026-10-10).
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
@@ -1031,12 +1033,14 @@ try {
           w.by("Population").indexOf("under 1% of it lies in Iowa") !== -1 &&
           !w.by("Why no names"),
           JSON.stringify(w.text.slice(0, 200)));
+    const meskwaki = (JSON.parse(readFileSync(new URL("../data/app/tribal-councils.json", import.meta.url), "utf8"))["3280"] || {}).roster || [];
     const m = await at("41.98186,-92.65608");
-    check("the Meskwaki Settlement names the tribe and says why no council member is named",
+    check("the Meskwaki Settlement names the tribe's whole council and says the names were read by hand",
           m.by("Tribal government") === "Sac & Fox Tribe of the Mississippi in Iowa" &&
-          m.by("Why no names").indexOf("not worked around") !== -1 &&
-          /\d{4}-\d{2}-\d{2}/.test(m.by("Why no names")),
-          JSON.stringify(m.by("Why no names").slice(0, 120)));
+          meskwaki.length === 7 && meskwaki.every((x) => m.text.indexOf(x.name) !== -1) &&
+          m.text.indexOf("read by hand in a web browser") !== -1 &&
+          !m.by("Why no names"),
+          `council=${meskwaki.length} ${JSON.stringify(m.text.slice(0, 200))}`);
     const off = await at(POINT);
     check("a point off tribal land is told so in the layer's own words",
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("4 tribal areas") !== -1,

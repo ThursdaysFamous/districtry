@@ -74,7 +74,7 @@ counties and Carson City, and no elementary or secondary ones. No trustee is nam
 to assume the office is empty. Recorded as gaps `nv-county-officials` and
 `nv-municipal-officeholders`.
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF 20 NATIONS AND NAMES THE COUNCILS OF NINE** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 20 NATIONS AND NAMES THE COUNCILS OF 12** (`tribal-areas.json`,
 since 2026-11-12). The Census keeps 27 reservations and 8 off-reservation trust lands in Nevada,
 and all 35 pieces are drawn, each joined in `data/tribal-government-join.json` to the government
 the Bureau of Indian Affairs lists for it. Six pieces cross the state line and are drawn whole: the
@@ -97,10 +97,10 @@ those cards link the nation's own site, recorded as `bureauWebsiteWithdrawn`. Th
 website for nine of the 20 nations, and the address it lists for the Yomba
 Shoshone Tribe now forwards to a roofing company's site, so on Adam's ruling of 2026-11-13 that card
 links no site (`websiteWithdrawn`). The Census draws no tribal district on any of this land, and the
-file is 345 KB at the Census's own detail, so it is not simplified. Since 2026-11-13 the cards name the council of 11 of the 20 nations, read nation by nation from
+file is 345 KB at the Census's own detail, so it is not simplified. Since 2026-11-13 the cards name the council of 12 of the 20 nations, read nation by nation from
 each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
-`update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
+`update-tribal-councils.yml`. Where a nation's site turns this project's reader away, its council page was read once by hand in a web browser on 2026-11-25 (Adam's go-ahead of that day), kept in `data/tribal-council-browser-reads.json` and not re-read each week; the card says so. One was (Summit Lake). Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
 project or showed a check only a person can pass, a page naming only part of the council or
 none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or

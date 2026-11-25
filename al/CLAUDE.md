@@ -61,8 +61,8 @@ to assume the office is empty. Each county is governed by an elected county comm
 officers such as a probate judge and a sheriff. Recorded as gaps `al-county-officials` and
 `al-municipal-officeholders`.
 
-**TRIBAL GOVERNMENT DRAWS THREE PIECES OF LAND HELD BY TWO TRIBES AND NAMES NO COUNCIL YET**
-(`tribal-areas.json`, since 2026-11-13). The Census keeps the Poarch Creek Reservation (about 1.1
+**TRIBAL GOVERNMENT DRAWS THREE PIECES OF LAND HELD BY TWO TRIBES AND NAMES ONE COUNCIL**
+(`tribal-areas.json` since 2026-11-13, `tribal-councils.json` since 2026-11-25). The Census keeps the Poarch Creek Reservation (about 1.1
 km2) and the Poarch Creek Off-Reservation Trust Land (about 0.5 km2, 98.6% of it in Alabama and the
 rest in Florida, whose app draws it too) in Alabama, and the MOWA Choctaw state reservation (about
 2.7 km2), measured 2026-11-12 with `scripts/tribal_areas.py --report Alabama`. All three are drawn,
@@ -71,9 +71,12 @@ Atmore, from the Bureau of Indian Affairs' list; and the MOWA Band of Choctaw In
 United States does not recognize, from the Alabama Indian Affairs Commission's list of tribes the
 State of Alabama recognizes (revised June 2026), so its card says the state recognizes the band,
 links that list and gives the office town the list gives, Mount Vernon. The Poarch Band's own site
-answered this project with an automated challenge page on 2026-11-12, so its card names nobody and
-says why (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`, from the Florida change); the MOWA
-Band's council is not carried yet (`ROSTER_NOT_SOUGHT`). Recorded in gap `al-tribal-government`.
+answers this project's reader with an automated challenge page (measured 2026-11-12), so its
+council of nine was read once by hand in a web browser on 2026-11-25 (Adam's go-ahead of that day)
+into `data/tribal-council-browser-reads.json`; it is not re-read each week, and the card says so.
+It ships in this app's own network-first `tribal-councils.json`, which the loader merges onto the
+land, so if that file fails to load the card still names the band and names nobody. The MOWA
+Band's council is not carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`). Recorded in gap `al-tribal-government`.
 
 **THE ZIP LAYER HIDES OUTSIDE ALABAMA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,

@@ -1051,8 +1051,11 @@ try {
   //         United States does not: the card says so, gives the band's town
   //         from the state's own list, and links that list.
   //       - The Poarch Creek Reservation is the ordinary case: the Bureau's
-  //         town and site, and the reason the card names nobody, the tribe's
-  //         own site answering with a challenge page.
+  //         town and site, and the band's council of nine from the councils
+  //         file, read once by hand in a web browser on 2026-11-25 because
+  //         the band's own site answers this project's reader with a
+  //         challenge page; the card says so. When that file fails, the card
+  //         still names the band and names nobody on its council.
   //       - The Capitol is on no tribal land, and the card says so in the
   //         layer's own words.
   //     Each point is the pole of inaccessibility of the largest part of the
@@ -1060,6 +1063,7 @@ try {
   //     them (shapely polylabel, 2026-11-13): 454 m and 240 m from its edge.
   {
     const areas = shipped("tribal-areas.json");
+    const councils = shipped("tribal-councils.json");
     const MOWA = "31.14870,-88.05317";
     const POARCH = "31.10485,-87.56589";
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
@@ -1104,16 +1108,32 @@ try {
     {
       const land = propsAt(areas, POARCH);
       const p = land[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
       const c = await at(POARCH);
-      check("the Poarch Creek Reservation names the Poarch Band with the Bureau's town and site, and says why it names nobody",
-        land.length === 1 && !c.error &&
+      check("the Poarch Creek Reservation names the Poarch Band with the Bureau's town and site, its whole council, and that the names were read by hand",
+        land.length === 1 && council.length === 9 && !c.error &&
           c.by("Tribal government") === p.nation && p.nation === "Poarch Band of Creek Indians" &&
           c.by("Land") === "Poarch Creek Reservation" &&
           c.by("Seat of government") === "Atmore, AL" &&
           c.labels.indexOf("Recognized by") === -1 &&
           !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
-          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("challenge") !== -1,
-        `land here=${land.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 160))}`);
+          council.every((m) => c.text.includes(m.name)) &&
+          c.text.includes("read by hand in a web browser") &&
+          c.text.includes("Where these names come from") && !c.by("Why no names"),
+        `land here=${land.length} council=${council.length} link=${JSON.stringify(c.link)} labels=${JSON.stringify(c.labels)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const p = propsAt(areas, POARCH)[0] || {};
+      const council = (councils[p.aiannh] || {}).roster || [];
+      const c = await at(POARCH, async (pg) => {
+        await pg.route("**/data/app/tribal-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const named = council.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the Tribal Government card still names the Poarch Band, and names nobody on its council, when the councils file fails",
+        !c.error && c.by("Tribal government") === "Poarch Band of Creek Indians" &&
+          council.length > 0 && named.length === 0,
+        `named=${named.slice(0, 2)} ${JSON.stringify(c.text.slice(0, 160))}`);
     }
 
     {
