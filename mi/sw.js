@@ -112,6 +112,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/mi-senate-members.json",
   "./data/app/mi-house-members.json",
+  "./data/app/mi-judges.json",
   "./data/app/coverage-gaps.json",
   "./data/app/mi-detroit-council-members.json",
   "./data/app/mi-grand-rapids-council-members.json",
