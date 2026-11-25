@@ -65,7 +65,7 @@ different thing from one it failed.
 | md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 72 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 28 | all | 13 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 29 | all | 13 of 14 levels |
 | mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 16 | all | 7 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 26 | all | 8 of 14 levels |
 | mt | **EAM·** | 56 | 56/56 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
@@ -418,7 +418,7 @@ per county, so each one is named under its state below.
 
 ### mn — EAM·
 
-- **Under a WATCH.md plan (15):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `mn/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (16):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-judicial-judges.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `mn/data/app/population/`, `state-counties.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
 
