@@ -3939,7 +3939,7 @@
     },
     {
       "file": "update-adams-county-board-roster.yml",
-      "purpose": "Adams County Board roster (certified canvasses on platinumelectionresults.com; also the backfill tripwire for the unread November 2022 canvass)",
+      "purpose": "Adams County Board roster (2024 certified canvass on platinumelectionresults.com, plus the county's November 2026 canvass carried in the builder from 7 Dec 2026)",
       "schedule": "Sat 20:00 UTC"
     },
     {
