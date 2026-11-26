@@ -761,11 +761,11 @@ try {
     await context.close();
   }
   // ---- Tribal Government. Leech Lake names its council from the nation's
-  // own page; Red Lake names nobody and has to say why (its site answered
-  // this project's robots.txt with an automated challenge, which is never
-  // worked around), so the card must carry the recorded reason rather than
-  // go quiet. Both points are shapely's representative point for the shipped
-  // reservation (2026-10-10).
+  // own page. Red Lake's site answered this project's robots.txt with an
+  // automated challenge, so its council was read once by hand in a web
+  // browser on 2026-11-25; the card names every member the councils file
+  // carries and says how the names were read. Both points are shapely's
+  // representative point for the shipped reservation (2026-10-10).
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
@@ -791,11 +791,12 @@ try {
     const red = await cardText(page2, "tribal-government");
     const fields2 = await fieldsOf(page2);
     const why = (fields2.find((f) => f.label === "Why no names") || {}).value || "";
+    const redCouncil = (JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/tribal-councils.json"), "utf8"))["3100"] || {}).roster || [];
     const redOk = red.text.indexOf("Red Lake Band") !== -1 &&
-                  why.indexOf("not worked around") !== -1 &&
-                  /\d{4}-\d{2}-\d{2}/.test(why);
-    check("Red Lake names the band and says why no council member is named",
-          redOk, JSON.stringify(why.slice(0, 120)));
+                  redCouncil.length === 18 && redCouncil.every((m) => red.text.indexOf(m.name) !== -1) &&
+                  red.text.indexOf("read by hand in a web browser") !== -1 && !why;
+    check("Red Lake names the band, its whole council, and that the names were read by hand",
+          redOk, `council=${redCouncil.length} ${JSON.stringify(red.text.slice(0, 200))}`);
 
     const page3 = await booted(
       context, `${BASE}#point=${POINT}&layers=tribal-government`);

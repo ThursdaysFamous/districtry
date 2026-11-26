@@ -98,7 +98,7 @@ client, which the seed records. Supreme Court justices are retained by statewide
 appointed, so they are not listed.
 
 **TRIBAL GOVERNMENT DRAWS THE LAND OF FLORIDA'S TRIBAL NATIONS AND NAMES THE SEMINOLE TRIBE'S
-COUNCIL** (`tribal-areas.json`, `tribal-councils.json`, since 2026-11-12). The Census keeps eleven
+AND THE POARCH BAND'S COUNCILS** (`tribal-areas.json`, `tribal-councils.json`, since 2026-11-12). The Census keeps eleven
 pieces: the Miccosukee Reservation (310.17 km², almost all of it in Broward County) and the
 Miccosukee's trust land (20.34 km²), six Seminole reservations (Big Cypress, Brighton, Immokalee,
 Hollywood, Fort Pierce and Tampa) and two pieces of Seminole trust land, and 0.007 km² of the
@@ -106,13 +106,17 @@ Poarch Band of Creek Indians' trust land in Escambia County, 1.37% of a parcel w
 Alabama, where the Band is seated. The Seminole Tribe of Florida has one Tribal Council for all its
 land, read weekly from its own page (www.semtribe.com) by `scripts/tribal_council_scraper.py`: the
 Chairman, the President and Vice-Chairwoman, and the representatives of Hollywood, Big Cypress and
-Brighton, whose reservation the card prints beside their name. **THE MICCOSUKEE AND POARCH CREEK
-CARDS NAME NOBODY**, because both tribes' own sites answered this project with a Cloudflare
-challenge page on 2026-11-12, which is not worked around (`ROSTER_BLOCKED` in
-`scripts/build_tribal_areas.py`, gap `fl-tribal-government`). The card's "(official)" link is the
-Bureau of Indian Affairs' listing, as in every instance: the Miccosukee's (tribe.miccosukee.com)
-had no DNS record that day and the Seminole's (www.seminoletribe.com) failed TLS from this
-project's sandbox (`fl/WATCH.md`).
+Brighton, whose reservation the card prints beside their name. Both other tribes' sites answered
+this project's reader with a Cloudflare challenge page on 2026-11-12, so on 2026-11-25 each was read
+once by hand in a web browser (Adam's go-ahead of that day): the Poarch Band's council page names
+its council of nine, carried in `data/tribal-council-browser-reads.json`, not re-read each week, and
+the card says so. **THE MICCOSUKEE CARD NAMES NOBODY**: the tribe's site is its casino and resort
+site and gives nothing of its government (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`, gap
+`fl-tribal-government`). The card's "(official)" link is the
+Bureau of Indian Affairs' listing, as in every instance, except the Miccosukee's: the Bureau lists
+tribe.miccosukee.com, which had no DNS record on 2026-11-12 or 2026-11-25, so on Adam's ruling of
+2026-11-25 ("withdraw") that card links no site (`websiteWithdrawn`). The Seminole's
+listing (www.seminoletribe.com) failed TLS from this project's sandbox (`fl/WATCH.md`).
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;

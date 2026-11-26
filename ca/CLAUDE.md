@@ -8,7 +8,7 @@ districtry California: a single-file, dependency-light web app. Click a point in
 
 **Two coverage tests, read from two shipped outlines.** The San Francisco layers declare `coverage: inSanFrancisco` (`san-francisco-county-outline.json`, the union of the supervisor districts with Treasure Island) and hide outside the city and county; the statewide layers that need one declare `coverage: inCalifornia` (`ca-state-outline.json`, the 58 counties dissolved). The wash draws the state as its region and San Francisco as its full coverage, so the key's middle band reads "Statewide layers only". **THE COUNTY CARD NAMES EACH COUNTY'S BOARD OF SUPERVISORS OUTSIDE SAN FRANCISCO** (2026-11-16, on Adam's "Start" to the county boards job): five supervisors in each of 57 counties, read weekly from the County Officials Directory of the Secretary of State's California Roster (`ca-county-officials.json`, `scripts/build_ca_county_officials.py`). The Roster is a PDF each county files its own entry in, published once a year and corrected in place, so the card names the edition and the date of the file it read and says a supervisor who took office since is not shown. The card lists all five and says it cannot tell which one represents the point, because no supervisorial district is drawn outside San Francisco yet. San Francisco's eleven are left to the city's own weekly data and the Supervisor District card: the Roster spelled one of them differently from the city on the day this was built, and the builder prints any such difference on every run without shipping it. The directory also lists each county's other officers without saying which are elected, so none of those is read. **Each county's board has a page of its own since 2026-11-17** (Adam's "merge" of that day): `ca/county-supervisor/<county>.html`, 58 pages from `scripts/build_county_pages.py`, the 57 outside San Francisco from the same Roster file with its edition and date printed, and San Francisco's from the city's own `sf-supervisor-members.json`, so both weekly jobs regenerate the pages. No mayor, council member or school board member is named outside San Francisco yet; the four gap records (`ca-county-officials`, `ca-municipal-officeholders`, `ca-school-board-members`, `ca-tribal-government`) say what is still missing and why. The fourth is now about the tribal councils: the land itself is drawn (below).
 
-**TRIBAL GOVERNMENT DRAWS THE LAND OF 98 NATIONS AND NAMES THE COUNCILS OF 49** (`tribal-areas.json`,
+**TRIBAL GOVERNMENT DRAWS THE LAND OF 98 NATIONS AND NAMES THE COUNCILS OF 55** (`tribal-areas.json`,
 since 2026-11-12). The Census keeps 103 reservations and rancherias and 47 off-reservation trust
 lands in California, and all 150 pieces are drawn, each joined in `data/tribal-government-join.json`
 to the government the Bureau of Indian Affairs lists for it. They lie in 34 of the 58 counties and
@@ -30,22 +30,24 @@ town its own site gives, Covelo and Brooks (`seatFromNation`), with a line on th
 the town came from; only the town is carried. Yocha Dehe's own site could not be read from this
 project's sandbox, so its card keeps the Bureau's address as the nation's site. The Greenville
 Rancheria the Bureau lists with a state and no city, so its card gives the state alone. The Bureau
-lists no website for 28 of the 98 nations, and the addresses it lists for ten more no longer reach
+lists no website for 28 of the 98 nations, and the addresses it lists for twelve more no longer reach
 the nation (no DNS record, a parked domain, a gambling site, an HTTP 500, or a casino or resort page
-that does not give the government), so on Adam's ruling of 2026-11-13 those cards link no site, or,
+that does not give the government), so on Adam's rulings of 2026-11-13 and 2026-11-25 (Chemehuevi
+and San Pasqual, both parked) those cards link no site, or,
 for the Pit River Tribe, the tribe's own site at pitrivertribe.gov (`websiteWithdrawn`). The Census draws tribal districts on one piece, the Yurok
 Reservation (Orick, Pecwan, Requa and Weitchpec), named on its card. The file is 1.12 MB (258 KB
 gzipped) at the Census's own detail, smaller than Arizona's simplified file, so it is not
-simplified. Since 2026-11-13 the cards name the council of 51 of the 98 nations, read nation by nation from
+simplified. Since 2026-11-13 the cards name the council of 55 of the 98 nations, read nation by nation from
 each nation's own page into `tribal-councils.json` (a separate file the loader merges onto the land,
 so a failed read leaves the card naming the nation and nobody on its council) and re-read weekly by
-`update-tribal-councils.yml`. Every other card says why it names nobody, in words measured on that
+`update-tribal-councils.yml`. Where a nation's site turns this project's reader away, its council page was read once by hand in a web browser on 2026-11-25 (Adam's go-ahead of that day), kept in `data/tribal-council-browser-reads.json` and not re-read each week; the card says so. Four were (Agua Caliente, Kashia, Pechanga and
+Tule River). Every other card says why it names nobody, in words measured on that
 day and kept in `ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`: a site that refused this
 project or showed a check only a person can pass, a page naming only part of the council or
 none of it, or no site of the nation's own. A council is carried only where its page names or lists as vacant all of its seats, or
-all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. Two are: Paskenta's page lists its
-secretary's seat as vacant, and the Washoe Tribe's names one of its two Off-Reservation
-representatives. Recorded in gap
+all but one (Adam, 2026-11-13), and then the card's note says which seat the page leaves out. Three are: Paskenta's page lists its
+secretary's seat as vacant, the Washoe Tribe's names one of its two Off-Reservation
+representatives, and Pechanga's names its chairperson and five of its six members. Recorded in gap
 `ca-tribal-government`.
 
 **There is no build step, no framework, and no server-side code.** The entire app — styles, core, and all layer modules — lives inline in `index.html`. `sw.js` is the service worker; `data/app/*.json` are runtime-fetched data files. Everything else is data pipeline, scrapers, or CI.
