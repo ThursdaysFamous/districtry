@@ -319,6 +319,15 @@ def parse_address(entry):
     them ("…18P & 19150 W. Jefferson St." is precinct 19 + 150 W. Jefferson),
     and the street number cannot be recovered from the text. Those return
     None: the card drops the address line rather than print a guessed one.
+
+    >>> parse_address("18P & 19 150 W. Jefferson St., Joliet 60432 (815) 724-4000") is None
+    True
+    >>> parse_address("1, 2 & 3 1165 S. Water St., Wilmington 60481 (815) 476-2175") is None
+    True
+    >>> parse_address("35P 44 E. Downer Pl., Aurora 60505 (630) 256-4636")
+    '44 E. Downer Pl., Aurora 60505'
+    >>> parse_address("(Will County)16313 159th St., Tinley Park 60477 (708) 444-5000")
+    '16313 159th St., Tinley Park 60477'
     """
     anchor = re.search(r"(\d{5})\s*\(\d{3}\)\s*\d{3}-\d{4}", entry)
     if not anchor:
@@ -331,7 +340,10 @@ def parse_address(entry):
     for m in re.finditer(r"\d", head):
         start = m.start()
         candidate = head[start:]
-        if not re.match(r"\d{1,6}\s+[A-Z0-9]", candidate):
+        # A street number is followed by a word or an ordinal ("159th"), never
+        # by a bare number: in "& 19 150 W." the 19 is a precinct, and taking
+        # it as the street shipped "19 150 W. Jefferson St." (2026-11-25).
+        if not re.match(r"\d{1,6}\s+(?:[A-Z]|\d+(?:st|nd|rd|th)\b)", candidate):
             continue
         if not re.search(r",\s*[A-Za-z\.\'’\- ]+\s*$", candidate):
             continue  # must end "…, City " right before the ZIP
