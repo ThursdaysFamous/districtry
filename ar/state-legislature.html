@@ -981,7 +981,7 @@ footer.site-footer a { color: var(--accent-deep); }
     <table class="flow">
       <thead><tr><th>District</th><th>Senator</th><th>Party</th><th>Telephone</th></tr></thead>
       <tbody>
-      <tr><td>District 1</td><td class="who">Vacant</td><td></td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>District 1</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 1"><span itemprop="name">Harrell Wilson</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8705505600">(870) 550-5600</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 2</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 2"><span itemprop="name">Matt Stone</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8708180750">(870) 818-0750</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 3</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 3"><span itemprop="name">Steve Crowell</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8705573440">(870) 557-3440</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 4</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 4"><span itemprop="name">Jimmy Hickey, Jr</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:9038248861">(903) 824-8861</a></td></tr>
@@ -998,7 +998,7 @@ footer.site-footer a { color: var(--accent-deep); }
       <tr itemscope itemtype="https://schema.org/Person"><td>District 15</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 15"><span itemprop="name">Fredrick J. Love</span></td><td itemprop="affiliation">Democratic</td><td><a href="tel:5016123939">(501) 612-3939</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 16</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 16"><span itemprop="name">Kim Hammer</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:5018403841">(501) 840-3841</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 17</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 17"><span itemprop="name">Mark Johnson</span></td><td itemprop="affiliation">Republican</td><td></td></tr>
-      <tr><td>District 18</td><td class="who">Vacant</td><td></td><td></td></tr>
+      <tr><td>District 18</td><td class="who">Not listed</td><td></td><td></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 19</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 19"><span itemprop="name">Dave Wallace</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8709198046">870-919-8046</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 20</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 20"><span itemprop="name">Dan Sullivan</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8702752929">(870) 275-2929</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 21</td><td class="who"><meta itemprop="jobTitle" content="Senator, District 21"><span itemprop="name">Blake Johnson</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8703231766">870-323-1766</a></td></tr>
@@ -1037,7 +1037,7 @@ footer.site-footer a { color: var(--accent-deep); }
       <tr itemscope itemtype="https://schema.org/Person"><td>District 5</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 5"><span itemprop="name">Ron McNair</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:8707547962">870-754-7962</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 6</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 6"><span itemprop="name">Harlan Breaux</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:4799813170">(479) 981-3170</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 7</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 7"><span itemprop="name">Brit McKenzie</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:4796449001">(479) 644-9001</a></td></tr>
-      <tr><td>District 8</td><td class="who">Vacant</td><td></td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>District 8</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 8"><span itemprop="name">Kara Armas</span></td><td itemprop="affiliation">Republican</td><td><a href="tel:4797904857">(479) 790-4857</a></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 9</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 9"><span itemprop="name">Diana Gonzales Worthen</span></td><td itemprop="affiliation">Democratic</td><td></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 10</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 10"><span itemprop="name">Mindy McAlindon</span></td><td itemprop="affiliation">Republican</td><td></td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>District 11</td><td class="who"><meta itemprop="jobTitle" content="Representative, District 11"><span itemprop="name">Rebecca Burkes</span></td><td itemprop="affiliation">Republican</td><td></td></tr>
@@ -1144,6 +1144,18 @@ footer.site-footer a { color: var(--accent-deep); }
       "@id": "https://districtry.com/ar/state-legislature.html#body-1",
       "name": "Arkansas Senate",
       "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ar/state-legislature.html#role-1-1-district-1",
+          "roleName": "Senator",
+          "namedPosition": "District 1",
+          "member": {
+            "@type": "Person",
+            "name": "Harrell Wilson",
+            "affiliation": "Republican",
+            "telephone": "(870) 550-5600"
+          }
+        },
         {
           "@type": "OrganizationRole",
           "@id": "https://districtry.com/ar/state-legislature.html#role-1-2-district-2",
@@ -1551,7 +1563,10 @@ footer.site-footer a { color: var(--accent-deep); }
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "District 1"
+          "name": "District 1",
+          "item": {
+            "@id": "https://districtry.com/ar/state-legislature.html#role-1-1-district-1"
+          }
         },
         {
           "@type": "ListItem",
@@ -1910,6 +1925,18 @@ footer.site-footer a { color: var(--accent-deep); }
             "name": "Brit McKenzie",
             "affiliation": "Republican",
             "telephone": "(479) 644-9001"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ar/state-legislature.html#role-2-8-district-8",
+          "roleName": "Representative",
+          "namedPosition": "District 8",
+          "member": {
+            "@type": "Person",
+            "name": "Kara Armas",
+            "affiliation": "Republican",
+            "telephone": "(479) 790-4857"
           }
         },
         {
@@ -3057,7 +3084,10 @@ footer.site-footer a { color: var(--accent-deep); }
         {
           "@type": "ListItem",
           "position": 8,
-          "name": "District 8"
+          "name": "District 8",
+          "item": {
+            "@id": "https://districtry.com/ar/state-legislature.html#role-2-8-district-8"
+          }
         },
         {
           "@type": "ListItem",
