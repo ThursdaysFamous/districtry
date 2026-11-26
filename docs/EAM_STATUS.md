@@ -84,7 +84,7 @@ different thing from one it failed.
 | ri | **--M·** | — | — | 0 | 0 | — | 13 | all | 9 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
-| tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 24 | all | 10 of 14 levels |
+| tn | **EAM·** | 95 | 95/95 § | 605 | 1,065 | all | 24 | all | 10 of 14 levels |
 | tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
