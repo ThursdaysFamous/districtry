@@ -1,0 +1,19 @@
+# Trial Courts of Metropolitan Nashville & Davidson County, "Directory of
+# Judges": https://trialcourts.nashville.gov/?p=68
+# Read 2026-11-25 with this project's own reader (districtry.com roster bot)
+# after robots.txt (204 bytes, no rule matching the page). The page's names,
+# copied exactly, one court per line: the court, a tab, its judges separated
+# by "; ". The page gives the courts as Chancery Court, Parts 1-4; Circuit
+# Court, 1st-8th Circuit; Criminal Court, Divisions 1-6.
+#
+# It is the control for the state courts' directory in the 20th District:
+# tn/scripts/build_tn_trial_judges.py requires the 20th's judges, after the
+# corrections, to be exactly these by surname. Read the same day, it settled
+# two corrections the other way: Jim Todd and Bethany Glandorf, appointed in
+# 2025 to the seats Cheryl Blackburn and Phillip Robinson left, are not on it,
+# while Khadija Babb and Andra Hedrick, both in the state directory, are, so
+# the appointment notices are used to take people out and never to put
+# someone in.
+Chancellor	Patricia Head Moskal; Anne C. Martin; I'Ashea L. Myles; Russell T. Perkins
+Circuit Court Judge	David Briley; Amanda McClendon; Corletra Mance; Stephanie Williams; Joe Binkley, Jr.; Thomas Brothers; Andra Hedrick; Lynne T. Ingram
+Criminal Court Judge	Steve Dozier; Angelita Blackshear Dalton; Dawn Deaner; Jennifer Smith; Khadija Babb; Cynthia Chappell

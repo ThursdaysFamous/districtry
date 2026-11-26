@@ -1,0 +1,13 @@
+# Oklahoma State Courts Network, Adair County's court page, section
+# DISTRICT JUDGES, read 2026-11-25 from https://www.oscn.net/courts/adair
+# once, by hand, in the operator's own Chrome (oscn.net's robots.txt asks
+# every automated reader to stay out; Adam's rule of 2026-11-25 allows one
+# read of a public page there). The page says "There are 5 counties in
+# Judicial District 15". The next county pages read the same way were
+# answered with a "verify you are human" page, and reading stopped there,
+# so this is the one court page read. Names as printed, office and
+# telephone lines not copied.
+District 15 | KING, TIMOTHY
+District 15 | KIRKLEY, DOUGLAS A
+District 15 | PAYTON, J. JEFFREY
+District 15 | SMITH, BRET

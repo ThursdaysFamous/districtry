@@ -1,0 +1,476 @@
+{
+ "1": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Jon K. Parsley"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Donna Lynn Dirickson"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Rafe R. Hall"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Justin P. Eilers"
+   },
+   {
+    "office": 2,
+    "name": "Paul K. Woodward"
+   },
+   {
+    "office": 3,
+    "name": "Tom L. Newby",
+    "next": {
+     "name": "Jason A. Seigars",
+     "how": "only-candidate"
+    }
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Emmit Tayloe",
+    "next": {
+     "name": "Neil West",
+     "how": "elected"
+    }
+   },
+   {
+    "office": 2,
+    "name": "G. Brent Russell",
+    "next": {
+     "name": "Carrie E. Hixon",
+     "how": "only-candidate"
+    }
+   },
+   {
+    "office": 3,
+    "name": "Jay Walker"
+   },
+   {
+    "office": 4,
+    "name": "Scott Meaders"
+   },
+   {
+    "office": 5,
+    "name": "Grant D. Sheperd"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Kory Kirkland"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Lydia Yvonne Green",
+    "appointed": "2025-06-10"
+   },
+   {
+    "office": 2,
+    "name": "Kaitlyn Allen"
+   },
+   {
+    "office": 3,
+    "name": "Amy Palumbo"
+   },
+   {
+    "office": 4,
+    "name": "Kenneth M. Stoner"
+   },
+   {
+    "office": 5,
+    "name": "Natalie Mai"
+   },
+   {
+    "office": 6,
+    "name": "C. Brent Dishman"
+   },
+   {
+    "office": 7,
+    "name": "Cindy H. Truong"
+   },
+   {
+    "office": 8,
+    "name": "Heather Coyle"
+   },
+   {
+    "office": 9,
+    "name": "Anthony L. Bonner, Jr."
+   },
+   {
+    "office": 10,
+    "name": "Susan Stallings",
+    "noVote": true
+   },
+   {
+    "office": 11,
+    "name": "Richard C. Ogden"
+   },
+   {
+    "office": 12,
+    "name": "Sheila D. Stinson"
+   },
+   {
+    "office": 13,
+    "name": "K. Nikki Kirkpatrick"
+   },
+   {
+    "office": 14,
+    "name": "Kathryn Ruth Savage"
+   },
+   {
+    "office": 15,
+    "name": "Don Andrews"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Lee Turner",
+    "next": {
+     "name": "Rob Davis",
+     "how": "elected"
+    }
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Jason A. Reese",
+    "next": {
+     "name": "Katherine Elder Thomas",
+     "how": "only-candidate"
+    }
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Stuart L. Tate"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Linda S. Thomas",
+    "next": {
+     "name": "Russell C. Vaclaw",
+     "how": "only-candidate"
+    }
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Shawn Taylor"
+   },
+   {
+    "office": 2,
+    "name": "Lara Russell"
+   },
+   {
+    "office": 3,
+    "name": "Stephen R. Pazzo, Jr."
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Jennifer McAffrey"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Caroline Wall"
+   },
+   {
+    "office": 2,
+    "name": "Sharon K. Holmes"
+   },
+   {
+    "office": 3,
+    "name": "Tracy Priddy"
+   },
+   {
+    "office": 4,
+    "name": "Daman Cantrell",
+    "next": {
+     "name": "Loretta Radford",
+     "how": "elected"
+    }
+   },
+   {
+    "office": 5,
+    "name": "Michelle Lee Bodine-Keely"
+   },
+   {
+    "office": 6,
+    "name": "Kelly Morgan Greenough"
+   },
+   {
+    "office": 7,
+    "name": "Bill LaFortune"
+   },
+   {
+    "office": 8,
+    "name": "Doug Drummond"
+   },
+   {
+    "office": 9,
+    "name": "Richard L. Hathcoat"
+   },
+   {
+    "office": 10,
+    "name": "Dawn Moody"
+   },
+   {
+    "office": 11,
+    "name": "Rebecca Nightingale",
+    "next": {
+     "name": "April Seibert",
+     "how": "only-candidate"
+    }
+   },
+   {
+    "office": 12,
+    "name": "Kevin Gray"
+   },
+   {
+    "office": 13,
+    "name": "David A. Guten"
+   },
+   {
+    "office": 14,
+    "name": "Kurt Glassco"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Tim King"
+   },
+   {
+    "office": 2,
+    "name": "Douglas Kirkley"
+   },
+   {
+    "office": 3,
+    "name": "Jeff Payton",
+    "next": {
+     "name": "Will Cosner",
+     "how": "only-candidate"
+    }
+   },
+   {
+    "office": 4,
+    "name": "Bret A. Smith"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Jonathan K. Sullivan"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Emily Maxwell Herron"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Michael Hogan"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Mark R. Campbell"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Carson Michael Brooks",
+    "appointed": "2025-10-16"
+   },
+   {
+    "office": 2,
+    "name": "Wallace Coppedge"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Michael David Tupper"
+   },
+   {
+    "office": 2,
+    "name": "Leah Edwards"
+   },
+   {
+    "office": 3,
+    "name": "Thad Balkman"
+   },
+   {
+    "office": 4,
+    "name": "Julia Lynne Race McGuire"
+   },
+   {
+    "office": 5,
+    "name": "Jeff Virgin"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Brett William Butner"
+   },
+   {
+    "office": 2,
+    "name": "Steve Kessinger"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Sarah Lynn Bridge"
+   },
+   {
+    "office": 2,
+    "name": "John G. Canavan, Jr.",
+    "next": {
+     "name": "Troy Austin Officer",
+     "how": "elected"
+    }
+   }
+  ]
+ },
+ "24": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Robert Getchell",
+    "appointed": "2025-06-26"
+   },
+   {
+    "office": 2,
+    "name": "Lawrence W. Parish"
+   },
+   {
+    "office": 3,
+    "name": "Pandee Ramirez"
+   },
+   {
+    "office": 4,
+    "name": "Kelly Hake"
+   }
+  ]
+ },
+ "25": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "D. Clay Mowdy"
+   }
+  ]
+ },
+ "26": {
+  "read": "2026-11-25",
+  "offices": [
+   {
+    "office": 1,
+    "name": "Paul Hesse"
+   },
+   {
+    "office": 2,
+    "name": "Khristan Strubhar"
+   }
+  ]
+ }
+}

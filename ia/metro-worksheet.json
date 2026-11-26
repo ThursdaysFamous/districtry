@@ -542,7 +542,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Winnebago Tribe of Nebraska today. For the Meskwaki and Omaha nations the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Winnebago Tribe of Nebraska. The Meskwaki Nation's council, from the nation's own page, was read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site, and dated on the card (data/tribal-council-browser-reads.json). For the Omaha Tribe the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Iowa — 4 areas across 3 nations: the Meskwaki Settlement in Tama County and its trust land, and the Iowa parts of the Omaha and Winnebago reservations along the Missouri. Most points in the state are on no tribal land."
       }
     }
@@ -922,7 +922,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v31",
+    "cache_name": "districtry-ia-shell-v32",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -1,0 +1,1023 @@
+{
+ "read": "2026-11-25",
+ "courtOfAppealsUrl": "https://www.courts.michigan.gov/courts/court-of-appeals/judges/current-judges/",
+ "circuitUrl": "https://www.courts.michigan.gov/trial-court-directory/",
+ "courtOfAppeals": {
+  "1": {
+   "judges": [
+    {
+     "name": "Mariam Saad Bazzi",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Thomas C. Cameron",
+     "termEnds": "2029-01-01"
+    },
+    {
+     "name": "Kristina Robinson Garrett",
+     "termEnds": "2029-01-01"
+    },
+    {
+     "name": "Anica Letica",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Andrew J. Lievense",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Christopher M. Murray",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Michael J. Riordan",
+     "termEnds": "2031-01-01"
+    }
+   ]
+  },
+  "2": {
+   "judges": [
+    {
+     "name": "Matthew S. Ackerman",
+     "termEnds": "2031-01-01"
+    },
+    {
+     "name": "Colleen A. O'Brien",
+     "termEnds": "2029-01-01"
+    },
+    {
+     "name": "Sima G. Patel",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Christopher M. Trebilcock",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Randy J. Wallace",
+     "termEnds": "2031-01-01"
+    },
+    {
+     "name": "Adrienne N. Young",
+     "termEnds": "2031-01-01"
+    }
+   ]
+  },
+  "3": {
+   "judges": [
+    {
+     "name": "Mark T. Boonstra",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Kathleen A. Feeney",
+     "termEnds": "2029-01-01"
+    },
+    {
+     "name": "Daniel S. Korobkin",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Philip P. Mariani",
+     "termEnds": "2031-01-01"
+    },
+    {
+     "name": "James Robert Redford",
+     "termEnds": "2029-01-01"
+    }
+   ],
+   "notes": [
+    "Judge Christopher Yates resigned. On November 9, 2026 the Governor named Dan Osher to his seat, for a term ending January 1, 2029. The court's page did not list him yet on November 25, 2026."
+   ]
+  },
+  "4": {
+   "judges": [
+    {
+     "name": "Stephen L. Borrello",
+     "termEnds": "2031-01-01",
+     "role": "Chief judge pro tem"
+    },
+    {
+     "name": "Michael F. Gadola",
+     "termEnds": "2029-01-01",
+     "role": "Chief judge"
+    },
+    {
+     "name": "Michael J. Kelly",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Allie Greenleaf Maldonado",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Michelle M. Rick",
+     "termEnds": "2027-01-01"
+    },
+    {
+     "name": "Brock A. Swartzle",
+     "termEnds": "2029-01-01"
+    }
+   ]
+  }
+ },
+ "circuits": {
+  "1": {
+   "judges": [],
+   "notes": [
+    "The court's directory listed no judge of this circuit on November 25, 2026."
+   ]
+  },
+  "2": {
+   "judges": [
+    {
+     "name": "Donna B. Howard"
+    },
+    {
+     "name": "Charles T. LaSata"
+    },
+    {
+     "name": "Angela Pasula"
+    },
+    {
+     "name": "Jennifer L. Smith"
+    }
+   ]
+  },
+  "3": {
+   "judges": [
+    {
+     "name": "Yvonna C. Abraham"
+    },
+    {
+     "name": "David J. Allen"
+    },
+    {
+     "name": "Charise L. Anderson"
+    },
+    {
+     "name": "Rula Aoun"
+    },
+    {
+     "name": "Chandra W. Baker-Robinson"
+    },
+    {
+     "name": "Annette J. Berry"
+    },
+    {
+     "name": "Christopher Michael Blount"
+    },
+    {
+     "name": "Karen Y. Braxton"
+    },
+    {
+     "name": "Nicole L. Castka"
+    },
+    {
+     "name": "Jerome C. Cavanagh"
+    },
+    {
+     "name": "Eric William Cholack"
+    },
+    {
+     "name": "Bradley L. Cobb"
+    },
+    {
+     "name": "Kiefer Joseph Cox"
+    },
+    {
+     "name": "Melissa Anne Cox"
+    },
+    {
+     "name": "Paul John Cusick"
+    },
+    {
+     "name": "Susan A. Dabaja"
+    },
+    {
+     "name": "Christopher D. Dingell"
+    },
+    {
+     "name": "Prentis Edwards, Jr."
+    },
+    {
+     "name": "Lawrence Elassal"
+    },
+    {
+     "name": "Charlene M. Elder"
+    },
+    {
+     "name": "Wanda Evans"
+    },
+    {
+     "name": "Edward Ewell, Jr."
+    },
+    {
+     "name": "Helal A. Farhat"
+    },
+    {
+     "name": "Patricia Susan Fresard"
+    },
+    {
+     "name": "Robbie Gaines, Jr."
+    },
+    {
+     "name": "Sheila Ann Gibson"
+    },
+    {
+     "name": "John Christopher Gillis"
+    },
+    {
+     "name": "John H. Gillis, Jr."
+    },
+    {
+     "name": "Alexis Glendening"
+    },
+    {
+     "name": "Nicole Neal Goodson"
+    },
+    {
+     "name": "Tracy E. Green"
+    },
+    {
+     "name": "Adel A. Harb"
+    },
+    {
+     "name": "Bridget Mary Hathaway"
+    },
+    {
+     "name": "Dana Margaret Hathaway"
+    },
+    {
+     "name": "Nicholas Hathaway"
+    },
+    {
+     "name": "Catherine Heise"
+    },
+    {
+     "name": "Margaret M. Van Houten"
+    },
+    {
+     "name": "Susan L. Hubbard"
+    },
+    {
+     "name": "Edward Joseph"
+    },
+    {
+     "name": "Mary Beth Kelly"
+    },
+    {
+     "name": "Donald Knapp"
+    },
+    {
+     "name": "Robyn Nicole Brazeal Liddell"
+    },
+    {
+     "name": "Qiana D. Lillard"
+    },
+    {
+     "name": "Anne Marie McCarthy"
+    },
+    {
+     "name": "Kathleen M. McCarthy"
+    },
+    {
+     "name": "Cylenthia LaToye Miller"
+    },
+    {
+     "name": "Kelly Ramsey"
+    },
+    {
+     "name": "Aliyah Sabree"
+    },
+    {
+     "name": "Adrienne G Scruggs"
+    },
+    {
+     "name": "Mark T. Slavens"
+    },
+    {
+     "name": "Martha M. Snow"
+    },
+    {
+     "name": "Brian R. Sullivan"
+    },
+    {
+     "name": "Carla Testani"
+    },
+    {
+     "name": "Regina Daniels Thomas"
+    },
+    {
+     "name": "Regina Triplett"
+    },
+    {
+     "name": "Shannon Nicol Walker"
+    },
+    {
+     "name": "Darnella Denise Williams-Claybourne"
+    }
+   ]
+  },
+  "4": {
+   "judges": [
+    {
+     "name": "Allison L. Bates"
+    },
+    {
+     "name": "Susan Beebe Jordan"
+    },
+    {
+     "name": "Richard N. LaFlamme"
+    },
+    {
+     "name": "John G. McBain, Jr."
+    }
+   ]
+  },
+  "5": {
+   "judges": [
+    {
+     "name": "Vicky Alspaugh"
+    }
+   ]
+  },
+  "6": {
+   "judges": [
+    {
+     "name": "Martha Anderson"
+    },
+    {
+     "name": "Mary Ellen Brennan"
+    },
+    {
+     "name": "David M. Cohen"
+    },
+    {
+     "name": "Jacob James Cunningham"
+    },
+    {
+     "name": "Tricia R. Dare"
+    },
+    {
+     "name": "Kameshia D. Gant"
+    },
+    {
+     "name": "Lisa Ortlieb Gorcyca"
+    },
+    {
+     "name": "Nanci J. Grant"
+    },
+    {
+     "name": "Maureen H. Kinsella"
+    },
+    {
+     "name": "Lisa Langton"
+    },
+    {
+     "name": "Jeffery S. Matis"
+    },
+    {
+     "name": "Cheryl A. Matthews"
+    },
+    {
+     "name": "Julie A. McDonald"
+    },
+    {
+     "name": "Daniel Patrick O'Brien"
+    },
+    {
+     "name": "Yasmine Isshak Poles"
+    },
+    {
+     "name": "Kwamé LeRoy Rowe"
+    },
+    {
+     "name": "Lorie N. Savin"
+    },
+    {
+     "name": "Amanda J. Shelton"
+    },
+    {
+     "name": "Victoria Ann Valentine"
+    },
+    {
+     "name": "Michael D. Warren, Jr."
+    }
+   ]
+  },
+  "7": {
+   "judges": [
+    {
+     "name": "B. Chris Christenson"
+    },
+    {
+     "name": "Khary L. Hanible"
+    },
+    {
+     "name": "Mary Alyce Hood"
+    },
+    {
+     "name": "Elizabeth Anne Kelly"
+    },
+    {
+     "name": "Mark W. Latchana"
+    },
+    {
+     "name": "Anthony McDowell"
+    },
+    {
+     "name": "David J. Newblatt"
+    },
+    {
+     "name": "Brian S. Pickell"
+    },
+    {
+     "name": "Dawn Marie Weier"
+    }
+   ]
+  },
+  "8": {
+   "judges": [
+    {
+     "name": "Suzanne Kreeger"
+    },
+    {
+     "name": "Ronald J. Schafer"
+    }
+   ]
+  },
+  "9": {
+   "judges": [
+    {
+     "name": "Kenneth N. Barnard"
+    },
+    {
+     "name": "Paul J. Bridenstine"
+    },
+    {
+     "name": "Rebecca Jean D'Angelo"
+    },
+    {
+     "name": "Gary C. Giguere, Jr."
+    },
+    {
+     "name": "Pamela L. Lightvoet"
+    },
+    {
+     "name": "Christine A. Morse"
+    }
+   ]
+  },
+  "10": {
+   "judges": [
+    {
+     "name": "André R. Borrello"
+    },
+    {
+     "name": "Brittany Dicken"
+    },
+    {
+     "name": "Julie A. Gafkay"
+    },
+    {
+     "name": "Darnell Jackson"
+    },
+    {
+     "name": "Manvel Trice, III"
+    }
+   ]
+  },
+  "11": {
+   "judges": [
+    {
+     "name": "Brian Daniel Rahilly"
+    }
+   ]
+  },
+  "12": {
+   "judges": [
+    {
+     "name": "Brittany Bulleit"
+    }
+   ]
+  },
+  "13": {
+   "judges": [
+    {
+     "name": "Kevin A. Elsenheimer"
+    },
+    {
+     "name": "Charles M. Hamlyn"
+    }
+   ]
+  },
+  "14": {
+   "judges": [
+    {
+     "name": "Kathy L. Hoogstra"
+    },
+    {
+     "name": "Kenneth S. Hoopes"
+    },
+    {
+     "name": "Matthew Ryan Kacel"
+    },
+    {
+     "name": "Jenny L. McNeill"
+    },
+    {
+     "name": "Annette Rose Smedley"
+    }
+   ]
+  },
+  "15": {
+   "judges": [
+    {
+     "name": "Zachary William Stempien"
+    }
+   ]
+  },
+  "16": {
+   "judges": [
+    {
+     "name": "James M. Biernat, Jr."
+    },
+    {
+     "name": "Richard L. Caretti"
+    },
+    {
+     "name": "Teri L. Dennings"
+    },
+    {
+     "name": "Jennifer Faunce"
+    },
+    {
+     "name": "Julie Gatti"
+    },
+    {
+     "name": "Tanya A. Grillo"
+    },
+    {
+     "name": "James M. Maceroni"
+    },
+    {
+     "name": "Rachel Rancilio"
+    },
+    {
+     "name": "Matthew P. Sabaugh"
+    },
+    {
+     "name": "Anthony R. Servitto"
+    },
+    {
+     "name": "Michael E. Servitto"
+    },
+    {
+     "name": "Matthew S. Switalski"
+    },
+    {
+     "name": "Joseph Toia"
+    },
+    {
+     "name": "Kathryn A. Viviano"
+    },
+    {
+     "name": "Tracey A. Yokich",
+     "note": "Retiring. The Governor named Jevona Fudge to this seat from December 14, 2026."
+    }
+   ]
+  },
+  "17": {
+   "judges": [
+    {
+     "name": "Curt A. Benson"
+    },
+    {
+     "name": "Alida J. Bryant"
+    },
+    {
+     "name": "Paul J. Denenfeld"
+    },
+    {
+     "name": "Maureen Gottlieb"
+    },
+    {
+     "name": "Jennifer L. Johnsen"
+    },
+    {
+     "name": "Deborah McNabb"
+    },
+    {
+     "name": "Christina Mims"
+    },
+    {
+     "name": "Scott A. Noto"
+    },
+    {
+     "name": "George Jay Quist"
+    },
+    {
+     "name": "J. Joseph Rossi"
+    },
+    {
+     "name": "Clay M. West"
+    }
+   ]
+  },
+  "18": {
+   "judges": [
+    {
+     "name": "Joseph K. Sheeran"
+    },
+    {
+     "name": "Jessie Scott Wood"
+    }
+   ]
+  },
+  "19": {
+   "judges": [
+    {
+     "name": "David A. Thompson"
+    }
+   ]
+  },
+  "20": {
+   "judges": [
+    {
+     "name": "Jon Van Allsburg"
+    },
+    {
+     "name": "Kent D. Engle"
+    },
+    {
+     "name": "Jon H. Hulsing"
+    },
+    {
+     "name": "Paul F. Kraus"
+    },
+    {
+     "name": "Karen J. Miedema"
+    }
+   ]
+  },
+  "21": {
+   "judges": [
+    {
+     "name": "James Edward Brian Allen"
+    },
+    {
+     "name": "Sara Spencer-Noggle"
+    }
+   ]
+  },
+  "22": {
+   "judges": [
+    {
+     "name": "Tracy Elisabeth Van den Bergh"
+    },
+    {
+     "name": "Patrick J. Conlin, Jr."
+    },
+    {
+     "name": "Jinan Mustapha Hamood"
+    },
+    {
+     "name": "Carol A. Kuhnke"
+    },
+    {
+     "name": "Arianne E. Slay"
+    }
+   ]
+  },
+  "23": {
+   "judges": [
+    {
+     "name": "David C. Riffel"
+    }
+   ]
+  },
+  "24": {
+   "judges": [
+    {
+     "name": "Timothy C. Wrathell"
+    }
+   ]
+  },
+  "25": {
+   "judges": [
+    {
+     "name": "Andrew G. Griffin"
+    },
+    {
+     "name": "Matthew J. Wiese"
+    }
+   ]
+  },
+  "26": {
+   "judges": [
+    {
+     "name": "Keith Edward Black"
+    }
+   ]
+  },
+  "27": {
+   "judges": [
+    {
+     "name": "Robert D. Springstead"
+    }
+   ]
+  },
+  "28": {
+   "judges": [
+    {
+     "name": "Jason J. Elmore"
+    }
+   ]
+  },
+  "29": {
+   "judges": [
+    {
+     "name": "Cori E. Barkman"
+    },
+    {
+     "name": "Shannon L. W. Schlegel"
+    }
+   ]
+  },
+  "30": {
+   "judges": [
+    {
+     "name": "Rosemarie E. Aquilina"
+    },
+    {
+     "name": "Morgan Elizabeth Cole"
+    },
+    {
+     "name": "James S. Jamo"
+    },
+    {
+     "name": "Carolyn N. Koenig"
+    },
+    {
+     "name": "Lisa K. McCormick"
+    },
+    {
+     "name": "Wanda M. Stokes"
+    },
+    {
+     "name": "Patricia Tremblay"
+    }
+   ]
+  },
+  "31": {
+   "judges": [
+    {
+     "name": "Daniel A. Damman"
+    },
+    {
+     "name": "Cynthia A. Lane"
+    },
+    {
+     "name": "Michael L. West"
+    }
+   ]
+  },
+  "32": {
+   "judges": [
+    {
+     "name": "Michael K. Pope"
+    }
+   ]
+  },
+  "33": {
+   "judges": [
+    {
+     "name": "Roy C. Hayes, III"
+    }
+   ]
+  },
+  "34": {
+   "judges": [
+    {
+     "name": "Robert Bennett"
+    }
+   ]
+  },
+  "35": {
+   "judges": [
+    {
+     "name": "Matthew J. Stewart"
+    }
+   ]
+  },
+  "36": {
+   "judges": [
+    {
+     "name": "Kathleen M. Brickley"
+    },
+    {
+     "name": "Jeffrey J. Dufon"
+    }
+   ]
+  },
+  "37": {
+   "judges": [
+    {
+     "name": "Jason C. Bomia"
+    },
+    {
+     "name": "John A. Hallacy"
+    },
+    {
+     "name": "Tina Yost Johnson"
+    },
+    {
+     "name": "Sarah Soules Lincoln"
+    }
+   ]
+  },
+  "38": {
+   "judges": [
+    {
+     "name": "Mark S. Braunlich"
+    },
+    {
+     "name": "William Paul Nichols"
+    },
+    {
+     "name": "Daniel S. White"
+    }
+   ]
+  },
+  "39": {
+   "judges": [
+    {
+     "name": "Anna Marie Anzalone"
+    },
+    {
+     "name": "Michael R. Olsaver"
+    }
+   ]
+  },
+  "40": {
+   "judges": [
+    {
+     "name": "Michael D. Hodges"
+    },
+    {
+     "name": "Michael J. Nolan"
+    }
+   ]
+  },
+  "41": {
+   "judges": [
+    {
+     "name": "Mary Brouillette Barglind"
+    },
+    {
+     "name": "Christopher S. Ninomiya"
+    }
+   ]
+  },
+  "42": {
+   "judges": [
+    {
+     "name": "Michael J. Beale"
+    },
+    {
+     "name": "Stephen P. Carras"
+    }
+   ]
+  },
+  "43": {
+   "judges": [
+    {
+     "name": "Mark A. Herman"
+    }
+   ]
+  },
+  "44": {
+   "judges": [
+    {
+     "name": "L. Suzanne Geddis"
+    },
+    {
+     "name": "Susan Anne Longsworth"
+    },
+    {
+     "name": "Matthew J. McGivney"
+    }
+   ]
+  },
+  "45": {
+   "judges": [
+    {
+     "name": "Paul E. Stutesman"
+    }
+   ]
+  },
+  "46": {
+   "judges": [
+    {
+     "name": "Colin G. Hunter"
+    },
+    {
+     "name": "George J. Mertz"
+    }
+   ]
+  },
+  "47": {
+   "judges": [
+    {
+     "name": "John B. Economopoulos"
+    }
+   ]
+  },
+  "48": {
+   "judges": [
+    {
+     "name": "Matthew W. Antkoviak"
+    },
+    {
+     "name": "Margaret Zuzich Bakker"
+    },
+    {
+     "name": "Emily Wilkey Jipp"
+    }
+   ]
+  },
+  "49": {
+   "judges": [
+    {
+     "name": "Kimberly L. Booher"
+    },
+    {
+     "name": "Amy C. Clapp"
+    }
+   ]
+  },
+  "50": {
+   "judges": [
+    {
+     "name": "James P. Lambros"
+    }
+   ]
+  },
+  "51": {
+   "judges": [
+    {
+     "name": "Susan K. Sniegowski"
+    }
+   ]
+  },
+  "52": {
+   "judges": [
+    {
+     "name": "Gerald M. Prill"
+    }
+   ]
+  },
+  "53": {
+   "judges": [
+    {
+     "name": "Aaron J. Gauthier"
+    }
+   ]
+  },
+  "54": {
+   "judges": [
+    {
+     "name": "Amy G. Gierhart"
+    }
+   ]
+  },
+  "55": {
+   "judges": [
+    {
+     "name": "Michelle Ambrozaitis"
+    },
+    {
+     "name": "Tara S. Hovey"
+    }
+   ]
+  },
+  "56": {
+   "judges": [
+    {
+     "name": "Janice K. Cunningham"
+    },
+    {
+     "name": "Kelly E. Morton"
+    }
+   ]
+  },
+  "57": {
+   "judges": [
+    {
+     "name": "Jennifer E. Deegan"
+    }
+   ]
+  }
+ }
+}

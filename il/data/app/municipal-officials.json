@@ -1080,73 +1080,97 @@
     "board": [
       {
         "district": "Ward 1",
+        "email": "barreirod@aurora.il.us",
         "name": "Daniel Barreiro",
+        "phone": "331-758-4731",
         "role": "Alderperson",
         "termExpires": "2027"
       },
       {
         "district": "Ward 2",
+        "email": "garzaj@aurora.il.us",
         "name": "Juany Garza",
+        "phone": "630-256-3022",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "Ward 3",
+        "email": "mesiacost@aurora.il.us",
         "name": "Theodoros “Ted” Mesiacos",
+        "phone": "331-452-3479",
         "role": "Alderperson",
         "termExpires": "2027"
       },
       {
         "district": "Ward 4",
+        "email": "nunezj@aurora.il.us",
         "name": "Jonathan Núñez",
+        "phone": "331-758-0202",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "Ward 5",
+        "email": "francoc@aurora.il.us",
         "name": "Carl Franco",
+        "phone": "630-631-4296",
         "role": "Alderperson",
         "termExpires": "2027"
       },
       {
         "district": "Ward 6",
+        "email": "savillem@aurora.il.us",
         "name": "Michael B. Saville",
+        "phone": "630-896-9895",
         "role": "Alderperson",
         "termExpires": "2027"
       },
       {
         "district": "Ward 7",
+        "email": "banuelosj@aurora.il.us",
         "name": "Javier Bañuelos",
+        "phone": "331-758-0972",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "Ward 8",
+        "email": "smithpc@aurora.il.us",
         "name": "Patty Smith",
+        "phone": "630-341-1176",
         "role": "Alderperson",
         "termExpires": "2027"
       },
       {
         "district": "Ward 9",
+        "email": "bugge@aurora.il.us",
         "name": "Edward J. Bugg",
+        "phone": "630-886-1615",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "Ward 10",
+        "email": "sbaid@aurora.il.us",
         "name": "Shweta Baid",
+        "phone": "630-256-3030",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "At Large",
+        "email": "larsonk@aurora.il.us",
         "name": "Keith Larson",
+        "phone": "331-758-4582",
         "role": "Alderperson",
         "termExpires": "2029"
       },
       {
         "district": "At Large",
+        "email": "whitew@aurora.il.us",
         "name": "Will White",
+        "phone": "331-329-2981",
         "role": "Alderperson",
         "termExpires": "2027"
       }

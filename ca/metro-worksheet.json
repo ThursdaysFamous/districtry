@@ -441,7 +441,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "The council of each nation whose own page names the whole of it, 49 of the 98 nations, re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json and named with the date each was read. Every other card says why it names nobody, in words measured nation by nation on 2026-11-13 (ROSTER_BLOCKED in scripts/build_tribal_areas.py): a site that refused this project or could not be read, a page naming part of a council or none of it, or no site of the nation's own. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for two of these nations, the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation; for both the seat is the town the nation's own site gives, read 2026-11-12, and the card says so. The Capitan Grande Reservation is shared by the Capitan Grande Band's two groups, Barona and Viejas, and its card lists both with their seats and sites. The Bureau lists no website for 28 of the nations, among them the Fort Mojave Indian Tribe, the Quechan Tribe and the Colorado River Indian Tribes; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "The council of each nation whose own page names the whole of it, or all but one seat, 55 of the 98 nations: 51 re-read weekly by scripts/tribal_council_scraper.py into data/app/tribal-councils.json, and four (Agua Caliente, Kashia, Pechanga and Tule River) read once by hand in a web browser on 2026-11-25, because the weekly reader cannot read those sites (data/tribal-council-browser-reads.json); each is named with the date it was read. Every other card says why it names nobody, in words measured nation by nation on 2026-11-13 and, for those tried in a browser, 2026-11-25 (ROSTER_BLOCKED in scripts/build_tribal_areas.py): a site that refused this project or could not be read, a page naming part of a council or none of it, or no site of the nation's own. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists neither a city nor a state for two of these nations, the Round Valley Indian Tribes and the Yocha Dehe Wintun Nation; for both the seat is the town the nation's own site gives, read 2026-11-12, and the card says so. The Capitan Grande Reservation is shared by the Capitan Grande Band's two groups, Barona and Viejas, and its card lists both with their seats and sites. The Bureau lists no website for 28 of the nations, among them the Fort Mojave Indian Tribe, the Quechan Tribe and the Colorado River Indian Tribes; the land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "California — the 150 pieces of land above, which reach into 34 of its 58 counties. Every other point in the state is on no tribal land the Census draws for a government."
       }
     },
@@ -839,7 +839,7 @@
     ]
   },
   "sw": {
-    "cache_name": "district-explorer-shell-sf-v14",
+    "cache_name": "district-explorer-shell-sf-v15",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

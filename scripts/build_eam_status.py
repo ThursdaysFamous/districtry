@@ -1845,8 +1845,8 @@ ANSWERS = {
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified", "school-district-elementary"),
         # Built 2026-10-01 from statute as unions of whole counties; the judges
-        # are not named (gap mi-judge-roster: the court system's site refuses
-        # every client).
+        # are named from one reading in a person's browser on 2026-11-25 (gap
+        # mi-judge-roster: the court system's site asks every client to stay out).
         "subdivision-boundaries": answers("county-subdivision"),
         "courts-by-district": answers("mi-court-of-appeals", "mi-circuit-court"),
         # A Michigan township governs everyone outside a village or city, so
@@ -2824,8 +2824,9 @@ ANSWERS = {
         # lists with no office town, seated from their own sites by Adam's
         # choice of that day. Since 2026-11-13 the councils of 11 of the 20
         # nations are named from each nation's own page, two of them with the
-        # card saying which seats the page leaves out; each of the other nine
-        # says why it names nobody (gap nv-tribal-government).
+        # card saying which seats the page leaves out, and since 2026-11-25 a
+        # twelfth (Summit Lake), read once by hand in a web browser; each of
+        # the other eight says why it names nobody (gap nv-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "az": {
@@ -3014,10 +3015,11 @@ ANSWERS = {
         "special-districts": OPEN,
         # SHIPPED 2026-11-12: the 7 reservations and 4 trust lands the Census
         # keeps in Florida, each named with its government, and the Seminole
-        # Tribe of Florida's council named from its own page; the Miccosukee's
-        # and the Poarch Band's councils are the narrower gap
-        # fl-tribal-government (both sites answered with a challenge page) --
-        # the Louisiana shape.
+        # Tribe of Florida's council named from its own page, and since
+        # 2026-11-25 the Poarch Band's, read once by hand in a web browser
+        # because its site answers this project with a challenge page; the
+        # Miccosukee's council is the narrower gap fl-tribal-government (its
+        # site gives nothing of its government) -- the Louisiana shape.
         "tribal-government": answers("tribal-government"),
     },
     "oh": {
@@ -3088,7 +3090,8 @@ ANSWERS = {
         # reservations and 22 off-reservation trust lands), each named with its
         # government -- 29 nations, the Umatilla seated in Oregon among them.
         # Since 2026-11-13 the councils of 20 of the 29 nations are named from
-        # each nation's own page; each of the other nine says why it names
+        # each nation's own page, and since 2026-11-25 five more, read once by
+        # hand in a web browser; each of the other four says why it names
         # nobody (gap wa-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
@@ -3237,8 +3240,9 @@ ANSWERS = {
         # Creek Indians' reservation and trust land and one state reservation
         # (MOWA Choctaw),
         # drawn since 2026-11-13, the MOWA Band named from the Alabama Indian
-        # Affairs Commission's list; no council is named yet
-        # (gap al-tribal-government).
+        # Affairs Commission's list; since 2026-11-25 the Poarch Band's council
+        # is named, read once by hand in a web browser, and the MOWA Band's is
+        # not sought yet (gap al-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     "or": {
@@ -3532,9 +3536,12 @@ ANSWERS = {
         # sites by Adam's choice of that day for Nevada. Since 2026-11-13 the
         # councils of 51 of the 98 nations are named from each nation's own
         # page, two of them with the card saying which seat the page leaves
-        # out; each of the others says why it names nobody, and ten whose
+        # out, and since 2026-11-25 four more, read once by hand in a web
+        # browser (one, Pechanga, leaving out a seat); each of the others says
+        # why it names nobody, and twelve whose
         # Bureau-listed site no longer reaches them link no site of the
-        # Bureau's (gap ca-tribal-government).
+        # Bureau's, two of them (Chemehuevi, San Pasqual) since 2026-11-25
+        # (gap ca-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),

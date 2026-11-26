@@ -1,0 +1,65 @@
+# Michigan circuit court judges as the One Court of Justice trial court directory listed them on 2026-11-25.
+# Read once in Adam's Chrome (Claude in Chrome), no check page shown, through the directory page's own feed:
+# https://www.courts.michigan.gov/trial-court-directory/ fills each county from /api/directory/county/<1..83>.
+# All 83 counties fetched the way the page does, 0.6 s apart, every answer HTTP 200. Kept: the circuit court
+# entries (courtCode C<nn>), merged across a circuit's counties and de-duplicated; the feed lists a judge once
+# per court location, so a judge seated at three locations appears three times in the raw answer.
+# A trailing * marks the feed's "Chief Judge" title; every other judge was titled "Circuit Judge".
+# circuit	counties	judges
+1	Hillsdale	Michelle Snell Bianchi*
+2	Berrien	Jennifer L. Smith; Mabel Johnson Mayfield*; Donna B. Howard; Charles T. LaSata; Angela Pasula
+3	Wayne	David J. Allen; Christopher D. Dingell; Charlene M. Elder; Helal A. Farhat; John H. Gillis, Jr.; Edward Joseph; Donald Knapp; Cylenthia LaToye Miller; Carla Testani; Margaret M. Van Houten; Shannon Nicol Walker; Mary Beth Kelly; Chandra W. Baker-Robinson; Kiefer Joseph Cox; Yvonna C. Abraham; Charise L. Anderson; Christopher Michael Blount; Eric William Cholack; Melissa Anne Cox; Susan A. Dabaja; Wanda Evans; Patricia Susan Fresard; Sheila Ann Gibson; Alexis Glendening; Nicholas Hathaway; Susan L. Hubbard; John Christopher Gillis; Anne Marie McCarthy; Kelly Ramsey; Mark T. Slavens; Martha M. Snow; Brian R. Sullivan; Regina Triplett; Darnella Denise Williams-Claybourne; Annette J. Berry; Karen Y. Braxton; Jerome C. Cavanagh; Paul John Cusick; Prentis Edwards, Jr.; Lawrence Elassal; Edward Ewell, Jr.*; Tracy E. Green; Adel A. Harb; Bridget Mary Hathaway; Dana Margaret Hathaway; Catherine Heise; Qiana D. Lillard; Kathleen M. McCarthy; Regina Daniels Thomas; Bradley L. Cobb; Nicole Neal Goodson; Adrienne G Scruggs; Aliyah Sabree; Nicole L. Castka; Robbie Gaines, Jr.; Rula Aoun; Robyn Nicole Brazeal Liddell
+4	Jackson	John G. McBain, Jr.; Susan Beebe Jordan*; Richard N. LaFlamme; Allison L. Bates
+5	Barry	Vicky Alspaugh; William M. Doherty*
+6	Oakland	Martha Anderson; Mary Ellen Brennan; Lisa Ortlieb Gorcyca; Nanci J. Grant; Jeffery S. Matis*; Lorie N. Savin; David M. Cohen; Lisa Langton; Cheryl A. Matthews; Daniel Patrick O'Brien; Yasmine Isshak Poles; Amanda J. Shelton; Victoria Ann Valentine; Kameshia D. Gant; Jacob James Cunningham; Maureen H. Kinsella; Kwame' LeRoy Rowe; Julie A. McDonald; Michael D. Warren, Jr.; Tricia R. Dare
+7	Genesee	Mark W. Latchana; B. Chris Christenson; David J. Newblatt*; Dawn Marie Weier; Anthony McDowell; Elizabeth Anne Kelly; Brian S. Pickell; Mary Alyce Hood; Khary L. Hanible
+8	Ionia,Montcalm	Suzanne Kreeger; Ronald J. Schafer*
+9	Kalamazoo	Gary C. Giguere, Jr.*; Kenneth N. Barnard; Rebecca Jean D'Angelo; Paul J. Bridenstine; Pamela L. Lightvoet; Christine A. Morse
+10	Saginaw	Manvel Trice, III; Andre' R. Borrello; Brittany Dicken; Julie A. Gafkay*; Darnell Jackson
+11	Alger,Luce,Mackinac,Schoolcraft	Brian Daniel Rahilly; Beth A. Gibson*
+12	Baraga,Houghton,Keweenaw	Brittany Bulleit; Fraser T. Strome*
+13	Antrim,Grand Traverse,Leelanau	Kevin A. Elsenheimer*; Charles M. Hamlyn
+14	Muskegon	Kathy L. Hoogstra; Kenneth S. Hoopes*; Matthew Ryan Kacel; Jenny L. McNeill; Annette Rose Smedley
+15	Branch	Kirk A. Kashian*; Zachary William Stempien
+16	Macomb	Julie Gatti; James M. Maceroni; Matthew S. Switalski; Joseph Toia; Richard L. Caretti; Rachel Rancilio; Matthew P. Sabaugh; Kathryn A. Viviano; Michael E. Servitto; James M. Biernat, Jr.*; Teri L. Dennings; Tracey A. Yokich; Jennifer Faunce; Anthony R. Servitto; Tanya A. Grillo
+17	Kent	Maureen Gottlieb; Scott A. Noto; Paul J. Denenfeld; Deborah McNabb*; George Jay Quist; J. Joseph Rossi; Clay M. West; Alida J. Bryant; Curt A. Benson; Christina Mims; Jennifer L. Johnsen
+18	Bay	Joseph K. Sheeran; Jessie Scott Wood; Mark E. Janer*
+19	Benzie,Manistee	David A. Thompson*
+20	Ottawa	Jon H. Hulsing; Kent D. Engle; Paul F. Kraus; Karen J. Miedema; Jon Van Allsburg*
+21	Isabella	Sara Spencer-Noggle; James Edward Brian Allen; Eric R. Janes*
+22	Washtenaw	Patrick J. Conlin, Jr.*; Tracy Elisabeth Van den Bergh; Arianne E. Slay; Carol A. Kuhnke; Jinan Mustapha Hamood
+23	Alcona,Arenac,Iosco,Oscoda	David C. Riffel; Richard E. Vollbach, Jr.*
+24	Sanilac	Timothy C. Wrathell*
+25	Marquette	Andrew G. Griffin; Matthew J. Wiese; Cheryl L. Hill*
+26	Alpena,Montmorency	Keith Edward Black*
+27	Lake,Newaygo	Robert D. Springstead*; David M. Glancy*
+28	Missaukee,Wexford	Jason J. Elmore*
+29	Clinton,Gratiot	Shannon L. W. Schlegel; Cori E. Barkman; Lisa Sullivan*
+30	Ingham	Rosemarie E. Aquilina; Carolyn N. Koenig; Morgan Elizabeth Cole; James S. Jamo; Lisa K. McCormick*; Patricia Tremblay; Wanda M. Stokes
+31	St. Clair	Daniel A. Damman; Cynthia A. Lane; Michael L. West*
+32	Gogebic,Ontonagon	Michael K. Pope*
+33	Charlevoix	Roy C. Hayes, III*
+34	Ogemaw,Roscommon	Robert Bennett*
+35	Shiawassee	Matthew J. Stewart*
+36	Van Buren	Jeffrey J. Dufon; Kathleen M. Brickley*
+37	Calhoun	Sarah Soules Lincoln*; Tina Yost Johnson; John A. Hallacy; Jason C. Bomia
+38	Monroe	Daniel S. White; William Paul Nichols; Mark S. Braunlich*
+39	Lenawee	Michael R. Olsaver*; Anna Marie Anzalone
+40	Lapeer	Michael D. Hodges; Michael J. Nolan; Laura Cheger Barnard*
+41	Dickinson,Iron,Menominee	Christopher S. Ninomiya; Mary Brouillette Barglind*
+42	Midland	Michael J. Beale; Stephen P. Carras*
+43	Cass	Mark A. Herman; Carol M. Bealor*
+44	Livingston	L. Suzanne Geddis; Matthew J. McGivney*; Susan Anne Longsworth
+45	St. Joseph	Paul E. Stutesman; Robert Pattison*
+46	Crawford,Kalkaska,Otsego	George J. Mertz; Colin G. Hunter*
+47	Delta	John B. Economopoulos*
+48	Allegan	Margaret Zuzich Bakker; Matthew W. Antkoviak*; Emily Wilkey Jipp
+49	Mecosta,Osceola	Kimberly L. Booher; Amy C. Clapp*
+50	Chippewa	James P. Lambros*
+51	Mason,Oceana	Susan K. Sniegowski; Jeffrey C. Nellis*
+52	Huron	Gerald M. Prill; Amy G. Gierhart*
+53	Cheboygan,Presque Isle	Aaron J. Gauthier*
+54	Tuscola	Amy G. Gierhart*
+55	Clare,Gladwin	Tara S. Hovey; Michelle Ambrozaitis; Joshua M. Farrell*
+56	Eaton	Kelly E. Morton; Janice K. Cunningham*
+57	Emmet	Jennifer E. Deegan*

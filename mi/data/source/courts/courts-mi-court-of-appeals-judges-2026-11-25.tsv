@@ -1,0 +1,32 @@
+# Michigan Court of Appeals judges as the court's own district pages listed them on 2026-11-25.
+# Read once in Adam's Chrome (Claude in Chrome), no check page shown:
+# https://www.courts.michigan.gov/courts/court-of-appeals/judges/current-judges/{first,second,third,fourth}-district-judges/
+# "term_expires" is the page's own line under each judge ("Term expires January 1, 2027.").
+# The court's alphabetical list (.../current-judges/) names the same 24 judges; Christopher P. Yates is
+# captioned "(retired)" in its photograph and appears on no district page. Chief judge and chief judge
+# pro tem are the alphabetical list's own milestones.
+# district	judge	term_expires	note
+1	Mariam Saad Bazzi	2027-01-01	appointed 2025
+1	Thomas C. Cameron	2029-01-01
+1	Kristina Robinson Garrett	2029-01-01
+1	Anica Letica	2027-01-01
+1	Andrew J. Lievense	2027-01-01	appointed April 2026 by Governor Whitmer
+1	Christopher M. Murray	2027-01-01
+1	Michael J. Riordan	2031-01-01
+2	Matthew S. Ackerman	2031-01-01
+2	Colleen A. O'Brien	2029-01-01
+2	Sima G. Patel	2027-01-01
+2	Christopher M. Trebilcock	2027-01-01
+2	Randy J. Wallace	2031-01-01
+2	Adrienne N. Young	2031-01-01
+3	Mark T. Boonstra	2027-01-01
+3	Kathleen A. Feeney	2029-01-01
+3	Daniel S. Korobkin	2027-01-01	appointed 2025 by Governor Whitmer
+3	Philip P. Mariani	2031-01-01
+3	James Robert Redford	2029-01-01
+4	Stephen L. Borrello	2031-01-01	chief judge pro tem
+4	Michael F. Gadola	2029-01-01	chief judge
+4	Michael J. Kelly	2027-01-01
+4	Allie Greenleaf Maldonado	2027-01-01
+4	Michelle M. Rick	2027-01-01
+4	Brock A. Swartzle	2029-01-01

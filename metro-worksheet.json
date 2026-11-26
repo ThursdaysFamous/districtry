@@ -1604,7 +1604,7 @@
         "file": "macoupin-county-board-districts.json",
         "min_features": 9,
         "max_features": 9,
-        "note": "Macoupin County's 9 County Board districts, taken exactly as the county publishes them in its own ArcGIS Online service (GIS_Layers layer 3, owned by the county's account behind its property map), unsimplified. Every channel the gap record had checked — the Socrata portal and the Clerk's Map Room PDFs — truly carried no district data; this service is a third channel it had not looked in. THREE WITNESSES, none of them the layer: all 61 Census 2020 voting districts (the 2005-2021 precinct fabric Ordinance O-2021.06 writes the plan in) nest in it, the worst at 98.8% of its area, pinned and re-measured on every build; the county's own Citizen's Guide precinct list agrees on 41 of 45 current precincts and on the Shipman and Girard splits, and its one difference, Cahokia, is the ordinance's old-precinct line; and the county's 44,967 people are placed exactly once, matching each district's voting-district sum to the person (scripts/build_macoupin_board_districts.py)."
+        "note": "Macoupin County's 9 County Board districts, taken exactly as the county publishes them in its own ArcGIS Online service (Macoupin_Reference_Boundaries layer 2, owned by the county's account behind its property map), unsimplified. Every channel the gap record had checked \u2014 the Socrata portal and the Clerk's Map Room PDFs \u2014 truly carried no district data; the county's ArcGIS Online account is a third channel it had not looked in. REBUILT 2026-11-25: the county deleted the GIS_Layers service this was first read from (2026-11-16) and republished the districts; the deleted layer still drew the 2012-2021 lines between Districts 3 and 6 and between 4 and 5 (1,337 people, Census 2020), and the new one is the adopted plan, matching the Clerk's Map Room PDFs, the Clerk's statement of what O-2021.06 changed, and the 3 November 2026 results. THREE WITNESSES, none of them the layer: all 61 Census 2020 voting districts (the 2005-2021 precinct fabric Ordinance O-2021.06 writes the plan in) nest in it, the worst at 99.6% of its area, pinned and re-measured on every build; the county's own Citizen's Guide precinct list agrees, Cahokia and the Shipman and Girard splits included; and the county's 44,967 people are placed exactly once, matching each district's voting-district sum to the person (scripts/build_macoupin_board_districts.py)."
       },
       {
         "file": "knox-county-board-districts.json",
@@ -3632,7 +3632,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v50",
+    "cache_name": "districtry-il-shell-v52",
     "shell_urls": [
       "./",
       "./sources.html",

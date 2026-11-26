@@ -9,7 +9,7 @@
        it makes the whole sitemap unparseable. One did, from 2026-09-12. -->
   <url>
     <loc>https://districtry.com/il/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -27,7 +27,7 @@
   </url>
   <url>
     <loc>https://districtry.com/al/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -141,19 +141,19 @@
   </url>
   <url>
     <loc>https://districtry.com/mi/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mn/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -225,7 +225,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ok/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -261,13 +261,13 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/tx/</loc>
-    <lastmod>2026-11-20</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -639,7 +639,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/library-district.html</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -891,7 +891,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mn/faq.html</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1335,7 +1335,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tx/county-commissioner.html</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1521,7 +1521,7 @@
   </url>
   <url>
     <loc>https://districtry.com/al/sources.html</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2337,7 +2337,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ca/sources.html</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2361,7 +2361,7 @@
   </url>
   <url>
     <loc>https://districtry.com/fl/sources.html</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3885,7 +3885,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/sources.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4245,7 +4245,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/mason.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4443,7 +4443,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/warren.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -6699,7 +6699,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mi/sources.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -7227,7 +7227,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mn/sources.html</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -7467,7 +7467,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/grundy.html</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -7917,7 +7917,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/sources.html</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9063,7 +9063,7 @@
   </url>
   <url>
     <loc>https://districtry.com/nv/sources.html</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9597,7 +9597,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ok/sources.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10275,7 +10275,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/sources.html</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10294,6 +10294,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/angelina.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/aransas.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10352,6 +10358,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/tx/county-commissioner/bell.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/bexar.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tx/county-commissioner/blanco.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -10378,6 +10396,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/brazoria.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/brazos.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10648,6 +10672,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/ellis.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/erath.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -11174,6 +11204,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/tx/county-commissioner/montgomery.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tx/county-commissioner/moore.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -11410,6 +11446,12 @@
   <url>
     <loc>https://districtry.com/tx/county-commissioner/sherman.html</loc>
     <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/tx/county-commissioner/smith.html</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -12447,7 +12489,7 @@
   </url>
   <url>
     <loc>https://districtry.com/wa/sources.html</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -13239,7 +13281,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/history.html</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -13263,7 +13305,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ai.html</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -65,7 +65,7 @@ OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "mason-county-board-memb
 
 SOURCE_URL = "https://masoncountyil.gov/county-board/"
 ROSTER_PDF = "https://masoncountyil.gov/wp-content/uploads/2026/05/Board-Members-.pdf"
-TRANSCRIBED = "2026-08-02"
+TRANSCRIBED = "2026-11-25"
 
 PARTY = {"D": "Democratic", "R": "Republican"}
 
@@ -77,25 +77,27 @@ PARTY = {"D": "Democratic", "R": "Republican"}
 # 11/03/2025 — and both say the member "will run for full term in 2026". Those
 # are the county's words about how a member reached the seat, not an office, so
 # they ride `seatNote` and are rendered as a note rather than as a badge.
+# RE-READ 2026-11-25 from the Clerk's sheet (the source; see SHEET_URL), after
+# the November election: Sleaford and Urish replace Kreiling and Walker,
+# Bender and Sarnes now hold full terms to 2030, Knollenberg is Chairman and
+# Garlisch Vice-Chairman. The sheet carries no seat notes now.
 MEMBERS = [
     # District 1
     {"name": "Kimi S. Bender", "district": "1", "party": "D",
-     "phone": "309-259-0402", "email": "bender70boss@yahoo.com", "termExpires": 2026,
-     "seatNote": "Appointed 05/12/2026 — will run for full term in 12/2026"},
-    {"name": "Scott Garlisch", "district": "1", "party": "R",
+     "phone": "309-259-0402", "email": "bender70boss@yahoo.com", "termExpires": 2030},
+    {"name": "Scott Garlisch", "district": "1", "party": "R", "role": "Vice-Chairman",
      "phone": "217-414-8470", "email": "garlischfarms@gmail.com", "termExpires": 2028},
-    {"name": "Dorothy J. Kreiling", "district": "1", "party": "R", "role": "Vice-Chairman",
-     "phone": "309-597-2124", "email": "djhouse@casscomm.com", "termExpires": 2026},
-    {"name": "Ronald Knollenberg", "district": "1", "party": "R",
+    {"name": "Daniel J. Sleaford", "district": "1", "party": "R",
+     "phone": "309-657-2204", "email": "dansleaford@gmail.com", "termExpires": 2030},
+    {"name": "Ronald Knollenberg", "district": "1", "party": "R", "role": "Chairman",
      "phone": "217-482-5351", "email": "rknoll4020@gmail.com", "termExpires": 2028},
     # District 2
-    {"name": "Kenneth Walker", "district": "2", "party": "D", "role": "Chairman",
-     "phone": "309-360-1723", "email": "kr44walker@gmail.com", "termExpires": 2026},
+    {"name": "Nicholas Urish", "district": "2", "party": "D",
+     "phone": "309-368-5251", "email": "urish8@gmail.com", "termExpires": 2030},
     {"name": "Brenda Davenport-Fornoff", "district": "2", "party": "R",
      "phone": "309-357-0999", "email": "davenportfornoff@casscomm.com", "termExpires": 2028},
-    {"name": "Adam Sarnes", "district": "2", "party": "D",
-     "phone": "309-338-8319", "email": "adamsarnes11@gmail.com", "termExpires": 2026,
-     "seatNote": "Seat vacant 11/03/2025 — will run for full term in 2026"},
+    {"name": "Adam P. Sarnes", "district": "2", "party": "D",
+     "phone": "309-338-8319", "email": "adamsarnes11@gmail.com", "termExpires": 2030},
     {"name": "Andrea Holtmeyer Thomson", "district": "2", "party": "D",
      "phone": "309-202-8796", "email": "athomson.mcboard@gmail.com", "termExpires": 2028},
 ]

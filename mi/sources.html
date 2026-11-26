@@ -1197,13 +1197,13 @@ table.matrix code {
             <tbody>
               <tr id="layer-mi-court-of-appeals">
                 <th scope="row"><span class="layer-name">Court of Appeals District</span><code>mi-court-of-appeals</code></th>
-                <td data-label="What it answers">The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="What it answers">The Court of Appeals district covering the point, how many counties it spans, how its judges are chosen, and the judges sitting there with the date each term ends, as the court listed them on 25 November 2026.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-302" target="_blank" rel="noopener">Derived county unions — no agency publishes Michigan's appellate districts as geometry (an ArcGIS Online catalogue search answered ten queries with no government court layer, measured 2026-10-01), so no new line is drawn: each district is a union of whole counties from the app's own TIGERweb county file, as MCL 600.302 lists them, witnessed county for county by the Michigan Manual 2025-2026 (pp. 453-454). Built by mi/scripts/build_mi_courts.py.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Who it names">mi-judges.json: the judges of each district, with the date each term ends, read ONCE on 25 November 2026 from the court's own four district pages (www.courts.michigan.gov) in Adam's own browser, because the site's robots.txt asks every automated tool to stay out, and built offline by mi/scripts/build_mi_judges.py. There is no weekly refresh; the card gives the date. The Governor's notice of 9 November 2026 naming Dan Osher to the 3rd District seat Judge Christopher Yates left is a note on that card, because the court's page did not list him yet. Recorded as gap mi-judge-roster.</td>
                 <td data-label="Where it applies">Michigan — statewide, all 83 counties across 4 districts.</td>
               </tr>
               <tr id="layer-us-house">
@@ -1230,13 +1230,13 @@ table.matrix code {
               </tr>
               <tr id="layer-mi-circuit-court">
                 <th scope="row"><span class="layer-name">Circuit Court</span><code>mi-circuit-court</code></th>
-                <td data-label="What it answers">The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why.</td>
+                <td data-label="What it answers">The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, how its judges are chosen, and the judges sitting there, as the court listed them on 25 November 2026.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-502" target="_blank" rel="noopener">Derived county unions — no agency publishes circuit geometry (measured 2026-10-01), so no new line is drawn: each circuit is a union of whole counties from the app's own TIGERweb county file, as MCL 600.502-600.549i list them (one section per circuit), witnessed by the Michigan Manual 2025-2026 (pp. 468-469 and 471-472). Five sections are written conditionally (5th/56th, 33rd/57th, 40th/54th); the Manual shows the split form in force, with a judge seated in each, and that is what is drawn. Built by mi/scripts/build_mi_courts.py.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.</td>
+                <td data-label="Who it names">mi-judges.json: the judges of each circuit, read ONCE on 25 November 2026 from the trial court directory on www.courts.michigan.gov in Adam's own browser (the site's robots.txt asks every automated tool to stay out), through the feed the directory page itself reads, and built offline by mi/scripts/build_mi_judges.py. The directory also lists each circuit's chief judge, and 18 of those are judges of another court in the county: none is in the Michigan Manual 2025-2026's table of that circuit's judges or in an appointment to it, so they are left out. Every judge kept is witnessed by that table or by an appointment notice, except two the builder names. No weekly refresh; the card gives the date. Recorded as gap mi-judge-roster.</td>
                 <td data-label="Where it applies">Michigan — statewide, all 83 counties across 57 circuits.</td>
               </tr>
               <tr id="layer-mi-house">
@@ -1305,7 +1305,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust lands, clipped to Michigan and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the twelve nations publish one this project can read; for the other three the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.</td>
+                <td data-label="Who it names">The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the twelve nations publish one this project can read weekly; the Hannahville Indian Community's and the Keweenaw Bay Indian Community's were read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read those sites, and dated on the card (data/tribal-council-browser-reads.json). For the other nation the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.</td>
                 <td data-label="Where it applies">Michigan — 24 areas across 12 nations. Most points in the state are on no tribal land.</td>
               </tr>
             </tbody>
@@ -1484,7 +1484,7 @@ table.matrix code {
       "@id": "https://districtry.com/mi/sources.html#dataset-mi-court-of-appeals",
       "identifier": "mi-court-of-appeals",
       "name": "Court of Appeals District",
-      "description": "The Court of Appeals district covering the point, how many counties it spans, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, and that is a measurement. The state court system's own site, www.courts.michigan.gov, publishes `User-agent: *` / `Disallow: /`, so this project does not read it; the one statewide list this project can read is the Michigan Manual 2025-2026, a December 2025 snapshot printed every two years, and a list that old cannot say who sits today. Recorded as gap mi-judge-roster.",
+      "description": "The Court of Appeals district covering the point, how many counties it spans, how its judges are chosen, and the judges sitting there with the date each term ends, as the court listed them on 25 November 2026. mi-judges.json: the judges of each district, with the date each term ends, read ONCE on 25 November 2026 from the court's own four district pages (www.courts.michigan.gov) in Adam's own browser, because the site's robots.txt asks every automated tool to stay out, and built offline by mi/scripts/build_mi_judges.py. There is no weekly refresh; the card gives the date. The Governor's notice of 9 November 2026 naming Dan Osher to the 3rd District seat Judge Christopher Yates left is a note on that card, because the court's page did not list him yet. Recorded as gap mi-judge-roster.",
       "url": "https://districtry.com/mi/sources.html#layer-mi-court-of-appeals",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/mi/sources.html#catalog"
@@ -1550,7 +1550,7 @@ table.matrix code {
       "@id": "https://districtry.com/mi/sources.html#dataset-mi-circuit-court",
       "identifier": "mi-circuit-court",
       "name": "Circuit Court",
-      "description": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, and how its judges are chosen. It names no judge yet, and says why. NO JUDGE IS NAMED, for the reason the Court of Appeals row gives: the court system's own site asks automated tools not to read it, and the Michigan Manual's December 2025 list is a dated snapshot. Recorded as gap mi-judge-roster.",
+      "description": "The circuit court whose judges serve the point — Michigan's trial court for serious criminal cases, larger civil cases and family matters — the counties it covers, how its judges are chosen, and the judges sitting there, as the court listed them on 25 November 2026. mi-judges.json: the judges of each circuit, read ONCE on 25 November 2026 from the trial court directory on www.courts.michigan.gov in Adam's own browser (the site's robots.txt asks every automated tool to stay out), through the feed the directory page itself reads, and built offline by mi/scripts/build_mi_judges.py. The directory also lists each circuit's chief judge, and 18 of those are judges of another court in the county: none is in the Michigan Manual 2025-2026's table of that circuit's judges or in an appointment to it, so they are left out. Every judge kept is witnessed by that table or by an appointment notice, except two the builder names. No weekly refresh; the card gives the date. Recorded as gap mi-judge-roster.",
       "url": "https://districtry.com/mi/sources.html#layer-mi-circuit-court",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/mi/sources.html#catalog"
@@ -1862,7 +1862,7 @@ table.matrix code {
       "@id": "https://districtry.com/mi/sources.html#dataset-tribal-government",
       "identifier": "tribal-government",
       "name": "Tribal Government",
-      "description": "Whether this address is on tribal land, and which nation's government answers for it — Michigan has 24 such areas across 12 nations. The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the twelve nations publish one this project can read; for the other three the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Michigan has 24 such areas across 12 nations. The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the twelve nations publish one this project can read weekly; the Hannahville Indian Community's and the Keweenaw Bay Indian Community's were read once by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read those sites, and dated on the card (data/tribal-council-browser-reads.json). For the other nation the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
       "url": "https://districtry.com/mi/sources.html#layer-tribal-government",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/mi/sources.html#catalog"

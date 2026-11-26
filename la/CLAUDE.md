@@ -278,13 +278,12 @@ chairman and says the council has five members without naming the other four, an
 carried only where its page names or lists as vacant all of its seats, or all but one (Adam,
 2026-11-13), so that card names nobody and says why (`ROSTER_BLOCKED` in
 `scripts/build_tribal_areas.py`). **THE CARD'S "(official)" LINK IS THE BUREAU OF INDIAN AFFAIRS'
-LISTING, AS IN EVERY INSTANCE, AND THE TUNICA-BILOXI'S LEADS NOWHERE**: the Bureau lists
-www.tunica.org, which answered 404 over http and a certificate for another name over https, while
-the tribe's own site is www.tunicabiloxi.org, which the card's "Where these names come from" link
-reaches. For the Coushatta the Bureau lists koasatiheritage.org, which answered the scraper's client
+LISTING, AS IN EVERY INSTANCE, EXCEPT THE TUNICA-BILOXI'S**: the Bureau lists www.tunica.org, which
+answered 404 over http and a certificate for another name over https on 2026-10-20 and again on
+2026-11-25, so on Adam's ruling of 2026-11-25 ("withdraw") the card links the tribe's own site,
+www.tunicabiloxi.org, instead (`websiteWithdrawn` in `data/tribal-government-join.json`). For the Coushatta the Bureau lists koasatiheritage.org, which answered the scraper's client
 with a Cloudflare 403 (what it shows a browser was not measured), and the tribe's government page is on
-coushatta.org. Whether a card may link a nation's current site in place of a Bureau listing
-measured dead is a fleet decision not yet taken (`la/WATCH.md`). Two Tunica-Biloxi
+coushatta.org; that address was not measured dead, so the Coushatta card still links it. Two Tunica-Biloxi
 council members are written both with and without "Sr." on their own page; the card prints the
 name as the page sets it in bold and notes the form the paragraph below gives.
 

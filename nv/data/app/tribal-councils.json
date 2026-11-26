@@ -525,6 +525,48 @@
   "rosterHost": null,
   "rosterMeasured": null
  },
+ "4045": {
+  "roster": [
+   {
+    "name": "Randi Lone Eagle",
+    "role": "Chairwoman",
+    "termEnds": "May 2027",
+    "email": "randi.loneeagle@slptnv.org"
+   },
+   {
+    "name": "Nedra Crane",
+    "role": "Vice-Chairperson",
+    "termEnds": "May 2027",
+    "email": "nedra.crane@slptnv.org",
+    "note": "the same page's picture caption calls her Vice-Chairwoman"
+   },
+   {
+    "name": "Philip Frank",
+    "role": "Secretary/Treasurer",
+    "termEnds": "May 2027",
+    "email": "philip.frank@slptnv.org"
+   },
+   {
+    "name": "Cherice Trejo",
+    "role": "Council Member",
+    "termEnds": "May 2027",
+    "email": "cherice.trejo@slptnv.org"
+   },
+   {
+    "name": "Scott 'Cory' Burdette",
+    "role": "Council Member",
+    "termEnds": "May 2027",
+    "email": "cory.burdette@slptnv.org"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read by hand in a web browser on 2026-11-25, because this project's weekly reader cannot read that site. It is not re-read each week.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.summitlaketribe.org/council.html",
+  "rosterRead": "2026-11-25",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
  "4180": {
   "roster": [
    {

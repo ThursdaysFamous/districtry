@@ -1,9 +1,9 @@
 {
-  "generated": "2026-11-01T18:02:24Z",
+  "generated": "2026-11-25T17:49:09Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Peoria",
       "heads": [
         {
@@ -11,7 +11,7 @@
           "role": "Director"
         },
         {
-          "email": "Aliesha@alphapark.org",
+          "email": "aliesha@alphapark.org",
           "name": "Aliesha Sullivan",
           "role": "Manager"
         }
@@ -78,10 +78,10 @@
         }
       ],
       "comptrollerCode": "055/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Macon",
       "office": {
-        "address": "P.O. Box 278",
+        "address": "PO Box 278",
         "city": "Oreana IL 62554",
         "phone": "(217) 468-2340"
       }
@@ -193,17 +193,17 @@
     "Atlanta Public Library District": {
       "board": [
         {
-          "email": "christopher.white@atlantapld.org",
-          "name": "Christopher White",
+          "email": "Jason.Dean@AtlantaPLD.org",
+          "name": "Jason Dean",
           "role": "President"
         }
       ],
       "comptrollerCode": "054/001/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Logan",
       "heads": [
         {
-          "email": "sue.chinowth@atlantapld.org",
+          "email": "Sue.Chinowth@AtlantaPLD.org",
           "name": "Susan Chinowth",
           "role": "Treas./Admin."
         }
@@ -233,6 +233,23 @@
       ],
       "office": {
         "phone": "(217) 578-2727"
+      }
+    },
+    "Auburn Public Library District": {
+      "comptrollerCode": "083/040/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "heads": [
+        {
+          "email": "APLDlibrarian@gmail.com",
+          "name": "Daniel Dixon",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "338 W Jefferson St",
+        "city": "Auburn IL 62615",
+        "phone": "(217) 438-6211"
       }
     },
     "Ayer Public Library District": {
@@ -325,7 +342,7 @@
         }
       ],
       "comptrollerCode": "062/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mcdonough",
       "office": {
         "phone": "(309) 652-3166"
@@ -337,11 +354,11 @@
           "email": "treasurerbpld@gmail.com",
           "name": "Barbara Fehr",
           "phone": "(309) 264-6521",
-          "role": "Trustee"
+          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "087/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Stark",
       "heads": [
         {
@@ -614,7 +631,7 @@
         }
       ],
       "comptrollerCode": "088/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "St. Clair",
       "office": {
         "email": "jkeck@caseyvillelibrary.org"
@@ -623,23 +640,18 @@
     "Catlin Public Library District": {
       "board": [
         {
+          "email": "cbrogan@catlinlib.org",
           "name": "Cathy Brogan",
           "role": "President"
         }
       ],
       "comptrollerCode": "092/008/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Vermilion",
-      "heads": [
-        {
-          "name": "Cathy Brogan",
-          "role": "Treas./Admin."
-        }
-      ],
       "office": {
         "address": "101 Mapleleaf Dr",
         "city": "Catlin IL 61817",
-        "email": "catlinlibrary03@yahoo.com",
+        "email": "Director@catlinlib.org",
         "phone": "(217) 427-2550"
       }
     },
@@ -723,14 +735,14 @@
           "role": "President"
         },
         {
-          "email": "lisaaberle@gmail.com",
+          "email": "lisa.aberle@gmail.com",
           "name": "Lisa Aberle",
           "phone": "(815) 848-4812",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "053/080/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Livingston",
       "office": {
         "email": "director.chatsworthlibrary@gmail.com"
@@ -792,7 +804,7 @@
         }
       ],
       "comptrollerCode": "072/040/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Peoria",
       "office": {
         "address": "430 N Bradley Ave",
@@ -890,7 +902,7 @@
         }
       ],
       "comptrollerCode": "037/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Henry",
       "heads": [
         {
@@ -1047,7 +1059,7 @@
         }
       ],
       "comptrollerCode": "090/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Tazewell",
       "office": {}
     },
@@ -1058,19 +1070,21 @@
           "name": "Elizabeth McCoy",
           "phone": "(573) 270-7749",
           "role": "President"
-        },
-        {
-          "email": "kevingerrie91@msn.com",
-          "name": "Gerrie McCoy",
-          "phone": "(202) 578-3934",
-          "role": "Sec./Treas."
         }
       ],
       "comptrollerCode": "002/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Alexander",
+      "heads": [
+        {
+          "email": "kevingerrie64@gmail.com",
+          "name": "Gerrie McCoy",
+          "phone": "(202) 578-3934",
+          "role": "Super./Treas."
+        }
+      ],
       "office": {
-        "email": "klschultz57@dodgelibrary1987.com"
+        "email": "klschultz57@dodgelibrary1987.org"
       }
     },
     "Dongola Public Library District": {
@@ -1108,11 +1122,11 @@
         }
       ],
       "comptrollerCode": "068/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Montgomery",
       "office": {
         "address": "109 OBANNON ST",
-        "city": "RAYMOND Il 62560",
+        "city": "RAYMOND IL 62560",
         "email": "dplboard@doylepubliclibrary.org",
         "phone": "(217) 229-4471"
       }
@@ -1250,11 +1264,11 @@
         }
       ],
       "comptrollerCode": "092/017/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Vermilion",
       "heads": [
         {
-          "name": "Loretta Fagg",
+          "name": "Lorretta Fagg",
           "role": "Director"
         }
       ],
@@ -1579,7 +1593,7 @@
         }
       ],
       "comptrollerCode": "014/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Clinton",
       "office": {
         "address": "403 Munster St",
@@ -1589,7 +1603,7 @@
     },
     "Golden Prairie Public Library District": {
       "comptrollerCode": "064/040/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mclean",
       "heads": [
         {
@@ -1676,7 +1690,7 @@
     },
     "Gridley Public Library District": {
       "comptrollerCode": "064/025/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mclean",
       "heads": [
         {
@@ -1702,7 +1716,7 @@
         }
       ],
       "comptrollerCode": "090/055/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Tazewell",
       "office": {
         "address": "202 N Main Ave PO Box 19",
@@ -1756,7 +1770,7 @@
     },
     "Hayner Public Library District": {
       "comptrollerCode": "057/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Madison",
       "heads": [
         {
@@ -1810,7 +1824,7 @@
         }
       ],
       "comptrollerCode": "064/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mclean",
       "office": {
         "email": "director@heyworthlibrary.com"
@@ -1893,11 +1907,11 @@
           "email": "diannelibrary3@gmail.com",
           "name": "Dianne Feasley",
           "phone": "(309) 660-1888",
-          "role": "Trustee"
+          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "064/050/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mclean",
       "office": {
         "address": "104 Pearl St",
@@ -1964,7 +1978,7 @@
         }
       ],
       "comptrollerCode": "048/005/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Knox",
       "office": {
         "address": "106 W MEEK",
@@ -1986,7 +2000,7 @@
         }
       ],
       "comptrollerCode": "071/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Ogle",
       "office": {
         "address": "100 Library Ln",
@@ -2068,17 +2082,17 @@
           "role": "President"
         },
         {
-          "name": "JOAN Brian",
+          "name": "Joan Brian",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "051/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Lawrence",
       "office": {
         "address": "814 12TH STREET",
         "city": "LAWRENCEVILLE IL 62439",
-        "email": "lawrencepubliclibrary@yahoo.com",
+        "email": "LAWRENCEPUBLICLIBRARY@YAHOO.COM",
         "phone": "(618) 943-3016"
       }
     },
@@ -2109,22 +2123,20 @@
         {
           "email": "lcpldboard@yahoo.com",
           "name": "Patty Wiegers",
+          "phone": "(309) 547-7457",
           "role": "President"
         },
         {
           "email": "lcpldkids@yahoo.com",
           "name": "Nancy Havera",
+          "phone": "(309) 547-2757",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "029/005/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Fulton",
-      "office": {
-        "address": "1126 N Main St",
-        "city": "Lewistown IL 61542",
-        "phone": "(309) 547-2860"
-      }
+      "office": {}
     },
     "Lexington Public Library District": {
       "board": [
@@ -2267,7 +2279,7 @@
         }
       ],
       "comptrollerCode": "069/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Morgan",
       "office": {
         "address": "P.O. Box 259",
@@ -2355,7 +2367,7 @@
         }
       ],
       "comptrollerCode": "055/040/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Macon",
       "office": {
         "address": "305 E Garfield",
@@ -2417,11 +2429,11 @@
         },
         {
           "name": "Christina Smith",
-          "role": "President"
+          "role": "Trustee"
         }
       ],
       "comptrollerCode": "012/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Clark",
       "heads": [
         {
@@ -2440,21 +2452,21 @@
         {
           "email": "trustees@masoncitylibrary.org",
           "name": "Elizabeth Edison",
-          "phone": "(217) 482-5281",
+          "phone": "(217) 482-5851",
           "role": "President"
         },
         {
-          "email": "director@masoncitylibrary.org",
+          "email": "readinglady15@aol.com",
           "name": "Kay Zimmerman",
+          "phone": "(217) 303-3873",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "060/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mason",
       "office": {
-        "email": "dianey@masoncitylibrary.org",
-        "phone": "(217) 482-3799"
+        "email": "dianey@masoncitylibrary.org"
       }
     },
     "Milford District Library": {
@@ -2531,19 +2543,20 @@
         {
           "email": "rakestraw12@icloud.com",
           "name": "Charlotte Rakestraw",
-          "phone": "(309) 288-5153",
           "role": "President"
-        },
+        }
+      ],
+      "comptrollerCode": "006/010/10",
+      "filedFor": "2026",
+      "filesIn": "Bureau",
+      "heads": [
         {
           "email": "newmi4@hotmail.com",
           "name": "Nancy Salzmann",
           "phone": "(309) 912-0511",
-          "role": "Treasurer"
+          "role": "Treas./Admin."
         }
       ],
-      "comptrollerCode": "006/010/10",
-      "filedFor": "2025",
-      "filesIn": "Bureau",
       "office": {}
     },
     "Mississippi Valley Library District": {
@@ -2785,13 +2798,13 @@
           "role": "President"
         },
         {
-          "email": "bwatson@newmanlibrary.org",
-          "name": "Ben Watson",
+          "email": "sbiddle@newmanlibrary.org",
+          "name": "Sue Biddle",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "021/025/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Douglas",
       "office": {
         "address": "207 S. Coffin St., Ste. D",
@@ -2871,7 +2884,6 @@
     "Oakwood Public Library District": {
       "board": [
         {
-          "email": "rsandusky@danvillepubliclibrary.org",
           "name": "Ruey Sandusky",
           "role": "President"
         },
@@ -2882,12 +2894,12 @@
         }
       ],
       "comptrollerCode": "092/009/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Vermilion",
       "office": {
-        "address": "PO Box 99",
+        "address": "110 E. Finley",
         "city": "Oakwood IL 61858",
-        "email": "oakwoodpubliclibrary@gmail.com",
+        "email": "oakwoodpubliclibraryboard@gmail.com",
         "phone": "(217) 354-4777"
       }
     },
@@ -2934,9 +2946,9 @@
     "Ohio Public Library District": {
       "board": [
         {
-          "email": "romoalbrecht@gmail.com",
-          "name": "Romaine Albrecht",
-          "phone": "(815) 878-0837",
+          "email": "wilkin.rick@gmail.com",
+          "name": "Rick Wilkin",
+          "phone": "(815) 878-2990",
           "role": "President"
         },
         {
@@ -2953,7 +2965,7 @@
         }
       ],
       "comptrollerCode": "006/015/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Bureau",
       "office": {
         "address": "112 North Main St., PO Box 187",
@@ -3104,17 +3116,17 @@
     },
     "Peru Public Library": {
       "comptrollerCode": "050/045/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Lasalle",
       "heads": [
         {
-          "name": "Melissa Keegan",
+          "email": "rmai@perulibrary.org",
+          "name": "Resa Mai",
           "role": "Director"
         },
         {
-          "email": "eschaub@perulibrary.org",
-          "name": "Emily Schaub",
-          "role": "Director"
+          "name": "Melissa Keegan",
+          "role": "Fin. Officer"
         }
       ],
       "office": {
@@ -3149,7 +3161,7 @@
     "Polo Public Library District": {
       "board": [
         {
-          "email": "mom2twovikings@gmail.com",
+          "email": "ppldtrusteesundman@gmail.com",
           "name": "Beth Sundman",
           "phone": "(269) 449-8345",
           "role": "President"
@@ -3162,7 +3174,7 @@
         }
       ],
       "comptrollerCode": "071/035/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Ogle",
       "office": {
         "email": "mariem@pololibrary.org"
@@ -3224,10 +3236,10 @@
         }
       ],
       "comptrollerCode": "078/005/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Putnam",
       "office": {
-        "address": "214 N 4th St Box 199",
+        "address": "214 N 4th St. Box 199",
         "city": "Hennepin IL 61327",
         "email": "jkalman@putnamcountylibrary.org",
         "phone": "(815) 339-2038"
@@ -3236,7 +3248,7 @@
     "Reddick Public Library District": {
       "board": [
         {
-          "email": "n.reino@sbcglobal.net",
+          "email": "nreinhardt@reddicklibrary.org",
           "name": "Neil Reinhardt",
           "role": "President"
         },
@@ -3246,7 +3258,7 @@
         }
       ],
       "comptrollerCode": "050/035/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Lasalle",
       "office": {
         "address": "1010 Canal Street",
@@ -3308,7 +3320,7 @@
     },
     "Robert R. Jones Public Library District": {
       "comptrollerCode": "081/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Rock Island",
       "heads": [
         {
@@ -3345,7 +3357,7 @@
     },
     "Robinson Public Library District": {
       "comptrollerCode": "017/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Crawford",
       "heads": [
         {
@@ -3368,17 +3380,24 @@
     "Rochester Public Library District": {
       "board": [
         {
+          "email": "president@rochesterlibrary.org",
           "name": "Sarah Deen",
           "role": "President"
         }
       ],
       "comptrollerCode": "083/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Sangamon",
+      "heads": [
+        {
+          "name": "Janet McAllister",
+          "role": "Director"
+        }
+      ],
       "office": {
-        "address": "1 Community Dr",
+        "address": "1 Community Drive",
         "city": "Rochester IL 62563",
-        "email": "President@rochesterlibrary.org",
+        "email": "director@rochesterlibrary.org",
         "phone": "(217) 498-8454"
       }
     },
@@ -3491,31 +3510,37 @@
     },
     "Savanna Public Library District": {
       "comptrollerCode": "008/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Carroll",
       "heads": [
         {
+          "email": "savpublib2@gmail.com",
           "name": "Mary Meyers",
           "role": "Director"
         }
       ],
-      "office": {}
+      "office": {
+        "address": "326 Third Street",
+        "city": "Savanna IL 61074",
+        "phone": "(815) 273-3714"
+      }
     },
     "Schmaling Memorial Public Library District": {
       "board": [
         {
-          "email": "amberjo_1984@yahoo.com",
+          "email": "aturner.schmaling@gmail.com",
           "name": "Amber Turner",
           "role": "President"
         },
         {
-          "email": "aleyoop92@gmail.com",
-          "name": "Aley Hamling",
+          "email": "ahicks.schmaling@gmail.com",
+          "name": "Thomas Hicks",
+          "phone": "(319) 333-6786",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "098/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Whiteside",
       "office": {
         "address": "501 10th Ave",
@@ -3538,7 +3563,7 @@
         }
       ],
       "comptrollerCode": "050/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Lasalle",
       "heads": [
         {
@@ -3759,11 +3784,11 @@
     },
     "Stinson Memorial Public Library District": {
       "comptrollerCode": "091/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Union",
       "heads": [
         {
-          "name": "Saran Watkins",
+          "name": "Sarah Watkins",
           "role": "Administrator"
         },
         {
@@ -4025,8 +4050,7 @@
     "Viola Public Library District": {
       "board": [
         {
-          "name": "Kathy Carter",
-          "phone": "(309) 314-2485",
+          "name": "Kathleen Carter",
           "role": "President"
         },
         {
@@ -4035,7 +4059,7 @@
         }
       ],
       "comptrollerCode": "066/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mercer",
       "office": {
         "address": "1701 17th St.",
@@ -4067,21 +4091,26 @@
       }
     },
     "Warren County Public Library District": {
-      "comptrollerCode": "094/010/10",
-      "filedFor": "2025",
-      "filesIn": "Warren",
-      "heads": [
+      "board": [
         {
-          "email": "lgood@wcplibrary.org",
-          "name": "Larissa Good",
-          "role": "Director"
+          "email": "schenderson.mc@gmail.com",
+          "name": "Sarah Henderson",
+          "role": "President"
         },
         {
-          "email": "office@wcplibrary.org",
-          "name": "Emma Chapin",
-          "role": "Bookkeeper"
+          "email": "stephenie.gambetta@mbwi.com",
+          "name": "Stephenie Gambetta",
+          "role": "Treasurer"
+        },
+        {
+          "email": "jackie.beal@mbwi.com",
+          "name": "Jackie Beal",
+          "role": "Secretary"
         }
       ],
+      "comptrollerCode": "094/010/10",
+      "filedFor": "2026",
+      "filesIn": "Warren",
       "office": {
         "address": "62 Public Square",
         "city": "Monmouth IL 61462",
@@ -4139,8 +4168,8 @@
     "West Sangamon Public Library District": {
       "board": [
         {
-          "email": "bbandy@pretzelpride.com",
-          "name": "Brian Bandy",
+          "email": "jcfoster2@yahoo.com",
+          "name": "Jennifer Nelson",
           "role": "President"
         },
         {
@@ -4150,7 +4179,7 @@
         }
       ],
       "comptrollerCode": "083/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Sangamon",
       "office": {
         "phone": "(217) 488-7733"
@@ -4159,18 +4188,18 @@
     "West Union District Library": {
       "board": [
         {
-          "email": "wudl1985@yahoo.com",
-          "name": "Keith Vahling",
+          "email": "wudljsm@gmail.com",
+          "name": "Jeffrey Mitchell",
           "role": "President"
         },
         {
-          "email": "kmacke2545@gmail.com",
+          "email": "wudlkm73@gmail.com",
           "name": "Kayte Macke",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "012/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Clark",
       "office": {
         "address": "P.O. Box 138",
@@ -4187,7 +4216,7 @@
         }
       ],
       "comptrollerCode": "037/030/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Henry",
       "office": {
         "address": "PO Box 70; 1111 4th St",

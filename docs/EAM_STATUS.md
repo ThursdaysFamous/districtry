@@ -44,7 +44,7 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ak | **EAM·** | 30 | 30/30 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
-| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
+| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ca | **--M·** | — | — | 296 | 296 | — | 23 | all | 9 of 14 levels |
@@ -64,8 +64,8 @@ different thing from one it failed.
 | ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
-| mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 72 | all | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 28 | all | 13 of 14 levels |
+| mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 73 | all | 13 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 29 | all | 13 of 14 levels |
 | mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 16 | all | 7 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 26 | all | 8 of 14 levels |
 | mt | **EAM·** | 56 | 56/56 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
@@ -78,14 +78,14 @@ different thing from one it failed.
 | nv | **EAM·** | 17 | 17/17 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 39 | all | 10 of 14 levels |
 | oh | **EAM·** | 88 | 88/88 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
-| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 21 | all | 10 of 14 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 22 | all | 10 of 14 levels |
 | or | **EAM·** | 36 | 36/36 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | pa | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | ri | **--M·** | — | — | 0 | 0 | — | 13 | all | 9 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 14 | all | 6 of 14 levels |
-| tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 23 | all | 10 of 14 levels |
-| tx | **EAM·** | 254 | 254/254 § | 920 | 919 | all | 16 | all | 7 of 14 levels |
+| tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 24 | all | 10 of 14 levels |
+| tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -410,7 +410,7 @@ per county, so each one is named under its state below.
 
 ### mi — EAM·
 
-- **Under a WATCH.md plan (58):** re-checked on a stated cadence rather than by a job — `alger-county-outline.json`, `allegan-county-outline.json`, `antrim-county-outline.json`, `baraga-county-outline.json`, `bay-county-outline.json`, `benzie-county-outline.json`, `branch-county-outline.json`, `charlevoix-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `crawford-county-outline.json`, `genesee-county-outline.json`, `gladwin-county-outline.json`, `gogebic-county-outline.json`, `huron-county-outline.json`, `ingham-county-outline.json`, `iosco-county-outline.json`, `iron-county-outline.json`, `livingston-county-outline.json`, `manistee-county-outline.json`, `marquette-county-outline.json`, `mason-county-outline.json`, `mecosta-county-outline.json`, `metro-outline.json`, `mi-battle-creek-wards.json`, `mi-bay-city-wards.json`, `mi-circuit-courts.json`, `mi-commissioner-districts.json`, `mi-commissioner-returns.json`, `mi-court-of-appeals-districts.json`, `mi-detroit-council-districts.json`, `mi-flint-wards.json`, `mi-grand-rapids-wards.json`, `mi-holland-wards.json`, `mi-house-districts.json`, `mi-isd-districts.json`, `mi-jackson-wards.json`, `mi-lansing-wards.json`, `mi-midland-wards.json`, `mi-muskegon-wards.json`, `mi-pontiac-wards.json`, `mi-precincts.json`, `mi-rochester-hills-wards.json`, `mi-senate-districts.json`, `mi-walker-wards.json`, `mi-warren-wards.json`, `missaukee-county-outline.json`, `montmorency-county-outline.json`, `newaygo-county-outline.json`, `oakland-county-outline.json`, `ottawa-county-outline.json`, `mi/data/app/population/`, `st-joseph-county-outline.json`, `state-counties.json`, `tuscola-county-outline.json`, `van-buren-county-outline.json`, `washtenaw-county-outline.json`, `wexford-county-outline.json`
+- **Under a WATCH.md plan (59):** re-checked on a stated cadence rather than by a job — `alger-county-outline.json`, `allegan-county-outline.json`, `antrim-county-outline.json`, `baraga-county-outline.json`, `bay-county-outline.json`, `benzie-county-outline.json`, `branch-county-outline.json`, `charlevoix-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `crawford-county-outline.json`, `genesee-county-outline.json`, `gladwin-county-outline.json`, `gogebic-county-outline.json`, `huron-county-outline.json`, `ingham-county-outline.json`, `iosco-county-outline.json`, `iron-county-outline.json`, `livingston-county-outline.json`, `manistee-county-outline.json`, `marquette-county-outline.json`, `mason-county-outline.json`, `mecosta-county-outline.json`, `metro-outline.json`, `mi-battle-creek-wards.json`, `mi-bay-city-wards.json`, `mi-circuit-courts.json`, `mi-commissioner-districts.json`, `mi-commissioner-returns.json`, `mi-court-of-appeals-districts.json`, `mi-detroit-council-districts.json`, `mi-flint-wards.json`, `mi-grand-rapids-wards.json`, `mi-holland-wards.json`, `mi-house-districts.json`, `mi-isd-districts.json`, `mi-jackson-wards.json`, `mi-judges.json`, `mi-lansing-wards.json`, `mi-midland-wards.json`, `mi-muskegon-wards.json`, `mi-pontiac-wards.json`, `mi-precincts.json`, `mi-rochester-hills-wards.json`, `mi-senate-districts.json`, `mi-walker-wards.json`, `mi-warren-wards.json`, `missaukee-county-outline.json`, `montmorency-county-outline.json`, `newaygo-county-outline.json`, `oakland-county-outline.json`, `ottawa-county-outline.json`, `mi/data/app/population/`, `st-joseph-county-outline.json`, `state-counties.json`, `tuscola-county-outline.json`, `van-buren-county-outline.json`, `washtenaw-county-outline.json`, `wexford-county-outline.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 74 of 82 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Ann Arbor city, Bedford township, Burton city, Kentwood city, Norton Shores city, Rochester Hills city, West Bloomfield charter township, Wyoming city. A record declares this level and earns nothing: `norton-shores-council-roster` (2659140) — City Clerk Rachel Pavlich was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `burton-council-roster` (2612060) — City Clerk Racheal Boggs was asked on 2026-10-12 and has not answered; the record earns nothing until a thread writes the outcome; `wyoming-mi-council-roster` (2688940) — City Clerk Kelli VandenBerg was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `west-bloomfield-township-board` (2612585480) — Township Clerk Debbie Binder was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `bedford-township-board` (2611506740) — Township Clerk Trudy L. Hershberger was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `annarbor-ward-boundary` (2603000) — Scott Harrod, maintainer of the city's Wards and Precincts dataset (sjharrod@a2gov.org) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome; `rochester-hills-council-roster` (2669035) — City Clerk Leanne Scott was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `kentwood-ward-boundary` (2642820) — City Clerk Dan Kasunic (elections@kentwood.us) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -418,7 +418,7 @@ per county, so each one is named under its state below.
 
 ### mn — EAM·
 
-- **Under a WATCH.md plan (15):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `mn/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (16):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-judicial-judges.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `mn/data/app/population/`, `state-counties.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
 
@@ -426,7 +426,7 @@ per county, so each one is named under its state below.
 
 - **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mo-commission-counties.json`, `mo-commission-districts.json`, `mo-house-districts.json`, `mo-senate-districts.json`, `mo-state-outline.json`, `mo/data/app/population/`, `state-counties.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 42 of 114 counties name a governing body and draw it where it is elected by district; 72 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **4. The county governing body, in every county of the state** — open. 43 of 114 counties name a governing body and draw it where it is elected by district; 71 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
@@ -608,7 +608,7 @@ this instance is in maintenance.
 ### ok — EAM·
 
 - **Watched, not rewritten:** `ok/data/app/ok-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-directors.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `ok/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-directors.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-district-judges.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `ok/data/app/population/`, `state-counties.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 15 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Muskogee city
   - **10. School boards elected by district** — open (required only where the state has the level)
@@ -698,7 +698,7 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `tn-conservation-boards`, `tn-county-commissioners` account for every county in the state, which is what Examined rests on here: 61 of 95 counties are covered one at a time — served by a roster or named individually — and the rest by the records. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Watched, not rewritten:** `tn/data/app/tn-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Watched, not rewritten:** `tn/data/app/tn-special-school-boards.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tn/data/app/population/`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-school-board-from-commission.json`, `tn-senate-districts.json`
+- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tn/data/app/population/`, `state-counties.json`, `tn-city-wards.json`, `tn-commission-districts.json`, `tn-house-districts.json`, `tn-judicial-districts.json`, `tn-precincts.json`, `tn-school-board-districts.json`, `tn-school-board-from-commission.json`, `tn-senate-districts.json`, `tn-trial-judges.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
   - **4. The county governing body, in every county of the state** — open. 61 of 95 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 26 of 28 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Knoxville city, Lebanon city. A record declares this level and earns nothing: `tn-municipal-officeholders` (4740000) — KGIS, the mapping agency of the City of Knoxville, Knox County and the Knoxville Utilities Board (kgis@kgis.org) was asked on 2026-10-17 and has not answered; the record earns nothing until a thread writes the outcome
@@ -709,10 +709,10 @@ this instance is in maintenance.
 
 ### tx — EAM·
 
-- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 230 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 237 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-house-districts.json`, `tx-senate-districts.json`
 - **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 230 of 254 counties name a governing body
+  - **4. The county governing body, in every county of the state** — open. 237 of 254 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 119 units at 25,000+ name a governing body; unanswered: Abilene city, Allen city, Alvin city, Amarillo city, Arlington city, Austin city, Balch Springs city, Baytown city and 111 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)

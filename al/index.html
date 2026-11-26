@@ -17085,11 +17085,14 @@ function initAlabamaExplorer() {
    * Virginia's Mattaponi card links the Commonwealth's. Only the town is
    * carried, never the street.
    *
-   * WHO THE CARD NAMES. Nobody yet. The Poarch Band's own site answered this
-   * project with an automated challenge page, which is never worked around,
-   * so its card says so (ROSTER_BLOCKED in scripts/build_tribal_areas.py).
-   * This app has not read a council list for the MOWA Band and has no site of
-   * the band's own to link, and its card says that (ROSTER_NOT_SOUGHT).
+   * WHO THE CARD NAMES. The Poarch Band's council of nine, from the band's
+   * own page, read once by hand in a web browser on 2026-11-25 because this
+   * project's weekly reader cannot read that site, and named with that date
+   * (data/tribal-council-browser-reads.json). The names are read from a file
+   * rather than written here: data/app/tribal-councils.json, which the loader
+   * merges onto the land. This app has not read a council list for the MOWA
+   * Band and has no site of the band's own to link, and its card says that
+   * (ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py).
    *
    * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
    * of 2026-09-30, a government answers for that ground, so a reader who
@@ -17103,12 +17106,26 @@ function initAlabamaExplorer() {
    * the project's own land-to-government join and the Bureau of Indian
    * Affairs' list of governments, the same reader every instance uses.
    * ---------- */
-  // NO COUNCIL FILE IS FETCHED YET, because none exists: build_tribal_areas.py
-  // --check refuses a councils file that names nobody. The day a council is
-  // carried, --rosters writes al/data/app/tribal-councils.json and this loader
-  // gains the same network-first merge Kansas's has.
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
   var loadAlTribalAreas = makeCached(function () {
-    return fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2);
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
   });
 
   registerPolygonLayer({

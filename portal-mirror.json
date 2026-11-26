@@ -48,12 +48,12 @@
     },
     "il:cps-hs-network": {
       "dataset": "aupu-jt2g",
-      "query": "https://data.cityofchicago.org/resource/aupu-jt2g.geojson?$limit=50000",
-      "route": 0,
-      "fetched": "2026-09-29",
+      "query": "https://data.cityofchicago.org/api/v3/views/aupu-jt2g/query.geojson",
+      "route": 1,
+      "fetched": "2026-11-22",
       "features": 4,
-      "data_sha256": "02a0355dd300b35ee138826314835dc707281ef2935da79098609df4961f5e80",
-      "archive_sha256": "25272ae1a19cf73b6263aeafe228675b8ab80045d665cf57174e0075dd43fa72"
+      "data_sha256": "9c96a45024e8ab31dbf75db07bd9f6e9fbe7b6748e94020f86d2c8f78bbe660c",
+      "archive_sha256": "472e2218fe6b1ab59d00f42a998a0c15042fcf1150fdc8f0ea422575081a518b"
     },
     "il:cps-middle": {
       "dataset": "fyff-53xy",

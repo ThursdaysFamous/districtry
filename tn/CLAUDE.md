@@ -97,7 +97,7 @@ State's voter registration lookup. The service states no licence and no descript
 Comptroller's site does not link the layer; both are evidence for the state-publishing ask. The
 quarterly re-check is in `tn/WATCH.md`.
 
-**THE 32 JUDICIAL DISTRICTS ARE DRAWN SINCE 2026-10-16, FROM WHOLE COUNTIES, AND NAME NOBODY YET.**
+**THE 32 JUDICIAL DISTRICTS ARE DRAWN SINCE 2026-10-16, FROM WHOLE COUNTIES, AND NAME THEIR JUDGES SINCE 2026-11-25.**
 `tn-judicial-district` dissolves the county fabric this instance ships, following the District
 Attorneys General Conference's "Find your District Attorney" county list, by
 `tn/scripts/build_tn_judicial_districts.py` through the fleet module `scripts/whole_county_courts.py`.
@@ -109,8 +109,19 @@ LexisNexis, the General Assembly's site admits only named search engines and arc
 robots.txt, and the courts' site answers with a managed challenge. So which counties make up each
 court district came from a prosecutors' association's site and a Comptroller map drawn for fiscal
 year 2019, which is evidence for the state-publishing ask. The card says the district's voters
-elect its circuit judges, chancellors and district attorney general, each for eight years, names
-none of them (gap `tn-judicial-district-officers`), and links the district attorney's own page.
+elect its circuit judges, chancellors and district attorney general, each for eight years, and
+links the district attorney's own page. **THE JUDGES COME FROM ONE HAND READ OF THE COURTS'
+DIRECTORY, CORRECTED, AND NOTHING REFRESHES THEM.** On 2026-11-25, on Adam's yes of that day, the
+state courts' judge directory and their news notices were read once in his own Chrome (no check
+page appeared) and kept in `tn/data/source/courts/`. The directory lags the courts' own notices:
+it still listed four retired judges, the prior holders of two seats the courts had declared vacant
+and a senior judge, so `tn/scripts/build_tn_trial_judges.py` takes those seven out, each citing its
+notice, prints the two seats as vacant, and writes `tn-trial-judges.json`. **AN APPOINTMENT NOTICE
+TAKES A NAME OUT AND NEVER PUTS ONE IN**: three 2025 appointees are missing from the directory, and
+Nashville's own trial courts' page, read the same day with this project's reader, lacks two of
+them too and names the people the directory has instead, because an appointee stands at the next
+August election. The build requires the 20th District to equal that page. The district attorneys
+are still unnamed (gap `tn-judicial-district-officers`).
 It ranks second by area, under the U.S. House, because its mean area (3,409 km2) is just over a
 Senate district's (3,306 km2). The annual re-check is in `tn/WATCH.md`.
 
@@ -304,9 +315,10 @@ Tennessee's median source step 27.67 / 25.41 / 23.63 / 21.34 m. At `interval=30`
 layer strays 31.2 m and 846 of its 859 districts exceed the ceiling, so 20 is a measured choice here and not a default. The coverage outline is ONE ring, 2,288 vertices, read from
 `build_metro_outline.py --check`.
 
-**`tncourts.gov` serves a browser challenge**, which the fleet's robots reader recognises as
-challenge-fronted. It is never worked around, and no layer here reads it; the judicial districts
-are drawn from other publishers for that reason.
+**`tncourts.gov` serves this project's reader a browser challenge**, which the fleet's robots
+reader recognises as challenge-fronted, so no script or weekly job reads it. Its judge directory
+was read once by hand in Adam's own browser on 2026-11-25 (above); the judicial districts
+themselves are drawn from other publishers.
 
 **There is no build step, no framework, and no server-side code.** The app (styles, engine,
 and layer modules) lives inline in `index.html`. `sw.js` is the service worker;
