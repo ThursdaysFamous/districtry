@@ -1,6 +1,6 @@
 {
  "Alapaha": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -40,13 +40,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Alcovy": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -120,13 +117,10 @@
     "listedName": "Randal M. McGinley",
     "listedBy": "directory"
    }
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Appalachian": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -178,13 +172,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Atlanta": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -384,21 +375,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Atlantic": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -449,25 +437,16 @@
    }
   ],
   "districtAttorney": {
-   "name": null,
-   "withheld": {
-    "name": "Billy Joe Nelson, Jr.",
-    "party": "Republican",
-    "elected": "2022-11-08",
-    "election": "2022NovGen",
-    "electionName": "November 8, 2022 - General/Special Election",
-    "since": "2023-01-01",
-    "listedAs": "superior court judge",
-    "listedName": "Billy Joe Nelson",
-    "listedBy": "directory"
-   }
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "name": "Richard \"Richy\" Braun",
+   "elected": "2026-11-03",
+   "election": "11032026GeneralAndSpecialElection",
+   "electionName": "November 3, 2026 - General & Special Elections",
+   "since": "2026-11-03",
+   "special": true
+  }
  },
  "Augusta": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -539,13 +518,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Bell-Forsyth": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -597,13 +573,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Blue Ridge": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -659,13 +632,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Brunswick": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -729,13 +699,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Chattahoochee": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -815,13 +782,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Cherokee": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -885,13 +849,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Clayton": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -959,13 +920,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Cobb": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1090,21 +1048,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Columbia": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -1147,14 +1102,19 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Natalie Paine",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Conasauga": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1213,21 +1173,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Cordele": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -1262,14 +1219,19 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Lyndsey Walters",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Coweta": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1329,13 +1291,10 @@
    "electionName": "November General Election",
    "since": "2025-01-01",
    "ballotCircuit": "Coweta"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "DeKalb": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1447,13 +1406,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Dougherty": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1509,13 +1465,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Douglas": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1563,13 +1516,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Dublin": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1613,13 +1563,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Eastern": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1699,21 +1646,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Enotah": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -1755,14 +1699,19 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Jeff Langley",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Flint": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1822,13 +1771,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Griffin": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -1905,13 +1851,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Gwinnett": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2038,13 +1981,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Houston": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2100,13 +2040,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Lookout Mountain": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2162,13 +2099,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Macon": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2244,13 +2178,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Middle": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2293,13 +2224,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Mountain": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2359,21 +2287,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Northeastern": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -2432,14 +2357,19 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Lee Darragh",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Northern": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2483,13 +2413,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Ocmulgee": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2549,13 +2476,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Oconee": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2599,13 +2523,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Ogeechee": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2657,21 +2578,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Pataula": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -2702,22 +2620,27 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Vic McNease",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Paulding": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -2762,14 +2685,19 @@
     "listedAs": "superior court judge",
     "listedName": "Matthew W. Rollins",
     "listedBy": "directory"
+   },
+   "elect": {
+    "name": "Robert S. Lane",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
    }
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Piedmont": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2825,21 +2753,18 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Rockdale": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -2870,14 +2795,19 @@
    "elected": "2022-11-08",
    "election": "2022NovGen",
    "electionName": "November 8, 2022 - General/Special Election",
-   "since": "2023-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+   "since": "2023-01-01",
+   "elect": {
+    "name": "Alisha Adams Johnson",
+    "party": "Democratic",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
+  }
  },
  "Rome": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2937,13 +2867,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "South Georgia": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -2987,13 +2914,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Southern": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3057,13 +2981,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Southwestern": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3110,13 +3031,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Tallapoosa": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3152,13 +3070,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Tifton": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3210,13 +3125,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Toombs": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3252,13 +3164,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Towaliga": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3297,13 +3206,10 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Waycross": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3357,21 +3263,18 @@
     "listedName": "Marilyn Parker Bennett",
     "listedBy": "directory"
    }
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "West Georgia": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
   ],
   "countiesFrom": [
    {
-    "election": "GeneralPrimary51926",
-    "elected": "2026-05-19"
+    "election": "11032026GeneralAndSpecialElection",
+    "elected": "2026-11-03"
    }
   ],
   "judges": [
@@ -3417,18 +3320,22 @@
   ],
   "districtAttorney": {
    "name": null,
-   "nominated": "2026-05-19"
+   "elect": {
+    "name": "Sarah Stimac Japour",
+    "party": "Republican",
+    "elected": "2026-11-03",
+    "election": "11032026GeneralAndSpecialElection",
+    "electionName": "November 3, 2026 - General & Special Elections",
+    "since": "2027-01-01"
+   }
   },
   "formedFrom": {
    "circuit": "Coweta",
    "through": "2024-11-05"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  },
  "Western": {
-  "asOf": "2026-11-05",
+  "asOf": "2026-11-26",
   "judgeElections": [
    "2024",
    "2026"
@@ -3488,9 +3395,6 @@
    "election": "2024NovGen",
    "electionName": "November General Election",
    "since": "2025-01-01"
-  },
-  "pending": [
-   "11032026GeneralAndSpecialElection"
-  ]
+  }
  }
 }

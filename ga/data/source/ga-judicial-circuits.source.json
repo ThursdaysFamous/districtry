@@ -1,5 +1,5 @@
 {
- "built": "2026-11-05",
+ "built": "2026-11-26",
  "source": "https://results.sos.ga.gov/results/public/Georgia",
  "directory": "https://georgiacourts.knack.com/gcd2/#home/",
  "rule": "Each county's circuit is the one whose contests are on its newest official ballot carrying a court contest.",
@@ -111,57 +111,45 @@
   "Atlantic": {
    "counties": {
     "Bryan": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     },
     "Evans": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     },
     "Liberty": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     },
     "Long": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     },
     "McIntosh": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     },
     "Tattnall": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Atlantic Judicial Circuit - Rep",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
-      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+      "District Attorney - Atlantic Judicial Circuit (Special Primary)"
      ]
     }
    }
@@ -346,12 +334,10 @@
   "Columbia": {
    "counties": {
     "Columbia": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Columbia Judicial Circuit - Rep",
-      "Judge - Superior Court - Columbia Judicial Circuit (Blanchard)",
-      "Judge - Superior Court - Columbia Judicial Circuit (Fleming)"
+      "District Attorney - Columbia Judicial Circuit"
      ]
     }
    }
@@ -379,31 +365,31 @@
   "Cordele": {
    "counties": {
     "Ben Hill": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Cordele Judicial Circuit - Rep"
+      "District Attorney - Cordele Judicial Circuit"
      ]
     },
     "Crisp": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Cordele Judicial Circuit - Rep"
+      "District Attorney - Cordele Judicial Circuit"
      ]
     },
     "Dooly": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Cordele Judicial Circuit - Rep"
+      "District Attorney - Cordele Judicial Circuit"
      ]
     },
     "Wilcox": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Cordele Judicial Circuit - Rep"
+      "District Attorney - Cordele Judicial Circuit"
      ]
     }
    }
@@ -516,39 +502,31 @@
   "Enotah": {
    "counties": {
     "Lumpkin": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Enotah Judicial Circuit - Rep",
-      "Judge - Superior Court - Enotah Judicial Circuit (George)",
-      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+      "District Attorney - Enotah Judicial Circuit"
      ]
     },
     "Towns": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Enotah Judicial Circuit - Rep",
-      "Judge - Superior Court - Enotah Judicial Circuit (George)",
-      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+      "District Attorney - Enotah Judicial Circuit"
      ]
     },
     "Union": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Enotah Judicial Circuit - Rep",
-      "Judge - Superior Court - Enotah Judicial Circuit (George)",
-      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+      "District Attorney - Enotah Judicial Circuit"
      ]
     },
     "White": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Enotah Judicial Circuit - Rep",
-      "Judge - Superior Court - Enotah Judicial Circuit (George)",
-      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+      "District Attorney - Enotah Judicial Circuit"
      ]
     }
    }
@@ -780,21 +758,17 @@
   "Northeastern": {
    "counties": {
     "Dawson": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Northeastern Judicial Circuit - Rep",
-      "Judge - Superior Court - Northeastern Judicial Circuit (Burton)",
-      "Judge - Superior Court - Northeastern Judicial Circuit (Deal)"
+      "District Attorney - Northeastern Judicial Circuit"
      ]
     },
     "Hall": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Northeastern Judicial Circuit - Rep",
-      "Judge - Superior Court - Northeastern Judicial Circuit (Burton)",
-      "Judge - Superior Court - Northeastern Judicial Circuit (Deal)"
+      "District Attorney - Northeastern Judicial Circuit"
      ]
     }
    }
@@ -979,59 +953,52 @@
   "Pataula": {
    "counties": {
     "Clay": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Early": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Miller": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Quitman": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Randolph": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Seminole": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     },
     "Terrell": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Pataula Judicial Circuit - Rep",
-      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+      "District Attorney - Pataula Judicial Circuit"
      ]
     }
    }
@@ -1039,11 +1006,10 @@
   "Paulding": {
    "counties": {
     "Paulding": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Paulding Judicial Circuit - Rep",
-      "Judge - Superior Court - Paulding Judicial Circuit (Rollins)"
+      "District Attorney - Paulding Judicial Circuit"
      ]
     }
    }
@@ -1069,11 +1035,10 @@
   "Rockdale": {
    "counties": {
     "Rockdale": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - Rockdale Judicial Circuit - Dem",
-      "Judge - Superior Court - Rockdale Judicial Circuit (Bills)"
+      "District Attorney - Rockdale Judicial Circuit"
      ]
     }
    }
@@ -1404,19 +1369,17 @@
   "West Georgia": {
    "counties": {
     "Carroll": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - West Georgia Judicial Circuit - Rep",
-      "Judge - Superior Court - West Georgia Judicial Circuit (Hightower)"
+      "District Attorney - West Georgia Judicial Circuit"
      ]
     },
     "Heard": {
-     "election": "GeneralPrimary51926",
-     "date": "2026-05-19",
+     "election": "11032026GeneralAndSpecialElection",
+     "date": "2026-11-03",
      "contests": [
-      "District Attorney - West Georgia Judicial Circuit - Rep",
-      "Judge - Superior Court - West Georgia Judicial Circuit (Hightower)"
+      "District Attorney - West Georgia Judicial Circuit"
      ]
     }
    }

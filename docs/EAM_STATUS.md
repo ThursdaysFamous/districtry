@@ -52,7 +52,7 @@ different thing from one it failed.
 | ct | **--M·** | — | — | 0 | 0 | — | 13 | all | 8 of 14 levels |
 | de | **EAM·** | 3 | 3/3 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
 | fl | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
-| ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 19 | all | 10 of 14 levels |
+| ga | **EAM·** | 159 | 159/159 § | 755 | 436 | all | 19 | all | 10 of 14 levels |
 | hi | **EAM·** | 5 | 5/5 § | 0 | 0 | by record | 12 | all | 10 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
