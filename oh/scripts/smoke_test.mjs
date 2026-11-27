@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.96133,-82.99895"; // Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.
-const OFFLINE = ["county", "us-house", "oh-senate", "oh-house"];
-const EXPECT_DISTRICT = { "county": "Franklin County", "us-house": "15", "oh-senate": "15", "oh-house": "1" };
+const OFFLINE = ["county", "us-house", "oh-senate", "oh-house", "oh-court-of-appeals"];
+const EXPECT_DISTRICT = { "county": "Franklin County", "us-house": "15", "oh-senate": "15", "oh-house": "1", "oh-court-of-appeals": "Tenth District Court of Appeals" };
 const NEGATIVE_POINT = "42.05310,-82.59980"; // Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Ohio";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "OhioExplorer";
@@ -837,6 +837,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const LOCAL = /Not named here/;
     const cases = [
       {
@@ -873,12 +874,69 @@ try {
         props: { GEOID: "3904380", NAME: "Columbus City School District", STATE: "39" },
         want: [/Columbus City School District/],
         reject: []
+      },
+      {
+        name: "the Starr township card names it, its county and what the Census records about its government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907374405", "NAME": "Starr township", "BASENAME": "Starr", "STATE": "39", "COUNTY": "073", "LSADC": "44", "FUNCSTAT": "A" },
+        want: [/Starr township/, /Hocking County/, /An active government of its own/, /does not name its officers yet/],
+        reject: [/None operating/]
+      },
+      {
+        name: "an inactive township says no government is operating",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399992", "NAME": "Example township", "BASENAME": "Example", "STATE": "39", "COUNTY": "073", "LSADC": "44", "FUNCSTAT": "I" },
+        want: [/Example township/, /None operating/, /records this township's\s+government as inactive/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a city the Census counts as its own subdivision says the city governs and the City or Village card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399994", "NAME": "Columbus city", "BASENAME": "Columbus", "STATE": "39", "COUNTY": "073", "LSADC": "25", "FUNCSTAT": "F" },
+        want: [/Columbus city/, /apart from every township/, /City or Village card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a village the Census counts as its own subdivision says the village governs and the City or Village card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399993", "NAME": "Example village", "BASENAME": "Example", "STATE": "39", "COUNTY": "073", "LSADC": "47", "FUNCSTAT": "F" },
+        want: [/Example village/, /apart from every township/, /City or Village card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a legal area with no government says a place's government or the county governs there",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399995", "NAME": "Example township", "BASENAME": "Example", "STATE": "39", "COUNTY": "073", "LSADC": "44", "FUNCSTAT": "N" },
+        want: [/Example township/, /a legal area with no\s+government of its own/, /outside one, the county is/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a consolidated township says it shares one set of officials with another government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399997", "NAME": "Example township", "BASENAME": "Example", "STATE": "39", "COUNTY": "073", "LSADC": "44", "FUNCSTAT": "C" },
+        want: [/Example township/, /consolidated with another government/, /one set\s+of officials/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "the Lake Erie water records say there is no township and no land",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3903500000", "NAME": "County subdivisions not defined", "BASENAME": "County subdivisions not defined", "STATE": "39", "COUNTY": "035", "LSADC": "00", "FUNCSTAT": "F" },
+        want: [/County subdivisions not defined/, /Cuyahoga County/, /Lake Erie water with no land/],
+        reject: [/apart from every township/]
+      },
+      {
+        name: "a status the card does not carry prints NO Government row",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3907399998", "NAME": "Example township", "BASENAME": "Example", "STATE": "39", "COUNTY": "073", "LSADC": "44", "FUNCSTAT": "Z" },
+        want: [/Example township/, /Hocking County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+      const layers = c.also ? `${c.also},${c.layer}` : c.layer;
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -947,6 +1005,32 @@ try {
     await context.close();
   }
 
+
+  // 7d. THE TOWNSHIP ARCHIVE ANSWERS, WITH THE CENSUS UNREACHABLE. The
+  //     Capitol is in Columbus city, which the Census counts as a county
+  //     subdivision of its own (FUNCSTAT F), and the rural point in Hocking
+  //     County (39.45000,-82.35000) is in Starr township, an active
+  //     government (TIGERweb's layer 1, read 2026-11-27). The card turns on
+  //     with the County layer, whose child it is.
+  {
+    for (const [where, point, want] of [
+      ["the Capitol", POINT, [/Columbus city/, /Franklin County/, /apart from every township/]],
+      ["the rural point in Hocking County", "39.45000,-82.35000", [/Starr township/, /Hocking County/, /An active government of its own/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county,county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the township archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose
@@ -1020,24 +1104,25 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES NOBODY AND SAYS SO. No list of county officials
-  //    has been read (gap oh-county-officials), so the card must name the
-  //    county, say how an Ohio county is governed and say nobody is named
-  //    rather than leave a reader to assume the list is empty. Which county
-  //    holds the Statehouse is read from the shipped county file, so the fixture
-  //    moves with a rebuild.
+  // 9. THE COUNTY CARD NAMES THE COUNTY'S COMMISSIONERS. Which county holds
+  //    the Statehouse, and who its commissioners are, are read from the
+  //    shipped files, so the fixture moves with a rebuild; the card must name
+  //    all three, the law that says how they are chosen and the date one seat
+  //    changes hands.
   {
     const counties = shipped("state-counties.json");
     const at = propsAt(counties, POINT)[0] || {};
+    const board = (shipped("oh-county-commissioners.json") || {})[at.GEOID] || {};
+    const members = board.members || [];
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
     const info = await cardText(page, "county");
     const text = info.text || "";
-    const want = [/County officials/, /board of three county commissioners/, /None of them is named here yet/];
-    const missing = want.filter((re) => !re.test(text));
-    check("the County card at the Statehouse names the county and says no county official is named",
-      !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
-      `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
+    const want = [/Board of County Commissioners/i, /Ohio Revised Code 305\.01/, /1 January 2027/];
+    const missing = want.filter((re) => !re.test(text)).concat(members.filter((n) => !text.includes(n)));
+    check("the County card at the Statehouse names the county and its three commissioners from the shipped file",
+      !info.error && !!at.NAME && text.includes(at.NAME) && members.length === 3 && missing.length === 0,
+      `file=${at.NAME} members=${members.length} missing=${missing} text=${text.slice(0, 160)}`);
     await context.close();
   }
 } finally {

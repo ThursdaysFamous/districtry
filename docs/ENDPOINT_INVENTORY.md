@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **336 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 291 are links.
+makes from a link a reader clicks. Of **341 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 296 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -181,7 +181,7 @@ prose.
 | nh | 0 | 12 |
 | tx | 0 | 13 |
 | fl | 0 | 11 |
-| oh | 0 | 10 |
+| oh | 0 | 12 |
 | wa | 0 | 11 |
 | ma | 0 | 13 |
 | co | 0 | 11 |
@@ -190,17 +190,17 @@ prose.
 | or | 0 | 13 |
 | ct | 0 | 13 |
 | ut | 0 | 11 |
-| ks | 0 | 11 |
+| ks | 0 | 13 |
 | nm | 0 | 11 |
-| ne | 0 | 10 |
+| ne | 0 | 12 |
 | id | 0 | 11 |
 | hi | 0 | 9 |
 | me | 0 | 13 |
 | mt | 0 | 13 |
 | ri | 0 | 13 |
 | de | 0 | 10 |
-| sd | 0 | 11 |
-| nd | 0 | 12 |
+| sd | 0 | 13 |
+| nd | 0 | 14 |
 | ak | 0 | 11 |
 | vt | 0 | 12 |
 | wy | 0 | 12 |
@@ -529,7 +529,7 @@ measured until the next run describes it.
 | nh | 19 | 11 | 0 |
 | tx | 18 | 15 | 0 |
 | fl | 16 | 13 | 0 |
-| oh | 16 | 11 | 0 |
+| oh | 18 | 14 | 0 |
 | wa | 15 | 12 | 0 |
 | ma | 18 | 12 | 0 |
 | co | 16 | 12 | 0 |
@@ -538,23 +538,23 @@ measured until the next run describes it.
 | or | 18 | 13 | 0 |
 | ct | 18 | 12 | 0 |
 | ut | 16 | 13 | 0 |
-| ks | 16 | 13 | 0 |
+| ks | 18 | 15 | 0 |
 | nm | 16 | 13 | 0 |
-| ne | 13 | 11 | 0 |
+| ne | 15 | 13 | 0 |
 | id | 15 | 12 | 0 |
 | hi | 15 | 11 | 0 |
 | me | 18 | 12 | 0 |
 | mt | 18 | 12 | 0 |
 | ri | 18 | 12 | 0 |
 | de | 16 | 11 | 0 |
-| sd | 16 | 13 | 0 |
-| nd | 17 | 12 | 0 |
+| sd | 18 | 15 | 0 |
+| nd | 19 | 14 | 0 |
 | ak | 16 | 12 | 0 |
 | vt | 18 | 11 | 0 |
 | wy | 17 | 12 | 0 |
-| **total** | **1308** | **1536** | **12** |
+| **total** | **1318** | **1547** | **12** |
 
-**265 distinct source hosts** across the six manifests. Each instance's
+**270 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

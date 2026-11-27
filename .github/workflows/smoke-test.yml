@@ -1561,8 +1561,11 @@ jobs:
       - name: The shipped Arkansas townships match their record and cover their counties
         if: ${{ !cancelled() }}
         run: python3 ar/scripts/build_ar_townships.py --check
-      # The court districts of Arkansas, Indiana, Oklahoma, South Carolina and
-      # Tennessee are whole counties (scripts/whole_county_courts.py). --check
+      # The court districts of Arkansas, Indiana, Oklahoma, South Carolina,
+      # Tennessee, Kansas, Nebraska, North Dakota, Ohio and South Dakota are
+      # whole counties (scripts/whole_county_courts.py; the last five through
+      # scripts/build_state_courts.py, which also holds each judge list to its
+      # kept excerpt and to the districts the map draws). --check
       # holds each shipped file to the county lists its builder reads: every
       # county in exactly one district, and every district's area equal to its
       # own counties' area.
@@ -1574,6 +1577,8 @@ jobs:
           python3 ok/scripts/build_ok_judicial_districts.py --check
           python3 sc/scripts/build_sc_judicial_circuits.py --check
           python3 tn/scripts/build_tn_judicial_districts.py --check
+          python3 scripts/build_state_courts.py --selftest
+          python3 scripts/build_state_courts.py --check
       # North Carolina's superior and district court districts are read from
       # the text of G.S. 7A-41 and G.S. 7A-133, kept in nc/data/source/statutes/,
       # and where the law divides a county, from the 2010 census pieces it

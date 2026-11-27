@@ -76,17 +76,59 @@ incorporated places (layer 4): 253 cities and 670 villages, about 9.6% of the st
 (measured 2026-11-11). One, Rendville village in Perry County, carries the Census's inactive
 status, and its card says it does not operate as a local government. An empty card says the
 point is outside every city and village and that the township and the county are the local
-governments there. Ohio's 1,308 active townships are not drawn (gap `oh-townships`).
+governments there. Ohio's 1,308 active townships are drawn by the Township or City
+layer (below); their trustees and fiscal officers are not named (gap `oh-townships`).
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 612 unified districts for Ohio (city, local and
 exempted village districts) and nothing on its elementary or secondary layers (measured
 2026-11-11), so those two layers are not drawn. No school board member is named yet (gap
-`oh-school-board-members`).
+`oh-school-board-members`). **OHIO'S SCHOOL BOARDS ARE ELECTED BY THE WHOLE DISTRICT, WITH TWO
+EXCEPTIONS IN THE LAW** (read in the Ohio Revised Code on 2026-11-27, and written out in the gap
+record): a city district of 50,000 to 149,999 people may elect up to two of its members from
+subdistricts (section 3313.02), and Cleveland's board is appointed by the mayor (section 3311.71).
+Which districts use subdistricts was not read district by district; a subdistrict map is the only
+school board map this state could need.
 
-**NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
-to assume the office is empty. Recorded as gaps `oh-county-officials` and
-`oh-municipal-officeholders`. Ohio's county commissioners are elected countywide, so naming them
-needs no district map.
+**THE TOWNSHIP OR CITY LAYER DRAWS ALL 1,607 OF OHIO'S COUNTY SUBDIVISIONS** (`county-subdivision`,
+since 2026-11-27, under the County layer), from a tile archive mirrored from TIGERweb's layer 1:
+1,308 townships the Census records as active governments, 5 consolidated with another government,
+one inactive, 12 legal areas with no government of their own, 192 cities and 84 villages it counts
+as areas of their own, and 5 records of Lake Erie water with no land. The card names the subdivision
+and its county and states its functional status in the Census's own terms; a status it does not know
+prints no row. No trustee or fiscal officer is named (gap `oh-townships`).
+
+**THE COUNTY CARD NAMES EACH COUNTY'S COMMISSIONERS SINCE 2026-11-27, FROM THE COUNTY'S OWN
+WEBSITE.** No state office lists them, so `oh/data/source/oh-county-commissioner-seats.json`
+writes each county's three commissioners down by hand from its own page, and
+`oh/scripts/build_oh_county_commissioners.py` re-reads every page and refuses to write unless
+every name is on it (the proof `scripts/city_councils.py` uses, with pictures' alt text added for
+Champaign, and the script file the page loads for Carroll, Scioto and Jefferson). The County
+Commissioners Association of Ohio's roster was used only to find the websites and to cross-check.
+Every commissioner is elected by the whole county (Ohio Revised Code 305.01), and one seat in each
+board was on the 3 November 2026 ballot and changes hands on 1 January 2027, so the card dates the
+read and says so, and `oh/WATCH.md` has the January re-read. Greene, Montgomery and Portage answer
+this project's reader with HTTP 403 and Pike's page fills itself in through a WebAssembly program,
+so those four were read once by hand in Adam's Chrome and are proved against the dated excerpts in
+`oh/data/source/commissioners/`; their cards say they were read by hand. Adams was read by this project's reader earlier on
+2026-11-27, and later that day its robots.txt answered with a managed challenge, so its names are
+proved against an excerpt of that read and nothing more is fetched from it. Ashland (an expired
+certificate), Holmes (a captcha) and Lawrence (no county website names them) name nobody, each
+card saying why. Cuyahoga and Summit are governed by charters: their cards name the county
+executive and Summit's three at-large council members and link each council, whose districts are
+not drawn. `build_county_pages.py` reads the file for the status report but writes no Ohio
+county pages yet: Ohio sits in its `HELD_INSTANCES`, and the pages are their own change, the order
+Texas followed. The county's other elected officers and every city and village
+official are not named (gaps `oh-county-officials`, `oh-municipal-officeholders`).
+
+**THE COURT LAYER DRAWS OHIO'S 12 COURT OF APPEALS DISTRICTS AND NAMES THEIR JUDGES**
+(`oh-court-of-appeals`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Supreme Court of Ohio's courts of
+appeals page, which also names each district's judges (67, read 2026-11-27), kept as a dated excerpt
+in `data/source/courts/oh-courts.txt` and shipped network-first as `oh-district-judges.json`. The
+Fourth District lists three judges and ships as listed. The card says the district's voters elect
+its judges (Ohio Constitution, Article IV, section 6) and that a panel of three hears each case.
+Each county's common pleas judges are elected countywide and are not named yet. No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE OHIO.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
@@ -121,8 +163,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Ohio (`ohio`) — https://districtry.com/oh/
 - Geocoders: address Photon (Ohio-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Ohio-bounded, serial >=1s queue)
-- Ground truth: 39.96133,-82.99895 (Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.) → county Franklin County; us-house 15; oh-senate 15; oh-house 1. Negative point 42.05310,-82.59980 (Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.OhioExplorer`.
+- Ground truth: 39.96133,-82.99895 (Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.) → county Franklin County; us-house 15; oh-senate 15; oh-house 1; oh-court-of-appeals Tenth District Court of Appeals. Negative point 42.05310,-82.59980 (Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 8. Debug namespace `window.OhioExplorer`.
 - Scheduled workflows: `update-oh-congress-roster.yml` (Tue 20:53 UTC); `update-oh-legislature-roster.yml` (Thu 20:53 UTC); `oh-validate-sources.yml` (1st of month 23:07 UTC).
 - Source registry: `oh/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

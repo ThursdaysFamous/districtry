@@ -1,0 +1,254 @@
+{
+ "Northwest": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Robin A. Schmidt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel S. El-Dweek"
+   },
+   {
+    "role": "District Judge",
+    "name": "Benjamen J. Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chas Neff, Jr."
+   },
+   {
+    "role": "District Judge",
+    "name": "Joshua B. Rustad"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kirsten M. Sjue"
+   }
+  ]
+ },
+ "North Central": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Gary H. Lee"
+   },
+   {
+    "role": "District Judge",
+    "name": "Richard L. Hagar"
+   },
+   {
+    "role": "District Judge",
+    "name": "Steven A. Lautt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stacy J. Louser"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christene A. Reierson"
+   }
+  ]
+ },
+ "Northeast": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Anthony Swain Benson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kari Michelle Agotness"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kelley Cole"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael P. Hurly"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lonnie Olson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ashley Samuelson"
+   }
+  ]
+ },
+ "Northeast Central": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Don Hager"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew Eyre"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jay Knudson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason McCarthy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Theodore Sandberg"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kristi Pettit Venhuizen"
+   }
+  ]
+ },
+ "East Central": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Wade L. Webb"
+   },
+   {
+    "role": "District Judge",
+    "name": "Susan Bailey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Reid A. Brady"
+   },
+   {
+    "role": "District Judge",
+    "name": "Cherie L. Clark"
+   },
+   {
+    "role": "District Judge",
+    "name": "Constance L. Cleveland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Scott O. Diamond"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stephanie Hayden"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stephannie N. Stiel"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tristan J. Van de Streek"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan Younggren"
+   }
+  ]
+ },
+ "Southeast": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Daniel D. Narum"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bradley A. Cruff"
+   },
+   {
+    "role": "District Judge",
+    "name": "James D. Hovey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Troy J. LeFevre"
+   },
+   {
+    "role": "District Judge",
+    "name": "James T. Shockman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Nicholas D. Thornton"
+   }
+  ]
+ },
+ "South Central": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Cynthia M. Feland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel J. Borgen"
+   },
+   {
+    "role": "District Judge",
+    "name": "James S. Hill"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Hammes"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jackson J. Lofgren"
+   },
+   {
+    "role": "District Judge",
+    "name": "Pamela A. Nesvig"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lindsey Nieuwsma"
+   },
+   {
+    "role": "District Judge",
+    "name": "Marina Spahr"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bonnie L. Storbakken"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bobbi Weiler"
+   }
+  ]
+ },
+ "Southwest": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "William A. Herauf"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rhonda R. Ehlis"
+   },
+   {
+    "role": "District Judge",
+    "name": "James D. Gion"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dann E. Greenwood"
+   }
+  ]
+ }
+}

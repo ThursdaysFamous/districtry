@@ -84,14 +84,15 @@
     "appellate-court-district": {
       "wi": "wi-court-of-appeals", "mi": "mi-court-of-appeals", "ky": "ky-court-of-appeals",
       "in": "in-court-of-appeals", "ar": "ar-court-of-appeals", "ms": "ms-court-of-appeals",
-      "la": "la-court-of-appeal"
+      "la": "la-court-of-appeal", "oh": "oh-court-of-appeals"
     },
     "trial-court-district": {
       "ny": "judicial-district", "wi": "wi-circuit-court", "ia": "ia-judicial-district",
       "mi": "mi-circuit-court", "mn": "mn-judicial-district", "ky": "ky-circuit-court",
       "ok": "ok-judicial-district", "sc": "sc-circuit-court", "tn": "tn-judicial-district",
       "ar": "ar-circuit-court", "ms": "ms-circuit-court", "nc": "nc-superior-court",
-      "la": "la-district-court", "ga": "ga-superior-court"
+      "la": "la-district-court", "ga": "ga-superior-court", "ks": "ks-judicial-district",
+      "ne": "ne-judicial-district", "nd": "nd-judicial-district", "sd": "sd-judicial-circuit"
     },
     "limited-trial-court-district": { "ky": "ky-district-court", "nc": "nc-district-court" },
     "county": {
@@ -108,7 +109,9 @@
       "il": "township", "ny": "municipality", "wi": "county-subdivision", "ia": "county-subdivision",
       "mi": "county-subdivision", "mn": "county-subdivision", "in": "county-subdivision", "nc": "county-subdivision",
       "ky": "county-subdivision", "ok": "county-subdivision", "sc": "county-subdivision", "tn": "county-subdivision",
-      "ar": "county-subdivision", "mo": "county-subdivision", "va": "county-subdivision", "wv": "county-subdivision", "ga": "county-subdivision"
+      "ar": "county-subdivision", "mo": "county-subdivision", "va": "county-subdivision", "wv": "county-subdivision", "ga": "county-subdivision",
+      "oh": "county-subdivision", "ks": "county-subdivision", "ne": "county-subdivision", "sd": "county-subdivision",
+      "nd": "county-subdivision"
     },
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",

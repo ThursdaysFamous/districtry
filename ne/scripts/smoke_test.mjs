@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "40.80814,-96.69957"; // Nebraska State Capitol, 1445 K Street, Lincoln, Lancaster County
-const OFFLINE = ["county", "us-house", "ne-legislature"];
-const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28" };
+const OFFLINE = ["county", "us-house", "ne-legislature", "ne-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28", "ne-judicial-district": "Judicial District 3" };
 const NEGATIVE_POINT = "42.87000,-97.05000"; // Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Nebraska";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NebraskaExplorer";
@@ -825,6 +825,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -867,12 +868,48 @@ try {
         props: { GEOID: "3172840", NAME: "Lincoln Public Schools", STATE: "31", LOGRADE: "PK", HIGRADE: "12" },
         want: [/Lincoln Public Schools/],
         reject: []
+      },
+      {
+        name: "the Mullen precinct card names it, its county and what the Census records about its government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3109192055", "NAME": "Mullen precinct", "BASENAME": "Mullen", "STATE": "31", "COUNTY": "091", "LSADC": "29", "FUNCSTAT": "N" },
+        want: [/Mullen precinct/, /Hooker County/, /a legal area with no\s+government of its own/],
+        reject: [/None operating/, /An active government/]
+      },
+      {
+        name: "an active township is a government of its own and its officers are not named yet",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3109199991", "NAME": "Example township", "BASENAME": "Example", "STATE": "31", "COUNTY": "091", "LSADC": "44", "FUNCSTAT": "A" },
+        want: [/Example township/, /Hooker County/, /An active government of its own/, /does not name its officers yet/],
+        reject: [/inactive/]
+      },
+      {
+        name: "an inactive township says no government is operating",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3109199992", "NAME": "Example township", "BASENAME": "Example", "STATE": "31", "COUNTY": "091", "LSADC": "44", "FUNCSTAT": "I" },
+        want: [/Example township/, /None operating/, /records this township's\s+government as inactive/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a city the Census counts as its own subdivision says the city governs and the City or Village card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3109199994", "NAME": "Lincoln city", "BASENAME": "Lincoln", "STATE": "31", "COUNTY": "091", "LSADC": "25", "FUNCSTAT": "F" },
+        want: [/Lincoln city/, /apart from every township and precinct/, /City or Village card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a status the card does not carry prints NO Government row",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3109199998", "NAME": "Example township", "BASENAME": "Example", "STATE": "31", "COUNTY": "091", "LSADC": "44", "FUNCSTAT": "Z" },
+        want: [/Example township/, /Hooker County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+      const layers = c.also ? `${c.also},${c.layer}` : c.layer;
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -948,6 +985,33 @@ try {
     await context.close();
   }
 
+
+  // 7d. THE TOWNSHIP ARCHIVE ANSWERS, WITH THE CENSUS UNREACHABLE. The
+  //     Capitol is in Lincoln city, which the Census counts as a county
+  //     subdivision of its own (FUNCSTAT F), and the rural point in Hooker
+  //     County (42.00000,-101.00000) is in Mullen precinct, a legal area
+  //     with no government of its own (TIGERweb's layer 1, read
+  //     2026-11-27). The card turns on with the County layer, whose child
+  //     it is.
+  {
+    for (const [where, point, want] of [
+      ["the Capitol", POINT, [/Lincoln city/, /Lancaster County/, /apart from every township and precinct/]],
+      ["the rural point in Hooker County", "42.00000,-101.00000", [/Mullen precinct/, /Hooker County/, /a legal area with no\s+government of its own/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county,county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the township archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

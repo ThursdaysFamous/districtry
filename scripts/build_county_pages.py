@@ -674,8 +674,33 @@ INSTANCES = [
 # while it is dark, with a NOT_COUNTY_BOARDS entry saying so, and its go-live
 # moves it into INSTANCES with the page wording beside it and drops that
 # entry; the adapter does not change. South Carolina was the first, and moved
-# at its go-live; none is held today.
-HELD_INSTANCES = []
+# at its go-live. A LIVE instance may be held too, while its names ship on the
+# app's card and its pages wait for their own change: Ohio, since 2026-11-27.
+HELD_INSTANCES = [
+    # OHIO'S COMMISSIONERS ARE ELECTED BY THE WHOLE COUNTY (Ohio Revised Code
+    # 305.01), three in each of 86 counties, so every page is the at-large
+    # shape. The names are each county's own website, written down by hand on
+    # 2026-11-27 and proved against it, the file the app's County card reads.
+    # Cuyahoga and Summit, governed by charters, get no page (the adapter says
+    # why). HELD 2026-11-27 although Ohio is live: the names reach the County
+    # card first and the pages follow as their own change, the order Texas's
+    # took on 2026-11-17 (names in #2058-#2068, pages in #2069). Moving this
+    # entry into INSTANCES needs oh/county-commissioner.html written first, and
+    # NAMES_NOBODY entries for the five counties the adapter leaves nameless
+    # (Ashland, Holmes, Lawrence, Cuyahoga, Summit; each reason is in
+    # oh/data/source/oh-county-commissioner-seats.json).
+    dict(tag="oh", state="Ohio", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All Ohio boards of county commissioners",
+         app_name="districtry Ohio", app_url="https://districtry.com/oh/",
+         district_word="", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("oh_commissioners",),
+         index_provenance="each name as the county's own website lists it"),
+]
 
 
 def heading_of(inst, county, rec=None):
@@ -4153,6 +4178,88 @@ def wv_commissions(inst):
     return out, problems, nameless, [path], note
 
 
+OH_LEDE = ("%%(county)s County's board has three commissioners, each elected "
+           "by the voters of the whole county to a four-year term (Ohio Revised "
+           "Code 305.01). These are the members the county's own website lists, "
+           "read %(how)son %(date)s. One seat was on the ballot on 3 November "
+           "2026, and its winner takes office on 1 January 2027, so one of these "
+           "names may change then.")
+OH_DESC = "%d commissioners elected by the whole county"
+OH_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is listed "
+                 "on the county's own website,\n"
+                 "read on the date above and not on a schedule, so a commissioner "
+                 "who took office since may not appear yet and that website is the "
+                 "current word.")
+OH_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this board; "
+               "the board has no districts, because every commissioner is elected "
+               "countywide.")
+OH_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
+             "August", "September", "October", "November", "December")
+
+
+def oh_commissioners(inst):
+    """Ohio: ONE file keyed by county GEOID ("39001"), each record one county's
+    government as its own website names it
+    (oh/scripts/build_oh_county_commissioners.py), the file the app's County
+    card reads.
+
+    AT LARGE, AND CLAIMED: Ohio Revised Code 305.01 elects every commissioner
+    by the whole county, so every page is one list.
+
+    CUYAHOGA AND SUMMIT GET NO PAGE. Each is governed by a charter's county
+    executive and a county council elected mostly by district, and the map
+    draws neither council's districts, so the file names only the executive
+    and Summit's at-large members; a page about a board of commissioners
+    would be about a body those counties do not have. They are nameless here,
+    as are the three counties whose record names nobody."""
+    path = os.path.join(app_data(inst["tag"]), "oh-county-commissioners.json")
+    out, problems, nameless = {}, [], set()
+    records = _read(path)
+    if len(records) != 88:
+        problems.append("oh-county-commissioners.json carries %d counties, not "
+                        "Ohio's 88" % len(records))
+    for geoid, rec in sorted(records.items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        read = rec.get("read") or ""
+        m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", read)
+        if not name or not m:
+            problems.append("oh-county-commissioners.json %r carries no county or "
+                            "no read date" % geoid)
+            continue
+        members = [{"name": n.strip(), "role": "Commissioner"}
+                   for n in rec.get("members") or [] if n.strip()]
+        link = (rec.get("sourceUrl") or "").strip()
+        if rec.get("kind") != "commissioners" or not members:
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("oh %s County names no board of commissioners"
+                                % name)
+            nameless.add(name)
+            continue
+        if len(members) != 3 or not link.startswith(("https://", "http://")):
+            problems.append("oh %s County lists %d commissioners or no source page"
+                            % (name, len(members)))
+            continue
+        date = "%d %s %s" % (int(m.group(3)), OH_MONTHS[int(m.group(2)) - 1],
+                             m.group(1))
+        how = "by hand in a browser " if rec.get("readByHand") else ""
+        out[name] = {"members": members,
+                     "structure": None,
+                     "verified": read,
+                     "sourceUrl": link,
+                     "sourceDocument": None,
+                     "seats": 3,
+                     "slug": county_slug(name), "at_large": True,
+                     "claims_at_large": True,
+                     "lede": OH_LEDE % {"how": how, "date": date},
+                     "desc": OH_DESC,
+                     "disclaimer": OH_DISCLAIMER, "cta_note": OH_CTA_NOTE,
+                     "index_note": ", elected countywide", "source_file": path}
+    note = ("%d of Ohio's 88 counties, every name from the county's own website"
+            % len(out))
+    return out, problems, nameless, [path], note
+
+
 CA_SOURCE_LABEL = "the California Secretary of State's California Roster"
 CA_LEDE = ("%%(county)s County's board of supervisors has %%(districts)d "
            "members, each elected from one of the county's supervisorial "
@@ -4482,6 +4589,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mo_county_bodies": mo_county_bodies,
             "va_local_bodies": va_local_bodies,
             "wv_commissions": wv_commissions,
+            "oh_commissioners": oh_commissioners,
             "ga_commissioners": ga_commissioners,
             "ca_supervisors": ca_supervisors,
             "tx_commissioners_courts": tx_commissioners_courts,

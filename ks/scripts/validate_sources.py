@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 105 counties by ks/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "ks-judicial-district",
+        "app_file": "ks-judicial-districts.json",
+        "source_url": "https://www.kscourts.gov/About-the-Courts/District-Courts",
+        "note": "Kansas's 31 judicial districts, dissolved from the 105 counties by scripts/build_state_courts.py from the county list on each district's kscourts.gov page (excerpt in ks/data/source/courts/ks-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "ks-judicial-district",
+        "app_file": "ks-district-judges.json",
+        "source_url": "https://www.kscourts.gov/About-the-Courts/District-Courts",
+        "note": "The district, magistrate and other judges of each district, read from the same 31 pages by scripts/build_state_courts.py --fetch ks; a vacant seat is listed as vacant. The monthly re-read is a row in ks/WATCH.md.",
+    },
 ]
 
 # Kansas's envelope, as index.html writes it for the ZIP layer

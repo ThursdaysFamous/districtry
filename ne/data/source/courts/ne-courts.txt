@@ -1,0 +1,74 @@
+# Nebraska court districts and judges, kept by scripts/build_state_courts.py --fetch ne
+# read: 2026-11-27
+# from: https://nebraskajudicial.gov/directories/district-map/district-1 to district-12 (counties; the district court's, which differ from the county court's for Otoe and Fillmore) and https://nebraskajudicial.gov/directories/district-court-judges (judges, with the county of each judge's home court)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Gage, Jefferson, Johnson, Fillmore, Nemaha, Otoe, Pawnee, Richardson, Saline, Thayer
+district | 2 | Cass, Sarpy
+district | 3 | Lancaster
+district | 4 | Douglas
+district | 5 | Boone, Butler, Colfax, Hamilton, Merrick, Nance, Platte, Polk, Saunders, Seward, York
+district | 6 | Burt, Cedar, Dakota, Dixon, Dodge, Thurston, Washington
+district | 7 | Antelope, Cuming, Madison, Knox, Pierce, Stanton, Wayne
+district | 8 | Blaine, Boyd, Brown, Cherry, Custer, Garfield, Greeley, Holt, Howard, Loup, Keya Paha, Rock, Sherman, Valley, Wheeler
+district | 9 | Buffalo, Hall
+district | 10 | Adams, Clay, Franklin, Harlan, Kearney, Nuckolls, Phelps, Webster
+district | 11 | Arthur, Chase, Dawson, Dundy, Furnas, Frontier, Gosper, Hayes, Hitchcock, Hooker, Keith, Lincoln, Logan, McPherson, Perkins, Red Willow, Thomas
+district | 12 | Banner, Box Butte, Cheyenne, Dawes, Deuel, Garden, Grant, Kimball, Morrill, Scotts Bluff, Sheridan, Sioux
+judge | 1 | District Judge | David J. A. Bargen | Saline
+judge | 1 | District Judge | Rick A. Schreiner | Gage
+judge | 1 | District Judge | Julie D. Smith | Johnson
+judge | 2 | District Judge | Nathan B. Cox | Sarpy
+judge | 2 | District Judge | Stefanie A. Martinez | Sarpy
+judge | 2 | District Judge | Michael A. Smith | Cass
+judge | 2 | District Judge | George A. Thompson | Sarpy
+judge | 3 | District Judge | Jennifer A. Huxoll | Lancaster
+judge | 3 | District Judge | Darla S. Ideus | Lancaster
+judge | 3 | District Judge | Andrew R. Jacobsen | Lancaster
+judge | 3 | District Judge | Lori A. Maret | Lancaster
+judge | 3 | District Judge | Kevin R. McManaman | Lancaster
+judge | 3 | District Judge | Matthew O. Mellor | Lancaster
+judge | 3 | District Judge | Ryan S. Post | Lancaster
+judge | 3 | District Judge | Susan I. Strong | Lancaster
+judge | 4 | District Judge | Tressa M. Alioth | Douglas
+judge | 4 | District Judge | Peter C. Bataillon | Douglas
+judge | 4 | District Judge | Katie L. Benson | 
+judge | 4 | District Judge | J Russell Derr | Douglas
+judge | 4 | District Judge | Duane C. Dougherty | Douglas
+judge | 4 | District Judge | Todd O. Engleman | Douglas
+judge | 4 | District Judge | Michael W. Jensen | Douglas
+judge | 4 | District Judge | Molly B. Keane | Douglas
+judge | 4 | District Judge | Ryan M. Lindberg | Douglas
+judge | 4 | District Judge | Jeffrey J. Lux | Douglas
+judge | 4 | District Judge | James M. Masteller | Douglas
+judge | 4 | District Judge | Richard P. McGowan | Douglas
+judge | 4 | District Judge | Kimberly Miller Pankonin | Douglas
+judge | 4 | District Judge | Marlon A. Polk | Douglas
+judge | 4 | District Judge | LeAnne M. Srb | Douglas
+judge | 4 | District Judge | Shelly R. Stratman | Douglas
+judge | 4 | District Judge | Horacio J. Wheelock | Douglas
+judge | 5 | District Judge | Rachel A. Daugherty | Hamilton
+judge | 5 | District Judge | Jason S. Doele | Platte
+judge | 5 | District Judge | Christina M. Marroquin | Saunders
+judge | 5 | District Judge | James C. Stecker | Seward
+judge | 6 | District Judge | Zachary L. Blackman | Washington
+judge | 6 | District Judge | Geoffrey C. Hall | Dodge
+judge | 6 | District Judge | Bryan C. Meismer | Dakota
+judge | 7 | District Judge | Michael L. Long | Madison
+judge | 7 | District Judge | Ryan J. Stover | Madison
+judge | 8 | District Judge | Mark D. Kozisek | Brown
+judge | 8 | District Judge | Karin L. Noakes | Howard
+judge | 9 | District Judge | Andrew C. Butler | Hall
+judge | 9 | District Judge | Patrick M. Lee | Hall
+judge | 9 | District Judge | John H. Marsh | Buffalo
+judge | 9 | District Judge | Kane M. Ramsey | Buffalo
+judge | 10 | District Judge | Morgan R. Farquhar | Adams
+judge | 10 | District Judge | Timothy E. Hoeft | Phelps
+judge | 11 | District Judge | Chawnta M. Durham | Dawson
+judge | 11 | District Judge | Patrick M. Heng | Red Willow
+judge | 11 | District Judge | Cindy R. Volkmer | Lincoln
+judge | 12 | District Judge | Leo P. Dobrovolny | Scotts Bluff
+judge | 12 | District Judge | Andrea Miller | Scotts Bluff
+judge | 12 | District Judge | Travis P. O'Gorman | Box Butte
+judge | 12 | District Judge | Derek C. Weimer | Cheyenne

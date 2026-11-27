@@ -183,7 +183,7 @@
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
+      "area_rank": 2,
       "rank_note": "15 congressional districts — the largest districts Ohio carries below the state itself, larger on average than its 33 Senate districts",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
@@ -201,7 +201,7 @@
       "id": "oh-senate",
       "label": "Ohio Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "33 Senate districts — smaller on average than a congressional district; each is three whole House districts",
       "source": {
         "answers": "The Ohio Senate district covering the point, and the senator holding it.",
@@ -216,10 +216,28 @@
       }
     },
     {
+      "id": "oh-court-of-appeals",
+      "label": "Court of Appeals District",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "12 appellate districts of whole counties, 9,664 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a congressional district (about 7,050 km2), so it ranks first",
+      "source": {
+        "answers": "The appellate district covering the point, its counties, and the court of appeals judges the Supreme Court of Ohio lists for it.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list the Supreme Court of Ohio prints for each district on its courts of appeals page (the districts are set by Article IV, section 3 of the Ohio Constitution and section 2501.01 of the Revised Code), read 2026-11-27.",
+            "url": "https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/"
+          }
+        ],
+        "people": "Each district's court of appeals judges are named from the Supreme Court of Ohio's courts of appeals page, read 2026-11-27 with this project's own client and kept as text in oh/data/source/courts/oh-courts.txt. No weekly job re-reads the page, so the card gives the date. Each county's common pleas judges are not named yet. How judges are chosen is from the Ohio Constitution, Article IV, section 6.",
+        "applies": "Ohio — statewide, all 88 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "88 counties, pre-built from TIGERweb; the instance's offline anchor layer, larger on average than a House district",
       "source": {
         "answers": "Which county contains the point.",
@@ -229,7 +247,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Each Ohio county is governed by an elected board of three county commissioners, except Cuyahoga and Summit, whose charters set up an elected county executive and county council, and elects officers such as an auditor, a treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a recorder, an engineer and a coroner; no list of them was read in this pass, so the card names the county only. Recorded as gap oh-county-officials.",
+        "people": "The county's government, written down by hand on 2026-11-27 from each county's own website and proved against it on every build (oh/scripts/build_oh_county_commissioners.py). Eighty-six counties are governed by three commissioners, each elected by the whole county (Ohio Revised Code 305.01); 83 are named, and Ashland (an expired certificate), Holmes (a captcha) and Lawrence (no county website names them) are not, each card saying why. Four pages were read by hand in a browser because the sites refuse this project's reader or fill themselves in with a program (Greene, Montgomery, Portage, Pike), and the card says so. Cuyahoga and Summit are governed by a charter's county executive and council; the executive and Summit's three at-large members are named, and the council districts are not drawn. No weekly job re-reads the pages, so the card gives the date. The county's other elected officers are not named: gap oh-county-officials.",
         "applies": "Ohio — statewide, all 88 counties."
       }
     },
@@ -237,7 +255,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "612 school districts, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -255,7 +273,7 @@
       "id": "oh-house",
       "label": "Ohio House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "99 House districts — three in each Senate district, and smaller on average than a county",
       "source": {
         "answers": "The Ohio House district covering the point, and the member holding it.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "1,233 ZIP Code Tabulation Areas inside Ohio (1,744 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -288,10 +306,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Township or City",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "1,607 records tiling the state, about 66 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.",
+        "applies": "Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Village",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "923 incorporated cities and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city or village containing the point, or that the point is outside every one.",
@@ -309,7 +345,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +363,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +381,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -360,7 +396,7 @@
       }
     }
   ],
-  "min_register_layer": 6,
+  "min_register_layer": 8,
   "anchor_point": {
     "lat": 39.96133,
     "lng": -82.99895,
@@ -382,6 +418,10 @@
     {
       "layer": "oh-house",
       "expected": "1"
+    },
+    {
+      "layer": "oh-court-of-appeals",
+      "expected": "Tenth District Court of Appeals"
     }
   ],
   "negative_point": {
@@ -430,6 +470,12 @@
         "min_features": 1224,
         "max_features": 1224,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "oh-judicial-districts.json",
+        "min_features": 12,
+        "max_features": 12,
+        "note": "The 12 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in oh/data/source/courts/oh-courts.txt."
       }
     ],
     "rosters": [
@@ -457,6 +503,16 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Ohio elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from oh/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "oh-district-judges.json",
+        "min_keys": 12,
+        "note": "The judges of each of the 12 court districts, keyed by district, 67 seats read 2026-11-27 from the state's own court website into oh/data/source/courts/oh-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
+      },
+      {
+        "file": "oh-county-commissioners.json",
+        "min_keys": 88,
+        "note": "Each county's government, keyed by county GEOID: the three commissioners of 83 counties, Cuyahoga's and Summit's county executive and Summit's at-large council members, and why three counties name nobody, written down from each county's own website on 2026-11-27 into oh/data/source/oh-county-commissioner-seats.json and built by oh/scripts/build_oh_county_commissioners.py, which re-reads every page and refuses to write unless every name is on it; its --check holds this file to the seats file. No weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

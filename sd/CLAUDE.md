@@ -58,6 +58,14 @@ organized. No mayor or council member is named yet (gap `sd-municipal-officehold
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school board
 member is named yet (gap `sd-school-board-members`).
 
+**THE TOWNSHIP OR CITY LAYER DRAWS ALL 1,327 OF SOUTH DAKOTA'S COUNTY SUBDIVISIONS**
+(`county-subdivision`, since 2026-11-27, under the County layer), from a tile archive mirrored from
+TIGERweb's layer 1: 898 civil townships the Census records as active governments, one it records as
+inactive, 108 unorganized territories it draws for counting people, and 166 cities and 154 towns it
+counts as areas of their own. The card names the subdivision and its county and states its
+functional status in the Census's own terms; a status it does not know prints no row. No township
+officer is named (gap `sd-township-officers`).
+
 **NO COUNTY OFFICIAL IS NAMED YET**, and the card says so rather than leave a reader to assume the office
 is empty. Each county is governed by an elected board of county commissioners and elects officers such
 as an auditor, a treasurer, a register of deeds, a sheriff and a state's attorney. Recorded as gap
@@ -83,6 +91,16 @@ made 1.32 MB, the Rosebud trust land alone in 580 parts, so it goes through one 
 at 3 m and is 603 KB (163 KB gzipped), the worst stray 3.4 m against a 25 m ceiling (`SIMPLIFY` in
 `scripts/build_tribal_areas.py`). The other eleven nations' councils are not carried yet
 (`ROSTER_NOT_SOUGHT`), recorded in gap `sd-tribal-government`.
+
+**THE COURT LAYER DRAWS SOUTH DAKOTA'S 7 JUDICIAL CIRCUITS AND NAMES THEIR JUDGES**
+(`sd-judicial-circuit`, since 2026-11-27). Each circuit is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Unified Judicial System's circuit
+pages; each circuit's contacts page names its circuit judges (45, read 2026-11-27; magistrates are
+not kept), in a dated excerpt in `data/source/courts/sd-courts.txt`, shipped network-first as
+`sd-district-judges.json`. The card says the circuit's voters elect its judges in a nonpolitical
+election for eight-year terms and the Governor fills a seat that comes open early (South Dakota
+Constitution, Article V, section 7). No job refreshes the names; the monthly re-read is a row in
+`WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE SOUTH DAKOTA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -112,8 +130,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: South Dakota (`southdakota`) — https://districtry.com/sd/
 - Geocoders: address Photon (South Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Dakota-bounded, serial >=1s queue)
-- Ground truth: 44.36706,-100.34604 (South Dakota State Capitol, 500 East Capitol Avenue, Pierre, Hughes County) → county Hughes County; us-house Congressional District (at Large); sd-senate 24; sd-house 24. Negative point 46.05000,-100.10000 (Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.SouthDakotaExplorer`.
+- Ground truth: 44.36706,-100.34604 (South Dakota State Capitol, 500 East Capitol Avenue, Pierre, Hughes County) → county Hughes County; us-house Congressional District (at Large); sd-senate 24; sd-house 24; sd-judicial-circuit Sixth Judicial Circuit. Negative point 46.05000,-100.10000 (Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.SouthDakotaExplorer`.
 - Scheduled workflows: `update-sd-congress-roster.yml` (Wed 23:17 UTC); `update-sd-legislature-roster.yml` (Thu 23:17 UTC); `sd-validate-sources.yml` (2nd of month 23:17 UTC).
 - Source registry: `sd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

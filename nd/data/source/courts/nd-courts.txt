@@ -1,0 +1,67 @@
+# North Dakota court districts and judges, kept by scripts/build_state_courts.py --fetch nd
+# read: 2026-11-27
+# from: https://www.ndcourts.gov/legal-resources/rules/ndsupctadminr/6 (Administrative Rule 6, counties) and https://www.ndcourts.gov/district-court/district-court-judges (judges)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | Northwest | Divide, McKenzie, Williams
+district | North Central | Burke, Mountrail, Ward
+district | Northeast | Benson, Bottineau, Cavalier, McHenry, Pembina, Pierce, Ramsey, Renville, Rolette, Towner, Walsh
+district | Northeast Central | Grand Forks, Nelson
+district | East Central | Cass, Steele, Traill
+district | Southeast | Barnes, Dickey, Eddy, Foster, Griggs, Kidder, LaMoure, Logan, McIntosh, Ransom, Richland, Sargent, Stutsman, Wells
+district | South Central | Burleigh, Emmons, Grant, McLean, Mercer, Morton, Oliver, Sioux, Sheridan
+district | Southwest | Adams, Billings, Bowman, Dunn, Golden Valley, Hettinger, Slope, Stark
+judge | East Central | Presiding Judge | Wade L. Webb | 
+judge | East Central | District Judge | Susan Bailey | 
+judge | East Central | District Judge | Reid A. Brady | 
+judge | East Central | District Judge | Cherie L. Clark | 
+judge | East Central | District Judge | Constance L. Cleveland | 
+judge | East Central | District Judge | Scott O. Diamond | 
+judge | East Central | District Judge | Stephanie Hayden | 
+judge | East Central | District Judge | Stephannie N. Stiel | 
+judge | East Central | District Judge | Tristan J. Van de Streek | 
+judge | East Central | District Judge | Ryan Younggren | 
+judge | North Central | Presiding Judge | Gary H. Lee | 
+judge | North Central | District Judge | Richard L. Hagar | 
+judge | North Central | District Judge | Steven A. Lautt | 
+judge | North Central | District Judge | Stacy J. Louser | 
+judge | North Central | District Judge | Christene A. Reierson | 
+judge | Northeast | Presiding Judge | Anthony Swain Benson | 
+judge | Northeast | District Judge | Kari Michelle Agotness | 
+judge | Northeast | District Judge | Kelley Cole | 
+judge | Northeast | District Judge | Michael P. Hurly | 
+judge | Northeast | District Judge | Lonnie Olson | 
+judge | Northeast | District Judge | Ashley Samuelson | 
+judge | Northeast Central | Presiding Judge | Don Hager | 
+judge | Northeast Central | District Judge | Andrew Eyre | 
+judge | Northeast Central | District Judge | Jay Knudson | 
+judge | Northeast Central | District Judge | Jason McCarthy | 
+judge | Northeast Central | District Judge | Theodore Sandberg | 
+judge | Northeast Central | District Judge | Kristi Pettit Venhuizen | 
+judge | Northwest | Presiding Judge | Robin A. Schmidt | 
+judge | Northwest | District Judge | Daniel S. El-Dweek | 
+judge | Northwest | District Judge | Benjamen J. Johnson | 
+judge | Northwest | District Judge | Chas Neff, Jr. | 
+judge | Northwest | District Judge | Joshua B. Rustad | 
+judge | Northwest | District Judge | Kirsten M. Sjue | 
+judge | South Central | Presiding Judge | Cynthia M. Feland | 
+judge | South Central | District Judge | Daniel J. Borgen | 
+judge | South Central | District Judge | James S. Hill | 
+judge | South Central | District Judge | Jason Hammes | 
+judge | South Central | District Judge | Jackson J. Lofgren | 
+judge | South Central | District Judge | Pamela A. Nesvig | 
+judge | South Central | District Judge | Lindsey Nieuwsma | 
+judge | South Central | District Judge | Marina Spahr | 
+judge | South Central | District Judge | Bonnie L. Storbakken | 
+judge | South Central | District Judge | Bobbi Weiler | 
+judge | Southeast | Presiding Judge | Daniel D. Narum | 
+judge | Southeast | District Judge | Bradley A. Cruff | 
+judge | Southeast | District Judge | James D. Hovey | 
+judge | Southeast | District Judge | Troy J. LeFevre | 
+judge | Southeast | District Judge | James T. Shockman | 
+judge | Southeast | District Judge | Nicholas D. Thornton | 
+judge | Southwest | Presiding Judge | William A. Herauf | 
+judge | Southwest | District Judge | Rhonda R. Ehlis | 
+judge | Southwest | District Judge | James D. Gion | 
+judge | Southwest | District Judge | Dann E. Greenwood | 

@@ -55,12 +55,20 @@ say so.
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school
 board member is named yet (gap `ks-school-board-members`).
 
+**THE TOWNSHIP OR CITY LAYER DRAWS ALL 1,521 OF KANSAS'S COUNTY SUBDIVISIONS**
+(`county-subdivision`, since 2026-11-27, under the County layer), from a tile archive mirrored from
+TIGERweb's layer 1: 1,258 townships the Census records as active governments, 134 it records as
+inactive, and 129 cities it counts as areas of their own, apart from every township. The card names
+the subdivision and its county and states its functional status in the Census's own terms; a status
+it does not know prints no row. No township officer is named (gap `ks-township-officers`).
+
 **NO COUNTY, CITY OR TOWNSHIP OFFICIAL IS NAMED YET**, and the cards say so rather than leave a
 reader to assume the office is empty. Each county is governed by an elected board of county
 commissioners, and most elect officers such as a clerk, a treasurer, a register of deeds and a
 sheriff. Recorded as gaps `ks-county-officials` and `ks-municipal-officeholders`. **KANSAS ALSO HAS
-1,258 ACTIVE TOWNSHIPS** (TIGER's county subdivisions), each with elected officers; they are not
-drawn yet, and the done-standard scorer marks that level open.
+1,258 ACTIVE TOWNSHIPS** (TIGER's county subdivisions), each with elected officers;
+the Township or City layer draws them (below) and names no officer, so the done-standard scorer
+marks that level open (gap `ks-township-officers`).
 
 **TRIBAL GOVERNMENT DRAWS THE LAND OF FOUR NATIONS AND NAMES ONE COUNCIL** (`tribal-areas.json` and
 `tribal-councils.json`, since 2026-11-13). The Census keeps four reservations in Kansas (Kickapoo,
@@ -76,6 +84,15 @@ app's own network-first `tribal-councils.json`, so a new council reaches a retur
 if that file fails to load, the card still names the nation and names nobody. The other three
 nations' councils are not carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`),
 recorded in gap `ks-tribal-government`.
+
+**THE COURT LAYER DRAWS KANSAS'S 31 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`ks-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the county list on each district's
+page at kscourts.gov; the same pages name the judges (267 named and 3 seats listed vacant, read
+2026-11-27), kept as a dated excerpt in `data/source/courts/ks-courts.txt` and shipped network-first
+as `ks-district-judges.json`. The card says the district's voters elect its judges for four-year
+terms unless they chose nonpartisan selection (Kansas Constitution, Article 3, section 6). No job
+refreshes the names; the monthly re-read is a row in `WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE KANSAS.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -108,8 +125,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Kansas (`kansas`) — https://districtry.com/ks/
 - Geocoders: address Photon (Kansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Kansas-bounded, serial >=1s queue)
-- Ground truth: 39.04807,-95.67803 (Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County) → county Shawnee County; us-house 2; ks-senate 19; ks-house 57. Negative point 40.20000,-98.50000 (Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.KansasExplorer`.
+- Ground truth: 39.04807,-95.67803 (Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County) → county Shawnee County; us-house 2; ks-senate 19; ks-house 57; ks-judicial-district 3rd Judicial District. Negative point 40.20000,-98.50000 (Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.KansasExplorer`.
 - Scheduled workflows: `update-ks-congress-roster.yml` (Mon 23:31 UTC); `update-ks-legislature-roster.yml` (Tue 23:31 UTC); `ks-validate-sources.yml` (1st of month 23:55 UTC).
 - Source registry: `ks/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

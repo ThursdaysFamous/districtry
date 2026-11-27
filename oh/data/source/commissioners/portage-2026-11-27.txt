@@ -1,0 +1,7 @@
+Read once in Adam's Chrome, 2026-11-27 ~15:44 UTC (our script reader got HTTP 403 at the old address www.co.portage.oh.us, which now redirects to portagecounty-oh.gov).
+URL: https://www.portagecounty-oh.gov/portage-county-board-commissioners (the /commissioners link redirects here)
+Staff Contacts
+Commissioner Mike Tinlin - President - (330) 297-3600
+Commissioner Jill Crawford - Vice President - (330) 297-3600
+Commissioner Sabrina Christian-Bennett - Commissioner - (330) 297-3600
+(the same number is printed for all three and for an administrative assistant: it is the office's line)

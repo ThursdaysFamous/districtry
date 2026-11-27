@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1199,6 +1199,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-oh-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>oh-court-of-appeals</code></th>
+                <td data-label="What it answers">The appellate district covering the point, its counties, and the court of appeals judges the Supreme Court of Ohio lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list the Supreme Court of Ohio prints for each district on its courts of appeals page (the districts are set by Article IV, section 3 of the Ohio Constitution and section 2501.01 of the Revised Code), read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's court of appeals judges are named from the Supreme Court of Ohio's courts of appeals page, read 2026-11-27 with this project's own client and kept as text in oh/data/source/courts/oh-courts.txt. No weekly job re-reads the page, so the card gives the date. Each county's common pleas judges are not named yet. How judges are chosen is from the Ohio Constitution, Article IV, section 6.</td>
+                <td data-label="Where it applies">Ohio — statewide, all 88 counties.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1299,7 +1310,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1315,7 +1326,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 88 features, measured 2026-11-11. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Each Ohio county is governed by an elected board of three county commissioners, except Cuyahoga and Summit, whose charters set up an elected county executive and county council, and elects officers such as an auditor, a treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a recorder, an engineer and a coroner; no list of them was read in this pass, so the card names the county only. Recorded as gap oh-county-officials.</td>
+                <td data-label="Who it names">The county's government, written down by hand on 2026-11-27 from each county's own website and proved against it on every build (oh/scripts/build_oh_county_commissioners.py). Eighty-six counties are governed by three commissioners, each elected by the whole county (Ohio Revised Code 305.01); 83 are named, and Ashland (an expired certificate), Holmes (a captcha) and Lawrence (no county website names them) are not, each card saying why. Four pages were read by hand in a browser because the sites refuse this project's reader or fill themselves in with a program (Greene, Montgomery, Portage, Pike), and the card says so. Cuyahoga and Summit are governed by a charter's county executive and council; the executive and Summit's three at-large members are named, and the council districts are not drawn. No weekly job re-reads the pages, so the card gives the date. The county's other elected officers are not named: gap oh-county-officials.</td>
                 <td data-label="Where it applies">Ohio — statewide, all 88 counties.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1328,6 +1339,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
                 <td data-label="Where it applies">Ohio. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Township or City</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.</td>
+                <td data-label="Where it applies">Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City or Village</span><code>municipality</code></th>
@@ -1370,6 +1392,28 @@ table.matrix code {
     "url": "https://overberg.co"
   },
   "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/oh/sources.html#dataset-oh-court-of-appeals",
+      "identifier": "oh-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The appellate district covering the point, its counties, and the court of appeals judges the Supreme Court of Ohio lists for it. Each district's court of appeals judges are named from the Supreme Court of Ohio's courts of appeals page, read 2026-11-27 with this project's own client and kept as text in oh/data/source/courts/oh-courts.txt. No weekly job re-reads the page, so the card gives the date. Each county's common pleas judges are not named yet. How judges are chosen is from the Ohio Constitution, Article IV, section 6.",
+      "url": "https://districtry.com/oh/sources.html#layer-oh-court-of-appeals",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/oh/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list the Supreme Court of Ohio prints for each district on its courts of appeals page (the districts are set by Article IV, section 3 of the Ohio Constitution and section 2501.01 of the Revised Code), read 2026-11-27.",
+          "url": "https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Ohio — statewide, all 88 counties"
+      }
+    },
     {
       "@type": "Dataset",
       "@id": "https://districtry.com/oh/sources.html#dataset-us-house",
@@ -1419,7 +1463,7 @@ table.matrix code {
       "@id": "https://districtry.com/oh/sources.html#dataset-county",
       "identifier": "county",
       "name": "County",
-      "description": "Which county contains the point. NO OFFICEHOLDER YET. Each Ohio county is governed by an elected board of three county commissioners, except Cuyahoga and Summit, whose charters set up an elected county executive and county council, and elects officers such as an auditor, a treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a recorder, an engineer and a coroner; no list of them was read in this pass, so the card names the county only. Recorded as gap oh-county-officials.",
+      "description": "Which county contains the point. The county's government, written down by hand on 2026-11-27 from each county's own website and proved against it on every build (oh/scripts/build_oh_county_commissioners.py). Eighty-six counties are governed by three commissioners, each elected by the whole county (Ohio Revised Code 305.01); 83 are named, and Ashland (an expired certificate), Holmes (a captcha) and Lawrence (no county website names them) are not, each card saying why. Four pages were read by hand in a browser because the sites refuse this project's reader or fill themselves in with a program (Greene, Montgomery, Portage, Pike), and the card says so. Cuyahoga and Summit are governed by a charter's county executive and council; the executive and Summit's three at-large members are named, and the council districts are not drawn. No weekly job re-reads the pages, so the card gives the date. The county's other elected officers are not named: gap oh-county-officials.",
       "url": "https://districtry.com/oh/sources.html#layer-county",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/oh/sources.html#catalog"
@@ -1500,6 +1544,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Ohio. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/oh/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Township or City",
+      "description": "The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own. NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.",
+      "url": "https://districtry.com/oh/sources.html#layer-county-subdivision",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/oh/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it"
       }
     },
     {

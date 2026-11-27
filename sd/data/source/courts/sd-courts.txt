@@ -1,0 +1,58 @@
+# South Dakota court districts and judges, kept by scripts/build_state_courts.py --fetch sd
+# read: 2026-11-27
+# from: https://ujs.sd.gov/court-finder/<circuit>-judicial-circuit/ (counties) and each circuit's contacts page (circuit judges; magistrate judges are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Aurora, Bon Homme, Brule, Buffalo, Charles Mix, Clay, Davison, Douglas, Hanson, Hutchinson, McCook, Turner, Union, Yankton
+district | 2 | Lincoln, Minnehaha
+district | 3 | Beadle, Brookings, Clark, Codington, Deuel, Grant, Hamlin, Hand, Jerauld, Kingsbury, Lake, Miner, Moody, Sanborn
+district | 4 | Butte, Corson, Dewey, Harding, Lawrence, Meade, Perkins, Ziebach
+district | 5 | Brown, Campbell, Day, Edmunds, Faulk, Marshall, McPherson, Roberts, Spink, Walworth
+district | 6 | Bennett, Gregory, Haakon, Hughes, Hyde, Jackson, Jones, Lyman, Mellette, Potter, Stanley, Sully, Todd, Tripp
+district | 7 | Custer, Fall River, Oglala Lakota, Pennington
+judge | 1 | Presiding Judge | Cheryle W. Gering | 
+judge | 1 | Circuit Judge | Bruce V. Anderson | 
+judge | 1 | Circuit Judge | Tami Bern | 
+judge | 1 | Circuit Judge | Chris S. Giles | 
+judge | 1 | Circuit Judge | David Knoff | 
+judge | 1 | Circuit Judge | Patrick T. Smith | 
+judge | 2 | Presiding Judge | Robin Jacobson Houwman | 
+judge | 2 | Circuit Judge | Douglas P. Barnett | 
+judge | 2 | Circuit Judge | Jeffrey C. Clapper | 
+judge | 2 | Circuit Judge | Natalie D. Damgaard | 
+judge | 2 | Circuit Judge | Sandra Hoglund Hanson | 
+judge | 2 | Circuit Judge | Ann Hoffman | 
+judge | 2 | Circuit Judge | Eric C. Johnson | 
+judge | 2 | Circuit Judge | Jennifer D. Mammenga | 
+judge | 2 | Circuit Judge | Mandi A. Mowery | 
+judge | 2 | Circuit Judge | John R. Pekas | 
+judge | 2 | Circuit Judge | James A. Power | 
+judge | 2 | Circuit Judge | Rachel R. Rasmussen | 
+judge | 2 | Circuit Judge | Susan M. Sabers | 
+judge | 2 | Circuit Judge | Jon C. Sogn | 
+judge | 3 | Presiding Judge | Patrick T. Pardy | 
+judge | 3 | Circuit Judge | Dawn M. Elshere | 
+judge | 3 | Circuit Judge | Abigail A. Howard | 
+judge | 3 | Circuit Judge | Carmen A. Means | 
+judge | 3 | Circuit Judge | Kent A. Shelton | 
+judge | 3 | Circuit Judge | David K. Wheeler | 
+judge | 4 | Presiding Judge | Michelle K. Comer | 
+judge | 4 | Circuit Judge | Chad R. Callahan | 
+judge | 4 | Circuit Judge | Eric J. Strawn | 
+judge | 5 | Presiding Judge | Gregg C. Magera | 
+judge | 5 | Circuit Judge | Julia Dvorak | 
+judge | 5 | Circuit Judge | Marshall C. Lovrien | 
+judge | 5 | Circuit Judge | Richard Sommers | 
+judge | 6 | Presiding Judge | Christina L. Klinger | 
+judge | 6 | Circuit Judge | Bobbi J. Rank | 
+judge | 6 | Circuit Judge | Margo D. Northrup | 
+judge | 6 | Circuit Judge | M. Bridget Mayer | 
+judge | 7 | Presiding Judge | Heidi L. Linngren | 
+judge | 7 | Circuit Judge | Matthew M. Brown | 
+judge | 7 | Circuit Judge | Jeffrey R. Connolly | 
+judge | 7 | Circuit Judge | Joshua K. Hendrickson | 
+judge | 7 | Circuit Judge | Eric Kelderman | 
+judge | 7 | Circuit Judge | Scott A. Roetzel | 
+judge | 7 | Circuit Judge | Cassidy M. Stalley | 
+judge | 7 | Circuit Judge | Stacy L. Wickre | 

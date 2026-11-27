@@ -61,6 +61,14 @@ government there, with the civil township where one is organized. No mayor or co
 between them cover the state's land, and nothing on TIGER's secondary layer, so it is not drawn. No school
 board member is named yet (gap `nd-school-board-members`).
 
+**THE TOWNSHIP OR CITY LAYER DRAWS ALL 1,761 OF NORTH DAKOTA'S COUNTY SUBDIVISIONS**
+(`county-subdivision`, since 2026-11-27, under the County layer), from a tile archive mirrored from
+TIGERweb's layer 1: 1,305 civil townships the Census records as active governments, 4 it records as
+inactive, 90 unorganized territories it draws for counting people, and 362 cities it counts as areas
+of their own. The card names the subdivision and its county and states its functional status in the
+Census's own terms; a status it does not know prints no row. No township officer is named (gap
+`nd-township-officers`).
+
 **NO COUNTY OFFICIAL IS NAMED YET**, and the card says so rather than leave a reader to assume the office
 is empty. Each county is governed by an elected board of county commissioners and elects officers such
 as an auditor, a treasurer, a recorder, a sheriff and a state's attorney. Recorded as gap
@@ -77,6 +85,16 @@ Sisseton-Wahpeton Oyate is seated at Agency Village, South Dakota. The cards nam
 districts the Census draws on the Fort Berthold, Spirit Lake, Standing Rock and Lake Traverse land.
 No council is carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap
 `nd-tribal-government`.
+
+**THE COURT LAYER DRAWS NORTH DAKOTA'S 8 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`nd-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Supreme Court's Administrative
+Rule 6; ndcourts.gov's district court judges page names the judges (53, read 2026-11-27), kept as a
+dated excerpt in `data/source/courts/nd-courts.txt` and shipped network-first as
+`nd-district-judges.json`, keyed by district name. The page differs from the court's 1 November
+designation PDF (it lists one judge the PDF does not, and the PDF one it does not); the page is the
+source. The district's voters choose its judges for six-year terms (North Dakota Constitution,
+Article VI, section 9). No job refreshes the names; the monthly re-read is a row in `WATCH.md`.
 
 **THE ZIP LAYER HIDES OUTSIDE NORTH DAKOTA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
@@ -110,8 +128,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: North Dakota (`northdakota`) — https://districtry.com/nd/
 - Geocoders: address Photon (North Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Dakota-bounded, serial >=1s queue)
-- Ground truth: 46.82078,-100.78267 (North Dakota State Capitol, 600 East Boulevard Avenue, Bismarck, Burleigh County) → county Burleigh County; us-house Congressional District (at Large); nd-senate 35; nd-house 35. Negative point 49.15000,-99.00000 (Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 2, geography 4); `registerLayer(` floor 9. Debug namespace `window.NorthDakotaExplorer`.
+- Ground truth: 46.82078,-100.78267 (North Dakota State Capitol, 600 East Boulevard Avenue, Bismarck, Burleigh County) → county Burleigh County; us-house Congressional District (at Large); nd-senate 35; nd-house 35; nd-judicial-district South Central Judicial District. Negative point 49.15000,-99.00000 (Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 11. Debug namespace `window.NorthDakotaExplorer`.
 - Scheduled workflows: `update-nd-congress-roster.yml` (Wed 23:27 UTC); `update-nd-legislature-roster.yml` (Thu 23:27 UTC); `nd-validate-sources.yml` (2nd of month 23:27 UTC).
 - Source registry: `nd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

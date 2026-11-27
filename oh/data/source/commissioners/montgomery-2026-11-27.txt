@@ -1,0 +1,6 @@
+Read once in Adam's Chrome, 2026-11-27 ~15:42 UTC (our script reader gets HTTP 403).
+URL: https://www.mcohio.org/685/Board-of-County-Commissioners (found in the site's own /sitemap.xml)
+Members
+Judy Dodge - County Commissioner
+Carolyn Rice - County Commissioner
+Mary A. McDonald - County Commissioner

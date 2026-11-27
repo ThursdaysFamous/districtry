@@ -1,0 +1,85 @@
+# Ohio court districts and judges, kept by scripts/build_state_courts.py --fetch oh
+# read: 2026-11-27
+# from: https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/ (counties and judges of all twelve districts)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Hamilton
+district | 2 | Champaign, Clark, Darke, Greene, Miami, Montgomery
+district | 3 | Allen, Auglaize, Crawford, Defiance, Hancock, Hardin, Henry, Logan, Marion, Mercer, Paulding, Putnam, Seneca, Shelby, Union, Van Wert, Wyandot
+district | 4 | Adams, Athens, Gallia, Highland, Hocking, Jackson, Lawrence, Meigs, Pickaway, Pike, Ross, Scioto, Vinton, Washington
+district | 5 | Ashland, Coshocton, Delaware, Fairfield, Guernsey, Holmes, Knox, Licking, Morgan, Morrow, Muskingum, Perry, Richland, Stark, Tuscarawas
+district | 6 | Erie, Fulton, Huron, Lucas, Ottawa, Sandusky, Williams, Wood
+district | 7 | Belmont, Carroll, Columbiana, Harrison, Jefferson, Mahoning, Monroe, Noble
+district | 8 | Cuyahoga
+district | 9 | Lorain, Medina, Summit, Wayne
+district | 10 | Franklin
+district | 11 | Ashtabula, Geauga, Lake, Portage, Trumbull
+district | 12 | Brown, Butler, Clermont, Clinton, Fayette, Madison, Preble, Warren
+judge | 1 | Judge | Ginger Bock | 
+judge | 1 | Judge | Terrance A. Nestor | 
+judge | 1 | Judge | Marilyn Zayas | 
+judge | 1 | Judge | Candace C. Crouse | 
+judge | 1 | Judge | Richard L. Moore | 
+judge | 1 | Judge | Jennifer M. Kinsley | 
+judge | 2 | Judge | Mary Katherine Huffman | 
+judge | 2 | Judge | Christopher B. Epley | 
+judge | 2 | Judge | Robert G. Hanseman | 
+judge | 2 | Judge | Ronald C. Lewis | 
+judge | 2 | Judge | Michael Tucker | 
+judge | 3 | Judge | Mark C. Miller | 
+judge | 3 | Judge | Juergen A. Waldick | 
+judge | 3 | Judge | William R. Zimmerman | 
+judge | 3 | Judge | John R. Willamowski | 
+judge | 4 | Judge | Jason P. Smith | 
+judge | 4 | Judge | Kristy S. Wilkin | 
+judge | 4 | Judge | Michael D. Hess | 
+judge | 5 | Judge | Andrew J. King | 
+judge | 5 | Judge | Robert G. Montgomery | 
+judge | 5 | Judge | Craig R. Baldwin | 
+judge | 5 | Judge | William B. Hoffman | 
+judge | 5 | Judge | Kevin W. Popham | 
+judge | 5 | Judge | David M. Gormley | 
+judge | 6 | Judge | Gene A. Zmuda | 
+judge | 6 | Judge | Christine Mayle | 
+judge | 6 | Judge | Charles E. Sulek | 
+judge | 6 | Judge | Thomas J. Osowik | 
+judge | 6 | Judge | Myron C. Duhart | 
+judge | 7 | Judge | Cheryl L. Waite | 
+judge | 7 | Judge | Katelyn Dickey | 
+judge | 7 | Judge | Carol Ann Robb | 
+judge | 7 | Judge | Mark A. Hanni | 
+judge | 8 | Judge | Eileen T. Gallagher | 
+judge | 8 | Judge | Michelle J. Sheehan | 
+judge | 8 | Judge | Deena R. Calabrese | 
+judge | 8 | Judge | Eileen A. Gallagher | 
+judge | 8 | Judge | Kathleen Ann Keough | 
+judge | 8 | Judge | Lisa Forbes | 
+judge | 8 | Judge | Timothy W. Clary | 
+judge | 8 | Judge | Sean C. Gallagher | 
+judge | 8 | Judge | Mary J. Boyle | 
+judge | 8 | Judge | Emanuella D. Groves | 
+judge | 8 | Judge | Michael J. Ryan | 
+judge | 8 | Judge | Anita Laster Mays | 
+judge | 9 | Judge | Scot Allan Stevenson | 
+judge | 9 | Judge | Nathan H. Manning | 
+judge | 9 | Judge | Betty S. Sutton | 
+judge | 9 | Judge | Jennifer Hensal | 
+judge | 9 | Judge | Jill Flagg Lanzinger | 
+judge | 10 | Judge | David J. Leland | 
+judge | 10 | Judge | Michael C. Mentel | 
+judge | 10 | Judge | Julia L. Dorrian | 
+judge | 10 | Judge | Kristin Boggs | 
+judge | 10 | Judge | Laurel Beatty Blunt | 
+judge | 10 | Judge | Carly M. Edelstein | 
+judge | 10 | Judge | Shawn Dingus | 
+judge | 10 | Judge | Terri Jamison | 
+judge | 11 | Judge | John J. Eklund | 
+judge | 11 | Judge | Matthew J. Lynch | 
+judge | 11 | Judge | Eugene A. Lucci | 
+judge | 11 | Judge | Robert J. Patton | 
+judge | 11 | Judge | Scott R. Lynch | 
+judge | 12 | Judge | Robin N. Piper III | 
+judge | 12 | Judge | Melena S. Siebert | 
+judge | 12 | Judge | Robert A. Hendrickson | 
+judge | 12 | Judge | Mike Powell | 

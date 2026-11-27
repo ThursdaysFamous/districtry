@@ -4673,16 +4673,19 @@ function initKansasExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ks-senate": "kss", "county": "co", "ks-house": "ksh",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "ks-senate": "kss", "ks-judicial-district": "ksj",
+    "county": "co", "ks-house": "ksh", "school-district-unified": "su", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ks-senate"],
-    "state-house": ["ks-house"], "county": ["county"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["ks-house"], "trial-court-district": ["ks-judicial-district"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4703,7 +4706,8 @@ function initKansasExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "ks-senate-districts.json", "ks-house-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "ks-senate-districts.json", "ks-house-districts.json", "zip-index.json",
+    "tribal-areas.json", "ks-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11600,11 +11604,13 @@ function initKansasExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 4 congressional districts — the largest districts Kansas carries below the state itself
+    "ks-judicial-district", // 31 judicial districts of whole counties, 6,869 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than a congressional district
     "ks-senate",         // 40 Senate districts, each electing one senator
     "county",            // 105 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ks-house",          // 125 House districts, each electing one representative
     "school-district-unified", // 285 school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 710 ZIP Code Tabulation Areas that reach into Kansas (890 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
+    "county-subdivision", // 1,521 records tiling the state, about 139 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "municipality",      // 626 incorporated cities, drawn from a tile archive mirrored from TIGERweb
     "tribal-government", // Tribal land — Kansas has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Kickapoo (KS) Reservation (613.4 km², Brown, Jackson and Atchison counties), the Prairie Band of Potawatomi Nation Reservation (316.3 km², Jackson County), the Iowa (KS-NE) Reservation (35.3 km² in Kansas, 69% of it, Brown and Doniphan counties) and its trust land (0.639 km², Brown County), and the Sac and Fox Nation Reservation (19.7 km² in Kansas, 33% of it) and its trust land (1.020 km² in Kansas, 70% of it), both in Brown County. The Iowa and Sac and Fox reservations and the Sac and Fox trust land are drawn whole into Nebraska. The Census draws no tribal district on any of it. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16796,8 +16802,8 @@ function initKansasExplorer() {
    * 2026-11-12 in TIGERweb's incorporated places for STATE='20'
    * (Places_CouSub_ConCity_SubMCD layer 4, drawn from a tile archive mirrored
    * by scripts/mirror_tiger_tiles.py): 626 records: 623 active cities, the city of Frederick, which the Census records as an inactive government, the city of Tribune, which it records as having no functioning government, and the balance of Greeley County's unified government. The state's county
-   * subdivisions are statistical areas with no government, so they are not
-   * drawn.
+   * subdivisions are drawn by the Township or City layer (7c), most of them
+   * townships the Census records as active governments.
    *
    * The empty state reads as a fact about the place rather than a failed
    * lookup: about 3% of Kansas's land is inside one (by the Census's own
@@ -17205,6 +17211,243 @@ function initKansasExplorer() {
       return wrap;
     },
     emptyNote: "This point is not on tribal land. Kansas has 6 tribal areas across 4 nations, four reservations and two pieces of off-reservation trust land, and this point is on none of them."
+  });
+
+  /* ---------- 7b. Judicial District — Kansas's judicial districts, whole counties ----------
+   * 31 judicial districts of whole counties, dissolved from this app's own
+   * county fabric by scripts/build_state_courts.py, which reads the county
+   * lists from the statewide district map the Kansas Judicial Branch prints on
+   * every district page and the judges from each district's own page on
+   * kscourts.gov, kept as text in ks/data/source/courts/. The districts are
+   * geometry (ks-judicial-districts.json, cache-first); the judges are a
+   * roster (ks-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * ks/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Kansas Constitution, Article 3,
+   * section 6 (ksrevisor.gov, read 2026-11-27): district judges are elected by
+   * the district's voters for four-year terms unless those voters have adopted
+   * nonpartisan selection. Which districts have is not on the court's pages
+   * read, so the card does not say.
+   * ---------- */
+  var loadKsCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ks-judicial-districts.json", {}, 2);
+  });
+  var loadKsJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ks-district-judges.json", {}, 2);
+  });
+  var KS_COURT = {
+    how: "The district's voters elect its district judges for four-year terms, unless they have chosen nonpartisan selection instead (Kansas Constitution, Article 3, section 6).",
+    court: "The district court is Kansas's trial court, and it sits in every county of the district. A district magistrate judge serves the county shown beside the name.",
+    from: "The Kansas Judicial Branch's page for this district",
+    link: { label: "Kansas district courts", url: "https://www.kscourts.gov/About-the-Courts/District-Courts" }
+  };
+  function ksCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial District";
+  }
+  // "Atchison and Leavenworth Counties"
+  function ksCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "ks-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Kansas's judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadKsCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : ksCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadKsCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadKsJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? ksCourtTitle(result.unit) : "Unknown judicial district",
+        note: ksCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: KS_COURT.how });
+      rows.push({ label: "The court", value: KS_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: KS_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return KS_COURT.link; }
+  });
+
+  /* ---------- 7c. Township or City — TIGERweb county subdivisions ----------
+   * Measured 2026-11-27 in TIGERweb's county subdivisions for this
+   * state (Places_CouSub_ConCity_SubMCD layer 1, drawn from a tile
+   * archive mirrored by scripts/mirror_tiger_tiles.py): 1,521 records:
+   * 1,258 townships the Census records as active governments (1,228
+   * named townships and 30 numbered ones), 134 townships it records as
+   * inactive, and 129 cities it counts as areas of their own, apart
+   * from every township; about 139 km2 of land on average.
+   *
+   * The card names the subdivision and its county, and says whether it
+   * governs, in the Census's own terms: its functional status (FUNCSTAT).
+   * A status this card does not know prints no row rather than an
+   * improvised one. A city the Census counts as its own
+   * subdivision (FUNCSTAT F) is named by the word TIGER's own NAME carries
+   * after BASENAME ("Topeka city"), so the card cannot disagree with the
+   * name printed above it.
+   *
+   * NO OFFICEHOLDER YET. The active townships elect their own officers, and
+   * no list of them was read in this pass, so the card names the township
+   * only. Recorded as gap ks-township-officers.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // What TIGER's NAME carries after its BASENAME ("Topeka city" -> "city");
+  // null when the name does not start with the base ("Township 4").
+  function subdivisionKind(name, base) {
+    if (name == null || base == null) return null;
+    name = String(name);
+    base = String(base);
+    return name.indexOf(base) === 0 ? name.slice(base.length).trim().toLowerCase() : null;
+  }
+
+  // The Census's functional status, in its own terms, for each status this
+  // state's county subdivisions carry (2026-11-27).
+  var KS_TOWNSHIP_GOVERNMENT = {
+    A: "An active government of its own, according to the U.S. Census " +
+      "Bureau. This app does not name its officers yet.",
+    I: "None operating. The U.S. Census Bureau records this township's " +
+      "government as inactive: it has the legal power to govern, and " +
+      "is not doing so."
+  };
+  // The places the Census counts as subdivisions of their own (FUNCSTAT F).
+  var KS_TOWNSHIP_PLACE_WORDS = { city: true };
+
+  registerLayer({
+    id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
+    group: "geography",
+    label: "Township or City",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      // the county-subdivision concept's colour and width (root
+      // layer-concepts.json)
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          base: findPropCI(props, ["basename"]),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
+      var kind = subdivisionKind(result.name, result.base);
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county
+      }));
+      var gov = null;
+      if (status === "F") {
+        if (kind && KS_TOWNSHIP_PLACE_WORDS.hasOwnProperty(kind)) {
+          gov = "The U.S. Census Bureau counts this " + kind + " as an area of " +
+            "its own here, apart from every township. The " + kind + "'s own " +
+            "government is the local government; the City card names it.";
+        }
+      } else if (status && KS_TOWNSHIP_GOVERNMENT.hasOwnProperty(status)) {
+        gov = KS_TOWNSHIP_GOVERNMENT[status];
+      }
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
   });
 
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
@@ -19098,9 +19341,9 @@ function initKansasExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ks-senate", "ks-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ks-senate", "ks-house", "ks-judicial-district",
     "school-district-unified",
-    "county", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19629,8 +19872,8 @@ function initKansasExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ks-senate", "county", "ks-house", "school-district-unified",
-    "zip-code", "municipality", "tribal-government", "police-station",
-    "fire-station", "post-office",
+    "us-house", "ks-judicial-district", "ks-senate", "county", "ks-house",
+    "school-district-unified", "zip-code", "county-subdivision",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +109,7 @@ GEOMETRY_FILES = {
     "ks-house-districts.json": (125, 125),  # The 125 Kansas House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (704, 704),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
     "tribal-areas.json": (6, 6),  # Kansas's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, three pieces drawn whole into Nebraska, at the Census's own detail (79 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "ks-judicial-districts.json": (31, 31),  # The 31 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in ks/data/source/courts/ks-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,6 +120,7 @@ ROSTER_FILES = {
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "tribal-councils.json": 1,  # The council of the Prairie Band Potawatomi Nation, from its own page, keyed by the Census AIANNH code of its land (2980) — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The same council Illinois's card names for the nation's trust land there. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "statewide-officials.json": 5,  # The officers Kansas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ks/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
+    "ks-district-judges.json": 31,  # The judges of each of the 31 court districts, keyed by district, 270 seats read 2026-11-27 from the state's own court website into ks/data/source/courts/ks-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

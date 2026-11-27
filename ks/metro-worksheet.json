@@ -201,7 +201,7 @@
       "id": "ks-senate",
       "label": "Kansas Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "40 Senate districts, each electing one senator",
       "source": {
         "answers": "The Senate district covering the point, and the senator it elects.",
@@ -216,10 +216,28 @@
       }
     },
     {
+      "id": "ks-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "31 judicial districts of whole counties, 6,869 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than a congressional district",
+      "source": {
+        "answers": "The judicial district covering the point, its counties, and the district court judges and district magistrate judges the Kansas Judicial Branch lists for it.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county lists of the statewide district map the Kansas Judicial Branch prints on each district's page, read 2026-11-27.",
+            "url": "https://www.kscourts.gov/About-the-Courts/District-Courts"
+          }
+        ],
+        "people": "Each district's chief judge, district judges and district magistrate judges (with the county the court prints beside a magistrate) are named from the district's own page on kscourts.gov, read 2026-11-27 with this project's own client and kept as text in ks/data/source/courts/ks-courts.txt; a seat the page prints as vacant shows as vacant. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the Kansas Constitution, Article 3, section 6.",
+        "applies": "Kansas — statewide, all 105 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "105 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -237,7 +255,7 @@
       "id": "ks-house",
       "label": "Kansas House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "125 House districts, each electing one representative",
       "source": {
         "answers": "The House district covering the point, and the representative it elects.",
@@ -255,7 +273,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "285 school districts, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "710 ZIP Code Tabulation Areas that reach into Kansas (890 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -288,10 +306,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Township or City",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "1,521 records tiling the state, about 139 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Kansas, measured 2026-11-27: 1,521 records: 1,258 townships the Census records as active governments (1,228 named townships and 30 numbered ones), 134 townships it records as inactive, and 129 cities it counts as areas of their own, apart from every township.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. The 1,258 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap ks-township-officers. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City card.",
+        "applies": "Kansas, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "626 incorporated cities, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city containing the point, or that the point is outside every one.",
@@ -309,7 +345,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "Tribal land — Kansas has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Kickapoo (KS) Reservation (613.4 km², Brown, Jackson and Atchison counties), the Prairie Band of Potawatomi Nation Reservation (316.3 km², Jackson County), the Iowa (KS-NE) Reservation (35.3 km² in Kansas, 69% of it, Brown and Doniphan counties) and its trust land (0.639 km², Brown County), and the Sac and Fox Nation Reservation (19.7 km² in Kansas, 33% of it) and its trust land (1.020 km² in Kansas, 70% of it), both in Brown County. The Iowa and Sac and Fox reservations and the Sac and Fox trust land are drawn whole into Nebraska. The Census draws no tribal district on any of it. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Kansas has 6 such areas, held by four nations seated in Kansas: the Kickapoo Tribe in Kansas, the Prairie Band Potawatomi Nation, the Iowa Tribe of Kansas and Nebraska, and the Sac & Fox Nation of Missouri in Kansas and Nebraska.",
@@ -327,7 +363,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -378,7 +414,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 39.04807,
     "lng": -95.67803,
@@ -400,6 +436,10 @@
     {
       "layer": "ks-house",
       "expected": "57"
+    },
+    {
+      "layer": "ks-judicial-district",
+      "expected": "3rd Judicial District"
     }
   ],
   "negative_point": {
@@ -454,6 +494,12 @@
         "min_features": 6,
         "max_features": 6,
         "note": "Kansas's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, three pieces drawn whole into Nebraska, at the Census's own detail (79 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "ks-judicial-districts.json",
+        "min_features": 31,
+        "max_features": 31,
+        "note": "The 31 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in ks/data/source/courts/ks-courts.txt."
       }
     ],
     "rosters": [
@@ -486,6 +532,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Kansas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ks/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "ks-district-judges.json",
+        "min_keys": 31,
+        "note": "The judges of each of the 31 court districts, keyed by district, 270 seats read 2026-11-27 from the state's own court website into ks/data/source/courts/ks-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

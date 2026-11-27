@@ -1,0 +1,1397 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Joan M. Lowdon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Clinton Lee",
+    "county": "Leavenworth"
+   },
+   {
+    "role": "District Judge",
+    "name": "Geoffrey Sonntag",
+    "county": "Atchison"
+   },
+   {
+    "role": "District Judge",
+    "name": "John J. Bryant",
+    "county": "Leavenworth"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gerald R. Kuckelman",
+    "county": "Leavenworth"
+   },
+   {
+    "role": "District Judge",
+    "name": "John W. Fresh",
+    "county": "Atchison"
+   },
+   {
+    "role": "District Judge",
+    "name": "Patrick Henderson",
+    "county": "Leavenworth"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jeffrey Elder"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christopher Etzel",
+    "county": "Jefferson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Norbert C. Marek Jr.",
+    "county": "Jackson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Angela Anderson",
+    "county": "Wabaunsee"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Brian Yearout",
+    "county": "Jefferson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Tamara Hafenstein",
+    "county": "Pottawatomie"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Steven R. Ebberts"
+   },
+   {
+    "role": "District Judge",
+    "name": "Carl William Ossmann"
+   },
+   {
+    "role": "District Judge",
+    "name": "Cheryl Rios"
+   },
+   {
+    "role": "District Judge",
+    "name": "Darian Dernovish"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Geier"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jessica Heinen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lori Dougherty-Bischel"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mary E. Mattivi"
+   },
+   {
+    "role": "District Judge",
+    "name": "Penny R. Moylan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jay Befort"
+   },
+   {
+    "role": "District Judge",
+    "name": "Teresa L. Watson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas G. Luedke"
+   },
+   {
+    "role": "District Judge",
+    "name": "Brett Watson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Maban Wright"
+   },
+   {
+    "role": "District Judge",
+    "name": "James Crowl"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Dennis C. Jones"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Andrew Holmes"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Taylor J. Wine",
+    "county": "Coffey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Douglas P. Witteman",
+    "county": "Franklin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric W. Godderz",
+    "county": "Anderson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "David Braun",
+    "county": "Franklin"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Lori D Breshears",
+    "county": "Osage"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Kara Reynolds",
+    "county": "Coffey"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jeffry J. Larson",
+    "county": "Lyon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laura Miser",
+    "county": "Lyon"
+   },
+   {
+    "role": "District Judge",
+    "name": "W. Lee Fowler",
+    "county": "Lyon"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Douglas P. Jones",
+    "county": "Chase"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Amy Harth",
+    "county": "Miami"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mark A. Ward",
+    "county": "Bourbon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sarah E. Stewart",
+    "county": "Bourbon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrea Purvis",
+    "county": "Linn"
+   },
+   {
+    "role": "District Judge",
+    "name": "Elizabeth Sweeney-Reeder",
+    "county": "Miami"
+   },
+   {
+    "role": "District Judge",
+    "name": "Richard M. Fisher Jr.",
+    "county": "Miami"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Rhonda E. Cole",
+    "county": "Bourbon"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Mark A Simpson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stacey Donovan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amy J. Hanley"
+   },
+   {
+    "role": "District Judge",
+    "name": "James McCabria"
+   },
+   {
+    "role": "District Judge",
+    "name": "Catherine Theisen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Carl Folsom III"
+   },
+   {
+    "role": "District Judge",
+    "name": "Blake Glover"
+   },
+   {
+    "role": "Judge, Pro Tem Division",
+    "name": "Gary West"
+   },
+   {
+    "role": "Judge, Juvenile Division",
+    "name": "Paul R. Klepper"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Benjamin Sexton",
+    "county": "Dickinson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Susan Robson",
+    "county": "Marion"
+   },
+   {
+    "role": "District Judge",
+    "name": "Courtney D. Craver",
+    "county": "Geary"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan W. Rosauer",
+    "county": "Geary"
+   },
+   {
+    "role": "District Judge",
+    "name": "Keith Collett",
+    "county": "Geary"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Amy C. Coppola",
+    "county": "Geary"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Neal Gugler",
+    "county": "Dickinson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Laura Viar",
+    "county": "Morris"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Michael Llamas",
+    "county": "Harvey"
+   },
+   {
+    "role": "District Judge",
+    "name": "John B. Klenda",
+    "county": "McPherson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason R. Lane",
+    "county": "Harvey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Marilyn M. Wilder",
+    "county": "Harvey"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Amanda Faber",
+    "county": "McPherson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Joseph Uhlman",
+    "county": "Harvey"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Brenda Cameron"
+   },
+   {
+    "role": "District Judge",
+    "name": "James Charles Droege"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christina Dunn Gyllenborg"
+   },
+   {
+    "role": "District Judge",
+    "name": "Erica K. Schoenig"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jacquelyn E. Rokusek"
+   },
+   {
+    "role": "District Judge",
+    "name": "John McEntee"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ashlyn L. Yarnell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kathleen Sloan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Keven O'Grady"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael P. Joyce"
+   },
+   {
+    "role": "District Judge",
+    "name": "Neil B. Foth"
+   },
+   {
+    "role": "District Judge",
+    "name": "Paul Burmaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rhonda K. Mason"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robert J. Wonnell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas Kelly Ryan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas M. Sutherland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Timothy McCarthy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Catherine Decena Triplett"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Billam"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stephanie Goodenow"
+   },
+   {
+    "role": "District Judge",
+    "name": "Joann Woltman"
+   },
+   {
+    "role": "District Judge",
+    "vacant": true
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Curtis Sample"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jenifer J. Ashford"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Wayne Smith"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Stefanie Benson-Hebberd"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kurtis I. Loy",
+    "county": "Crawford"
+   },
+   {
+    "role": "District Judge",
+    "name": "Maradeth Frederick",
+    "county": "Cherokee"
+   },
+   {
+    "role": "District Judge",
+    "name": "M. Jennifer Brunetti",
+    "county": "Crawford"
+   },
+   {
+    "role": "District Judge",
+    "name": "John Mazurek",
+    "county": "Crawford"
+   },
+   {
+    "role": "District Judge",
+    "name": "Fred W. Johnson Jr.",
+    "county": "Labette"
+   },
+   {
+    "role": "District Judge",
+    "name": "Steven Stockard",
+    "county": "Labette"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Douglas R. Steele",
+    "county": "Cherokee"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Joe Gordon Gregory",
+    "county": "Crawford"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kim Cudney",
+    "county": "Washington"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jennifer O'Hare",
+    "county": "Lincoln"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Renee J. Henke",
+    "county": "Mitchell"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Kevin L. Phillips",
+    "county": "Jewell"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jason C. Cohorst",
+    "county": "Washington"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Regine Thompson",
+    "county": "Republic"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Angela Hecke",
+    "county": "Lincoln"
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "David Ricke",
+    "county": "Butler"
+   },
+   {
+    "role": "District Judge",
+    "name": "Charles M. Hart",
+    "county": "Butler"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jan Satterfield",
+    "county": "Butler"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chad M. Crum",
+    "county": "Butler"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Joe E. Lee",
+    "county": "Elk"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Phyllis K. Webster",
+    "county": "Greenwood"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jeffrey Gettler",
+    "county": "Montgomery"
+   },
+   {
+    "role": "District Judge",
+    "name": "F. Williams Cullins",
+    "county": "Montgomery"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey Gossard",
+    "county": "Montgomery"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dan Reynolds",
+    "county": "Montgomery"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Rebecca Stewart",
+    "county": "Chautauqua"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kevin Berens",
+    "county": "Thomas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Scott Showalter",
+    "county": "Sherman"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "James Schroeder",
+    "county": "Rawlins"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "John Cahoj",
+    "county": "Sheridan"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Greg Jirak",
+    "county": "Logan"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Justin Gardner",
+    "county": "Cheyenne"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Richard J. Ress",
+    "county": "Thomas"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Steve Unruh",
+    "county": "Wallace"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Laura H. Lewis",
+    "county": "Ford"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sidney R. Thomas",
+    "county": "Ford"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew M. Stein",
+    "county": "Ford"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Anthony Bayer",
+    "county": "Gray"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Karl Harris",
+    "county": "Meade"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Philip J. Moore",
+    "county": "Clark"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Richard McVey",
+    "county": "Kiowa"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Rustin Martin",
+    "county": "Comanche"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Paula D. Hofaker",
+    "county": "Phillips"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jessie Thompson",
+    "county": "Graham"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jody Enfield",
+    "county": "Norton"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jay E. Tate",
+    "county": "Decatur"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Morgan Zeigler",
+    "county": "Graham"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "vacant": true,
+    "county": "Osborne"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Shannon Schmidt",
+    "county": "Smith"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jeffrey Goering"
+   },
+   {
+    "role": "District Judge",
+    "name": "Phillip Journey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric Yost"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gregory D. Keith"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robb Rumsey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Seth Rundle"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric Williams"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rodger Woods"
+   },
+   {
+    "role": "District Judge",
+    "name": "Richard Macias"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chris Magana"
+   },
+   {
+    "role": "District Judge",
+    "name": "Quentin Pittman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kevin M. Smith"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chrystal Krier"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jacqueline Kelly"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kellie Hogan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Linda Kirby"
+   },
+   {
+    "role": "District Judge",
+    "name": "Faith Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael Hoelscher"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stephen Ternes"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey Dewey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Deborah Mitchell"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Sioux Woolley"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tyler Roush"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sean M.A. Hatfield"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey Syrios"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric Commer"
+   },
+   {
+    "role": "District Judge",
+    "name": "Francessca Montes-Williams"
+   },
+   {
+    "role": "District Judge",
+    "name": "J. Shawn Elliott"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kathleen Watson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Grant Brazill"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Elizabeth Henry"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Nicholas St. Peter"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christopher Smith"
+   },
+   {
+    "role": "District Judge",
+    "name": "LaDonna L. Lanning"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "David Maslen",
+    "county": "Cowley"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Carey L. Hipp",
+    "county": "Ellsworth"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lisa Beran",
+    "county": "Barton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Levi Morris",
+    "county": "Barton"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Crystal Miner",
+    "county": "Russell"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Peggy Svaty",
+    "county": "Ellsworth"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Richard Burgess",
+    "county": "Rice"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Timarie Ann Walters",
+    "county": "Stafford"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Grant D. Bannister",
+    "county": "Riley"
+   },
+   {
+    "role": "District Judge",
+    "name": "John Bosch",
+    "county": "Riley"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kendra S. Lewison",
+    "county": "Riley"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "John McNish",
+    "county": "Clay"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jeremy Larchick",
+    "county": "Riley"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "John L. Weingart"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laura Johnson-McNish",
+    "county": "Doniphan"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Michael Vermetten",
+    "county": "Marshall"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Kelly J. Fuemmeler",
+    "county": "Doniphan"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Scott M. Anson",
+    "county": "Nemaha"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Curtis Brown",
+    "county": "Ellis"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas J. Drees",
+    "county": "Ellis"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Brendon Boone",
+    "county": "Gove"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Douglas Bigge",
+    "county": "Rooks"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Richard Hanks",
+    "county": "Trego"
+   }
+  ]
+ },
+ "24": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Bruce T. Gatterman",
+    "county": "Pawnee"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Dale E. Snyder",
+    "county": "Rush"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Julie Fletcher Cowell",
+    "county": "Pawnee"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Ken Schmidt",
+    "county": "Edwards"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Kenton T. Gleason",
+    "county": "Hodgeman"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "R. Scott Barrows",
+    "county": "Ness"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Thomas Bennett",
+    "county": "Lane"
+   }
+  ]
+ },
+ "25": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kristi Cott"
+   },
+   {
+    "role": "District Judge",
+    "name": "Richard Marquez",
+    "county": "Finney"
+   },
+   {
+    "role": "District Judge",
+    "name": "Natalie Morlock",
+    "county": "Finney"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rebecca Faurot",
+    "county": "Scott"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Timothy R. Woods",
+    "county": "Finney"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Christopher Velez",
+    "county": "Hamilton"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Shairlyn Wasinger",
+    "county": "Scott"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Korina Wedel",
+    "county": "Wichita"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Wade Dixon",
+    "county": "Greeley"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Darrell Walters",
+    "county": "Kearny"
+   }
+  ]
+ },
+ "26": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Clint Peterson",
+    "county": "Seward"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bradley Ambrosier",
+    "county": "Morton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Linda W. Gilmore",
+    "county": "Stevens"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Damon Simmons",
+    "county": "Stevens"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Ethan G. Harder",
+    "county": "Morton"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jerry Gum",
+    "county": "Stanton"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Michael Winner",
+    "county": "Grant"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Justin Groth",
+    "county": "Haskell"
+   }
+  ]
+ },
+ "27": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Daniel Gilligan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Greg Bell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Keith Schroeder"
+   },
+   {
+    "role": "District Judge",
+    "name": "Trish Rose"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jeff Newsum"
+   }
+  ]
+ },
+ "28": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jared B. Johnson",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Allie Burris",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jacob Peterson",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Debra Wright",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amy Taylor-Norton",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrea Swisher",
+    "county": "Saline"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Jennifer Oliver",
+    "county": "Ottawa"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Claire M. Serrault-Wiseman",
+    "county": "Saline"
+   }
+  ]
+ },
+ "29": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Robert P. Burns",
+    "county": "Wyandotte"
+   },
+   {
+    "role": "District Judge",
+    "name": "Aaron T. Roberts"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bill L. Klapper"
+   },
+   {
+    "role": "District Judge",
+    "name": "Courtney Mikesic"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel Cahill"
+   },
+   {
+    "role": "District Judge",
+    "name": "Delia M. York"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jane A. Wilson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jennifer Orth Myers"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kathleen M. Lynch"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael Russell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Renee Henry"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robert A. Martinez"
+   },
+   {
+    "role": "District Judge",
+    "name": "Timothy Dupree"
+   },
+   {
+    "role": "District Judge",
+    "name": "Candice Alcaraz"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Mahoney"
+   },
+   {
+    "role": "District Judge",
+    "name": "Damon Mitchell"
+   }
+  ]
+ },
+ "30": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "William R. Mott",
+    "county": "Sumner"
+   },
+   {
+    "role": "District Judge",
+    "name": "Francis Meisenheimer",
+    "county": "Pratt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gaten T. Wood",
+    "county": "Kingman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Shawn R. DeJarnett",
+    "county": "Sumner"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Candace R. Lattin",
+    "county": "Barber"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Scott McPherson",
+    "county": "Harper"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Roseanna Mathis",
+    "county": "Kingman"
+   }
+  ]
+ },
+ "31": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Daniel D. Creitz",
+    "county": "Allen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daryl D. Ahlquist",
+    "county": "Neosho"
+   },
+   {
+    "role": "District Judge",
+    "name": "David Rogers",
+    "county": "Wilson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tod Michael Davis",
+    "county": "Woodson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Zelda Schlotterbeck",
+    "county": "Woodson"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "vacant": true,
+    "county": "Allen"
+   },
+   {
+    "role": "District Magistrate Judge",
+    "name": "Melissa Dugan",
+    "county": "Neosho"
+   }
+  ]
+ }
+}

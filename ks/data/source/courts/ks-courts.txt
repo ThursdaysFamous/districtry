@@ -1,0 +1,307 @@
+# Kansas court districts and judges, kept by scripts/build_state_courts.py --fetch ks
+# read: 2026-11-27
+# from: the 31 district pages under https://www.kscourts.gov/About-the-Courts/District-Courts/Districts/ (each lists its judges and carries the statewide district map's county lists)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Atchison, Leavenworth
+district | 2 | Jackson, Jefferson, Pottawatomie, Wabaunsee
+district | 3 | Shawnee
+district | 4 | Anderson, Coffey, Franklin, Osage
+district | 5 | Chase, Lyon
+district | 6 | Bourbon, Linn, Miami
+district | 7 | Douglas
+district | 8 | Dickinson, Geary, Marion, Morris
+district | 9 | Harvey, McPherson
+district | 10 | Johnson
+district | 11 | Cherokee, Crawford, Labette
+district | 12 | Cloud, Jewell, Lincoln, Mitchell, Republic, Washington
+district | 13 | Butler, Elk, Greenwood
+district | 14 | Chautauqua, Montgomery
+district | 15 | Cheyenne, Logan, Rawlins, Sheridan, Sherman, Thomas, Wallace
+district | 16 | Clark, Comanche, Ford, Gray, Kiowa, Meade
+district | 17 | Decatur, Graham, Norton, Osborne, Phillips, Smith
+district | 18 | Sedgwick
+district | 19 | Cowley
+district | 20 | Barton, Ellsworth, Rice, Russell, Stafford
+district | 21 | Clay, Riley
+district | 22 | Brown, Doniphan, Marshall, Nemaha
+district | 23 | Ellis, Gove, Rooks, Trego
+district | 24 | Edwards, Hodgeman, Lane, Ness, Pawnee, Rush
+district | 25 | Finney, Greeley, Hamilton, Kearny, Scott, Wichita
+district | 26 | Grant, Haskell, Morton, Seward, Stanton, Stevens
+district | 27 | Reno
+district | 28 | Ottawa, Saline
+district | 29 | Wyandotte
+district | 30 | Barber, Harper, Kingman, Pratt, Sumner
+district | 31 | Allen, Neosho, Wilson, Woodson
+judge | 1 | Chief Judge | Joan M. Lowdon | 
+judge | 1 | District Judge | Clinton Lee | Leavenworth
+judge | 1 | District Judge | Geoffrey Sonntag | Atchison
+judge | 1 | District Judge | John J. Bryant | Leavenworth
+judge | 1 | District Judge | Gerald R. Kuckelman | Leavenworth
+judge | 1 | District Judge | John W. Fresh | Atchison
+judge | 1 | District Judge | Patrick Henderson | Leavenworth
+judge | 2 | Chief Judge | Jeffrey Elder | 
+judge | 2 | District Judge | Christopher Etzel | Jefferson
+judge | 2 | District Judge | Norbert C. Marek Jr. | Jackson
+judge | 2 | District Magistrate Judge | Angela Anderson | Wabaunsee
+judge | 2 | District Magistrate Judge | Brian Yearout | Jefferson
+judge | 2 | District Magistrate Judge | Tamara Hafenstein | Pottawatomie
+judge | 3 | Chief Judge | Steven R. Ebberts | 
+judge | 3 | District Judge | Carl William Ossmann | 
+judge | 3 | District Judge | Cheryl Rios | 
+judge | 3 | District Judge | Darian Dernovish | 
+judge | 3 | District Judge | Jason Geier | 
+judge | 3 | District Judge | Jessica Heinen | 
+judge | 3 | District Judge | Lori Dougherty-Bischel | 
+judge | 3 | District Judge | Mary E. Mattivi | 
+judge | 3 | District Judge | Penny R. Moylan | 
+judge | 3 | District Judge | Jay Befort | 
+judge | 3 | District Judge | Teresa L. Watson | 
+judge | 3 | District Judge | Thomas G. Luedke | 
+judge | 3 | District Judge | Brett Watson | 
+judge | 3 | District Judge | Maban Wright | 
+judge | 3 | District Judge | James Crowl | 
+judge | 3 | District Magistrate Judge | Dennis C. Jones | 
+judge | 3 | District Magistrate Judge | Andrew Holmes | 
+judge | 4 | Chief Judge | Taylor J. Wine | Coffey
+judge | 4 | District Judge | Douglas P. Witteman | Franklin
+judge | 4 | District Judge | Eric W. Godderz | Anderson
+judge | 4 | District Magistrate Judge | David Braun | Franklin
+judge | 4 | District Magistrate Judge | Lori D Breshears | Osage
+judge | 4 | District Magistrate Judge | Kara Reynolds | Coffey
+judge | 5 | Chief Judge | Jeffry J. Larson | Lyon
+judge | 5 | District Judge | Laura Miser | Lyon
+judge | 5 | District Judge | W. Lee Fowler | Lyon
+judge | 5 | District Magistrate Judge | Douglas P. Jones | Chase
+judge | 6 | Chief Judge | Amy Harth | Miami
+judge | 6 | District Judge | Mark A. Ward | Bourbon
+judge | 6 | District Judge | Sarah E. Stewart | Bourbon
+judge | 6 | District Judge | Andrea Purvis | Linn
+judge | 6 | District Judge | Elizabeth Sweeney-Reeder | Miami
+judge | 6 | District Judge | Richard M. Fisher Jr. | Miami
+judge | 6 | District Magistrate Judge | Rhonda E. Cole | Bourbon
+judge | 7 | Chief Judge | Mark A Simpson | 
+judge | 7 | District Judge | Stacey Donovan | 
+judge | 7 | District Judge | Amy J. Hanley | 
+judge | 7 | District Judge | James McCabria | 
+judge | 7 | District Judge | Catherine Theisen | 
+judge | 7 | District Judge | Carl Folsom III | 
+judge | 7 | District Judge | Blake Glover | 
+judge | 7 | Judge, Pro Tem Division | Gary West | 
+judge | 7 | Judge, Juvenile Division | Paul R. Klepper | 
+judge | 8 | Chief Judge | Benjamin Sexton | Dickinson
+judge | 8 | District Judge | Susan Robson | Marion
+judge | 8 | District Judge | Courtney D. Craver | Geary
+judge | 8 | District Judge | Ryan W. Rosauer | Geary
+judge | 8 | District Judge | Keith Collett | Geary
+judge | 8 | District Magistrate Judge | Amy C. Coppola | Geary
+judge | 8 | District Magistrate Judge | Neal Gugler | Dickinson
+judge | 8 | District Magistrate Judge | Laura Viar | Morris
+judge | 9 | Chief Judge | Michael Llamas | Harvey
+judge | 9 | District Judge | John B. Klenda | McPherson
+judge | 9 | District Judge | Jason R. Lane | Harvey
+judge | 9 | District Judge | Marilyn M. Wilder | Harvey
+judge | 9 | District Magistrate Judge | Amanda Faber | McPherson
+judge | 9 | District Magistrate Judge | Joseph Uhlman | Harvey
+judge | 10 | Chief Judge | Brenda Cameron | 
+judge | 10 | District Judge | James Charles Droege | 
+judge | 10 | District Judge | Christina Dunn Gyllenborg | 
+judge | 10 | District Judge | Erica K. Schoenig | 
+judge | 10 | District Judge | Jacquelyn E. Rokusek | 
+judge | 10 | District Judge | John McEntee | 
+judge | 10 | District Judge | Ashlyn L. Yarnell | 
+judge | 10 | District Judge | Kathleen Sloan | 
+judge | 10 | District Judge | Keven O'Grady | 
+judge | 10 | District Judge | Michael P. Joyce | 
+judge | 10 | District Judge | Neil B. Foth | 
+judge | 10 | District Judge | Paul Burmaster | 
+judge | 10 | District Judge | Rhonda K. Mason | 
+judge | 10 | District Judge | Robert J. Wonnell | 
+judge | 10 | District Judge | Thomas Kelly Ryan | 
+judge | 10 | District Judge | Thomas M. Sutherland | 
+judge | 10 | District Judge | Timothy McCarthy | 
+judge | 10 | District Judge | Catherine Decena Triplett | 
+judge | 10 | District Judge | Jason Billam | 
+judge | 10 | District Judge | Stephanie Goodenow | 
+judge | 10 | District Judge | Joann Woltman | 
+vacant | 10 | District Judge | | 
+judge | 10 | District Magistrate Judge | Curtis Sample | 
+judge | 10 | District Magistrate Judge | Jenifer J. Ashford | 
+judge | 10 | District Magistrate Judge | Wayne Smith | 
+judge | 10 | District Magistrate Judge | Stefanie Benson-Hebberd | 
+judge | 11 | Chief Judge | Kurtis I. Loy | Crawford
+judge | 11 | District Judge | Maradeth Frederick | Cherokee
+judge | 11 | District Judge | M. Jennifer Brunetti | Crawford
+judge | 11 | District Judge | John Mazurek | Crawford
+judge | 11 | District Judge | Fred W. Johnson Jr. | Labette
+judge | 11 | District Judge | Steven Stockard | Labette
+judge | 11 | District Magistrate Judge | Douglas R. Steele | Cherokee
+judge | 11 | District Magistrate Judge | Joe Gordon Gregory | Crawford
+judge | 12 | Chief Judge | Kim Cudney | Washington
+judge | 12 | District Judge | Jennifer O'Hare | Lincoln
+judge | 12 | District Magistrate Judge | Renee J. Henke | Mitchell
+judge | 12 | District Magistrate Judge | Kevin L. Phillips | Jewell
+judge | 12 | District Magistrate Judge | Jason C. Cohorst | Washington
+judge | 12 | District Magistrate Judge | Regine Thompson | Republic
+judge | 12 | District Magistrate Judge | Angela Hecke | Lincoln
+judge | 13 | Chief Judge | David Ricke | Butler
+judge | 13 | District Judge | Charles M. Hart | Butler
+judge | 13 | District Judge | Jan Satterfield | Butler
+judge | 13 | District Judge | Chad M. Crum | Butler
+judge | 13 | District Magistrate Judge | Joe E. Lee | Elk
+judge | 13 | District Magistrate Judge | Phyllis K. Webster | Greenwood
+judge | 14 | Chief Judge | Jeffrey Gettler | Montgomery
+judge | 14 | District Judge | F. Williams Cullins | Montgomery
+judge | 14 | District Judge | Jeffrey Gossard | Montgomery
+judge | 14 | District Judge | Dan Reynolds | Montgomery
+judge | 14 | District Magistrate Judge | Rebecca Stewart | Chautauqua
+judge | 15 | Chief Judge | Kevin Berens | Thomas
+judge | 15 | District Judge | Scott Showalter | Sherman
+judge | 15 | District Magistrate Judge | James Schroeder | Rawlins
+judge | 15 | District Magistrate Judge | John Cahoj | Sheridan
+judge | 15 | District Magistrate Judge | Greg Jirak | Logan
+judge | 15 | District Magistrate Judge | Justin Gardner | Cheyenne
+judge | 15 | District Magistrate Judge | Richard J. Ress | Thomas
+judge | 15 | District Magistrate Judge | Steve Unruh | Wallace
+judge | 16 | Chief Judge | Laura H. Lewis | Ford
+judge | 16 | District Judge | Sidney R. Thomas | Ford
+judge | 16 | District Judge | Andrew M. Stein | Ford
+judge | 16 | District Magistrate Judge | Anthony Bayer | Gray
+judge | 16 | District Magistrate Judge | Karl Harris | Meade
+judge | 16 | District Magistrate Judge | Philip J. Moore | Clark
+judge | 16 | District Magistrate Judge | Richard McVey | Kiowa
+judge | 16 | District Magistrate Judge | Rustin Martin | Comanche
+judge | 17 | Chief Judge | Paula D. Hofaker | Phillips
+judge | 17 | District Judge | Jessie Thompson | Graham
+judge | 17 | District Magistrate Judge | Jody Enfield | Norton
+judge | 17 | District Magistrate Judge | Jay E. Tate | Decatur
+judge | 17 | District Magistrate Judge | Morgan Zeigler | Graham
+vacant | 17 | District Magistrate Judge | | Osborne
+judge | 17 | District Magistrate Judge | Shannon Schmidt | Smith
+judge | 18 | Chief Judge | Jeffrey Goering | 
+judge | 18 | District Judge | Phillip Journey | 
+judge | 18 | District Judge | Eric Yost | 
+judge | 18 | District Judge | Gregory D. Keith | 
+judge | 18 | District Judge | Robb Rumsey | 
+judge | 18 | District Judge | Seth Rundle | 
+judge | 18 | District Judge | Eric Williams | 
+judge | 18 | District Judge | Rodger Woods | 
+judge | 18 | District Judge | Richard Macias | 
+judge | 18 | District Judge | Chris Magana | 
+judge | 18 | District Judge | Quentin Pittman | 
+judge | 18 | District Judge | Kevin M. Smith | 
+judge | 18 | District Judge | Chrystal Krier | 
+judge | 18 | District Judge | Jacqueline Kelly | 
+judge | 18 | District Judge | Kellie Hogan | 
+judge | 18 | District Judge | Linda Kirby | 
+judge | 18 | District Judge | Faith Johnson | 
+judge | 18 | District Judge | Michael Hoelscher | 
+judge | 18 | District Judge | Stephen Ternes | 
+judge | 18 | District Judge | Jeffrey Dewey | 
+judge | 18 | District Judge | Deborah Mitchell | 
+judge | 18 | District Judge | William Sioux Woolley | 
+judge | 18 | District Judge | Tyler Roush | 
+judge | 18 | District Judge | Sean M.A. Hatfield | 
+judge | 18 | District Judge | Jeffrey Syrios | 
+judge | 18 | District Judge | Eric Commer | 
+judge | 18 | District Judge | Francessca Montes-Williams | 
+judge | 18 | District Judge | J. Shawn Elliott | 
+judge | 18 | District Judge | Kathleen Watson | 
+judge | 18 | District Judge | Grant Brazill | 
+judge | 18 | District Magistrate Judge | Elizabeth Henry | 
+judge | 19 | Chief Judge | Nicholas St. Peter | 
+judge | 19 | District Judge | Christopher Smith | 
+judge | 19 | District Judge | LaDonna L. Lanning | 
+judge | 19 | District Magistrate Judge | David Maslen | Cowley
+judge | 20 | Chief Judge | Carey L. Hipp | Ellsworth
+judge | 20 | District Judge | Lisa Beran | Barton
+judge | 20 | District Judge | Levi Morris | Barton
+judge | 20 | District Magistrate Judge | Crystal Miner | Russell
+judge | 20 | District Magistrate Judge | Peggy Svaty | Ellsworth
+judge | 20 | District Magistrate Judge | Richard Burgess | Rice
+judge | 20 | District Magistrate Judge | Timarie Ann Walters | Stafford
+judge | 21 | Chief Judge | Grant D. Bannister | Riley
+judge | 21 | District Judge | John Bosch | Riley
+judge | 21 | District Judge | Kendra S. Lewison | Riley
+judge | 21 | District Magistrate Judge | John McNish | Clay
+judge | 21 | District Magistrate Judge | Jeremy Larchick | Riley
+judge | 22 | Chief Judge | John L. Weingart | 
+judge | 22 | District Judge | Laura Johnson-McNish | Doniphan
+judge | 22 | District Magistrate Judge | Michael Vermetten | Marshall
+judge | 22 | District Magistrate Judge | Kelly J. Fuemmeler | Doniphan
+judge | 22 | District Magistrate Judge | Scott M. Anson | Nemaha
+judge | 23 | Chief Judge | Curtis Brown | Ellis
+judge | 23 | District Judge | Thomas J. Drees | Ellis
+judge | 23 | District Magistrate Judge | Brendon Boone | Gove
+judge | 23 | District Magistrate Judge | Douglas Bigge | Rooks
+judge | 23 | District Magistrate Judge | Richard Hanks | Trego
+judge | 24 | Chief Judge | Bruce T. Gatterman | Pawnee
+judge | 24 | District Magistrate Judge | Dale E. Snyder | Rush
+judge | 24 | District Magistrate Judge | Julie Fletcher Cowell | Pawnee
+judge | 24 | District Magistrate Judge | Ken Schmidt | Edwards
+judge | 24 | District Magistrate Judge | Kenton T. Gleason | Hodgeman
+judge | 24 | District Magistrate Judge | R. Scott Barrows | Ness
+judge | 24 | District Magistrate Judge | Thomas Bennett | Lane
+judge | 25 | Chief Judge | Kristi Cott | 
+judge | 25 | District Judge | Richard Marquez | Finney
+judge | 25 | District Judge | Natalie Morlock | Finney
+judge | 25 | District Judge | Rebecca Faurot | Scott
+judge | 25 | District Magistrate Judge | Timothy R. Woods | Finney
+judge | 25 | District Magistrate Judge | Christopher Velez | Hamilton
+judge | 25 | District Magistrate Judge | Shairlyn Wasinger | Scott
+judge | 25 | District Magistrate Judge | Korina Wedel | Wichita
+judge | 25 | District Magistrate Judge | Wade Dixon | Greeley
+judge | 25 | District Magistrate Judge | Darrell Walters | Kearny
+judge | 26 | Chief Judge | Clint Peterson | Seward
+judge | 26 | District Judge | Bradley Ambrosier | Morton
+judge | 26 | District Judge | Linda W. Gilmore | Stevens
+judge | 26 | District Magistrate Judge | Damon Simmons | Stevens
+judge | 26 | District Magistrate Judge | Ethan G. Harder | Morton
+judge | 26 | District Magistrate Judge | Jerry Gum | Stanton
+judge | 26 | District Magistrate Judge | Michael Winner | Grant
+judge | 26 | District Magistrate Judge | Justin Groth | Haskell
+judge | 27 | Chief Judge | Daniel Gilligan | 
+judge | 27 | District Judge | Greg Bell | 
+judge | 27 | District Judge | Keith Schroeder | 
+judge | 27 | District Judge | Trish Rose | 
+judge | 27 | District Magistrate Judge | Jeff Newsum | 
+judge | 28 | Chief Judge | Jared B. Johnson | Saline
+judge | 28 | District Judge | Allie Burris | Saline
+judge | 28 | District Judge | Jacob Peterson | Saline
+judge | 28 | District Judge | Debra Wright | Saline
+judge | 28 | District Judge | Amy Taylor-Norton | Saline
+judge | 28 | District Judge | Andrea Swisher | Saline
+judge | 28 | District Magistrate Judge | Jennifer Oliver | Ottawa
+judge | 28 | District Magistrate Judge | Claire M. Serrault-Wiseman | Saline
+judge | 29 | Chief Judge | Robert P. Burns | Wyandotte
+judge | 29 | District Judge | Aaron T. Roberts | 
+judge | 29 | District Judge | Bill L. Klapper | 
+judge | 29 | District Judge | Courtney Mikesic | 
+judge | 29 | District Judge | Daniel Cahill | 
+judge | 29 | District Judge | Delia M. York | 
+judge | 29 | District Judge | Jane A. Wilson | 
+judge | 29 | District Judge | Jennifer Orth Myers | 
+judge | 29 | District Judge | Kathleen M. Lynch | 
+judge | 29 | District Judge | Michael Russell | 
+judge | 29 | District Judge | Renee Henry | 
+judge | 29 | District Judge | Robert A. Martinez | 
+judge | 29 | District Judge | Timothy Dupree | 
+judge | 29 | District Judge | Candice Alcaraz | 
+judge | 29 | District Judge | William Mahoney | 
+judge | 29 | District Judge | Damon Mitchell | 
+judge | 30 | Chief Judge | William R. Mott | Sumner
+judge | 30 | District Judge | Francis Meisenheimer | Pratt
+judge | 30 | District Judge | Gaten T. Wood | Kingman
+judge | 30 | District Judge | Shawn R. DeJarnett | Sumner
+judge | 30 | District Magistrate Judge | Candace R. Lattin | Barber
+judge | 30 | District Magistrate Judge | Scott McPherson | Harper
+judge | 30 | District Magistrate Judge | Roseanna Mathis | Kingman
+judge | 31 | Chief Judge | Daniel D. Creitz | Allen
+judge | 31 | District Judge | Daryl D. Ahlquist | Neosho
+judge | 31 | District Judge | David Rogers | Wilson
+judge | 31 | District Judge | Tod Michael Davis | Woodson
+judge | 31 | District Magistrate Judge | Zelda Schlotterbeck | Woodson
+vacant | 31 | District Magistrate Judge | | Allen
+judge | 31 | District Magistrate Judge | Melissa Dugan | Neosho
