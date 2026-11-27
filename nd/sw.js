@@ -64,6 +64,7 @@ const ROSTER_URLS = [
   "./data/app/coverage-gaps.json",
   "./data/app/statewide-officials.json",
   "./data/app/nd-district-judges.json",
+  "./data/app/nd-city-councils.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

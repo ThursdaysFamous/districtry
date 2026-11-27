@@ -1,0 +1,39 @@
+Read once by hand in Adam's Chrome on 2026-11-27 (the site answers this project's reader with HTTP 403).
+URL: https://www.olatheks.gov/government/city-council
+
+City Council
+
+John Bacon
+Mayor
+913-971-8500
+jbacon@olatheks.org
+
+Dean Vakas
+Mayor Pro Tem/Ward 2
+913-971-8773
+dvakas@olatheks.org
+
+Robyn Essex
+Ward 1
+913-971-6368
+rressex@olatheks.org
+
+LeEtta Felter
+Ward 3
+913-971-6995
+lfelter@olatheks.org
+
+Kevin Deneault
+Ward 4
+913-971-8745
+kdeneault@olatheks.org
+
+Jeff Creighton
+At-Large
+913-971-8769
+jcreighton@olatheks.org
+
+Matthew Schoonover
+At-Large
+913-971-8797
+mschoonover@olatheks.org

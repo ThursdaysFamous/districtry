@@ -1,0 +1,357 @@
+{
+ "3807200": {
+  "body": "City Commission",
+  "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+  "name": "Bismarck",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Michael Schmitz",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://bismarcknd.gov/Directory.aspx?did=21"
+   },
+   {
+    "byWard": false,
+    "name": "Michael Connelly",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://bismarcknd.gov/Directory.aspx?did=21"
+   },
+   {
+    "byWard": false,
+    "name": "Amelia Doll",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://bismarcknd.gov/Directory.aspx?did=21"
+   },
+   {
+    "byWard": false,
+    "name": "Matt Hull",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://bismarcknd.gov/Directory.aspx?did=21"
+   },
+   {
+    "byWard": false,
+    "name": "John Risch",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://bismarcknd.gov/Directory.aspx?did=21"
+   }
+  ]
+ },
+ "3819620": {
+  "body": "City Commission",
+  "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+  "name": "Dickinson",
+  "read": "2026-11-27",
+  "readByHand": true,
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Scott Decker",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.dickinsongov.com/city-commission"
+   },
+   {
+    "byWard": false,
+    "name": "Robert Baer",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.dickinsongov.com/city-commission"
+   },
+   {
+    "byWard": false,
+    "name": "Jason Fridrich",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.dickinsongov.com/city-commission"
+   },
+   {
+    "byWard": false,
+    "name": "Joe Ridl",
+    "phone": "701.690.6103",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.dickinsongov.com/city-commission"
+   },
+   {
+    "byWard": false,
+    "name": "Russ Murphy",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.dickinsongov.com/city-commission"
+   }
+  ]
+ },
+ "3825700": {
+  "body": "City Commission",
+  "how": "The mayor and four commissioners are all elected by the whole city (the city's own commission page).",
+  "name": "Fargo",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Josh Boschee",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://fargond.gov/city-government/departments/city-commission/members"
+   },
+   {
+    "byWard": false,
+    "name": "John Strand",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://fargond.gov/city-government/departments/city-commission/members"
+   },
+   {
+    "byWard": false,
+    "name": "Nikkie Gullickson",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://fargond.gov/city-government/departments/city-commission/members"
+   },
+   {
+    "byWard": false,
+    "name": "Chad Peterson",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://fargond.gov/city-government/departments/city-commission/members"
+   },
+   {
+    "byWard": false,
+    "name": "Michelle Turnberg",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://fargond.gov/city-government/departments/city-commission/members"
+   }
+  ]
+ },
+ "3832060": {
+  "body": "City Council",
+  "how": "Each of seven council members is elected by the voters of one ward, and the mayor by the whole city.",
+  "name": "Grand Forks",
+  "read": "2026-11-27",
+  "readByHand": true,
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Brandon Bochenski",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/mayor-bochenski"
+   },
+   {
+    "byWard": true,
+    "name": "Danny Weigel",
+    "phone": "(701) 215-8021",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Rebecca Osowski",
+    "phone": "(701) 787-1938",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Tricia Berg",
+    "phone": "(701) 740-2692",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Angela Salentiny",
+    "phone": "(701) 739-8356",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Mike Fridolfs",
+    "phone": "(701) 740-2691",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Dana Sande",
+    "phone": "(701) 330-9284",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Ken Vein",
+    "phone": "(701) 215-2463",
+    "role": "Council member",
+    "seat": "Ward 7",
+    "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "ward": "7"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "3853380": {
+  "body": "City Council",
+  "how": "The mayor and six council members are all elected by the whole city, three council members every two years.",
+  "name": "Minot",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Mark Jantzer",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Steve Podrygula",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "John MacMartin",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Mike Blessum",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Rob Fuller",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Eric Locken",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   },
+   {
+    "byWard": false,
+    "name": "Scott Samuelson",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.minotnd.gov/252/City-Council"
+   }
+  ]
+ },
+ "3884780": {
+  "body": "City Commission",
+  "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (the city's own commission page).",
+  "name": "West Fargo",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Eric Gjerdevig",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://westfargond.gov/365/City-Commission"
+   },
+   {
+    "byWard": false,
+    "name": "Amy Zundel",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://westfargond.gov/365/City-Commission"
+   },
+   {
+    "byWard": false,
+    "name": "Rory Jorgensen",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://westfargond.gov/365/City-Commission"
+   },
+   {
+    "byWard": false,
+    "name": "Patti Stedman",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://westfargond.gov/365/City-Commission"
+   },
+   {
+    "byWard": false,
+    "name": "Tyler Erickson",
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://westfargond.gov/365/City-Commission"
+   }
+  ]
+ },
+ "3886220": {
+  "body": "City Commission",
+  "how": "All five commissioners are elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+  "name": "Williston",
+  "read": "2026-11-27",
+  "readByHand": true,
+  "seats": [
+   {
+    "byWard": false,
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofwilliston.com/government/city_commission/index.php",
+    "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+   },
+   {
+    "byWard": false,
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofwilliston.com/government/city_commission/index.php",
+    "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+   },
+   {
+    "byWard": false,
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofwilliston.com/government/city_commission/index.php",
+    "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+   },
+   {
+    "byWard": false,
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofwilliston.com/government/city_commission/index.php",
+    "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+   },
+   {
+    "byWard": false,
+    "role": "Commissioner",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofwilliston.com/government/city_commission/index.php",
+    "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+   }
+  ]
+ }
+}

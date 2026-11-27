@@ -1,0 +1,101 @@
+Rendered once by this project's own reader on 2026-11-27, in a browser engine with the token districtry/1.0 (+https://districtry.com/ks/) after robots.txt allowed the page, because the page fills its council list in with a script from a feed that needs a key the script obtains, and its static markup carries only the members' names.
+URL: https://www.opkansas.gov/city-council
+Page text (council list):
+
+Find Your Council Members
+Logan Heley
+Title
+Ward 1
+Email
+logan.heley@opkansas.gov
+Phone
+913-895-6575
+Council Member Logan Heley
+Holly Grummert
+Title
+Ward 1
+Email
+holly.grummert@opkansas.gov
+Phone
+913-895-6577
+Council Member Holly Grummert
+Drew Mitrisin
+Title
+Ward 2
+Email
+drew.mitrisin@opkansas.gov
+Phone
+913-895-6574
+Council Member Drew Mitrisin
+Melissa Cheatham
+Title
+Ward 2
+Email
+melissa.cheatham@opkansas.gov
+Phone
+913-895-6585
+Council Member Melissa Cheatham
+Richard Borlaza
+Title
+Ward 3
+Email
+richard.borlaza@opkansas.gov
+Phone
+913-895-6576
+Council Member Richard Borlaza
+Amy Scrivner
+Title
+Ward 3
+Email
+amy.scrivner@opkansas.gov
+Phone
+913-895-6578
+Council Member Amy Scrivner
+Gregg Riess
+Title
+Ward 4
+Email
+gregg.riess@opkansas.gov
+Phone
+913-895-6591
+Council Member Gregg Riess
+Amy Antrim
+Title
+Ward 4
+Email
+amy.antrim@opkansas.gov
+Phone
+913-895-6588
+Council Member Amy Antrim
+Andrew Payne
+Title
+Ward 5
+Email
+andrew.payne@opkansas.gov
+Phone
+913-895-6586
+Council Member Andrew Payne
+Inas Younis
+Title
+Ward 5
+Email
+inas.younis@opkansas.gov
+Phone
+913-895-6592
+Council Member Inas Younis
+Christopher Newlin
+Title
+Ward 6
+Email
+chris.newlin@opkansas.gov
+Phone
+913-895-6565
+Council Member Christopher Newlin
+Josh Beck
+Title
+Ward 6
+Email
+josh.beck@opkansas.gov
+Phone
+913-895-6587
+Council Member Josh Beck

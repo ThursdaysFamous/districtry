@@ -54,8 +54,27 @@ read 2026-11-12: its `*` group disallows Drupal's own paths only; pages are read
 **MOST OF NORTH DAKOTA IS IN NO CITY.** The **City** layer is TIGERweb's incorporated places (layer 4): 355
 records, every one an active city, under 1% of the state's land (1,552.3 of 178,694.4 km2, measured
 2026-11-12). An empty card says the point is outside every city and that the county is the local
-government there, with the civil township where one is organized. No mayor or commissioner is named yet
-(gap `nd-municipal-officeholders`).
+government there, with the civil township where one is organized.
+
+**THE 7 CITIES OF 25,000 PEOPLE OR MORE NAME THEIR MAYOR AND COUNCIL OR COMMISSION SINCE
+2026-11-27** (Fargo, Bismarck, Grand Forks, Minot, West Fargo, Williston and Dickinson). No state office's list of city officials has been read, so
+`data/source/nd-city-council-seats.json` writes each city's mayor and members down by hand from the
+city's own pages, and `nd/scripts/build_nd_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write unless
+every name is on its page; the builder's docstring says how each city elects and what says so (the
+city's page, its charter, state law, or election results). The card ships network-first as
+`nd-city-councils.json`, and every seat says whether its ward's own voters or the whole city elect
+it. **GRAND FORKS'S, WILLISTON'S AND DICKINSON'S PAGES WERE READ ONCE BY HAND** in Adam's Chrome,
+because Grand Forks and Dickinson answer this project's reader with HTTP 403 and Williston's
+robots.txt disallows every page; each is kept as a dated excerpt in `data/source/councils/` that the
+build proves names against, and the card says it was read by hand. **WILLISTON NAMES NOBODY**: its
+commission page names no commissioner and its minutes give surnames only, and a surname is not a
+name, so its card says so. Grand Forks elects by ward and its wards are not drawn, and the card says so; the five
+commission cities elect every seat at large by state law (NDCC 40-09-03), and Minot's aldermen are
+elected citywide. A member's own e-mail address or number ships where the city's page prints it
+beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
+and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller place names nobody (gap
+`nd-municipal-officeholders`).
 
 **TWO SCHOOL LAYERS.** Measured 2026-11-12: 147 unified districts and 20 elementary districts, which
 between them cover the state's land, and nothing on TIGER's secondary layer, so it is not drawn. No school
@@ -194,8 +213,9 @@ the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. The chamber cards
 degrade to the district + the chamber's own member list on a roster miss, and a vacant or unlisted
-seat says so with the day it was read; the County, municipality and school district cards carry no
-roster and **say so on the card**. External strings always render through
+seat says so with the day it was read; the County and school district cards carry no roster and
+**say so on the card**, and the City card names the mayor and council or commission of
+the cities of 25,000 people or more and says so on the card for every other city. External strings always render through
 `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct commits
 to main.
 

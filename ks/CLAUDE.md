@@ -51,6 +51,26 @@ there. **WYANDOTTE COUNTY AND KANSAS CITY ARE ONE GOVERNMENT**, the Unified Gove
 County and Kansas City, and **GREELEY COUNTY AND TRIBUNE ARE ONE TOO**; their County and City cards
 say so.
 
+**THE 16 CITIES OF 25,000 PEOPLE OR MORE NAME THEIR MAYOR AND COUNCIL OR COMMISSION SINCE
+2026-11-27** (Wichita, Overland Park, Kansas City, Olathe, Topeka, Lawrence, Shawnee, Lenexa, Manhattan,
+Salina, Hutchinson, Leavenworth, Leawood, Garden City, Dodge City and Derby). No state office's list of city officials has been read, so
+`data/source/ks-city-council-seats.json` writes each city's mayor and members down by hand from the
+city's own pages, and `ks/scripts/build_ks_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write unless
+every name is on its page; the builder's docstring says how each city elects and what says so (the
+city's page, its charter, state law, or election results). The card ships network-first as
+`ks-city-councils.json`, and every seat says whether its ward's own voters or the whole city elect
+it. **WICHITA'S, OLATHE'S, LAWRENCE'S, SHAWNEE'S AND LEAWOOD'S PAGES WERE READ ONCE BY HAND** in
+Adam's Chrome, because their sites answer this project's reader with HTTP 403 or their robots.txt
+disallows it, and **OVERLAND PARK'S AND HUTCHINSON'S WERE RENDERED ONCE**, because their member lists
+are filled in by a script; each is kept as a dated excerpt in `data/source/councils/` that the build
+proves names against, and the card says a hand-read page was read by hand. Kansas City's card names
+the Unified Government's Board of Commissioners, whose two at-large seats are labelled "At large". The ten cities that elect by ward or district do not have their wards drawn, and the card
+says so. A member's own e-mail address or number ships where the city's page prints it
+beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
+and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller place names nobody (gap
+`ks-municipal-officeholders`).
+
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 285 unified districts for Kansas and nothing on its
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school
 board member is named yet (gap `ks-school-board-members`).
@@ -62,10 +82,10 @@ inactive, and 129 cities it counts as areas of their own, apart from every towns
 the subdivision and its county and states its functional status in the Census's own terms; a status
 it does not know prints no row. No township officer is named (gap `ks-township-officers`).
 
-**NO COUNTY, CITY OR TOWNSHIP OFFICIAL IS NAMED YET**, and the cards say so rather than leave a
+**NO COUNTY OR TOWNSHIP OFFICIAL IS NAMED YET**, and the cards say so rather than leave a
 reader to assume the office is empty. Each county is governed by an elected board of county
 commissioners, and most elect officers such as a clerk, a treasurer, a register of deeds and a
-sheriff. Recorded as gaps `ks-county-officials` and `ks-municipal-officeholders`. **KANSAS ALSO HAS
+sheriff. Recorded as gap `ks-county-officials`. **KANSAS ALSO HAS
 1,258 ACTIVE TOWNSHIPS** (TIGER's county subdivisions), each with elected officers;
 the Township or City layer draws them (below) and names no officer, so the done-standard scorer
 marks that level open (gap `ks-township-officers`).
@@ -188,8 +208,9 @@ the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. The chamber cards
 degrade to the district + the chamber's own member list on a roster miss, and a vacant or unlisted
-seat says so with the day it was read; the County, municipality and school district cards carry no
-roster and **say so on the card**. External strings always render through
+seat says so with the day it was read; the County and school district cards carry no roster and
+**say so on the card**, and the City card names the mayor and council or commission of
+the cities of 25,000 people or more and says so on the card for every other city. External strings always render through
 `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct commits
 to main.
 

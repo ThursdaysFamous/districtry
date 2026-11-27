@@ -48,7 +48,24 @@ states `Crawl-delay: 3`, which the script honours between requests.
 places (layer 4): 528 records, 381 villages and 147 cities, every one an active government, about 1% of
 the state's land (2,092.9 of 198,950.7 km2, measured 2026-11-12). An empty card says the point is outside
 every city and village and that the county is the local government there, with the township in the 20
-counties that kept township government. No mayor, council or village board member is named yet (gap
+counties that kept township government.
+
+**THE 7 CITIES OF 25,000 PEOPLE OR MORE NAME THEIR MAYOR AND COUNCIL SINCE
+2026-11-27** (Omaha, Lincoln, Bellevue, Grand Island, Kearney, Fremont and Hastings). No state office's list of city officials has been read, so
+`data/source/ne-city-council-seats.json` writes each city's mayor and members down by hand from the
+city's own pages, and `ne/scripts/build_ne_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write unless
+every name is on its page; the builder's docstring says how each city elects and what says so (the
+city's page, its charter, state law, or election results). The card ships network-first as
+`ne-city-councils.json`, and every seat says whether its ward's own voters or the whole city elect
+it. **OMAHA'S PAGE WAS READ ONCE BY HAND** in Adam's Chrome, because its sites answer this
+project's reader with HTTP 403; it is kept as a dated excerpt in `data/source/councils/` that the
+build proves names against, and the card says it was read by hand. Kearney's members page prints
+home addresses and telephones, and neither is ever carried. The first-class cities seat the winners
+of November 2026 in December, so every name there is re-read then (`WATCH.md`). The six cities that elect by ward or district do not have their wards drawn, and the card
+says so. A member's own e-mail address or number ships where the city's page prints it
+beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
+and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller city and every village names nobody (gap
 `ne-municipal-officeholders`).
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 244 unified districts for Nebraska and nothing on its
@@ -187,8 +204,9 @@ the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. The chamber cards
 degrade to the district + the chamber's own member list on a roster miss, and a vacant or unlisted
-seat says so with the day it was read; the County, municipality and school district cards carry no
-roster and **say so on the card**. External strings always render through
+seat says so with the day it was read; the County and school district cards carry no roster and
+**say so on the card**, and the City or Village card names the mayor and council of
+the cities of 25,000 people or more and says so on the card for every other city or village. External strings always render through
 `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct commits
 to main.
 

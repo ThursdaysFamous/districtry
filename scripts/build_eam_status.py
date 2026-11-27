@@ -4152,6 +4152,14 @@ CITY_ROSTERS = {
     # Each city's own council page, keyed by the city's Census id; today
     # Charleston's (wv/scripts/build_wv_city_councils.py).
     "wv": [("wv/data/app/wv-city-councils.json", "geoid7")],
+    # Written down from each city's own pages and proved against them on every
+    # build (<tag>/scripts/build_<tag>_city_councils.py), keyed by the city's
+    # Census id, every seat saying whether its ward or the whole city elects
+    # it: the cities of 25,000 people or more in each state (2026-11-27).
+    "ks": [("ks/data/app/ks-city-councils.json", "geoid7")],
+    "ne": [("ne/data/app/ne-city-councils.json", "geoid7")],
+    "nd": [("nd/data/app/nd-city-councils.json", "geoid7")],
+    "sd": [("sd/data/app/sd-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -4797,6 +4805,24 @@ WARD_MAPS = {
     "wv": dict(
         drawn={"5414600"},
         drawn_file=("wv/data/app/wv-city-wards.json", "geoid")),
+    # The cities of 25,000 or more in Kansas, Nebraska, North Dakota and South
+    # Dakota that elect members by ward or district, none drawn yet
+    # (2026-11-27; each state's build_<tag>_city_councils.py says how each
+    # city elects). The others elect every seat by the whole city.
+    "ks": dict(
+        owed={"2079000": "Wichita", "2053775": "Overland Park",
+              "2036000": "Kansas City", "2052575": "Olathe",
+              "2071000": "Topeka", "2064500": "Shawnee",
+              "2039350": "Lenexa", "2033625": "Hutchinson",
+              "2039075": "Leawood", "2017800": "Derby"}),
+    "ne": dict(
+        owed={"3137000": "Omaha", "3128000": "Lincoln",
+              "3103950": "Bellevue", "3119595": "Grand Island",
+              "3117670": "Fremont", "3121415": "Hastings"}),
+    "nd": dict(owed={"3832060": "Grand Forks"}),
+    "sd": dict(
+        owed={"4659020": "Sioux Falls", "4652980": "Rapid City",
+              "4600100": "Aberdeen"}),
 }
 
 

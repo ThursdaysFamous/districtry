@@ -1,0 +1,32 @@
+Rendered once by this project's own reader on 2026-11-27, in a browser engine with the token districtry/1.0 (+https://districtry.com/ks/) after robots.txt allowed the page, because the page fills its council list in with a script from a feed that needs a key the script obtains, and its static markup names nobody.
+URL: https://www.hutchinsonks.gov/city-council
+Page text (council part; the accessibility contact's details left out):
+
+Those who want to contact their elected officials about items on the agenda or other issues are encouraged to do so. Their contact information can be found below.
+
+Darrin Truan
+Title
+City-at-Large
+darrin.truan@hutchinsonks.gov
+620-728-9444
+
+Steven Garza
+Title
+Southeast District
+steve.garza@hutchinsonks.gov
+620-899-5977
+
+Scott Meggers
+Title
+Mayor / Northeast District
+scott.meggers@hutchinsonks.gov
+620-728-8669
+
+Stacy Goss
+Title
+Northwest District
+stacy.goss@hutchinsonks.gov
+620-474-5829
+
+Overview of City Council
+Hutchinson has a Council-Manager form of government. The Governing Body (City Council) consists of 5 council members, with 1 elected at-large and 4 elected by districts on a non-partisan basis. All district members are elected to 4-year terms; the at-large member is elected to a 2-year term. The mayor and vice-mayor are then selected for a 1-year term by the Council members.

@@ -1,0 +1,273 @@
+{
+ "4600100": {
+  "body": "City Council",
+  "how": "Two council members are elected from each of four districts by that district's voters, and the mayor by the whole city.",
+  "name": "Aberdeen",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Travis Schaunaman",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.aberdeen.sd.us/75/Mayor"
+   },
+   {
+    "byWard": true,
+    "name": "Rob Ronayne",
+    "role": "Council member",
+    "seat": "Northeast District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Northeast"
+   },
+   {
+    "byWard": true,
+    "name": "Erin Fouberg",
+    "role": "Council member",
+    "seat": "Northeast District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Northeast"
+   },
+   {
+    "byWard": true,
+    "name": "David Novstrup",
+    "role": "Council member",
+    "seat": "Southeast District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Southeast"
+   },
+   {
+    "byWard": true,
+    "name": "Chad Nilson",
+    "role": "Council member",
+    "seat": "Southeast District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Southeast"
+   },
+   {
+    "byWard": true,
+    "name": "Charlotte Liebelt",
+    "role": "Council member",
+    "seat": "Northwest District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Northwest"
+   },
+   {
+    "byWard": true,
+    "name": "Rich Ward",
+    "role": "Council member",
+    "seat": "Northwest District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Northwest"
+   },
+   {
+    "byWard": true,
+    "name": "Alan Johnson",
+    "role": "Council member",
+    "seat": "Southwest District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Southwest"
+   },
+   {
+    "byWard": true,
+    "name": "Talmage Ekanger",
+    "role": "Council member",
+    "seat": "Southwest District",
+    "sourceUrl": "https://www.aberdeen.sd.us/74/City-Council",
+    "ward": "Southwest"
+   }
+  ],
+  "wardWord": "District",
+  "wardsDrawn": false
+ },
+ "4652980": {
+  "body": "City Council",
+  "how": "Two council members are elected from each of five wards by that ward's voters (South Dakota law for a city governed by a common council, SDCL 9-8-4), and the mayor by the whole city.",
+  "name": "Rapid City",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Jason Salamun",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/mayor-s-office.html"
+   },
+   {
+    "byWard": true,
+    "name": "Josh Biberdorf",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Stephen Tamang",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Lindsey Seachris",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Bill Evans",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Kevin Maher",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Greg Strommen",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "John B. Roberts",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Lance Lehmann",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Callie Meyer",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Laura Armstrong",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+    "ward": "5"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "4659020": {
+  "body": "City Council",
+  "how": "Five council members are each elected by the voters of one district, and three council members and the mayor by the whole city (the city charter, section 2.02).",
+  "name": "Sioux Falls",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Christine Erickson",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.siouxfalls.gov/government/mayor/biography-ce"
+   },
+   {
+    "byWard": true,
+    "email": "zak.okuwe@siouxfalls.gov",
+    "name": "Zak Okuwe",
+    "phone": "605-367-8110",
+    "role": "Council member",
+    "seat": "Central District",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members",
+    "ward": "Central"
+   },
+   {
+    "byWard": true,
+    "email": "miranda.basye@siouxfalls.gov",
+    "name": "Miranda Basye",
+    "phone": "605-367-8764",
+    "role": "Council member",
+    "seat": "Northeast District",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members",
+    "ward": "Northeast"
+   },
+   {
+    "byWard": true,
+    "email": "jennifer.sigette@siouxfalls.gov",
+    "name": "Jennifer Sigette",
+    "phone": "605-367-8898",
+    "role": "Council member",
+    "seat": "Northwest District",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members",
+    "ward": "Northwest"
+   },
+   {
+    "byWard": true,
+    "email": "sara.pankonin@siouxfalls.gov",
+    "name": "Sara Pankonin",
+    "phone": "605-367-8102",
+    "role": "Council member",
+    "seat": "Southeast District",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members",
+    "ward": "Southeast"
+   },
+   {
+    "byWard": true,
+    "email": "ryan.spellerberg@siouxfalls.gov",
+    "name": "Ryan Spellerberg",
+    "phone": "605-367-8865",
+    "role": "Council member",
+    "seat": "Southwest District",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members",
+    "ward": "Southwest"
+   },
+   {
+    "byWard": false,
+    "email": "rich.merkouris@siouxfalls.gov",
+    "name": "Rich Merkouris",
+    "phone": "605-367-8818",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members"
+   },
+   {
+    "byWard": false,
+    "email": "james.oppenheimer@siouxfalls.gov",
+    "name": "James Oppenheimer",
+    "phone": "605-367-8809",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members"
+   },
+   {
+    "byWard": false,
+    "email": "richard.thomason@siouxfalls.gov",
+    "name": "Richard Thomason",
+    "phone": "605-367-8733",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members"
+   }
+  ],
+  "wardWord": "District",
+  "wardsDrawn": false
+ }
+}

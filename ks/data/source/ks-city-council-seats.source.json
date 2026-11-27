@@ -1,0 +1,503 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
+ "pages": {
+  "https://cityofshawnee.civicweb.net/portal/members.aspx?id=10": {
+   "bytes": 1739,
+   "client": "hand",
+   "emails": [
+    "ealdridge@cityofshawnee.org",
+    "epersson@cityofshawnee.org",
+    "jmurphy@cityofshawnee.org",
+    "kknappen@cityofshawnee.org",
+    "lburchfield@cityofshawnee.org",
+    "mrainey@cityofshawnee.org",
+    "msandifer@cityofshawnee.org",
+    "sreynolds@cityofshawnee.org",
+    "swhitted@cityofshawnee.org"
+   ],
+   "excerpt": "ks/data/source/councils/shawnee-2026-11-27.txt",
+   "final": "https://cityofshawnee.civicweb.net/portal/members.aspx?id=10",
+   "names": [
+    "Eric Persson",
+    "Erin Aldridge",
+    "Jeanie Murphy",
+    "Kurt Knappen",
+    "Laurel Burchfield",
+    "Mickey Sandifer",
+    "Morgan Rainey",
+    "Sierra Whitted",
+    "Steele Reynolds"
+   ],
+   "phones": [
+    "3163479348",
+    "7855503078",
+    "8162175102",
+    "9132057788",
+    "9132633278",
+    "9132863516",
+    "9133038764",
+    "9134617703",
+    "9136082724"
+   ],
+   "read": "2026-11-27",
+   "sha256": "1cbc04546cab493ec15ba6af2ec446aa3b59ea2cd95bd8ebe18a142cb07ca6f8"
+  },
+  "https://lawrenceks.civicweb.net/portal/members.aspx?id=10": {
+   "bytes": 1137,
+   "client": "hand",
+   "emails": [
+    "asellers@lawrenceks.gov",
+    "bfinkeldei@lawrenceks.gov",
+    "kpolian@lawrenceks.gov",
+    "mcourtney@lawrenceks.gov",
+    "mdever@lawrenceks.gov"
+   ],
+   "excerpt": "ks/data/source/councils/lawrence-2026-11-27.txt",
+   "final": "https://lawrenceks.civicweb.net/portal/members.aspx?id=10",
+   "names": [
+    "Amber Sellers",
+    "Brad Finkeldei",
+    "Kristine Polian",
+    "Mike Courtney",
+    "Mike Dever"
+   ],
+   "phones": [
+    "3166193324",
+    "7852022267",
+    "7855504909",
+    "7855509699",
+    "7858131381"
+   ],
+   "read": "2026-11-27",
+   "sha256": "adf3b15721fe67510566d266d990322492d08342387141ea43832fe791c09fdf"
+  },
+  "https://leawood.civicweb.net/portal/members.aspx?id=10": {
+   "bytes": 1725,
+   "client": "hand",
+   "emails": [
+    "asunkel@leawood.org",
+    "jcain@leawood.org",
+    "lisah@leawood.org",
+    "melkins@leawood.org",
+    "mlarson@leawood.org",
+    "mpeppes@leawood.org",
+    "rrubin@leawood.org",
+    "sgayed@leawood.org",
+    "skaster@leawood.org"
+   ],
+   "excerpt": "ks/data/source/councils/leawood-2026-11-27.txt",
+   "final": "https://leawood.civicweb.net/portal/members.aspx?id=10",
+   "names": [
+    "Alan Sunkel",
+    "Julie Cain",
+    "Lisa Harrison",
+    "Marc Elkins",
+    "Mary Larson",
+    "Matt Peppes",
+    "Rachel Rubin",
+    "Sherrie Gayed",
+    "Steve Kaster"
+   ],
+   "phones": [
+    "8165892677",
+    "9133179688",
+    "9133350450",
+    "9133636627",
+    "9134840417",
+    "9134868422",
+    "9135586743",
+    "9136639101",
+    "9137066563"
+   ],
+   "read": "2026-11-27",
+   "sha256": "61b7bd3cdfe7a38cd611098609516085f2a4f00fa940a700ab9fc86f7f60ccfe"
+  },
+  "https://topeka.gov/government/city-council/index.php": {
+   "bytes": 126743,
+   "client": "token",
+   "emails": [
+    "bkell@topeka.org",
+    "cvaldivia-alcala@topeka.org",
+    "dbanks@topeka.org",
+    "khiller@topeka.org",
+    "mabradberry@topeka.org",
+    "mahoferer@topeka.org",
+    "marcusm@topeka.org",
+    "mtmcgee@topeka.org",
+    "sortiz@topeka.org"
+   ],
+   "final": "https://topeka.gov/government/city-council/index.php",
+   "names": [
+    "Brett Kell",
+    "Christina Valdivia-Alcala",
+    "David Banks",
+    "Karen Hiller",
+    "Marcus Miller",
+    "Michelle Bradberry",
+    "Michelle Hoferer",
+    "Murray McGee",
+    "Sylvia Ortiz"
+   ],
+   "phones": [
+    "7852267196",
+    "7852322917",
+    "7852337110",
+    "7852492674",
+    "7853045674",
+    "7853570717",
+    "7854098695",
+    "7855691465",
+    "7855801817"
+   ],
+   "read": "2026-11-27",
+   "sha256": "d1e7bcddee61bdb5a7485dcd1b7438851d6689450de156dde5794a92fa9f5e92"
+  },
+  "https://topeka.gov/government/mayor/index.php": {
+   "bytes": 62948,
+   "client": "token",
+   "final": "https://topeka.gov/government/mayor/index.php",
+   "names": [
+    "Spencer Duncan"
+   ],
+   "read": "2026-11-27",
+   "sha256": "08a6392a63dbe81b25b16bc9105f45829583a4b4dd65ef1f82fbf49e2c1994de"
+  },
+  "https://www.derbyks.gov/113/City-Council": {
+   "bytes": 107869,
+   "client": "token",
+   "final": "https://www.derbyks.gov/113/City-Council",
+   "names": [
+    "Gabe McKeever",
+    "Jared Brown",
+    "Jenny Webster",
+    "Jessica Rhein",
+    "Kristi Truitt",
+    "Mark Staats",
+    "Mike Neel",
+    "Nick Engle",
+    "Wayne Molt, Jr."
+   ],
+   "read": "2026-11-27",
+   "sha256": "9385f02dd54bfc38c70637b68ca39b0a881a357716441082f75c36c103837e62"
+  },
+  "https://www.dodgecity.org/54/City-Commission": {
+   "bytes": 118088,
+   "client": "token",
+   "emails": [
+    "chuckt@dodgecity.org",
+    "danielp@dodgecity.org",
+    "jeffr@dodgecity.org",
+    "michaelb@dodgecity.org",
+    "ricks@dodgecity.org"
+   ],
+   "final": "https://www.dodgecity.org/54/City-Commission",
+   "names": [
+    "Chuck Taylor",
+    "Daniel Pogue",
+    "Jeff Reinert",
+    "Michael Burns",
+    "Rick Sowers"
+   ],
+   "read": "2026-11-27",
+   "sha256": "fdf1a912be51ccbbcc7531679385f72858816ceb329defcf8ded0afa074c3672"
+  },
+  "https://www.garden-city.org/402/City-Commission": {
+   "bytes": 206565,
+   "client": "token",
+   "emails": [
+    "bryce.landgraf@gardencityks.us",
+    "deb.oyler@gardencityks.us",
+    "karen.lozano@gardencityks.us",
+    "roy.cessna@gardencityks.us",
+    "tom.nguyen@gardencityks.us"
+   ],
+   "final": "https://www.garden-city.org/402/City-Commission",
+   "names": [
+    "Bryce Landgraf",
+    "Deb Oyler",
+    "Karen Canales-Lozano",
+    "Roy Cessna",
+    "Tom Nguyen"
+   ],
+   "read": "2026-11-27",
+   "sha256": "7ee61ca4bc8312bf801073a362c1ece73d2e2751dd0548157cc10170480ff030"
+  },
+  "https://www.hutchinsonks.gov/application-for-southwest-district-council-seat-1": {
+   "bytes": 910,
+   "client": "rendered",
+   "excerpt": "ks/data/source/councils/hutchinson-southwest-2026-11-27.txt",
+   "final": "https://www.hutchinsonks.gov/application-for-southwest-district-council-seat-1",
+   "names": [
+    "fill the unexpired term for the Southwest District seat"
+   ],
+   "read": "2026-11-27",
+   "sha256": "c92ca364dd3f9464156a2dbfaae53819c788f42ae1d7658dea2ff7c3e5a54446"
+  },
+  "https://www.hutchinsonks.gov/city-council": {
+   "bytes": 1330,
+   "client": "rendered",
+   "emails": [
+    "darrin.truan@hutchinsonks.gov",
+    "scott.meggers@hutchinsonks.gov",
+    "stacy.goss@hutchinsonks.gov",
+    "steve.garza@hutchinsonks.gov"
+   ],
+   "excerpt": "ks/data/source/councils/hutchinson-2026-11-27.txt",
+   "final": "https://www.hutchinsonks.gov/city-council",
+   "names": [
+    "Darrin Truan",
+    "Scott Meggers",
+    "Stacy Goss",
+    "Steven Garza"
+   ],
+   "phones": [
+    "6204745829",
+    "6207288669",
+    "6207289444",
+    "6208995977"
+   ],
+   "read": "2026-11-27",
+   "sha256": "aa0b51d7ddf36c70377bad5fb09cb1bebf36cb9a3880637ca806d46c5d9b46a7"
+  },
+  "https://www.leavenworthks.gov/citycommission": {
+   "bytes": 51983,
+   "client": "token",
+   "emails": [
+    "holly.pittman@leavenworthks.gov",
+    "joe.wilson@leavenworthks.gov",
+    "nbauder@leavenworthks.gov",
+    "rebecca.hollister@leavenworthks.gov",
+    "sam.maxwell@leavenworthks.gov"
+   ],
+   "final": "https://www.leavenworthks.gov/citycommission",
+   "names": [
+    "Holly Pittman",
+    "Joe Wilson",
+    "Nancy Bauder",
+    "Rebecca Hollister",
+    "Samuel Maxwell"
+   ],
+   "phones": [
+    "9132405961",
+    "9134498991",
+    "9135655552",
+    "9136757166",
+    "9136839373"
+   ],
+   "read": "2026-11-27",
+   "sha256": "46a70dcec91109bae2febae86b0f7623ec9ee0f4ce8e01b0e05cbb8d63a42937"
+  },
+  "https://www.lenexa.com/Government/Mayor-City-Council/Elected-Officials": {
+   "bytes": 160249,
+   "client": "token",
+   "emails": [
+    "abell@lenexa.com",
+    "bnicks@lenexa.com",
+    "cdenny@lenexa.com",
+    "ceiterich@lenexa.com",
+    "cherron@lenexa.com",
+    "cwilliamson@lenexa.com",
+    "jhandley@lenexa.com",
+    "jsayers@lenexa.com",
+    "mcharlton@lenexa.com"
+   ],
+   "final": "https://www.lenexa.com/Government/Mayor-City-Council/Elected-Officials",
+   "names": [
+    "Avery Bell",
+    "Bill Nicks",
+    "Chelsea Williamson",
+    "Chris Herron",
+    "Courtney Eiterich",
+    "Craig Denny",
+    "John Michael Handley",
+    "Julie Sayers",
+    "Mark Charlton"
+   ],
+   "phones": [
+    "7858443314",
+    "8162255891",
+    "9133039929",
+    "9134249228",
+    "9134777550",
+    "9134777567",
+    "9135229423",
+    "9137067576"
+   ],
+   "read": "2026-11-27",
+   "sha256": "fced7e1f7fd57dc2ec085645be1b04713f2b93d48adf0a400bec46bf6dfefb89"
+  },
+  "https://www.manhattanks.gov/202/Meet-the-City-Commission": {
+   "bytes": 217116,
+   "client": "token",
+   "final": "https://www.manhattanks.gov/202/Meet-the-City-Commission",
+   "names": [
+    "Andrew Von Lintel",
+    "Jim Morrison",
+    "Karen McCulloh",
+    "Larry Fox",
+    "Susan E. Adamchak"
+   ],
+   "read": "2026-11-27",
+   "sha256": "223efeb806628961e6807ebc54d4fe8ff1275de2c9f428a1560ccbe0eaebf988"
+  },
+  "https://www.olatheks.gov/government/city-council": {
+   "bytes": 588,
+   "client": "hand",
+   "emails": [
+    "dvakas@olatheks.org",
+    "jbacon@olatheks.org",
+    "jcreighton@olatheks.org",
+    "kdeneault@olatheks.org",
+    "lfelter@olatheks.org",
+    "mschoonover@olatheks.org",
+    "rressex@olatheks.org"
+   ],
+   "excerpt": "ks/data/source/councils/olathe-2026-11-27.txt",
+   "final": "https://www.olatheks.gov/government/city-council",
+   "names": [
+    "Dean Vakas",
+    "Jeff Creighton",
+    "John Bacon",
+    "Kevin Deneault",
+    "LeEtta Felter",
+    "Matthew Schoonover",
+    "Robyn Essex"
+   ],
+   "phones": [
+    "9139716368",
+    "9139716995",
+    "9139718500",
+    "9139718745",
+    "9139718769",
+    "9139718773",
+    "9139718797"
+   ],
+   "read": "2026-11-27",
+   "sha256": "720dbcd77174540b007dcbca629cb0b8ddea5449cd22892c8ac473985d437e7c"
+  },
+  "https://www.opkansas.gov/city-council": {
+   "bytes": 1708,
+   "client": "rendered",
+   "emails": [
+    "amy.antrim@opkansas.gov",
+    "amy.scrivner@opkansas.gov",
+    "andrew.payne@opkansas.gov",
+    "chris.newlin@opkansas.gov",
+    "drew.mitrisin@opkansas.gov",
+    "gregg.riess@opkansas.gov",
+    "holly.grummert@opkansas.gov",
+    "inas.younis@opkansas.gov",
+    "josh.beck@opkansas.gov",
+    "logan.heley@opkansas.gov",
+    "melissa.cheatham@opkansas.gov",
+    "richard.borlaza@opkansas.gov"
+   ],
+   "excerpt": "ks/data/source/councils/overland-park-2026-11-27.txt",
+   "final": "https://www.opkansas.gov/city-council",
+   "names": [
+    "Amy Antrim",
+    "Amy Scrivner",
+    "Andrew Payne",
+    "Christopher Newlin",
+    "Drew Mitrisin",
+    "Gregg Riess",
+    "Holly Grummert",
+    "Inas Younis",
+    "Josh Beck",
+    "Logan Heley",
+    "Melissa Cheatham",
+    "Richard Borlaza"
+   ],
+   "phones": [
+    "9138956565",
+    "9138956574",
+    "9138956575",
+    "9138956576",
+    "9138956577",
+    "9138956578",
+    "9138956585",
+    "9138956586",
+    "9138956587",
+    "9138956588",
+    "9138956591",
+    "9138956592"
+   ],
+   "read": "2026-11-27",
+   "sha256": "f0de59f775bcc3ef42e514eee944498d1640396199ea5950f694743f0841c7fe"
+  },
+  "https://www.opkansas.gov/mayor-curt-skoog": {
+   "bytes": 281322,
+   "client": "token",
+   "final": "https://www.opkansas.gov/mayor-curt-skoog",
+   "names": [
+    "Curt Skoog"
+   ],
+   "read": "2026-11-27",
+   "sha256": "254740df67e66360dd7b958ac42ae0e5aa6e763471dd5540bedd6048ba265bcb"
+  },
+  "https://www.salina-ks.gov/salina-city-commission": {
+   "bytes": 143551,
+   "client": "token",
+   "final": "https://www.salina-ks.gov/salina-city-commission",
+   "names": [
+    "Doug Rempp",
+    "Gary Norris",
+    "Greg Lenkiewicz",
+    "Michael L. Hoppock",
+    "Trent W. Davis"
+   ],
+   "read": "2026-11-27",
+   "sha256": "8b5f7b2072677ba946a27466040fa0ca1da78d398e14b9f8a4333ed6d0ca445e"
+  },
+  "https://www.wichita.gov/599/City-Council": {
+   "bytes": 569,
+   "client": "hand",
+   "excerpt": "ks/data/source/councils/wichita-2026-11-27.txt",
+   "final": "https://www.wichita.gov/599/City-Council",
+   "names": [
+    "Becky Tuttle",
+    "Dalton Glasscock",
+    "J.V. Johnston",
+    "Joseph Shepard",
+    "Lily Wu",
+    "Maggie Ballard",
+    "Mike Hoheisel"
+   ],
+   "read": "2026-11-27",
+   "sha256": "cbbdfc735d0959d046026d92f368a65bbb12b6ba1e3023ceda2451aa0cc760cd"
+  },
+  "https://www.wycokck.org/Departments/Board-of-Commissioners/Districts": {
+   "bytes": 188758,
+   "client": "token",
+   "emails": [
+    "adavis@wycokck.org",
+    "akump@wycokck.org",
+    "c.pacheco@wycokck.org",
+    "cestites@wycokck.org",
+    "cramirez@wycokck.org",
+    "ehill@wycokck.org",
+    "jhoward@wycokck.org",
+    "mayorwatson@wycokck.org",
+    "mbynum@wycokck.org",
+    "pjlopez@wycokck.org",
+    "wjburns@wycokck.org"
+   ],
+   "final": "https://www.wycokck.org/Departments/Board-of-Commissioners/Districts",
+   "names": [
+    "Andrew Davis",
+    "Andrew Tyler Kump",
+    "Carlos Pacheco III",
+    "Christal E. Watson",
+    "Christian Ramirez",
+    "Chuck Stites",
+    "Evelyn Hill",
+    "Jermaine Howard",
+    "Melissa Bynum",
+    "Philip J. Lopez",
+    "William (Bill) J. Burns, Jr."
+   ],
+   "read": "2026-11-27",
+   "sha256": "38645b02ef921256b07b216783c12eb0404fa74090db7001507553e3a0f60809"
+  }
+ }
+}

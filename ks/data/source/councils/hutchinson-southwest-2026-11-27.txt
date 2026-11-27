@@ -1,0 +1,7 @@
+Rendered once by this project's own reader on 2026-11-27, in a browser engine with the token districtry/1.0 (+https://districtry.com/ks/) after robots.txt allowed the page, because the page fills its text in with a script and its static markup carries only its title.
+URL: https://www.hutchinsonks.gov/application-for-southwest-district-council-seat-1
+Page text (purpose section):
+
+APPLICATION FOR SOUTHWEST DISTRICT COUNCIL SEAT
+Purpose
+Use this form to apply for consideration for appointment to fill the unexpired term for the Southwest District seat on the Hutchinson City Council. The appointed Councilmember will serve through December 2027. An election for the Southwest District seat will be held in November 2027, at which time the appointed Council member may choose to run for election. The candidate elected by voters will serve the remainder of the district's current term, through December 2029.
