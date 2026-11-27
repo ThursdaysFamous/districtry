@@ -178,6 +178,18 @@ PROVENANCE = [
             "anchor per county plus OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "nv-judicial-district",
+        "app_file": "nv-judicial-districts.json",
+        "source_url": "https://www.leg.state.nv.us/NRS/NRS-003.html",
+        "note": "Nevada's 11 judicial districts, dissolved from the 17 counties by scripts/build_state_courts.py from NRS 3.010 (excerpt in nv/data/source/courts/nv-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "nv-judicial-district",
+        "app_file": "nv-district-judges.json",
+        "source_url": "https://nvcourts.gov/find_a_court/district_courts",
+        "note": "The district judges of each district, read by scripts/build_state_courts.py --fetch nv from the Second and Eighth district courts' own pages and, for the other nine districts, from the term-of-office list read by hand (nv/data/source/courts/nv-term-of-office.txt); the fetch stops unless every district fills the seats NRS 3.011 to 3.0197 set. The monthly re-read is a row in nv/WATCH.md.",
+    },
 ]
 
 # Nevada's envelope, as index.html writes it for the ZIP layer

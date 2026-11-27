@@ -361,9 +361,9 @@ cache-first; the judge list is not).
 | Judicial circuits (SD, 7) | **At no fixed time**: a change to the circuits under state law (which body makes it was not read here) | not measured; read from the Unified Judicial System's circuit pages | geometry and the judge list's keys; 66 counties in 7 circuits |
 
 
-### AL, CO, ID, MT, NM, OR, PA, UT, WA, WV, WY — COURT DISTRICTS ONLY
+### AL, CO, ID, MT, NM, NV, OR, PA, UT, WA, WV, WY — COURT DISTRICTS ONLY
 
-No other blast-radius entries for these eleven states. Their court district layers were added
+No other blast-radius entries for these twelve states. Their court district layers were added
 2026-11-27 the same way as the five above: `scripts/build_state_courts.py` dissolves whole counties
 out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then `<tag>` and a
 `sw.cache_name` bump (the map is cache-first; the judge list is not).
@@ -375,6 +375,7 @@ out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then 
 | Judicial districts (ID, 7) | **At no fixed time**: an act of the Legislature amending Idaho Code 1-802 to 1-808 | the Legislature; read from those sections, which also set each district's seats (51) | geometry, the judge list's keys and the seat count the fetch holds the directory to; 44 counties in 7 districts |
 | Judicial districts (MT, 22) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the county menu on the Judicial Branch's District Courts page | geometry and the judge list's keys, and the statewide count of district judges that page states; 56 counties in 22 districts |
 | Judicial districts (NM, 13) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the Judicial Branch's Courts by District page | geometry and the judge list's keys; 33 counties in 13 districts. The judges come from a terms list whose file is renamed with each update, found from its page each time |
+| Judicial districts (NV, 11) | **At no fixed time**: an act of the Legislature amending NRS 3.010 (counties) or 3.011 to 3.0197 (judges); and **every six years**, when every district judge's term ends together (next on 4 January 2027) | the Legislature; read from those sections, which also set each district's seats (90) | geometry, the judge list's keys and the seat count the fetch holds every district to; 17 counties in 11 districts. Nine districts' judges come from a list read by hand, and the fetch stops from 4 January 2027 until it is read again |
 | Judicial districts (OR, 27) | **At no fixed time**: an act of the Legislature amending ORS 3.012 | the Legislature; read from ORS 3.012, which also sets each district's seats (186) | geometry, the judge list's keys and the seat count; 36 counties in 27 districts |
 | Judicial districts (PA, 60) | **At no fixed time**: an act of the General Assembly moving a county or changing a district's judges | the General Assembly (the statute that draws the districts was not read here; 42 Pa.C.S. section 911 sets the judges); read from the Unified Judicial System's Judicial Districts page, with each district's judges set by section 911 (470; Act 58 of 2023 added seats, Montgomery's two from January 2028) | geometry, the judge list's keys and the seat ceiling the fetch holds the list to; 67 counties in 60 districts |
 | Judicial districts (UT, 8) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the courts' map of judicial districts | geometry and the judge list's keys; 29 counties in 8 districts |

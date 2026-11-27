@@ -142,6 +142,13 @@ STATES = {
         "authority": "The West Virginia Judiciary's circuit court map (courtswv.gov)",
         "source": "https://www.courtswv.gov/lower-courts/circuit-courts",
     },
+    "nv": {
+        "name": "Nevada",
+        "districts": 11, "counties": 17, "min_judges": 85,
+        "unit_word": "judicial district",
+        "authority": "NRS 3.010 (leg.state.nv.us)",
+        "source": "https://www.leg.state.nv.us/NRS/NRS-003.html",
+    },
     "ks": {
         "name": "Kansas",
         "districts": 31, "counties": 105, "min_judges": 250,
@@ -1278,12 +1285,155 @@ def fetch_or(reader):
     return out
 
 
-FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al,
+NV_ORD = ("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth",
+          "Ninth", "Tenth", "Eleventh")
+NV_NUMBERS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+              "eight": 8, "nine": 9, "ten": 10}
+NV_NRS = "https://www.leg.state.nv.us/NRS/NRS-003.html"
+NV_CLARK = ("https://www.clarkcountycourts.us/departments/judicial/civil-criminal-divison/",
+            "https://www.clarkcountycourts.us/departments/judicial/family-division/")
+NV_WASHOE = "https://www.washoecourts.com/Judges"
+NV_HAND = os.path.join(ROOT, "nv", "data", "source", "courts", "nv-term-of-office.txt")
+NV_HAND_URL = ("https://nvcourts.gov/__data/assets/pdf_file/0007/12202/"
+               "Judicial_Directory-Term_of_Office_08.10.26.pdf")
+NV_HAND_HEAD = "Read once by hand in Adam's Chrome on "
+# Nevada Constitution, Article 6, section 5: a district judge's term starts on
+# the first Monday of January after the election, and the list read by hand
+# says every term it holds expires 3 January 2027.
+NV_TERMS_END = datetime.date(2027, 1, 4)
+NV_HAND_FROM = ("The Nevada Judiciary's list of judges' terms of office, opened by hand in a "
+                "web browser because its website is closed to this app's automated reader")
+
+
+def nv_statute(text):
+    """({district: [county, ...]}, {(district, family?): seats}) from NRS
+    chapter 3's sections 3.010 to 3.0197, as the Legislature prints them."""
+    text = re.sub(r"\s+", " ", text)
+    i = text.index("NRS 3.010 Judicial districts: Number; constitution. The State")
+    n = int(re.match(r".{0,80}?divided into (\d+) judicial districts", text[i:]).group(1))
+    if n != len(NV_ORD):
+        wcc.fail(LABEL, "nv: NRS 3.010 now divides the state into %d districts" % n)
+    counties, seats = {}, {}
+    for d, word in enumerate(NV_ORD, 1):
+        m = re.search(r"%s Judicial District\. (.+?) constitutes? the %s Judicial District\."
+                      % (word, word), text[i:i + 3000])
+        if not m:
+            wcc.fail(LABEL, "nv: NRS 3.010 does not say what the %s district is" % word)
+        names = re.sub(r"\b(?:[Tt]he )?Count(?:y|ies) of ", "", m.group(1))
+        counties[d] = [x.strip() for x in re.split(r",\s*|\s+and\s+", names) if x.strip()]
+        found = re.findall(r"For the %s Judicial District(?:, in addition to the district "
+                           r"judges established pursuant to NRS 3\.\d+ ,|,)? there must be (\w+) "
+                           r"district judges?( who are (?:not )?judges of the family court)?"
+                           % word, text)
+        for count, family in found:
+            key = (d, "not" not in family and bool(family))
+            if key in seats:
+                wcc.fail(LABEL, "nv: NRS chapter 3 sets the %s district's seats twice" % word)
+            seats[key] = int(count) if count.isdigit() else NV_NUMBERS[count]
+        if not found:
+            wcc.fail(LABEL, "nv: NRS chapter 3 sets no seats for the %s district" % word)
+    return counties, seats
+
+
+def nv_clark(lines):
+    """[(department, judge)] from a Clark County division page's table, whose
+    rows run department, location, courtroom, judge, then two telephones."""
+    i = lines.index("LAW CLERK#")
+    rows = []
+    for j in range(i + 1, len(lines) - 3):
+        if re.match(r"^(?:[IVXL]+|[A-Z])$", lines[j]) and re.match(r"^[A-Z]{3,}$", lines[j + 1]):
+            rows.append((lines[j], lines[j + 3]))
+    return rows
+
+
+def nv_washoe(lines):
+    """[(division, judge, chief?)] from the Second Judicial District Court's
+    Judges page, which lists each judge as "Honorable <name>" above the
+    department, under General Jurisdiction or Family Division."""
+    i = lines.index("District Court Judges")
+    div, rows = None, []
+    for j in range(i + 1, len(lines) - 1):
+        if lines[j] in ("General Jurisdiction", "Family Division"):
+            div = lines[j]
+        m = re.match(r"^Honorable (Chief Judge )?(.+)$", lines[j])
+        if m and re.match(r"^Department \d+$", lines[j + 1]):
+            rows.append((div, m.group(2), bool(m.group(1))))
+    return rows
+
+
+def nv_hand(text, today):
+    """(read date, [(district, judge)]) from the term-of-office list read by
+    hand, which must say who read it, when, and from where."""
+    lines = text.splitlines()
+    m = re.match(r"^%s(\d{4}-\d{2}-\d{2})\b" % re.escape(NV_HAND_HEAD), lines[0])
+    if not m or lines[1].strip() != NV_HAND_URL:
+        wcc.fail(LABEL, "nv: the term-of-office excerpt must open with who read it, on which "
+                 "day, and the list's address")
+    read = m.group(1)
+    if today >= NV_TERMS_END and datetime.date.fromisoformat(read) < NV_TERMS_END:
+        wcc.fail(LABEL, "nv: every term on the list read %s ended in January 2027; read the "
+                 "list again by hand before fetching" % read)
+    rows = []
+    for ln in lines[3:]:
+        mm = re.match(r"^(.+?) \| (\w+) Judicial District Court \(Dept\. \d+\)$", ln)
+        if not mm or mm.group(2) not in NV_ORD:
+            wcc.fail(LABEL, "nv: unreadable term-of-office line %r" % ln)
+        rows.append((NV_ORD.index(mm.group(2)) + 1, mm.group(1)))
+    return read, rows
+
+
+def fetch_nv(reader):
+    """Districts, counties and seats from NRS chapter 3; the Eighth District's
+    judges from its two division pages on clarkcountycourts.us and the
+    Second's from washoecourts.com; the other nine districts' from the Nevada
+    Judiciary's list of terms of office, whose host refuses this project's
+    reader, kept as an excerpt read once by hand. Every district's judges must
+    fill exactly the seats the statute sets."""
+    counties, seats = nv_statute(" ".join(reader.get(NV_NRS)))
+    out = ["district | %d | %s" % (d, ", ".join(counties[d])) for d in sorted(counties)]
+    judges = {}
+    for url, family, label in ((NV_CLARK[0], False, "District Judge"),
+                               (NV_CLARK[1], True, "District Judge, Family Division")):
+        rows = nv_clark(reader.get(url))
+        if len(rows) != seats[(8, family)] or len(set(r[0] for r in rows)) != len(rows):
+            wcc.fail(LABEL, "nv: %s lists %d departments, NRS sets %d seats"
+                     % (url, len(rows), seats[(8, family)]))
+        judges.setdefault(8, []).extend((label, person(n, "nv 8")) for _d, n in rows)
+    rows = nv_washoe(reader.get(NV_WASHOE))
+    for family, div in ((False, "General Jurisdiction"), (True, "Family Division")):
+        mine = [r for r in rows if r[0] == div]
+        if len(mine) != seats[(2, family)]:
+            wcc.fail(LABEL, "nv: the Second District's page lists %d %s judges, NRS sets %d"
+                     % (len(mine), div, seats[(2, family)]))
+        for _div, name, chief in mine:
+            role = "Chief Judge" if chief else (
+                "District Judge, Family Division" if family else "District Judge")
+            judges.setdefault(2, []).append((role, person(name, "nv 2")))
+    with open(NV_HAND) as fh:
+        read, rows = nv_hand(fh.read(), datetime.date.today())
+    for d, name in rows:
+        if d in (2, 8):
+            wcc.fail(LABEL, "nv: the term-of-office excerpt keeps a %s district judge; that "
+                     "district is read from its court's own page" % NV_ORD[d - 1])
+        judges.setdefault(d, []).append(("District Judge", person(name, "nv %d" % d)))
+    for d in sorted(counties):
+        want = seats.get((d, False), 0) + seats.get((d, True), 0)
+        if len(judges.get(d, [])) != want:
+            wcc.fail(LABEL, "nv %s district: %d judges named, NRS sets %d seats"
+                     % (NV_ORD[d - 1], len(judges.get(d, [])), want))
+        if d not in (2, 8):
+            out.append("read | %d | %s | %s" % (d, read, NV_HAND_FROM))
+        out.extend("judge | %d | %s | %s | " % (d, role, name) for role, name in judges[d])
+    return out
+
+
+FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al, "nv": fetch_nv,
             "or": fetch_or, "ks": fetch_ks, "ne": fetch_ne, "nd": fetch_nd, "oh": fetch_oh,
             "sd": fetch_sd}
 
 SOURCES_READ = {
     "al": "Code of Alabama 12-11-2 and 12-17-20 through https://alison.legislature.state.al.us/graphql, the address the Legislature's code page reads (circuits, counties, judges per circuit), and each county's court site <county>.alacourt.gov, linked from https://www.alacourt.gov/images/Alabama_circuits.svg (judges)",
+    "nv": "NRS 3.010 to 3.0197 on https://www.leg.state.nv.us/NRS/NRS-003.html (districts, counties and seats), the Eighth District's civil and criminal division and family division pages on https://www.clarkcountycourts.us/departments/judicial/ and https://www.washoecourts.com/Judges for the Second (judges), and for the other nine districts the Nevada Judiciary's list of judges' terms of office, read by hand (nv/data/source/courts/nv-term-of-office.txt)",
     "wv": "https://www.courtswv.gov/lower-courts/circuit-courts and the circuit court map PDF it links (circuits, counties and judges; the page's statewide count of circuit judges)",
     "pa": "https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts (counties), 42 Pa.C.S. section 911 on palegis.us (each court's number of judges) and https://www.pacourts.us/api/judgeView?judgeType=1, the feed the Common Pleas Judges page reads (judges; senior judges are not kept)",
     "wa": "https://www.courts.wa.gov/court_dir/?fa=court_dir.judicialdistricts (the superior courts and their counties), each county's Court Directory page (superior court judges; commissioners are not kept) and RCW 2.08.061 to 2.08.065 on lawfilesext.leg.wa.gov (the number of judges each court may have)",
@@ -1313,6 +1463,7 @@ def write_source(tag, lines):
         "# district | <district> | <counties, as the court lists them>",
         "# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>",
         "# vacant | <district> | <title> | | <county>",
+        "# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)",
     ]
     with open(path, "w") as fh:
         fh.write("\n".join(head + lines) + "\n")
@@ -1327,7 +1478,7 @@ def unit_key(tag, raw):
 
 def read_source(tag):
     cfg = STATES[tag]
-    read, districts, seats = None, {}, {}
+    read, districts, seats, apart = None, {}, {}, {}
     with open(source_path(tag)) as fh:
         for ln in fh:
             ln = ln.rstrip("\n")
@@ -1341,6 +1492,9 @@ def read_source(tag):
                 if unit in districts:
                     wcc.fail(LABEL, "%s lists district %s twice" % (tag, unit))
                 districts[unit] = [c.strip() for c in parts[2].split(",")]
+            elif kind == "read" and len(parts) == 4 and re.match(r"^\d{4}-\d{2}-\d{2}$", parts[2]) \
+                    and parts[3] and unit not in apart:
+                apart[unit] = {"read": parts[2], "from": parts[3]}
             elif kind in ("judge", "vacant") and len(parts) == 5:
                 seat = {"role": parts[2]}
                 if kind == "judge":
@@ -1369,7 +1523,10 @@ def read_source(tag):
                 wcc.fail(LABEL, "%s district %s: %s is beside a county outside "
                          "the district (%s)" % (tag, unit, s.get("name", "a vacancy"),
                                                 s["county"]))
-    return read, districts, seats
+    if set(apart) - set(districts):
+        wcc.fail(LABEL, "%s: a read line for districts %s that list no counties"
+                 % (tag, sorted(set(apart) - set(districts), key=str)))
+    return read, districts, seats, apart
 
 
 def tiling(tag, districts):
@@ -1383,8 +1540,15 @@ def tiling(tag, districts):
                       cfg["districts"], cfg["authority"])
 
 
-def roster(read, districts, seats):
-    return {str(u): {"read": read, "judges": seats.get(u, [])} for u in districts}
+def roster(read, districts, seats, apart):
+    """Each district's judges and the day they were read; a district read
+    apart from the rest carries its own day and where its names come from."""
+    out = {}
+    for u in districts:
+        own = apart.get(u) or {}
+        out[str(u)] = dict({"read": own.get("read", read), "judges": seats.get(u, [])},
+                           **({"from": own["from"]} if own else {}))
+    return out
 
 
 def roster_path(tag):
@@ -1392,21 +1556,21 @@ def roster_path(tag):
 
 
 def build(tag):
-    read, districts, seats = read_source(tag)
+    read, districts, seats, apart = read_source(tag)
     wcc.build(tag, LABEL, [tiling(tag, districts)])
     with open(roster_path(tag), "w") as fh:
-        json.dump(roster(read, districts, seats), fh, indent=1, ensure_ascii=False)
+        json.dump(roster(read, districts, seats, apart), fh, indent=1, ensure_ascii=False)
         fh.write("\n")
     print("%s: wrote %s-district-judges.json (%d seats, read %s)"
           % (LABEL, tag, sum(len(v) for v in seats.values()), read))
 
 
 def check(tag):
-    read, districts, seats = read_source(tag)
+    read, districts, seats, apart = read_source(tag)
     wcc.check(tag, LABEL, [tiling(tag, districts)])
     with open(roster_path(tag)) as fh:
         shipped = json.load(fh)
-    if shipped != roster(read, districts, seats):
+    if shipped != roster(read, districts, seats, apart):
         wcc.fail(LABEL, "%s-district-judges.json is not what %s says; re-run "
                  "this builder" % (tag, os.path.relpath(source_path(tag), ROOT)))
     print("%s: %s OK — %d districts, %d seats, read %s"
@@ -1455,6 +1619,20 @@ def selftest():
         ("Gregory S. Griggers", True), ("Jeffrey Todd Stearns", True),
         ("William H. Bostick, III (Bill)", False), ("Lee Carter", False)]
     assert al_key("George C. Day, Jr.") == al_key("George C. Day, Jr") == ("george", "day")
+    assert nv_clark(["DEPT#", "LOCATION", "CR#", "JUDGE", "JEA#", "LAW CLERK#", "I", "RJC", "14C",
+                     "Bita Yeager", "(702) 671-4324", "(702) 671-4328", "XXXII", "RJC", "5D",
+                     "Christy Craig", "Home", "+", "Departments"]) == [
+        ("I", "Bita Yeager"), ("XXXII", "Christy Craig")]
+    assert nv_washoe(["District Court Judges", "General Jurisdiction",
+                      "Honorable Kathleen M. Drakulich", "Department 1", "Biography",
+                      "Honorable Chief Judge Egan Walker", "Department 7", "Family Division",
+                      "Honorable Dixie Grossman", "Department 2", "General Jurisdiction",
+                      "75 Court Street"]) == [
+        ("General Jurisdiction", "Kathleen M. Drakulich", False),
+        ("General Jurisdiction", "Egan Walker", True), ("Family Division", "Dixie Grossman", False)]
+    assert nv_hand("\n".join([NV_HAND_HEAD + "2026-11-27 (a note).", NV_HAND_URL, "Kept: a note.",
+                              "Jason Woodbury | First Judicial District Court (Dept. 1)"]),
+                   datetime.date(2026, 12, 1)) == ("2026-11-27", [(1, "Jason Woodbury")])
     print("%s: selftest OK" % LABEL)
 
 

@@ -2814,9 +2814,11 @@ ANSWERS = {
             "or town limit the county governs. The 71 sub-county units the "
             "Census publishes for Nevada are census county divisions: statistical "
             "areas, not governments (measured 2026-11-11)."),
-        # District court judges are elected by judicial district and justices
-        # of the peace by township; neither is drawn or named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Nevada's 11 judicial districts of
+        # whole counties and names the district judges elected there (since
+        # 2026-11-27). Justices of the peace, elected by township, are not
+        # drawn or named yet.
+        "courts-by-district": answers("nv-judicial-district"),
         # The Clark County and Washoe County school boards elect trustees from
         # districts; no district is drawn or trustee named yet.
         "school-boards-by-district": OPEN,

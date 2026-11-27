@@ -198,10 +198,28 @@
       }
     },
     {
+      "id": "nv-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "11 judicial districts of whole counties, 26,034 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a congressional district",
+      "source": {
+        "answers": "The judicial district covering the point, its counties, and its district judges.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following NRS 3.010, which names each district's counties, read 2026-11-27 from the Legislature's site.",
+            "url": "https://www.leg.state.nv.us/NRS/NRS-003.html"
+          }
+        ],
+        "people": "The Eighth District's judges are named from its civil and criminal division and family division pages on clarkcountycourts.us and the Second's from washoecourts.com, read 2026-11-27 with this project's own client; the other nine districts' from the Nevada Judiciary's list of judges' terms of office, whose site refuses this project's reader, read once by hand on 2026-11-27. All are kept as text in nv/data/source/courts/; the fetch stops unless each district's judges fill exactly the seats NRS 3.011 to 3.0197 set. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the Nevada Constitution, Article 6, section 5.",
+        "applies": "Nevada — statewide, all 17 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "16 counties and Carson City, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -219,7 +237,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "17 school districts, as many as the state's 16 counties and Carson City, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -237,7 +255,7 @@
       "id": "nv-senate",
       "label": "Nevada Senate District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "21 Senate districts — smaller on average than a county, each made of two Assembly districts",
       "source": {
         "answers": "The Nevada Senate district covering the point, and the senator holding it.",
@@ -255,7 +273,7 @@
       "id": "nv-assembly",
       "label": "Nevada Assembly District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "42 Assembly districts — two in each Senate district",
       "source": {
         "answers": "The Nevada Assembly district covering the point, and the member holding it.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "182 ZIP Code Tabulation Areas inside Nevada (439 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "71 census county divisions, about 4,008 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -309,7 +327,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "19 incorporated cities, Carson City among them, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city containing the point, or that the point is outside every city.",
@@ -327,7 +345,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — Nevada has 35 pieces, 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines. The largest are the Pyramid Lake Paiute Reservation (1,889.4 km², Washoe County with slivers of Storey and Lyon), the Walker River Reservation (1,375.5 km², Mineral, Lyon and Churchill counties), the Duck Valley Reservation (582.7 km² in Nevada, 49.7% of it, Elko County), the Washoe Ranches Trust Land (377.1 km², mostly Douglas County), the Moapa River Indian Reservation (287.4 km², Clark County) and the Goshute Reservation (284.1 km² in Nevada, 58.4% of it, White Pine County); the smallest is the Battle Mountain Off-Reservation Trust Land (0.006 km², Lander County). Six pieces cross the state line and are drawn whole: the Duck Valley, Fort McDermitt (48.0% in Nevada), Goshute, Timbi-Sha Shoshone (78.1%) and Fort Mojave (11.5%) reservations and the Washoe Ranches Trust Land (99.7%). The Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe are seated in California and the Confederated Tribes of the Goshute Reservation in Utah. The Census draws no tribal district on any of this land. Ranked after municipalities and before the point layers, as Arizona's and Washington's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on most of this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Nevada has 35 such areas, held by 20 nations, 16 of them seated in Nevada, two (the Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe) in California, one (the Confederated Tribes of the Goshute Reservation) in Utah.",
@@ -345,7 +363,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -396,7 +414,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 39.16384,
     "lng": -119.76637,
@@ -418,6 +436,10 @@
     {
       "layer": "nv-assembly",
       "expected": "40"
+    },
+    {
+      "layer": "nv-judicial-district",
+      "expected": "1st Judicial District"
     }
   ],
   "negative_point": {
@@ -472,6 +494,12 @@
         "min_features": 35,
         "max_features": 35,
         "note": "Nevada's tribal land (scripts/build_tribal_areas.py) — 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, six pieces drawn whole across the state line, at the Census's own detail (345 KB, under the size at which Arizona's and Oklahoma's are simplified). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "nv-judicial-districts.json",
+        "min_features": 11,
+        "max_features": 11,
+        "note": "The 11 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in nv/data/source/courts/nv-courts.txt."
       }
     ],
     "rosters": [
@@ -504,6 +532,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Nevada elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from nv/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "nv-district-judges.json",
+        "min_keys": 11,
+        "note": "The judges of each of the 11 court districts, keyed by district, 90 seats read 2026-11-27 from the state's own court website into nv/data/source/courts/nv-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

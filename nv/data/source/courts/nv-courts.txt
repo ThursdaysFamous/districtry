@@ -1,0 +1,117 @@
+# Nevada court districts and judges, kept by scripts/build_state_courts.py --fetch nv
+# read: 2026-11-27
+# from: NRS 3.010 to 3.0197 on https://www.leg.state.nv.us/NRS/NRS-003.html (districts, counties and seats), the Eighth District's civil and criminal division and family division pages on https://www.clarkcountycourts.us/departments/judicial/ and https://www.washoecourts.com/Judges for the Second (judges), and for the other nine districts the Nevada Judiciary's list of judges' terms of office, read by hand (nv/data/source/courts/nv-term-of-office.txt)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)
+district | 1 | Carson City, Storey
+district | 2 | Washoe
+district | 3 | Lyon
+district | 4 | Elko
+district | 5 | Esmeralda, Nye
+district | 6 | Humboldt
+district | 7 | Eureka, White Pine, Lincoln
+district | 8 | Clark
+district | 9 | Douglas
+district | 10 | Churchill
+district | 11 | Lander, Mineral, Pershing
+read | 1 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 1 | District Judge | Jason Woodbury | 
+judge | 1 | District Judge | Kristin Luis | 
+judge | 2 | District Judge | Kathleen M. Drakulich | 
+judge | 2 | District Judge | Tammy M. Riggs | 
+judge | 2 | District Judge | Connie Steinheimer | 
+judge | 2 | District Judge | Lynne K. Jones | 
+judge | 2 | Chief Judge | Egan Walker | 
+judge | 2 | District Judge | Barry L. Breslow | 
+judge | 2 | District Judge | Scott N. Freeman | 
+judge | 2 | District Judge | Kathleen Sigurdson | 
+judge | 2 | District Judge | David Hardy | 
+judge | 2 | District Judge, Family Division | Dixie Grossman | 
+judge | 2 | District Judge, Family Division | Cynthia Lu | 
+judge | 2 | District Judge, Family Division | Paige Dollinger | 
+judge | 2 | District Judge, Family Division | Sandra A. Unsworth | 
+judge | 2 | District Judge, Family Division | Alexander C. Morey | 
+judge | 2 | District Judge, Family Division | Tamatha R. Schreinert | 
+judge | 2 | District Judge, Family Division | Aimee Banales | 
+read | 3 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 3 | District Judge | John Schlegelmilch | 
+judge | 3 | District Judge | Leon Aberasturi | 
+read | 4 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 4 | District Judge | Kriston N. Hill | 
+judge | 4 | District Judge | Alvin R. Kacin | 
+judge | 4 | District Judge | Mason Simons | 
+read | 5 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 5 | District Judge | Kimberly W. Wanker | 
+judge | 5 | District Judge | Robert W. Lane | 
+read | 6 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 6 | District Judge | Michael Montero | 
+read | 7 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 7 | District Judge | Steven Dobrescu | 
+judge | 7 | District Judge | Dylan Frehner | 
+judge | 8 | District Judge | Bita Yeager | 
+judge | 8 | District Judge | Carli Kierny | 
+judge | 8 | District Judge | Monica Trujillo | 
+judge | 8 | District Judge | Nadia Krall | 
+judge | 8 | District Judge | Veronica Barisich | 
+judge | 8 | District Judge | Jacqueline Bluth | 
+judge | 8 | District Judge | Danielle K. Pieper | 
+judge | 8 | District Judge | Jessica Peterson | 
+judge | 8 | District Judge | Maria Gall | 
+judge | 8 | District Judge | Tierra D. Jones | 
+judge | 8 | District Judge | Anna Albertson | 
+judge | 8 | District Judge | Michelle Leavitt | 
+judge | 8 | District Judge | Mark R. Denton | 
+judge | 8 | District Judge | Tina Talim | 
+judge | 8 | District Judge | Joe Hardy | 
+judge | 8 | District Judge | Timothy C. Williams | 
+judge | 8 | District Judge | Jennifer Schwartz | 
+judge | 8 | District Judge | Mary Kay Holthus | 
+judge | 8 | District Judge | Crystal Eller | 
+judge | 8 | District Judge | Eric Johnson | 
+judge | 8 | District Judge | Tara Clark Newberry | 
+judge | 8 | District Judge | Susan H. Johnson | 
+judge | 8 | District Judge | Jasmin Lilly-Spells | 
+judge | 8 | District Judge | Colleen Brown | 
+judge | 8 | District Judge | Kathleen E. Delaney | 
+judge | 8 | District Judge | Peter Thunell | 
+judge | 8 | District Judge | Erika Mendoza | 
+judge | 8 | District Judge | Ronald J. Israel | 
+judge | 8 | District Judge | Jacob A. Reynolds | 
+judge | 8 | District Judge | Jerry A. Wiese II | 
+judge | 8 | District Judge | Joanna S. Kishner | 
+judge | 8 | District Judge | Christy Craig | 
+judge | 8 | District Judge, Family Division | Mari D. Parlade | 
+judge | 8 | District Judge, Family Division | Linda Marquis | 
+judge | 8 | District Judge, Family Division | Gregory G. Gordon | 
+judge | 8 | District Judge, Family Division | Robert W. Teuton | 
+judge | 8 | District Judge, Family Division | Charles Hoskin | 
+judge | 8 | District Judge, Family Division | Denise L. Gentile | 
+judge | 8 | District Judge, Family Division | Rhonda K. Forsberg | 
+judge | 8 | District Judge, Family Division | T. Arthur Ritchie, Jr. | 
+judge | 8 | District Judge, Family Division | Sunny Bailey | 
+judge | 8 | District Judge, Family Division | Dee Butler | 
+judge | 8 | District Judge, Family Division | Cynthia N. Giuliani | 
+judge | 8 | District Judge, Family Division | David S. Gibson | 
+judge | 8 | District Judge, Family Division | Amy Mastin | 
+judge | 8 | District Judge, Family Division | Kerri Maxey | 
+judge | 8 | District Judge, Family Division | Regina M. McConnell | 
+judge | 8 | District Judge, Family Division | Mary Perry | 
+judge | 8 | District Judge, Family Division | Bryce C. Duckworth | 
+judge | 8 | District Judge, Family Division | Bill Henderson | 
+judge | 8 | District Judge, Family Division | Vincent Ochoa | 
+judge | 8 | District Judge, Family Division | Nadin Cutter | 
+judge | 8 | District Judge, Family Division | Dawn R. Throne | 
+judge | 8 | District Judge, Family Division | Margaret Pickard | 
+judge | 8 | District Judge, Family Division | Stacy M. Rocheleau | 
+judge | 8 | District Judge, Family Division | Heidi Almase | 
+judge | 8 | District Judge, Family Division | Adriana Rincon White | 
+judge | 8 | District Judge, Family Division | Michele Mercer | 
+read | 9 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 9 | District Judge | Nathan Tod Young | 
+judge | 9 | District Judge | Thomas W. Gregory | 
+read | 10 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 10 | District Judge | Thomas L. Stockard | 
+read | 11 | 2026-11-27 | The Nevada Judiciary's list of judges' terms of office, opened by hand in a web browser because its website is closed to this app's automated reader
+judge | 11 | District Judge | Bryce Shields | 

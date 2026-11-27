@@ -282,7 +282,7 @@ All 67 counties: cities, boroughs and townships, school districts, ZIP codes, an
 
 All 16 counties and Carson City: incorporated cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Nevada Senate, Assembly and U.S. House districts, with who holds each seat. County commissioners and city and school board members are not named yet, and the Data gaps panel says why.
 
-- [Nevada district lookup](https://districtry.com/nv/): 12 layers, all 16 counties and Carson City.
+- [Nevada district lookup](https://districtry.com/nv/): 13 layers, all 16 counties and Carson City.
 - [Who is my U.S. representative?](https://districtry.com/nv/congress.html)
 - [Sources & data layers](https://districtry.com/nv/sources.html)
 - [Who is my Nevada legislator?](https://districtry.com/nv/state-legislature.html)
