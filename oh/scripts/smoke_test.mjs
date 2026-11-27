@@ -1104,24 +1104,25 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES NOBODY AND SAYS SO. No list of county officials
-  //    has been read (gap oh-county-officials), so the card must name the
-  //    county, say how an Ohio county is governed and say nobody is named
-  //    rather than leave a reader to assume the list is empty. Which county
-  //    holds the Statehouse is read from the shipped county file, so the fixture
-  //    moves with a rebuild.
+  // 9. THE COUNTY CARD NAMES THE COUNTY'S COMMISSIONERS. Which county holds
+  //    the Statehouse, and who its commissioners are, are read from the
+  //    shipped files, so the fixture moves with a rebuild; the card must name
+  //    all three, the law that says how they are chosen and the date one seat
+  //    changes hands.
   {
     const counties = shipped("state-counties.json");
     const at = propsAt(counties, POINT)[0] || {};
+    const board = (shipped("oh-county-commissioners.json") || {})[at.GEOID] || {};
+    const members = board.members || [];
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
     const info = await cardText(page, "county");
     const text = info.text || "";
-    const want = [/County officials/, /board of three county commissioners/, /None of them is named here yet/];
-    const missing = want.filter((re) => !re.test(text));
-    check("the County card at the Statehouse names the county and says no county official is named",
-      !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
-      `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
+    const want = [/Board of County Commissioners/i, /Ohio Revised Code 305\.01/, /1 January 2027/];
+    const missing = want.filter((re) => !re.test(text)).concat(members.filter((n) => !text.includes(n)));
+    check("the County card at the Statehouse names the county and its three commissioners from the shipped file",
+      !info.error && !!at.NAME && text.includes(at.NAME) && members.length === 3 && missing.length === 0,
+      `file=${at.NAME} members=${members.length} missing=${missing} text=${text.slice(0, 160)}`);
     await context.close();
   }
 } finally {

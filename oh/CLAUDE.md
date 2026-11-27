@@ -97,10 +97,28 @@ as areas of their own, and 5 records of Lake Erie water with no land. The card n
 and its county and states its functional status in the Census's own terms; a status it does not know
 prints no row. No trustee or fiscal officer is named (gap `oh-townships`).
 
-**NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
-to assume the office is empty. Recorded as gaps `oh-county-officials` and
-`oh-municipal-officeholders`. Ohio's county commissioners are elected countywide, so naming them
-needs no district map.
+**THE COUNTY CARD NAMES EACH COUNTY'S COMMISSIONERS SINCE 2026-11-27, FROM THE COUNTY'S OWN
+WEBSITE.** No state office lists them, so `oh/data/source/oh-county-commissioner-seats.json`
+writes each county's three commissioners down by hand from its own page, and
+`oh/scripts/build_oh_county_commissioners.py` re-reads every page and refuses to write unless
+every name is on it (the proof `scripts/city_councils.py` uses, with pictures' alt text added for
+Champaign, and the script file the page loads for Carroll, Scioto and Jefferson). The County
+Commissioners Association of Ohio's roster was used only to find the websites and to cross-check.
+Every commissioner is elected by the whole county (Ohio Revised Code 305.01), and one seat in each
+board was on the 3 November 2026 ballot and changes hands on 1 January 2027, so the card dates the
+read and says so, and `oh/WATCH.md` has the January re-read. Greene, Montgomery and Portage answer
+this project's reader with HTTP 403 and Pike's page fills itself in through a WebAssembly program,
+so those four were read once by hand in Adam's Chrome and are proved against the dated excerpts in
+`oh/data/source/commissioners/`; their cards say they were read by hand. Adams was read by this project's reader earlier on
+2026-11-27, and later that day its robots.txt answered with a managed challenge, so its names are
+proved against an excerpt of that read and nothing more is fetched from it. Ashland (an expired
+certificate), Holmes (a captcha) and Lawrence (no county website names them) name nobody, each
+card saying why. Cuyahoga and Summit are governed by charters: their cards name the county
+executive and Summit's three at-large council members and link each council, whose districts are
+not drawn. `build_county_pages.py` reads the file for the status report but writes no Ohio
+county pages yet: Ohio sits in its `HELD_INSTANCES`, and the pages are their own change, the order
+Texas followed. The county's other elected officers and every city and village
+official are not named (gaps `oh-county-officials`, `oh-municipal-officeholders`).
 
 **THE COURT LAYER DRAWS OHIO'S 12 COURT OF APPEALS DISTRICTS AND NAMES THEIR JUDGES**
 (`oh-court-of-appeals`, since 2026-11-27). Each district is whole counties, dissolved from

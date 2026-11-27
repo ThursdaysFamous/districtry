@@ -16621,17 +16621,101 @@ function initOhioExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down. 88 features: Ohio's 88 counties.
    *
-   * NO OFFICEHOLDER YET. Each Ohio county is governed by an elected board of
-   * three county commissioners, except Cuyahoga and Summit, whose charters
-   * set up an elected county executive and county council. Each county also
-   * elects officers such as an auditor, a treasurer, a prosecuting attorney,
-   * a sheriff, a clerk of courts, a recorder, an engineer and a coroner. No
-   * list of any of them was read in this pass, so the card names the county
-   * and says nobody is named here. Recorded as gap oh-county-officials.
+   * THE CARD NAMES THE COUNTY'S GOVERNMENT, FROM ITS OWN WEBSITE. Eighty-six
+   * counties are governed by three commissioners, each elected by the whole
+   * county (Ohio Revised Code 305.01); Cuyahoga and Summit by a charter's
+   * county executive and county council. The names were written down from
+   * each county's own website and every build proves them against it
+   * (oh/scripts/build_oh_county_commissioners.py; data/app/
+   * oh-county-commissioners.json, keyed by county GEOID). One seat in each
+   * board was on the November 2026 ballot and changes hands, if it does, on
+   * 1 January 2027, so the card dates the read and says so. Neither charter
+   * council's districts are drawn, so those cards name the executive and any
+   * at-large members and link the council. Three counties name nobody, each
+   * card saying why. The county's other elected officers are not named
+   * (gap oh-county-officials).
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+  var loadCountyCommissioners = makeCached(function () {
+    return fetchJSONWithRetry("data/app/oh-county-commissioners.json", {}, 2);
+  });
+  var OH_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function ohDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return Number(m[3]) + " " + OH_MONTHS[Number(m[2]) - 1] + " " + m[1];
+  }
+  var OH_OTHER_OFFICERS = "The county also elects officers such as an auditor, a " +
+    "treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a " +
+    "recorder, an engineer and a coroner. They are not named here yet.";
+  function ohCountyGovernment(wrap, rec, failed) {
+    if (!rec) {
+      wrap.appendChild(renderFieldStack([{
+        label: "County government",
+        value: failed
+          ? "The list of county commissioners did not load, so no names are shown."
+          : "No county government is listed for this county."
+      }]));
+      return;
+    }
+    var read = ohDate(rec.read);
+    if (rec.kind === "charter") {
+      wrap.appendChild(renderSectionLabel("County executive"));
+      wrap.appendChild(renderPersonRows([{ name: String(rec.executive) }]));
+      var atLarge = (rec.atLarge || []).map(function (n) {
+        return { name: String(n), badge: "At large" };
+      });
+      if (atLarge.length) {
+        wrap.appendChild(renderSectionLabel(String(rec.body) + ", elected countywide"));
+        wrap.appendChild(renderPersonRows(atLarge));
+      }
+      wrap.appendChild(renderFieldStack([
+        { label: "How it is chosen",
+          value: String(rec.county) + " is governed under its charter by an " +
+            "elected county executive and a county council" +
+            (atLarge.length
+              ? " of " + (atLarge.length + rec.districtSeats) + " members: " +
+                rec.districtSeats + " elected from districts and " + atLarge.length +
+                " by the whole county."
+              : " of " + rec.districtSeats + " members, each elected from a district.") },
+        { label: "Your council district member",
+          value: "Not shown: this map does not draw the council's districts yet, " +
+            "so it cannot say which member represents this point. The council's " +
+            "own website can (link below)." },
+        { label: "Where these names come from",
+          value: "The county's own website" + (read ? ", read on " + read : "") + "." },
+        { label: "Other county officers", value: OH_OTHER_OFFICERS }
+      ]));
+      return;
+    }
+    var members = rec.members || [];
+    if (!members.length) {
+      wrap.appendChild(renderFieldStack([
+        { label: "Board of County Commissioners",
+          value: "Not named here. " + String(rec.unnamed || "") },
+        { label: "Other county officers", value: OH_OTHER_OFFICERS }
+      ]));
+      return;
+    }
+    wrap.appendChild(renderSectionLabel("Board of County Commissioners"));
+    wrap.appendChild(renderPersonRows(members.map(function (n) {
+      return { name: String(n) };
+    })));
+    wrap.appendChild(renderFieldStack([
+      { label: "How they are chosen",
+        value: "Three commissioners, each elected by the whole county to a " +
+          "four-year term (Ohio Revised Code 305.01). One seat was on the " +
+          "ballot on 3 November 2026, and its winner takes office on 1 January " +
+          "2027, so one of these names may change then." },
+      { label: "Where these names come from",
+        value: "The county's own website" + (read ? ", read " +
+          (rec.readByHand ? "by hand in a browser on " : "on ") + read : "") + "." },
+      { label: "Other county officers", value: OH_OTHER_OFFICERS }
+    ]));
+  }
 
   registerLayer({
     id: "county",
@@ -16651,12 +16735,32 @@ function initOhioExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"])
         };
+        // the board list is same-origin; its failure shows in the card
+        // section only, never as a failed County card
+        return loadCountyCommissioners().then(function (r) {
+          result.government = (r && r[String(result.geoid)]) || null;
+          return result;
+        }, function () {
+          result.governmentFailed = true;
+          return result;
+        });
       });
+    },
+    primaryLink: function (result) {
+      var rec = result && result.government;
+      if (!rec) return null;
+      if (rec.kind === "charter" && rec.councilUrl) {
+        return { label: String(rec.body), url: String(rec.councilUrl) };
+      }
+      if (rec.sourceUrl) {
+        return { label: String(rec.county) + " commissioners", url: String(rec.sourceUrl) };
+      }
+      return null;
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
@@ -16664,18 +16768,7 @@ function initOhioExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County officials",
-        value: "Each Ohio county is governed by an elected board of three " +
-          "county commissioners, unless its charter sets up another " +
-          "government, as Cuyahoga's and Summit's do (an elected county " +
-          "executive and county council). The county also elects officers " +
-          "such as an auditor, a treasurer, a prosecuting attorney, a sheriff, " +
-          "a clerk of courts, a recorder, an engineer and a coroner. None of " +
-          "them is named here yet, and this app does not guess in the " +
-          "meantime, so the county's own website is " +
-          "the current source."
-      }]));
+      ohCountyGovernment(wrap, result.government, result.governmentFailed);
       return wrap;
     }
   });

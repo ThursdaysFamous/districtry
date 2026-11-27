@@ -77,7 +77,7 @@ different thing from one it failed.
 | nm | **EAM·** | 33 | 33/33 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | nv | **EAM·** | 17 | 17/17 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 39 | all | 10 of 14 levels |
-| oh | **EAM·** | 88 | 88/88 § | 0 | 0 | by record | 14 | all | 8 of 14 levels |
+| oh | **EAM·** | 88 | 88/88 § | 0 | 0 | by record | 15 | all | 8 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 22 | all | 10 of 14 levels |
 | or | **EAM·** | 36 | 36/36 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | pa | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -583,11 +583,11 @@ this instance is in maintenance.
 
 ### oh — EAM·
 
-- **Examined by a statewide record:** `oh-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 88 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `oh-county-officials` accounts for every county in the state, which is what Examined rests on here: 83 of 88 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `oh-district-judges.json`, `oh-house-districts.json`, `oh-judicial-districts.json`, `oh-senate-districts.json`, `oh/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `oh-county-commissioners.json`, `oh-district-judges.json`, `oh-house-districts.json`, `oh-judicial-districts.json`, `oh-senate-districts.json`, `oh/data/app/population/`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 0 of 88 counties name a governing body
+  - **4. The county governing body, in every county of the state** — open. 83 of 88 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 103 units at 25,000+ name a governing body; unanswered: Akron city, Anderson township, Athens township, Austintown township, Avon Lake city, Barberton city, Batavia township, Bath township and 95 more
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)

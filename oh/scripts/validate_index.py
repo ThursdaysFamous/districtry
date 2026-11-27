@@ -118,6 +118,7 @@ ROSTER_FILES = {
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "statewide-officials.json": 5,  # The officers Ohio elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from oh/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "oh-district-judges.json": 12,  # The judges of each of the 12 court districts, keyed by district, 67 seats read 2026-11-27 from the state's own court website into oh/data/source/courts/oh-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
+    "oh-county-commissioners.json": 88,  # Each county's government, keyed by county GEOID: the three commissioners of 83 counties, Cuyahoga's and Summit's county executive and Summit's at-large council members, and why three counties name nobody, written down from each county's own website on 2026-11-27 into oh/data/source/oh-county-commissioner-seats.json and built by oh/scripts/build_oh_county_commissioners.py, which re-reads every page and refuses to write unless every name is on it; its --check holds this file to the seats file. No weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at
@@ -727,14 +728,13 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
     same shape, closed this after seven counties sat greyed out for two days
     with every gate in the repo green; Iowa carried the identical hole.
 
-    ONE COMPARAND, THE COUNTY GEOMETRY. This instance ships no county roster
-    yet (gap oh-county-officials), so state-counties.json, which draws the 88
-    counties, is the only file enumerating the counties its cards answer for,
-    the shape the instances without a county roster have always used. The
-    ring and the geometry must name the same counties: the wash may not grey
-    out a county whose card answers, and may not promise one the app cannot
-    draw. When a county roster ships, hold the ring to it as well, the way
-    Iowa and West Virginia do.
+    TWO COMPARANDS. state-counties.json draws the 88 counties, and since
+    2026-11-27 oh-county-commissioners.json carries a record for each one (its
+    commissioners, its charter government, or why it names nobody). The ring,
+    the geometry and the roster must name the same counties: the wash may not
+    grey out a county whose card answers, may not promise one the app cannot
+    draw, and no county card may find no record, the way Iowa and West
+    Virginia are held.
     """
     outline_py = os.path.join(repo_root, "scripts", "build_metro_outline.py")
     counties_path = os.path.join(app_dir, "state-counties.json")
@@ -779,6 +779,17 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
              "draw: %s. Either the county layer stopped resolving (rebuild it) or "
              "the county was added to the ring too early."
              % ("ies are" if len(promised) > 1 else "y is", ", ".join(promised)))
+
+    roster_path = os.path.join(app_dir, "oh-county-commissioners.json")
+    if not os.path.exists(roster_path):
+        fail("oh-county-commissioners.json not found — the County card reads it")
+        return 0
+    with open(roster_path, encoding="utf-8") as f:
+        roster = {k[-3:] for k in json.load(f) if len(k) == 5 and k.startswith("39")}
+    if roster != drawn:
+        fail("oh-county-commissioners.json and state-counties.json name different "
+             "counties: no record for %s, a record for no drawn county %s"
+             % (sorted(drawn - roster) or "none", sorted(roster - drawn) or "none"))
 
     return len(in_ring)
 

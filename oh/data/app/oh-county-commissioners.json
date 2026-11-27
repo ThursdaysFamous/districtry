@@ -1,0 +1,968 @@
+{
+ "39001": {
+  "county": "Adams County",
+  "kind": "commissioners",
+  "members": [
+   "Barbara Moore Holt",
+   "Kelly Jones",
+   "Jason Hayslip"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://adamscountyoh.gov/commissioners/"
+ },
+ "39003": {
+  "county": "Allen County",
+  "kind": "commissioners",
+  "members": [
+   "Cory Noonan",
+   "Beth Seibert",
+   "Brian Winegardner"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://commissioners.allencountyohio.com/"
+ },
+ "39005": {
+  "county": "Ashland County",
+  "kind": "commissioners",
+  "members": [],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.ashlandcounty.org/",
+  "unnamed": "Ashland County's website could not be read on 27 November 2026: its security certificate had expired, and this project's reader does not open a site whose certificate fails."
+ },
+ "39007": {
+  "county": "Ashtabula County",
+  "kind": "commissioners",
+  "members": [
+   "Casey R. Kozlowski",
+   "Kathryn L. Whittington",
+   "J.P Ducro, IV"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.ashtabulacounty.gov/220/Commissioners"
+ },
+ "39009": {
+  "county": "Athens County",
+  "kind": "commissioners",
+  "members": [
+   "Lenny Eliason",
+   "Charlie Adkins",
+   "Chris Chmiel"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.athensoh.org/government/commissioners/index.php"
+ },
+ "39011": {
+  "county": "Auglaize County",
+  "kind": "commissioners",
+  "members": [
+   "David Bambauer",
+   "Douglas A. Spencer",
+   "John N. Bergman"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www2.auglaizecounty.org/elected-officials/board-county-commissioners"
+ },
+ "39013": {
+  "county": "Belmont County",
+  "kind": "commissioners",
+  "members": [
+   "Jerry Echemann",
+   "Vince Gianangeli",
+   "J. P. Dutton"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://belmontcountycommissioners.com/meet-the-commissioners-2"
+ },
+ "39015": {
+  "county": "Brown County",
+  "kind": "commissioners",
+  "members": [
+   "Tony Applegate",
+   "Barry Woodruff",
+   "Gordon Ellis"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.browncountyohio.gov/index.php/commissioners42"
+ },
+ "39017": {
+  "county": "Butler County",
+  "kind": "commissioners",
+  "members": [
+   "T.C. Rogers",
+   "Cindy Carpenter",
+   "Donald L. Dixon"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.bcohio.gov/board_of_commissioners/index.php"
+ },
+ "39019": {
+  "county": "Carroll County",
+  "kind": "commissioners",
+  "members": [
+   "Donald E. Leggett II",
+   "Christopher R. Modranski",
+   "Robert E. Wirkner"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://carrollcountyohio.us/Officials"
+ },
+ "39021": {
+  "county": "Champaign County",
+  "kind": "commissioners",
+  "members": [
+   "Tim Cassady",
+   "Steven R. Hess",
+   "Nino Vitale"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "http://www.co.champaign.oh.us/commissioners/body_index.html"
+ },
+ "39023": {
+  "county": "Clark County",
+  "kind": "commissioners",
+  "members": [
+   "Sasha Rittenhouse",
+   "Charles Patterson",
+   "Greg Kaffenbarger"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://clarkcountyohio.gov/directory.aspx?did=30"
+ },
+ "39025": {
+  "county": "Clermont County",
+  "kind": "commissioners",
+  "members": [
+   "Bonnie Batchler",
+   "David Painter",
+   "Claire Corcoran"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://bcc.clermontcountyohio.gov/"
+ },
+ "39027": {
+  "county": "Clinton County",
+  "kind": "commissioners",
+  "members": [
+   "Kerry R. Steed",
+   "Brenda K. Woods",
+   "Mike McCarty"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://co.clinton.oh.us/MeetYourCommissioners"
+ },
+ "39029": {
+  "county": "Columbiana County",
+  "kind": "commissioners",
+  "members": [
+   "Mike Halleck",
+   "Roy Paparodis",
+   "Tim Ginter"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "http://www.cccommissioners.org/commisioners-bios"
+ },
+ "39031": {
+  "county": "Coshocton County",
+  "kind": "commissioners",
+  "members": [
+   "Dane Shryock",
+   "Gary L. Fischer",
+   "Robert W. Bigrigg"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.coshoctoncounty.net/boc/about-us/"
+ },
+ "39033": {
+  "county": "Crawford County",
+  "kind": "commissioners",
+  "members": [
+   "Tim Ley",
+   "Larry Schmidt",
+   "Jeff Price"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://commissioners.crawford-co.org/"
+ },
+ "39035": {
+  "atLarge": [],
+  "body": "Cuyahoga County Council",
+  "councilUrl": "https://www.cuyahogacounty.gov/council",
+  "county": "Cuyahoga County",
+  "districtSeats": 11,
+  "executive": "Chris Ronayne",
+  "executiveUrl": "https://www.cuyahogacounty.gov/executive",
+  "kind": "charter",
+  "read": "2026-11-27"
+ },
+ "39037": {
+  "county": "Darke County",
+  "kind": "commissioners",
+  "members": [
+   "Matt Aultman",
+   "Aaron Flatter",
+   "Marshall Combs"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.mydarkecounty.com/countyoffices"
+ },
+ "39039": {
+  "county": "Defiance County",
+  "kind": "commissioners",
+  "members": [
+   "Dana Phipps",
+   "Mick Pocratsky",
+   "Matthew Koester"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.defiance-county.com/board-of-commissioners/index.php"
+ },
+ "39041": {
+  "county": "Delaware County",
+  "kind": "commissioners",
+  "members": [
+   "Jeff Benton",
+   "Barb Lewis",
+   "Gary Merrell"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://co.delaware.oh.us/commissioners/"
+ },
+ "39043": {
+  "county": "Erie County",
+  "kind": "commissioners",
+  "members": [
+   "Patrick J. Shenigo",
+   "Mathew R. Old",
+   "Stephen L. Shoffner"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.eriecounty.oh.gov/BoardofCommissioners.aspx"
+ },
+ "39045": {
+  "county": "Fairfield County",
+  "kind": "commissioners",
+  "members": [
+   "Steve Davis",
+   "David L. Levacy",
+   "Jeff Fix"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.fairfield.oh.us/"
+ },
+ "39047": {
+  "county": "Fayette County",
+  "kind": "commissioners",
+  "members": [
+   "Tony Anderson",
+   "Jim Garland",
+   "Donnie Fleak"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.fayette-co-oh.com/254/County-Commissioners"
+ },
+ "39049": {
+  "county": "Franklin County",
+  "kind": "commissioners",
+  "members": [
+   "John O'Grady",
+   "Kevin L. Boyce",
+   "Erica C. Crawley"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.franklincountyohio.gov/County-Government/Meet-Your-Commissioners"
+ },
+ "39051": {
+  "county": "Fulton County",
+  "kind": "commissioners",
+  "members": [
+   "Jeff Rupp",
+   "RJ Lumbrezer",
+   "Joe Short"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.fultoncountyoh.com/210/County-Commissioners"
+ },
+ "39053": {
+  "county": "Gallia County",
+  "kind": "commissioners",
+  "members": [
+   "Jeremy Kroll",
+   "Jay Stapleton",
+   "Tony Hughes"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://galliacountyoh.gov/commissioners/"
+ },
+ "39055": {
+  "county": "Geauga County",
+  "kind": "commissioners",
+  "members": [
+   "Carolyn Brakey",
+   "James W. Dvorak",
+   "Ralph Spidalieri"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://bocc.geauga.oh.gov/"
+ },
+ "39057": {
+  "county": "Greene County",
+  "kind": "commissioners",
+  "members": [
+   "Richard Gould",
+   "Thomas R. Koogler",
+   "Sarah J. Mays"
+  ],
+  "read": "2026-11-27",
+  "readByHand": true,
+  "sourceUrl": "https://www.greenecountyohio.gov/649/Meet-the-Commissioners"
+ },
+ "39059": {
+  "county": "Guernsey County",
+  "kind": "commissioners",
+  "members": [
+   "Jack Marlin",
+   "Dave Wilson",
+   "Bill Cowgill"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://guernseycounty.gov/guernsey-county-commissioners/"
+ },
+ "39061": {
+  "county": "Hamilton County",
+  "kind": "commissioners",
+  "members": [
+   "Stephanie Summerow Dumas",
+   "Alicia Reece",
+   "Denise Driehaus"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.hamiltoncountyohio.gov/government/county_commissioners/index.php"
+ },
+ "39063": {
+  "county": "Hancock County",
+  "kind": "commissioners",
+  "members": [
+   "William L. Bateson",
+   "Timothy K. Bechtol",
+   "Jeffrey Hunker"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.hancock.oh.us/303/Commissioners"
+ },
+ "39065": {
+  "county": "Hardin County",
+  "kind": "commissioners",
+  "members": [
+   "Tim L. Striker",
+   "Joseph C. Sherman",
+   "Fred M. Rush"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://hardincountyohio.gov/commissioners/"
+ },
+ "39067": {
+  "county": "Harrison County",
+  "kind": "commissioners",
+  "members": [
+   "Amy Norris",
+   "Paul Prevot",
+   "Dustin Corder"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.harrisoncountyohio.gov/harrison-county-commissioners"
+ },
+ "39069": {
+  "county": "Henry County",
+  "kind": "commissioners",
+  "members": [
+   "Jeff Brubaker",
+   "Glenn Miller",
+   "Joel Miller"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.henrycountyohio.gov/229/Board-of-Commissioners"
+ },
+ "39071": {
+  "county": "Highland County",
+  "kind": "commissioners",
+  "members": [
+   "Terry Britton",
+   "David Daniels",
+   "Brad Roades"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.highland.oh.us/offices/commissioners.html"
+ },
+ "39073": {
+  "county": "Hocking County",
+  "kind": "commissioners",
+  "members": [
+   "Andrew Davidson",
+   "Jason D'Onofrio",
+   "Michael Linton"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.hocking.oh.gov/Commissioners"
+ },
+ "39075": {
+  "county": "Holmes County",
+  "kind": "commissioners",
+  "members": [],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.holmescountycommissioners.com/",
+  "unnamed": "Holmes County's commissioners' website answers this project with a captcha, and this project does not solve captchas."
+ },
+ "39077": {
+  "county": "Huron County",
+  "kind": "commissioners",
+  "members": [
+   "Bob Morgan",
+   "Harry Brady",
+   "Tom Dunlap"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.huroncounty-oh.gov/departments/commissioners/index.php"
+ },
+ "39079": {
+  "county": "Jackson County",
+  "kind": "commissioners",
+  "members": [
+   "Donnie Willis",
+   "Jon Hensler",
+   "Paul Haller"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.jacksoncountyohio.us/elected-officials/commissioners/"
+ },
+ "39081": {
+  "county": "Jefferson County",
+  "kind": "commissioners",
+  "members": [
+   "Eric Timmons",
+   "Ronald “Jake” Kleineke",
+   "Tony Morelli"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://jeffersoncountyoh.com/commissioners"
+ },
+ "39083": {
+  "county": "Knox County",
+  "kind": "commissioners",
+  "members": [
+   "Drenda Keesee",
+   "Barry Lester",
+   "Bill Pursel"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.knox.oh.us/171/Commissioners"
+ },
+ "39085": {
+  "county": "Lake County",
+  "kind": "commissioners",
+  "members": [
+   "John T. Plecnik",
+   "Morris W. Beverage III",
+   "Morgan R. McIntosh"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.lakecountyohio.gov/commissioners-office/"
+ },
+ "39087": {
+  "county": "Lawrence County",
+  "kind": "commissioners",
+  "members": [],
+  "read": "2026-11-27",
+  "unnamed": "No Lawrence County website naming the commissioners was found: the address the County Commissioners Association of Ohio lists for the county is a chamber of commerce's site, and the domain of the county's e-mail addresses serves only a placeholder page."
+ },
+ "39089": {
+  "county": "Licking County",
+  "kind": "commissioners",
+  "members": [
+   "Timothy E. Bubb",
+   "Duane H. Flowers",
+   "Rick Black"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://lickingcounty.gov/depts/commissioners/"
+ },
+ "39091": {
+  "county": "Logan County",
+  "kind": "commissioners",
+  "members": [
+   "Joe Antram",
+   "Greg Fitzpatrick",
+   "Michael E. Yoder"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.logancountyohio.gov/commissioners.html"
+ },
+ "39093": {
+  "county": "Lorain County",
+  "kind": "commissioners",
+  "members": [
+   "David J. Moore",
+   "Marty Gallagher",
+   "Jeff Riddell"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.loraincountyohio.gov/170/Commissioners"
+ },
+ "39095": {
+  "county": "Lucas County",
+  "kind": "commissioners",
+  "members": [
+   "Lisa A. Sobecki",
+   "Pete Gerken",
+   "Anita Lopez"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.lucascountyoh.gov/62/Board-of-County-Commissioners"
+ },
+ "39097": {
+  "county": "Madison County",
+  "kind": "commissioners",
+  "members": [
+   "Tony Xenikis",
+   "Chris Wallace",
+   "Brendan Shea"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.madison.oh.us/departments/county_officials/county_commissioners/index.php"
+ },
+ "39099": {
+  "county": "Mahoning County",
+  "kind": "commissioners",
+  "members": [
+   "Geno DiFabio",
+   "Carol Rimedio-Righetti",
+   "Anthony Traficanti"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.mahoningcountyoh.gov/776/About-the-Commissioners"
+ },
+ "39101": {
+  "county": "Marion County",
+  "kind": "commissioners",
+  "members": [
+   "Kevin Davidson",
+   "Andy Appelfeller",
+   "Mark Davis"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.marion.oh.us/elected_offices/meet_the_commissioners.php"
+ },
+ "39103": {
+  "county": "Medina County",
+  "kind": "commissioners",
+  "members": [
+   "Colleen M. Swedyk",
+   "Stephen D. Hambley",
+   "Aaron M. Harrison"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.medinaco.org/county-commissioners/board-members/"
+ },
+ "39105": {
+  "county": "Meigs County",
+  "kind": "commissioners",
+  "members": [
+   "Shannon Miller",
+   "Jimmy Will",
+   "Zach Manuel"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://meigscountycommissioners.com/"
+ },
+ "39107": {
+  "county": "Mercer County",
+  "kind": "commissioners",
+  "members": [
+   "Brian Miller",
+   "Rick Muhlenkamp",
+   "Dave Buschur"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.mercercountyoh.gov/elected-officials/commissioners/"
+ },
+ "39109": {
+  "county": "Miami County",
+  "kind": "commissioners",
+  "members": [
+   "Wade H. Westfall",
+   "Gregory A. Simmons",
+   "Ted S. Mercer"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.miamicountyohio.gov/commissioners/"
+ },
+ "39111": {
+  "county": "Monroe County",
+  "kind": "commissioners",
+  "members": [
+   "Mick Schumacher",
+   "Bill Bolon",
+   "Diane Burkhart"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.monroecountyohio.net/government/commissioners/index.php"
+ },
+ "39113": {
+  "county": "Montgomery County",
+  "kind": "commissioners",
+  "members": [
+   "Judy Dodge",
+   "Carolyn Rice",
+   "Mary A. McDonald"
+  ],
+  "read": "2026-11-27",
+  "readByHand": true,
+  "sourceUrl": "https://www.mcohio.org/685/Board-of-County-Commissioners"
+ },
+ "39115": {
+  "county": "Morgan County",
+  "kind": "commissioners",
+  "members": [
+   "Steve Best",
+   "Heidi Maxwell",
+   "Cecil Mayle"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.morgancounty-oh.gov/commissioners.html"
+ },
+ "39117": {
+  "county": "Morrow County",
+  "kind": "commissioners",
+  "members": [
+   "Jon Mason",
+   "Tim Siegfried",
+   "Tim Abraham"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.morrowcountyohio.gov/government/commissioners/index.php"
+ },
+ "39119": {
+  "county": "Muskingum County",
+  "kind": "commissioners",
+  "members": [
+   "Melissa Bell",
+   "Cindy S. Cameron",
+   "Drake Prouty"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.muskingumcountyoh.gov/Offices/Commissioners/"
+ },
+ "39121": {
+  "county": "Noble County",
+  "kind": "commissioners",
+  "members": [
+   "Gary Saling",
+   "Brian D. Carter",
+   "Floyd Allen Fraley"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://noblecountyohio.gov/commissioners/"
+ },
+ "39123": {
+  "county": "Ottawa County",
+  "kind": "commissioners",
+  "members": [
+   "Mark W. Stahl",
+   "Donald A. Douglas",
+   "Mark E. Coppeler"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.ottawa.oh.us/365/Commissioners"
+ },
+ "39125": {
+  "county": "Paulding County",
+  "kind": "commissioners",
+  "members": [
+   "Mike Weible",
+   "Lisa McClure",
+   "Mark Holtsberry"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.pauldingcountycommissioners.com/officials/"
+ },
+ "39127": {
+  "county": "Perry County",
+  "kind": "commissioners",
+  "members": [
+   "Scott Owen",
+   "Chase Bennett",
+   "Ben Carpenter"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://perrycountyohio.gov/services/perry-county-ohio-commissioners/"
+ },
+ "39129": {
+  "county": "Pickaway County",
+  "kind": "commissioners",
+  "members": [
+   "Jay H. Wippel",
+   "Harold Henson",
+   "Gary Scherer"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://pickawaycountyohio.gov/offices/commissioners/"
+ },
+ "39131": {
+  "county": "Pike County",
+  "kind": "commissioners",
+  "members": [
+   "Tony Montgomery",
+   "Jerry Miller",
+   "Jeff Chattin"
+  ],
+  "read": "2026-11-27",
+  "readByHand": true,
+  "sourceUrl": "https://www.pikecountyohcommissioners.gov/board"
+ },
+ "39133": {
+  "county": "Portage County",
+  "kind": "commissioners",
+  "members": [
+   "Mike Tinlin",
+   "Jill Crawford",
+   "Sabrina Christian-Bennett"
+  ],
+  "read": "2026-11-27",
+  "readByHand": true,
+  "sourceUrl": "https://www.portagecounty-oh.gov/portage-county-board-commissioners"
+ },
+ "39135": {
+  "county": "Preble County",
+  "kind": "commissioners",
+  "members": [
+   "Adam Craft",
+   "Rachael Vonderhaar",
+   "David Haber"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.prebco.org/254/Board-of-County-Commissioners"
+ },
+ "39137": {
+  "county": "Putnam County",
+  "kind": "commissioners",
+  "members": [
+   "Tim Wehri",
+   "Brad Brubaker",
+   "John Schlumbohm"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://putnamcountyohio.gov/commissioners/"
+ },
+ "39139": {
+  "county": "Richland County",
+  "kind": "commissioners",
+  "members": [
+   "Darrell Banks",
+   "Cliff Mears",
+   "Tony Vero"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.richlandcountyoh.gov/departments/staff_directory/boardofcommissioners"
+ },
+ "39141": {
+  "county": "Ross County",
+  "kind": "commissioners",
+  "members": [
+   "Jack Everson",
+   "James E. Lowe",
+   "David Glass"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.rosscountyohio.gov/commissioners/"
+ },
+ "39143": {
+  "county": "Sandusky County",
+  "kind": "commissioners",
+  "members": [
+   "Scott Miller",
+   "Russ Zimmerman",
+   "Justin Smith"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://sanduskycountyoh.gov/index.php?page=commissioner-s-office"
+ },
+ "39145": {
+  "county": "Scioto County",
+  "kind": "commissioners",
+  "members": [
+   "Merit Smith",
+   "Scottie Powell",
+   "Steven W. Mault"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.sciotocountyoh.com/commissioners"
+ },
+ "39147": {
+  "county": "Seneca County",
+  "kind": "commissioners",
+  "members": [
+   "Anthony Paradiso",
+   "Bill Frankart",
+   "Brent Busdeker"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://senecacountyohio.gov/"
+ },
+ "39149": {
+  "county": "Shelby County",
+  "kind": "commissioners",
+  "members": [
+   "Julie Ehemann",
+   "Mack Knupp",
+   "Bruce Metz"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.shelby.oh.us/228/Board-of-County-Commissioners"
+ },
+ "39151": {
+  "county": "Stark County",
+  "kind": "commissioners",
+  "members": [
+   "Alan Harold",
+   "Richard Regula",
+   "Bill Smith"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.starkcountyohio.gov/government/offices/commissioners/index.php"
+ },
+ "39153": {
+  "atLarge": [
+   "John Donofrio",
+   "Erin Dickinson",
+   "Elizabeth Walters"
+  ],
+  "body": "Summit County Council",
+  "councilUrl": "https://council.summitoh.net/",
+  "county": "Summit County",
+  "districtSeats": 8,
+  "executive": "Ilene Shapiro",
+  "executiveUrl": "https://co.summitoh.net/home/Summit-County-Executive.html",
+  "kind": "charter",
+  "read": "2026-11-27"
+ },
+ "39155": {
+  "county": "Trumbull County",
+  "kind": "commissioners",
+  "members": [
+   "Tony Bernard",
+   "Rick Hernandez",
+   "Denny Malloy"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.trumbull.oh.us/Commissioners"
+ },
+ "39157": {
+  "county": "Tuscarawas County",
+  "kind": "commissioners",
+  "members": [
+   "Mitch Pace",
+   "Greg Ress",
+   "Kristin Zemis"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.tuscarawas.oh.us/government/commissioners/index.php"
+ },
+ "39159": {
+  "county": "Union County",
+  "kind": "commissioners",
+  "members": [
+   "Tom McCarthy",
+   "Steve Robinson",
+   "Shaun Bailey"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.unioncountyohio.gov/meet-the-commissioners-52095"
+ },
+ "39161": {
+  "county": "Van Wert County",
+  "kind": "commissioners",
+  "members": [
+   "Thad Lichtensteiger",
+   "Stan D. Owens",
+   "Todd D. Wolfrum"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.vanwertcountyohio.gov/government/county_commissioners/index.php"
+ },
+ "39163": {
+  "county": "Vinton County",
+  "kind": "commissioners",
+  "members": [
+   "Kevin Cozad",
+   "Tim Eberts",
+   "Jeffery Harper, III"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://vintoncounty.com/vinton_government/county-commissioners/"
+ },
+ "39165": {
+  "county": "Warren County",
+  "kind": "commissioners",
+  "members": [
+   "Tom Grossmann",
+   "Shannon Jones",
+   "David G. Young"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://commissioners.warrencountyohio.gov/"
+ },
+ "39167": {
+  "county": "Washington County",
+  "kind": "commissioners",
+  "members": [
+   "Charlie Schilling",
+   "Eddie Place",
+   "Greg Nohe"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.washingtongov.org/238/Board-of-County-Commissioners"
+ },
+ "39169": {
+  "county": "Wayne County",
+  "kind": "commissioners",
+  "members": [
+   "Matt Martin",
+   "Jonathan Hofstetter",
+   "Dave McMillen"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.wayneohio.org/board-of-commissioners/"
+ },
+ "39171": {
+  "county": "Williams County",
+  "kind": "commissioners",
+  "members": [
+   "Scott A. Lirot",
+   "Bartley E. Westfall",
+   "Matthew A. Grube"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.williamscountyoh.gov/280/Commissioners"
+ },
+ "39173": {
+  "county": "Wood County",
+  "kind": "commissioners",
+  "members": [
+   "Doris I. Herringshaw",
+   "Theodore H. Bowlus",
+   "Craig LaHote"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.woodcountyohio.gov/Directory.aspx?DID=9"
+ },
+ "39175": {
+  "county": "Wyandot County",
+  "kind": "commissioners",
+  "members": [
+   "David Courtad",
+   "Brad Batton",
+   "Steve Heinlen"
+  ],
+  "read": "2026-11-27",
+  "sourceUrl": "https://www.co.wyandot.oh.us/202/Elected-Officials"
+ }
+}

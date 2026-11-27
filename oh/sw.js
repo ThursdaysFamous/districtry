@@ -63,6 +63,7 @@ const ROSTER_URLS = [
   "./data/app/coverage-gaps.json",
   "./data/app/statewide-officials.json",
   "./data/app/oh-district-judges.json",
+  "./data/app/oh-county-commissioners.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

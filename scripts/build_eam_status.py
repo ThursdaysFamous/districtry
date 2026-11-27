@@ -3026,8 +3026,12 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("oh-senate", "oh-house"),
         "county-boundaries": answers("county"),
-        # No county commissioner is named yet (the state-level launch names
-        # the legislature first, Adam's plan of 2026-11-10).
+        # Since 2026-11-27 the County card names the three commissioners of 83
+        # counties from each county's own website, counted through
+        # build_county_pages' oh_commissioners adapter. Ashland, Holmes and
+        # Lawrence name nobody, and Cuyahoga's and Summit's charter councils are
+        # elected mostly by district and not drawn, so all five stay open (gap
+        # oh-county-officials).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # No city or village council is named yet.

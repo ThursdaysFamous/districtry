@@ -1,0 +1,10 @@
+Read once in Adam's Chrome, 2026-11-27 ~15:40 UTC (our script reader gets HTTP 403).
+URL: https://www.greenecountyohio.gov/649/Meet-the-Commissioners
+Page text (commissioner part):
+Commissioner Dick Gould
+Current Term: January 1, 2023 through December 31, 2026
+Commissioner Tom Koogler
+Current Term: January 3, 2025 through January 2, 2028
+Commissioner Sarah J. Mays
+Current Term: January 2, 2025 through December 31, 2028
+Side menu links: Commissioner Richard Gould, CPA / Commissioner Thomas R. Koogler / Commissioner Sarah J. Mays

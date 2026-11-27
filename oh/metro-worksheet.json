@@ -247,7 +247,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Each Ohio county is governed by an elected board of three county commissioners, except Cuyahoga and Summit, whose charters set up an elected county executive and county council, and elects officers such as an auditor, a treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a recorder, an engineer and a coroner; no list of them was read in this pass, so the card names the county only. Recorded as gap oh-county-officials.",
+        "people": "The county's government, written down by hand on 2026-11-27 from each county's own website and proved against it on every build (oh/scripts/build_oh_county_commissioners.py). Eighty-six counties are governed by three commissioners, each elected by the whole county (Ohio Revised Code 305.01); 83 are named, and Ashland (an expired certificate), Holmes (a captcha) and Lawrence (no county website names them) are not, each card saying why. Four pages were read by hand in a browser because the sites refuse this project's reader or fill themselves in with a program (Greene, Montgomery, Portage, Pike), and the card says so. Cuyahoga and Summit are governed by a charter's county executive and council; the executive and Summit's three at-large members are named, and the council districts are not drawn. No weekly job re-reads the pages, so the card gives the date. The county's other elected officers are not named: gap oh-county-officials.",
         "applies": "Ohio — statewide, all 88 counties."
       }
     },
@@ -508,6 +508,11 @@
         "file": "oh-district-judges.json",
         "min_keys": 12,
         "note": "The judges of each of the 12 court districts, keyed by district, 67 seats read 2026-11-27 from the state's own court website into oh/data/source/courts/oh-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
+      },
+      {
+        "file": "oh-county-commissioners.json",
+        "min_keys": 88,
+        "note": "Each county's government, keyed by county GEOID: the three commissioners of 83 counties, Cuyahoga's and Summit's county executive and Summit's at-large council members, and why three counties name nobody, written down from each county's own website on 2026-11-27 into oh/data/source/oh-county-commissioner-seats.json and built by oh/scripts/build_oh_county_commissioners.py, which re-reads every page and refuses to write unless every name is on it; its --check holds this file to the seats file. No weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },
