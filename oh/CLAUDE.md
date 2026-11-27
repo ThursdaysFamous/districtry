@@ -76,12 +76,26 @@ incorporated places (layer 4): 253 cities and 670 villages, about 9.6% of the st
 (measured 2026-11-11). One, Rendville village in Perry County, carries the Census's inactive
 status, and its card says it does not operate as a local government. An empty card says the
 point is outside every city and village and that the township and the county are the local
-governments there. Ohio's 1,308 active townships are not drawn (gap `oh-townships`).
+governments there. Ohio's 1,308 active townships are drawn by the Township or City
+layer (below); their trustees and fiscal officers are not named (gap `oh-townships`).
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 612 unified districts for Ohio (city, local and
 exempted village districts) and nothing on its elementary or secondary layers (measured
 2026-11-11), so those two layers are not drawn. No school board member is named yet (gap
-`oh-school-board-members`).
+`oh-school-board-members`). **OHIO'S SCHOOL BOARDS ARE ELECTED BY THE WHOLE DISTRICT, WITH TWO
+EXCEPTIONS IN THE LAW** (read in the Ohio Revised Code on 2026-11-27, and written out in the gap
+record): a city district of 50,000 to 149,999 people may elect up to two of its members from
+subdistricts (section 3313.02), and Cleveland's board is appointed by the mayor (section 3311.71).
+Which districts use subdistricts was not read district by district; a subdistrict map is the only
+school board map this state could need.
+
+**THE TOWNSHIP OR CITY LAYER DRAWS ALL 1,607 OF OHIO'S COUNTY SUBDIVISIONS** (`county-subdivision`,
+since 2026-11-27, under the County layer), from a tile archive mirrored from TIGERweb's layer 1:
+1,308 townships the Census records as active governments, 5 consolidated with another government,
+one inactive, 12 legal areas with no government of their own, 192 cities and 84 villages it counts
+as areas of their own, and 5 records of Lake Erie water with no land. The card names the subdivision
+and its county and states its functional status in the Census's own terms; a status it does not know
+prints no row. No trustee or fiscal officer is named (gap `oh-townships`).
 
 **NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
 to assume the office is empty. Recorded as gaps `oh-county-officials` and
@@ -132,7 +146,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Ohio (`ohio`) — https://districtry.com/oh/
 - Geocoders: address Photon (Ohio-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Ohio-bounded, serial >=1s queue)
 - Ground truth: 39.96133,-82.99895 (Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.) → county Franklin County; us-house 15; oh-senate 15; oh-house 1; oh-court-of-appeals Tenth District Court of Appeals. Negative point 42.05310,-82.59980 (Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 7. Debug namespace `window.OhioExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 8. Debug namespace `window.OhioExplorer`.
 - Scheduled workflows: `update-oh-congress-roster.yml` (Tue 20:53 UTC); `update-oh-legislature-roster.yml` (Thu 20:53 UTC); `oh-validate-sources.yml` (1st of month 23:07 UTC).
 - Source registry: `oh/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

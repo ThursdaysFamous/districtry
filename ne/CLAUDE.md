@@ -55,6 +55,14 @@ counties that kept township government. No mayor, council or village board membe
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school board
 member is named yet (gap `ne-school-board-members`).
 
+**THE TOWNSHIP OR PRECINCT LAYER DRAWS ALL 1,182 OF NEBRASKA'S COUNTY SUBDIVISIONS**
+(`county-subdivision`, since 2026-11-27, under the County layer), from a tile archive mirrored from
+TIGERweb's layer 1: 319 townships the Census records as active governments, 92 it records as
+inactive, 695 precincts and districts it records as legal areas with no government of their own, and
+76 cities it counts as areas of their own. The card names the subdivision and its county and states
+its functional status in the Census's own terms; a status it does not know prints no row. No
+township officer is named (gap `ne-township-officers`).
+
 **NO COUNTY OFFICIAL IS NAMED YET**, and the card says so rather than leave a reader to assume the office
 is empty. Each county is governed by an elected board of commissioners or, in the counties that kept
 township government, a board of supervisors, and elects officers such as a clerk, a treasurer, an
@@ -117,7 +125,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Nebraska (`nebraska`) — https://districtry.com/ne/
 - Geocoders: address Photon (Nebraska-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Nebraska-bounded, serial >=1s queue)
 - Ground truth: 40.80814,-96.69957 (Nebraska State Capitol, 1445 K Street, Lincoln, Lancaster County) → county Lancaster County; us-house 1; ne-legislature 28; ne-judicial-district Judicial District 3. Negative point 42.87000,-97.05000 (Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NebraskaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NebraskaExplorer`.
 - Scheduled workflows: `update-ne-congress-roster.yml` (Wed 22:13 UTC); `update-ne-legislature-roster.yml` (Thu 22:13 UTC); `ne-validate-sources.yml` (2nd of month 22:13 UTC).
 - Source registry: `ne/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

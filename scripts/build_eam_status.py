@@ -3039,7 +3039,12 @@ ANSWERS = {
         # Ohio's are active townships (LSADC 44, FUNCSTAT A), general-purpose
         # governments each electing three trustees and a fiscal officer, and
         # no township layer is drawn yet (gap oh-townships).
-        "subdivision-boundaries": OPEN,
+        # The Township or City layer draws all of Ohio's county subdivisions
+        # from TIGERweb's layer 1, mirrored into a tile archive, and states each
+        # one's functional status in the Census's own terms (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
+        # The active townships are drawn and their officers are not named (gap
+        # oh-townships), so this level stays open.
         "sub-county-government": OPEN,
         # Common pleas judges are elected by county and court of appeals
         # judges by appellate district; neither is drawn or named yet.
@@ -3377,7 +3382,12 @@ ANSWERS = {
         # Measured 2026-11-12 on TIGERweb's current county subdivisions: 1,258 of
         # Kansas's are active townships (FUNCSTAT A), governments of their own,
         # and no township layer is drawn yet.
-        "subdivision-boundaries": OPEN,
+        # The Township or City layer draws all of Kansas's county subdivisions
+        # from TIGERweb's layer 1, mirrored into a tile archive, and states each
+        # one's functional status in the Census's own terms (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
+        # The active townships are drawn and their officers are not named (gap
+        # ks-township-officers), so this level stays open.
         "sub-county-government": OPEN,
         # District judges are elected by judicial district in some districts
         # and stand for retention in the rest; no district is drawn or judge
@@ -3610,7 +3620,11 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): 319 of Nebraska's are
         # active townships (FUNCSTAT A), governments of their own, and no
         # township layer is drawn yet.
-        "subdivision-boundaries": OPEN,
+        # The Township or Precinct layer draws all of Nebraska's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and states each one's functional status in the Census's own terms
+        # (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # Judges are appointed and stand for retention by judicial district; no
         # district is drawn or judge named yet.
         # Nebraska district judges face a retention vote by the district's
@@ -3618,6 +3632,8 @@ ANSWERS = {
         # The 12 districts and their judges were read 2026-11-27 from the
         # Nebraska Judicial Branch (scripts/build_state_courts.py).
         "courts-by-district": answers("ne-judicial-district"),
+        # The active townships are drawn and their officers are not named (gap
+        # ne-township-officers), so this level stays open.
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
@@ -3841,7 +3857,11 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): 898 of South Dakota's
         # are active townships (FUNCSTAT A), governments of their own, and no
         # township layer is drawn yet.
-        "subdivision-boundaries": OPEN,
+        # The Township or City layer draws all of South Dakota's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and states each one's functional status in the Census's own terms
+        # (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # Circuit judges are elected by judicial circuit; no circuit is drawn or
         # judge named yet.
         # South Dakota elects its circuit judges by circuit in a nonpolitical
@@ -3849,6 +3869,8 @@ ANSWERS = {
         # circuits and their judges were read 2026-11-27 from the Unified
         # Judicial System (scripts/build_state_courts.py).
         "courts-by-district": answers("sd-judicial-circuit"),
+        # The active townships are drawn and their officers are not named (gap
+        # sd-township-officers), so this level stays open.
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
@@ -3877,7 +3899,11 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): 1,305 of North
         # Dakota's are active townships (FUNCSTAT A), governments of their own,
         # and no township layer is drawn yet.
-        "subdivision-boundaries": OPEN,
+        # The Township or City layer draws all of North Dakota's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and states each one's functional status in the Census's own terms
+        # (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # District judges are elected by judicial district; no district is drawn
         # or judge named yet.
         # North Dakota's electors of each judicial district choose its district
@@ -3885,6 +3911,8 @@ ANSWERS = {
         # districts (Administrative Rule 6) and their judges were read
         # 2026-11-27 from ndcourts.gov (scripts/build_state_courts.py).
         "courts-by-district": answers("nd-judicial-district"),
+        # The active townships are drawn and their officers are not named (gap
+        # nd-township-officers), so this level stays open.
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,

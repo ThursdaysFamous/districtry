@@ -4675,14 +4675,16 @@ function initOhioExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "oh-senate": "ohs", "oh-court-of-appeals": "oha",
     "county": "co", "school-district-unified": "su", "oh-house": "ohh", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["oh-senate"],
     "state-house": ["oh-house"], "appellate-court-district": ["oh-court-of-appeals"],
-    "county": ["county"], "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
@@ -11607,6 +11609,7 @@ function initOhioExplorer() {
     "school-district-unified", // 612 school districts, drawn from a tile archive mirrored from TIGERweb
     "oh-house",          // 99 House districts — three in each Senate district, and smaller on average than a county
     "zip-code",          // 1,233 ZIP Code Tabulation Areas inside Ohio (1,744 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
+    "county-subdivision", // 1,607 records tiling the state, about 66 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "municipality",      // 923 incorporated cities and villages, drawn from a tile archive mirrored from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16810,7 +16813,8 @@ function initOhioExplorer() {
    * lookup: about 9.6% of Ohio's land is inside a city or village (by the
    * Census's own AREALAND, 10,137.6 of 105,824.6 km2, measured 2026-11-11),
    * and everywhere else the township and the county are the local
-   * governments. Ohio's townships are not drawn yet (gap oh-townships).
+   * governments. Ohio's townships are drawn by the
+   * Township or City layer (9c); their officers are not named (gap oh-townships).
    *
    * NO OFFICEHOLDER YET. No statewide roster of Ohio's mayors and council
    * members has been read, so the card names no one rather than guessing.
@@ -17185,6 +17189,142 @@ function initOhioExplorer() {
       return wrap;
     },
     primaryLink: function () { return OH_COURT.link; }
+  });
+
+  /* ---------- 9c. Township or City — TIGERweb county subdivisions ----------
+   * Measured 2026-11-27 in TIGERweb's county subdivisions for this
+   * state (Places_CouSub_ConCity_SubMCD layer 1, drawn from a tile
+   * archive mirrored by scripts/mirror_tiger_tiles.py): 1,607 records:
+   * 1,308 townships the Census records as active governments, 5 it
+   * records as consolidated with another government, one inactive, 12
+   * it records as legal areas with no government of their own, 192
+   * cities and 84 villages it counts as areas of their own, apart from
+   * every township, and 5 areas of Lake Erie water, with no land, where
+   * it defines no township; about 66 km2 of land on average.
+   *
+   * The card names the subdivision and its county, and says whether it
+   * governs, in the Census's own terms: its functional status (FUNCSTAT).
+   * A status this card does not know prints no row rather than an
+   * improvised one. A city or village the Census counts as its own
+   * subdivision (FUNCSTAT F) is named by the word TIGER's own NAME carries
+   * after BASENAME ("Columbus city"), so the card cannot disagree with the
+   * name printed above it.
+   *
+   * The five records TIGER names "County subdivisions not defined" are
+   * Lake Erie water with no land (AREALAND 0, measured the same day, in
+   * Ashtabula, Cuyahoga, Erie, Lake and Lorain counties), and the card
+   * says that rather than naming a government.
+   *
+   * NO OFFICEHOLDER YET. The active townships elect their own officers, and
+   * no list of them was read in this pass, so the card names the township
+   * only. Recorded as gap oh-townships.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // What TIGER's NAME carries after its BASENAME ("Columbus city" -> "city");
+  // null when the name does not start with the base ("Township 4").
+  function subdivisionKind(name, base) {
+    if (name == null || base == null) return null;
+    name = String(name);
+    base = String(base);
+    return name.indexOf(base) === 0 ? name.slice(base.length).trim().toLowerCase() : null;
+  }
+
+  // The Census's functional status, in its own terms, for each status this
+  // state's county subdivisions carry (2026-11-27).
+  var OH_TOWNSHIP_GOVERNMENT = {
+    A: "An active government of its own, according to the U.S. Census " +
+      "Bureau. This app does not name its officers yet.",
+    I: "None operating. The U.S. Census Bureau records this township's " +
+      "government as inactive: it has the legal power to govern, and " +
+      "is not doing so.",
+    C: "The U.S. Census Bureau records this township's government as " +
+      "consolidated with another government, the two sharing one set " +
+      "of officials.",
+    N: "None. The U.S. Census Bureau records this as a legal area with " +
+      "no government of its own. A place over this point named on the " +
+      "City or Village card is its local government; outside one, the " +
+      "county is."
+  };
+  // The places the Census counts as subdivisions of their own (FUNCSTAT F).
+  var OH_TOWNSHIP_PLACE_WORDS = { city: true, village: true };
+
+  registerLayer({
+    id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
+    group: "geography",
+    label: "Township or City",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      // the county-subdivision concept's colour and width (root
+      // layer-concepts.json)
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          base: findPropCI(props, ["basename"]),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
+      var kind = subdivisionKind(result.name, result.base);
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county
+      }));
+      var gov = null;
+      if (status === "F") {
+        if (kind && OH_TOWNSHIP_PLACE_WORDS.hasOwnProperty(kind)) {
+          gov = "The U.S. Census Bureau counts this " + kind + " as an area of " +
+            "its own here, apart from every township. The " + kind + "'s own " +
+            "government is the local government; the City or Village card names it.";
+        } else if (result.name != null &&
+            String(result.name) === "County subdivisions not defined") {
+          gov = "None. This is Lake Erie water with no land, where the U.S. " +
+            "Census Bureau defines no township.";
+        }
+      } else if (status && OH_TOWNSHIP_GOVERNMENT.hasOwnProperty(status)) {
+        gov = OH_TOWNSHIP_GOVERNMENT[status];
+      }
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
   });
 
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
@@ -19083,7 +19223,7 @@ function initOhioExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "oh-senate", "oh-house", "oh-court-of-appeals",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19611,8 +19751,9 @@ function initOhioExplorer() {
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#753B07": "#D7864B", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#753B07": "#D7864B", "#7A5C3E": "#CFA57C",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

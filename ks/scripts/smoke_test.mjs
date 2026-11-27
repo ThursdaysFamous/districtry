@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ks-senate", "ks-house", "ks-judicial-dis
 const EXPECT_DISTRICT = { "county": "Shawnee County", "us-house": "2", "ks-senate": "19", "ks-house": "57", "ks-judicial-district": "3rd Judicial District" };
 const NEGATIVE_POINT = "40.20000,-98.50000"; // Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Kansas";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "KansasExplorer";
@@ -820,6 +820,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -855,12 +856,41 @@ try {
         props: { GEOID: "2012260", NAME: "Topeka Public Schools Unified School District 501", STATE: "20" },
         want: [/Topeka Public Schools Unified School District 501/],
         reject: []
+      },
+      {
+        name: "the Strong township card names it, its county and what the Census records about its government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "2001768600", "NAME": "Strong township", "BASENAME": "Strong", "STATE": "20", "COUNTY": "017", "LSADC": "44", "FUNCSTAT": "A" },
+        want: [/Strong township/, /Chase County/, /An active government of its own/, /does not name its officers yet/],
+        reject: [/None operating/]
+      },
+      {
+        name: "an inactive township says no government is operating",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "2001799992", "NAME": "Example township", "BASENAME": "Example", "STATE": "20", "COUNTY": "017", "LSADC": "44", "FUNCSTAT": "I" },
+        want: [/Example township/, /None operating/, /records this township's\s+government as inactive/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a city the Census counts as its own subdivision says the city governs and the City card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "2001799994", "NAME": "Topeka city", "BASENAME": "Topeka", "STATE": "20", "COUNTY": "017", "LSADC": "25", "FUNCSTAT": "F" },
+        want: [/Topeka city/, /apart from every township/, /City card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a status the card does not carry prints NO Government row",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "2001799998", "NAME": "Example township", "BASENAME": "Example", "STATE": "20", "COUNTY": "017", "LSADC": "44", "FUNCSTAT": "Z" },
+        want: [/Example township/, /Chase County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+      const layers = c.also ? `${c.also},${c.layer}` : c.layer;
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -928,6 +958,32 @@ try {
     await context.close();
   }
 
+
+  // 7d. THE TOWNSHIP ARCHIVE ANSWERS, WITH THE CENSUS UNREACHABLE. The
+  //     Capitol is in Topeka city, which the Census counts as a county
+  //     subdivision of its own (FUNCSTAT F), and the Flint Hills point in
+  //     Chase County (38.50000,-96.50000) is in Strong township, an active
+  //     government (TIGERweb's layer 1, read 2026-11-27). The card turns on
+  //     with the County layer, whose child it is.
+  {
+    for (const [where, point, want] of [
+      ["the Capitol", POINT, [/Topeka city/, /Shawnee County/, /apart from every township/]],
+      ["the Flint Hills point in Chase County", "38.50000,-96.50000", [/Strong township/, /Chase County/, /An active government of its own/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county,county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the township archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

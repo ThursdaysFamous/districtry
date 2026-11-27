@@ -4674,16 +4674,17 @@ function initNebraskaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ne-legislature": "nel", "ne-judicial-district": "nej",
-    "county": "co", "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "county": "co", "school-district-unified": "su", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ne-legislature"],
     "trial-court-district": ["ne-judicial-district"], "county": ["county"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -11607,6 +11608,7 @@ function initNebraskaExplorer() {
     "county",            // 93 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 244 school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 592 ZIP Code Tabulation Areas that reach into Nebraska (877 in the app's bounding box), about 336 km2 of land on average, drawn from a tile archive of the ones inside the state; the layer hides outside it
+    "county-subdivision", // 1,182 records tiling the state, about 168 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "municipality",      // 528 incorporated cities and villages, drawn from a tile archive mirrored from TIGERweb
     "tribal-government", // Tribal land — Nebraska has 9 pieces held by seven nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Omaha Reservation (787.1 km² in Nebraska, 98.0% of it, Thurston, Cuming and Burt counties), the Santee Reservation (477.9 km², Knox County), the Winnebago Reservation (457.5 km² in Nebraska, 99.4% of it, Thurston and Dixon counties) and its trust land (0.465 km², Burt County), the Ponca (NE) Trust Land (0.825 km², Knox County), the Sac and Fox Nation Reservation (40.0 km² in Nebraska) and trust land (0.431 km²) and the Iowa (KS-NE) Reservation (15.6 km² in Nebraska), all three in Richardson County, and 2.236 km² of the Pine Ridge Reservation in Sheridan County. Every piece but the Santee Reservation and the Winnebago trust land is drawn whole across the state line. The Census draws one tribal district on the Pine Ridge land in Nebraska. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16782,7 +16784,7 @@ function initNebraskaExplorer() {
    * subdivisions are precincts, which have no government, and in the 20
    * counties that kept township government, townships: 319 of them the
    * Census records as active governments (measured 2026-11-12). The
-   * townships are not drawn yet.
+   * Township or Precinct layer (6c) draws them since 2026-11-27.
    *
    * The empty state reads as a fact about the place rather than a failed
    * lookup: about 1% of Nebraska's land is inside one (by the Census's own
@@ -17312,6 +17314,131 @@ function initNebraskaExplorer() {
       return wrap;
     },
     primaryLink: function () { return NE_COURT.link; }
+  });
+
+  /* ---------- 6c. Township or Precinct — TIGERweb county subdivisions ----------
+   * Measured 2026-11-27 in TIGERweb's county subdivisions for this
+   * state (Places_CouSub_ConCity_SubMCD layer 1, drawn from a tile
+   * archive mirrored by scripts/mirror_tiger_tiles.py): 1,182 records:
+   * 319 townships the Census records as active governments, in the
+   * counties that kept township government (314 named townships and 5
+   * numbered ones), 92 townships it records as inactive, 695 precincts
+   * and districts it records as legal areas with no government of their
+   * own (576 named precincts, 104 numbered precincts and 15 numbered
+   * districts), and 76 cities it counts as areas of their own, apart
+   * from every township and precinct; about 168 km2 of land on average.
+   *
+   * The card names the subdivision and its county, and says whether it
+   * governs, in the Census's own terms: its functional status (FUNCSTAT).
+   * A status this card does not know prints no row rather than an
+   * improvised one. A city the Census counts as its own
+   * subdivision (FUNCSTAT F) is named by the word TIGER's own NAME carries
+   * after BASENAME ("Lincoln city"), so the card cannot disagree with the
+   * name printed above it.
+   *
+   * NO OFFICEHOLDER YET. The active townships elect their own officers, and
+   * no list of them was read in this pass, so the card names the township
+   * only. Recorded as gap ne-township-officers.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // What TIGER's NAME carries after its BASENAME ("Lincoln city" -> "city");
+  // null when the name does not start with the base ("Township 4").
+  function subdivisionKind(name, base) {
+    if (name == null || base == null) return null;
+    name = String(name);
+    base = String(base);
+    return name.indexOf(base) === 0 ? name.slice(base.length).trim().toLowerCase() : null;
+  }
+
+  // The Census's functional status, in its own terms, for each status this
+  // state's county subdivisions carry (2026-11-27).
+  var NE_TOWNSHIP_GOVERNMENT = {
+    A: "An active government of its own, according to the U.S. Census " +
+      "Bureau. This app does not name its officers yet.",
+    I: "None operating. The U.S. Census Bureau records this township's " +
+      "government as inactive: it has the legal power to govern, and " +
+      "is not doing so.",
+    N: "None. The U.S. Census Bureau records this as a legal area with " +
+      "no government of its own. A place over this point named on the " +
+      "City or Village card is its local government; outside one, the " +
+      "county is."
+  };
+  // The places the Census counts as subdivisions of their own (FUNCSTAT F).
+  var NE_TOWNSHIP_PLACE_WORDS = { city: true };
+
+  registerLayer({
+    id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
+    group: "geography",
+    label: "Township or Precinct",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      // the county-subdivision concept's colour and width (root
+      // layer-concepts.json)
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          base: findPropCI(props, ["basename"]),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
+      var kind = subdivisionKind(result.name, result.base);
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county
+      }));
+      var gov = null;
+      if (status === "F") {
+        if (kind && NE_TOWNSHIP_PLACE_WORDS.hasOwnProperty(kind)) {
+          gov = "The U.S. Census Bureau counts this " + kind + " as an area of " +
+            "its own here, apart from every township and precinct. The " + kind + "'s own " +
+            "government is the local government; the City or Village card names it.";
+        }
+      } else if (status && NE_TOWNSHIP_GOVERNMENT.hasOwnProperty(status)) {
+        gov = NE_TOWNSHIP_GOVERNMENT[status];
+      }
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
   });
 
   /* ---------- 7. Post Offices (nearest 3) — USGS National Map ----------
@@ -19206,7 +19333,7 @@ function initNebraskaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ne-legislature", "ne-judicial-district", "school-district-unified",
-    "county", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19735,8 +19862,8 @@ function initNebraskaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

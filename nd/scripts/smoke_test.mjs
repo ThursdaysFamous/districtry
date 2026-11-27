@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "nd-senate", "nd-house", "nd-judicial-dis
 const EXPECT_DISTRICT = { "county": "Burleigh County", "us-house": "Congressional District (at Large)", "nd-senate": "35", "nd-house": "35", "nd-judicial-district": "South Central Judicial District" };
 const NEGATIVE_POINT = "49.15000,-99.00000"; // Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry North Dakota";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NorthDakotaExplorer";
@@ -843,6 +843,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -885,12 +886,48 @@ try {
         props: { GEOID: "3806360", NAME: "Emerado Public School District 127", STATE: "38", LOGRADE: "KG", HIGRADE: "12" },
         want: [/Emerado Public School District 127/],
         reject: []
+      },
+      {
+        name: "the Bull Moose township card names it, its county and what the Census records about its government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3810310700", "NAME": "Bull Moose township", "BASENAME": "Bull Moose", "STATE": "38", "COUNTY": "103", "LSADC": "44", "FUNCSTAT": "A" },
+        want: [/Bull Moose township/, /Wells County/, /An active government of its own/, /does not name its officers yet/],
+        reject: [/None operating/]
+      },
+      {
+        name: "an inactive township says no government is operating",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3810399992", "NAME": "Example township", "BASENAME": "Example", "STATE": "38", "COUNTY": "103", "LSADC": "44", "FUNCSTAT": "I" },
+        want: [/Example township/, /None operating/, /records this township's\s+government as inactive/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a city the Census counts as its own subdivision says the city governs and the City card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3810399994", "NAME": "Bismarck city", "BASENAME": "Bismarck", "STATE": "38", "COUNTY": "103", "LSADC": "25", "FUNCSTAT": "F" },
+        want: [/Bismarck city/, /apart from every township/, /City card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "an unorganized territory says it is an area for counting people with no government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3810399996", "NAME": "Example UT", "BASENAME": "Example", "STATE": "38", "COUNTY": "103", "LSADC": "46", "FUNCSTAT": "S" },
+        want: [/Example UT/, /unorganized territory/, /outside one, the county is/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a status the card does not carry prints NO Government row",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "3810399998", "NAME": "Example township", "BASENAME": "Example", "STATE": "38", "COUNTY": "103", "LSADC": "44", "FUNCSTAT": "Z" },
+        want: [/Example township/, /Wells County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+      const layers = c.also ? `${c.also},${c.layer}` : c.layer;
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -970,6 +1007,32 @@ try {
     await context.close();
   }
 
+
+  // 7d. THE TOWNSHIP ARCHIVE ANSWERS, WITH THE CENSUS UNREACHABLE. The
+  //     Capitol is in Bismarck city, which the Census counts as a county
+  //     subdivision of its own (FUNCSTAT F), and the rural point in Wells
+  //     County (47.50000,-100.00000) is in Bull Moose township, an active
+  //     government (TIGERweb's layer 1, read 2026-11-27). The card turns on
+  //     with the County layer, whose child it is.
+  {
+    for (const [where, point, want] of [
+      ["the Capitol", POINT, [/Bismarck city/, /Burleigh County/, /apart from every township/]],
+      ["the rural point in Wells County", "47.50000,-100.00000", [/Bull Moose township/, /Wells County/, /An active government of its own/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county,county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the township archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

@@ -78,7 +78,7 @@ in the researched-but-unbuilt backlog.
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "ohio": ["oh-court-of-appeals", "us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "ohio": ["oh-court-of-appeals", "us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "massachusetts": ["us-house", "county", "ma-senate", "school-district-secondary", "ma-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "colorado": ["us-house", "co-senate", "county", "co-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
@@ -87,17 +87,17 @@ in the researched-but-unbuilt backlog.
   "oregon": ["us-house", "school-district-secondary", "or-senate", "county", "or-house", "school-district-elementary", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "connecticut": ["us-house", "county", "ct-senate", "school-district-secondary", "ct-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "utah": ["us-house", "ut-senate", "county", "school-district-unified", "ut-house", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "kansas": ["us-house", "ks-judicial-district", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "kansas": ["us-house", "ks-judicial-district", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "newmexico": ["us-house", "county", "nm-senate", "nm-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "nebraska": ["us-house", "ne-judicial-district", "ne-legislature", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "nebraska": ["us-house", "ne-judicial-district", "ne-legislature", "county", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "idaho": ["us-house", "id-senate", "id-house", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "hawaii": ["school-district-unified", "us-house", "county", "hi-senate", "hi-house", "zip-code", "police-station", "fire-station", "post-office"],
   "maine": ["us-house", "county", "me-senate", "me-house", "school-district-unified", "school-district-secondary", "zip-code", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
   "montana": ["us-house", "mt-senate", "county", "mt-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "rhodeisland": ["us-house", "county", "school-district-secondary", "school-district-elementary", "ri-senate", "municipality", "school-district-unified", "ri-house", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
   "delaware": ["us-house", "county", "school-district-unified", "de-senate", "de-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "southdakota": ["us-house", "sd-judicial-circuit", "sd-senate", "sd-house", "county", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "northdakota": ["us-house", "nd-judicial-district", "nd-senate", "nd-house", "county", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "southdakota": ["us-house", "sd-judicial-circuit", "sd-senate", "sd-house", "county", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "northdakota": ["us-house", "nd-judicial-district", "nd-senate", "nd-house", "county", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "alaska": ["us-house", "ak-senate", "county", "ak-house", "school-district-unified", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "vermont": ["us-house", "county", "vt-senate", "school-district-secondary", "vt-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "wyoming": ["us-house", "county", "wy-senate", "school-district-unified", "wy-house", "zip-code", "school-district-elementary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
@@ -4430,11 +4430,11 @@ trusted.
             "area": "Ohio",
             "counties": [],
             "kind": "no-source",
-            "layer": null,
-            "summary": "The map does not draw Ohio's townships or name their trustees and fiscal officers. Outside a city or village, the township and the county are the local governments, and the City or Village card says so.",
-            "why": "No township layer has been built for this app, and no list of the people each township elects has been read.",
-            "wanted": "A statewide list of each township's trustees and fiscal officer, or a township's own published list, to name on a township layer drawn from the Census's township lines.",
-            "blocker": "Measured 2026-11-11 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='39': 1,607 records, 1,326 of them townships (LSADC 44), 1,308 of those active governments (FUNCSTAT A) and 18 not; the other 281 are cities and villages the Census also counts as county subdivisions (192 and 84) and five areas it leaves undefined (LSADC 00). Each township elects three trustees and a fiscal officer (Ohio Revised Code 505.01 and 507.01). The layer carries geography and no officeholder field, and no township roster was read for this record. A township layer drawn from those lines, with the board named where a source proves it, is its own change. ROUTES NOT YET READ, government publishers first: each township's own website; and each county board of elections' results. The Auditor of State keeps records of every township, and its site's robots.txt refuses every client, so it is not read. The Ohio Township Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+            "layer": "county-subdivision",
+            "summary": "The Township or City card draws Ohio's townships and says which have a government of its own, and does not name their trustees and fiscal officers.",
+            "why": "No list of the people each township elects has been read for this app yet.",
+            "wanted": "A statewide list of each township's trustees and fiscal officer, or a township's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='39': 1,607 records, 1,326 of them townships (LSADC 44), 1,308 of those active governments (FUNCSTAT A) and 18 not; the other 281 are cities and villages the Census also counts as county subdivisions (192 and 84) and five areas it leaves undefined (LSADC 00). Each township elects three trustees and a fiscal officer (Ohio Revised Code 505.01 and 507.01). The townships have been drawn since 2026-11-27, as the Township or City layer (county-subdivision) from the same records, re-measured that day with the same counts; its card states each record's functional status in the Census's own terms. The layer carries geography and no officeholder field, and no township roster was read. ROUTES NOT YET READ, government publishers first: each township's own website; and each county board of elections' results. The Auditor of State keeps records of every township, and its site's robots.txt refuses every client, so it is not read. The Ohio Township Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
       },
       {
             "id": "oh-school-board-members",
@@ -4446,7 +4446,7 @@ trusted.
             "summary": "The School District card names the district you picked, and not the members of its board of education.",
             "why": "No list of the members of Ohio's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
-            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='39': 612 unified districts on layer 0 (city, local and exempted village districts), and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record, and how each board's members are chosen was not checked district by district: most are elected at large, and Cleveland's is appointed by its mayor. ROUTES NOT YET READ, government publishers first: the Ohio Department of Education and Workforce's directory of school districts; each district's own website; and the county boards of elections' results. The Ohio School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='39': 612 unified districts on layer 0 (city, local and exempted village districts), and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record. HOW A BOARD IS CHOSEN, read in the Ohio Revised Code at codes.ohio.gov on 2026-11-27: a local or exempted village district's board has five members elected at large (section 3313.01). A city district's board is set by the district's population at the last federal census (section 3313.02): under 50,000 people, three to five members elected at large; 50,000 to 149,999, two to seven members elected at large and up to two members elected from subdistricts; 150,000 or more, five to seven members elected at large. A municipal school district, which is one that has been under a federal court order putting the state in charge of it, is run after its release by a nine-member board the mayor appoints from a nominating panel's slate (section 3311.71); that is Cleveland's board, and section 3313.02 does not apply to it. Joint vocational school districts, which TIGER does not draw, have boards appointed by their member districts' boards (section 3311.19). So every board this layer draws is elected by the whole district, except Cleveland's, which is appointed, and except any subdistrict seats in a city district of 50,000 to 149,999 people; which of those districts use subdistricts was not read district by district, and a subdistrict map would be the only school board map Ohio needs. ROUTES NOT YET READ, government publishers first: the Ohio Department of Education and Workforce's directory of school districts; each district's own website; and the county boards of elections' results. The Ohio School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ],
   "washington": [
@@ -4881,6 +4881,18 @@ trusted.
             "why": "This app has not read the council lists of Kansas's other three nations yet. Each nation publishes its own, which has to be read one nation at a time.",
             "wanted": "Each nation's own published list of its council, read one nation at a time.",
             "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 6 pieces, held by 4 nations, measured with scripts/tribal_areas.py --report Kansas (control passed: Kansas resolves to state code 20). The Kickapoo (KS) Reservation (613.392 km2) and the Prairie Band of Potawatomi Nation Reservation (316.281 km2) lie wholly in Kansas; 69.4% of the Iowa (KS-NE) Reservation (35.314 km2 in Kansas) and all of its trust land, and 33.1% of the Sac and Fox Nation Reservation (19.741 km2 in Kansas) and 70.3% of its trust land, are in Kansas and are drawn whole across the Nebraska line. The Prairie Band Potawatomi Nation's card names its seven-member council, read weekly from the nation's own page into ks/data/app/tribal-councils.json, the council Illinois's card already names; the Kickapoo Tribe in Kansas, the Iowa Tribe of Kansas and Nebraska and the Sac & Fox Nation of Missouri in Kansas and Nebraska are not carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
+      },
+      {
+            "id": "ks-township-officers",
+            "concept": "Township government",
+            "area": "Kansas — the 1,258 active townships",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county-subdivision",
+            "summary": "Where a township has a government of its own, the Township or City card says so and does not name its officers.",
+            "why": "No list of Kansas's township officers has been read for this app yet, statewide or county by county.",
+            "wanted": "A statewide list of township officers, or each county's or township's own published list of them.",
+            "blocker": "Measured 2026-11-27 across all county subdivisions TIGERweb carries for STATE='20' (Places_CouSub_ConCity_SubMCD layer 1): 1,521 records: 1,258 townships with FUNCSTAT A, active governments (1,228 named and 30 numbered); 134 townships with FUNCSTAT I, inactive; and 129 cities with FUNCSTAT F, which the Census counts as areas of their own, apart from every township. The layer carries geography and no officeholder field. No list of township officers was looked for in the change that drew the layer, statewide or county by county. NOT YET ASKED."
       }
   ],
   "newmexico": [
@@ -4983,6 +4995,18 @@ trusted.
             "why": "This app has not read the council lists of Nebraska's other six nations yet, and the Omaha Tribe's site could not be reached. Each nation publishes its own, which has to be read one nation at a time.",
             "wanted": "Each nation's own published list of its council, read one nation at a time.",
             "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 9 pieces, 6 reservations and 3 pieces of off-reservation trust land, held by 7 nations, measured with scripts/tribal_areas.py --report Nebraska (control passed: Nebraska resolves to state code 31). Seven cross the state line and are drawn whole, among them the Nebraska parts of the Sac and Fox Nation (66.9%) and Iowa (KS-NE) (30.6%) reservations, whose nations are seated in Reserve and White Cloud, Kansas, and 2.236 km2 of the Pine Ridge Reservation in Sheridan County, kept by Adam's 1%-or-0.25 km2 rule and named with the Oglala Sioux Tribe and the one tribal district the Census draws there. The Winnebago Tribe's card names its council of nine, read weekly from the tribe's own page into ne/data/app/tribal-councils.json, the council Iowa's card already names. The Omaha Tribe's site could not be reached from where this project is built (2026-10-10, ROSTER_BLOCKED in scripts/build_tribal_areas.py); the Santee Sioux Nation, the Ponca Tribe, the Iowa Tribe of Kansas and Nebraska, the Sac & Fox Nation of Missouri in Kansas and Nebraska and the Oglala Sioux Tribe are not carried, recorded state-wide in ROSTER_NOT_SOUGHT. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
+      },
+      {
+            "id": "ne-township-officers",
+            "concept": "Township government",
+            "area": "Nebraska — the 319 active townships",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county-subdivision",
+            "summary": "Where a township has a government of its own, the Township or Precinct card says so and does not name its officers.",
+            "why": "No list of Nebraska's township officers has been read for this app yet, statewide or county by county.",
+            "wanted": "A statewide list of township officers, or each county's or township's own published list of them.",
+            "blocker": "Measured 2026-11-27 across all county subdivisions TIGERweb carries for STATE='31' (Places_CouSub_ConCity_SubMCD layer 1): 1,182 records: 319 townships with FUNCSTAT A, active governments (314 named and 5 numbered); 92 townships with FUNCSTAT I, inactive; 695 precincts and districts with FUNCSTAT N, legal areas with no government of their own (576 named precincts, 104 numbered precincts, 15 numbered districts); and 76 cities with FUNCSTAT F. The layer carries geography and no officeholder field. No list of township officers was looked for in the change that drew the layer, statewide or county by county. NOT YET ASKED."
       }
   ],
   "idaho": [
@@ -5279,6 +5303,18 @@ trusted.
             "why": "This app has not read the council lists of South Dakota's other eleven nations yet. Each nation publishes its own, which has to be read one nation at a time.",
             "wanted": "Each nation's own published list of its council, read one nation at a time.",
             "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 16 pieces, 9 reservations and 7 pieces of off-reservation trust land, held by 12 nations, measured with scripts/tribal_areas.py --report South Dakota (control passed: South Dakota resolves to state code 46). Every piece that crosses the state line is drawn whole: the Pine Ridge, Standing Rock (69.2% in South Dakota) and Lake Traverse (92.9%) reservations, the Lake Traverse trust land, and the trust land of three nations seated outside the state, the Shakopee Mdewakanton Sioux Community (Prior Lake, Minnesota), the Northern Cheyenne Tribe (Lame Deer, Montana) and the Turtle Mountain Band (Belcourt, North Dakota). The cards name the tribal districts the Census draws on the Rosebud (20), Pine Ridge (8), Lake Traverse (7), Cheyenne River (6), Standing Rock (5) and Crow Creek (3) land. The Shakopee Mdewakanton Sioux Community's card names its Business Council of three, read weekly from the community's own page into sd/data/app/tribal-councils.json, the council Minnesota's card already names; the other eleven nations are not carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. The land is drawn simplified at 3 m, the worst stray 3.4 m against a 25 m ceiling. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
+      },
+      {
+            "id": "sd-township-officers",
+            "concept": "Township government",
+            "area": "South Dakota — the 898 active townships",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county-subdivision",
+            "summary": "Where a township has a government of its own, the Township or City card says so and does not name its officers.",
+            "why": "No list of South Dakota's township officers has been read for this app yet, statewide or county by county.",
+            "wanted": "A statewide list of township officers, or each county's or township's own published list of them.",
+            "blocker": "Measured 2026-11-27 across all county subdivisions TIGERweb carries for STATE='46' (Places_CouSub_ConCity_SubMCD layer 1): 1,327 records: 898 civil townships with FUNCSTAT A, active governments; one with FUNCSTAT I, inactive; 108 unorganized territories with FUNCSTAT S, statistical areas with no government; and 166 cities and 154 towns with FUNCSTAT F. The layer carries geography and no officeholder field. No list of township officers was looked for in the change that drew the layer, statewide or county by county. NOT YET ASKED."
       }
   ],
   "northdakota": [
@@ -5330,6 +5366,18 @@ trusted.
             "why": "This app has not read any North Dakota nation's council list yet. Each nation publishes its own, which has to be read one nation at a time.",
             "wanted": "Each nation's own published list of its council, read one nation at a time.",
             "blocker": "SHIPPED 2026-11-13 as `tribal-government`: 7 pieces, 5 reservations and 2 pieces of off-reservation trust land, held by 5 nations, measured with scripts/tribal_areas.py --report North Dakota (control passed: North Dakota resolves to state code 38). Four cross the state line and are drawn whole: the Standing Rock (30.8% in North Dakota) and Lake Traverse (7.1%) reservations, the Turtle Mountain trust land (46.1%) and the Lake Traverse trust land (91.5%); the Sisseton-Wahpeton Oyate is seated in Agency Village, South Dakota. The cards name the tribal districts the Census draws on the Fort Berthold (6), Spirit Lake (4), Standing Rock (4) and Lake Traverse (1) land. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py. NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
+      },
+      {
+            "id": "nd-township-officers",
+            "concept": "Township government",
+            "area": "North Dakota — the 1,305 active townships",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county-subdivision",
+            "summary": "Where a township has a government of its own, the Township or City card says so and does not name its officers.",
+            "why": "No list of North Dakota's township officers has been read for this app yet, statewide or county by county.",
+            "wanted": "A statewide list of township officers, or each county's or township's own published list of them.",
+            "blocker": "Measured 2026-11-27 across all county subdivisions TIGERweb carries for STATE='38' (Places_CouSub_ConCity_SubMCD layer 1): 1,761 records: 1,305 civil townships with FUNCSTAT A, active governments; 4 with FUNCSTAT I, inactive; 90 unorganized territories with FUNCSTAT S, statistical areas with no government; and 362 cities with FUNCSTAT F. The layer carries geography and no officeholder field. No list of township officers was looked for in the change that drew the layer, statewide or county by county. NOT YET ASKED."
       }
   ],
   "alaska": [

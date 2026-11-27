@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1310,7 +1310,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1339,6 +1339,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
                 <td data-label="Where it applies">Ohio. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Township or City</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.</td>
+                <td data-label="Where it applies">Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City or Village</span><code>municipality</code></th>
@@ -1533,6 +1544,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Ohio. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/oh/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Township or City",
+      "description": "The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own. NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.",
+      "url": "https://districtry.com/oh/sources.html#layer-county-subdivision",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/oh/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it"
       }
     },
     {

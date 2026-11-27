@@ -306,10 +306,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Township or City",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "1,607 records tiling the state, about 66 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The county subdivision containing the point (a township, or a place the Census counts as an area of its own) and its county, and whether it has a government of its own.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; for Ohio, measured 2026-11-27: 1,607 records: 1,308 townships the Census records as active governments, 5 it records as consolidated with another government, one inactive, 12 it records as legal areas with no government of their own, 192 cities and 84 villages it counts as areas of their own, apart from every township, and 5 areas of Lake Erie water, with no land, where it defines no township.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. The 1,308 active townships elect their own officers, and no list of them was read in this pass, so the card names the township only and says it has a government of its own: recorded as gap oh-townships. For every other record the card states what the Census records about its government, and a place with a government of its own is named on the City or Village card.",
+        "applies": "Ohio, statewide, every record. Whether a subdivision has a government is read from the Census's own record of it (its functional status), so it cannot go stale against the name printed above it."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "923 incorporated cities and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city or village containing the point, or that the point is outside every one.",
@@ -327,7 +345,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -378,7 +396,7 @@
       }
     }
   ],
-  "min_register_layer": 7,
+  "min_register_layer": 8,
   "anchor_point": {
     "lat": 39.96133,
     "lng": -82.99895,

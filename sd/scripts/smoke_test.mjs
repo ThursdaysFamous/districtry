@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "sd-senate", "sd-house", "sd-judicial-cir
 const EXPECT_DISTRICT = { "county": "Hughes County", "us-house": "Congressional District (at Large)", "sd-senate": "24", "sd-house": "24", "sd-judicial-circuit": "Sixth Judicial Circuit" };
 const NEGATIVE_POINT = "46.05000,-100.10000"; // Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry South Dakota";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "SouthDakotaExplorer";
@@ -826,6 +826,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -861,12 +862,55 @@ try {
         props: { GEOID: "4655260", NAME: "Pierre School District 32-2", STATE: "46", LOGRADE: "PK", HIGRADE: "12" },
         want: [/Pierre School District 32-2/],
         reject: []
+      },
+      {
+        name: "the West Haakon UT card names it, its county and what the Census records about its government",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605570375", "NAME": "West Haakon UT", "BASENAME": "West Haakon", "STATE": "46", "COUNTY": "055", "LSADC": "46", "FUNCSTAT": "S" },
+        want: [/West Haakon UT/, /Haakon County/, /unorganized territory/],
+        reject: [/None operating/, /An active government/]
+      },
+      {
+        name: "an active township is a government of its own and its officers are not named yet",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605599991", "NAME": "Example township", "BASENAME": "Example", "STATE": "46", "COUNTY": "055", "LSADC": "44", "FUNCSTAT": "A" },
+        want: [/Example township/, /Haakon County/, /An active government of its own/, /does not name its officers yet/],
+        reject: [/inactive/]
+      },
+      {
+        name: "an inactive township says no government is operating",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605599992", "NAME": "Example township", "BASENAME": "Example", "STATE": "46", "COUNTY": "055", "LSADC": "44", "FUNCSTAT": "I" },
+        want: [/Example township/, /None operating/, /records this township's\s+government as inactive/],
+        reject: [/An active government of its own/]
+      },
+      {
+        name: "a city the Census counts as its own subdivision says the city governs and the City or Town card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605599994", "NAME": "Pierre city", "BASENAME": "Pierre", "STATE": "46", "COUNTY": "055", "LSADC": "25", "FUNCSTAT": "F" },
+        want: [/Pierre city/, /apart from every township/, /City or Town card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a town the Census counts as its own subdivision says the town governs and the City or Town card names it",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605599993", "NAME": "Example town", "BASENAME": "Example", "STATE": "46", "COUNTY": "055", "LSADC": "43", "FUNCSTAT": "F" },
+        want: [/Example town/, /apart from every township/, /City or Town card names it/],
+        reject: [/An active government of its own/, /no government of its own/]
+      },
+      {
+        name: "a status the card does not carry prints NO Government row",
+        layer: "county-subdivision", also: "county", service: COUSUB,
+        props: { "GEOID": "4605599998", "NAME": "Example township", "BASENAME": "Example", "STATE": "46", "COUNTY": "055", "LSADC": "44", "FUNCSTAT": "Z" },
+        want: [/Example township/, /Haakon County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+      const layers = c.also ? `${c.also},${c.layer}` : c.layer;
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
@@ -942,6 +986,33 @@ try {
     await context.close();
   }
 
+
+  // 7d. THE TOWNSHIP ARCHIVE ANSWERS, WITH THE CENSUS UNREACHABLE. The
+  //     Capitol is in Pierre city, which the Census counts as a county
+  //     subdivision of its own (FUNCSTAT F), and the rural point in Haakon
+  //     County (44.00000,-102.00000) is in West Haakon UT, unorganized
+  //     territory, with no government of its own (TIGERweb's layer 1, read
+  //     2026-11-27). The card turns on with the County layer, whose child
+  //     it is.
+  {
+    for (const [where, point, want] of [
+      ["the Capitol", POINT, [/Pierre city/, /Hughes County/, /apart from every township/]],
+      ["the rural point in Haakon County", "44.00000,-102.00000", [/West Haakon UT/, /Haakon County/, /unorganized territory/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county,county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the township archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

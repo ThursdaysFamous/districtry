@@ -343,7 +343,7 @@ All 67 counties: cities, towns and villages, school districts, ZIP codes, and th
 
 All 88 counties: cities and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Ohio Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
 
-- [Ohio district lookup](https://districtry.com/oh/): 11 layers, all 88 counties.
+- [Ohio district lookup](https://districtry.com/oh/): 12 layers, all 88 counties.
 - [Who is my U.S. representative?](https://districtry.com/oh/congress.html)
 - [Sources & data layers](https://districtry.com/oh/sources.html)
 - [Who is my Ohio legislator?](https://districtry.com/oh/state-legislature.html)
@@ -433,7 +433,7 @@ All 29 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 105 counties: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Kansas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Kansas district lookup](https://districtry.com/ks/): 12 layers, all 105 counties.
+- [Kansas district lookup](https://districtry.com/ks/): 13 layers, all 105 counties.
 - [Who is my U.S. representative?](https://districtry.com/ks/congress.html)
 - [Sources & data layers](https://districtry.com/ks/sources.html)
 - [Who is my Kansas legislator?](https://districtry.com/ks/state-legislature.html)
@@ -453,7 +453,7 @@ All 33 counties: cities, towns and villages, school districts, ZIP codes, and th
 
 All 93 counties: cities and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Nebraska's one-house Legislature and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Nebraska district lookup](https://districtry.com/ne/): 11 layers, all 93 counties.
+- [Nebraska district lookup](https://districtry.com/ne/): 12 layers, all 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/ne/congress.html)
 - [Sources & data layers](https://districtry.com/ne/sources.html)
 - [Who is my Nebraska legislator?](https://districtry.com/ne/state-legislature.html)
@@ -523,7 +523,7 @@ All 3 counties: cities and towns, school districts, ZIP codes, and the nearest p
 
 All 66 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the South Dakota Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [South Dakota district lookup](https://districtry.com/sd/): 12 layers, all 66 counties.
+- [South Dakota district lookup](https://districtry.com/sd/): 13 layers, all 66 counties.
 - [Who is my U.S. representative?](https://districtry.com/sd/congress.html)
 - [Sources & data layers](https://districtry.com/sd/sources.html)
 - [Who is my South Dakota legislator?](https://districtry.com/sd/state-legislature.html)
@@ -533,7 +533,7 @@ All 66 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 53 counties: cities, unified and elementary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Dakota Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [North Dakota district lookup](https://districtry.com/nd/): 13 layers, all 53 counties.
+- [North Dakota district lookup](https://districtry.com/nd/): 14 layers, all 53 counties.
 - [Who is my U.S. representative?](https://districtry.com/nd/congress.html)
 - [Sources & data layers](https://districtry.com/nd/sources.html)
 - [Who is my North Dakota legislator?](https://districtry.com/nd/state-legislature.html)

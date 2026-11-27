@@ -553,6 +553,7 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
+        "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
@@ -566,6 +567,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fire-station",
         "ks-house",
         "ks-judicial-district",
@@ -967,6 +969,7 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
+        "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-unified",
@@ -981,6 +984,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "nd-house",
@@ -999,6 +1003,7 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
+        "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
@@ -1012,6 +1017,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "ne-judicial-district",
@@ -1213,6 +1219,7 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
+        "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
@@ -1226,6 +1233,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "oh-court-of-appeals",
@@ -1409,6 +1417,7 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
+        "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
@@ -1422,6 +1431,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
+        "county-subdivision",
         "fire-station",
         "municipality",
         "police-station",
