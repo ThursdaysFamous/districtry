@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "40.80814,-96.69957"; // Nebraska State Capitol, 1445 K Street, Lincoln, Lancaster County
-const OFFLINE = ["county", "us-house", "ne-legislature"];
-const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28" };
+const OFFLINE = ["county", "us-house", "ne-legislature", "ne-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28", "ne-judicial-district": "Judicial District 3" };
 const NEGATIVE_POINT = "42.87000,-97.05000"; // Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Nebraska";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NebraskaExplorer";

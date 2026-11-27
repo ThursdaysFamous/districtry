@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.96133,-82.99895"; // Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.
-const OFFLINE = ["county", "us-house", "oh-senate", "oh-house"];
-const EXPECT_DISTRICT = { "county": "Franklin County", "us-house": "15", "oh-senate": "15", "oh-house": "1" };
+const OFFLINE = ["county", "us-house", "oh-senate", "oh-house", "oh-court-of-appeals"];
+const EXPECT_DISTRICT = { "county": "Franklin County", "us-house": "15", "oh-senate": "15", "oh-house": "1", "oh-court-of-appeals": "Tenth District Court of Appeals" };
 const NEGATIVE_POINT = "42.05310,-82.59980"; // Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Ohio";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "OhioExplorer";

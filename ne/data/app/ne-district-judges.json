@@ -1,0 +1,341 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "David J. A. Bargen",
+    "county": "Saline"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rick A. Schreiner",
+    "county": "Gage"
+   },
+   {
+    "role": "District Judge",
+    "name": "Julie D. Smith",
+    "county": "Johnson"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Nathan B. Cox",
+    "county": "Sarpy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stefanie A. Martinez",
+    "county": "Sarpy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael A. Smith",
+    "county": "Cass"
+   },
+   {
+    "role": "District Judge",
+    "name": "George A. Thompson",
+    "county": "Sarpy"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Jennifer A. Huxoll",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Darla S. Ideus",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew R. Jacobsen",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lori A. Maret",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kevin R. McManaman",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Matthew O. Mellor",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan S. Post",
+    "county": "Lancaster"
+   },
+   {
+    "role": "District Judge",
+    "name": "Susan I. Strong",
+    "county": "Lancaster"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Tressa M. Alioth",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Peter C. Bataillon",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Katie L. Benson"
+   },
+   {
+    "role": "District Judge",
+    "name": "J Russell Derr",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Duane C. Dougherty",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Todd O. Engleman",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael W. Jensen",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Molly B. Keane",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan M. Lindberg",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey J. Lux",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "James M. Masteller",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Richard P. McGowan",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kimberly Miller Pankonin",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Marlon A. Polk",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "LeAnne M. Srb",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Shelly R. Stratman",
+    "county": "Douglas"
+   },
+   {
+    "role": "District Judge",
+    "name": "Horacio J. Wheelock",
+    "county": "Douglas"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Rachel A. Daugherty",
+    "county": "Hamilton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason S. Doele",
+    "county": "Platte"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christina M. Marroquin",
+    "county": "Saunders"
+   },
+   {
+    "role": "District Judge",
+    "name": "James C. Stecker",
+    "county": "Seward"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Zachary L. Blackman",
+    "county": "Washington"
+   },
+   {
+    "role": "District Judge",
+    "name": "Geoffrey C. Hall",
+    "county": "Dodge"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bryan C. Meismer",
+    "county": "Dakota"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Michael L. Long",
+    "county": "Madison"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan J. Stover",
+    "county": "Madison"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Mark D. Kozisek",
+    "county": "Brown"
+   },
+   {
+    "role": "District Judge",
+    "name": "Karin L. Noakes",
+    "county": "Howard"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Andrew C. Butler",
+    "county": "Hall"
+   },
+   {
+    "role": "District Judge",
+    "name": "Patrick M. Lee",
+    "county": "Hall"
+   },
+   {
+    "role": "District Judge",
+    "name": "John H. Marsh",
+    "county": "Buffalo"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kane M. Ramsey",
+    "county": "Buffalo"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Morgan R. Farquhar",
+    "county": "Adams"
+   },
+   {
+    "role": "District Judge",
+    "name": "Timothy E. Hoeft",
+    "county": "Phelps"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Chawnta M. Durham",
+    "county": "Dawson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Patrick M. Heng",
+    "county": "Red Willow"
+   },
+   {
+    "role": "District Judge",
+    "name": "Cindy R. Volkmer",
+    "county": "Lincoln"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "District Judge",
+    "name": "Leo P. Dobrovolny",
+    "county": "Scotts Bluff"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrea Miller",
+    "county": "Scotts Bluff"
+   },
+   {
+    "role": "District Judge",
+    "name": "Travis P. O'Gorman",
+    "county": "Box Butte"
+   },
+   {
+    "role": "District Judge",
+    "name": "Derek C. Weimer",
+    "county": "Cheyenne"
+   }
+  ]
+ }
+}

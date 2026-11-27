@@ -138,6 +138,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 93 counties by ne/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "ne-judicial-district",
+        "app_file": "ne-judicial-districts.json",
+        "source_url": "https://nebraskajudicial.gov/directories/district-court-judges",
+        "note": "Nebraska's 12 district court districts, dissolved from the 93 counties by scripts/build_state_courts.py from the Judicial Branch's district map pages (excerpt in ne/data/source/courts/ne-courts.txt, read 2026-11-27). The county court's districts differ for Otoe and Fillmore; this layer follows the district court.",
+    },
+    {
+        "layer": "ne-judicial-district",
+        "app_file": "ne-district-judges.json",
+        "source_url": "https://nebraskajudicial.gov/directories/district-court-judges",
+        "note": "Nebraska's district judges, read from the Judicial Branch's district court judges directory by scripts/build_state_courts.py --fetch ne. The monthly re-read is a row in ne/WATCH.md.",
+    },
 ]
 
 # Nebraska's envelope, as index.html writes it for the ZIP layer

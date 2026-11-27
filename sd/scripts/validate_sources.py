@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 66 counties by sd/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "sd-judicial-circuit",
+        "app_file": "sd-judicial-districts.json",
+        "source_url": "https://ujs.sd.gov/court-finder/",
+        "note": "South Dakota's 7 judicial circuits, dissolved from the 66 counties by scripts/build_state_courts.py from the Unified Judicial System's circuit pages (excerpt in sd/data/source/courts/sd-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "sd-judicial-circuit",
+        "app_file": "sd-district-judges.json",
+        "source_url": "https://ujs.sd.gov/court-finder/",
+        "note": "Each circuit's circuit judges, read from its contacts page on ujs.sd.gov by scripts/build_state_courts.py --fetch sd; magistrates are not listed. The monthly re-read is a row in sd/WATCH.md.",
+    },
 ]
 
 # South Dakota's envelope, as index.html writes it for the ZIP layer

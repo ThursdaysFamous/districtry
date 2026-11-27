@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "46.82078,-100.78267"; // North Dakota State Capitol, 600 East Boulevard Avenue, Bismarck, Burleigh County
-const OFFLINE = ["county", "us-house", "nd-senate", "nd-house"];
-const EXPECT_DISTRICT = { "county": "Burleigh County", "us-house": "Congressional District (at Large)", "nd-senate": "35", "nd-house": "35" };
+const OFFLINE = ["county", "us-house", "nd-senate", "nd-house", "nd-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Burleigh County", "us-house": "Congressional District (at Large)", "nd-senate": "35", "nd-house": "35", "nd-judicial-district": "South Central Judicial District" };
 const NEGATIVE_POINT = "49.15000,-99.00000"; // Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry North Dakota";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NorthDakotaExplorer";

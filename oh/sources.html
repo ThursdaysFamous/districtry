@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1199,6 +1199,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-oh-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>oh-court-of-appeals</code></th>
+                <td data-label="What it answers">The appellate district covering the point, its counties, and the court of appeals judges the Supreme Court of Ohio lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list the Supreme Court of Ohio prints for each district on its courts of appeals page (the districts are set by Article IV, section 3 of the Ohio Constitution and section 2501.01 of the Revised Code), read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's court of appeals judges are named from the Supreme Court of Ohio's courts of appeals page, read 2026-11-27 with this project's own client and kept as text in oh/data/source/courts/oh-courts.txt. No weekly job re-reads the page, so the card gives the date. Each county's common pleas judges are not named yet. How judges are chosen is from the Ohio Constitution, Article IV, section 6.</td>
+                <td data-label="Where it applies">Ohio — statewide, all 88 counties.</td>
+              </tr>
               <tr id="layer-us-house">
                 <th scope="row"><span class="layer-name">U.S. House</span><code>us-house</code></th>
                 <td data-label="What it answers">The U.S. House district covering the point, and the representative holding it.</td>
@@ -1370,6 +1381,28 @@ table.matrix code {
     "url": "https://overberg.co"
   },
   "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/oh/sources.html#dataset-oh-court-of-appeals",
+      "identifier": "oh-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The appellate district covering the point, its counties, and the court of appeals judges the Supreme Court of Ohio lists for it. Each district's court of appeals judges are named from the Supreme Court of Ohio's courts of appeals page, read 2026-11-27 with this project's own client and kept as text in oh/data/source/courts/oh-courts.txt. No weekly job re-reads the page, so the card gives the date. Each county's common pleas judges are not named yet. How judges are chosen is from the Ohio Constitution, Article IV, section 6.",
+      "url": "https://districtry.com/oh/sources.html#layer-oh-court-of-appeals",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/oh/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list the Supreme Court of Ohio prints for each district on its courts of appeals page (the districts are set by Article IV, section 3 of the Ohio Constitution and section 2501.01 of the Revised Code), read 2026-11-27.",
+          "url": "https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Ohio — statewide, all 88 counties"
+      }
+    },
     {
       "@type": "Dataset",
       "@id": "https://districtry.com/oh/sources.html#dataset-us-house",

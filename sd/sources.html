@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 5 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1205,6 +1205,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">South Dakota — statewide, one district.</td>
+              </tr>
+              <tr id="layer-sd-judicial-circuit">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>sd-judicial-circuit</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point, its counties, and the circuit judges the South Dakota Unified Judicial System lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://ujs.sd.gov/court-finder/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list on each circuit's page of the Unified Judicial System's court finder, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each circuit's presiding judge and circuit judges are named from the circuit's contacts page on ujs.sd.gov, read 2026-11-27 with this project's own client and kept as text in sd/data/source/courts/sd-courts.txt; the magistrate judges it also lists are not kept, and the card says so. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the South Dakota Constitution, Article V, section 7.</td>
+                <td data-label="Where it applies">South Dakota — statewide, all 66 counties.</td>
               </tr>
               <tr id="layer-sd-senate">
                 <th scope="row"><span class="layer-name">South Dakota Senate District</span><code>sd-senate</code></th>
@@ -1397,6 +1408,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Dakota — statewide, one district"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sd/sources.html#dataset-sd-judicial-circuit",
+      "identifier": "sd-judicial-circuit",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point, its counties, and the circuit judges the South Dakota Unified Judicial System lists for it. Each circuit's presiding judge and circuit judges are named from the circuit's contacts page on ujs.sd.gov, read 2026-11-27 with this project's own client and kept as text in sd/data/source/courts/sd-courts.txt; the magistrate judges it also lists are not kept, and the card says so. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the South Dakota Constitution, Article V, section 7.",
+      "url": "https://districtry.com/sd/sources.html#layer-sd-judicial-circuit",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/sd/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county list on each circuit's page of the Unified Judicial System's court finder, read 2026-11-27.",
+          "url": "https://ujs.sd.gov/court-finder/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "South Dakota — statewide, all 66 counties"
       }
     },
     {

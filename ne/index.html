@@ -4673,15 +4673,16 @@ function initNebraskaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ne-legislature": "nel", "county": "co",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
+  var LAYER_CODES = { "us-house": "us", "ne-legislature": "nel", "ne-judicial-district": "nej",
+    "county": "co", "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
     "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ne-legislature"],
-    "county": ["county"], "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "trial-court-district": ["ne-judicial-district"], "county": ["county"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -4703,7 +4704,8 @@ function initNebraskaExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "ne-legislature-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "ne-legislature-districts.json", "zip-index.json", "tribal-areas.json",
+    "ne-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11600,6 +11602,7 @@ function initNebraskaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 3 congressional districts — the largest districts Nebraska carries below the state itself
+    "ne-judicial-district", // 12 district court judicial districts of whole counties, 16,671 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a legislative district, smaller than a congressional district
     "ne-legislature",    // 49 legislative districts, each electing one senator to Nebraska's one-chamber Legislature
     "county",            // 93 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 244 school districts, drawn from a tile archive mirrored from TIGERweb
@@ -17191,6 +17194,126 @@ function initNebraskaExplorer() {
     emptyNote: "This point is not on tribal land. Nebraska has 9 tribal areas across 7 nations, 6 reservations and 3 pieces of off-reservation trust land, and this point is on none of them."
   });
 
+  /* ---------- 6b. Judicial District — Nebraska's district court judicial districts, whole counties ----------
+   * 12 district court judicial districts of whole counties, dissolved from
+   * this app's own county fabric by scripts/build_state_courts.py, which reads
+   * the county lists from the Nebraska Judicial Branch's district map pages
+   * and the judges from its directory of district court judges, kept as text
+   * in ne/data/source/courts/. The districts are geometry (ne-judicial-
+   * districts.json, cache-first); the judges are a roster (ne-district-
+   * judges.json, network-first), so a new judge reaches a returning reader
+   * without a cache bump. No weekly job re-reads the pages; ne/WATCH.md
+   * carries the re-read and the card prints the date they were read. A seat
+   * the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Nebraska Constitution, Article V,
+   * section 21 (nebraskalegislature.gov, read 2026-11-27): district judges are
+   * appointed, and every six years each faces the voters' approval or
+   * rejection. THE COUNTY COURT'S DISTRICTS DIFFER for Otoe and Fillmore
+   * counties (the district map pages say so), so the card says this map is the
+   * district court's.
+   * ---------- */
+  var loadNeCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ne-judicial-districts.json", {}, 2);
+  });
+  var loadNeJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ne-district-judges.json", {}, 2);
+  });
+  var NE_COURT = {
+    how: "District judges are appointed by the Governor, and every six years the voters decide whether each one stays in office (Nebraska Constitution, Article V, section 21).",
+    court: "The district court is Nebraska's general trial court. Each judge is listed with the county of their home court, and has authority across the whole district. This map is the district court's: the county court's districts put Otoe County in District 2 and Fillmore County in District 10.",
+    from: "The Nebraska Judicial Branch's directory of district court judges",
+    link: { label: "Nebraska district courts", url: "https://nebraskajudicial.gov/courts/district-court" }
+  };
+  function neCourtTitle(unit) {
+    return "Judicial District " + unit;
+  }
+  // "Atchison and Leavenworth Counties"
+  function neCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "ne-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Nebraska's district court judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadNeCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : neCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadNeCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadNeJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? neCourtTitle(result.unit) : "Unknown judicial district",
+        note: neCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("District judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: NE_COURT.how });
+      rows.push({ label: "The court", value: NE_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: NE_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return NE_COURT.link; }
+  });
+
   /* ---------- 7. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19082,7 +19205,7 @@ function initNebraskaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ne-legislature", "school-district-unified",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ne-legislature", "ne-judicial-district", "school-district-unified",
     "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -19612,7 +19735,8 @@ function initNebraskaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#88637C": "#DAA7C9", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

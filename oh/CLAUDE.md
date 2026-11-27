@@ -88,6 +88,16 @@ to assume the office is empty. Recorded as gaps `oh-county-officials` and
 `oh-municipal-officeholders`. Ohio's county commissioners are elected countywide, so naming them
 needs no district map.
 
+**THE COURT LAYER DRAWS OHIO'S 12 COURT OF APPEALS DISTRICTS AND NAMES THEIR JUDGES**
+(`oh-court-of-appeals`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Supreme Court of Ohio's courts of
+appeals page, which also names each district's judges (67, read 2026-11-27), kept as a dated excerpt
+in `data/source/courts/oh-courts.txt` and shipped network-first as `oh-district-judges.json`. The
+Fourth District lists three judges and ships as listed. The card says the district's voters elect
+its judges (Ohio Constitution, Article IV, section 6) and that a panel of three hears each case.
+Each county's common pleas judges are elected countywide and are not named yet. No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE OHIO.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves. The archive keeps 1,233 of the 1,744 ZCTAs in the app's box
@@ -121,8 +131,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Ohio (`ohio`) — https://districtry.com/oh/
 - Geocoders: address Photon (Ohio-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Ohio-bounded, serial >=1s queue)
-- Ground truth: 39.96133,-82.99895 (Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.) → county Franklin County; us-house 15; oh-senate 15; oh-house 1. Negative point 42.05310,-82.59980 (Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.OhioExplorer`.
+- Ground truth: 39.96133,-82.99895 (Ohio Statehouse, 1 Capitol Square, Columbus, Franklin County. Measured 2026-11-11 against the shipped files: 363 m inside its congressional district, 442 m inside its Senate and House districts.) → county Franklin County; us-house 15; oh-senate 15; oh-house 1; oh-court-of-appeals Tenth District Court of Appeals. Negative point 42.05310,-82.59980 (Leamington, Ontario, on the Canadian shore of Lake Erie — outside Ohio and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Ohio Statehouse returns Ohio), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 7. Debug namespace `window.OhioExplorer`.
 - Scheduled workflows: `update-oh-congress-roster.yml` (Tue 20:53 UTC); `update-oh-legislature-roster.yml` (Thu 20:53 UTC); `oh-validate-sources.yml` (1st of month 23:07 UTC).
 - Source registry: `oh/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

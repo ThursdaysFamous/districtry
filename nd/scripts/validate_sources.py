@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 53 counties by nd/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "nd-judicial-district",
+        "app_file": "nd-judicial-districts.json",
+        "source_url": "https://www.ndcourts.gov/district-court/district-court-judges",
+        "note": "North Dakota's 8 judicial districts, dissolved from the 53 counties by scripts/build_state_courts.py from Administrative Rule 6 on ndcourts.gov (excerpt in nd/data/source/courts/nd-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "nd-judicial-district",
+        "app_file": "nd-district-judges.json",
+        "source_url": "https://www.ndcourts.gov/district-court/district-court-judges",
+        "note": "North Dakota's district judges, read from ndcourts.gov's district court judges page by scripts/build_state_courts.py --fetch nd. The monthly re-read is a row in nd/WATCH.md.",
+    },
 ]
 
 # North Dakota's envelope, as index.html writes it for the ZIP layer

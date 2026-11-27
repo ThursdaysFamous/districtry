@@ -422,7 +422,14 @@ question.
   law divides a county it lists the 2010 census voting districts and blocks of
   each part, so those parts are drawn from the Census Bureau's 2010 lines. No
   judge is named, because the court system lists its judges on a page its
-  website asks programs not to read.
+  website asks programs not to read. Since 2026-11-27 Kansas, Nebraska, North
+  Dakota, Ohio and South Dakota answer them too, each with the court its voters
+  choose judges for by district: Kansas's 31 judicial districts, Nebraska's 12
+  district court districts (retention votes), North Dakota's 8 judicial
+  districts, Ohio's 12 court of appeals districts and South Dakota's 7 circuits.
+  Each is whole counties, read with the judges' names from the court system's
+  own pages. Ohio's common pleas judges are elected county by county and are not
+  named yet.
 - School boards elected by district: Chicago, Milwaukee, Racine, Iowa's
   statewide director districts, New York City's community education councils,
   Minnesota's fourteen boards that elect by district, and since 2026-10-16

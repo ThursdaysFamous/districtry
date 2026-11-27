@@ -3043,7 +3043,12 @@ ANSWERS = {
         "sub-county-government": OPEN,
         # Common pleas judges are elected by county and court of appeals
         # judges by appellate district; neither is drawn or named yet.
-        "courts-by-district": OPEN,
+        # Ohio elects its court of appeals judges by appellate district (Ohio
+        # Constitution, Article IV, section 6(A)(2)). The 12 districts and their
+        # judges were read 2026-11-27 from the Supreme Court of Ohio
+        # (scripts/build_state_courts.py). Common pleas judges are elected by
+        # county and are not named yet.
+        "courts-by-district": answers("oh-court-of-appeals"),
         # Whether any board elects its members by district has not been
         # measured for Ohio.
         "school-boards-by-district": UNSETTLED,
@@ -3377,7 +3382,11 @@ ANSWERS = {
         # District judges are elected by judicial district in some districts
         # and stand for retention in the rest; no district is drawn or judge
         # named yet.
-        "courts-by-district": OPEN,
+        # Kansas elects its district judges by judicial district unless a
+        # district adopted nonpartisan selection (Kansas Constitution, Article
+        # 3, section 6). The 31 districts and their judges were read 2026-11-27
+        # from kscourts.gov (scripts/build_state_courts.py).
+        "courts-by-district": answers("ks-judicial-district"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -3604,7 +3613,11 @@ ANSWERS = {
         "subdivision-boundaries": OPEN,
         # Judges are appointed and stand for retention by judicial district; no
         # district is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # Nebraska district judges face a retention vote by the district's
+        # voters every six years (Nebraska Constitution, Article V, section 21).
+        # The 12 districts and their judges were read 2026-11-27 from the
+        # Nebraska Judicial Branch (scripts/build_state_courts.py).
+        "courts-by-district": answers("ne-judicial-district"),
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
@@ -3831,7 +3844,11 @@ ANSWERS = {
         "subdivision-boundaries": OPEN,
         # Circuit judges are elected by judicial circuit; no circuit is drawn or
         # judge named yet.
-        "courts-by-district": OPEN,
+        # South Dakota elects its circuit judges by circuit in a nonpolitical
+        # election (South Dakota Constitution, Article V, section 7). The 7
+        # circuits and their judges were read 2026-11-27 from the Unified
+        # Judicial System (scripts/build_state_courts.py).
+        "courts-by-district": answers("sd-judicial-circuit"),
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
@@ -3863,7 +3880,11 @@ ANSWERS = {
         "subdivision-boundaries": OPEN,
         # District judges are elected by judicial district; no district is drawn
         # or judge named yet.
-        "courts-by-district": OPEN,
+        # North Dakota's electors of each judicial district choose its district
+        # judges (North Dakota Constitution, Article VI, section 9). The 8
+        # districts (Administrative Rule 6) and their judges were read
+        # 2026-11-27 from ndcourts.gov (scripts/build_state_courts.py).
+        "courts-by-district": answers("nd-judicial-district"),
         "sub-county-government": OPEN,
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,

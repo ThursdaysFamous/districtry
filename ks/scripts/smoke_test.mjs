@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "39.04807,-95.67803"; // Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County
-const OFFLINE = ["county", "us-house", "ks-senate", "ks-house"];
-const EXPECT_DISTRICT = { "county": "Shawnee County", "us-house": "2", "ks-senate": "19", "ks-house": "57" };
+const OFFLINE = ["county", "us-house", "ks-senate", "ks-house", "ks-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Shawnee County", "us-house": "2", "ks-senate": "19", "ks-house": "57", "ks-judicial-district": "3rd Judicial District" };
 const NEGATIVE_POINT = "40.20000,-98.50000"; // Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Kansas";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "KansasExplorer";

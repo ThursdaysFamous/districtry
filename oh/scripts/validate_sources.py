@@ -178,6 +178,18 @@ PROVENANCE = [
             "anchor per county plus OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "oh-court-of-appeals",
+        "app_file": "oh-judicial-districts.json",
+        "source_url": "https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/",
+        "note": "Ohio's 12 court of appeals districts, dissolved from the 88 counties by scripts/build_state_courts.py from the Supreme Court of Ohio's courts of appeals page (excerpt in oh/data/source/courts/oh-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "oh-court-of-appeals",
+        "app_file": "oh-district-judges.json",
+        "source_url": "https://www.supremecourt.ohio.gov/courts/judicial-system/ohio-court-of-appeals/",
+        "note": "Each district's appellate judges, read from the same page by scripts/build_state_courts.py --fetch oh. The monthly re-read is a row in oh/WATCH.md.",
+    },
 ]
 
 # Ohio's envelope, as index.html writes it for the ZIP layer

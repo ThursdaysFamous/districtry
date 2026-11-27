@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "44.36706,-100.34604"; // South Dakota State Capitol, 500 East Capitol Avenue, Pierre, Hughes County
-const OFFLINE = ["county", "us-house", "sd-senate", "sd-house"];
-const EXPECT_DISTRICT = { "county": "Hughes County", "us-house": "Congressional District (at Large)", "sd-senate": "24", "sd-house": "24" };
+const OFFLINE = ["county", "us-house", "sd-senate", "sd-house", "sd-judicial-circuit"];
+const EXPECT_DISTRICT = { "county": "Hughes County", "us-house": "Congressional District (at Large)", "sd-senate": "24", "sd-house": "24", "sd-judicial-circuit": "Sixth Judicial Circuit" };
 const NEGATIVE_POINT = "46.05000,-100.10000"; // Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry South Dakota";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "SouthDakotaExplorer";

@@ -4673,16 +4673,18 @@ function initSouthDakotaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "sd-senate": "sds", "sd-house": "sdh", "county": "co",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "sd-senate": "sds", "sd-house": "sdh",
+    "sd-judicial-circuit": "sdj", "county": "co", "school-district-unified": "su",
+    "zip-code": "zp", "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["sd-senate"],
-    "state-house": ["sd-house"], "county": ["county"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["sd-house"], "trial-court-district": ["sd-judicial-circuit"],
+    "county": ["county"], "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4703,7 +4705,8 @@ function initSouthDakotaExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "sd-senate-districts.json", "sd-house-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "sd-senate-districts.json", "sd-house-districts.json", "zip-index.json",
+    "tribal-areas.json", "sd-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11600,6 +11603,7 @@ function initSouthDakotaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // the at-large congressional district, the whole state
+    "sd-judicial-circuit", // 7 judicial circuits of whole counties, 28,473 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than the at-large congressional district
     "sd-senate",         // 35 Senate districts, each exactly one House district or its two subdistricts
     "sd-house",          // 37 House districts and subdistricts: 33 districts electing two representatives and 4 subdistricts electing one
     "county",            // 66 counties, pre-built from TIGERweb; the instance's offline anchor layer
@@ -17241,6 +17245,129 @@ function initSouthDakotaExplorer() {
     emptyNote: "This point is not on tribal land. South Dakota has 16 tribal areas across 12 nations, 9 reservations and 7 pieces of off-reservation trust land, and this point is on none of them."
   });
 
+  /* ---------- 7b. Judicial Circuit — South Dakota's judicial circuits, whole counties ----------
+   * 7 judicial circuits of whole counties, dissolved from this app's own
+   * county fabric by scripts/build_state_courts.py, which reads the county
+   * lists from the Unified Judicial System's page for each circuit and the
+   * judges from each circuit's contacts page, kept as text in
+   * sd/data/source/courts/. The districts are geometry (sd-judicial-
+   * districts.json, cache-first); the judges are a roster (sd-district-
+   * judges.json, network-first), so a new judge reaches a returning reader
+   * without a cache bump. No weekly job re-reads the pages; sd/WATCH.md
+   * carries the re-read and the card prints the date they were read. A seat
+   * the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the South Dakota Constitution, Article
+   * V, section 7 (sdlegislature.gov, read 2026-11-27): circuit judges are
+   * elected in a nonpolitical election by the voters of their circuit for
+   * eight-year terms, and the Governor fills a vacancy for the rest of the
+   * term. MAGISTRATE JUDGES ARE NOT KEPT: the constitution's election clause
+   * names circuit judges, and the card says the magistrates are on the court's
+   * page.
+   * ---------- */
+  var loadSdCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sd-judicial-districts.json", {}, 2);
+  });
+  var loadSdJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sd-district-judges.json", {}, 2);
+  });
+  var SD_COURT = {
+    how: "The circuit's voters elect its circuit judges in a nonpolitical election for eight-year terms. When a seat comes open early, the Governor appoints a judge for the rest of the term (South Dakota Constitution, Article V, section 7).",
+    court: "The circuit court is South Dakota's trial court. The circuit's magistrate judges are listed on the court's own page, not here.",
+    from: "The South Dakota Unified Judicial System's contacts page for this circuit",
+    link: { label: "South Dakota circuit courts", url: "https://ujs.sd.gov/court-finder/" }
+  };
+  var SD_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth",
+    "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth"];
+  function sdCourtTitle(unit) {
+    return (SD_ORDINALS[parseInt(unit, 10) - 1] || unit) + " Judicial Circuit";
+  }
+  // "Atchison and Leavenworth Counties"
+  function sdCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "sd-judicial-circuit",
+    group: "political",
+    label: "Judicial Circuit",
+    emptyNote: "No judicial circuit here. This map holds South Dakota's judicial circuits, so a point outside the state gets none.",
+    overlay: {
+      load: loadSdCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : sdCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadSdCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadSdJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? sdCourtTitle(result.unit) : "Unknown judicial circuit",
+        note: sdCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Circuit judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: SD_COURT.how });
+      rows.push({ label: "The court", value: SD_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: SD_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return SD_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19132,7 +19259,7 @@ function initSouthDakotaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "sd-senate", "sd-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "sd-senate", "sd-house", "sd-judicial-circuit",
     "school-district-unified", "county", "municipality",
     "zip-code", "tribal-government", "police-station", "fire-station",
     "post-office"];
@@ -19663,8 +19790,8 @@ function initSouthDakotaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
