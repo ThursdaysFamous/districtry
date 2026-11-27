@@ -72,13 +72,16 @@ def app_dir(tag):
 
 
 def county_geometry(tag, label):
-    """{BASENAME: geometry} from the instance's own county fabric."""
+    """{BASENAME: geometry} from the instance's own county fabric. An independent
+    city is keyed by its NAME ("Baltimore city"), since its BASENAME can be the
+    same as a county's (Maryland's Baltimore County and Baltimore city)."""
     path = os.path.join(app_dir(tag), "state-counties.json")
     with open(path) as fh:
         feats = json.load(fh)["features"]
     out = {}
     for f in feats:
-        name = (f.get("properties") or {}).get("BASENAME")
+        props = f.get("properties") or {}
+        name = props.get("NAME") if str(props.get("NAME", "")).endswith(" city") else props.get("BASENAME")
         if not name:
             fail(label, "a county feature in %s/data/app/state-counties.json "
                  "carries no BASENAME" % tag)

@@ -149,6 +149,13 @@ STATES = {
         "authority": "NRS 3.010 (leg.state.nv.us)",
         "source": "https://www.leg.state.nv.us/NRS/NRS-003.html",
     },
+    "md": {
+        "name": "Maryland",
+        "districts": 7, "counties": 24, "min_judges": 14,
+        "unit_word": "appellate judicial circuit",
+        "authority": "Article IV, section 14 of the Maryland Constitution, as the Maryland Manual prints it (msa.maryland.gov)",
+        "source": "https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html",
+    },
     "ks": {
         "name": "Kansas",
         "districts": 31, "counties": 105, "min_judges": 250,
@@ -1427,11 +1434,84 @@ def fetch_nv(reader):
     return out
 
 
-FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al, "nv": fetch_nv,
+MD_CONST = "https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html"
+MD_SUPREME = "https://msa.maryland.gov/msa/mdmanual/29ap/html/ap.html"
+MD_APPELLATE = "https://msa.maryland.gov/msa/mdmanual/30sp/html/sp.html"
+MD_ORD = ("First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh")
+
+
+def md_circuits(text):
+    """{circuit: [county, ...]} from Article IV, section 14 of the Maryland
+    Constitution, which names the seven appellate judicial circuits' counties.
+    Baltimore City is keyed as the county fabric names it, "Baltimore city"."""
+    text = re.sub(r"\s+", " ", text)
+    i = text.index("SEC. 14. The Supreme Court of Maryland shall be composed of seven justices")
+    body = text[i:text.index("The justices of the Supreme Court of Maryland shall be residents", i)]
+    out = {}
+    for item in re.split(r";\s*(?:and\s+)?", body):
+        m = re.search(r"one from the (\w+) Appellate Judicial Circuit,? consisting of (.+)$",
+                      item.strip().rstrip("."))
+        if not m:
+            continue
+        word, names = m.group(1), re.sub(r"\s+(?:counties|County)$", "", m.group(2).strip())
+        if names == "Baltimore City":
+            out[MD_ORD.index(word) + 1] = ["Baltimore city"]
+            continue
+        out[MD_ORD.index(word) + 1] = [x.strip() for x in re.split(r",\s*(?:and\s+)?|\s+and\s+", names)
+                                       if x.strip()]
+    if sorted(out) != list(range(1, 8)):
+        wcc.fail(LABEL, "md: Article IV section 14 names circuits %s" % sorted(out))
+    return out
+
+
+def md_bench(lines, title):
+    """[(circuit or None, name, chief?)] from a Maryland Manual court page,
+    which prints each member as name, a comma, then "<title>, <n>th Appellate
+    Judicial Circuit," or "<title>, At Large," and the year the term ends."""
+    out = []
+    for k, ln in enumerate(lines):
+        m = re.match(r"^(Chief )?%s(?: \(designated by Governor\))?, (?:(\d)(?:st|nd|rd|th) "
+                     r"Appellate Judicial Circuit|(At Large))\b" % title, ln)
+        if m and k >= 2 and lines[k - 1] == ",":
+            out.append((int(m.group(2)) if m.group(2) else None, lines[k - 2], bool(m.group(1))))
+    return out
+
+
+def fetch_md(reader):
+    """Circuits and counties from Article IV, section 14 of the Constitution,
+    as the Maryland Manual prints it; the justice of the Supreme Court of
+    Maryland and the judge of the Appellate Court of Maryland from each circuit
+    from the Manual's pages for the two courts. Each circuit must have exactly
+    one of each, and the Appellate Court eight at-large judges besides."""
+    circuits = md_circuits(" ".join(reader.get(MD_CONST)))
+    out = ["district | %d | %s" % (d, ", ".join(circuits[d])) for d in sorted(circuits)]
+    justices = md_bench(reader.get(MD_SUPREME), "Justice")
+    judges = md_bench(reader.get(MD_APPELLATE), "Judge")
+    at_large = [j for j in judges if j[0] is None]
+    if len(at_large) != 8:
+        wcc.fail(LABEL, "md: the Appellate Court page lists %d at-large judges, the court has 8"
+                 % len(at_large))
+    for d in sorted(circuits):
+        mine = [("Chief Justice, Supreme Court of Maryland" if chief else
+                 "Justice, Supreme Court of Maryland", name)
+                for c, name, chief in justices if c == d]
+        mine += [("Chief Judge, Appellate Court of Maryland" if chief else
+                  "Judge, Appellate Court of Maryland", name)
+                 for c, name, chief in judges if c == d]
+        if len(mine) != 2 or not mine[0][0].endswith("Supreme Court of Maryland"):
+            wcc.fail(LABEL, "md circuit %d: %d justice(s) and judge(s) listed, each circuit has "
+                     "one of each" % (d, len(mine)))
+        out.extend("judge | %d | %s | %s | " % (d, role, person(name, "md %d" % d))
+                   for role, name in mine)
+    return out
+
+
+FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al, "nv": fetch_nv, "md": fetch_md,
             "or": fetch_or, "ks": fetch_ks, "ne": fetch_ne, "nd": fetch_nd, "oh": fetch_oh,
             "sd": fetch_sd}
 
 SOURCES_READ = {
+    "md": "Article IV, section 14 of the Maryland Constitution on https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html (circuits and counties), and the Maryland Manual's pages for the Supreme Court of Maryland, https://msa.maryland.gov/msa/mdmanual/29ap/html/ap.html, and the Appellate Court of Maryland, https://msa.maryland.gov/msa/mdmanual/30sp/html/sp.html (each circuit's justice and Appellate Court judge; the eight at-large judges are counted and not kept)",
     "al": "Code of Alabama 12-11-2 and 12-17-20 through https://alison.legislature.state.al.us/graphql, the address the Legislature's code page reads (circuits, counties, judges per circuit), and each county's court site <county>.alacourt.gov, linked from https://www.alacourt.gov/images/Alabama_circuits.svg (judges)",
     "nv": "NRS 3.010 to 3.0197 on https://www.leg.state.nv.us/NRS/NRS-003.html (districts, counties and seats), the Eighth District's civil and criminal division and family division pages on https://www.clarkcountycourts.us/departments/judicial/ and https://www.washoecourts.com/Judges for the Second (judges), and for the other nine districts the Nevada Judiciary's list of judges' terms of office, read by hand (nv/data/source/courts/nv-term-of-office.txt)",
     "wv": "https://www.courtswv.gov/lower-courts/circuit-courts and the circuit court map PDF it links (circuits, counties and judges; the page's statewide count of circuit judges)",
@@ -1633,6 +1713,19 @@ def selftest():
     assert nv_hand("\n".join([NV_HAND_HEAD + "2026-11-27 (a note).", NV_HAND_URL, "Kept: a note.",
                               "Jason Woodbury | First Judicial District Court (Dept. 1)"]),
                    datetime.date(2026, 12, 1)) == ("2026-11-27", [(1, "Jason Woodbury")])
+    assert md_circuits("SEC. 14. The Supreme Court of Maryland shall be composed of seven justices, "
+                       "one from the First Appellate Judicial Circuit, consisting of Dorchester, Somerset "
+                       "and Worcester counties; one from the Second Appellate Judicial Circuit, consisting "
+                       "of St. Mary's and Calvert counties; one from the Third Appellate Judicial Circuit, "
+                       "consisting of Allegany County; one from the Fourth Appellate Judicial Circuit, "
+                       "consisting of Prince George's County; one from the Fifth Appellate Judicial "
+                       "Circuit, consisting of Anne Arundel County; one from the Sixth Appellate Judicial "
+                       "Circuit, consisting of Baltimore City; and one from the Seventh Appellate Judicial "
+                       "Circuit, consisting of Howard County. The justices of the Supreme Court of "
+                       "Maryland shall be residents")[2] == ["St. Mary's", "Calvert"]
+    assert md_bench(["Matthew J. Fader", ",", "Chief Justice, 4th Appellate Judicial Circuit, 2032",
+                     "Kathryn Grill Graeff", ",", "Judge, At Large, 2031"], "Justice") == [
+        (4, "Matthew J. Fader", True)]
     print("%s: selftest OK" % LABEL)
 
 

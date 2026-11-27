@@ -79,7 +79,7 @@
     },
     "supreme-court-district": {
       "il": "il-supreme-court", "ky": "ky-supreme-court", "ms": "ms-supreme-court",
-      "la": "la-supreme-court"
+      "la": "la-supreme-court", "md": "md-appellate-circuit"
     },
     "appellate-court-district": {
       "wi": "wi-court-of-appeals", "mi": "mi-court-of-appeals", "ky": "ky-court-of-appeals",

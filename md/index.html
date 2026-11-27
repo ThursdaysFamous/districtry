@@ -4673,17 +4673,19 @@ function initMarylandExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "county": "co", "school-district-unified": "su",
-    "md-senate": "mds", "md-house": "mdh", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "md-appellate-circuit": "mdc", "us-house": "us", "county": "co",
+    "school-district-unified": "su", "md-senate": "mds", "md-house": "mdh", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["md-senate"],
-    "state-house": ["md-house"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["md-house"], "supreme-court-district": ["md-appellate-circuit"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4704,7 +4706,8 @@ function initMarylandExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "md-senate-districts.json", "md-house-districts.json", "zip-index.json" ];
+    "md-senate-districts.json", "md-house-districts.json", "zip-index.json",
+    "md-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11600,6 +11603,7 @@ function initMarylandExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
+    "md-appellate-circuit", // 7 appellate judicial circuits of whole counties, 4,590 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a congressional district
     "us-house",          // 8 congressional districts — the largest districts Maryland carries below the state itself
     "county",            // 24 county equivalents (23 counties and Baltimore City), pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 24 school districts, one for each county and Baltimore City and the same ground, drawn from a tile archive mirrored from TIGERweb
@@ -17179,6 +17183,140 @@ function initMarylandExplorer() {
     }
   });
 
+  /* ---------- 7b. Appellate Circuit — Maryland's appellate judicial circuits, whole counties ----------
+   * 7 appellate judicial circuits of whole counties, dissolved from this app's
+   * own county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from Article IV, section 14 of the Maryland Constitution, as the Maryland
+   * Manual prints it and the judges from the Maryland Manual's pages for the
+   * Supreme Court of Maryland and the Appellate Court of Maryland,
+   * kept as text in md/data/source/courts/. The districts are geometry
+   * (md-judicial-districts.json, cache-first); the judges are a roster
+   * (md-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * md/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Maryland Constitution, Article IV,
+   * sections 5A and 14, as the Maryland State Archives' Maryland Manual prints
+   * it (msa.maryland.gov, read 2026-11-27): the Governor appoints each justice
+   * and appellate judge with the Senate's consent; a justice of the Supreme
+   * Court of Maryland, one from each appellate judicial circuit and resident
+   * in it, then stands for retention by the registered voters of that circuit,
+   * and an Appellate Court judge by the voters of the area the law prescribes,
+   * for ten-year terms. The Manual's Appellate Court page says one of that
+   * court's 15 judges is elected from each circuit and eight from the State at
+   * large; the at-large judges are not listed here. THE COUNT IS CHECKED: the
+   * fetch stops unless each circuit has exactly one justice and one Appellate
+   * Court judge on the Manual's pages, and the Appellate Court eight at-large
+   * judges besides. Circuit court judges, whom each county's voters elect, are
+   * not drawn here; the County map already draws their ground.
+   * ---------- */
+  var loadMdCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/md-judicial-districts.json", {}, 2);
+  });
+  var loadMdJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/md-district-judges.json", {}, 2);
+  });
+  var MD_COURT = {
+    how: "The Governor appoints each justice and appellate judge with the Senate's consent. The justice from this circuit then stands for retention by the circuit's voters for ten-year terms (Maryland Constitution, Article IV, section 5A), and so does the Appellate Court judge elected from it.",
+    court: "The Supreme Court of Maryland is the state's highest court, and the Appellate Court of Maryland is the court below it. Each circuit has one justice and one Appellate Court judge; the Appellate Court's eight other judges are retained statewide and are not listed here, nor are circuit court judges, whom each county elects.",
+    from: "The Maryland State Archives' Maryland Manual",
+    link: { label: "Maryland Judiciary", url: "https://www.mdcourts.gov/" }
+  };
+  function mdCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Appellate Judicial Circuit";
+  }
+  // "Atchison and Leavenworth Counties"
+  // "Baltimore city" is the county fabric's name for Baltimore City, which is
+  // not a county; it prints as the city and is not counted among the counties.
+  function mdCourtCounties(names) {
+    var all = (names || []).map(function (n) { return String(n); });
+    var list = all.filter(function (n) { return n !== "Baltimore city"; });
+    var city = all.length > list.length ? "Baltimore City" : null;
+    if (!list.length) return city;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return (city ? city + " and " : "") + joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "md-appellate-circuit",
+    group: "political",
+    label: "Appellate Circuit",
+    emptyNote: "No appellate judicial circuit here. This map holds Maryland's appellate judicial circuits, so a point outside the state gets none.",
+    overlay: {
+      load: loadMdCourtDistricts,
+      // the supreme-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#8A692C", weight: 2, fillColor: "#8A692C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : mdCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMdCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadMdJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? mdCourtTitle(result.unit) : "Unknown appellate judicial circuit",
+        note: mdCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Justice and judge"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: MD_COURT.how });
+      rows.push({ label: "The court", value: MD_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: (bench.from ? String(bench.from) : MD_COURT.from) + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return MD_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19070,7 +19208,7 @@ function initMarylandExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "md-senate", "md-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "md-senate", "md-house", "md-appellate-circuit",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -19601,8 +19739,8 @@ function initMarylandExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
     "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#8A692C": "#DDB061", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

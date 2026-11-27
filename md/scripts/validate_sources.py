@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 23 counties and Baltimore City by md/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "md-appellate-circuit",
+        "app_file": "md-judicial-districts.json",
+        "source_url": "https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html",
+        "note": "Maryland's 7 appellate judicial circuits, dissolved from the 23 counties and Baltimore City by scripts/build_state_courts.py from Article IV, section 14 of the Maryland Constitution (excerpt in md/data/source/courts/md-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "md-appellate-circuit",
+        "app_file": "md-district-judges.json",
+        "source_url": "https://msa.maryland.gov/msa/mdmanual/29ap/html/ap.html",
+        "note": "Each circuit's justice of the Supreme Court of Maryland and judge of the Appellate Court of Maryland, read from the Maryland Manual by scripts/build_state_courts.py --fetch md, which stops unless every circuit has exactly one of each. The monthly re-read is a row in md/WATCH.md.",
+    },
 ]
 
 # Maryland's envelope, as index.html writes it for the ZIP layer

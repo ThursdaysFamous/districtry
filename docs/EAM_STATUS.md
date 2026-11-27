@@ -62,7 +62,7 @@ different thing from one it failed.
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 22 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 26 | all | 9 of 14 levels |
 | ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
-| md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
+| md | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 14 | all | 9 of 14 levels |
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 73 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 29 | all | 13 of 14 levels |
@@ -367,11 +367,10 @@ per county, so each one is named under its state below.
 
 - **Examined by a statewide record:** `md-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 23 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `md-house-districts.json`, `md-senate-districts.json`, `metro-outline.json`, `md/data/app/population/`, `state-counties.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `md-district-judges.json`, `md-house-districts.json`, `md-judicial-districts.json`, `md-senate-districts.json`, `metro-outline.json`, `md/data/app/population/`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 23 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 10 units at 25,000+ name a governing body; unanswered: Annapolis city, Baltimore city, Bowie city, College Park city, Frederick city, Gaithersburg city, Hagerstown city, Laurel city and 2 more
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)

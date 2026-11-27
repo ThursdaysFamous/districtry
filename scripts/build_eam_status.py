@@ -3234,10 +3234,12 @@ ANSWERS = {
             "city or town the county governs. Its county subdivisions are its "
             "counties' election districts, which the Census marks "
             "non-functioning (measured 2026-11-12)."),
-        # Circuit court judges stand for election by county after appointment,
-        # and the appellate judges for retention; no district is drawn or judge
-        # named yet.
-        "courts-by-district": OPEN,
+        # The Appellate Circuit layer draws Maryland's 7 appellate judicial
+        # circuits and names the justice of the Supreme Court of Maryland and
+        # the Appellate Court judge each circuit's voters retain (since
+        # 2026-11-27). Circuit court judges are elected by county, whose ground
+        # the County map draws, and are not named.
+        "courts-by-district": answers("md-appellate-circuit"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,

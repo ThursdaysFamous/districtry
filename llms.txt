@@ -383,7 +383,7 @@ All 64 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 23 counties and Baltimore City: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Maryland Senate, House of Delegates and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
 
-- [Maryland district lookup](https://districtry.com/md/): 11 layers, all 23 counties and Baltimore City.
+- [Maryland district lookup](https://districtry.com/md/): 12 layers, all 23 counties and Baltimore City.
 - [Who is my U.S. representative?](https://districtry.com/md/congress.html)
 - [Sources & data layers](https://districtry.com/md/sources.html)
 - [Who is my Maryland legislator?](https://districtry.com/md/state-legislature.html)

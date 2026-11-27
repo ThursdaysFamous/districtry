@@ -50,6 +50,7 @@ const GEOMETRY_URLS = [
   "./data/app/md-senate-districts.json",
   "./data/app/md-house-districts.json",
   "./data/app/zip-index.json",
+  "./data/app/md-judicial-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -61,6 +62,7 @@ const ROSTER_URLS = [
   "./data/app/md-house-members.json",
   "./data/app/coverage-gaps.json",
   "./data/app/statewide-officials.json",
+  "./data/app/md-district-judges.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */
