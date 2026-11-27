@@ -77,6 +77,14 @@ only in Oklahoma, so a point anywhere else in Alaska is told it is on no tribal 
 draws for a government, in words that say why. No council is carried yet (`ROSTER_NOT_SOUGHT` in
 `scripts/build_tribal_areas.py`), recorded in gap `ak-tribal-government`.
 
+**THE CENSUS SUBAREA LAYER DRAWS ALL 37 OF ALASKA'S COUNTY SUBDIVISIONS, AND THE CARD SAYS THEY
+GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the Borough or Census Area layer, the
+done standard's level 14). Every one is a census subarea (LSADC 23, FUNCSTAT S, measured that day):
+an area the Census Bureau draws inside a borough or census area to report its counts. The layer is
+Oklahoma's, drawn from a tile archive mirrored from TIGERweb's layer 1. The card names the subarea
+and its borough or census area and says no one is elected from it and that Alaska has no government
+between the borough and the city.
+
 **THE ZIP LAYER HIDES OUTSIDE ALASKA**, as it does in every app. A ZCTA carries no state
 field, so the coverage test reads the shipped outline rather than the service, and the smoke test asserts
 both halves.
@@ -108,7 +116,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Alaska (`alaska`) — https://districtry.com/ak/
 - Geocoders: address Photon (Alaska-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Alaska-bounded, serial >=1s queue)
 - Ground truth: 58.30196,-134.41035 (Alaska State Capitol, 120 4th Street, Juneau, Juneau City and Borough) → county Juneau City and Borough; us-house Congressional District (at Large); ak-senate B; ak-house 4. Negative point 57.70000,-140.50000 (the Gulf of Alaska about 200 km south of Yakutat — outside Alaska and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Alaska State Capitol returns Alaska), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlaskaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.AlaskaExplorer`.
 - Scheduled workflows: `update-ak-congress-roster.yml` (Wed 23:33 UTC); `update-ak-legislature-roster.yml` (Thu 23:33 UTC); `ak-validate-sources.yml` (2nd of month 23:33 UTC).
 - Source registry: `ak/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

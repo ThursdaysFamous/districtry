@@ -82,6 +82,15 @@ wills. Recorded as gaps `md-county-officials` and `md-municipal-officeholders`.
 reservation in Maryland (measured 2026-11-12 with `scripts/tribal_areas.py --report Maryland`), so
 the state is recorded as covered in `data/tribal-government-join.json`, with nothing to draw.
 
+**THE ELECTION DISTRICT LAYER DRAWS ALL 290 OF MARYLAND'S COUNTY SUBDIVISIONS**
+(`county-subdivision`, since 2026-11-27, under the County layer, the done standard's level 14): 289
+of the counties' election districts, which the Census records as legal areas with no functioning
+government (LSADC 28, FUNCSTAT N, measured that day), and Baltimore city (FUNCSTAT F), an
+independent city outside every county. The layer is Oklahoma's, drawn from a tile archive mirrored
+from TIGERweb's layer 1. The card names the district and its county and says it has no government
+and that outside a city, town or village the county governs; in Baltimore city it says the city's
+own government governs.
+
 **THE ZIP LAYER HIDES OUTSIDE MARYLAND.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -111,7 +120,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Maryland (`maryland`) — https://districtry.com/md/
 - Geocoders: address Photon (Maryland-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Maryland-bounded, serial >=1s queue)
 - Ground truth: 38.97864,-76.49077 (Maryland State House, 100 State Circle, Annapolis, Anne Arundel County) → county Anne Arundel County; us-house 3; md-senate 30; md-house 30A. Negative point 38.35000,-74.95000 (The Atlantic about 15 km east of Ocean City — outside Maryland and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Maryland), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.MarylandExplorer`.
+- Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.MarylandExplorer`.
 - Scheduled workflows: `update-md-congress-roster.yml` (Mon 22:31 UTC); `update-md-legislature-roster.yml` (Tue 22:31 UTC); `md-validate-sources.yml` (1st of month 23:25 UTC).
 - Source registry: `md/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -4674,14 +4674,16 @@ function initColoradoExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "co-senate": "cos", "county": "co", "co-house": "coh",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "zip-code": "zp", "county-subdivision": "cs",
+    "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["co-senate"],
-    "state-house": ["co-house"], "county": ["county"], "municipality": ["municipality"],
+    "state-house": ["co-house"], "county": ["county"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -11605,6 +11607,7 @@ function initColoradoExplorer() {
     "co-house",          // 65 House districts, each electing one representative
     "school-district-unified", // 178 school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 530 ZIP Code Tabulation Areas that reach into Colorado (587 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
+    "county-subdivision", // 209 census county divisions, about 1,284 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive
     "municipality",      // 273 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb
     "tribal-government", // Tribal land — Colorado has 2 reservations held by two nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Southern Ute Reservation (2,759.2 km², La Plata and Archuleta counties), held by the Southern Ute Indian Tribe, and the Ute Mountain Reservation (1,854.2 km² in Colorado, 80.5% of it, almost all in Montezuma County, drawn whole into New Mexico and Utah), held by the Ute Mountain Ute Tribe. The Census draws no tribal district on either. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16794,9 +16797,9 @@ function initColoradoExplorer() {
    * Colorado's municipalities are its incorporated cities and towns. Measured
    * 2026-11-12 in TIGERweb's incorporated places for STATE='08'
    * (Places_CouSub_ConCity_SubMCD layer 4, drawn from a tile archive mirrored
-   * by scripts/mirror_tiger_tiles.py): 273 records: 197 towns, 75 cities and the town of Bonanza, which the Census records as an inactive government. The state's county
-   * subdivisions are statistical areas with no government, so they are not
-   * drawn.
+   * by scripts/mirror_tiger_tiles.py): 273 records: 197 towns, 75 cities and the town of Bonanza, which the Census records as an inactive government.
+   * The state's county subdivisions govern nobody and are drawn by
+   * the Census County Division layer, whose card says so.
    *
    * The empty state reads as a fact about the place rather than a failed
    * lookup: about 2% of Colorado's land is inside one (by the Census's own
@@ -17175,6 +17178,102 @@ function initColoradoExplorer() {
       return wrap;
     },
     emptyNote: "This point is not on tribal land. Colorado has 2 tribal areas across 2 nations, both reservations, and this point is on neither of them."
+  });
+
+  /* ---------- Census County Division — TIGERweb county subdivisions, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether
+   * or not the units govern anyone (docs/DONE_STANDARD.md, level 14,
+   * Adam's ruling of 2026-10-14). Colorado has no township governments,
+   * so outside a city or town the county governs. Every one of the 209
+   * county subdivisions TIGERweb carries for STATE='08' is a census
+   * county division (LSADC 22, FUNCSTAT S, measured 2026-11-27): an area
+   * the Census Bureau draws to report its counts, which governs nobody.
+   * The card says that rather than implying a government: it names the
+   * subdivision and its county, and its Government row is read from the
+   * Census's own functional-status code, so a FUNCSTAT this card does not
+   * know prints no row rather than an improvised one. Oklahoma's layer,
+   * drawn from a tile archive mirrored by scripts/mirror_tiger_tiles.py;
+   * the point query runs only when the archive cannot be read.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // A census county division's own name ("Denver" of "Denver CCD"): the card's header
+  // already says what kind of area it is, and the hover row prints the same
+  // value beside the same label.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "ccd" && base != null && String(base) !== "") return String(base);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
+    group: "geography",
+    label: "Census County Division",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      // the county-subdivision concept's colour and width (root
+      // layer-concepts.json)
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown subdivision",
+        note: result.county
+      }));
+      var GOVERNMENT = {
+        S: "None. A census county division is an area the U.S. Census " +
+          "Bureau draws to report its counts, and no one is elected from " +
+          "it. Colorado has no township governments, so outside a city or " +
+          "town the county governs.",
+        N: "None. The U.S. Census Bureau records this area as having no " +
+          "functioning government, and no one is elected to run it."
+      };
+      var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
+      var gov = status && GOVERNMENT.hasOwnProperty(status) ? GOVERNMENT[status] : null;
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
   });
 
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
@@ -19070,7 +19169,7 @@ function initColoradoExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "co-senate", "co-house",
     "school-district-unified",
-    "county", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19599,8 +19698,8 @@ function initColoradoExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

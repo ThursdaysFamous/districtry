@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "hi-senate", "hi-house"];
 const EXPECT_DISTRICT = { "county": "Honolulu County", "us-house": "1", "hi-senate": "13", "hi-house": "25" };
 const NEGATIVE_POINT = "20.70000,-158.70000"; // the open Pacific about 100 km southwest of Oahu — outside Hawaii and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Hawaii State Capitol returns Hawaii), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Hawaii";
-const EXPECT_LAYERS = 9;
+const EXPECT_LAYERS = 10;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "HawaiiExplorer";
@@ -834,6 +834,7 @@ try {
         features: props ? [{ attributes: props, geometry: { rings: [RING] } }] : []
       });
     }
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "the unified school district card names the district",
@@ -841,6 +842,27 @@ try {
         props: { GEOID: "1500030", NAME: "Hawaii Department of Education", STATE: "15", LOGRADE: "KG", HIGRADE: "12" },
         want: [/Hawaii Department of Education/],
         reject: []
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1500390810", NAME: "Honolulu CCD", BASENAME: "Honolulu", STATE: "15", COUNTY: "003", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Honolulu/, /Honolulu County/, /no one is elected from it/, /no government below its counties/],
+        reject: [/Honolulu CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1500390810", NAME: "Honolulu CCD", BASENAME: "Honolulu", STATE: "15", COUNTY: "003", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Honolulu/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1500390810", NAME: "Honolulu CCD", BASENAME: "Honolulu", STATE: "15", COUNTY: "003", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Honolulu/, /Honolulu County/],
+        reject: [/Government/]
       }
     ];
 
@@ -895,6 +917,30 @@ try {
   }
 
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Honolulu CCD, Honolulu County
+  //     (TIGERweb's layer 1, read 2026-11-27, which the archive is mirrored
+  //     from). An archive that stopped being read would send the click to
+  //     the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Honolulu/, /Honolulu County/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

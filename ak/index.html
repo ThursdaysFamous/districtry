@@ -4673,15 +4673,17 @@ function initAlaskaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ak-senate": "aks", "county": "co", "ak-house": "akh",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "ak-senate": "aks", "county": "co",
+    "county-subdivision": "cs", "ak-house": "akh", "school-district-unified": "su",
+    "zip-code": "zp", "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ak-senate"],
-    "state-house": ["ak-house"], "county": ["county"], "municipality": ["municipality"],
+    "state-house": ["ak-house"], "county": ["county"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -11602,6 +11604,7 @@ function initAlaskaExplorer() {
     "us-house",          // the at-large congressional district, the whole state
     "ak-senate",         // 20 Senate districts, lettered A to T, each exactly two House districts
     "county",            // 30 boroughs and census areas (Alaska's county equivalents), pre-built from TIGERweb; the instance's offline anchor layer
+    "county-subdivision", // 37 census subareas, about 39,998 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive; they nest inside the boroughs and census areas
     "ak-house",          // 40 House districts, two in each Senate district
     "school-district-unified", // 52 school districts, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 245 ZIP Code Tabulation Areas that reach into Alaska (245 in the app's bounding box), about 6,041 km2 of land on average, drawn from a tile archive of the ones inside the state; the layer hides outside it
@@ -16837,9 +16840,9 @@ function initAlaskaExplorer() {
    * (Places_CouSub_ConCity_SubMCD layer 4, drawn from a tile archive
    * mirrored by scripts/mirror_tiger_tiles.py): 149 records: 145 cities, the
    * Municipality of Anchorage and the City and Borough of Juneau, Sitka and
-   * Wrangell, the last four each a city and a borough in one government. The
-   * state's county subdivisions are statistical areas with no government, so
-   * they are not drawn.
+   * Wrangell, the last four each a city and a borough in one government.
+   * The state's county subdivisions govern nobody and are drawn by
+   * the Census Subarea layer, whose card says so.
    *
    * The empty state reads as a fact about the place rather than a failed
    * lookup: about 2% of Alaska's land is inside one (by the Census's own
@@ -17230,6 +17233,103 @@ function initAlaskaExplorer() {
       return wrap;
     },
     emptyNote: "This point is not on tribal land the Census draws for a government. Alaska has one reservation, the Annette Island Reserve, and this point is not on it; the Census's Alaska Native village statistical areas are statistical areas, which this map does not draw."
+  });
+
+  /* ---------- Census Subarea — TIGERweb county subdivisions, the level-14 map ----------
+   * Which county subdivision a point is in, owed in every state whether
+   * or not the units govern anyone (docs/DONE_STANDARD.md, level 14,
+   * Adam's ruling of 2026-10-14). Alaska has no government between the
+   * borough and the city. Every one of the 37 county subdivisions
+   * TIGERweb carries for STATE='02' is a census subarea (LSADC 23,
+   * FUNCSTAT S, measured 2026-11-27): an area the Census Bureau draws
+   * inside a borough or census area to report its counts, which governs
+   * nobody. The card says that rather than implying a government: it
+   * names the subdivision and its county, and its Government row is read
+   * from the Census's own functional-status code, so a FUNCSTAT this card
+   * does not know prints no row rather than an improvised one. Oklahoma's
+   * layer, drawn from a tile archive mirrored by
+   * scripts/mirror_tiger_tiles.py; the point query runs only when the
+   * archive cannot be read.
+   * ---------- */
+  var loadCountySubdivisions = tigerStatewideLoader(
+    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
+    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+
+  // The county a subdivision lies in, named from this app's own county file
+  // by the three-digit code TIGER carries; null when that file did not load,
+  // and the card then answers without it.
+  function subdivisionCounty(counties, code) {
+    if (!counties || code == null) return null;
+    var feats = counties.features || [];
+    for (var i = 0; i < feats.length; i++) {
+      var p = feats[i].properties || {};
+      if (String(findPropCI(p, ["county"])) === String(code)) {
+        var name = findPropCI(p, ["name"]);
+        return name != null ? String(name) : null;
+      }
+    }
+    return null;
+  }
+
+  // A census subarea's own name ("Juneau" of "Juneau census subarea"): the card's header
+  // already says what kind of area it is, and the hover row prints the same
+  // value beside the same label.
+  function subdivisionTitle(props) {
+    var name = findPropCI(props, ["name"]), base = findPropCI(props, ["basename"]);
+    if (subdivisionKind(name, base) === "census subarea" && base != null && String(base) !== "") return String(base);
+    return name != null ? String(name) : null;
+  }
+
+  registerLayer({
+    id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
+    group: "geography",
+    label: "Census Subarea",
+    subOf: "county",
+    overlay: {
+      load: loadCountySubdivisions,
+      // the county-subdivision concept's colour and width (root
+      // layer-concepts.json)
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return subdivisionTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadCountySubdivisions, point),
+        loadStateCounties().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: subdivisionTitle(props),
+          funcstat: findPropCI(props, ["funcstat"]),
+          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title != null ? result.title : "Unknown subdivision",
+        note: result.county
+      }));
+      var GOVERNMENT = {
+        S: "None. A census subarea is an area the U.S. Census Bureau draws " +
+          "inside a borough or census area to report its counts, and no " +
+          "one is elected from it. Alaska has no government between the " +
+          "borough and the city.",
+        N: "None. The U.S. Census Bureau records this area as having no " +
+          "functioning government, and no one is elected to run it."
+      };
+      var status = result.funcstat != null ? String(result.funcstat).toUpperCase() : null;
+      var gov = status && GOVERNMENT.hasOwnProperty(status) ? GOVERNMENT[status] : null;
+      if (gov) wrap.appendChild(renderFieldStack([{ label: "Government", value: gov }]));
+      return wrap;
+    }
   });
 
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
@@ -19124,7 +19224,7 @@ function initAlaskaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ak-senate", "ak-house",
-    "school-district-unified", "county", "municipality",
+    "school-district-unified", "county", "county-subdivision", "municipality",
     "zip-code", "tribal-government", "police-station", "fire-station",
     "post-office"];
   (function applySidebarRank() {
@@ -19654,8 +19754,8 @@ function initAlaskaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

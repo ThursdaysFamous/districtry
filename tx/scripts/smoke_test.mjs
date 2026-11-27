@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "tx-senate", "tx-house"];
 const EXPECT_DISTRICT = { "county": "Travis County", "us-house": "37", "tx-senate": "14", "tx-house": "49" };
 const NEGATIVE_POINT = "28.50000,-101.50000"; // The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Texas";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "TexasExplorer";
@@ -834,6 +834,7 @@ try {
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const LOCAL = /Not named here/;
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -869,6 +870,27 @@ try {
         props: { GEOID: "4808940", NAME: "Austin Independent School District", STATE: "48" },
         want: [/Austin Independent School District/],
         reject: []
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "4845390165", NAME: "Austin CCD", BASENAME: "Austin", STATE: "48", COUNTY: "453", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Austin/, /Travis County/, /no one is elected from it/, /no township governments/, /outside a city, town or village the county governs/],
+        reject: [/Austin CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "4845390165", NAME: "Austin CCD", BASENAME: "Austin", STATE: "48", COUNTY: "453", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Austin/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "4845390165", NAME: "Austin CCD", BASENAME: "Austin", STATE: "48", COUNTY: "453", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Austin/, /Travis County/],
+        reject: [/Government/]
       }
     ];
 
@@ -965,6 +987,30 @@ try {
     await context.close();
   }
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Austin CCD, Travis County
+  //     (TIGERweb's layer 1, read 2026-11-27, which the archive is mirrored
+  //     from). An archive that stopped being read would send the click to
+  //     the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Austin/, /Travis County/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

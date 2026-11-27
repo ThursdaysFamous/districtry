@@ -78,6 +78,14 @@ It ships in this app's own network-first `tribal-councils.json`, which the loade
 land, so if that file fails to load the card still names the band and names nobody. The MOWA
 Band's council is not carried yet (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`). Recorded in gap `al-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 390 OF ALABAMA'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Alabama has no township governments,
+so outside a city or town the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE ALABAMA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -109,7 +117,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Alabama (`alabama`) — https://districtry.com/al/
 - Geocoders: address Photon (Alabama-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Alabama-bounded, serial >=1s queue)
 - Ground truth: 32.37771,-86.30091 (Alabama State Capitol, 600 Dexter Avenue, Montgomery, Montgomery County) → county Montgomery County; us-house 2; al-senate 26; al-house 77. Negative point 29.95000,-88.00000 (The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.AlabamaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.AlabamaExplorer`.
 - Scheduled workflows: `update-al-congress-roster.yml` (Mon 22:43 UTC); `update-al-legislature-roster.yml` (Tue 22:43 UTC); `al-validate-sources.yml` (1st of month 23:31 UTC).
 - Source registry: `al/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

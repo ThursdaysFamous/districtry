@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "az-senate", "az-house"];
 const EXPECT_DISTRICT = { "county": "Maricopa County", "us-house": "3", "az-senate": "11", "az-house": "11" };
 const NEGATIVE_POINT = "31.00000,-111.50000"; // Sonora, Mexico, about 37 km south of the Arizona line between Nogales and Sasabe — outside Arizona and outside every other instance in the fleet, and inside permalink_gate (minLat 30.90) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State Capitol and Tucson's city hall return Arizona, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. MEXICO BECAUSE NO INSTANCE WILL EVER SERVE IT: every U.S. neighbour of Arizona is in a later batch of the state-level launch, and a point on any of them would have to move the day that neighbour goes live.
 const APP_NAME = "districtry Arizona";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "ArizonaExplorer";
@@ -855,6 +855,7 @@ try {
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const LOCAL = /Not named here/;
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -897,7 +898,28 @@ try {
         props: { GEOID: "0499997", NAME: "School District Not Defined", STATE: "04", LOGRADE: "PK", HIGRADE: "12" },
         want: [/No school district defined here/, /a placeholder and not a district/],
         reject: [/runs every grade/, /Pre-kindergarten to grade 12/, /Your governing board/]
-      }
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0401392601", NAME: "Phoenix CCD", BASENAME: "Phoenix", STATE: "04", COUNTY: "013", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Phoenix/, /Maricopa County/, /no one is elected from it/, /no township governments/, /outside a city or town the county governs/],
+        reject: [/Phoenix CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0401392601", NAME: "Phoenix CCD", BASENAME: "Phoenix", STATE: "04", COUNTY: "013", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Phoenix/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0401392601", NAME: "Phoenix CCD", BASENAME: "Phoenix", STATE: "04", COUNTY: "013", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Phoenix/, /Maricopa County/],
+        reject: [/Government/]
+      },
     ];
 
     for (const c of cases) {
@@ -1028,6 +1050,30 @@ try {
       JSON.stringify({ placeholder: { text: ph.text.slice(0, 60), pin: ph.pin, lit: ph.lit, hover: ph.hover },
         control: { text: ctrl.text.slice(0, 60), pin: ctrl.pin } })
     );
+  }
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Phoenix CCD, Maricopa County
+  //     (TIGERweb's layer 1, read 2026-11-27, which the archive is mirrored
+  //     from). An archive that stopped being read would send the click to
+  //     the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Phoenix/, /Maricopa County/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
   }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.

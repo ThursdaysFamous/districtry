@@ -16,7 +16,7 @@ checkpoint that didn't happen.
 | Weekly (Wed 22:45 UTC) | U.S. House (Montana) roster refresh | `.github/workflows/update-mt-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Thu 22:45 UTC) | Montana Senate + Montana House roster refresh, from Open States' export, because the Legislature's own data cannot yet say who sits today | `.github/workflows/update-mt-legislature-roster.yml` → PR on change | Review + merge the PR. A red run is a person's job: a seat listed twice, a district the map does not draw, fewer named members than the builder's floor, or too few members carrying their e-mail address, party or member page |
 | Weekly (`update-statewide-officials.yml`) | The statewide officials line | `scripts/build_statewide_officials.py` → PR on change | Review + merge the PR; a red run is a handover to read |
-| Weekly (Sun, `update-tiger-tiles.yml`) | The five TIGERweb fabric archives (municipality, three school district layers and ZIP) | `scripts/mirror_tiger_tiles.py` → PR on change | Review + merge the PR; it moves this app's cache name itself |
+| Weekly (Sun, `update-tiger-tiles.yml`) | The six TIGERweb fabric archives (county subdivision, municipality, three school district layers and ZIP) | `scripts/mirror_tiger_tiles.py` → PR on change | Review + merge the PR; it moves this app's cache name itself |
 | Monthly (2nd of month 22:45 UTC) | Source freshness for every dataset this instance depends on | `.github/workflows/mt-validate-sources.yml` → tracking issue on WARN/FAIL | Read the issue; the job stays green on purpose |
 
 ## Dated (one change each, on or after the date)

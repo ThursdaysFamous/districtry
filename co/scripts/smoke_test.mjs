@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "co-senate", "co-house"];
 const EXPECT_DISTRICT = { "county": "Denver County", "us-house": "1", "co-senate": "31", "co-house": "6" };
 const NEGATIVE_POINT = "41.15000,-105.90000"; // Albany County, Wyoming, about 17 km north of the Colorado line west of Laramie — outside Colorado and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Colorado), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Colorado and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Colorado";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "ColoradoExplorer";
@@ -824,6 +824,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "Denver names itself a city and a county in one government",
@@ -866,6 +867,27 @@ try {
         props: { GEOID: "0803360", NAME: "Denver County School District 1", STATE: "08" },
         want: [/Denver County School District 1/],
         reject: []
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0803191007", NAME: "Denver CCD", BASENAME: "Denver", STATE: "08", COUNTY: "031", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Denver/, /Denver County/, /no one is elected from it/, /no township governments/, /outside a city or town the county governs/],
+        reject: [/Denver CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0803191007", NAME: "Denver CCD", BASENAME: "Denver", STATE: "08", COUNTY: "031", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Denver/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0803191007", NAME: "Denver CCD", BASENAME: "Denver", STATE: "08", COUNTY: "031", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Denver/, /Denver County/],
+        reject: [/Government/]
       }
     ];
 
@@ -938,6 +960,30 @@ try {
     await context.close();
   }
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Denver CCD, Denver County
+  //     (TIGERweb's layer 1, read 2026-11-27, which the archive is mirrored
+  //     from). An archive that stopped being read would send the click to
+  //     the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Denver/, /Denver County/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

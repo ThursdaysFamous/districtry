@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "nv-senate", "nv-assembly"];
 const EXPECT_DISTRICT = { "county": "Carson City", "us-house": "2", "nv-senate": "16", "nv-assembly": "40" };
 const NEGATIVE_POINT = "42.15000,-115.50000"; // Owyhee County, Idaho, about 17 km north of the Nevada line and 40 km east of the Duck Valley Reservation — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. MOVED 2026-11-12 FROM 42.15, -116.0, 41 km west, when the Tribal Government layer shipped: that layer draws the whole Duck Valley Reservation, its Idaho half included, and the old point lay about 0.9 km inside the reservation's northern edge, so validate_index.py found it inside data/app/tribal-areas.json. Measured that day from the shipped files: the Idaho app's own county outlines (id/data/app/state-counties.json, from TIGERweb) put the new point in Owyhee County, it is inside Idaho's outline in fleet-outlines.json and no other, and none of this app's shipped boundary files contains it. The old point had been measured 2026-11-10, when TIGERweb's state layer named Idaho there (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state). Every neighbour of Nevada is a live app since Idaho's go-live (batch 4 of the state-level launch, 2026-11-12), and measured that day on a 0.05-degree grid no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so the point is inside Idaho's outline wherever it goes. That is all right: the checks that use it boot on it or select it, which asks only that it be outside Nevada and outside every shipped boundary file, and a selection the app makes itself never leaves; the click that had to stay here became an Idaho routing case in the change that published Idaho, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Nevada";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NevadaExplorer";
@@ -811,6 +811,7 @@ try {
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const LOCAL = /Not named here/;
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -839,7 +840,28 @@ try {
         props: { GEOID: "3200060", NAME: "Washoe County School District", STATE: "32" },
         want: [/Washoe County School District/],
         reject: []
-      }
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "3251094140", NAME: "Carson City CCD", BASENAME: "Carson City", STATE: "32", COUNTY: "510", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Carson City/, /Carson City/, /no one is elected from it/, /no township governments/, /outside a city the county governs/],
+        reject: [/Carson City CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "3251094140", NAME: "Carson City CCD", BASENAME: "Carson City", STATE: "32", COUNTY: "510", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Carson City/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "3251094140", NAME: "Carson City CCD", BASENAME: "Carson City", STATE: "32", COUNTY: "510", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Carson City/, /Carson City/],
+        reject: [/Government/]
+      },
     ];
 
     for (const c of cases) {
@@ -909,6 +931,30 @@ try {
     await context.close();
   }
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Carson City CCD, Carson City
+  //     (TIGERweb's layer 1, read 2026-11-27, which the archive is mirrored
+  //     from). An archive that stopped being read would send the click to
+  //     the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Carson City/, /Carson City/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

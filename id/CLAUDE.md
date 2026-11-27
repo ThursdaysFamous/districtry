@@ -77,6 +77,14 @@ that site, as Nevada's card for the same land does (`seatFromNation`). The Shosh
 of the Duck Valley Reservation; the other nations are not carried yet (`ROSTER_NOT_SOUGHT` in
 `scripts/build_tribal_areas.py`), recorded in gap `id-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 170 OF IDAHO'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Idaho has no township governments, so
+outside a city the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE IDAHO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -105,7 +113,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Idaho (`idaho`) — https://districtry.com/id/
 - Geocoders: address Photon (Idaho-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Idaho-bounded, serial >=1s queue)
 - Ground truth: 43.61771,-116.19975 (Idaho State Capitol, 700 West Jefferson Street, Boise, Ada County) → county Ada County; us-house 2; id-senate 19; id-house 19. Negative point 49.08000,-116.45000 (British Columbia, Canada, north of Bonners Ferry — outside Idaho and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Idaho State Capitol returns Idaho), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.IdahoExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.IdahoExplorer`.
 - Scheduled workflows: `update-id-congress-roster.yml` (Wed 22:21 UTC); `update-id-legislature-roster.yml` (Thu 22:21 UTC); `id-validate-sources.yml` (2nd of month 22:21 UTC).
 - Source registry: `id/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

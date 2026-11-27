@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1306,7 +1306,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1324,6 +1324,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER YET. Each organized borough is governed by an elected assembly and a mayor, and Anchorage, Juneau, Sitka, Wrangell, Yakutat and Skagway are each a city and a borough in one government. The Unorganized Borough has no borough government: its census areas are drawn for statistics, the state provides the services a borough would, and the card says so. No list of any borough's officials was read in this pass. Recorded as gap ak-county-officials.</td>
                 <td data-label="Where it applies">Alaska — statewide, all 19 boroughs and 11 census areas.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Census Subarea</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The census subarea containing the point, and its borough or census area.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 37 features for Alaska, every one a census subarea (LSADC 23, FUNCSTAT S), measured 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. A census subarea is an area the Census Bureau draws inside a borough or census area to report its counts: no one is elected from it, and Alaska has no government between the borough and the city. The card names the subarea and its borough or census area and says it governs nobody.</td>
+                <td data-label="Where it applies">Alaska — statewide.</td>
               </tr>
               <tr id="layer-zip-code">
                 <th scope="row"><span class="layer-name">ZIP Code</span><code>zip-code</code></th>
@@ -1441,6 +1452,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Alaska — statewide, all 19 boroughs and 11 census areas"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ak/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Census Subarea",
+      "description": "The census subarea containing the point, and its borough or census area. NO OFFICEHOLDER. A census subarea is an area the Census Bureau draws inside a borough or census area to report its counts: no one is elected from it, and Alaska has no government between the borough and the city. The card names the subarea and its borough or census area and says it governs nobody.",
+      "url": "https://districtry.com/ak/sources.html#layer-county-subdivision",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ak/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 37 features for Alaska, every one a census subarea (LSADC 23, FUNCSTAT S), measured 2026-11-27.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Alaska — statewide"
       }
     },
     {

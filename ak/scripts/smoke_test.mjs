@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ak-senate", "ak-house"];
 const EXPECT_DISTRICT = { "county": "Juneau City and Borough", "us-house": "Congressional District (at Large)", "ak-senate": "B", "ak-house": "4" };
 const NEGATIVE_POINT = "57.70000,-140.50000"; // the Gulf of Alaska about 200 km south of Yakutat — outside Alaska and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Alaska State Capitol returns Alaska), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Alaska";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "AlaskaExplorer";
@@ -839,6 +839,7 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "Juneau names itself a city and a borough in one government",
@@ -874,6 +875,27 @@ try {
         props: { GEOID: "0200210", NAME: "Juneau Borough School District", STATE: "02", LOGRADE: "PK", HIGRADE: "12" },
         want: [/Juneau Borough School District/],
         reject: []
+      },
+      {
+        name: "a census subarea names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0211036450", NAME: "Juneau census subarea", BASENAME: "Juneau", STATE: "02", COUNTY: "110", LSADC: "23", FUNCSTAT: "S" },
+        want: [/Juneau/, /Juneau City and Borough/, /no one is elected from it/, /no government between the borough and the city/],
+        reject: [/Juneau census subarea/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0211036450", NAME: "Juneau census subarea", BASENAME: "Juneau", STATE: "02", COUNTY: "110", LSADC: "23", FUNCSTAT: "N" },
+        want: [/Juneau/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "0211036450", NAME: "Juneau census subarea", BASENAME: "Juneau", STATE: "02", COUNTY: "110", LSADC: "23", FUNCSTAT: "A" },
+        want: [/Juneau/, /Juneau City and Borough/],
+        reject: [/Government/]
       }
     ];
 
@@ -955,6 +977,30 @@ try {
     await context.close();
   }
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Juneau census subarea, Juneau
+  //     City and Borough (TIGERweb's layer 1, read 2026-11-27, which the
+  //     archive is mirrored from). An archive that stopped being read would
+  //     send the click to the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Juneau/, /Juneau City and Borough/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

@@ -111,7 +111,11 @@
       "ky": "county-subdivision", "ok": "county-subdivision", "sc": "county-subdivision", "tn": "county-subdivision",
       "ar": "county-subdivision", "mo": "county-subdivision", "va": "county-subdivision", "wv": "county-subdivision", "ga": "county-subdivision",
       "oh": "county-subdivision", "ks": "county-subdivision", "ne": "county-subdivision", "sd": "county-subdivision",
-      "nd": "county-subdivision"
+      "nd": "county-subdivision",
+      "ak": "county-subdivision", "al": "county-subdivision", "az": "county-subdivision", "co": "county-subdivision", "de": "county-subdivision",
+      "fl": "county-subdivision", "hi": "county-subdivision", "id": "county-subdivision", "md": "county-subdivision", "mt": "county-subdivision",
+      "nm": "county-subdivision", "nv": "county-subdivision", "or": "county-subdivision", "tx": "county-subdivision", "ut": "county-subdivision",
+      "wa": "county-subdivision", "wy": "county-subdivision"
     },
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",

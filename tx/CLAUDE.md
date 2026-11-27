@@ -147,6 +147,14 @@ of a five-member court answers nobody searching for that court; its County card 
 judge. Uvalde's page says the courts office's directory names no judge there. Both weekly jobs
 regenerate the pages.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 862 OF TEXAS'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Texas has no township governments, so
+outside a city, town or village the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE TEXAS.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -191,7 +199,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Texas (`texas`) — https://districtry.com/tx/
 - Geocoders: address Photon (Texas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Texas-bounded, serial >=1s queue)
 - Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 8. Debug namespace `window.TexasExplorer`.
+- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 9. Debug namespace `window.TexasExplorer`.
 - Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `update-tx-county-officials.yml` (Wed 20:33 UTC); `update-tx-county-commissioners.yml` (Thu 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
 - Source registry: `tx/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

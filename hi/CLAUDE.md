@@ -70,6 +70,14 @@ with Hawaii resolving to state code 15 as the control. Recorded as covered in
 `data/tribal-government-join.json`. Hawaiian home lands are a different class, which the fleet does not
 draw.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 44 OF HAWAII'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Hawaii has no government below its
+counties.
+
 **THE ZIP LAYER HIDES OUTSIDE HAWAII**, as it does in every app. A ZCTA carries no state
 field, so the coverage test reads the shipped outline rather than the service, and the smoke test asserts
 both halves.
@@ -99,7 +107,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Hawaii (`hawaii`) — https://districtry.com/hi/
 - Geocoders: address Photon (Hawaii-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Hawaii-bounded, serial >=1s queue)
 - Ground truth: 21.30742,-157.85743 (Hawaii State Capitol, 415 South Beretania Street, Honolulu, Honolulu County) → county Honolulu County; us-house 1; hi-senate 13; hi-house 25. Negative point 20.70000,-158.70000 (the open Pacific about 100 km southwest of Oahu — outside Hawaii and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Hawaii State Capitol returns Hawaii), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 9 registered (political 3, safety 2, schools 1, geography 3); `registerLayer(` floor 7. Debug namespace `window.HawaiiExplorer`.
+- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.HawaiiExplorer`.
 - Scheduled workflows: `update-hi-congress-roster.yml` (Wed 22:29 UTC); `update-hi-legislature-roster.yml` (Thu 22:29 UTC); `hi-validate-sources.yml` (2nd of month 22:29 UTC).
 - Source registry: `hi/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -60,8 +60,9 @@ host is paced at one request a second regardless.
 **MOST OF NEVADA IS IN NO CITY**, so the **City** layer is TIGERweb's incorporated places (layer
 4): 18 cities and Carson City, about 1% of the state's land. The Las Vegas Strip is outside every
 city, and an empty card says the point is outside every city and that the county is the local
-government there. Census-designated places and county subdivisions are statistical areas with no
-government and are not drawn.
+government there. Census-designated places are statistical areas with no government and are not
+drawn; the county subdivisions are drawn by the Census County Division layer, whose card says
+they govern nobody.
 
 **CARSON CITY IS A CITY AND A COUNTY IN ONE GOVERNMENT** (county FIPS 32510, place 3209700), run
 by an elected mayor and board of supervisors, and both its County and City cards say so.
@@ -108,6 +109,14 @@ all but one (Adam, 2026-11-13), and then the card's note says which seat the pag
 vacant, and the Washoe Tribe's names one of its two Off-Reservation representatives. Recorded in gap
 `nv-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 71 OF NEVADA'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Nevada has no township governments, so
+outside a city the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE NEVADA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -131,7 +140,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Nevada (`nevada`) — https://districtry.com/nv/
 - Geocoders: address Photon (Nevada-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Nevada-bounded, serial >=1s queue)
 - Ground truth: 39.16384,-119.76637 (Nevada State Capitol, 101 North Carson Street, Carson City) → county Carson City; us-house 2; nv-senate 16; nv-assembly 40. Negative point 42.15000,-115.50000 (Owyhee County, Idaho, about 17 km north of the Nevada line and 40 km east of the Duck Valley Reservation — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. MOVED 2026-11-12 FROM 42.15, -116.0, 41 km west, when the Tribal Government layer shipped: that layer draws the whole Duck Valley Reservation, its Idaho half included, and the old point lay about 0.9 km inside the reservation's northern edge, so validate_index.py found it inside data/app/tribal-areas.json. Measured that day from the shipped files: the Idaho app's own county outlines (id/data/app/state-counties.json, from TIGERweb) put the new point in Owyhee County, it is inside Idaho's outline in fleet-outlines.json and no other, and none of this app's shipped boundary files contains it. The old point had been measured 2026-11-10, when TIGERweb's state layer named Idaho there (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state). Every neighbour of Nevada is a live app since Idaho's go-live (batch 4 of the state-level launch, 2026-11-12), and measured that day on a 0.05-degree grid no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so the point is inside Idaho's outline wherever it goes. That is all right: the checks that use it boot on it or select it, which asks only that it be outside Nevada and outside every shipped boundary file, and a selection the app makes itself never leaves; the click that had to stay here became an Idaho routing case in the change that published Idaho, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NevadaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NevadaExplorer`.
 - Scheduled workflows: `update-nv-congress-roster.yml` (Mon 20:21 UTC); `update-nv-legislature-roster.yml` (Tue 20:21 UTC); `nv-validate-sources.yml` (1st of month 22:11 UTC).
 - Source registry: `nv/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
