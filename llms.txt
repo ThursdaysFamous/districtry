@@ -393,7 +393,7 @@ All 23 counties and Baltimore City: cities, towns and villages, school districts
 
 All 67 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Alabama Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Alabama district lookup](https://districtry.com/al/): 12 layers, all 67 counties.
+- [Alabama district lookup](https://districtry.com/al/): 13 layers, all 67 counties.
 - [Who is my U.S. representative?](https://districtry.com/al/congress.html)
 - [Sources & data layers](https://districtry.com/al/sources.html)
 - [Who is my Alabama legislator?](https://districtry.com/al/state-legislature.html)

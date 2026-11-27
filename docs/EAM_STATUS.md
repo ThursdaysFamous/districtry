@@ -44,7 +44,7 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ak | **EAM·** | 30 | 30/30 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
-| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 8 of 14 levels |
+| al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | ca | **--M·** | — | — | 296 | 296 | — | 23 | all | 9 of 14 levels |
@@ -124,11 +124,10 @@ per county, so each one is named under its state below.
 
 - **Examined by a statewide record:** `al-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 67 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `al-house-districts.json`, `al-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `al/data/app/population/`, `state-counties.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `al-district-judges.json`, `al-house-districts.json`, `al-judicial-districts.json`, `al-senate-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `al/data/app/population/`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 67 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 24 units at 25,000+ name a governing body; unanswered: Alabaster city, Athens city, Auburn city, Bessemer city, Birmingham city, Daphne city, Decatur city, Dothan city and 16 more
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)

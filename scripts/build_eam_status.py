@@ -3271,9 +3271,10 @@ ANSWERS = {
             "city or town the county governs. The 390 sub-county units the Census "
             "publishes for Alabama are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # Circuit and district judges are elected by judicial circuit and
-        # county; no circuit is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial Circuit layer draws Alabama's 41 judicial circuits of
+        # whole counties and names the circuit judges elected there (since
+        # 2026-11-27). District and probate judges are not drawn or named yet.
+        "courts-by-district": answers("al-judicial-circuit"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,

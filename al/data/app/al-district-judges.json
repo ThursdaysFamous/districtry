@@ -1,0 +1,803 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Charles R. Montgomery"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Perry Newton"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Cleveland Poole"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Burt Smithart"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Marvin W. Wiggins"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Donald L. McMillan"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Robert Bryan Jones"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "William Isaac Whorton"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "James Luke Farmer"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kevin M. Hall"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jim Roberts"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Allen W. May, Jr."
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Corey Seale"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Daniel Pruet"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Dennis Steverson, Sr."
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Elizabeth C. Hamner"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Shannon Page"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Dustin Merritt"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jennifer Weems"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Peggy P. Lacher"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Timothy C. Burgess"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jennifer M. Howell"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Charles B. Elliott"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Stephen F. Brown"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jeremy S. Taylor"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Andrew J. Hairston"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Shaunathan C. Bell"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Elisabeth A. French"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Adrienne Moffett Powell"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Alaric O. May"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Alisha Ruffin May"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brendette Brown Green"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brian Huff"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Charles “Chuck” Price II"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "David Carpenter"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "David Hobdy"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Frederic Bolling"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Janine Hunt-Hilliard"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Javan Patton Crayton"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kandice Pickett"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kechia Davis"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Marshell Jackson Hatcher"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael Streety"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Monica Agee"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Pat Ballard"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patricia Stephens"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Reginald L. Jeter"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Shera Grant"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Stephen C. Wallace"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Tamara Harris Johnson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Thomas E. Thrash"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Tiara Hudson"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "William Powell"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Benjamin R. Graves"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Carole C. Medley"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Chris Connolly"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jeffery W. Kelley"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Henry T. Reagan, II"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Shannon R. Clark"
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "S. Wesley Pipes"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ben H. Brooks"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brandy Hambright"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Edmond G. Naman"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jay A. York"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jill P. Phillips"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael A. Youngpeter"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael P. Windom"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Theresa Williamson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Vicki M. Davis"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Walter H. Honeycutt"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Hugh D. Farris, Jr."
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Gregory M. Williams"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Joeletta M. Barrentine"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "J.R. Gaines"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Calvin L. Williams"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Greg Griffin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Holbrook E. Reid"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "James H. Anderson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Lloria M. James"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Monet Gaines"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Monica L. Arrington"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Tiffany B. McCord"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "George C. Day, Jr."
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brynn T. Crain"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cody D. Robinson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Sonny J. Steen"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Gregory S. Griggers"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jonathan A. Spann"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Lara M. Alvis"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patrick Kennedy"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "William H. Bostick, III (Bill)"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Amanda Baxley"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "DeAnne \"Dee Dee\" Calhoon"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Joy Booth"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patrick Pinkston"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Christopher K. Richardson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Henry \"Butch\" D. Binford"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "J. Kevin Moulton"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "M. John Steensland, III"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "R. Todd Derrick"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jeffrey Todd Stearns"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Wade Leon Hartley"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Charles A. Short"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Grace Jeter"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Donna S. Pate"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Alison S. Austin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Christian M. Comer"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Claude E. Hundley"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "D. Alan Mann"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Donald N. Rizzardi, Sr."
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patrick M. Tuten"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ron W. Smith"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ruth Ann Hall"
+   }
+  ]
+ },
+ "24": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Samuel Junkin"
+   }
+  ]
+ },
+ "25": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Daryl Burt"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Lee Carter"
+   }
+  ]
+ },
+ "26": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "A. David Johnson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Zachary T. Collins"
+   }
+  ]
+ },
+ "27": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Christopher Abel"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "John M. Mastin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Matt Elliott"
+   }
+  ]
+ },
+ "28": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "J. Clark Stankoski"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ashley Siebert"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Byron Brackin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Karol J. Kemp"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Laurie A. Hoyt"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Scott P. Taylor"
+   }
+  ]
+ },
+ "29": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Chad E. Woodruff"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "William E. Hollingsworth, IV"
+   }
+  ]
+ },
+ "30": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "James E. Hill, III"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Billy R. Weathington, Jr."
+   }
+  ]
+ },
+ "31": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Kyle W. Brown"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Mitchell D. Hays"
+   }
+  ]
+ },
+ "32": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Emily Johnston"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "J. Chad Floyd"
+   }
+  ]
+ },
+ "33": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "William H. Filmore"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kimberly A. Crawford"
+   }
+  ]
+ },
+ "34": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Brian P. Hamilton"
+   }
+  ]
+ },
+ "35": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Jack B. Weaver"
+   }
+  ]
+ },
+ "36": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Callie Waldrep"
+   }
+  ]
+ },
+ "37": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Christopher J. Hughes"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jeffrey Gerald Tickal"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael C. Fellows"
+   }
+  ]
+ },
+ "38": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "John H. Graham"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "M. Brent Benson"
+   }
+  ]
+ },
+ "39": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "B. Chadwick Wise"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Matthew R. Huggins"
+   }
+  ]
+ },
+ "40": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "David Law"
+   }
+  ]
+ },
+ "41": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Circuit Judge",
+    "name": "Gregory J. Reid"
+   }
+  ]
+ }
+}

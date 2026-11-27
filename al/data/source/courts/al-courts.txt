@@ -1,0 +1,196 @@
+# Alabama court districts and judges, kept by scripts/build_state_courts.py --fetch al
+# read: 2026-11-27
+# from: Code of Alabama 12-11-2 and 12-17-20 through https://alison.legislature.state.al.us/graphql, the address the Legislature's code page reads (circuits, counties, judges per circuit), and each county's court site <county>.alacourt.gov, linked from https://www.alacourt.gov/images/Alabama_circuits.svg (judges)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Choctaw, Clarke, Washington
+district | 2 | Butler, Crenshaw, Lowndes
+district | 3 | Barbour, Bullock
+district | 4 | Bibb, Dallas, Hale, Perry, Wilcox
+district | 5 | Chambers, Macon, Randolph, Tallapoosa
+district | 6 | Tuscaloosa
+district | 7 | Calhoun, Cleburne
+district | 8 | Morgan
+district | 9 | Cherokee, DeKalb
+district | 10 | Jefferson
+district | 11 | Lauderdale
+district | 12 | Coffee, Pike
+district | 13 | Mobile
+district | 14 | Walker
+district | 15 | Montgomery
+district | 16 | Etowah
+district | 17 | Marengo, Greene, Sumter
+district | 18 | Shelby
+district | 19 | Autauga, Chilton, Elmore
+district | 20 | Henry, Houston
+district | 21 | Escambia
+district | 22 | Covington
+district | 23 | Madison
+district | 24 | Fayette, Lamar, Pickens
+district | 25 | Marion, Winston
+district | 26 | Russell
+district | 27 | Marshall
+district | 28 | Baldwin
+district | 29 | Talladega
+district | 30 | St. Clair
+district | 31 | Colbert
+district | 32 | Cullman
+district | 33 | Dale, Geneva
+district | 34 | Franklin
+district | 35 | Conecuh, Monroe
+district | 36 | Lawrence
+district | 37 | Lee
+district | 38 | Jackson
+district | 39 | Limestone
+district | 40 | Clay, Coosa
+district | 41 | Blount
+judge | 1 | Presiding Circuit Judge | Charles R. Montgomery | 
+judge | 1 | Circuit Judge | Perry Newton | 
+judge | 2 | Presiding Circuit Judge | Cleveland Poole | 
+judge | 3 | Presiding Circuit Judge | Burt Smithart | 
+judge | 4 | Presiding Circuit Judge | Marvin W. Wiggins | 
+judge | 4 | Circuit Judge | Donald L. McMillan | 
+judge | 4 | Circuit Judge | Robert Bryan Jones | 
+judge | 5 | Presiding Circuit Judge | William Isaac Whorton | 
+judge | 5 | Circuit Judge | James Luke Farmer | 
+judge | 5 | Circuit Judge | Kevin M. Hall | 
+judge | 6 | Presiding Circuit Judge | Jim Roberts | 
+judge | 6 | Circuit Judge | Allen W. May, Jr. | 
+judge | 6 | Circuit Judge | Corey Seale | 
+judge | 6 | Circuit Judge | Daniel Pruet | 
+judge | 6 | Circuit Judge | Dennis Steverson, Sr. | 
+judge | 6 | Circuit Judge | Elizabeth C. Hamner | 
+judge | 7 | Presiding Circuit Judge | Shannon Page | 
+judge | 7 | Circuit Judge | Dustin Merritt | 
+judge | 7 | Circuit Judge | Jennifer Weems | 
+judge | 7 | Circuit Judge | Peggy P. Lacher | 
+judge | 7 | Circuit Judge | Timothy C. Burgess | 
+judge | 8 | Presiding Circuit Judge | Jennifer M. Howell | 
+judge | 8 | Circuit Judge | Charles B. Elliott | 
+judge | 8 | Circuit Judge | Stephen F. Brown | 
+judge | 9 | Presiding Circuit Judge | Jeremy S. Taylor | 
+judge | 9 | Circuit Judge | Andrew J. Hairston | 
+judge | 9 | Circuit Judge | Shaunathan C. Bell | 
+judge | 10 | Presiding Circuit Judge | Elisabeth A. French | 
+judge | 10 | Circuit Judge | Adrienne Moffett Powell | 
+judge | 10 | Circuit Judge | Alaric O. May | 
+judge | 10 | Circuit Judge | Alisha Ruffin May | 
+judge | 10 | Circuit Judge | Brendette Brown Green | 
+judge | 10 | Circuit Judge | Brian Huff | 
+judge | 10 | Circuit Judge | Charles “Chuck” Price II | 
+judge | 10 | Circuit Judge | David Carpenter | 
+judge | 10 | Circuit Judge | David Hobdy | 
+judge | 10 | Circuit Judge | Frederic Bolling | 
+judge | 10 | Circuit Judge | Janine Hunt-Hilliard | 
+judge | 10 | Circuit Judge | Javan Patton Crayton | 
+judge | 10 | Circuit Judge | Kandice Pickett | 
+judge | 10 | Circuit Judge | Kechia Davis | 
+judge | 10 | Circuit Judge | Marshell Jackson Hatcher | 
+judge | 10 | Circuit Judge | Michael Streety | 
+judge | 10 | Circuit Judge | Monica Agee | 
+judge | 10 | Circuit Judge | Pat Ballard | 
+judge | 10 | Circuit Judge | Patricia Stephens | 
+judge | 10 | Circuit Judge | Reginald L. Jeter | 
+judge | 10 | Circuit Judge | Shera Grant | 
+judge | 10 | Circuit Judge | Stephen C. Wallace | 
+judge | 10 | Circuit Judge | Tamara Harris Johnson | 
+judge | 10 | Circuit Judge | Thomas E. Thrash | 
+judge | 10 | Circuit Judge | Tiara Hudson | 
+judge | 11 | Presiding Circuit Judge | William Powell | 
+judge | 11 | Circuit Judge | Benjamin R. Graves | 
+judge | 11 | Circuit Judge | Carole C. Medley | 
+judge | 11 | Circuit Judge | Chris Connolly | 
+judge | 12 | Presiding Circuit Judge | Jeffery W. Kelley | 
+judge | 12 | Circuit Judge | Henry T. Reagan, II | 
+judge | 12 | Circuit Judge | Shannon R. Clark | 
+judge | 13 | Presiding Circuit Judge | S. Wesley Pipes | 
+judge | 13 | Circuit Judge | Ben H. Brooks | 
+judge | 13 | Circuit Judge | Brandy Hambright | 
+judge | 13 | Circuit Judge | Edmond G. Naman | 
+judge | 13 | Circuit Judge | Jay A. York | 
+judge | 13 | Circuit Judge | Jill P. Phillips | 
+judge | 13 | Circuit Judge | Michael A. Youngpeter | 
+judge | 13 | Circuit Judge | Michael P. Windom | 
+judge | 13 | Circuit Judge | Theresa Williamson | 
+judge | 13 | Circuit Judge | Vicki M. Davis | 
+judge | 13 | Circuit Judge | Walter H. Honeycutt | 
+judge | 14 | Presiding Circuit Judge | Hugh D. Farris, Jr. | 
+judge | 14 | Circuit Judge | Gregory M. Williams | 
+judge | 14 | Circuit Judge | Joeletta M. Barrentine | 
+judge | 15 | Presiding Circuit Judge | J.R. Gaines | 
+judge | 15 | Circuit Judge | Calvin L. Williams | 
+judge | 15 | Circuit Judge | Greg Griffin | 
+judge | 15 | Circuit Judge | Holbrook E. Reid | 
+judge | 15 | Circuit Judge | James H. Anderson | 
+judge | 15 | Circuit Judge | Lloria M. James | 
+judge | 15 | Circuit Judge | Monet Gaines | 
+judge | 15 | Circuit Judge | Monica L. Arrington | 
+judge | 15 | Circuit Judge | Tiffany B. McCord | 
+judge | 16 | Presiding Circuit Judge | George C. Day, Jr. | 
+judge | 16 | Circuit Judge | Brynn T. Crain | 
+judge | 16 | Circuit Judge | Cody D. Robinson | 
+judge | 16 | Circuit Judge | Sonny J. Steen | 
+judge | 17 | Presiding Circuit Judge | Gregory S. Griggers | 
+judge | 18 | Presiding Circuit Judge | Jonathan A. Spann | 
+judge | 18 | Circuit Judge | Lara M. Alvis | 
+judge | 18 | Circuit Judge | Patrick Kennedy | 
+judge | 18 | Circuit Judge | William H. Bostick, III (Bill) | 
+judge | 19 | Presiding Circuit Judge | Amanda Baxley | 
+judge | 19 | Circuit Judge | DeAnne "Dee Dee" Calhoon | 
+judge | 19 | Circuit Judge | Joy Booth | 
+judge | 19 | Circuit Judge | Patrick Pinkston | 
+judge | 20 | Circuit Judge | Christopher K. Richardson | 
+judge | 20 | Circuit Judge | Henry "Butch" D. Binford | 
+judge | 20 | Circuit Judge | J. Kevin Moulton | 
+judge | 20 | Circuit Judge | M. John Steensland, III | 
+judge | 20 | Circuit Judge | R. Todd Derrick | 
+judge | 21 | Presiding Circuit Judge | Jeffrey Todd Stearns | 
+judge | 21 | Circuit Judge | Wade Leon Hartley | 
+judge | 22 | Presiding Circuit Judge | Charles A. Short | 
+judge | 22 | Circuit Judge | Grace Jeter | 
+judge | 23 | Presiding Circuit Judge | Donna S. Pate | 
+judge | 23 | Circuit Judge | Alison S. Austin | 
+judge | 23 | Circuit Judge | Christian M. Comer | 
+judge | 23 | Circuit Judge | Claude E. Hundley | 
+judge | 23 | Circuit Judge | D. Alan Mann | 
+judge | 23 | Circuit Judge | Donald N. Rizzardi, Sr. | 
+judge | 23 | Circuit Judge | Patrick M. Tuten | 
+judge | 23 | Circuit Judge | Ron W. Smith | 
+judge | 23 | Circuit Judge | Ruth Ann Hall | 
+judge | 24 | Presiding Circuit Judge | Samuel Junkin | 
+judge | 25 | Circuit Judge | Daryl Burt | 
+judge | 25 | Circuit Judge | Lee Carter | 
+judge | 26 | Presiding Circuit Judge | A. David Johnson | 
+judge | 26 | Circuit Judge | Zachary T. Collins | 
+judge | 27 | Presiding Circuit Judge | Christopher Abel | 
+judge | 27 | Circuit Judge | John M. Mastin | 
+judge | 27 | Circuit Judge | Matt Elliott | 
+judge | 28 | Presiding Circuit Judge | J. Clark Stankoski | 
+judge | 28 | Circuit Judge | Ashley Siebert | 
+judge | 28 | Circuit Judge | Byron Brackin | 
+judge | 28 | Circuit Judge | Karol J. Kemp | 
+judge | 28 | Circuit Judge | Laurie A. Hoyt | 
+judge | 28 | Circuit Judge | Scott P. Taylor | 
+judge | 29 | Presiding Circuit Judge | Chad E. Woodruff | 
+judge | 29 | Circuit Judge | William E. Hollingsworth, IV | 
+judge | 30 | Presiding Circuit Judge | James E. Hill, III | 
+judge | 30 | Circuit Judge | Billy R. Weathington, Jr. | 
+judge | 31 | Presiding Circuit Judge | Kyle W. Brown | 
+judge | 31 | Circuit Judge | Mitchell D. Hays | 
+judge | 32 | Presiding Circuit Judge | Emily Johnston | 
+judge | 32 | Circuit Judge | J. Chad Floyd | 
+judge | 33 | Presiding Circuit Judge | William H. Filmore | 
+judge | 33 | Circuit Judge | Kimberly A. Crawford | 
+judge | 34 | Presiding Circuit Judge | Brian P. Hamilton | 
+judge | 35 | Presiding Circuit Judge | Jack B. Weaver | 
+judge | 36 | Presiding Circuit Judge | Callie Waldrep | 
+judge | 37 | Presiding Circuit Judge | Christopher J. Hughes | 
+judge | 37 | Circuit Judge | Jeffrey Gerald Tickal | 
+judge | 37 | Circuit Judge | Michael C. Fellows | 
+judge | 38 | Presiding Circuit Judge | John H. Graham | 
+judge | 38 | Circuit Judge | M. Brent Benson | 
+judge | 39 | Presiding Circuit Judge | B. Chadwick Wise | 
+judge | 39 | Circuit Judge | Matthew R. Huggins | 
+judge | 40 | Presiding Circuit Judge | David Law | 
+judge | 41 | Presiding Circuit Judge | Gregory J. Reid | 
