@@ -92,6 +92,17 @@ Applications/WV_Election FOLDER. IT IS NEVER READ, BY ANY BUILDER, PROBE OR AGEN
 **THE SCHOOL LAYER IS ONE PER COUNTY.** TIGER holds 55 unified districts for West Virginia and no
 elementary or secondary ones, so one layer covers the state. No board member is named yet.
 
+**THE COURT LAYER DRAWS WEST VIRGINIA'S 30 JUDICIAL CIRCUITS AND NAMES THEIR JUDGES**
+(`wv-judicial-circuit`, since 2026-11-27). Each circuit is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Judiciary's circuit court map, a
+PDF the Circuit Courts page links (its file name carries the month it was posted, so it is found
+from the page each time; the one read 2026-11-27 says "effective November 2026"). The map lists each
+circuit's counties in parentheses and then its judges, 80 on 2026-11-27, and the fetch stops unless
+that matches the page's own count of circuit judges. The map marks no chief judge. They are kept as
+a dated excerpt in `data/source/courts/wv-courts.txt` and shipped network-first as
+`wv-district-judges.json`. Judges are elected in non-partisan elections for eight-year terms (the
+Circuit Courts page). No job refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE WEST VIRGINIA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped
 outline, and the smoke test asserts both halves.
@@ -121,8 +132,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: West Virginia (`westvirginia`) — https://districtry.com/wv/
 - Geocoders: address Photon (West Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, West Virginia-bounded, serial >=1s queue)
-- Ground truth: 38.33650,-81.61230 (West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County) → county Kanawha County; us-house 1; wv-senate 8; wv-house 54. Negative point 39.55000,-79.25000 (Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), and none of the state's shipped boundary files contains it. MARYLAND'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED MARYLAND (batch 3 of the state-level launch, written 2026-11-12), AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because Kentucky, Virginia, Ohio, Pennsylvania and Maryland are all served. It is still outside West Virginia and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Maryland routing case in the same change, as Kentucky's and Tennessee's did.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.WestVirginiaExplorer`.
+- Ground truth: 38.33650,-81.61230 (West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County) → county Kanawha County; us-house 1; wv-senate 8; wv-house 54; wv-judicial-circuit 8th Judicial Circuit. Negative point 39.55000,-79.25000 (Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), and none of the state's shipped boundary files contains it. MARYLAND'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED MARYLAND (batch 3 of the state-level launch, written 2026-11-12), AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because Kentucky, Virginia, Ohio, Pennsylvania and Maryland are all served. It is still outside West Virginia and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Maryland routing case in the same change, as Kentucky's and Tennessee's did.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 11. Debug namespace `window.WestVirginiaExplorer`.
 - Scheduled workflows: `update-wv-congress-roster.yml` (Mon 19:53 UTC); `update-wv-legislature-roster.yml` (Tue 19:53 UTC); `update-wv-county-officials.yml` (Wed 19:53 UTC); `update-wv-city-councils.yml` (Thu 19:53 UTC); `wv-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `wv/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

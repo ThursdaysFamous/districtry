@@ -4673,18 +4673,18 @@ function initWestVirginiaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "wv-senate": "wvs", "county": "co",
-    "school-district-unified": "su", "wv-house": "wvh", "county-subdivision": "cs",
-    "zip-code": "zp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "wv-senate": "wvs", "wv-judicial-circuit": "wvj",
+    "county": "co", "school-district-unified": "su", "wv-house": "wvh",
+    "county-subdivision": "cs", "zip-code": "zp", "municipality": "mu", "city-ward": "cw",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["wv-senate"],
-    "state-house": ["wv-house"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "city-council": ["city-ward"], "zip-code": ["zip-code"],
+    "state-house": ["wv-house"], "trial-court-district": ["wv-judicial-circuit"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "city-council": ["city-ward"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
@@ -4707,7 +4707,7 @@ function initWestVirginiaExplorer() {
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
     "wv-senate-districts.json", "wv-house-districts.json", "wv-magisterial-districts.json",
-    "wv-city-wards.json", "zip-index.json" ];
+    "wv-city-wards.json", "zip-index.json", "wv-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11605,6 +11605,7 @@ function initWestVirginiaExplorer() {
   var LAYER_AREA_RANK = [
     "us-house",          // 2 congressional districts — the largest districts West Virginia carries below the state itself
     "wv-senate",         // 17 Senate districts, two senators each — larger on average than a county, smaller than a congressional district
+    "wv-judicial-circuit", // 30 judicial circuits of whole counties, 2,092 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a Senate district
     "county",            // 55 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 55 county school districts, one for each county, live from TIGERweb (no data/app file)
     "wv-house",          // 100 single-member delegate districts — smaller on average than a county, larger than a magisterial district
@@ -17519,6 +17520,130 @@ function initWestVirginiaExplorer() {
   });
 
 
+  /* ---------- 8b. Judicial Circuit — West Virginia's judicial circuits, whole counties ----------
+   * 30 judicial circuits of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the West Virginia Judiciary's circuit court map and the judges from
+   * the West Virginia Judiciary's circuit court map,
+   * kept as text in wv/data/source/courts/. The districts are geometry
+   * (wv-judicial-districts.json, cache-first); the judges are a roster
+   * (wv-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * wv/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the West Virginia Judiciary's Circuit
+   * Courts page (courtswv.gov, read 2026-11-27): the elections are
+   * non-partisan and judges serve eight-year terms; if a circuit judge leaves
+   * office before the term ends, the Governor appoints a replacement, who may
+   * serve out the term or must run to complete it depending on how much of it
+   * is left. THE COUNT IS CHECKED: the same page says the 55 counties are
+   * divided into 30 circuits with 80 circuit judges, and the fetch stops
+   * unless the map names that many. The map does not mark chief judges, so
+   * none is marked.
+   * ---------- */
+  var loadWvCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wv-judicial-districts.json", {}, 2);
+  });
+  var loadWvJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wv-district-judges.json", {}, 2);
+  });
+  var WV_COURT = {
+    how: "Circuit judges are elected in non-partisan elections for eight-year terms. If a judge leaves office early, the Governor appoints a replacement (West Virginia Judiciary).",
+    court: "The circuit court is West Virginia's trial court of general jurisdiction, and it sits in every county of the circuit. The Legislature sets each circuit's size and number of judges. Family court judges and magistrates are not listed here.",
+    from: "The West Virginia Judiciary's circuit court map",
+    link: { label: "West Virginia circuit courts", url: "https://www.courtswv.gov/lower-courts/circuit-courts" }
+  };
+  function wvCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial Circuit";
+  }
+  // "Atchison and Leavenworth Counties"
+  function wvCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "wv-judicial-circuit",
+    group: "political",
+    label: "Judicial Circuit",
+    emptyNote: "No judicial circuit here. This map holds West Virginia's judicial circuits, so a point outside the state gets none.",
+    overlay: {
+      load: loadWvCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : wvCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadWvCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadWvJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? wvCourtTitle(result.unit) : "Unknown judicial circuit",
+        note: wvCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Circuit judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: WV_COURT.how });
+      rows.push({ label: "The court", value: WV_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: WV_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return WV_COURT.link; }
+  });
+
   /* ---------- 9. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19412,7 +19537,7 @@ function initWestVirginiaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "wv-senate", "wv-house", "city-ward",
+  var LAYER_SIDEBAR_RANK = ["us-house", "wv-senate", "wv-house", "wv-judicial-circuit", "city-ward",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -19943,8 +20068,8 @@ function initWestVirginiaExplorer() {
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
     "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

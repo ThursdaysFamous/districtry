@@ -1,0 +1,116 @@
+# West Virginia court districts and judges, kept by scripts/build_state_courts.py --fetch wv
+# read: 2026-11-27
+# from: https://www.courtswv.gov/lower-courts/circuit-courts and the circuit court map PDF it links (circuits, counties and judges; the page's statewide count of circuit judges)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Brooke, Hancock, Ohio
+district | 2 | Marshall, Tyler, Wetzel
+district | 3 | Doddridge, Pleasants, Ritchie, Wirt
+district | 4 | Wood
+district | 5 | Calhoun, Jackson, Mason, Roane
+district | 6 | Cabell
+district | 7 | Putnam
+district | 8 | Kanawha
+district | 9 | Boone, Lincoln
+district | 10 | Wayne
+district | 11 | Logan, Mingo
+district | 12 | McDowell, Wyoming
+district | 13 | Mercer
+district | 14 | Raleigh
+district | 15 | Fayette
+district | 16 | Nicholas
+district | 17 | Braxton, Clay, Gilmer, Webster
+district | 18 | Lewis, Upshur
+district | 19 | Harrison
+district | 20 | Marion
+district | 21 | Monongalia
+district | 22 | Preston, Tucker
+district | 23 | Barbour, Taylor
+district | 24 | Randolph
+district | 25 | Grant, Mineral
+district | 26 | Hampshire, Hardy, Pendleton
+district | 27 | Berkeley, Morgan
+district | 28 | Jefferson
+district | 29 | Greenbrier, Pocahontas
+district | 30 | Monroe, Summers
+judge | 1 | Circuit Judge | Joseph Barki | 
+judge | 1 | Circuit Judge | Jason Cuomo | 
+judge | 1 | Circuit Judge | Michael Olejasz | 
+judge | 1 | Circuit Judge | David Sims | 
+judge | 2 | Circuit Judge | Jeffery Cramer | 
+judge | 2 | Circuit Judge | C. Richard Wilson | 
+judge | 3 | Circuit Judge | Leslie L. Maze | 
+judge | 3 | Circuit Judge | Timothy Sweeney | 
+judge | 4 | Circuit Judge | JD Beane | 
+judge | 4 | Circuit Judge | Robert Waters | 
+judge | 4 | Circuit Judge | Jason Wharton | 
+judge | 5 | Circuit Judge | Anita Ashley | 
+judge | 5 | Circuit Judge | Lora Dyer | 
+judge | 5 | Circuit Judge | Richard Tatterson | 
+judge | 6 | Circuit Judge | David Amsbary | 
+judge | 6 | Circuit Judge | Sean Hammers | 
+judge | 6 | Circuit Judge | Greg Howard | 
+judge | 6 | Circuit Judge | Chad Lovejoy | 
+judge | 7 | Circuit Judge | Phillip Stowers | 
+judge | 7 | Circuit Judge | Kristina Raynes | 
+judge | 8 | Circuit Judge | Stephanie Abraham | 
+judge | 8 | Circuit Judge | Maryclaire Akers | 
+judge | 8 | Circuit Judge | Jennifer Bailey | 
+judge | 8 | Circuit Judge | Ken Ballard | 
+judge | 8 | Circuit Judge | Richard Lindsay, II | 
+judge | 8 | Circuit Judge | Dave Hardy | 
+judge | 8 | Circuit Judge | Tera Salango | 
+judge | 8 | Circuit Judge | Carrie Webster | 
+judge | 9 | Circuit Judge | Jay Hoke | 
+judge | 9 | Circuit Judge | Stacy Nowicki-Eldridge | 
+judge | 10 | Circuit Judge | Jason Fry | 
+judge | 10 | Circuit Judge | James Young, Jr. | 
+judge | 11 | Circuit Judge | Joshua Butcher | 
+judge | 11 | Circuit Judge | Kelly Codispoti | 
+judge | 11 | Circuit Judge | Sabrina Deskins | 
+judge | 12 | Circuit Judge | Josh Miller | 
+judge | 12 | Circuit Judge | Rudolph Murensky, II | 
+judge | 13 | Circuit Judge | Brian Cochran | 
+judge | 13 | Circuit Judge | Ryan Flanigan | 
+judge | 13 | Circuit Judge | Mark Wills | 
+judge | 14 | Circuit Judge | Andrew Dimlich | 
+judge | 14 | Circuit Judge | Michael Froble | 
+judge | 14 | Circuit Judge | Todd Kirby | 
+judge | 14 | Circuit Judge | Darl W. Poling | 
+judge | 15 | Circuit Judge | Thomas Fast | 
+judge | 15 | Circuit Judge | Sam Fox | 
+judge | 16 | Circuit Judge | Stephen Callaghan | 
+judge | 16 | Circuit Judge | Gregory Tucker | 
+judge | 17 | Circuit Judge | Michael Asbury, Jr. | 
+judge | 17 | Circuit Judge | Jasmine Morton | 
+judge | 18 | Circuit Judge | Kurt Hall | 
+judge | 18 | Circuit Judge | Jacob Reger | 
+judge | 19 | Circuit Judge | Christopher McCarthy | 
+judge | 19 | Circuit Judge | Andrew McMunn | 
+judge | 19 | Circuit Judge | Joseph Shaffer, Jr. | 
+judge | 20 | Circuit Judge | Matthew Delligatti | 
+judge | 20 | Circuit Judge | Patrick Wilson | 
+judge | 21 | Circuit Judge | Perri DeChristopher | 
+judge | 21 | Circuit Judge | Cindy Scott | 
+judge | 21 | Circuit Judge | Michael Simms | 
+judge | 22 | Circuit Judge | Hilary Bright | 
+judge | 22 | Circuit Judge | Steven Shaffer | 
+judge | 23 | Circuit Judge | Thomas Hoxie | 
+judge | 23 | Circuit Judge | Shawn Nines | 
+judge | 24 | Circuit Judge | Jaymie Wilfong | 
+judge | 24 | Circuit Judge | David Wilmoth | 
+judge | 25 | Circuit Judge | James Courrier, Jr. | 
+judge | 25 | Circuit Judge | Frank Pancake, III | 
+judge | 26 | Circuit Judge | H. Charles Carl, III | 
+judge | 26 | Circuit Judge | John Treadway, Jr. | 
+judge | 27 | Circuit Judge | Catherine Delligatti | 
+judge | 27 | Circuit Judge | Laura Faircloth | 
+judge | 27 | Circuit Judge | Joseph Kinser | 
+judge | 27 | Circuit Judge | Michael Lorensen | 
+judge | 27 | Circuit Judge | Debra McLaughlin | 
+judge | 28 | Circuit Judge | Bridget Cohee | 
+judge | 28 | Circuit Judge | David Hammer | 
+judge | 29 | Circuit Judge | Robert Richardson | 
+judge | 29 | Circuit Judge | Patrick Via | 
+judge | 30 | Circuit Judge | Amy Mann | 

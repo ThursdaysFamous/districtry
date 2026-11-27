@@ -92,7 +92,7 @@
       "ok": "ok-judicial-district", "sc": "sc-circuit-court", "tn": "tn-judicial-district",
       "ar": "ar-circuit-court", "ms": "ms-circuit-court", "nc": "nc-superior-court",
       "la": "la-district-court", "ga": "ga-superior-court", "ks": "ks-judicial-district",
-      "ne": "ne-judicial-district", "nd": "nd-judicial-district", "sd": "sd-judicial-circuit", "co": "co-judicial-district", "id": "id-judicial-district", "ut": "ut-judicial-district", "wy": "wy-judicial-district", "or": "or-judicial-district", "nm": "nm-judicial-district", "mt": "mt-judicial-district", "wa": "wa-superior-court", "pa": "pa-judicial-district"
+      "ne": "ne-judicial-district", "nd": "nd-judicial-district", "sd": "sd-judicial-circuit", "co": "co-judicial-district", "id": "id-judicial-district", "ut": "ut-judicial-district", "wy": "wy-judicial-district", "or": "or-judicial-district", "nm": "nm-judicial-district", "mt": "mt-judicial-district", "wa": "wa-superior-court", "pa": "pa-judicial-district", "wv": "wv-judicial-circuit"
     },
     "limited-trial-court-district": { "ky": "ky-district-court", "nc": "nc-district-court" },
     "county": {

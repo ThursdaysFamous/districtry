@@ -361,9 +361,9 @@ cache-first; the judge list is not).
 | Judicial circuits (SD, 7) | **At no fixed time**: a change to the circuits under state law (which body makes it was not read here) | not measured; read from the Unified Judicial System's circuit pages | geometry and the judge list's keys; 66 counties in 7 circuits |
 
 
-### CO, ID, MT, NM, OR, PA, UT, WA, WY — COURT DISTRICTS ONLY
+### CO, ID, MT, NM, OR, PA, UT, WA, WV, WY — COURT DISTRICTS ONLY
 
-No other blast-radius entries for these nine states. Their court district layers were added
+No other blast-radius entries for these ten states. Their court district layers were added
 2026-11-27 the same way as the five above: `scripts/build_state_courts.py` dissolves whole counties
 out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then `<tag>` and a
 `sw.cache_name` bump (the map is cache-first; the judge list is not).
@@ -378,6 +378,7 @@ out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then 
 | Judicial districts (PA, 60) | **At no fixed time**: an act of the General Assembly moving a county or changing a district's judges | the General Assembly (the statute that draws the districts was not read here; 42 Pa.C.S. section 911 sets the judges); read from the Unified Judicial System's Judicial Districts page, with each district's judges set by section 911 (470; Act 58 of 2023 added seats, Montgomery's two from January 2028) | geometry, the judge list's keys and the seat ceiling the fetch holds the list to; 67 counties in 60 districts |
 | Judicial districts (UT, 8) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the courts' map of judicial districts | geometry and the judge list's keys; 29 counties in 8 districts |
 | Superior courts (WA, 32) | **At no fixed time**: an act of the Legislature joining or separating counties' courts, or changing a court's number of judges | the Legislature (RCW 2.08.061 to 2.08.065 set the judges; which statute joins counties was not read here); read from the Court Directory's Judicial Districts Reference List | geometry and the judge list's keys, which are court names ("Benton and Franklin Counties"), not numbers; 39 counties in 32 courts, and the fetch stops if a court lists more judges than the RCW allows |
+| Judicial circuits (WV, 30) | **At no fixed time**: an act of the Legislature, which sets each circuit's size and number of judges | the Legislature (statute not read here); read from the Judiciary's circuit court map, a PDF whose file name changes with each posting, found from the Circuit Courts page each time | geometry and the judge list's keys, and the statewide count of circuit judges that page states; 55 counties in 30 circuits |
 | Judicial districts (WY, 9) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the Judicial Branch's Find a Court list | geometry and the judge list's keys, and the statewide count of district judges the district courts page states; 23 counties in 9 districts |
 
 ---

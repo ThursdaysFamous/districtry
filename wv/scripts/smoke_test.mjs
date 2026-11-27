@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "38.33650,-81.61230"; // West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County
-const OFFLINE = ["county", "us-house", "wv-senate", "wv-house"];
-const EXPECT_DISTRICT = { "county": "Kanawha County", "us-house": "1", "wv-senate": "8", "wv-house": "54" };
+const OFFLINE = ["county", "us-house", "wv-senate", "wv-house", "wv-judicial-circuit"];
+const EXPECT_DISTRICT = { "county": "Kanawha County", "us-house": "1", "wv-senate": "8", "wv-house": "54", "wv-judicial-circuit": "8th Judicial Circuit" };
 const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), and none of the state's shipped boundary files contains it. MARYLAND'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED MARYLAND (batch 3 of the state-level launch, written 2026-11-12), AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because Kentucky, Virginia, Ohio, Pennsylvania and Maryland are all served. It is still outside West Virginia and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Maryland routing case in the same change, as Kentucky's and Tennessee's did.
 const APP_NAME = "districtry West Virginia";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 // Instance constants this file owns (the worksheet emits the block above).

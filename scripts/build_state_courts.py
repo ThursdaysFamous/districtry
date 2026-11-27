@@ -128,6 +128,13 @@ STATES = {
         "authority": "The Unified Judicial System of Pennsylvania's Judicial Districts page (pacourts.us)",
         "source": "https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts",
     },
+    "wv": {
+        "name": "West Virginia",
+        "districts": 30, "counties": 55, "min_judges": 75,
+        "unit_word": "judicial circuit",
+        "authority": "The West Virginia Judiciary's circuit court map (courtswv.gov)",
+        "source": "https://www.courtswv.gov/lower-courts/circuit-courts",
+    },
     "ks": {
         "name": "Kansas",
         "districts": 31, "counties": 105, "min_judges": 250,
@@ -981,6 +988,68 @@ def fetch_pa(reader):
     return out
 
 
+WV_BASE = "https://www.courtswv.gov"
+
+
+def fetch_wv(reader):
+    """Circuits, their counties and their judges from the Court Circuit Map
+    PDF the Circuit Courts page links ("WEST VIRGINIA CIRCUIT COURT CIRCUITS",
+    each circuit as "<n>th Judicial Circuit", its counties in parentheses, then
+    its judges one per line). The PDF's file name carries the month it was
+    posted, so it is found from the page each time. The page states the
+    statewide number of circuit judges, and the PDF must name that many."""
+    page = reader.html(WV_BASE + "/lower-courts/circuit-courts")
+    hrefs = re.findall(r'href="([^"]+\.pdf)"[^>]*>[^<]*Circuit Court Map', page)
+    if len(hrefs) != 1:
+        wcc.fail(LABEL, "wv: the Circuit Courts page links %d circuit court map PDFs" % len(hrefs))
+    url = hrefs[0] if hrefs[0].startswith("https://") else WV_BASE + hrefs[0]
+    reader.sc.require_robots_once(url, reader.headers["User-Agent"],
+                                  headers=reader.headers, label=LABEL)
+    body = reader.sc.fetch(url, reader.headers, timeout=60).content
+    if not body.startswith(b"%PDF"):
+        wcc.fail(LABEL, "wv: %s answered with %r, not a PDF" % (url, body[:40]))
+    import pypdf
+    text = "\n".join(pg.extract_text() for pg in pypdf.PdfReader(io.BytesIO(body)).pages)
+    out = wv_rows(text[text.index("WEST VIRGINIA CIRCUIT COURT CIRCUITS"):])
+    said = [int(m.group(1)) for m in re.finditer(
+        r"divided into \d+ circuits with (\d+) circuit judges", " ".join(page_lines(page)))]
+    named = sum(1 for ln in out if ln.startswith("judge "))
+    if said != [named]:
+        wcc.fail(LABEL, "wv: the map names %d circuit judges, the Circuit Courts page says %s"
+                 % (named, said))
+    return out
+
+
+def wv_rows(text):
+    """Excerpt lines from the map PDF's list of circuits."""
+    out, d, counties, judges = [], None, None, {}
+    for ln in (x.strip() for x in text.splitlines()):
+        m = re.match(r"^(.*?)(\d+)(?:st|nd|rd|th) Judicial Circuit$", ln)
+        if m:
+            if m.group(1):  # a judge's name and the next heading on one line
+                judges[d].append(m.group(1).strip())
+            d, counties = int(m.group(2)), ""
+            judges[d] = []
+            continue
+        if d is None or not ln:
+            continue
+        if counties is not None and (counties or ln.startswith("(")):
+            counties += " " + ln
+            if ln.endswith(")"):
+                out.append("district | %d | %s" % (d, re.sub(r"\s+", " ", counties.strip(" ()"))))
+                counties = None
+            continue
+        judges[d].append(ln)
+    if sorted(judges) != list(range(1, len(judges) + 1)):
+        wcc.fail(LABEL, "wv: the map's circuits are not numbered 1 to %d" % len(judges))
+    for n in sorted(judges):
+        if not judges[n]:
+            wcc.fail(LABEL, "wv circuit %d: the map names no judge" % n)
+        for name in judges[n]:
+            out.append("judge | %d | Circuit Judge | %s | " % (n, person(name, "wv %d" % n)))
+    return out
+
+
 OR_WORDS = ("first second third fourth fifth sixth seventh eighth ninth tenth eleventh "
             "twelfth thirteenth fourteenth fifteenth sixteenth seventeenth eighteenth "
             "nineteenth twentieth twenty-first twenty-second twenty-third twenty-fourth "
@@ -1039,11 +1108,12 @@ def fetch_or(reader):
     return out
 
 
-FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa,
+FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv,
             "or": fetch_or, "ks": fetch_ks, "ne": fetch_ne, "nd": fetch_nd, "oh": fetch_oh,
             "sd": fetch_sd}
 
 SOURCES_READ = {
+    "wv": "https://www.courtswv.gov/lower-courts/circuit-courts and the circuit court map PDF it links (circuits, counties and judges; the page's statewide count of circuit judges)",
     "pa": "https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts (counties), 42 Pa.C.S. section 911 on palegis.us (each court's number of judges) and https://www.pacourts.us/api/judgeView?judgeType=1, the feed the Common Pleas Judges page reads (judges; senior judges are not kept)",
     "wa": "https://www.courts.wa.gov/court_dir/?fa=court_dir.judicialdistricts (the superior courts and their counties), each county's Court Directory page (superior court judges; commissioners are not kept) and RCW 2.08.061 to 2.08.065 on lawfilesext.leg.wa.gov (the number of judges each court may have)",
     "mt": "https://courts.mt.gov/courts/dcourt/ (counties, from its county menu, and the statewide number of district judges) and each district's Court Locator page, https://courts.mt.gov/CourtLocator/<n>JudicialDistrict (district judges; standing masters and limited-jurisdiction judges are not kept)",
@@ -1196,6 +1266,16 @@ def selftest():
         "vacant | 3 | District Judge | | ",
         "judge | 3 | District Judge | Todd A. Coberly | ",
         "judge | 3 | District Judge | LaDonna Giron | "]
+    assert wv_rows("\n".join([
+        "WEST VIRGINIA CIRCUIT COURT CIRCUITS", "1st Judicial Circuit", "(Brooke, Hancock, Ohio)",
+        "Joseph Barki", "", "2nd Judicial Circuit", "(Doddridge, Pleasants,", "Ritchie, Wirt)",
+        "Richard Lindsay, II", "Kristina Raynes 3rd Judicial Circuit", "(Putnam)", "Amy Mann"])) == [
+        "district | 1 | Brooke, Hancock, Ohio", "district | 2 | Doddridge, Pleasants, Ritchie, Wirt",
+        "district | 3 | Putnam",
+        "judge | 1 | Circuit Judge | Joseph Barki | ",
+        "judge | 2 | Circuit Judge | Richard Lindsay, II | ",
+        "judge | 2 | Circuit Judge | Kristina Raynes | ",
+        "judge | 3 | Circuit Judge | Amy Mann | "]
     print("%s: selftest OK" % LABEL)
 
 

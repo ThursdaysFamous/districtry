@@ -91,7 +91,7 @@ different thing from one it failed.
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,572 | all | 269 | all | 13 of 14 levels |
-| wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 15 | all | 10 of 14 levels |
+| wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 17 | all | 11 of 14 levels |
 | wy | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -760,10 +760,9 @@ this instance is in maintenance.
 
 ### wv — EAM·
 
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wv/data/app/population/`, `state-counties.json`, `wv-city-wards.json`, `wv-house-districts.json`, `wv-magisterial-districts.json`, `wv-senate-districts.json`
-- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wv/data/app/population/`, `state-counties.json`, `wv-city-wards.json`, `wv-district-judges.json`, `wv-house-districts.json`, `wv-judicial-districts.json`, `wv-magisterial-districts.json`, `wv-senate-districts.json`
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 5 units at 25,000+ name a governing body; unanswered: Huntington city, Morgantown city, Parkersburg city, Wheeling city
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (3):** each one below is counted towards Covered by a stated fact rather than by work.

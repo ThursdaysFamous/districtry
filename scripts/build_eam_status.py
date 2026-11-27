@@ -2715,10 +2715,11 @@ ANSWERS = {
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
-        # Circuit judges, family court judges and magistrates are elected by
-        # circuit or county, and no court's districts are drawn or its judges
+        # The Judicial Circuit layer draws West Virginia's 30 judicial circuits
+        # of whole counties and names the circuit judges elected there (since
+        # 2026-11-27). Family court judges and magistrates are not drawn or
         # named yet.
-        "courts-by-district": OPEN,
+        "courts-by-district": answers("wv-judicial-circuit"),
         # Measured 2026-11-10 on TIGERweb's Census 2020 county subdivisions,
         # with Illinois as the control (1,412 active): all 228 of West
         # Virginia's are FUNCSTAT N. They are the counties' magisterial

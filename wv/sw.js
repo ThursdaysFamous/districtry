@@ -52,6 +52,7 @@ const GEOMETRY_URLS = [
   "./data/app/wv-magisterial-districts.json",
   "./data/app/wv-city-wards.json",
   "./data/app/zip-index.json",
+  "./data/app/wv-judicial-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -64,6 +65,7 @@ const ROSTER_URLS = [
   "./data/app/wv-county-officials.json",
   "./data/app/wv-city-councils.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/wv-district-judges.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

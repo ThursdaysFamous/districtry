@@ -250,7 +250,7 @@ All 95 counties and 38 independent cities: each county's board and each city's c
 
 All 55 counties: each county's commission and elected officers, magisterial districts, cities, towns and villages, school districts, ZIP codes, Charleston's 20 council wards and the members elected from them, and the nearest police station, fire and EMS station and post office — plus the West Virginia Senate, House of Delegates and U.S. House districts, with who holds each seat. County commissioners and officers are named from the Secretary of State's directory of county officials, and legislators from the Legislature's own rosters. School board members, judges and the other cities' councils are not named yet, and the Data gaps panel says why.
 
-- [West Virginia district lookup](https://districtry.com/wv/): 12 layers, all 55 counties.
+- [West Virginia district lookup](https://districtry.com/wv/): 13 layers, all 55 counties.
 - [Who is my U.S. representative?](https://districtry.com/wv/congress.html)
 - [Who are my county commissioners?](https://districtry.com/wv/county-commissioner.html): links a page per county, 55 of them, each naming every member with the telephone and e-mail the Secretary of State's directory prints beside each commissioner, and the commission's office.
 - [Sources & data layers](https://districtry.com/wv/sources.html)
