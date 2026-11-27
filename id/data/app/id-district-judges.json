@@ -1,0 +1,241 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Barry McHugh"
+   },
+   {
+    "role": "District Judge",
+    "name": "Susie Jensen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ross Pittman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lamont Berecz"
+   },
+   {
+    "role": "District Judge",
+    "name": "John Cafferty"
+   },
+   {
+    "role": "District Judge",
+    "name": "Regina McCrea"
+   },
+   {
+    "role": "District Judge",
+    "name": "Casey Simmons"
+   },
+   {
+    "role": "District Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Mark Monson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Adam Green"
+   },
+   {
+    "role": "District Judge",
+    "name": "Megan Marshall"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michelle Evans"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Thomas Whitney"
+   },
+   {
+    "role": "District Judge",
+    "name": "Randall Grove"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gabriel McCarthy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gene Petty"
+   },
+   {
+    "role": "District Judge",
+    "name": "Matthew Roker"
+   },
+   {
+    "role": "District Judge",
+    "name": "Davis VanderVelde"
+   },
+   {
+    "role": "District Judge",
+    "name": "Brent Whiting"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kiley Stuchlik"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Steven Hippler"
+   },
+   {
+    "role": "District Judge",
+    "name": "Peter Barton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Nancy Baskin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Joseph Borton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Annie McDevitt"
+   },
+   {
+    "role": "District Judge",
+    "name": "James Cawthon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jonathan Medema"
+   },
+   {
+    "role": "District Judge",
+    "name": "Patrick Miller"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lynn Norton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Derrick O’Neill"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Scott"
+   },
+   {
+    "role": "District Judge",
+    "name": "Cynthia Yee-Wallace"
+   },
+   {
+    "role": "District Judge",
+    "name": "Theodore Fleming"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Eric Wildman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ned Williamson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Blaine Cannon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rosemary Emory"
+   },
+   {
+    "role": "District Judge",
+    "name": "Reed Cotten"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ben Cluff"
+   },
+   {
+    "role": "District Judge",
+    "name": "William “Bill” Hancock"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Javier Gabiola"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rick Carnaroli"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robert C. Naftz"
+   },
+   {
+    "role": "District Judge",
+    "name": "Cody Brower"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative District Judge",
+    "name": "Steven Boyce"
+   },
+   {
+    "role": "District Judge",
+    "name": "Darren Simpson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Brendon Taylor"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amanda Ulrich"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Walker"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael Whyte"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel Clark"
+   }
+  ]
+ }
+}

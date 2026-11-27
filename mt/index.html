@@ -4673,19 +4673,20 @@ function initMontanaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "mt-senate": "mts", "county": "co", "mt-house": "mth",
-    "school-district-secondary": "sh", "school-district-unified": "su",
-    "school-district-elementary": "se", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "mt-judicial-district": "mtj", "mt-senate": "mts",
+    "county": "co", "mt-house": "mth", "school-district-secondary": "sh",
+    "school-district-unified": "su", "school-district-elementary": "se", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["mt-senate"],
-    "state-house": ["mt-house"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["mt-house"], "trial-court-district": ["mt-judicial-district"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
@@ -4708,7 +4709,8 @@ function initMontanaExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "mt-senate-districts.json", "mt-house-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "mt-senate-districts.json", "mt-house-districts.json", "zip-index.json",
+    "tribal-areas.json", "mt-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11605,6 +11607,7 @@ function initMontanaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 2 congressional districts — the largest districts Montana carries below the state itself
+    "mt-judicial-district", // 22 judicial districts of whole counties, 17,311 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than a congressional district
     "mt-senate",         // 50 Senate districts, each exactly two House districts
     "county",            // 56 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "mt-house",          // 100 House districts, two in each Senate district
@@ -17374,6 +17377,130 @@ function initMontanaExplorer() {
     }
   });
 
+  /* ---------- 7b. Judicial District — Montana's judicial districts, whole counties ----------
+   * 22 judicial districts of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the Montana Judicial Branch's District Courts page and the judges
+   * from each district's Court Locator page on courts.mt.gov,
+   * kept as text in mt/data/source/courts/. The districts are geometry
+   * (mt-judicial-districts.json, cache-first); the judges are a roster
+   * (mt-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * mt/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Montana Constitution, Article VII,
+   * sections 7 and 8 (archive.legmt.gov, read 2026-11-27): district court
+   * judges are elected by the qualified electors for six-year terms; for a
+   * vacancy the Governor appoints from nominees selected as the law provides,
+   * subject to Senate confirmation; and an incumbent with no opponent still
+   * appears on the general election ballot for the voters to approve or
+   * reject. THE COUNT IS CHECKED: the District Courts page says 53 district
+   * court judges serve, and the fetch stops unless the Court Locator pages
+   * name that many.
+   * ---------- */
+  var loadMtCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mt-judicial-districts.json", {}, 2);
+  });
+  var loadMtJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mt-district-judges.json", {}, 2);
+  });
+  var MT_COURT = {
+    how: "The district's voters elect its judges for six-year terms. For a vacancy the Governor appoints from nominees, subject to Senate confirmation (Montana Constitution, Article VII, sections 7 and 8).",
+    court: "The district court is Montana's court of general jurisdiction, and it is held in every county of the district. Standing masters and justices of the peace are not listed here.",
+    from: "The Montana Judicial Branch's Court Locator page for this district",
+    link: { label: "Montana district courts", url: "https://courts.mt.gov/courts/dcourt/" }
+  };
+  function mtCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial District";
+  }
+  // "Atchison and Leavenworth Counties"
+  function mtCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "mt-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Montana's judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadMtCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : mtCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMtCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadMtJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? mtCourtTitle(result.unit) : "Unknown judicial district",
+        note: mtCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("District judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: MT_COURT.how });
+      rows.push({ label: "The court", value: MT_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: MT_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return MT_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19265,7 +19392,7 @@ function initMontanaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "mt-senate", "mt-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "mt-senate", "mt-house", "mt-judicial-district",
     "school-district-unified", "school-district-elementary", "school-district-secondary",
     "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
@@ -19797,8 +19924,8 @@ function initMontanaExplorer() {
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5E3A8C": "#B283F4",
     "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -1,0 +1,64 @@
+# Idaho court districts and judges, kept by scripts/build_state_courts.py --fetch id
+# read: 2026-11-27
+# from: https://legislature.idaho.gov/statutesrules/idstat/title1/t1ch8/sect1-802/ to sect1-808/ (Idaho Code, counties and seats of each district) and https://isc.idaho.gov/about-the-courts/judicial-directory (district judges, from the data the page carries inline; magistrate judges are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Boundary, Bonner, Kootenai, Shoshone, Benewah
+district | 2 | Latah, Clearwater, Nez Perce, Lewis, Idaho
+district | 3 | Adams, Washington, Payette, Gem, Canyon, Owyhee
+district | 4 | Valley, Boise, Ada, Elmore
+district | 5 | Blaine, Camas, Gooding, Lincoln, Jerome, Minidoka, Cassia, Twin Falls
+district | 6 | Power, Bannock, Caribou, Bear Lake, Franklin, Oneida
+district | 7 | Lemhi, Custer, Butte, Clark, Fremont, Jefferson, Madison, Teton, Bonneville, Bingham
+judge | 1 | Administrative District Judge | Barry McHugh | 
+judge | 1 | District Judge | Susie Jensen | 
+judge | 1 | District Judge | Ross Pittman | 
+judge | 1 | District Judge | Lamont Berecz | 
+judge | 1 | District Judge | John Cafferty | 
+judge | 1 | District Judge | Regina McCrea | 
+judge | 1 | District Judge | Casey Simmons | 
+vacant | 1 | District Judge | | 
+judge | 2 | Administrative District Judge | Mark Monson | 
+judge | 2 | District Judge | Adam Green | 
+judge | 2 | District Judge | Megan Marshall | 
+judge | 2 | District Judge | Michelle Evans | 
+judge | 3 | Administrative District Judge | Thomas Whitney | 
+judge | 3 | District Judge | Randall Grove | 
+judge | 3 | District Judge | Gabriel McCarthy | 
+judge | 3 | District Judge | Gene Petty | 
+judge | 3 | District Judge | Matthew Roker | 
+judge | 3 | District Judge | Davis VanderVelde | 
+judge | 3 | District Judge | Brent Whiting | 
+judge | 3 | District Judge | Kiley Stuchlik | 
+judge | 4 | Administrative District Judge | Steven Hippler | 
+judge | 4 | District Judge | Peter Barton | 
+judge | 4 | District Judge | Nancy Baskin | 
+judge | 4 | District Judge | Joseph Borton | 
+judge | 4 | District Judge | Annie McDevitt | 
+judge | 4 | District Judge | James Cawthon | 
+judge | 4 | District Judge | Jonathan Medema | 
+judge | 4 | District Judge | Patrick Miller | 
+judge | 4 | District Judge | Lynn Norton | 
+judge | 4 | District Judge | Derrick O’Neill | 
+judge | 4 | District Judge | Jason Scott | 
+judge | 4 | District Judge | Cynthia Yee-Wallace | 
+judge | 4 | District Judge | Theodore Fleming | 
+judge | 5 | Administrative District Judge | Eric Wildman | 
+judge | 5 | District Judge | Ned Williamson | 
+judge | 5 | District Judge | Blaine Cannon | 
+judge | 5 | District Judge | Rosemary Emory | 
+judge | 5 | District Judge | Reed Cotten | 
+judge | 5 | District Judge | Ben Cluff | 
+judge | 5 | District Judge | William “Bill” Hancock | 
+judge | 6 | Administrative District Judge | Javier Gabiola | 
+judge | 6 | District Judge | Rick Carnaroli | 
+judge | 6 | District Judge | Robert C. Naftz | 
+judge | 6 | District Judge | Cody Brower | 
+judge | 7 | Administrative District Judge | Steven Boyce | 
+judge | 7 | District Judge | Darren Simpson | 
+judge | 7 | District Judge | Brendon Taylor | 
+judge | 7 | District Judge | Amanda Ulrich | 
+judge | 7 | District Judge | Jason Walker | 
+judge | 7 | District Judge | Michael Whyte | 
+judge | 7 | District Judge | Daniel Clark | 

@@ -170,6 +170,18 @@ PROVENANCE = [
             "anchor per county plus OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "wa-superior-court",
+        "app_file": "wa-judicial-districts.json",
+        "source_url": "https://www.courts.wa.gov/court_dir/?fa=court_dir.judicialdistricts",
+        "note": "Washington's 32 superior courts, dissolved from the 39 counties by scripts/build_state_courts.py from the Judicial Districts Reference List (excerpt in wa/data/source/courts/wa-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "wa-superior-court",
+        "app_file": "wa-district-judges.json",
+        "source_url": "https://www.courts.wa.gov/court_dir/",
+        "note": "The superior court judges of each court, read from its counties' Court Directory pages by scripts/build_state_courts.py --fetch wa, which stops if counties sharing a court disagree or a court lists more judges than RCW 2.08.061 to 2.08.065 allow. The monthly re-read is a row in wa/WATCH.md.",
+    },
 ]
 
 # Washington's envelope, as index.html writes it for the ZIP layer

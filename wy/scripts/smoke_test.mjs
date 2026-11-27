@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "41.14010,-104.82024"; // Wyoming State Capitol, 200 West 24th Street, Cheyenne, Laramie County
-const OFFLINE = ["county", "us-house", "wy-senate", "wy-house"];
-const EXPECT_DISTRICT = { "county": "Laramie County", "us-house": "Congressional District (at Large)", "wy-senate": "8", "wy-house": "11" };
+const OFFLINE = ["county", "us-house", "wy-senate", "wy-house", "wy-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Laramie County", "us-house": "Congressional District (at Large)", "wy-senate": "8", "wy-house": "11", "wy-judicial-district": "1st Judicial District" };
 const NEGATIVE_POINT = "40.85000,-105.40000"; // Larimer County, Colorado, south of the Wyoming line — outside Wyoming and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Colorado here (control: the Wyoming State Capitol returns Wyoming), none of the state's shipped boundary files contains it, and of every outline in the fleet only Colorado's does (Colorado went live in batch 3 of the state-level launch). Wyoming borders no water and no other country, and every one of its neighbours (Montana, South Dakota, Nebraska, Colorado, Utah and Idaho) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Wyoming";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "WyomingExplorer";

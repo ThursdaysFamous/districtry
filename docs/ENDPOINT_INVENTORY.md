@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **341 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 296 are links.
+makes from a link a reader clicks. Of **350 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 305 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -174,7 +174,7 @@ prose.
 | va | 0 | 17 |
 | wv | 0 | 12 |
 | ga | 0 | 16 |
-| pa | 0 | 10 |
+| pa | 0 | 11 |
 | nv | 0 | 12 |
 | az | 0 | 14 |
 | nj | 0 | 12 |
@@ -182,28 +182,28 @@ prose.
 | tx | 0 | 14 |
 | fl | 0 | 12 |
 | oh | 0 | 12 |
-| wa | 0 | 12 |
+| wa | 0 | 13 |
 | ma | 0 | 13 |
-| co | 0 | 12 |
+| co | 0 | 13 |
 | md | 0 | 11 |
 | al | 0 | 12 |
-| or | 0 | 14 |
+| or | 0 | 15 |
 | ct | 0 | 13 |
-| ut | 0 | 12 |
+| ut | 0 | 13 |
 | ks | 0 | 13 |
-| nm | 0 | 12 |
+| nm | 0 | 13 |
 | ne | 0 | 12 |
-| id | 0 | 12 |
+| id | 0 | 13 |
 | hi | 0 | 10 |
 | me | 0 | 13 |
-| mt | 0 | 14 |
+| mt | 0 | 15 |
 | ri | 0 | 13 |
 | de | 0 | 11 |
 | sd | 0 | 13 |
 | nd | 0 | 14 |
 | ak | 0 | 12 |
 | vt | 0 | 12 |
-| wy | 0 | 13 |
+| wy | 0 | 14 |
 
 ### Where each layer's shapes come from
 
@@ -522,7 +522,7 @@ measured until the next run describes it.
 | va | 23 | 20 | 0 |
 | wv | 21 | 14 | 0 |
 | ga | 21 | 18 | 0 |
-| pa | 16 | 11 | 0 |
+| pa | 18 | 13 | 0 |
 | nv | 16 | 13 | 0 |
 | az | 17 | 12 | 0 |
 | nj | 17 | 10 | 0 |
@@ -530,31 +530,31 @@ measured until the next run describes it.
 | tx | 18 | 15 | 0 |
 | fl | 16 | 13 | 0 |
 | oh | 18 | 14 | 0 |
-| wa | 15 | 12 | 0 |
+| wa | 17 | 14 | 0 |
 | ma | 18 | 12 | 0 |
-| co | 16 | 12 | 0 |
+| co | 18 | 14 | 0 |
 | md | 16 | 11 | 0 |
 | al | 16 | 13 | 0 |
-| or | 18 | 13 | 0 |
+| or | 20 | 15 | 0 |
 | ct | 18 | 12 | 0 |
-| ut | 16 | 13 | 0 |
+| ut | 18 | 15 | 0 |
 | ks | 18 | 16 | 0 |
-| nm | 16 | 13 | 0 |
+| nm | 18 | 15 | 0 |
 | ne | 15 | 14 | 0 |
-| id | 15 | 12 | 0 |
+| id | 17 | 14 | 0 |
 | hi | 15 | 11 | 0 |
 | me | 18 | 12 | 0 |
-| mt | 18 | 12 | 0 |
+| mt | 20 | 14 | 0 |
 | ri | 18 | 12 | 0 |
 | de | 16 | 11 | 0 |
 | sd | 18 | 16 | 0 |
 | nd | 19 | 15 | 0 |
 | ak | 16 | 12 | 0 |
 | vt | 18 | 11 | 0 |
-| wy | 17 | 12 | 0 |
-| **total** | **1318** | **1551** | **12** |
+| wy | 19 | 14 | 0 |
+| **total** | **1336** | **1569** | **12** |
 
-**270 distinct source hosts** across the six manifests. Each instance's
+**280 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

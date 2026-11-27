@@ -205,6 +205,7 @@
       "atpoint_hooks_fired": 0,
       "layer_ids": [
         "co-house",
+        "co-judicial-district",
         "co-senate",
         "county",
         "county-subdivision",
@@ -435,6 +436,7 @@
         "county-subdivision",
         "fire-station",
         "id-house",
+        "id-judicial-district",
         "id-senate",
         "municipality",
         "police-station",
@@ -936,6 +938,7 @@
         "county-subdivision",
         "fire-station",
         "mt-house",
+        "mt-judicial-district",
         "mt-senate",
         "municipality",
         "police-station",
@@ -1136,6 +1139,7 @@
         "fire-station",
         "municipality",
         "nm-house",
+        "nm-judicial-district",
         "nm-senate",
         "police-station",
         "post-office",
@@ -1331,6 +1335,7 @@
         "fire-station",
         "municipality",
         "or-house",
+        "or-judicial-district",
         "or-senate",
         "police-station",
         "post-office",
@@ -1362,6 +1367,7 @@
         "fire-station",
         "municipality",
         "pa-house",
+        "pa-judicial-district",
         "pa-senate",
         "police-station",
         "post-office",
@@ -1573,6 +1579,7 @@
         "tribal-government",
         "us-house",
         "ut-house",
+        "ut-judicial-district",
         "ut-senate",
         "zip-code"
       ]
@@ -1673,6 +1680,7 @@
         "us-house",
         "wa-house",
         "wa-senate",
+        "wa-superior-court",
         "zip-code"
       ]
     },
@@ -1790,6 +1798,7 @@
         "tribal-government",
         "us-house",
         "wy-house",
+        "wy-judicial-district",
         "wy-senate",
         "zip-code"
       ]

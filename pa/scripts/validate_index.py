@@ -87,16 +87,16 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 9
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "pa-senate", "county", "pa-house", "school-district-unified",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "us-house", "pa-senate", "pa-judicial-district", "county", "pa-house",
+    "school-district-unified", "zip-code", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "pa-senate-districts.json": (50, 50),  # The 50 Pennsylvania Senate districts, TIGERweb layer 1, the 2022 plan.
     "pa-house-districts.json": (203, 203),  # The 203 Pennsylvania House districts, TIGERweb layer 2, the 2022 plan.
     "zip-index.json": (1820, 1820),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "pa-judicial-districts.json": (60, 60),  # The 60 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in pa/data/source/courts/pa-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -116,6 +117,7 @@ ROSTER_FILES = {
     "pa-house-members.json": 203,  # Pennsylvania House roster from the General Assembly's own member list and member pages, one record per district, refreshed weekly.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "statewide-officials.json": 5,  # The officers Pennsylvania elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from pa/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
+    "pa-district-judges.json": 60,  # The judges of each of the 60 court districts, keyed by district, 456 seats read 2026-11-27 from the state's own court website into pa/data/source/courts/pa-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

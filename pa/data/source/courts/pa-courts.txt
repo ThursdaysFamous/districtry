@@ -1,0 +1,522 @@
+# Pennsylvania court districts and judges, kept by scripts/build_state_courts.py --fetch pa
+# read: 2026-11-27
+# from: https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts (counties), 42 Pa.C.S. section 911 on palegis.us (each court's number of judges) and https://www.pacourts.us/api/judgeView?judgeType=1, the feed the Common Pleas Judges page reads (judges; senior judges are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Philadelphia
+district | 2 | Lancaster
+district | 3 | Northampton
+district | 4 | Tioga
+district | 5 | Allegheny
+district | 6 | Erie
+district | 7 | Bucks
+district | 8 | Northumberland
+district | 9 | Cumberland
+district | 10 | Westmoreland
+district | 11 | Luzerne
+district | 12 | Dauphin
+district | 13 | Greene
+district | 14 | Fayette
+district | 15 | Chester
+district | 16 | Somerset
+district | 17 | Snyder, Union
+district | 18 | Clarion
+district | 19 | York
+district | 20 | Huntingdon
+district | 21 | Schuylkill
+district | 22 | Wayne
+district | 23 | Berks
+district | 24 | Blair
+district | 25 | Clinton
+district | 26 | Columbia, Montour
+district | 27 | Washington
+district | 28 | Venango
+district | 29 | Lycoming
+district | 30 | Crawford
+district | 31 | Lehigh
+district | 32 | Delaware
+district | 33 | Armstrong
+district | 34 | Susquehanna
+district | 35 | Mercer
+district | 36 | Beaver
+district | 37 | Forest, Warren
+district | 38 | Montgomery
+district | 39 | Franklin, Fulton
+district | 40 | Indiana
+district | 41 | Juniata, Perry
+district | 42 | Bradford
+district | 43 | Monroe
+district | 44 | Sullivan, Wyoming
+district | 45 | Lackawanna
+district | 46 | Clearfield
+district | 47 | Cambria
+district | 48 | McKean
+district | 49 | Centre
+district | 50 | Butler
+district | 51 | Adams
+district | 52 | Lebanon
+district | 53 | Lawrence
+district | 54 | Jefferson
+district | 55 | Potter
+district | 56 | Carbon
+district | 57 | Bedford
+district | 58 | Mifflin
+district | 59 | Cameron, Elk
+district | 60 | Pike
+judge | 1 | Administrative Judge | Daniel J. Anders | 
+judge | 1 | President Judge | Nina N. Wright Padilla | 
+judge | 1 | Administrative Judge | Sheila A. Woods-Skipper | 
+judge | 1 | Administrative Judge | Walter J. Olszewski | 
+judge | 1 | Judge | Anne Marie B. Coyle | 
+judge | 1 | Judge | Anthony E. Stefanski | 
+judge | 1 | Judge | Anthony G. Kyriakakis | 
+judge | 1 | Judge | Betsy Jo Wahl | 
+judge | 1 | Judge | Brian E. McLaughlin | 
+judge | 1 | Judge | Brian R. Kisielewski | 
+judge | 1 | Judge | Carmella G. Jacquinto | 
+judge | 1 | Judge | Caroline M. Turner | 
+judge | 1 | Judge | Cateria R. McCabe | 
+judge | 1 | Judge | Charles A. Ehrlich | 
+judge | 1 | Judge | Chesley A. Lightsey | 
+judge | 1 | Judge | Christopher P. Mallios Jr. | 
+judge | 1 | Judge | Christopher R. Hall | 
+judge | 1 | Judge | Craig R. Levin | 
+judge | 1 | Judge | Crystal Bryant Powell | 
+judge | 1 | Judge | Daine A. Grey | 
+judge | 1 | Judge | Damaris L. Garcia | 
+judge | 1 | Judge | Daniel R. Sulman | 
+judge | 1 | Judge | Deborah D. Cianfrani | 
+judge | 1 | Judge | Deborah L. Canty | 
+judge | 1 | Judge | Deborah Watson-Stokes | 
+judge | 1 | Judge | Denis P. Cohen | 
+judge | 1 | Judge | Diana L. Anhalt | 
+judge | 1 | Judge | Donna M. Woelpper | 
+judge | 1 | Judge | Edward C. Wright | 
+judge | 1 | Judge | Elizabeth Jackson | 
+judge | 1 | Judge | Elvin P. Ross III | 
+judge | 1 | Judge | Frank Palumbo | 
+judge | 1 | Judge | Giovanni O. Campbell | 
+judge | 1 | Judge | Glynnis D. Hill | 
+judge | 1 | Judge | Gwendolyn N. Bright | 
+judge | 1 | Judge | Ida K. Chen | 
+judge | 1 | Judge | Irina G. Ehrlich | 
+judge | 1 | Judge | James C. Crumlish III | 
+judge | 1 | Judge | James J. Eisenhower | 
+judge | 1 | Judge | Jennifer A. Santiago | 
+judge | 1 | Judge | Jennifer Schultz | 
+judge | 1 | Judge | Jessica R. Brown | 
+judge | 1 | Judge | John R. Padova Jr. | 
+judge | 1 | Judge | Jonathan Q. Irvine | 
+judge | 1 | Judge | Joseph J. Russo | 
+judge | 1 | Judge | Joseph L. Fernandes | 
+judge | 1 | Judge | Joseph Scott O'Keefe | 
+judge | 1 | Judge | Joshua H. Roberts | 
+judge | 1 | Judge | Kay K. Yu | 
+judge | 1 | Judge | Kia Ghee | 
+judge | 1 | Judge | Lawrence M. Farnese Jr. | 
+judge | 1 | Judge | Leanne L. Litwin | 
+judge | 1 | Judge | Leon A. King II | 
+judge | 1 | Judge | Linda A. Carpenter | 
+judge | 1 | Judge | Lucretia Clemons | 
+judge | 1 | Judge | Lyris F. Younge | 
+judge | 1 | Judge | Mark J. Moore | 
+judge | 1 | Judge | Michael E. Erdos | 
+judge | 1 | Judge | Michele D. Hangley | 
+judge | 1 | Judge | Monica N. Gibbs | 
+judge | 1 | Judge | Natasha Taylor-Smith | 
+judge | 1 | Judge | Nicholas S. Kamau | 
+judge | 1 | Judge | Ourania Papademetriou | 
+judge | 1 | Judge | Paula A. Patrick | 
+judge | 1 | Judge | Rajinderpal S. Sandher | 
+judge | 1 | Judge | Ramy I. Djerassi | 
+judge | 1 | Judge | Richard J. Gordon Jr. | 
+judge | 1 | Judge | Rose Marie DeFino-Nastasi | 
+judge | 1 | Judge | Roxanne E. Covington | 
+judge | 1 | Judge | Samantha J. Williams | 
+judge | 1 | Judge | Sarah Jones | 
+judge | 1 | Judge | Scott DiClaudio | 
+judge | 1 | Judge | Sean Kennedy | 
+judge | 1 | Judge | Shanese I. Johnson | 
+judge | 1 | Judge | Sierra L. Thomas-Street | 
+judge | 1 | Judge | Stephanie M. Sawyer | 
+judge | 1 | Judge | Susan I. Schulman | 
+judge | 1 | Judge | Tamika N. Washington | 
+judge | 1 | Judge | Tiffany L. Palmer | 
+judge | 1 | Judge | Tracy Roman | 
+judge | 1 | Judge | Viktoria Kristiansson | 
+judge | 1 | Judge | Vincent L. Johnson | 
+judge | 1 | Judge | Vincent W. Furlong | 
+judge | 1 | Judge | Wendi D. Barish | 
+judge | 1 | Judge | William S. Braveman | 
+judge | 1 | Judge | Zachary C. Shaffer | 
+vacant | 1 | Judge | | 
+judge | 2 | President Judge | Leonard G. Brown III | 
+judge | 2 | Judge | Christina M. Parsons | 
+judge | 2 | Judge | Christopher A. Hackman | 
+judge | 2 | Judge | Craig W. Stedman | 
+judge | 2 | Judge | Dennis E. Reinaker | 
+judge | 2 | Judge | Jeffery D. Wright | 
+judge | 2 | Judge | Jeffrey A. Conrad | 
+judge | 2 | Judge | Jeffrey J. Reich | 
+judge | 2 | Judge | JoAnne Murphy | 
+judge | 2 | Judge | Merrill M. Spahn Jr. | 
+judge | 2 | Judge | Shawn P. McLaughlin | 
+judge | 2 | Judge | Thomas B. Sponaugle | 
+judge | 2 | Judge | Todd E. Brown | 
+vacant | 2 | Judge | | 
+vacant | 2 | Judge | | 
+judge | 3 | President Judge | Craig A. Dally | 
+judge | 3 | Judge | Abraham P. Kassis | 
+judge | 3 | Judge | Brian J. Panella | 
+judge | 3 | Judge | Jennifer R. Sletvold | 
+judge | 3 | Judge | Jeremy Clark | 
+judge | 3 | Judge | John M. Morganelli | 
+judge | 3 | Judge | Michael J. Koury Jr. | 
+judge | 3 | Judge | Paula A. Roscioli | 
+judge | 3 | Judge | Samuel P. Murray | 
+judge | 4 | President Judge | George W. Wheeler | 
+judge | 5 | Administrative Judge | Alan D. Hertzberg | 
+judge | 5 | Administrative Judge | Bruce R. Beemer | 
+judge | 5 | Administrative Judge | Hugh F. McGough | 
+judge | 5 | Administrative Judge | Jennifer S. McCrady | 
+judge | 5 | President Judge | Susan Evashavik DiLucente | 
+judge | 5 | Judge | Amanda Green-Hawkins | 
+judge | 5 | Judge | Arnold I. Klein | 
+judge | 5 | Judge | Beth A. Lazzara | 
+judge | 5 | Judge | Cathleen Cawood Bubash | 
+judge | 5 | Judge | Chelsa L. Wagner | 
+judge | 5 | Judge | Daniel D. Regan | 
+judge | 5 | Judge | Daniel Laurenzano Miller | 
+judge | 5 | Judge | David L. Spurgeon | 
+judge | 5 | Judge | Dwayne D. Woodruff | 
+judge | 5 | Judge | Edward J. Borkowski | 
+judge | 5 | Judge | Eleanor L. Bush | 
+judge | 5 | Judge | Elliot C. Howsie | 
+judge | 5 | Judge | Heather Schmidt Bresnahan | 
+judge | 5 | Judge | Jaime M. Hickton | 
+judge | 5 | Judge | Jennifer Satler | 
+judge | 5 | Judge | Jessel A. Costa | 
+judge | 5 | Judge | Jill E. Rangos | 
+judge | 5 | Judge | John T. McVay Jr. | 
+judge | 5 | Judge | Julie Capone | 
+judge | 5 | Judge | Kelly Eileen Bigley | 
+judge | 5 | Judge | Kevin G. Sasinoski | 
+judge | 5 | Judge | Kim D. Eaton | 
+judge | 5 | Judge | Lisa G. Middleman | 
+judge | 5 | Judge | Mary C. McGinley | 
+judge | 5 | Judge | Matthew V. Rudzki | 
+judge | 5 | Judge | Nicola Henry-Taylor | 
+judge | 5 | Judge | Patrick A. Sweeney | 
+judge | 5 | Judge | Patrick M. Connelly | 
+judge | 5 | Judge | Paul E. Cozza | 
+judge | 5 | Judge | Philip A. Ignelzi | 
+judge | 5 | Judge | R. Anthony DeLuca | 
+judge | 5 | Judge | Randal B. Todd | 
+judge | 5 | Judge | Sabrina Korbel | 
+judge | 5 | Judge | Simquita Bridges | 
+judge | 5 | Judge | Thomas P. Caulfield | 
+judge | 5 | Judge | Tiffany E. Sizemore | 
+judge | 5 | Judge | Wrenna L. Watson | 
+vacant | 5 | Judge | | 
+judge | 6 | President Judge | John J. Mead | 
+judge | 6 | Judge | David G. Ridge | 
+judge | 6 | Judge | Emily M. Merski | 
+judge | 6 | Judge | Erin C. Connelly Marucci | 
+judge | 6 | Judge | John J. Trucilla | 
+judge | 6 | Judge | Joseph M. Walsh III | 
+judge | 6 | Judge | Marshall J. Piccinini | 
+judge | 6 | Judge | Peter J. Sala | 
+vacant | 6 | Judge | | 
+judge | 7 | President Judge | Raymond F. McHugh | 
+judge | 7 | Judge | Amy Fitzpatrick | 
+judge | 7 | Judge | Brian T. McGuffin | 
+judge | 7 | Judge | C. Theodore Fritsch Jr. | 
+judge | 7 | Judge | Charissa J. Liller | 
+judge | 7 | Judge | Dawn Marie DiDonato Burke | 
+judge | 7 | Judge | Denise M. Bowman | 
+judge | 7 | Judge | James M. McMaster | 
+judge | 7 | Judge | Jeffrey G. Trauger | 
+judge | 7 | Judge | Jordan B. Yeager | 
+judge | 7 | Judge | Linda Bobrin | 
+judge | 7 | Judge | Matthew D. Weintraub | 
+judge | 7 | Judge | Stephen A. Corr | 
+judge | 7 | Judge | Tiffany Thomas-Smith | 
+judge | 7 | Judge | Wallace H. Bateman Jr. | 
+judge | 8 | President Judge | Paige Rosini | 
+judge | 8 | Judge | Edward Greco | 
+judge | 8 | Judge | Frank W. Garrigan | 
+judge | 8 | Judge | Michael P. Toomey | 
+judge | 9 | President Judge | Albert H. Masland | 
+judge | 9 | Judge | Alexandra E. Sacavage | 
+judge | 9 | Judge | Carrie E. Hyams | 
+judge | 9 | Judge | Christylee L. Peck | 
+judge | 9 | Judge | Jessica E. Brewbaker | 
+judge | 9 | Judge | Matthew P. Smith | 
+judge | 9 | Judge | Michelle H. Sibert | 
+judge | 10 | President Judge | Christopher A. Feliciani | 
+judge | 10 | Judge | Christian F. Scherer | 
+judge | 10 | Judge | Harry F. Smail Jr. | 
+judge | 10 | Judge | James P. Silvis | 
+judge | 10 | Judge | Justin M. Walsh | 
+judge | 10 | Judge | Matthew Schimizzi | 
+judge | 10 | Judge | Meagan A. Bilik-DeFazio | 
+judge | 10 | Judge | Michael J. Stewart | 
+judge | 10 | Judge | Michele G. Bononi | 
+judge | 10 | Judge | Scott O. Mears | 
+judge | 10 | Judge | Timothy A. Krieger | 
+judge | 11 | President Judge | Stefanie J. Salavantis | 
+judge | 11 | Judge | David W. Lupas | 
+judge | 11 | Judge | Fred A. Pierantoni III | 
+judge | 11 | Judge | Jennifer L. Rogers | 
+judge | 11 | Judge | Joseph F. Sklarosky Jr. | 
+judge | 11 | Judge | Lesa S. Gelb | 
+judge | 11 | Judge | Mark Bufalino | 
+judge | 11 | Judge | Michael T. Vough | 
+judge | 11 | Judge | Richard M. Hughes | 
+judge | 11 | Judge | Tarah C. Toohil | 
+judge | 11 | Judge | Tina Polachek Gartley | 
+judge | 12 | President Judge | Andrew H. Dowling | 
+judge | 12 | Judge | Courtney K. Powell | 
+judge | 12 | Judge | Deborah E. Curcillo | 
+judge | 12 | Judge | Edward M. Marsico Jr. | 
+judge | 12 | Judge | Jeffrey B. Engle | 
+judge | 12 | Judge | John Joseph McNally | 
+judge | 12 | Judge | Katherine E. McShane | 
+judge | 12 | Judge | La Tasha C. Williams | 
+judge | 12 | Judge | Royce L. Morris | 
+judge | 12 | Judge | Scott Arthur Evans | 
+judge | 12 | Judge | William T. Tully | 
+judge | 13 | President Judge | Jeffry N. Grimes | 
+judge | 13 | Judge | Christopher M. Simms | 
+judge | 14 | President Judge | Steve P. Leskinen | 
+judge | 14 | Judge | Joseph M. George Jr. | 
+judge | 14 | Judge | Linda R. Cordaro | 
+judge | 14 | Judge | Mark M. Mehalov | 
+judge | 14 | Judge | Nancy D. Vernon | 
+judge | 15 | President Judge | Ann Marie M. Wheatcraft | 
+judge | 15 | Judge | Alita A. Rovito | 
+judge | 15 | Judge | Allison Bell Royer | 
+judge | 15 | Judge | Analisa S. Sondergaard | 
+judge | 15 | Judge | Anthony T. Verwey | 
+judge | 15 | Judge | Bret M. Binder | 
+judge | 15 | Judge | Clay N. Cauley Sr. | 
+judge | 15 | Judge | Deborah S. Ryan | 
+judge | 15 | Judge | Fredda L. Maddox | 
+judge | 15 | Judge | John L. Hall | 
+judge | 15 | Judge | Mackenzie W. Smith | 
+judge | 15 | Judge | Nicole R. Forzato | 
+judge | 15 | Judge | Patrick Carmody | 
+judge | 15 | Judge | Sarah B. Black | 
+judge | 15 | Judge | Thomas P. McCabe | 
+judge | 16 | President Judge | Scott P. Bittner | 
+judge | 16 | Judge | Daniel W. Rullo | 
+judge | 16 | Judge | Molly Metzgar | 
+judge | 17 | President Judge | Lori R. Hackenberg | 
+judge | 17 | Judge | Michael Piecuch | 
+judge | 18 | President Judge | Sara J. Seidle-Patton | 
+judge | 19 | President Judge | Michael W. Flannelly | 
+judge | 19 | Judge | Amber A. Kraft | 
+judge | 19 | Judge | Andrea Marceca Strong | 
+judge | 19 | Judge | Christopher A. Ferro | 
+judge | 19 | Judge | Clyde W. Vedder | 
+judge | 19 | Judge | Gregory M. Snyder | 
+judge | 19 | Judge | Joseph C. Adams | 
+judge | 19 | Judge | Joseph N. Gothie | 
+judge | 19 | Judge | Kathleen J. Prendergast | 
+judge | 19 | Judge | Kelley L. Margetas | 
+judge | 19 | Judge | Matthew D. Menges | 
+judge | 19 | Judge | N. Christopher Menges | 
+judge | 19 | Judge | Paul W. Minnich | 
+judge | 19 | Judge | Steven D. Stambaugh | 
+judge | 19 | Judge | Todd R. Platts | 
+judge | 20 | President Judge | George N. Zanic | 
+judge | 20 | Judge | Ray A. Ghaner | 
+judge | 21 | President Judge | Jacqueline L. Russell | 
+judge | 21 | Judge | Andrew J. Serina Jr. | 
+judge | 21 | Judge | Christina E. Hale | 
+judge | 21 | Judge | Christopher W. Hobbs | 
+judge | 21 | Judge | James P. Goodman | 
+judge | 21 | Judge | William L. Burke | 
+judge | 22 | President Judge | Janine Edwards | 
+judge | 22 | Judge | Matthew L. Meagher | 
+judge | 23 | President Judge | M. Theresa Johnson | 
+judge | 23 | Judge | Eleni V. Dimitriou Geishauser | 
+judge | 23 | Judge | Eric J. Taylor | 
+judge | 23 | Judge | James E. Gavin | 
+judge | 23 | Judge | Jill M. Scheidt | 
+judge | 23 | Judge | John Benjamin Nevius | 
+judge | 23 | Judge | Justin D. Bodor | 
+judge | 23 | Judge | Madelyn S. Fudeman | 
+judge | 23 | Judge | Patrick T. Barrett | 
+judge | 23 | Judge | Scott E. Lash | 
+judge | 23 | Judge | Thomas G. Parisi | 
+judge | 23 | Judge | Tina M. Boyd | 
+judge | 24 | President Judge | Wade A. Kagarise | 
+judge | 24 | Judge | David B. Consiglio | 
+judge | 24 | Judge | Jackie L. Bernard | 
+judge | 24 | Judge | Louis C. Schmitt Jr. | 
+judge | 24 | Judge | Paula M. Aigner | 
+judge | 25 | President Judge | Craig P. Miller | 
+judge | 25 | Judge | Michael F. Salisbury | 
+judge | 26 | President Judge | Gary E. Norton | 
+judge | 26 | Judge | David C. James | 
+judge | 26 | Judge | Richard W. Knecht | 
+judge | 27 | President Judge | Valarie S. Costanzo | 
+judge | 27 | Judge | Jesse Pettit | 
+judge | 27 | Judge | John F. DiSalle | 
+judge | 27 | Judge | Michael J. Lucas | 
+judge | 27 | Judge | Traci L. McDonald | 
+judge | 28 | President Judge | Matthew T. Kirtland | 
+judge | 28 | Judge | Justin S. Fleeger | 
+judge | 29 | President Judge | Eric R. Linhardt | 
+judge | 29 | Judge | Ryan C. Gardner | 
+judge | 29 | Judge | Ryan M. Tira | 
+judge | 29 | Judge | William P. Carlucci | 
+judge | 30 | President Judge | John F. Spataro | 
+judge | 30 | Judge | Francis J. Schultz | 
+judge | 30 | Judge | Mark D. Stevens | 
+judge | 31 | President Judge | Douglas G. Reichley | 
+judge | 31 | Judge | Anna-Kristie M. Marks | 
+judge | 31 | Judge | J. Brian Johnson | 
+judge | 31 | Judge | James T. Anthony | 
+judge | 31 | Judge | Mark B. Stanziola | 
+judge | 31 | Judge | Melissa T. Pavlack | 
+judge | 31 | Judge | Robert L. Steinberg | 
+judge | 31 | Judge | Thomas A. Capehart | 
+judge | 31 | Judge | Thomas M. Caffrey | 
+judge | 31 | Judge | Zachary J. Cohen | 
+judge | 32 | President Judge | Linda A. Cartisano | 
+judge | 32 | Judge | Anthony D. Scanlon | 
+judge | 32 | Judge | Atinuke B. Moss | 
+judge | 32 | Judge | Deborah A. Krull | 
+judge | 32 | Judge | Dominic F. Pileggi | 
+judge | 32 | Judge | Frederick J. Stollsteimer IV | 
+judge | 32 | Judge | G. Michael Green | 
+judge | 32 | Judge | George A. Pagano | 
+judge | 32 | Judge | John J. Whelan | 
+judge | 32 | Judge | Kathrynann W. Durham | 
+judge | 32 | Judge | Kelly D. Eckel | 
+judge | 32 | Judge | Kevin F. Kelly | 
+judge | 32 | Judge | Margaret J. Amoroso | 
+judge | 32 | Judge | Mary Alice Brennan | 
+judge | 32 | Judge | Michael D. Power | 
+judge | 32 | Judge | Nusrat J. Rashid | 
+judge | 32 | Judge | Rachel Ezzell Berry | 
+judge | 32 | Judge | Richard H. Lowe | 
+judge | 32 | Judge | Richard M. Cappelli | 
+judge | 32 | Judge | Stephanie H. Klein | 
+judge | 32 | Judge | William C. Mackrides | 
+judge | 33 | President Judge | Chase G. McClister | 
+judge | 34 | President Judge | Jason J. Legg | 
+judge | 35 | President Judge | Tedd C. Nesbit | 
+judge | 35 | Judge | D. Neil McEwen | 
+judge | 35 | Judge | Ronald D. Amrhein | 
+vacant | 35 | Judge | | 
+judge | 36 | President Judge | Richard Mancini | 
+judge | 36 | Judge | Dale M. Fouse | 
+judge | 36 | Judge | Deborah L. DeCostro | 
+judge | 36 | Judge | James J. Ross | 
+judge | 36 | Judge | Kim Tesla | 
+judge | 36 | Judge | Laura J. Tocci | 
+judge | 36 | Judge | Mitchell P. Shahen | 
+judge | 37 | President Judge | Gregory J. Hammond | 
+judge | 37 | Judge | Todd A. Woodin | 
+judge | 38 | President Judge | Carolyn Tornetta Carluccio | 
+judge | 38 | Judge | Andrea Nicole Tate-Wilborn | 
+judge | 38 | Judge | Daniel G. Ronca | 
+judge | 38 | Judge | Daniel J. Clifford | 
+judge | 38 | Judge | Garrett D. Page | 
+judge | 38 | Judge | Henry S. Hilles III | 
+judge | 38 | Judge | Jeffrey S. Saltz | 
+judge | 38 | Judge | Kelly C. Wall | 
+judge | 38 | Judge | Lauren A. Hughes | 
+judge | 38 | Judge | Lois E. Murphy | 
+judge | 38 | Judge | Mary Coyne Pugh | 
+judge | 38 | Judge | Melissa S. Sterling | 
+judge | 38 | Judge | Patricia E. Coonahan | 
+judge | 38 | Judge | Raymond McGarry | 
+judge | 38 | Judge | Richard P. Haaz | 
+judge | 38 | Judge | Risa Vetri Ferman | 
+judge | 38 | Judge | Steven C. Tolliver | 
+judge | 38 | Judge | Steven T. O'Neill | 
+judge | 38 | Judge | Thomas M. Del Ricci | 
+judge | 38 | Judge | Todd D. Eisenberg | 
+judge | 38 | Judge | Virgil B. Walker | 
+judge | 38 | Judge | Wendy Demchick-Alloy | 
+judge | 38 | Judge | Wendy G. Rothstein | 
+judge | 38 | Judge | William R. Carpenter | 
+judge | 39 | President Judge | Shawn D. Meyers | 
+judge | 39 | Judge | Angela R. Krom | 
+judge | 39 | Judge | Jeremiah D. Zook | 
+judge | 39 | Judge | Mary Beth Shank | 
+judge | 39 | Judge | Todd M. Sponseller | 
+judge | 40 | President Judge | Thomas M. Bianco | 
+judge | 40 | Judge | Gina R. Force | 
+judge | 40 | Judge | Michael T. Clark | 
+judge | 41 | President Judge | Kenneth A. Mummah | 
+judge | 41 | Judge | Andrew J. Bender | 
+judge | 42 | President Judge | Maureen T. Beirne | 
+judge | 42 | Judge | Evan S. Williams III | 
+judge | 43 | President Judge | Jonathan Mark | 
+judge | 43 | Judge | Cyril D. Higgins | 
+judge | 43 | Judge | David J. Williamson | 
+judge | 43 | Judge | Janet Jackson | 
+judge | 43 | Judge | Jennifer H. Sibum | 
+judge | 43 | Judge | Patrick J. Best | 
+judge | 43 | Judge | Stephen M. Higgins | 
+judge | 44 | President Judge | Russell D. Shurtleff | 
+judge | 44 | Judge | Nina M. Sordoni | 
+judge | 45 | President Judge | James A. Gibbons | 
+judge | 45 | Judge | Andrew J. Jarbola III | 
+judge | 45 | Judge | Frank J. Ruggiero | 
+judge | 45 | Judge | Margaret A. Bisignani Moyle | 
+judge | 45 | Judge | Mark Powell | 
+judge | 45 | Judge | Mary D. Walsh Dempsey | 
+judge | 45 | Judge | Michael J. Barrasse | 
+judge | 45 | Judge | Terrence R. Nealon | 
+vacant | 45 | Judge | | 
+judge | 46 | President Judge | Paul E. Cherry | 
+judge | 46 | Judge | Joshua S. Maines | 
+judge | 47 | President Judge | Linda R. Fleming | 
+judge | 47 | Judge | Forrest B. Fordham III | 
+judge | 47 | Judge | Gregory J. Neugebauer | 
+judge | 47 | Judge | Michael A. Carbonara | 
+judge | 47 | Judge | Tamara R. Bernstein | 
+judge | 48 | President Judge | John H. Pavlock | 
+judge | 48 | Judge | Michele D. Alfieri-Causer | 
+judge | 49 | President Judge | Jonathan D. Grine | 
+judge | 49 | Judge | Brian K. Marshall | 
+judge | 49 | Judge | Julia R. Rater | 
+judge | 49 | Judge | Katherine V. Oliver | 
+judge | 50 | President Judge | S. Michael Yeager | 
+judge | 50 | Judge | John C. Scialabba | 
+judge | 50 | Judge | Joseph E. Kubit | 
+judge | 50 | Judge | Kelley T.D. Streib | 
+judge | 50 | Judge | Matthew T. McCune | 
+judge | 50 | Judge | Maura L. Palumbi | 
+judge | 50 | Judge | William C. Robinson Jr. | 
+judge | 51 | President Judge | Thomas R. Campbell | 
+judge | 51 | Judge | Christina M. Simpson | 
+judge | 51 | Judge | Shawn C. Wagner | 
+judge | 51 | Judge | Torren C. Ecker | 
+judge | 52 | President Judge | John C. Tylwalk | 
+judge | 52 | Judge | Bradford H. Charles | 
+judge | 52 | Judge | Charles T. Jones Jr. | 
+judge | 52 | Judge | Donna Long Brightbill | 
+judge | 53 | President Judge | J. Craig Cox | 
+judge | 53 | Judge | Bradley G. Olson Jr. | 
+judge | 53 | Judge | Lawrence J. Keith | 
+judge | 53 | Judge | William J. Flannery | 
+judge | 54 | President Judge | John H. Foradora | 
+judge | 55 | President Judge | Stephen P.B. Minor | 
+judge | 56 | President Judge | Roger N. Nanovic | 
+judge | 56 | Judge | Joseph J. Matika | 
+judge | 56 | Judge | Steven R. Serfass | 
+judge | 57 | President Judge | Travis W. Livengood | 
+judge | 57 | Judge | Brandi J. Hershey | 
+judge | 58 | President Judge | Aaron L. Gingrich | 
+judge | 58 | Judge | Jonathan W. Reed | 
+judge | 59 | President Judge | Shawn T. McMahon | 
+judge | 60 | President Judge | Gregory H. Chelak | 
+judge | 60 | Judge | Kelly A. Gaughan | 

@@ -78,6 +78,18 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Colorado has no township governments,
 so outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS COLORADO'S 23 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`co-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Judicial Branch's list of trial
+courts by district; the Judges and Staff page of every county's court names the district judges
+(208, read 2026-11-27), kept as a dated excerpt in `data/source/courts/co-courts.txt` and shipped
+network-first as `co-district-judges.json`. The pages are accordion sections over contact cards, and
+the section decides who is kept, because some cards print no title. Denver's juvenile and probate
+judges are kept in the 2nd district; county court judges, magistrates and Denver County Court (whose
+judges the mayor appoints) are not. The Governor appoints, and the district's voters retain each
+judge for six-year terms (the Judicial Branch's nominating commissions page). No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE COLORADO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -110,8 +122,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Colorado (`colorado`) — https://districtry.com/co/
 - Geocoders: address Photon (Colorado-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Colorado-bounded, serial >=1s queue)
-- Ground truth: 39.73924,-104.98480 (Colorado State Capitol, 200 East Colfax Avenue, Denver) → county Denver County; us-house 1; co-senate 31; co-house 6. Negative point 41.15000,-105.90000 (Albany County, Wyoming, about 17 km north of the Colorado line west of Laramie — outside Colorado and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Colorado), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Colorado and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.ColoradoExplorer`.
+- Ground truth: 39.73924,-104.98480 (Colorado State Capitol, 200 East Colfax Avenue, Denver) → county Denver County; us-house 1; co-senate 31; co-house 6; co-judicial-district 2nd Judicial District. Negative point 41.15000,-105.90000 (Albany County, Wyoming, about 17 km north of the Colorado line west of Laramie — outside Colorado and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Colorado), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Colorado and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.ColoradoExplorer`.
 - Scheduled workflows: `update-co-congress-roster.yml` (Mon 22:19 UTC); `update-co-legislature-roster.yml` (Tue 22:19 UTC); `co-validate-sources.yml` (1st of month 23:19 UTC).
 - Source registry: `co/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

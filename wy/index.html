@@ -4673,8 +4673,8 @@ function initWyomingExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "county": "co", "wy-senate": "wys",
-    "school-district-unified": "su", "wy-house": "wyh", "zip-code": "zp",
+  var LAYER_CODES = { "us-house": "us", "wy-judicial-district": "wyj", "county": "co",
+    "wy-senate": "wys", "school-district-unified": "su", "wy-house": "wyh", "zip-code": "zp",
     "county-subdivision": "cs", "school-district-elementary": "se", "municipality": "mu",
     "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
@@ -4682,9 +4682,10 @@ function initWyomingExplorer() {
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["wy-senate"],
-    "state-house": ["wy-house"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["wy-house"], "trial-court-district": ["wy-judicial-district"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -4706,7 +4707,8 @@ function initWyomingExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "wy-senate-districts.json", "wy-house-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "wy-senate-districts.json", "wy-house-districts.json", "zip-index.json",
+    "tribal-areas.json", "wy-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11603,6 +11605,7 @@ function initWyomingExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // the at-large congressional district, the whole state
+    "wy-judicial-district", // 9 judicial districts of whole counties, 28,147 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than the at-large congressional district
     "county",            // 23 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "wy-senate",         // 31 Senate districts, each electing one senator
     "school-district-unified", // 47 unified districts, about 5,250 km2 of land on average, plus the Census's placeholder for ground in no school district, drawn from a mirrored tile archive; with the 1 elementary district they cover the state's land
@@ -17366,6 +17369,129 @@ function initWyomingExplorer() {
     }
   });
 
+  /* ---------- 7b. Judicial District — Wyoming's judicial districts, whole counties ----------
+   * 9 judicial districts of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the Wyoming Judicial Branch's Find a Court list and the judges from
+   * each county's district court page on wyocourts.gov,
+   * kept as text in wy/data/source/courts/. The districts are geometry
+   * (wy-judicial-districts.json, cache-first); the judges are a roster
+   * (wy-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * wy/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Judicial Branch's district courts
+   * page (wyocourts.gov, read 2026-11-27): district judges are chosen as
+   * Supreme Court justices are, the Governor appointing from three names the
+   * Judicial Nominating Commission submits, with the same provisions for
+   * retention, and serve six-year terms. Each judge's court page prints when
+   * they stand for retention. THE COUNT IS CHECKED: the same page says there
+   * are 27 district judges in the state, and the fetch stops unless the county
+   * pages name that many.
+   * ---------- */
+  var loadWyCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wy-judicial-districts.json", {}, 2);
+  });
+  var loadWyJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wy-district-judges.json", {}, 2);
+  });
+  var WY_COURT = {
+    how: "The Governor appoints each district judge from three names the Judicial Nominating Commission submits. Judges then stand in retention elections and serve six-year terms (Wyoming Judicial Branch).",
+    court: "The district court is Wyoming's trial court of general jurisdiction, and it is held in every county of the district. Circuit court judges are not listed here.",
+    from: "The Wyoming Judicial Branch's district court pages for this district's counties",
+    link: { label: "Wyoming district courts", url: "https://www.wyocourts.gov/district-courts/" }
+  };
+  function wyCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial District";
+  }
+  // "Atchison and Leavenworth Counties"
+  function wyCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "wy-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Wyoming's judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadWyCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : wyCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadWyCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadWyJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? wyCourtTitle(result.unit) : "Unknown judicial district",
+        note: wyCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("District judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: WY_COURT.how });
+      rows.push({ label: "The court", value: WY_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: WY_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return WY_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19257,7 +19383,7 @@ function initWyomingExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "wy-senate", "wy-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "wy-senate", "wy-house", "wy-judicial-district",
     "school-district-unified", "school-district-elementary", "county", "county-subdivision",
     "municipality", "zip-code", "tribal-government", "police-station",
     "fire-station", "post-office"];
@@ -19788,9 +19914,9 @@ function initWyomingExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
-    "#D19133": "#FFD6A3"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

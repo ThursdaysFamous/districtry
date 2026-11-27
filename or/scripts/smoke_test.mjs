@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "44.93809,-123.03013"; // Oregon State Capitol, 900 Court Street NE, Salem, Marion County
-const OFFLINE = ["county", "us-house", "or-senate", "or-house"];
-const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "6", "or-senate": "11", "or-house": "21" };
+const OFFLINE = ["county", "us-house", "or-senate", "or-house", "or-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Marion County", "us-house": "6", "or-senate": "11", "or-house": "21", "or-judicial-district": "3rd Judicial District" };
 const NEGATIVE_POINT = "44.95000,-124.40000"; // The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Oregon";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "OregonExplorer";

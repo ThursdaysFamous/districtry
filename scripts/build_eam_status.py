@@ -2769,10 +2769,11 @@ ANSWERS = {
         # Pennsylvania's municipalities ARE its county subdivisions (TIGERweb layer 1),
         # so the municipality layer is this map.
         "subdivision-boundaries": answers("municipality"),
-        # Common pleas judges are elected by judicial district (a county or two)
-        # and magisterial district judges by magisterial district; neither is
-        # drawn or named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Pennsylvania's 60 judicial districts
+        # of whole counties and names the Common Pleas judges the voters elect
+        # there (since 2026-11-27). Magisterial district judges, elected by
+        # magisterial district, are not drawn or named yet.
+        "courts-by-district": answers("pa-judicial-district"),
         # Measured 2026-11-11 on TIGERweb: 1,543 of Pennsylvania's county
         # subdivisions are active townships, general-purpose governments the
         # municipality layer draws and whose supervisors or commissioners it
@@ -3106,10 +3107,10 @@ ANSWERS = {
             "city or town limit the county governs. The 242 sub-county units the "
             "Census publishes for Washington are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # Superior court judges are elected by county and Court of Appeals
-        # judges by district within each division; neither is drawn or named
-        # yet.
-        "courts-by-district": OPEN,
+        # The Superior Court layer draws Washington's 32 superior courts of
+        # whole counties and names the judges each court's voters elect (since
+        # 2026-11-27).
+        "courts-by-district": answers("wa-superior-court"),
         # Whether any board elects its members by district has not been
         # measured for Washington.
         "school-boards-by-district": UNSETTLED,
@@ -3190,9 +3191,10 @@ ANSWERS = {
             "city or town the county governs. The 209 sub-county units the Census "
             "publishes for Colorado are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # District and county court judges stand for retention by judicial
-        # district and county; no district is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Colorado's 23 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # retain (since 2026-11-27).
+        "courts-by-district": answers("co-judicial-district"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -3309,9 +3311,10 @@ ANSWERS = {
             "city the county governs. The 212 sub-county units the Census "
             "publishes for Oregon are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # Circuit court judges are elected by judicial district; no district is
-        # drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Oregon's 27 judicial districts of
+        # whole counties and names the circuit judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("or-judicial-district"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -3386,9 +3389,10 @@ ANSWERS = {
             "city or town the county governs. The 93 sub-county units the Census "
             "publishes for Utah are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # District and justice court judges stand for retention by judicial
-        # district; no district is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Utah's 8 judicial districts of whole
+        # counties and names the district judges each district's voters retain
+        # (since 2026-11-27).
+        "courts-by-district": answers("ut-judicial-district"),
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
@@ -3620,9 +3624,10 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges are elected by judicial district; no district is drawn
-        # or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws New Mexico's 13 judicial districts
+        # of whole counties and names the district judges chosen there in
+        # partisan elections and retained (since 2026-11-27).
+        "courts-by-district": answers("nm-judicial-district"),
         "sub-county-government": na(
             "New Mexico has no sub-county general-purpose government \u2014 outside "
             "a city or town the county governs. The 130 sub-county units the "
@@ -3704,9 +3709,10 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges are elected by judicial district; no district is drawn
-        # or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Idaho's 7 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("id-judicial-district"),
         "sub-county-government": na(
             "Idaho has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 170 sub-county units the "
@@ -3832,9 +3838,10 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District court judges are elected by judicial district; no district is
-        # drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Montana's 22 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("mt-judicial-district"),
         "sub-county-government": na(
             "Montana has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 194 sub-county units the "
@@ -4065,9 +4072,10 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges stand for retention by judicial district; no district
-        # is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Wyoming's 9 judicial districts of
+        # whole counties and names the district judges who stand for retention
+        # there (since 2026-11-27).
+        "courts-by-district": answers("wy-judicial-district"),
         "sub-county-government": na(
             "Wyoming has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 71 sub-county units the "

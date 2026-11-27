@@ -272,7 +272,7 @@ All 159 counties: county commission and school board districts where the county'
 
 All 67 counties: cities, boroughs and townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Pennsylvania Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
 
-- [Pennsylvania district lookup](https://districtry.com/pa/): 10 layers, all 67 counties.
+- [Pennsylvania district lookup](https://districtry.com/pa/): 11 layers, all 67 counties.
 - [Who is my U.S. representative?](https://districtry.com/pa/congress.html)
 - [Sources & data layers](https://districtry.com/pa/sources.html)
 - [Who is my Pennsylvania legislator?](https://districtry.com/pa/state-legislature.html)
@@ -353,7 +353,7 @@ All 88 counties: cities and villages, school districts, ZIP codes, and the neare
 
 All 39 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Washington's 49 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Washington district lookup](https://districtry.com/wa/): 12 layers, all 39 counties.
+- [Washington district lookup](https://districtry.com/wa/): 13 layers, all 39 counties.
 - [Who is my U.S. representative?](https://districtry.com/wa/congress.html)
 - [Sources & data layers](https://districtry.com/wa/sources.html)
 - [Who is my Washington legislator?](https://districtry.com/wa/state-legislature.html)
@@ -373,7 +373,7 @@ All 14 counties and 351 cities and towns: unified, elementary and secondary scho
 
 All 64 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Colorado Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Colorado district lookup](https://districtry.com/co/): 12 layers, all 64 counties.
+- [Colorado district lookup](https://districtry.com/co/): 13 layers, all 64 counties.
 - [Who is my U.S. representative?](https://districtry.com/co/congress.html)
 - [Sources & data layers](https://districtry.com/co/sources.html)
 - [Who is my Colorado legislator?](https://districtry.com/co/state-legislature.html)
@@ -403,7 +403,7 @@ All 67 counties: cities and towns, school districts, ZIP codes, and the nearest 
 
 All 36 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oregon Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Oregon district lookup](https://districtry.com/or/): 14 layers, all 36 counties.
+- [Oregon district lookup](https://districtry.com/or/): 15 layers, all 36 counties.
 - [Who is my U.S. representative?](https://districtry.com/or/congress.html)
 - [Sources & data layers](https://districtry.com/or/sources.html)
 - [Who is my Oregon legislator?](https://districtry.com/or/state-legislature.html)
@@ -423,7 +423,7 @@ All 9 planning regions and 169 towns: unified, elementary and secondary school d
 
 All 29 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Utah Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Utah district lookup](https://districtry.com/ut/): 12 layers, all 29 counties.
+- [Utah district lookup](https://districtry.com/ut/): 13 layers, all 29 counties.
 - [Who is my U.S. representative?](https://districtry.com/ut/congress.html)
 - [Sources & data layers](https://districtry.com/ut/sources.html)
 - [Who is my Utah legislator?](https://districtry.com/ut/state-legislature.html)
@@ -443,7 +443,7 @@ All 105 counties: cities, school districts, ZIP codes, and the nearest police st
 
 All 33 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the New Mexico Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [New Mexico district lookup](https://districtry.com/nm/): 12 layers, all 33 counties.
+- [New Mexico district lookup](https://districtry.com/nm/): 13 layers, all 33 counties.
 - [Who is my U.S. representative?](https://districtry.com/nm/congress.html)
 - [Sources & data layers](https://districtry.com/nm/sources.html)
 - [Who is my New Mexico legislator?](https://districtry.com/nm/state-legislature.html)
@@ -463,7 +463,7 @@ All 93 counties: cities and villages, school districts, ZIP codes, and the neare
 
 All 44 counties: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Idaho's 35 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Idaho district lookup](https://districtry.com/id/): 12 layers, all 44 counties.
+- [Idaho district lookup](https://districtry.com/id/): 13 layers, all 44 counties.
 - [Who is my U.S. representative?](https://districtry.com/id/congress.html)
 - [Sources & data layers](https://districtry.com/id/sources.html)
 - [Who is my Idaho legislator?](https://districtry.com/id/state-legislature.html)
@@ -493,7 +493,7 @@ All 16 counties and every city, town, plantation and unorganized territory: unif
 
 All 56 counties: cities and towns, elementary, high school and unified school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Montana Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Montana district lookup](https://districtry.com/mt/): 14 layers, all 56 counties.
+- [Montana district lookup](https://districtry.com/mt/): 15 layers, all 56 counties.
 - [Who is my U.S. representative?](https://districtry.com/mt/congress.html)
 - [Sources & data layers](https://districtry.com/mt/sources.html)
 - [Who is my Montana legislator?](https://districtry.com/mt/state-legislature.html)
@@ -563,7 +563,7 @@ All 14 counties and every city, town and gore: unified, elementary and secondary
 
 All 23 counties: cities and towns, unified and elementary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Wyoming Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Wyoming district lookup](https://districtry.com/wy/): 13 layers, all 23 counties.
+- [Wyoming district lookup](https://districtry.com/wy/): 14 layers, all 23 counties.
 - [Who is my U.S. representative?](https://districtry.com/wy/congress.html)
 - [Sources & data layers](https://districtry.com/wy/sources.html)
 - [Who is my Wyoming legislator?](https://districtry.com/wy/state-legislature.html)

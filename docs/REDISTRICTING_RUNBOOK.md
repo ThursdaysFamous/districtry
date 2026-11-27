@@ -360,6 +360,26 @@ cache-first; the judge list is not).
 | Court of appeals districts (OH, 12) | **At no fixed time**: an act of the General Assembly | the General Assembly (statute not read here); read from the Supreme Court of Ohio's courts of appeals page | geometry and the judge list's keys; 88 counties in 12 districts |
 | Judicial circuits (SD, 7) | **At no fixed time**: a change to the circuits under state law (which body makes it was not read here) | not measured; read from the Unified Judicial System's circuit pages | geometry and the judge list's keys; 66 counties in 7 circuits |
 
+
+### CO, ID, MT, NM, OR, PA, UT, WA, WY — COURT DISTRICTS ONLY
+
+No other blast-radius entries for these nine states. Their court district layers were added
+2026-11-27 the same way as the five above: `scripts/build_state_courts.py` dissolves whole counties
+out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then `<tag>` and a
+`sw.cache_name` bump (the map is cache-first; the judge list is not).
+
+| Layer | Exposure class | Enacting authority | What breaks |
+|---|---|---|---|
+| Judicial districts (CO, 23) | **At no fixed time**: an act of the General Assembly | the General Assembly (statute not read here); read from the Judicial Branch's trial courts by district page | geometry and the judge list's keys; 64 counties in 23 districts |
+| Judicial districts (ID, 7) | **At no fixed time**: an act of the Legislature amending Idaho Code 1-802 to 1-808 | the Legislature; read from those sections, which also set each district's seats (51) | geometry, the judge list's keys and the seat count the fetch holds the directory to; 44 counties in 7 districts |
+| Judicial districts (MT, 22) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the county menu on the Judicial Branch's District Courts page | geometry and the judge list's keys, and the statewide count of district judges that page states; 56 counties in 22 districts |
+| Judicial districts (NM, 13) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the Judicial Branch's Courts by District page | geometry and the judge list's keys; 33 counties in 13 districts. The judges come from a terms list whose file is renamed with each update, found from its page each time |
+| Judicial districts (OR, 27) | **At no fixed time**: an act of the Legislature amending ORS 3.012 | the Legislature; read from ORS 3.012, which also sets each district's seats (186) | geometry, the judge list's keys and the seat count; 36 counties in 27 districts |
+| Judicial districts (PA, 60) | **At no fixed time**: an act of the General Assembly moving a county or changing a district's judges | the General Assembly (the statute that draws the districts was not read here; 42 Pa.C.S. section 911 sets the judges); read from the Unified Judicial System's Judicial Districts page, with each district's judges set by section 911 (470; Act 58 of 2023 added seats, Montgomery's two from January 2028) | geometry, the judge list's keys and the seat ceiling the fetch holds the list to; 67 counties in 60 districts |
+| Judicial districts (UT, 8) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the courts' map of judicial districts | geometry and the judge list's keys; 29 counties in 8 districts |
+| Superior courts (WA, 32) | **At no fixed time**: an act of the Legislature joining or separating counties' courts, or changing a court's number of judges | the Legislature (RCW 2.08.061 to 2.08.065 set the judges; which statute joins counties was not read here); read from the Court Directory's Judicial Districts Reference List | geometry and the judge list's keys, which are court names ("Benton and Franklin Counties"), not numbers; 39 counties in 32 courts, and the fetch stops if a court lists more judges than the RCW allows |
+| Judicial districts (WY, 9) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the Judicial Branch's Find a Court list | geometry and the judge list's keys, and the statewide count of district judges the district courts page states; 23 counties in 9 districts |
+
 ---
 
 ## The detection layer (executable NOW)

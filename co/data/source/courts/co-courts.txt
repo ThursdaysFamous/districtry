@@ -1,0 +1,237 @@
+# Colorado court districts and judges, kept by scripts/build_state_courts.py --fetch co
+# read: 2026-11-27
+# from: https://www.coloradojudicial.gov/trial-courts-district (counties) and the Judges and Staff page of every county's court and of Denver's district, juvenile and probate courts (district judges; county court judges and magistrates are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Gilpin, Jefferson
+district | 2 | Denver
+district | 3 | Huerfano, Las Animas
+district | 4 | El Paso, Teller
+district | 5 | Clear Creek, Eagle, Lake, Summit
+district | 6 | Archuleta, La Plata, San Juan
+district | 7 | Delta, Gunnison, Hinsdale, Montrose, Ouray, San Miguel
+district | 8 | Jackson, Larimer
+district | 9 | Garfield, Pitkin, Rio Blanco
+district | 10 | Pueblo
+district | 11 | Chaffee, Custer, Fremont, Park
+district | 12 | Alamosa, Conejos, Costilla, Mineral, Rio Grande, Saguache
+district | 13 | Kit Carson, Logan, Morgan, Phillips, Sedgwick, Washington, Yuma
+district | 14 | Grand, Moffat, Routt
+district | 15 | Baca, Cheyenne, Kiowa, Prowers
+district | 16 | Bent, Crowley, Otero
+district | 17 | Adams, Broomfield
+district | 18 | Arapahoe
+district | 19 | Weld
+district | 20 | Boulder
+district | 21 | Mesa
+district | 22 | Dolores, Montezuma
+district | 23 | Douglas, Elbert, Lincoln
+judge | 1 | Chief Judge | Jeffrey R. Pilkington | 
+judge | 1 | District Judge | Tamara S. Russell | 
+judge | 1 | District Judge | Lindsay VanGilder | 
+judge | 1 | District Judge | Todd L. Vriesman | 
+judge | 1 | District Judge | Christopher Zenisek | 
+judge | 1 | District Judge | Jason Carrithers | 
+judge | 1 | District Judge | Chantel Contiguglia | 
+judge | 1 | District Judge | Diego G. Hunt | 
+judge | 1 | District Judge | Adam Kendall | 
+judge | 1 | District Judge | Russell Klein | 
+judge | 1 | District Judge | Ryan P. Loewer | 
+judge | 1 | District Judge | Meegan A. Miloud | 
+judge | 1 | District Judge | Andrew Poland | 
+judge | 1 | District Judge | Christopher B. Rhamey | 
+judge | 2 | Chief Judge | Christopher J. Baumann | 
+judge | 2 | District Judge | Michael W.V. Angel | 
+judge | 2 | District Judge | Lisa C. Arnolds | 
+judge | 2 | District Judge | Mark T. Bailey | 
+judge | 2 | District Judge | Nikea T. Bland | 
+judge | 2 | District Judge | Angela Boykins | 
+judge | 2 | District Judge | Karen L. Brody | 
+judge | 2 | District Judge | Jill D. Dorancy | 
+judge | 2 | District Judge | J. Eric Elliff | 
+judge | 2 | District Judge | Ericka F. H. Englert | 
+judge | 2 | District Judge | Adam J. Espinosa | 
+judge | 2 | District Judge | Kandace C. Gerdes | 
+judge | 2 | District Judge | Jay S. Grant | 
+judge | 2 | District Judge | Eric M. Johnson | 
+judge | 2 | District Judge | A. Bruce Jones | 
+judge | 2 | District Judge | Ian J. Kellogg | 
+judge | 2 | District Judge | Heidi L. Kutcher | 
+judge | 2 | District Judge | Andrew J. Luxen | 
+judge | 2 | District Judge | Andrew P. McCallin | 
+judge | 2 | District Judge | Marie Avery Moses | 
+judge | 2 | District Judge | Alex C. Myers | 
+judge | 2 | District Judge | Jon J. Olafson | 
+judge | 2 | District Judge | Anita M. Schutte | 
+judge | 2 | District Judge | Stephanie L. Scoville | 
+judge | 2 | District Judge | Demetria E. Trujillo | 
+judge | 2 | District Judge | Sarah B. Wallace | 
+judge | 2 | Presiding Judge, Juvenile Court | Elizabeth (Libbie) McCarthy | 
+judge | 2 | District Judge | Laurie Clark | 
+judge | 2 | Juvenile Court Judge | Lisa Gomez | 
+judge | 2 | Presiding Judge, Probate Court | Elizabeth D. Leith | 
+judge | 3 | Chief Judge | John "Clay" McKisson | 
+judge | 3 | District Judge | Pierce L. Fowler | 
+judge | 4 | Chief Judge | Erin Sokol | 
+judge | 4 | District Judge | William Bain | 
+judge | 4 | District Judge | Eric Bentley | 
+judge | 4 | District Judge | Lin Billings Vela | 
+judge | 4 | District Judge | Jill Brady | 
+judge | 4 | District Judge | Robin Chittum | 
+judge | 4 | District Judge | Amy Cullen Cano | 
+judge | 4 | District Judge | Jessica Curtis | 
+judge | 4 | District Judge | Samuel Evig | 
+judge | 4 | District Judge | Laura N. Findorff | 
+judge | 4 | District Judge | Sherri Gryboski | 
+judge | 4 | District Judge | Hilary Gurney | 
+judge | 4 | District Judge | Marcus Henson | 
+judge | 4 | District Judge | Frances Johnson | 
+judge | 4 | District Judge | Mary Linden | 
+judge | 4 | District Judge | Diana May | 
+judge | 4 | District Judge | Dennis McGuire | 
+judge | 4 | District Judge | Michael McHenry | 
+judge | 4 | District Judge | Kelly McPherson | 
+judge | 4 | District Judge | Chad Miller | 
+judge | 4 | District Judge | Catherine Mitchell Helton | 
+judge | 4 | District Judge | Lara Nafziger | 
+judge | 4 | District Judge | Amanda Philipps | 
+judge | 4 | District Judge | David Prince | 
+judge | 4 | District Judge | Jennifer Viehman | 
+judge | 4 | District Judge | Gregory R. Werner | 
+judge | 4 | District Judge | Sarah Zane | 
+judge | 4 | District Judge | William Moller | 
+judge | 5 | Chief Judge | Paul R. Dunkelman | 
+judge | 5 | District Judge | Catherine J. Cheroutes | 
+judge | 5 | District Judge | Rachel J. Olguin-Fresquez | 
+judge | 5 | District Judge | Jonathan Shamis | 
+judge | 5 | District Judge | Reed W. Owens | 
+judge | 5 | District Judge | Karen A. Romeo | 
+judge | 6 | Chief Judge | Kim S. Shropshire | 
+judge | 6 | District Judge | Justin P. Fay | 
+judge | 6 | District Judge | David Ottman | 
+judge | 6 | District Judge | Reid Stewart | 
+judge | 7 | Chief Judge | D. Cory Jackson | 
+judge | 7 | District Judge | Laura E. H. Harvell | 
+judge | 7 | District Judge | Matthew G. Margeson | 
+judge | 7 | District Judge | Steven L. Schultz | 
+judge | 7 | District Judge | Kellie Starritt | 
+judge | 7 | District Judge | Keri A. Yoder | 
+judge | 8 | Chief Judge | Gregory M. Lammons | 
+judge | 8 | District Judge | Joseph D. Findley | 
+judge | 8 | District Judge | C.Michelle Brinegar | 
+judge | 8 | District Judge | Kara E. Clark | 
+judge | 8 | District Judge | Sarah B. Cure | 
+judge | 8 | District Judge | Laurie K. Dean | 
+judge | 8 | District Judge | Daniel M. McDonald | 
+judge | 8 | District Judge | Jeffrey M. Schwartz | 
+judge | 8 | District Judge | Daniel M. St. John II | 
+judge | 9 | Chief Judge | Anne K. Norrdin | 
+judge | 9 | District Judge | Alexander Haynes | 
+judge | 9 | District Judge | Laura C. Makar | 
+judge | 9 | District Judge | Elise Myer | 
+judge | 9 | District Judge | Susan Ryan | 
+judge | 10 | Chief Judge | Gregory Styduhar | 
+judge | 10 | District Judge | William Alexander | 
+judge | 10 | District Judge | Michelle Chostner | 
+judge | 10 | District Judge | Allison P. Ernst | 
+judge | 10 | District Judge | Thomas Flesher | 
+judge | 10 | District Judge | Amiel Markenson | 
+judge | 10 | District Judge | Tim O'Shea | 
+judge | 10 | District Judge | Tayler Thomas | 
+judge | 11 | Chief Judge | Amanda Hunter | 
+judge | 11 | District Judge | Dayna Vise | 
+judge | 11 | District Judge | Lauren Swan | 
+judge | 11 | District Judge | Kaitlin Turner | 
+judge | 12 | Chief Judge | Amanda C. Hopkins | 
+judge | 12 | District Judge | Kim Cortez-Rodriguez | 
+judge | 12 | District Judge | Michael A. Gonzales | 
+judge | 12 | District Judge | Crista Newmyer-Olsen | 
+judge | 13 | Chief Judge | Carl S. McGuire III | 
+judge | 13 | District Judge | Matthew W. E. Bradley | 
+judge | 13 | District Judge | Dina M. Christiansen | 
+judge | 13 | District Judge | Stevie M.G. Gagliano | 
+judge | 13 | District Judge | Robert C. James | 
+judge | 13 | District Judge | Kimbra L. Killin | 
+judge | 14 | Chief Judge | Brittany A. Schneider | 
+judge | 14 | District Judge | Billy-George Hertzke | 
+judge | 14 | District Judge | Mary C. Hoak | 
+judge | 15 | Chief Judge | Tarryn L. Johnson | 
+judge | 15 | District Judge | Mike Davidson | 
+judge | 16 | Chief Judge | Samuel S. Vigil | 
+judge | 16 | District Judge | Deni E. Eiring | 
+judge | 17 | Chief Judge | Kyle Seedorf | 
+judge | 17 | District Judge | Caryn A. Datz | 
+judge | 17 | District Judge | Sean Finn | 
+judge | 17 | District Judge | Emily Lieberman | 
+judge | 17 | District Judge | Priscilla J. Loew | 
+judge | 17 | District Judge | Michal Lord-Blegen | 
+judge | 17 | District Judge | Brett Martin | 
+judge | 17 | District Judge | Sara Price | 
+judge | 17 | District Judge | Patrick H. Pugh | 
+judge | 17 | District Judge | Lochlin Rosen | 
+judge | 17 | District Judge | Jeffrey Ruff | 
+judge | 17 | District Judge | Meghan P. Saleebey | 
+judge | 17 | District Judge | Kelley R. Southerland | 
+judge | 17 | District Judge | Thomas M. Ward | 
+judge | 17 | District Judge | Mark Warner | 
+judge | 17 | District Judge | Toni J. Wehman | 
+judge | 17 | District Judge | Jeffrey Smith | 
+judge | 17 | District Judge | Teri L. Vasquez | 
+judge | 18 | Chief Judge | Michelle Amico | 
+judge | 18 | District Judge | David Karpel | 
+judge | 18 | District Judge | Darren Vahle | 
+judge | 18 | District Judge | Laqunya Baker | 
+judge | 18 | District Judge | Jacob Edson | 
+judge | 18 | District Judge | Benjamin Figa | 
+judge | 18 | District Judge | Thomas Henderson | 
+judge | 18 | District Judge | H. Clay Hurst | 
+judge | 18 | District Judge | Michelle Jones | 
+judge | 18 | District Judge | Bonnie McLean | 
+judge | 18 | District Judge | James Quinn | 
+judge | 18 | District Judge | Natalie Stricklin | 
+judge | 18 | District Judge | A.Danielle Touart | 
+judge | 18 | District Judge | Don J. Toussaint | 
+judge | 18 | District Judge | Christine Washburn | 
+judge | 18 | District Judge | Shay Whitaker | 
+judge | 18 | District Judge | Eric White | 
+judge | 18 | District Judge | Joseph Whitfield | 
+judge | 18 | District Judge | J. Jay Williford | 
+judge | 19 | Chief Judge | Julie Hoskins | 
+judge | 19 | District Judge | Allison J. Esser | 
+judge | 19 | District Judge | Audrey Galloway | 
+judge | 19 | District Judge | Troy Hause | 
+judge | 19 | District Judge | Anita Jain Crowther | 
+judge | 19 | District Judge | Timothy Kerns | 
+judge | 19 | District Judge | Annette Kundelius | 
+judge | 19 | District Judge | Sean J. Lacefield | 
+judge | 19 | District Judge | Shannon Lyons | 
+judge | 19 | District Judge | Kimberly B. Schutt | 
+judge | 19 | District Judge | Todd Taylor | 
+judge | 19 | District Judge | Vincente G. Vigil | 
+judge | 20 | Chief Judge | Nancy W. Salomone | 
+judge | 20 | District Judge | J. Keith Collins | 
+judge | 20 | District Judge | Robert R. Gunning | 
+judge | 20 | District Judge | Andrew Hartman | 
+judge | 20 | District Judge | Timothy Johnson | 
+judge | 20 | District Judge | Michael Kotlarczyk | 
+judge | 20 | District Judge | J. Chris Larson | 
+judge | 20 | District Judge | Dea M. Lindsey | 
+judge | 20 | District Judge | Thomas F. Mulvahill | 
+judge | 21 | Chief Judge | Brian J. Flynn | 
+judge | 21 | District Judge | Matthew D. Barrett | 
+judge | 21 | District Judge | Jeremy L. Chaffin | 
+judge | 21 | District Judge | Craig P. Henderson | 
+judge | 21 | District Judge | Gretchen B. Larson | 
+judge | 21 | District Judge | JenniLynn E. Lawrence | 
+judge | 22 | Chief Judge | Todd Jay Plewe | 
+judge | 22 | District Judge | William Young Furse | 
+judge | 23 | Chief Judge | Ryan J. Stuart | 
+judge | 23 | District Judge | Beth Elliott-Dumler | 
+judge | 23 | District Judge | Andrew Baum | 
+judge | 23 | District Judge | Shelby Fyles | 
+judge | 23 | District Judge | Stacy Guillon | 
+judge | 23 | District Judge | Victoria Klingensmith | 
+judge | 23 | District Judge | Donna Stewart | 
+judge | 23 | District Judge | Daniel Warhola | 
+judge | 23 | District Judge | Theresa Slade | 

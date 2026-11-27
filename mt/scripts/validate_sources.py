@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 56 counties by mt/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "mt-judicial-district",
+        "app_file": "mt-judicial-districts.json",
+        "source_url": "https://courts.mt.gov/courts/dcourt/",
+        "note": "Montana's 22 judicial districts, dissolved from the 56 counties by scripts/build_state_courts.py from the District Courts page's county menu (excerpt in mt/data/source/courts/mt-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "mt-judicial-district",
+        "app_file": "mt-district-judges.json",
+        "source_url": "https://courts.mt.gov/courts/dcourt/",
+        "note": "The district judges of each district, read from its Court Locator page on courts.mt.gov by scripts/build_state_courts.py --fetch mt, which stops unless they total the statewide count the District Courts page states. The monthly re-read is a row in mt/WATCH.md.",
+    },
 ]
 
 # Montana's envelope, as index.html writes it for the ZIP layer

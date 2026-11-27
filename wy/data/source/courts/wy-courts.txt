@@ -1,0 +1,42 @@
+# Wyoming court districts and judges, kept by scripts/build_state_courts.py --fetch wy
+# read: 2026-11-27
+# from: https://www.wyocourts.gov/find-a-court/ (counties) and each county's district court page under https://www.wyocourts.gov/court/ (the judges who sit there)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Laramie
+district | 2 | Albany, Carbon
+district | 3 | Lincoln, Sweetwater, Uinta
+district | 4 | Johnson, Sheridan
+district | 5 | Big Horn, Hot Springs, Park, Washakie
+district | 6 | Campbell, Crook, Weston
+district | 7 | Natrona
+district | 8 | Converse, Goshen, Niobrara, Platte
+district | 9 | Fremont, Sublette, Teton
+judge | 1 | District Judge | Catherine R. Rogers | 
+judge | 1 | District Judge | Peter H. Froelicher | 
+judge | 1 | District Judge | Robin S. Cooley | 
+judge | 1 | District Judge | Nathaniel S. Hibben | 
+judge | 2 | District Judge | Misha Westby | 
+judge | 2 | District Judge | Dawnessa Snyder | 
+judge | 3 | District Judge | Joseph B. Bluemel | 
+judge | 3 | District Judge | Suzannah G. Robinson | 
+judge | 3 | District Judge | Clark Stith | 
+judge | 3 | District Judge | James C. Kaste | 
+judge | 4 | District Judge | Benjamin Kirven | 
+judge | 4 | District Judge | Darci Phillips | 
+judge | 5 | District Judge | Bobbi Overfield | 
+judge | 5 | District Judge | William L. Simpson | 
+judge | 6 | District Judge | Matthew F.G. Castano | 
+judge | 6 | District Judge | James Michael Causey | 
+judge | 6 | District Judge | Stuart S. Healy III | 
+judge | 6 | District Judge | Michael J. McGrady | 
+judge | 7 | District Judge | Catherine E. Wilking | 
+judge | 7 | District Judge | Dan Forgey | 
+judge | 7 | District Judge | Kerri M. Johnson | 
+judge | 7 | District Judge | Joshua Eames | 
+judge | 8 | District Judge | F. Scott Peasley | 
+judge | 8 | District Judge | Edward A. Buchanan | 
+judge | 9 | District Judge | Jason M. Conder | 
+judge | 9 | District Judge | Kate G. McKay | 
+judge | 9 | District Judge | Melissa M. Owens | 

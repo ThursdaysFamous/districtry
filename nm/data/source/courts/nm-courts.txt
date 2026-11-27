@@ -1,0 +1,123 @@
+# New Mexico court districts and judges, kept by scripts/build_state_courts.py --fetch nm
+# read: 2026-11-27
+# from: https://nmcourts.gov/courts-by-district/ (counties) and the District Court Staggered Terms list linked from https://nmcourts.gov/resources/judicial-terms-and-retention-schedule/ (district judges and vacant divisions, from the Judicial Performance Evaluation Commission's PDF)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Los Alamos, Rio Arriba, Santa Fe
+district | 2 | Bernalillo
+district | 3 | Doña Ana
+district | 4 | Guadalupe, Mora, San Miguel
+district | 5 | Chaves, Eddy, Lea
+district | 6 | Grant, Hidalgo, Luna
+district | 7 | Catron, Socorro, Sierra, Torrance
+district | 8 | Taos, Colfax, Union
+district | 9 | Curry, Roosevelt
+district | 10 | De Baca, Harding, Quay
+district | 11 | McKinley, San Juan
+district | 12 | Lincoln, Otero
+district | 13 | Cibola, Sandoval, Valencia
+judge | 1 | District Judge | Francis J. Mathew | 
+judge | 1 | District Judge | Maria E. Sanchez-Gagne | 
+judge | 1 | District Judge | Todd A. Coberly | 
+judge | 1 | District Judge | Denise M. Thomas | 
+judge | 1 | District Judge | Jason C. Lidyard | 
+judge | 1 | Chief Judge | Bryan Biedscheid | 
+judge | 1 | District Judge | T. Glenn Ellington | 
+judge | 1 | District Judge | Anastasia Martin | 
+judge | 1 | District Judge | Matthew J. Wilson | 
+judge | 1 | District Judge | Kathleen McGarry Ellenwood | 
+judge | 1 | District Judge | Dylan O’Reilly | 
+judge | 2 | District Judge | William E. Parnall | 
+judge | 2 | District Judge | Matthew E. Chavez | 
+judge | 2 | District Judge | Brett R. Loveless | 
+judge | 2 | District Judge | Beatrice J. Brickhouse | 
+judge | 2 | District Judge | Nancy J. Franchini | 
+judge | 2 | District Judge | Daniel E. Ramczyk | 
+judge | 2 | District Judge | Alma C. Roberson | 
+judge | 2 | District Judge | Catherine Begaye | 
+judge | 2 | District Judge | Cindy Leos | 
+judge | 2 | District Judge | Bruce C. Fox | 
+judge | 2 | District Judge | Bryan T. Fox | 
+judge | 2 | District Judge | Elaine P. Lujan | 
+judge | 2 | District Judge | Lisa Chavez Ortega | 
+judge | 2 | Chief Judge | Marie C. Ward | 
+judge | 2 | District Judge | Courtney B. Weaks | 
+judge | 2 | District Judge | Jennifer J. Wernersbach | 
+judge | 2 | District Judge | Erin B. O'Connell | 
+judge | 2 | District Judge | Denise Barela-Shepherd | 
+judge | 2 | District Judge | Diana Garcia | 
+judge | 2 | District Judge | Britt M. Baca | 
+judge | 2 | District Judge | Emeterio L. Rudolfo | 
+judge | 2 | District Judge | Amber Chavez Baker | 
+judge | 2 | District Judge | Joshua A. Allison | 
+judge | 2 | District Judge | Crystal E. Lees | 
+judge | 2 | District Judge | Jane C. Levy | 
+judge | 2 | District Judge | Joseph Montaño | 
+judge | 2 | District Judge | Victor S. Lopez | 
+judge | 2 | District Judge | Clara Moran | 
+judge | 2 | District Judge | Lucy Boyadjian Solimon | 
+judge | 2 | District Judge | David Allen Murphy | 
+judge | 2 | District Judge | Maria Montoya Chavez | 
+judge | 3 | District Judge | Manuel I. Arrieta | 
+judge | 3 | District Judge | Robert Lara | 
+judge | 3 | Chief Judge | Conrad F. Perea | 
+vacant | 3 | District Judge | | 
+judge | 3 | District Judge | Casey B. Fitch | 
+judge | 3 | District Judge | James T. Martin, Jr. | 
+judge | 3 | District Judge | Douglas R. Driggers | 
+judge | 3 | District Judge | Grace B Duran | 
+judge | 3 | District Judge | Richard M. Jacquez | 
+judge | 4 | District Judge | Michael A. Aragon | 
+judge | 4 | District Judge | Abigail P. Aragon | 
+judge | 4 | Chief Judge | Floripa “Flora” Gallegos | 
+judge | 5 | District Judge | David E. Finger | 
+judge | 5 | District Judge | Thomas E. Lilley | 
+judge | 5 | District Judge | Efren A. Cortez | 
+judge | 5 | Chief Judge | Mark T. Sánchez | 
+judge | 5 | District Judge | Eileen P. Riordan | 
+judge | 5 | District Judge | James M. Hudson | 
+judge | 5 | District Judge | Michael H. Stone | 
+judge | 5 | District Judge | Jared G. Kallunki | 
+judge | 5 | District Judge | Lisa B. Riley | 
+judge | 5 | District Judge | Dustin K. Hunter | 
+judge | 5 | District Judge | Lee A. Kirksey | 
+judge | 5 | District Judge | Anne Marie Lewis | 
+judge | 6 | District Judge | Thomas F. Stewart | 
+judge | 6 | District Judge | Jennifer E. DeLaney | 
+judge | 6 | District Judge | James B. Foy | 
+judge | 6 | Chief Judge | Jarod K. Hofacket | 
+judge | 7 | Chief Judge | Mercedes C. Murphy | 
+judge | 7 | District Judge | Roscoe A. Woods | 
+judge | 7 | District Judge | Shannon L. Murdock-Poff | 
+judge | 8 | Chief Judge | Emilio J. Chávez | 
+judge | 8 | District Judge | Steven A. Romero | 
+judge | 8 | District Judge | Jeffrey A. Shannon | 
+judge | 9 | District Judge | Benjamin S. Cross | 
+judge | 9 | District Judge | Drew D. Tatum | 
+judge | 9 | District Judge | Fred T. Van Soelen | 
+judge | 9 | Chief Judge | Donna J. Mowrer | 
+judge | 9 | District Judge | David P. Reeb | 
+judge | 10 | Chief Judge | Timothy L. Rose | 
+judge | 11 | District Judge | Bradford J. Dalley | 
+judge | 11 | District Judge | Brad Keeler | 
+judge | 11 | District Judge | Sarah V. Weaver | 
+judge | 11 | District Judge | Curtis R. Gurley | 
+judge | 11 | Chief Judge | R. David Pederson | 
+judge | 11 | District Judge | Brenna Clani-Washinawatok | 
+judge | 11 | District Judge | Douglas W. Decker | 
+judge | 11 | District Judge | Stephen M. Wayne | 
+judge | 12 | District Judge | Stephen P. Ochoa | 
+judge | 12 | District Judge | Lori Gibson Willard | 
+judge | 12 | Chief Judge | Daniel A. Bryant | 
+judge | 12 | District Judge | Angie K. Schneider | 
+judge | 12 | District Judge | John P. Sugg | 
+judge | 13 | District Judge | James L. Sanchez | 
+judge | 13 | District Judge | George P. Eichwald | 
+judge | 13 | District Judge | LaDonna Giron | 
+judge | 13 | District Judge | Amanda Sanchez Villalobos | 
+judge | 13 | Chief Judge | James A. Noel | 
+judge | 13 | District Judge | Cindy M. Mercer | 
+judge | 13 | District Judge | Christopher G. Pérez | 
+judge | 13 | District Judge | Kirsten Louise Dick | 
+judge | 13 | District Judge | Allison P. Martinez | 

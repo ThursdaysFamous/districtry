@@ -88,6 +88,18 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Oregon has no township governments, so
 outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS OREGON'S 27 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`or-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from ORS 3.012, which also sets each
+district's number of circuit judges (186). The Judicial Department's Judges page fills its table
+from a SharePoint list, and the fetch reads that list through its own address: 183 judges named on
+2026-11-27 and three seats it names Vacant (two in Multnomah, one in Deschutes). A judge who sits in
+two counties is listed once per county and kept once, and the fetch stops unless each district's
+seats match the statute. They are kept as a dated excerpt in `data/source/courts/or-courts.txt` and
+shipped network-first as `or-district-judges.json`. The district's voters elect its judges for
+six-year terms (Oregon Constitution, Article VII (Amended), section 1). No job refreshes the names;
+the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE OREGON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -117,8 +129,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Oregon (`oregon`) — https://districtry.com/or/
 - Geocoders: address Photon (Oregon-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oregon-bounded, serial >=1s queue)
-- Ground truth: 44.93809,-123.03013 (Oregon State Capitol, 900 Court Street NE, Salem, Marion County) → county Marion County; us-house 6; or-senate 11; or-house 21. Negative point 44.95000,-124.40000 (The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 11. Debug namespace `window.OregonExplorer`.
+- Ground truth: 44.93809,-123.03013 (Oregon State Capitol, 900 Court Street NE, Salem, Marion County) → county Marion County; us-house 6; or-senate 11; or-house 21; or-judicial-district 3rd Judicial District. Negative point 44.95000,-124.40000 (The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 15 registered (political 5, safety 2, schools 3, geography 5); `registerLayer(` floor 12. Debug namespace `window.OregonExplorer`.
 - Scheduled workflows: `update-or-congress-roster.yml` (Mon 22:55 UTC); `update-or-legislature-roster.yml` (Tue 22:55 UTC); `or-validate-sources.yml` (1st of month 23:37 UTC).
 - Source registry: `or/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

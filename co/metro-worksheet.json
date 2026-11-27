@@ -198,10 +198,28 @@
       }
     },
     {
+      "id": "co-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "23 judicial districts of whole counties, 11,722 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than a congressional district",
+      "source": {
+        "answers": "The judicial district covering the point, its counties, and the district court judges the Colorado Judicial Branch lists for it (in Denver, also the juvenile and probate court judges).",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Colorado Judicial Branch's list of trial courts by district, read 2026-11-27.",
+            "url": "https://www.coloradojudicial.gov/trial-courts-district"
+          }
+        ],
+        "people": "Each district's chief judge and district judges are named from the Judges and Staff page of each of its courts on coloradojudicial.gov, read 2026-11-27 with this project's own client and kept as text in co/data/source/courts/co-courts.txt. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the Colorado Judicial Branch's page on judicial nominating commissions.",
+        "applies": "Colorado — statewide, all 64 counties."
+      }
+    },
+    {
       "id": "co-senate",
       "label": "Colorado Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "35 Senate districts, each electing one senator",
       "source": {
         "answers": "The Senate district covering the point, and the senator it elects.",
@@ -219,7 +237,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "64 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -237,7 +255,7 @@
       "id": "co-house",
       "label": "Colorado House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "65 House districts, each electing one representative",
       "source": {
         "answers": "The House district covering the point, and the representative it elects.",
@@ -255,7 +273,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "178 school districts, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "530 ZIP Code Tabulation Areas that reach into Colorado (587 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "209 census county divisions, about 1,284 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -309,7 +327,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "273 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city or town containing the point, or that the point is outside every one.",
@@ -327,7 +345,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — Colorado has 2 reservations held by two nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Southern Ute Reservation (2,759.2 km², La Plata and Archuleta counties), held by the Southern Ute Indian Tribe, and the Ute Mountain Reservation (1,854.2 km² in Colorado, 80.5% of it, almost all in Montezuma County, drawn whole into New Mexico and Utah), held by the Ute Mountain Ute Tribe. The Census draws no tribal district on either. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Colorado has 2 such areas, the Southern Ute and Ute Mountain reservations, held by the Southern Ute Indian Tribe and the Ute Mountain Ute Tribe, both seated in Colorado.",
@@ -345,7 +363,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -396,7 +414,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 39.73924,
     "lng": -104.9848,
@@ -418,6 +436,10 @@
     {
       "layer": "co-house",
       "expected": "6"
+    },
+    {
+      "layer": "co-judicial-district",
+      "expected": "2nd Judicial District"
     }
   ],
   "negative_point": {
@@ -472,6 +494,12 @@
         "min_features": 2,
         "max_features": 2,
         "note": "Colorado's tribal land (scripts/build_tribal_areas.py) — the Southern Ute and Ute Mountain reservations, the second drawn whole into New Mexico and Utah, at the Census's own detail (89 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "co-judicial-districts.json",
+        "min_features": 23,
+        "max_features": 23,
+        "note": "The 23 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in co/data/source/courts/co-courts.txt."
       }
     ],
     "rosters": [
@@ -499,6 +527,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Colorado elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from co/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "co-district-judges.json",
+        "min_keys": 23,
+        "note": "The judges of each of the 23 court districts, keyed by district, 208 seats read 2026-11-27 from the state's own court website into co/data/source/courts/co-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

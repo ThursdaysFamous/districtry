@@ -87,17 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 10
+MIN_REGISTER_LAYER = 11
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "county", "wy-senate", "school-district-unified", "wy-house",
-    "zip-code", "school-district-elementary", "county-subdivision",
-    "municipality", "tribal-government", "police-station", "fire-station",
-    "post-office",
+    "us-house", "wy-judicial-district", "county", "wy-senate",
+    "school-district-unified", "wy-house", "zip-code",
+    "school-district-elementary", "county-subdivision", "municipality",
+    "tribal-government", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +109,7 @@ GEOMETRY_FILES = {
     "wy-house-districts.json": (62, 62),  # The 62 Wyoming House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (176, 176),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
     "tribal-areas.json": (2, 2),  # Wyoming's tribal land (scripts/build_tribal_areas.py) — the Wind River Reservation and its off-reservation trust land, at the Census's own detail (216 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "wy-judicial-districts.json": (9, 9),  # The 9 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in wy/data/source/courts/wy-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,6 +119,7 @@ ROSTER_FILES = {
     "wy-house-members.json": 62,  # Wyoming House roster, one record per district, refreshed weekly by update-wy-legislature-roster.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "statewide-officials.json": 5,  # The officers Wyoming elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from wy/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
+    "wy-district-judges.json": 9,  # The judges of each of the 9 court districts, keyed by district, 27 seats read 2026-11-27 from the state's own court website into wy/data/source/courts/wy-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

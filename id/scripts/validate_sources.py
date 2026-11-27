@@ -144,6 +144,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 44 counties by id/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "id-judicial-district",
+        "app_file": "id-judicial-districts.json",
+        "source_url": "https://legislature.idaho.gov/statutesrules/idstat/title1/t1ch8/",
+        "note": "Idaho's 7 judicial districts, dissolved from the 44 counties by scripts/build_state_courts.py from Idaho Code sections 1-802 to 1-808 (excerpt in id/data/source/courts/id-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "id-judicial-district",
+        "app_file": "id-district-judges.json",
+        "source_url": "https://isc.idaho.gov/about-the-courts/judicial-directory",
+        "note": "The district judges of each district, read from the Idaho Supreme Court's judicial directory by scripts/build_state_courts.py --fetch id, which stops unless each district's seats match the number Idaho Code sets; a vacant seat is listed as vacant. The monthly re-read is a row in id/WATCH.md.",
+    },
 ]
 
 # Idaho's envelope, as index.html writes it for the ZIP layer

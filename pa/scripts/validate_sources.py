@@ -178,6 +178,18 @@ PROVENANCE = [
             "county plus OUTSIDE anchors over the state line and on Lake Erie."
         ),
     },
+    {
+        "layer": "pa-judicial-district",
+        "app_file": "pa-judicial-districts.json",
+        "source_url": "https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts",
+        "note": "Pennsylvania's 60 judicial districts, dissolved from the 67 counties by scripts/build_state_courts.py from the Unified Judicial System's Judicial Districts page (excerpt in pa/data/source/courts/pa-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "pa-judicial-district",
+        "app_file": "pa-district-judges.json",
+        "source_url": "https://www.pacourts.us/courts/courts-of-common-pleas/common-pleas-judges",
+        "note": "The Common Pleas judges of each district, read from the feed the Unified Judicial System's Common Pleas Judges page fills from by scripts/build_state_courts.py --fetch pa, which stops if a district lists more judges than 42 Pa.C.S. section 911 sets. The monthly re-read is a row in pa/WATCH.md.",
+    },
 ]
 
 # Pennsylvania's envelope, as index.html writes it for the ZIP layer

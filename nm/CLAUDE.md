@@ -90,6 +90,23 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that New Mexico has no township
 governments, so outside a city, town or village the county governs.
 
+**THE COURT LAYER DRAWS NEW MEXICO'S 13 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`nm-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Judicial Branch's Courts by
+District page. The judges come from the District Court Staggered Terms list the Judicial Performance
+Evaluation Commission keeps (a PDF linked from the Judicial Terms and Retention Schedule page,
+renamed with each update, so the fetch finds it from the page): 103 judges and one division it names
+Vacant (the Third's Division 4), list updated 2026-11-23 and read 2026-11-27. The fetch stops unless
+each district's divisions run from 1 with none skipped, and stops on any answer that is not a PDF:
+nmcourts.gov answered this client with a managed challenge during the same day's work, and the
+Eleventh District's own site did so throughout. THE DISTRICT SITES ARE OLDER: read the same day,
+they agree with the list except two divisions (the Third's Division 4 still shows a judge the list
+names Vacant, and the Thirteenth's Division 3 shows the judge the list's appointee replaced), and
+they mark fewer chief judges. They are kept as a dated excerpt in `data/source/courts/nm-courts.txt`
+and shipped network-first as `nm-district-judges.json`. Judges are first chosen in a partisan
+election and then retained for six-year terms. No job refreshes the names; the monthly re-read is a
+row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE NEW MEXICO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -120,8 +137,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: New Mexico (`newmexico`) — https://districtry.com/nm/
 - Geocoders: address Photon (New Mexico-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, New Mexico-bounded, serial >=1s queue)
-- Ground truth: 35.68226,-105.93964 (New Mexico State Capitol, 490 Old Santa Fe Trail, Santa Fe, Santa Fe County) → county Santa Fe County; us-house 3; nm-senate 25; nm-house 47. Negative point 31.25000,-108.60000 (Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NewMexicoExplorer`.
+- Ground truth: 35.68226,-105.93964 (New Mexico State Capitol, 490 Old Santa Fe Trail, Santa Fe, Santa Fe County) → county Santa Fe County; us-house 3; nm-senate 25; nm-house 47; nm-judicial-district 1st Judicial District. Negative point 31.25000,-108.60000 (Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.NewMexicoExplorer`.
 - Scheduled workflows: `update-nm-congress-roster.yml` (Wed 22:05 UTC); `update-nm-legislature-roster.yml` (Thu 22:05 UTC); `nm-validate-sources.yml` (2nd of month 22:05 UTC).
 - Source registry: `nm/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
