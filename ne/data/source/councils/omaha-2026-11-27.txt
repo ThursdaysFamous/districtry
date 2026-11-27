@@ -1,0 +1,13 @@
+Read once by hand in Adam's Chrome on 2026-11-27 (www.cityofomaha.org and citycouncil.cityofomaha.org answer this project's reader, and its robots.txt request, with HTTP 403).
+https://citycouncil.cityofomaha.org/councilmembers
+The City Council is comprised of seven members, elected by district:
+District 1: Pete Festersen
+District 2: LaVonya Goodwin
+District 3: Danny Begley
+District 4: Ron Hug
+District 5: Don Rowe
+District 6: Brinker Harding
+District 7: Aimee Melton
+
+https://www.cityofomaha.org/  (the city's home page, menu link to https://mayors-office.cityofomaha.org/meet-the-mayor/)
+Meet Mayor John Ewing, Jr

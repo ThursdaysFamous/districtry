@@ -1,0 +1,526 @@
+{
+ "3103950": {
+  "body": "City Council",
+  "how": "Each of six council members is elected by one ward, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
+  "name": "Bellevue",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Rusty Hike",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.bellevue.net/490/THE-Mayor"
+   },
+   {
+    "byWard": true,
+    "name": "Thomas Burns",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Rich Casey",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Kathy Welch",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Julie Collins",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Don Preister",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Jerry McCaw",
+    "role": "Council member",
+    "seat": "Ward 6",
+    "sourceUrl": "https://www.bellevue.net/426/City-Council",
+    "ward": "6"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "3117670": {
+  "body": "City Council",
+  "how": "Two council members are elected by each of four wards, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
+  "name": "Fremont",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Dev Sookram",
+    "phone": "402.719.4036",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council"
+   },
+   {
+    "byWard": true,
+    "name": "Paul Von Behren",
+    "phone": "402.909.1016",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Jeff Peterson",
+    "phone": "402.720.3537",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Blair Horner",
+    "phone": "402.936.6140",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "TJ Marsh",
+    "phone": "402.936.5690",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "James Vaughan",
+    "phone": "402.812.9534",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Jensen",
+    "phone": "402.926.9527",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Lori Lathrop",
+    "phone": "402.727.7801",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Sally Ganem",
+    "phone": "402.707.8081",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.fremontne.gov/29/City-Council",
+    "ward": "4"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "3119595": {
+  "body": "City Council",
+  "how": "Two council members are elected by each of five wards, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
+  "name": "Grand Island",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Roger Steele",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.grand-island.com/page/mayor-roger-steele"
+   },
+   {
+    "byWard": true,
+    "name": "Jack Sheard",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Doug Brown",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Mark Stelk",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Maggie Mendoza",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Jason Conley",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Ryan O'Neill",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Mike Paulick",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Mitch Nickerson",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Doug Lanfear",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Chuck Haase",
+    "role": "Council member",
+    "seat": "Ward 5",
+    "sourceUrl": "https://www.grand-island.com/page/city-council",
+    "ward": "5"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "3121415": {
+  "body": "City Council",
+  "how": "Two council members are elected by the voters of each of four wards (the council's own page), and the mayor by the whole city.",
+  "name": "Hastings",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Jay Beckby",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofhastings.org/mayor/"
+   },
+   {
+    "byWard": true,
+    "name": "Steven Huntley",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-1st-ward.html",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Michael Anderson",
+    "role": "Council member",
+    "seat": "Ward 1",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-1st-ward.html",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "Brad Consbruck",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-2nd-ward.html",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Lawrence Consbruck",
+    "role": "Council member",
+    "seat": "Ward 2",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-2nd-ward.html",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Marc Rowan",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-3rd-ward.html",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Maggie Esch",
+    "role": "Council member",
+    "seat": "Ward 3",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-3rd-ward.html",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Matt Fong",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Brian Hoffman",
+    "role": "Council member",
+    "seat": "Ward 4",
+    "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html",
+    "ward": "4"
+   }
+  ],
+  "wardsDrawn": false
+ },
+ "3125055": {
+  "body": "City Council",
+  "how": "All five council members are elected by the whole city, and the council chooses one of its members as its president, who is the mayor (the city's form of government page).",
+  "name": "Kearney",
+  "note": "As listed on Kearney's own website, which says Pete Kotsiopulos is serving as acting council member in place of Alex Straatmann, who is mobilized for the U.S. military.",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Jonathan Nikkila",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofkearney.org/706/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Randy Buschkoetter",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofkearney.org/706/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Kurt Schmidt",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofkearney.org/706/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Tami James Moore",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.cityofkearney.org/706/City-Council-Members"
+   },
+   {
+    "byWard": false,
+    "name": "Pete Kotsiopulos",
+    "role": "Council member",
+    "seat": "At large (acting)",
+    "sourceUrl": "https://www.cityofkearney.org/706/City-Council-Members"
+   }
+  ]
+ },
+ "3128000": {
+  "body": "City Council",
+  "how": "Four council members are each elected by the voters of one district, and three council members and the mayor by the whole city (the council's own questions page).",
+  "name": "Lincoln",
+  "read": "2026-11-27",
+  "seats": [
+   {
+    "byWard": false,
+    "name": "Leirion Gaylor Baird",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/Mayor"
+   },
+   {
+    "byWard": true,
+    "email": "jbowers@lincoln.ne.gov",
+    "name": "James Michael Bowers",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "email": "tduden@lincoln.ne.gov",
+    "name": "Tom Duden",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "email": "jpcarlson@lincoln.ne.gov",
+    "name": "Justin P. Carlson",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "email": "bweber@lincoln.ne.gov",
+    "name": "Brodey Weber",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members",
+    "ward": "4"
+   },
+   {
+    "byWard": false,
+    "email": "swashington@lincoln.ne.gov",
+    "name": "Sändra Washington",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members"
+   },
+   {
+    "byWard": false,
+    "email": "tbeckius@lincoln.ne.gov",
+    "name": "Tom Beckius",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members"
+   },
+   {
+    "byWard": false,
+    "email": "bshobe@lincoln.ne.gov",
+    "name": "Bennie Shobe",
+    "role": "Council member",
+    "seat": "At large",
+    "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members"
+   }
+  ],
+  "wardWord": "District",
+  "wardsDrawn": false
+ },
+ "3137000": {
+  "body": "City Council",
+  "how": "Each of seven council members is elected by one district (the council's own page), and the mayor by the whole city.",
+  "name": "Omaha",
+  "read": "2026-11-27",
+  "readByHand": true,
+  "seats": [
+   {
+    "byWard": false,
+    "name": "John Ewing Jr.",
+    "role": "Mayor",
+    "seat": "Mayor",
+    "sourceUrl": "https://www.cityofomaha.org/"
+   },
+   {
+    "byWard": true,
+    "name": "Pete Festersen",
+    "role": "Council member",
+    "seat": "District 1",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "1"
+   },
+   {
+    "byWard": true,
+    "name": "LaVonya Goodwin",
+    "role": "Council member",
+    "seat": "District 2",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "2"
+   },
+   {
+    "byWard": true,
+    "name": "Danny Begley",
+    "role": "Council member",
+    "seat": "District 3",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "3"
+   },
+   {
+    "byWard": true,
+    "name": "Ron Hug",
+    "role": "Council member",
+    "seat": "District 4",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "4"
+   },
+   {
+    "byWard": true,
+    "name": "Don Rowe",
+    "role": "Council member",
+    "seat": "District 5",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "5"
+   },
+   {
+    "byWard": true,
+    "name": "Brinker Harding",
+    "role": "Council member",
+    "seat": "District 6",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "6"
+   },
+   {
+    "byWard": true,
+    "name": "Aimee Melton",
+    "role": "Council member",
+    "seat": "District 7",
+    "sourceUrl": "https://citycouncil.cityofomaha.org/councilmembers",
+    "ward": "7"
+   }
+  ],
+  "wardWord": "District",
+  "wardsDrawn": false
+ }
+}

@@ -14,9 +14,10 @@ that must be read with a browser's client together with the measurement that
 allows it. Everything else lives here once. Used by
 ar/scripts/build_ar_city_councils.py, nc/scripts/build_nc_city_councils.py,
 ok/scripts/build_ok_city_councils.py, sc/scripts/build_sc_city_councils.py and
-tn/scripts/build_tn_city_councils.py (all 2026-10-16), whose --watch the
-weekly job .github/workflows/watch-city-council-pages.yml runs (Adam's choice
-of 2026-10-16 over a quarterly re-read by hand).
+tn/scripts/build_tn_city_councils.py (all 2026-10-16), and by
+ks/, ne/, nd/ and sd/scripts/build_<tag>_city_councils.py (2026-11-27),
+whose --watch the weekly job .github/workflows/watch-city-council-pages.yml
+runs (Adam's choice of 2026-10-16 over a quarterly re-read by hand).
 
 WHY A PERSON READS THE PAGES. No state office in Arkansas, North Carolina,
 Oklahoma, South Carolina or Tennessee publishes who sits on each city council,
@@ -94,6 +95,21 @@ is missing from its page or a link on the page contradicts it, and --watch
 reports the first as CONTACT GONE and the second as CONTACT REFUSED, naming
 the city and the seat and never the value; errors and logs never print a
 value.
+
+A PAGE READ ONCE BY HAND (Adam, 2026-11-25: a thread may open a public page
+that refuses automated readers ONCE in his own Chrome and read it, never as a
+weekly source). Such a page is kept as a dated excerpt in the instance's
+data/source/, named by the builder's `excerpts`, whose first line says who
+read it and on which day ("Read once by hand in Adam's Chrome on
+2026-11-27 ...") and which quotes the page's address. The build proves the
+seats it cites against the excerpt as text, never fetches the page, records
+the excerpt's own date and hash with the client "hand", and marks the city
+`readByHand` in the app's file so the card says so; --check fails when an
+excerpt changes without a build. A page that fills itself in, rendered once
+by this project's own reader in a browser engine with its token, is kept the
+same way with the client "rendered" (first line "Rendered once by this
+project's own reader ..."). --watch cannot re-read either, says how many it
+passed over, and the instance's WATCH.md carries their re-read.
 
 A PAGE THAT CANNOT BE READ KEEPS WHAT IT LAST SAID, the operator's ruling of
 2026-09-19 (a refusal stops the fetch and never unpublishes what was fetched
@@ -266,11 +282,14 @@ class Spec(object):
     fewest seats that may carry an e-mail address and a number, set at about
     two thirds of what the pages printed when the contacts were written down,
     so a seats file that loses most of its contacts fails rather than
-    shipping cards that quietly stopped offering them."""
+    shipping cards that quietly stopped offering them. `excerpts` is
+    {page: file} for a page this project's reader cannot read, kept as a
+    dated excerpt in the instance's data/source/ (A PAGE READ ONCE BY HAND,
+    below)."""
 
     def __init__(self, tag, label, user_agent, seats_file, out_file, seats,
                  browser=None, wards_file=None, undrawn=None, readers=None,
-                 min_emails=0, min_phones=0):
+                 min_emails=0, min_phones=0, excerpts=None):
         self.tag = tag
         self.label = label
         self.user_agent = user_agent
@@ -286,6 +305,8 @@ class Spec(object):
         self.out_path = os.path.join(self.instance, "data", "app", out_file)
         self.wards_path = (os.path.join(self.instance, "data", "app", wards_file)
                            if wards_file else None)
+        self.excerpts = {url: os.path.join(self.instance, "data", "source", rel)
+                         for url, rel in (excerpts or {}).items()}
 
 
 def fail(spec, msg):
@@ -622,6 +643,9 @@ def norm(text):
     # does, so a page that writes "Mc\u00adDaniel" shows McDaniel
     # (Bradford Special School District's board page, 2026-10-26).
     text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
+    # A zero-width space marks a break between words and shows nothing:
+    # Aberdeen's council page writes "\u200bAlan Johnson" (2026-11-27).
+    text = text.replace("\u200b", " ").replace("\ufeff", "")
     for a, b in QUOTES.items():
         text = text.replace(a, b)
     text = DASH_RE.sub("-", text).casefold()
@@ -915,6 +939,34 @@ def read_page(spec, url):
     raise last
 
 
+# The first line of an excerpt says who read the page and on which day, and
+# the client the record names follows from it.
+EXCERPT_HEADS = (("Read once by hand in Adam's Chrome on ", "hand"),
+                 ("Rendered once by this project's own reader", "rendered"))
+EXCERPT_DATE_RE = re.compile(r"\bon (\d{4}-\d{2}-\d{2})\b")
+
+
+def read_excerpt(spec, url):
+    """(client, read date, body) for a page kept as an excerpt. Raises
+    RuntimeError when the excerpt does not say who read it, on which day, or
+    which page it is."""
+    path = spec.excerpts[url]
+    with open(path, "rb") as fh:
+        body = fh.read()
+    text = body.decode("utf-8")
+    first = text.split("\n", 1)[0]
+    client = next((c for head, c in EXCERPT_HEADS if first.startswith(head)), None)
+    date = EXCERPT_DATE_RE.search(first)
+    if not client or not date:
+        raise RuntimeError("%s does not begin by saying who read the page and on which day "
+                           "(%s)" % (os.path.relpath(path, REPO_ROOT),
+                                     " or ".join(repr(h) for h, _c in EXCERPT_HEADS)))
+    if url not in text:
+        raise RuntimeError("%s does not name the page it is an excerpt of, %s"
+                           % (os.path.relpath(path, REPO_ROOT), url))
+    return client, date.group(1), body
+
+
 def read_all(spec, cities, prior):
     """Read every page. Returns (record pages, problems, carried pages)."""
     pages = pages_of(cities)
@@ -922,11 +974,18 @@ def read_all(spec, cities, prior):
     today = datetime.date.today().isoformat()
     first = True
     for url, seats in sorted(pages.items()):
-        if not first:
-            time.sleep(PACE_SECONDS)
-        first = False
+        excerpt = url in spec.excerpts
+        if not excerpt:
+            if not first:
+                time.sleep(PACE_SECONDS)
+            first = False
         try:
-            client, final, body = read_page(spec, url)
+            if excerpt:
+                client, read, body = read_excerpt(spec, url)
+                final = url
+            else:
+                client, final, body = read_page(spec, url)
+                read = today
         except SystemExit as e:
             entry = (prior or {}).get(url)
             problems.append(("unread", url, "robots.txt refused this client: %s" % e))
@@ -942,7 +1001,8 @@ def read_all(spec, cities, prior):
                 carried.append(url)
             continue
         reader = spec.readers.get(url)
-        plain = reader(body) if reader else page_text(body)
+        plain = (body.decode("utf-8") if excerpt else
+                 reader(body) if reader else page_text(body))
         text = norm(plain)
         wanted = {proof_name(s) for _g, s in seats if proof_name(s)}
         found = sorted(n for n in wanted if on_page(n, text))
@@ -950,13 +1010,15 @@ def read_all(spec, cities, prior):
             if proof_name(s) and proof_name(s) not in found:
                 problems.append(("missing", url, "%s, %s: %r is not on the page"
                                  % (cities[geoid]["name"], s["seat"], proof_name(s))))
-        entry = {"read": today, "client": client, "final": final, "bytes": len(body),
+        entry = {"read": read, "client": client, "final": final, "bytes": len(body),
                  "sha256": hashlib.sha256(body).hexdigest(), "names": found}
+        if excerpt:
+            entry["excerpt"] = os.path.relpath(spec.excerpts[url], REPO_ROOT)
         line = "%d of %d names found" % (len(found), len(wanted))
         want_e = sum(1 for _g, s in seats if s.get("email"))
         want_p = sum(len(seat_numbers(s)) for _g, s in seats)
         if want_e or want_p:
-            markup = not reader and body[:5] != b"%PDF-"
+            markup = not reader and not excerpt and body[:5] != b"%PDF-"
             contacts = page_contacts(body, None if markup else plain)
             emails, phones, contact_problems = prove_contacts(cities, seats, contacts)
             problems += [(kind, url, msg) for kind, msg in contact_problems]
@@ -996,6 +1058,8 @@ def app_doc(cities, pages, undrawn=()):
         reads = [pages[c["sources"][s["from"]]]["read"] for s in c["seats"]]
         entry = {"name": c["name"], "body": c["body"], "how": c["how"],
                  "read": min(reads), "seats": []}
+        if any(pages[c["sources"][s["from"]]].get("client") == "hand" for s in c["seats"]):
+            entry["readByHand"] = True
         for key in ("note", "page", "wardWord"):
             if c.get(key):
                 entry[key] = c[key]
@@ -1032,7 +1096,21 @@ def check_record(spec, cities, pages):
         entry = pages.get(url)
         if not entry:
             continue
-        want_client = "browser" if url in spec.browser else "token"
+        if url in spec.excerpts:
+            try:
+                want_client, want_read, body = read_excerpt(spec, url)
+            except (OSError, RuntimeError) as e:
+                problems.append(str(e))
+                continue
+            if (entry.get("sha256") != hashlib.sha256(body).hexdigest()
+                    or entry.get("read") != want_read):
+                problems.append("%s has changed since the build last proved it; run the build"
+                                % os.path.relpath(spec.excerpts[url], REPO_ROOT))
+        else:
+            want_client = "browser" if url in spec.browser else "token"
+            if entry.get("excerpt"):
+                problems.append("the record proves %s against an excerpt and the builder now "
+                                "reads the page; run the build" % url)
         if entry.get("client") != want_client:
             problems.append("%s was last read with the %s client and the builder now reads it "
                             "with the %s client; run the build"
@@ -1160,8 +1238,11 @@ def run_watch(spec):
               "that has gone from its page, or that a link on it now contradicts, comes off "
               "its seat until the page prints it beside the member again" % spec.label)
         raise SystemExit(1)
-    print("%s --watch: every name and contact is still on the page it cites (%d pages read)"
-          % (spec.label, len(pages)))
+    kept = sorted(u for u in pages if u in spec.excerpts)
+    print("%s --watch: every name and contact is still on the page it cites (%d pages read%s)"
+          % (spec.label, len(pages),
+             ", %d of them excerpts this job cannot re-read, which are re-read by hand "
+             "(the instance's WATCH.md)" % len(kept) if kept else ""))
 
 
 def run_build(spec):

@@ -1,0 +1,7 @@
+Read once by hand in Adam's Chrome on 2026-11-27 (the site's robots.txt disallows every page to every client).
+https://www.cityofwilliston.com/government/city_commission/index.php
+"The City of Williston City Commission is comprised of five Commissioners who manage different areas, or portfolios, of the City. Each Commissioner has a 4-year term in office."
+"Commission photos will be updated at a later date."  The page names no commissioner.
+https://www.cityofwilliston.com/11.10.2026%20Minutes.pdf (minutes of 10 November 2026, page 1):
+"COMMISSIONERS PRESENT: Siemieniewski, Johnson, Bekkedahl, Clark"  "COMMISSIONERS ABSENT: Sweet"
+Surnames only; no page read gives the commissioners' full names, so none is written down.

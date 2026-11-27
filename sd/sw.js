@@ -65,6 +65,7 @@ const ROSTER_URLS = [
   "./data/app/tribal-councils.json",
   "./data/app/statewide-officials.json",
   "./data/app/sd-district-judges.json",
+  "./data/app/sd-city-councils.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

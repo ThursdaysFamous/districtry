@@ -52,7 +52,22 @@ matches `/api/`.
 (layer 4): 310 records, 157 cities and 153 towns, every one an active government, under 1% of the state's
 land (1,438.5 of 196,345.1 km2, measured 2026-11-12). An empty card says the point is outside every city
 and town and that the county is the local government there, with the civil township where one is
-organized. No mayor or council member is named yet (gap `sd-municipal-officeholders`).
+organized.
+
+**THE 3 CITIES OF 25,000 PEOPLE OR MORE NAME THEIR MAYOR AND COUNCIL SINCE
+2026-11-27** (Sioux Falls, Rapid City and Aberdeen). No state office's list of city officials has been read, so
+`data/source/sd-city-council-seats.json` writes each city's mayor and members down by hand from the
+city's own pages, and `sd/scripts/build_sd_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write unless
+every name is on its page; the builder's docstring says how each city elects and what says so (the
+city's page, its charter, state law, or election results). The card ships network-first as
+`sd-city-councils.json`, and every seat says whether its ward's own voters or the whole city elect
+it. Every page is read by this project's own reader; Sioux Falls's charter, which says which
+seats are at large, was read once by hand in Adam's Chrome. All three elect members by ward or district, none of their wards is drawn, and the card
+says so. A member's own e-mail address or number ships where the city's page prints it
+beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
+and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller city and every town names nobody (gap
+`sd-municipal-officeholders`).
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 147 unified districts for South Dakota and nothing on its
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school board
@@ -196,8 +211,9 @@ the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. The chamber cards
 degrade to the district + the chamber's own member list on a roster miss, and a vacant or unlisted
-seat says so with the day it was read; the County, municipality and school district cards carry no
-roster and **say so on the card**. External strings always render through
+seat says so with the day it was read; the County and school district cards carry no roster and
+**say so on the card**, and the City or Town card names the mayor and council of
+the cities of 25,000 people or more and says so on the card for every other city or town. External strings always render through
 `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct commits
 to main.
 

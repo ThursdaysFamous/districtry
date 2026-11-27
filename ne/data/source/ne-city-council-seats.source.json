@@ -1,0 +1,219 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
+ "pages": {
+  "https://citycouncil.cityofomaha.org/councilmembers": {
+   "bytes": 618,
+   "client": "hand",
+   "excerpt": "ne/data/source/councils/omaha-2026-11-27.txt",
+   "final": "https://citycouncil.cityofomaha.org/councilmembers",
+   "names": [
+    "Aimee Melton",
+    "Brinker Harding",
+    "Danny Begley",
+    "Don Rowe",
+    "LaVonya Goodwin",
+    "Pete Festersen",
+    "Ron Hug"
+   ],
+   "read": "2026-11-27",
+   "sha256": "2634eeccd0c75972d261f2b65f981c27c26a8c07fd025efb333f97fcdfb6d894"
+  },
+  "https://www.bellevue.net/426/City-Council": {
+   "bytes": 91596,
+   "client": "token",
+   "final": "https://www.bellevue.net/426/City-Council",
+   "names": [
+    "Don Preister",
+    "Jerry McCaw",
+    "Julie Collins",
+    "Kathy Welch",
+    "Rich Casey",
+    "Thomas Burns"
+   ],
+   "read": "2026-11-27",
+   "sha256": "e319fae744d50551ee41c1eb0a0cd3a2fd2cfbc486a7950f4afab6d6ace1d18b"
+  },
+  "https://www.bellevue.net/490/THE-Mayor": {
+   "bytes": 86078,
+   "client": "token",
+   "final": "https://www.bellevue.net/490/THE-Mayor",
+   "names": [
+    "Rusty Hike"
+   ],
+   "read": "2026-11-27",
+   "sha256": "49e9cb6d86dd342e1916b429d66f752026e690b4cbc444ceaf4d2047aa2301ca"
+  },
+  "https://www.cityofhastings.org/government/city-officials/city-council/city-council-1st-ward.html": {
+   "bytes": 42623,
+   "client": "token",
+   "final": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-1st-ward.html",
+   "names": [
+    "Michael Anderson",
+    "Steven Huntley"
+   ],
+   "read": "2026-11-27",
+   "sha256": "4819ca4e31682dd93f88b5521ea52fe22256832bdf87c3c7a391ec04678e7864"
+  },
+  "https://www.cityofhastings.org/government/city-officials/city-council/city-council-2nd-ward.html": {
+   "bytes": 41747,
+   "client": "token",
+   "final": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-2nd-ward.html",
+   "names": [
+    "Brad Consbruck",
+    "Lawrence Consbruck"
+   ],
+   "read": "2026-11-27",
+   "sha256": "52906da5c27820de23cf2bb0657b1757b2702b81c84ce2e53666015724ff4eb8"
+  },
+  "https://www.cityofhastings.org/government/city-officials/city-council/city-council-3rd-ward.html": {
+   "bytes": 42880,
+   "client": "token",
+   "final": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-3rd-ward.html",
+   "names": [
+    "Maggie Esch",
+    "Marc Rowan"
+   ],
+   "read": "2026-11-27",
+   "sha256": "e45ee783abc7030008c958bfd6f867a2a2a645b77be0f1c6da29ec6fcc4ab2a3"
+  },
+  "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html": {
+   "bytes": 42572,
+   "client": "token",
+   "final": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html",
+   "names": [
+    "Brian Hoffman",
+    "Matt Fong"
+   ],
+   "read": "2026-11-27",
+   "sha256": "9d04c1272da7c37cf1057d4e356a4484f3dacaa53fb9ebd7d713899da2369905"
+  },
+  "https://www.cityofhastings.org/mayor/": {
+   "bytes": 39903,
+   "client": "token",
+   "final": "https://www.cityofhastings.org/mayor/",
+   "names": [
+    "Jay Beckby"
+   ],
+   "read": "2026-11-27",
+   "sha256": "aa54fdaff7d0dab017a1ed0104539550f6779808c566c0c6225b00e82f973821"
+  },
+  "https://www.cityofkearney.org/706/City-Council-Members": {
+   "bytes": 114815,
+   "client": "token",
+   "final": "https://www.cityofkearney.org/706/City-Council-Members",
+   "names": [
+    "Jonathan Nikkila",
+    "Kurt Schmidt",
+    "Pete Kotsiopulos",
+    "Randy Buschkoetter",
+    "Tami James Moore"
+   ],
+   "read": "2026-11-27",
+   "sha256": "a0b7399b4e04e94a166cc521a682816b53c731f5b6114922ec9ea67a35dc01b8"
+  },
+  "https://www.cityofomaha.org/": {
+   "bytes": 618,
+   "client": "hand",
+   "excerpt": "ne/data/source/councils/omaha-2026-11-27.txt",
+   "final": "https://www.cityofomaha.org/",
+   "names": [
+    "John Ewing Jr."
+   ],
+   "read": "2026-11-27",
+   "sha256": "2634eeccd0c75972d261f2b65f981c27c26a8c07fd025efb333f97fcdfb6d894"
+  },
+  "https://www.fremontne.gov/29/City-Council": {
+   "bytes": 93535,
+   "client": "token",
+   "final": "https://www.fremontne.gov/29/City-Council",
+   "names": [
+    "Blair Horner",
+    "Dev Sookram",
+    "James Vaughan",
+    "Jeff Peterson",
+    "Lori Lathrop",
+    "Mark Jensen",
+    "Paul Von Behren",
+    "Sally Ganem",
+    "TJ Marsh"
+   ],
+   "phones": [
+    "4027078081",
+    "4027194036",
+    "4027203537",
+    "4027277801",
+    "4028129534",
+    "4029091016",
+    "4029269527",
+    "4029365690",
+    "4029366140"
+   ],
+   "read": "2026-11-27",
+   "sha256": "08d83cf4452d04ebfa1974e67b23df629fdbbb1232e46c47107aafae65772c5c"
+  },
+  "https://www.grand-island.com/page/city-council": {
+   "bytes": 1859739,
+   "client": "token",
+   "final": "https://www.grand-island.com/page/city-council",
+   "names": [
+    "Chuck Haase",
+    "Doug Brown",
+    "Doug Lanfear",
+    "Jack Sheard",
+    "Jason Conley",
+    "Maggie Mendoza",
+    "Mark Stelk",
+    "Mike Paulick",
+    "Mitch Nickerson",
+    "Ryan O'Neill"
+   ],
+   "read": "2026-11-27",
+   "sha256": "1f5412219a8b744d09e99c7881ab258313cda89cc158905c9040174d116d7ede"
+  },
+  "https://www.grand-island.com/page/mayor-roger-steele": {
+   "bytes": 1826085,
+   "client": "token",
+   "final": "https://www.grand-island.com/page/mayor-roger-steele",
+   "names": [
+    "Roger Steele"
+   ],
+   "read": "2026-11-27",
+   "sha256": "38417ef562d90d53e9c31188ae08a73c64aba176ecd25806bfc1d9f6326c0d80"
+  },
+  "https://www.lincoln.ne.gov/City/City-Council/Council-Members": {
+   "bytes": 111496,
+   "client": "token",
+   "emails": [
+    "bshobe@lincoln.ne.gov",
+    "bweber@lincoln.ne.gov",
+    "jbowers@lincoln.ne.gov",
+    "jpcarlson@lincoln.ne.gov",
+    "swashington@lincoln.ne.gov",
+    "tbeckius@lincoln.ne.gov",
+    "tduden@lincoln.ne.gov"
+   ],
+   "final": "https://www.lincoln.ne.gov/City/City-Council/Council-Members",
+   "names": [
+    "Bennie Shobe",
+    "Brodey Weber",
+    "James Michael Bowers",
+    "Justin P. Carlson",
+    "Sändra Washington",
+    "Tom Beckius",
+    "Tom Duden"
+   ],
+   "read": "2026-11-27",
+   "sha256": "e00208a67cba35f53a0e4361ebd4f320a73eec87eaed885c9989972da24b19b1"
+  },
+  "https://www.lincoln.ne.gov/City/Mayor": {
+   "bytes": 87552,
+   "client": "token",
+   "final": "https://www.lincoln.ne.gov/City/Mayor",
+   "names": [
+    "Leirion Gaylor Baird"
+   ],
+   "read": "2026-11-27",
+   "sha256": "974d3a43bdf9dc533140102e68675dae708c245ae9e52227e3e7d44646def50a"
+  }
+ }
+}

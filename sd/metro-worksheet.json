@@ -337,7 +337,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. No statewide roster of South Dakota's local officials was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap sd-municipal-officeholders.",
+        "people": "In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district and none of their maps is drawn yet, and the card says so. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.",
         "applies": "South Dakota — statewide."
       }
     },
@@ -537,6 +537,11 @@
         "file": "sd-district-judges.json",
         "min_keys": 7,
         "note": "The judges of each of the 7 court districts, keyed by district, 45 seats read 2026-11-27 from the state's own court website into sd/data/source/courts/sd-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
+      },
+      {
+        "file": "sd-city-councils.json",
+        "min_keys": 3,
+        "note": "The mayor and council or commission of each of the 3 cities of 25,000 people or more, keyed by Census place id, written down from each city's own pages and proved against them by sd/scripts/build_sd_city_councils.py, whose --check holds the file to its seats file and its record of every page read. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; a page kept as a dated excerpt is re-read by hand (sd/WATCH.md). Network-first: a new member must reach a returning visitor at once."
       }
     ]
   },

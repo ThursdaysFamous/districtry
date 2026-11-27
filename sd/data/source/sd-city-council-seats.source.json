@@ -1,0 +1,108 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
+ "pages": {
+  "https://www.aberdeen.sd.us/74/City-Council": {
+   "bytes": 109307,
+   "client": "token",
+   "final": "https://www.aberdeen.sd.us/74/City-Council",
+   "names": [
+    "Alan Johnson",
+    "Chad Nilson",
+    "Charlotte Liebelt",
+    "David Novstrup",
+    "Erin Fouberg",
+    "Rich Ward",
+    "Rob Ronayne",
+    "Talmage Ekanger"
+   ],
+   "read": "2026-11-27",
+   "sha256": "0ea113e7d93dc27adbab8829ea2d83855174fd2a2b8c99f531caa96963640bff"
+  },
+  "https://www.aberdeen.sd.us/75/Mayor": {
+   "bytes": 100038,
+   "client": "token",
+   "final": "https://www.aberdeen.sd.us/75/Mayor",
+   "names": [
+    "Travis Schaunaman"
+   ],
+   "read": "2026-11-27",
+   "sha256": "c682a783b3bad3ec12179cf60603492a104e80e6b0c40b4d97f38d3a9721cdf2"
+  },
+  "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html": {
+   "bytes": 81775,
+   "client": "token",
+   "final": "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html",
+   "names": [
+    "Bill Evans",
+    "Callie Meyer",
+    "Greg Strommen",
+    "John B. Roberts",
+    "Josh Biberdorf",
+    "Kevin Maher",
+    "Lance Lehmann",
+    "Laura Armstrong",
+    "Lindsey Seachris",
+    "Stephen Tamang"
+   ],
+   "read": "2026-11-27",
+   "sha256": "16845c43267ee06c712e99182b9da6dfca9da973e158d0b039dec74a0d6f89d4"
+  },
+  "https://www.rcgov.org/departments/mayor-s-office-city-council/mayor-s-office.html": {
+   "bytes": 75933,
+   "client": "token",
+   "final": "https://www.rcgov.org/departments/mayor-s-office-city-council/mayor-s-office.html",
+   "names": [
+    "Jason Salamun"
+   ],
+   "read": "2026-11-27",
+   "sha256": "097b40e5591b29d9373730bca4df967b0015751f7f1509f75c6a57fc633e34b1"
+  },
+  "https://www.siouxfalls.gov/government/council/council-members": {
+   "bytes": 97302,
+   "client": "token",
+   "emails": [
+    "james.oppenheimer@siouxfalls.gov",
+    "jennifer.sigette@siouxfalls.gov",
+    "miranda.basye@siouxfalls.gov",
+    "rich.merkouris@siouxfalls.gov",
+    "richard.thomason@siouxfalls.gov",
+    "ryan.spellerberg@siouxfalls.gov",
+    "sara.pankonin@siouxfalls.gov",
+    "zak.okuwe@siouxfalls.gov"
+   ],
+   "final": "https://www.siouxfalls.gov/government/council/council-members",
+   "names": [
+    "James Oppenheimer",
+    "Jennifer Sigette",
+    "Miranda Basye",
+    "Rich Merkouris",
+    "Richard Thomason",
+    "Ryan Spellerberg",
+    "Sara Pankonin",
+    "Zak Okuwe"
+   ],
+   "phones": [
+    "6053678102",
+    "6053678110",
+    "6053678733",
+    "6053678764",
+    "6053678809",
+    "6053678818",
+    "6053678865",
+    "6053678898"
+   ],
+   "read": "2026-11-27",
+   "sha256": "8c2c73788b33aac4961a7686eb01a29549dbe8200e59bdea54e568e927cabc24"
+  },
+  "https://www.siouxfalls.gov/government/mayor/biography-ce": {
+   "bytes": 93087,
+   "client": "token",
+   "final": "https://www.siouxfalls.gov/government/mayor/biography-ce",
+   "names": [
+    "Christine Erickson"
+   ],
+   "read": "2026-11-27",
+   "sha256": "90efacc7eb35e5aa7ac2d4a470223dc423f115a3f29744de5f09f4a167fcb572"
+  }
+ }
+}

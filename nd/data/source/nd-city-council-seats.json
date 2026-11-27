@@ -1,0 +1,346 @@
+{
+ "_about": "Kept by hand: the mayor and council or commission of each North Dakota city of 25,000 people or more, written down from each city's own pages on 2026-11-27. nd/scripts/build_nd_city_councils.py re-reads every page each seat cites (or, for a page read once by hand, the dated excerpt in nd/data/source/councils/) and refuses to write unless every name and contact is on its page (scripts/city_councils.py).",
+ "cities": {
+  "3825700": {
+   "name": "Fargo",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "The mayor and four commissioners are all elected by the whole city (the city's own commission page).",
+   "sources": {
+    "council": "https://fargond.gov/city-government/departments/city-commission/members"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Josh Boschee",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "John Strand",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Nikkie Gullickson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chad Peterson",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Michelle Turnberg",
+     "from": "council"
+    }
+   ]
+  },
+  "3807200": {
+   "name": "Bismarck",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+   "sources": {
+    "council": "https://bismarcknd.gov/Directory.aspx?did=21"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Michael Schmitz",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Michael Connelly",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Amelia Doll",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Matt Hull",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "John Risch",
+     "from": "council"
+    }
+   ]
+  },
+  "3832060": {
+   "name": "Grand Forks",
+   "body": "City Council",
+   "how": "Each of seven council members is elected by the voters of one ward, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://www.grandforksgov.com/government/city-leadership/city-council",
+    "mayor": "https://www.grandforksgov.com/government/city-leadership/mayor-bochenski"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Brandon Bochenski",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Danny Weigel",
+     "from": "council",
+     "as": "Weigel, Danny",
+     "phone": "(701) 215-8021"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Rebecca Osowski",
+     "from": "council",
+     "as": "Osowski, Rebecca",
+     "phone": "(701) 787-1938"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Tricia Berg",
+     "from": "council",
+     "as": "Berg, Tricia",
+     "phone": "(701) 740-2692"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Angela Salentiny",
+     "from": "council",
+     "as": "Salentiny, Angela",
+     "phone": "(701) 739-8356"
+    },
+    {
+     "seat": "Ward 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "Mike Fridolfs",
+     "from": "council",
+     "as": "Fridolfs, Mike",
+     "phone": "(701) 740-2691"
+    },
+    {
+     "seat": "Ward 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Dana Sande",
+     "from": "council",
+     "as": "Sande, Dana",
+     "phone": "(701) 330-9284"
+    },
+    {
+     "seat": "Ward 7",
+     "by": "ward",
+     "ward": "7",
+     "name": "Ken Vein",
+     "from": "council",
+     "as": "Vein, Ken",
+     "phone": "(701) 215-2463"
+    }
+   ]
+  },
+  "3853380": {
+   "name": "Minot",
+   "body": "City Council",
+   "how": "The mayor and six council members are all elected by the whole city, three council members every two years.",
+   "sources": {
+    "council": "https://www.minotnd.gov/252/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mark Jantzer",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Steve Podrygula",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "John MacMartin",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Mike Blessum",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Rob Fuller",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Eric Locken",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Scott Samuelson",
+     "from": "council"
+    }
+   ]
+  },
+  "3884780": {
+   "name": "West Fargo",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (the city's own commission page).",
+   "sources": {
+    "council": "https://westfargond.gov/365/City-Commission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Eric Gjerdevig",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Amy Zundel",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Rory Jorgensen",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Patti Stedman",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Tyler Erickson",
+     "from": "council"
+    }
+   ]
+  },
+  "3886220": {
+   "name": "Williston",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+   "sources": {
+    "council": "https://www.cityofwilliston.com/government/city_commission/index.php"
+   },
+   "seats": [
+    {
+     "seat": "At large",
+     "by": "city",
+     "from": "council",
+     "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "from": "council",
+     "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "from": "council",
+     "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "from": "council",
+     "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "from": "council",
+     "unnamed": "Not named here: the city's commission page names no commissioner (its photos are to be \"updated at a later date\"), and its minutes give surnames only."
+    }
+   ]
+  },
+  "3819620": {
+   "name": "Dickinson",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
+   "sources": {
+    "council": "https://www.dickinsongov.com/city-commission"
+   },
+   "officeLines": [
+    "701.456.7744"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Scott Decker",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Robert Baer",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jason Fridrich",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Joe Ridl",
+     "from": "council",
+     "phone": "701.690.6103"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Russ Murphy",
+     "from": "council"
+    }
+   ]
+  }
+ }
+}

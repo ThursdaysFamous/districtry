@@ -16832,9 +16832,20 @@ function initSouthDakotaExplorer() {
    * county, with the civil township where one is organized, is the local
    * government everywhere else.
    *
-   * NO OFFICEHOLDER YET. No statewide list of South Dakota's mayors and
-   * councils has been read, so the card names no one rather than guessing.
-   * Recorded as gap sd-municipal-officeholders.
+   * THE THREE CITIES OF 25,000 PEOPLE OR MORE NAME THEIR MAYOR AND COUNCIL
+   * OR COMMISSION, written down from each city's own pages and proved against
+   * those pages on every build (sd/scripts/build_sd_city_councils.py through
+   * scripts/city_councils.py; data/app/sd-city-councils.json, a roster, so
+   * network-first). Every seat says whether its ward's own voters or the
+   * whole city elect it, read from the city's pages, its charter or state
+   * law, or measured from election results; the builder says which for each
+   * city. The wards of the three that elect by ward are not drawn yet, and the
+   * card says so. Where a city's site is closed to this app's reader its
+   * page was read once by hand in a browser, and the card says that too.
+   *
+   * South Dakota's other cities and towns name nobody: no statewide list of their mayors
+   * and councils has been read, so the card names no one rather than
+   * guessing. Recorded as gap sd-municipal-officeholders.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
@@ -16846,6 +16857,111 @@ function initSouthDakotaExplorer() {
   // A place whose government differs from the usual form, by GEOID: its type
   // row and the officials row its card prints instead of the general ones.
   var SD_SPECIAL_PLACES = {};
+
+  // The mayor and council or commission of each city of 25,000 people or
+  // more, keyed by the city's Census id; every seat says who elects it and
+  // which page names it.
+  var loadSdCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/sd-city-councils.json", {}, 2);
+  });
+  // "Ward 3", "District 3", or, for a ward a city names, "Northeast District"
+  function sdWardName(council, ward) {
+    var word = String(council.wardWord || "Ward"), w = String(ward);
+    return /^[A-Z][a-z]+$/.test(w) ? w + " " + word : word + " " + w;
+  }
+  // The seat as its body names its members: "Mayor", "Council, Ward 1",
+  // "Commissioner, At large"
+  function sdSeatBadge(seat) {
+    var role = String(seat.role);
+    if (role === "Mayor" || role === "Vice Mayor") return role;
+    return (role === "Council member" ? "Council" : role) + ", " + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so.
+  function sdSeatElectedBy(council, seat, atLarge) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    // a mayor who holds a ward seat was chosen from the council, not by the ward
+    if (seat.byWard && seat.ward != null) {
+      return (seat.role === "Mayor" || seat.role === "Vice Mayor" ? "elected to the council by " : "elected by ") +
+        sdWardName(council, seat.ward);
+    }
+    return atLarge || "elected by the whole city";
+  }
+  // A named seat and a seat the city says is to be filled each get a row; a
+  // seat no page names is said once, below the rows.
+  function sdCouncilPeople(council, seats, atLarge) {
+    var out = [];
+    seats.forEach(function (seat) {
+      if (seat.unnamed) return;
+      var by = sdSeatElectedBy(council, seat, atLarge);
+      out.push(seat.vacant ? {
+        name: "Vacant",
+        badge: sdSeatBadge(seat),
+        note: ["the city's own page says this seat is to be filled", by].filter(Boolean).join(" · ")
+      } : {
+        name: String(seat.name),
+        badge: sdSeatBadge(seat),
+        note: by,
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
+      });
+    });
+    return out;
+  }
+  // Below the names: any seat no page names, how the seats are elected,
+  // where the names come from and when they were read (each city's names are
+  // dated by the oldest read of its pages), and, for a city that elects by
+  // ward, that its wards are not drawn.
+  function sdCouncilAfter(council, seats) {
+    var rows = [];
+    var read = council.read ? statewideDate(council.read) : null;
+    var byHand = council.readByHand
+      ? " The city's website is closed to this app's automated reader, so its page was read once by hand in a web browser."
+      : "";
+    var unnamed = seats.filter(function (s) { return s.unnamed; });
+    var none = unnamed.length === seats.length;
+    if (unnamed.length) {
+      rows.push({
+        label: none ? "Who holds the seats" : "Seats not named",
+        value: String(unnamed[0].unnamed) + (none
+          ? (read ? " Read on " + read + "." : "") + byHand
+          : " That is " + unnamed.length + " of the " + seats.length + " seats.")
+      });
+    }
+    rows.push({ label: "How the seats are elected", value: String(council.how) });
+    if (!none) {
+      rows.push({
+        label: "Where these names come from",
+        value: (council.note ? String(council.note)
+          : "As listed on " + String(council.name) + "'s own website.") +
+          (read ? " Read on " + read + "." : "") + byHand +
+          " If a seat has changed hands since, the city's own website or clerk says who holds it now."
+      });
+    }
+    if (council.wardsDrawn === false) {
+      var word = String(council.wardWord || "Ward").toLowerCase();
+      rows.push({
+        label: "Which " + word + " this point is in",
+        value: "This app does not draw " + String(council.name) + "'s " + word +
+          "s yet, so it cannot say which " + word + " this point is in. The city's own " +
+          word + " map shows it."
+      });
+    }
+    return rows;
+  }
+  function sdCouncilLink(council) {
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].role !== "Mayor" && seats[i].sourceUrl) {
+        return {
+          label: council.note ? "The page these names come from"
+            : String(council.name) + "'s " + String(council.body),
+          url: String(seats[i].sourceUrl)
+        };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
@@ -16874,15 +16990,26 @@ function initSouthDakotaExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the type can never contradict the name
           // above it
           kind: subdivisionKind(name, base),
           funcstat: String(findPropCI(props, ["funcstat"]) || ""),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the city card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadSdCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -16909,18 +17036,34 @@ function initSouthDakotaExplorer() {
       } else if (result.kind && SD_PLACE_KINDS.hasOwnProperty(result.kind)) {
         rows.push({ label: "Type", value: SD_PLACE_KINDS[result.kind] });
       }
-      if (special) {
-        rows.push({ label: special.officialsLabel, value: special.officials });
-      } else {
-        rows.push({
+      var council = result.council;
+      if (!council) {
+        rows.push(result.rosterFailed ? {
           label: "Your local officials",
-          value: "Not named here. No statewide list of South Dakota's mayors and " +
-            "councils has been read for this app, and it does not guess in the " +
-            "meantime, so this city or town's own website is the current source."
+          value: "The list of mayors and council members did not load, so no name is shown. " +
+            "This city or town's own website names its officials."
+        } : special && special.officials ? {
+          label: special.officialsLabel, value: special.officials
+        } : {
+          label: "Your local officials",
+          value: "Not named here. This app names the mayor and council or commission of " +
+            "South Dakota's 3 cities of 25,000 people or more, from each city's own website, " +
+            "and this city or town is not one of them yet. Its own website is the current source."
         });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
       }
-      wrap.appendChild(renderFieldStack(rows));
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its ward's own voters or the whole city.
+      var seats = council.seats || [];
+      var people = sdCouncilPeople(council, seats, special && special.atLarge);
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      wrap.appendChild(renderFieldStack(sdCouncilAfter(council, seats)));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? sdCouncilLink(result.council) : null;
     }
   });
 

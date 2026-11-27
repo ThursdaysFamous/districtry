@@ -1,0 +1,1130 @@
+{
+ "_about": "Kept by hand: the mayor and council or commission of each Kansas city of 25,000 people or more, written down from each city's own pages on 2026-11-27. ks/scripts/build_ks_city_councils.py re-reads every page each seat cites (or, for a page read once by hand or rendered once, the dated excerpt in ks/data/source/councils/) and refuses to write unless every name and contact is on its page (scripts/city_councils.py).",
+ "cities": {
+  "2079000": {
+   "name": "Wichita",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Each of six council members is elected by the voters of one district, and the mayor by the whole city (the city's own council page).",
+   "sources": {
+    "council": "https://www.wichita.gov/599/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Lily Wu",
+     "from": "council"
+    },
+    {
+     "seat": "District 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Joseph Shepard",
+     "from": "council"
+    },
+    {
+     "seat": "District 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Becky Tuttle",
+     "from": "council"
+    },
+    {
+     "seat": "District 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Mike Hoheisel",
+     "from": "council"
+    },
+    {
+     "seat": "District 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Dalton Glasscock",
+     "from": "council"
+    },
+    {
+     "seat": "District 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "J.V. Johnston",
+     "from": "council"
+    },
+    {
+     "seat": "District 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Maggie Ballard",
+     "from": "council"
+    }
+   ]
+  },
+  "2053775": {
+   "name": "Overland Park",
+   "body": "City Council",
+   "how": "Two council members are elected by the voters of each of six wards, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://www.opkansas.gov/city-council",
+    "mayor": "https://www.opkansas.gov/mayor-curt-skoog"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Curt Skoog",
+     "from": "mayor"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Logan Heley",
+     "from": "council",
+     "email": "logan.heley@opkansas.gov",
+     "phone": "913-895-6575"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Holly Grummert",
+     "from": "council",
+     "email": "holly.grummert@opkansas.gov",
+     "phone": "913-895-6577"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Drew Mitrisin",
+     "from": "council",
+     "email": "drew.mitrisin@opkansas.gov",
+     "phone": "913-895-6574"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Melissa Cheatham",
+     "from": "council",
+     "email": "melissa.cheatham@opkansas.gov",
+     "phone": "913-895-6585"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Richard Borlaza",
+     "from": "council",
+     "email": "richard.borlaza@opkansas.gov",
+     "phone": "913-895-6576"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Amy Scrivner",
+     "from": "council",
+     "email": "amy.scrivner@opkansas.gov",
+     "phone": "913-895-6578"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Gregg Riess",
+     "from": "council",
+     "email": "gregg.riess@opkansas.gov",
+     "phone": "913-895-6591"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Amy Antrim",
+     "from": "council",
+     "email": "amy.antrim@opkansas.gov",
+     "phone": "913-895-6588"
+    },
+    {
+     "seat": "Ward 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "Andrew Payne",
+     "from": "council",
+     "email": "andrew.payne@opkansas.gov",
+     "phone": "913-895-6586"
+    },
+    {
+     "seat": "Ward 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "Inas Younis",
+     "from": "council",
+     "email": "inas.younis@opkansas.gov",
+     "phone": "913-895-6592"
+    },
+    {
+     "seat": "Ward 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Christopher Newlin",
+     "from": "council",
+     "email": "chris.newlin@opkansas.gov",
+     "phone": "913-895-6565"
+    },
+    {
+     "seat": "Ward 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Josh Beck",
+     "from": "council",
+     "email": "josh.beck@opkansas.gov",
+     "phone": "913-895-6587"
+    }
+   ]
+  },
+  "2036000": {
+   "name": "Kansas City",
+   "body": "Board of Commissioners",
+   "member": "Commissioner",
+   "wardWord": "District",
+   "how": "Kansas City and Wyandotte County are governed together by the Unified Government. Eight commissioners are nominated and elected from districts; the two at-large commissioners are nominated from districts and elected at large, and the mayor and chief executive is nominated at large (the Unified Government's own page).",
+   "sources": {
+    "council": "https://www.wycokck.org/Departments/Board-of-Commissioners/Districts"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Christal E. Watson",
+     "from": "council",
+     "email": "mayorwatson@wycokck.org"
+    },
+    {
+     "seat": "At large, District 1",
+     "by": "city",
+     "name": "Melissa Bynum",
+     "from": "council",
+     "email": "mbynum@wycokck.org"
+    },
+    {
+     "seat": "At large, District 2",
+     "by": "city",
+     "name": "Andrew Tyler Kump",
+     "from": "council",
+     "email": "akump@wycokck.org"
+    },
+    {
+     "seat": "District 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Jermaine Howard",
+     "from": "council",
+     "email": "jhoward@wycokck.org"
+    },
+    {
+     "seat": "District 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "William (Bill) J. Burns, Jr.",
+     "from": "council",
+     "email": "wjburns@wycokck.org"
+    },
+    {
+     "seat": "District 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Christian Ramirez",
+     "from": "council",
+     "email": "cramirez@wycokck.org"
+    },
+    {
+     "seat": "District 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Evelyn Hill",
+     "from": "council",
+     "email": "ehill@wycokck.org"
+    },
+    {
+     "seat": "District 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "Carlos Pacheco III",
+     "from": "council",
+     "email": "c.pacheco@wycokck.org"
+    },
+    {
+     "seat": "District 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Philip J. Lopez",
+     "from": "council",
+     "email": "pjlopez@wycokck.org"
+    },
+    {
+     "seat": "District 7",
+     "by": "ward",
+     "ward": "7",
+     "name": "Chuck Stites",
+     "from": "council",
+     "email": "cestites@wycokck.org"
+    },
+    {
+     "seat": "District 8",
+     "by": "ward",
+     "ward": "8",
+     "name": "Andrew Davis",
+     "from": "council",
+     "email": "adavis@wycokck.org"
+    }
+   ]
+  },
+  "2052575": {
+   "name": "Olathe",
+   "body": "City Council",
+   "how": "Four council members are each elected by the voters of one ward, and two council members and the mayor by the whole city.",
+   "sources": {
+    "council": "https://www.olatheks.gov/government/city-council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "John Bacon",
+     "from": "council",
+     "email": "jbacon@olatheks.org",
+     "phone": "913-971-8500"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Robyn Essex",
+     "from": "council",
+     "email": "rressex@olatheks.org",
+     "phone": "913-971-6368"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Dean Vakas",
+     "from": "council",
+     "email": "dvakas@olatheks.org",
+     "phone": "913-971-8773"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "LeEtta Felter",
+     "from": "council",
+     "email": "lfelter@olatheks.org",
+     "phone": "913-971-6995"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Kevin Deneault",
+     "from": "council",
+     "email": "kdeneault@olatheks.org",
+     "phone": "913-971-8745"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jeff Creighton",
+     "from": "council",
+     "email": "jcreighton@olatheks.org",
+     "phone": "913-971-8769"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Matthew Schoonover",
+     "from": "council",
+     "email": "mschoonover@olatheks.org",
+     "phone": "913-971-8797"
+    }
+   ]
+  },
+  "2071000": {
+   "name": "Topeka",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Each of nine council members is elected by the voters of one district, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://topeka.gov/government/city-council/index.php",
+    "mayor": "https://topeka.gov/government/mayor/index.php"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Spencer Duncan",
+     "from": "mayor"
+    },
+    {
+     "seat": "District 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Karen Hiller",
+     "from": "council",
+     "email": "khiller@topeka.org",
+     "phone": "(785) 232-2917"
+    },
+    {
+     "seat": "District 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Christina Valdivia-Alcala",
+     "from": "council",
+     "email": "cvaldivia-alcala@topeka.org",
+     "phone": "(785) 233-7110"
+    },
+    {
+     "seat": "District 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Sylvia Ortiz",
+     "from": "council",
+     "email": "sortiz@topeka.org",
+     "phone": "(785) 357-0717"
+    },
+    {
+     "seat": "District 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "David Banks",
+     "from": "council",
+     "email": "dbanks@topeka.org",
+     "phone": "(785) 249-2674"
+    },
+    {
+     "seat": "District 5",
+     "by": "ward",
+     "ward": "5",
+     "name": "Brett Kell",
+     "from": "council",
+     "email": "bkell@topeka.org",
+     "phone": "(785) 226-7196"
+    },
+    {
+     "seat": "District 6",
+     "by": "ward",
+     "ward": "6",
+     "name": "Marcus Miller",
+     "from": "council",
+     "email": "marcusm@topeka.org",
+     "phone": "(785) 409-8695"
+    },
+    {
+     "seat": "District 7",
+     "by": "ward",
+     "ward": "7",
+     "name": "Michelle Bradberry",
+     "from": "council",
+     "email": "mabradberry@topeka.org",
+     "phone": "(785) 580-1817"
+    },
+    {
+     "seat": "District 8",
+     "by": "ward",
+     "ward": "8",
+     "name": "Murray McGee",
+     "from": "council",
+     "email": "mtmcgee@topeka.org",
+     "phone": "(785) 569-1465"
+    },
+    {
+     "seat": "District 9",
+     "by": "ward",
+     "ward": "9",
+     "name": "Michelle Hoferer",
+     "from": "council",
+     "email": "mahoferer@topeka.org",
+     "phone": "(785) 304-5674"
+    }
+   ]
+  },
+  "2038900": {
+   "name": "Lawrence",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, and each December the commission chooses one of them as mayor and one as vice mayor (the city's own commission page).",
+   "sources": {
+    "council": "https://lawrenceks.civicweb.net/portal/members.aspx?id=10"
+   },
+   "seats": [
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Brad Finkeldei",
+     "from": "council",
+     "email": "bfinkeldei@lawrenceks.gov",
+     "phone": "785-550-9699"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Mike Courtney",
+     "from": "council",
+     "email": "mcourtney@lawrenceks.gov",
+     "phone": "785-202-2267"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Mike Dever",
+     "from": "council",
+     "email": "mdever@lawrenceks.gov",
+     "phone": "785-550-4909"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Kristine Polian",
+     "from": "council",
+     "email": "kpolian@lawrenceks.gov",
+     "phone": "316-619-3324"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Amber Sellers",
+     "from": "council",
+     "email": "asellers@lawrenceks.gov",
+     "phone": "785-813-1381"
+    }
+   ]
+  },
+  "2064500": {
+   "name": "Shawnee",
+   "body": "City Council",
+   "how": "Two council members are elected by the voters of each of four wards, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://cityofshawnee.civicweb.net/portal/members.aspx?id=10"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mickey Sandifer",
+     "from": "council",
+     "email": "msandifer@cityofshawnee.org",
+     "phone": "913-205-7788"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Steele Reynolds",
+     "from": "council",
+     "email": "sreynolds@cityofshawnee.org",
+     "phone": "913-286-3516"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Sierra Whitted",
+     "from": "council",
+     "email": "swhitted@cityofshawnee.org",
+     "phone": "316-347-9348"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Eric Persson",
+     "from": "council",
+     "email": "epersson@cityofshawnee.org",
+     "phone": "816-217-5102"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Jeanie Murphy",
+     "from": "council",
+     "email": "jmurphy@cityofshawnee.org",
+     "phone": "913-303-8764"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Kurt Knappen",
+     "from": "council",
+     "email": "kknappen@cityofshawnee.org",
+     "phone": "913-608-2724"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Morgan Rainey",
+     "from": "council",
+     "email": "mrainey@cityofshawnee.org",
+     "phone": "913-263-3278"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Laurel Burchfield",
+     "from": "council",
+     "email": "lburchfield@cityofshawnee.org",
+     "phone": "913-461-7703"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Erin Aldridge",
+     "from": "council",
+     "email": "ealdridge@cityofshawnee.org",
+     "phone": "785-550-3078"
+    }
+   ]
+  },
+  "2039350": {
+   "name": "Lenexa",
+   "body": "City Council",
+   "how": "Two council members are elected by the voters of each of four wards, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://www.lenexa.com/Government/Mayor-City-Council/Elected-Officials"
+   },
+   "officeLines": [
+    "913.477.7500"
+   ],
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Julie Sayers",
+     "from": "council",
+     "email": "jsayers@lenexa.com",
+     "phone": "913.477.7567"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Courtney Eiterich",
+     "from": "council",
+     "email": "ceiterich@lenexa.com",
+     "phone": "913.522.9423"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "John Michael Handley",
+     "from": "council",
+     "email": "jhandley@lenexa.com",
+     "phone": "785.844.3314"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Bill Nicks",
+     "from": "council",
+     "email": "bnicks@lenexa.com",
+     "phone": "913.424.9228"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Mark Charlton",
+     "from": "council",
+     "email": "mcharlton@lenexa.com",
+     "phone": "913.706.7576"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Chelsea Williamson",
+     "from": "council",
+     "email": "cwilliamson@lenexa.com",
+     "phone": "913.303.9929"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Avery Bell",
+     "from": "council",
+     "email": "abell@lenexa.com"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Craig Denny",
+     "from": "council",
+     "email": "cdenny@lenexa.com",
+     "phone": "816.225.5891"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Chris Herron",
+     "from": "council",
+     "email": "cherron@lenexa.com",
+     "phone": "913.477.7550"
+    }
+   ]
+  },
+  "2044250": {
+   "name": "Manhattan",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, and each year the commission chooses one of them as mayor (the city's own commission page).",
+   "sources": {
+    "council": "https://www.manhattanks.gov/202/Meet-the-City-Commission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Susan E. Adamchak",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Karen McCulloh",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Larry Fox",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jim Morrison",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Andrew Von Lintel",
+     "from": "council"
+    }
+   ]
+  },
+  "2062700": {
+   "name": "Salina",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, and the commission chooses one of them as mayor (the city's own commission page).",
+   "sources": {
+    "council": "https://www.salina-ks.gov/salina-city-commission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Michael L. Hoppock",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Trent W. Davis",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Greg Lenkiewicz",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Gary Norris",
+     "from": "council"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Doug Rempp",
+     "from": "council"
+    }
+   ]
+  },
+  "2033625": {
+   "name": "Hutchinson",
+   "body": "City Council",
+   "wardWord": "District",
+   "how": "Four council members are each elected by one district and one by the whole city, and each year the council chooses a mayor and a vice-mayor from its members (the city's own council page).",
+   "sources": {
+    "council": "https://www.hutchinsonks.gov/city-council",
+    "southwest": "https://www.hutchinsonks.gov/application-for-southwest-district-council-seat-1"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "ward",
+     "ward": "Northeast",
+     "name": "Scott Meggers",
+     "from": "council",
+     "email": "scott.meggers@hutchinsonks.gov",
+     "phone": "620-728-8669"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Darrin Truan",
+     "from": "council",
+     "email": "darrin.truan@hutchinsonks.gov",
+     "phone": "620-728-9444"
+    },
+    {
+     "seat": "Southeast District",
+     "by": "ward",
+     "ward": "Southeast",
+     "name": "Steven Garza",
+     "from": "council",
+     "email": "steve.garza@hutchinsonks.gov",
+     "phone": "620-899-5977"
+    },
+    {
+     "seat": "Northwest District",
+     "by": "ward",
+     "ward": "Northwest",
+     "name": "Stacy Goss",
+     "from": "council",
+     "email": "stacy.goss@hutchinsonks.gov",
+     "phone": "620-474-5829"
+    },
+    {
+     "seat": "Southwest District",
+     "by": "ward",
+     "ward": "Southwest",
+     "from": "southwest",
+     "vacant": true,
+     "as": "fill the unexpired term for the Southwest District seat"
+    }
+   ]
+  },
+  "2039000": {
+   "name": "Leavenworth",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, and the commission chooses one of them as mayor.",
+   "sources": {
+    "council": "https://www.leavenworthks.gov/citycommission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Nancy Bauder",
+     "from": "council",
+     "email": "nbauder@leavenworthks.gov",
+     "phone": "913-675-7166"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Rebecca Hollister",
+     "from": "council",
+     "email": "rebecca.hollister@leavenworthks.gov",
+     "phone": "913-240-5961"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Holly Pittman",
+     "from": "council",
+     "email": "holly.pittman@leavenworthks.gov",
+     "phone": "913-449-8991"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Joe Wilson",
+     "from": "council",
+     "email": "joe.wilson@leavenworthks.gov",
+     "phone": "913-683-9373"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Samuel Maxwell",
+     "from": "council",
+     "email": "sam.maxwell@leavenworthks.gov",
+     "phone": "913-565-5552"
+    }
+   ]
+  },
+  "2039075": {
+   "name": "Leawood",
+   "body": "City Council",
+   "how": "Two council members are elected by the voters of each of four wards, and the mayor by the whole city.",
+   "sources": {
+    "council": "https://leawood.civicweb.net/portal/members.aspx?id=10"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Marc Elkins",
+     "from": "council",
+     "email": "melkins@leawood.org",
+     "phone": "913-663-9101"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Matt Peppes",
+     "from": "council",
+     "email": "mpeppes@leawood.org",
+     "phone": "913-335-0450"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Alan Sunkel",
+     "from": "council",
+     "email": "asunkel@leawood.org",
+     "phone": "913-558-6743"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Mary Larson",
+     "from": "council",
+     "email": "mlarson@leawood.org",
+     "phone": "913-706-6563"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Sherrie Gayed",
+     "from": "council",
+     "email": "sgayed@leawood.org",
+     "phone": "913-484-0417"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Rachel Rubin",
+     "from": "council",
+     "email": "rrubin@leawood.org",
+     "phone": "816-589-2677"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Lisa Harrison",
+     "from": "council",
+     "email": "lisah@leawood.org",
+     "phone": "913-317-9688"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Julie Cain",
+     "from": "council",
+     "email": "jcain@leawood.org",
+     "phone": "913-486-8422"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Steve Kaster",
+     "from": "council",
+     "email": "skaster@leawood.org",
+     "phone": "913-363-6627"
+    }
+   ]
+  },
+  "2025325": {
+   "name": "Garden City",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, and each year the commission chooses one of them as mayor (the city's own commission page).",
+   "sources": {
+    "council": "https://www.garden-city.org/402/City-Commission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Tom Nguyen",
+     "from": "council",
+     "email": "tom.nguyen@gardencityks.us"
+    },
+    {
+     "seat": "Vice Mayor",
+     "by": "city",
+     "name": "Deb Oyler",
+     "from": "council",
+     "email": "deb.oyler@gardencityks.us"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Bryce Landgraf",
+     "from": "council",
+     "email": "bryce.landgraf@gardencityks.us"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Roy Cessna",
+     "from": "council",
+     "email": "roy.cessna@gardencityks.us"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Karen Canales-Lozano",
+     "from": "council",
+     "email": "karen.lozano@gardencityks.us"
+    }
+   ]
+  },
+  "2018250": {
+   "name": "Dodge City",
+   "body": "City Commission",
+   "member": "Commissioner",
+   "how": "All five commissioners are elected by the whole city, three at each election, and each January the commission chooses one of them as mayor and one as vice-mayor.",
+   "sources": {
+    "council": "https://www.dodgecity.org/54/City-Commission"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Daniel Pogue",
+     "from": "council",
+     "email": "danielp@dodgecity.org"
+    },
+    {
+     "seat": "Vice Mayor",
+     "by": "city",
+     "name": "Michael Burns",
+     "from": "council",
+     "email": "michaelb@dodgecity.org"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Jeff Reinert",
+     "from": "council",
+     "email": "jeffr@dodgecity.org"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Rick Sowers",
+     "from": "council",
+     "email": "ricks@dodgecity.org"
+    },
+    {
+     "seat": "At large",
+     "by": "city",
+     "name": "Chuck Taylor",
+     "from": "council",
+     "email": "chuckt@dodgecity.org"
+    }
+   ]
+  },
+  "2017800": {
+   "name": "Derby",
+   "body": "City Council",
+   "how": "Two council members are elected by each of four wards, and the mayor by the whole city (the city's own council page, which numbers the wards I to IV).",
+   "sources": {
+    "council": "https://www.derbyks.gov/113/City-Council"
+   },
+   "seats": [
+    {
+     "seat": "Mayor",
+     "by": "city",
+     "name": "Mark Staats",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Mike Neel",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 1",
+     "by": "ward",
+     "ward": "1",
+     "name": "Kristi Truitt",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Gabe McKeever",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 2",
+     "by": "ward",
+     "ward": "2",
+     "name": "Wayne Molt, Jr.",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Jessica Rhein",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 3",
+     "by": "ward",
+     "ward": "3",
+     "name": "Nick Engle",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Jared Brown",
+     "from": "council"
+    },
+    {
+     "seat": "Ward 4",
+     "by": "ward",
+     "ward": "4",
+     "name": "Jenny Webster",
+     "from": "council"
+    }
+   ]
+  }
+ }
+}

@@ -162,6 +162,14 @@ async function booted(context, url, routeFn) {
 // completion accepts either card generation and the returned text prepends
 // the pill — the "District N" assertions read the whole card, not just the
 // body, exactly as a user does.
+// A card's text carries members' own e-mail addresses and numbers; a check
+// that prints card text prints it through this, so a log never carries one.
+function noContacts(text) {
+  return String(text)
+    .replace(/[^\s<>"'(),;:@]+@[^\s<>"'(),;:@]+\.[A-Za-z]{2,}/g, "<e-mail>")
+    .replace(/\(?\b\d{3}\)?[\s.\-\u2011]*\d{3}[\s.\-\u2011]*\d{4}\b/g, "<number>");
+}
+
 async function cardText(page, id) {
   await page
     .waitForFunction(
@@ -849,8 +857,38 @@ try {
         name: "a city names itself an incorporated city",
         layer: "municipality", service: PLACES,
         props: { GEOID: "3807200", NAME: "Bismarck city", BASENAME: "Bismarck", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Bismarck city/, /Incorporated city — a general-purpose local government over this point, alongside the county/, /Not named here/],
-        reject: [/inactive government/]
+        want: [/Bismarck city/, /Incorporated city — a general-purpose local government over this point, alongside the county/,
+          /Michael Schmitz/, /Commissioner, At large/, /How the seats are elected/, /Read on November 27, 2026/],
+        reject: [/inactive government/, /Not named here/, /elected by Ward/, /Which ward/]
+      },
+      {
+        name: "a council elected by ward names each member's ward and says the wards are not drawn",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "3832060", NAME: "Grand Forks city", BASENAME: "Grand Forks", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Brandon Bochenski/, /Council, Ward 1/, /elected by Ward 1/, /Which ward this point is in/,
+          /read once by hand in a web browser/],
+        reject: [/Not named here/]
+      },
+      {
+        name: "a commission whose page names nobody names nobody and says why",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "3886220", NAME: "Williston city", BASENAME: "Williston", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Who holds the seats/, /names no commissioner/, /How the seats are elected/],
+        reject: [/Where these names come from/, /Vacant/]
+      },
+      {
+        name: "a city outside the 7 says it names nobody and why",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "3899995", NAME: "Example city", BASENAME: "Example", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Not named here/, /7 cities of 25,000 people or more/],
+        reject: [/How the seats are elected/]
+      },
+      {
+        name: "a roster that fails to load leaves the city card standing and says so",
+        layer: "municipality", service: PLACES, block: "**/data/app/nd-city-councils.json",
+        props: { GEOID: "3807200", NAME: "Bismarck city", BASENAME: "Bismarck", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Bismarck city/, /did not load, so no name is shown/],
+        reject: [/Michael Schmitz/]
       },
       {
         name: "a town, which North Dakota does not have, prints NO type row",
@@ -931,6 +969,7 @@ try {
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
+        if (c.block) await p.route(c.block, (r) => r.abort());
       });
       const info = await cardText(page, c.layer);
       const text = info.text || "";
@@ -938,8 +977,56 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       check(c.name, !info.error && (!c.empty || info.empty) && missing.length === 0 && present.length === 0,
         missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
-          : text.slice(0, 90));
+          ? `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 160)}`
+          : noContacts(text).slice(0, 90));
+      await context.close();
+    }
+
+    // A member's own e-mail address and numbers reach that member's row as
+    // links. Where a city's page prints them beside one member, the seat
+    // carries them (scripts/city_councils.py, CONTACTS), and the build proved
+    // every one in the shipped file on the page its seat cites. The expected
+    // links are read from that file, so this check prints counts and never a
+    // value; a member the file gives nothing must show no link.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/nd-city-councils.json"), "utf8"));
+      const props = { GEOID: "3832060", NAME: "Grand Forks city", BASENAME: "Grand Forks", STATE: "38", LSADC: "25", FUNCSTAT: "A" };
+      const dial = (phone) => {
+        // the engine's cardPhoneDial: the digits, stopping at an extension
+        let s = String(phone);
+        const m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+        if (m) s = s.slice(0, m.index + m[1].length);
+        return "tel:" + s.replace(/[^\d+]/g, "");
+      };
+      const want = roster[props.GEOID].seats.filter((s) => s.name).map((s) => ({
+        name: s.name,
+        mails: s.email ? ["mailto:" + s.email] : [],
+        tels: [s.phone].concat(s.phonesExtra || []).filter(Boolean).map(dial)
+      }));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
+        await p.route(`**/${PLACES}/query**`, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: esriBody(props) }));
+      });
+      await cardText(page, "municipality");
+      const rows = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-municipality .card-person")).map((row) => ({
+          name: (row.querySelector(".card-person-name") || {}).textContent || "",
+          mails: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href")),
+          tels: Array.from(row.querySelectorAll('a[href^="tel:"]')).map((a) => a.getAttribute("href"))
+        })));
+      const differ = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || JSON.stringify(row.mails) !== JSON.stringify(w.mails) ||
+          JSON.stringify(row.tels) !== JSON.stringify(w.tels);
+      }).length;
+      const mails = want.filter((w) => w.mails.length).length;
+      const tels = want.reduce((n, w) => n + w.tels.length, 0);
+      check(`${props.BASENAME}'s members' own e-mail addresses and numbers are links on their own rows`,
+        (mails > 0 || tels > 0) && differ === 0,
+        `${mails} e-mail links and ${tels} numbers across ${want.length} named members; ` +
+        `${differ} rows differ from the shipped file`);
       await context.close();
     }
   }

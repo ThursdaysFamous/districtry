@@ -63,6 +63,7 @@ const ROSTER_URLS = [
   "./data/app/tribal-councils.json",
   "./data/app/statewide-officials.json",
   "./data/app/ne-district-judges.json",
+  "./data/app/ne-city-councils.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

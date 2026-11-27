@@ -1,14 +1,18 @@
 name: Watch city council pages
 
-# The mayors and councils of the 122 cities above 25,000 people in Arkansas,
-# North Carolina, Oklahoma, South Carolina and Tennessee are written down by
-# hand from each city's own pages, because no state office in any of the five
-# publishes who sits on a city council and each city publishes its own council
-# its own way (scripts/city_councils.py says why a person reads the pages
-# rather than a parser per city). This job re-reads every page the five seats
-# files cite, once a week, and checks that every name, and every e-mail address
+# The mayors and councils of the 155 cities above 25,000 people in Arkansas,
+# Kansas, Nebraska, North Carolina, North Dakota, Oklahoma, South Carolina,
+# South Dakota and Tennessee are written down by hand from each city's own
+# pages, because no state office in any of the nine publishes who sits on a
+# city council and each city publishes its own council its own way
+# (scripts/city_councils.py says why a person reads the pages rather than a
+# parser per city). This job re-reads every page the nine seats files cite,
+# once a week, and checks that every name, and every e-mail address
 # and number written against a member, is still on the page its seat cites.
-# Adam chose weekly over quarterly on 2026-10-16.
+# Adam chose weekly over quarterly on 2026-10-16. Kansas, Nebraska, North
+# Dakota and South Dakota joined on 2026-11-27; a page of theirs that was read
+# once by hand in Adam's Chrome, or rendered once, is not re-read here, and
+# each state's WATCH.md carries its re-read.
 #
 # It re-reads the board pages of Tennessee's fourteen special school districts
 # too (tn/scripts/build_tn_special_school_boards.py), on Adam's "Yes" of
@@ -17,9 +21,13 @@ name: Watch city council pages
 #
 # The files whose pages it re-reads:
 #   ar/data/app/ar-city-councils.json
+#   ks/data/app/ks-city-councils.json
 #   nc/data/app/nc-city-councils.json
+#   nd/data/app/nd-city-councils.json
+#   ne/data/app/ne-city-councils.json
 #   ok/data/app/ok-city-councils.json
 #   sc/data/app/sc-city-councils.json
+#   sd/data/app/sd-city-councils.json
 #   tn/data/app/tn-city-councils.json
 #   tn/data/app/tn-special-school-boards.json
 #
@@ -27,7 +35,7 @@ name: Watch city council pages
 # its page usually means the seat changed hands, and which seat a new member
 # holds is something only a person reading the page can say, so the output is
 # a request for a person rather than a diff: it opens or updates ONE tracking
-# issue for all five states, and closes it after a run that reads every page
+# issue for all nine states, and closes it after a run that reads every page
 # and finds every name and contact. A CONTACT GONE line is a contact no longer
 # on its page, and a CONTACT REFUSED line one that a link on the page now
 # contradicts; either comes off its seat until the page prints it beside the
@@ -90,14 +98,26 @@ jobs:
             echo "### Arkansas"
             python3 ar/scripts/build_ar_city_councils.py --watch 2>&1 || code=1
             echo
+            echo "### Kansas"
+            python3 ks/scripts/build_ks_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### Nebraska"
+            python3 ne/scripts/build_ne_city_councils.py --watch 2>&1 || code=1
+            echo
             echo "### North Carolina"
             python3 nc/scripts/build_nc_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### North Dakota"
+            python3 nd/scripts/build_nd_city_councils.py --watch 2>&1 || code=1
             echo
             echo "### Oklahoma"
             python3 ok/scripts/build_ok_city_councils.py --watch 2>&1 || code=1
             echo
             echo "### South Carolina"
             python3 sc/scripts/build_sc_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### South Dakota"
+            python3 sd/scripts/build_sd_city_councils.py --watch 2>&1 || code=1
             echo
             echo "### Tennessee"
             python3 tn/scripts/build_tn_city_councils.py --watch 2>&1 || code=1
@@ -140,7 +160,7 @@ jobs:
           {
             echo "_Automated by \`.github/workflows/watch-city-council-pages.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
             echo
-            echo "The councils of the 122 cities above 25,000 people in Arkansas, North Carolina, Oklahoma, South Carolina and Tennessee, and the boards of Tennessee's fourteen special school districts, are written down by hand from each city's or district's own pages. This week's re-read found these:"
+            echo "The councils of the 155 cities above 25,000 people in Arkansas, Kansas, Nebraska, North Carolina, North Dakota, Oklahoma, South Carolina, South Dakota and Tennessee, and the boards of Tennessee's fourteen special school districts, are written down by hand from each city's or district's own pages. This week's re-read found these:"
             echo
             echo '```'
             cat watch-lines.txt

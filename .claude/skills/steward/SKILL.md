@@ -251,6 +251,10 @@ python3 nc/scripts/build_nc_city_councils.py --check                 # the same 
 python3 ok/scripts/build_ok_city_councils.py --check                 # the same for Oklahoma's 16 cities
 python3 sc/scripts/build_sc_city_councils.py --check                 # the same for South Carolina's 17 places
 python3 tn/scripts/build_tn_city_councils.py --check                 # the same for Tennessee's 28 cities
+python3 ks/scripts/build_ks_city_councils.py --check                 # the same for Kansas's 16 cities, the pages read once by hand or rendered once held to their dated excerpts
+python3 ne/scripts/build_ne_city_councils.py --check                 # the same for Nebraska's 7 cities
+python3 nd/scripts/build_nd_city_councils.py --check                 # the same for North Dakota's 7 cities
+python3 sd/scripts/build_sd_city_councils.py --check                 # the same for South Dakota's 3 cities
 python3 ky/scripts/build_ky_county_districts.py --selftest           # the precinct-placing rules: ballots first, 2022 only where it agrees, one empty district filled, Army posts left out
 python3 ky/scripts/build_ky_county_districts.py --check              # the shipped magisterial and council districts hash to their record and cover each drawn county
 python3 ar/scripts/build_ar_townships.py --check                     # Arkansas's townships: hash and per-county counts against their record, every name a township, every county covered by its own

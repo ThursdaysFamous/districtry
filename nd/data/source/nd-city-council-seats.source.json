@@ -1,0 +1,127 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
+ "pages": {
+  "https://bismarcknd.gov/Directory.aspx?did=21": {
+   "bytes": 122666,
+   "client": "token",
+   "final": "https://www.bismarcknd.gov/m/directory/department?did=21",
+   "names": [
+    "Amelia Doll",
+    "John Risch",
+    "Matt Hull",
+    "Michael Connelly",
+    "Michael Schmitz"
+   ],
+   "read": "2026-11-27",
+   "sha256": "cbd80661c2beedf9b5e4df9b948e7fad125abcf61812bf69c5c1cf06ad36952e"
+  },
+  "https://fargond.gov/city-government/departments/city-commission/members": {
+   "bytes": 29127,
+   "client": "token",
+   "final": "https://fargond.gov/city-government/departments/city-commission/members",
+   "names": [
+    "Chad Peterson",
+    "John Strand",
+    "Josh Boschee",
+    "Michelle Turnberg",
+    "Nikkie Gullickson"
+   ],
+   "read": "2026-11-27",
+   "sha256": "ec4d56b4c3cb2af23e767b2ccbd393be7e6730afcd1338c4b86835e966748602"
+  },
+  "https://westfargond.gov/365/City-Commission": {
+   "bytes": 118686,
+   "client": "token",
+   "final": "https://westfargond.gov/365/City-Commission",
+   "names": [
+    "Amy Zundel",
+    "Eric Gjerdevig",
+    "Patti Stedman",
+    "Rory Jorgensen",
+    "Tyler Erickson"
+   ],
+   "read": "2026-11-27",
+   "sha256": "7a51f13254e80c5ac572d94bdcbbe1ba772fda5d324faebd53f181978f3175f7"
+  },
+  "https://www.cityofwilliston.com/government/city_commission/index.php": {
+   "bytes": 727,
+   "client": "hand",
+   "excerpt": "nd/data/source/councils/williston-2026-11-27.txt",
+   "final": "https://www.cityofwilliston.com/government/city_commission/index.php",
+   "names": [],
+   "read": "2026-11-27",
+   "sha256": "a3c9d56547879d2fae119d6f3626dceb1cf3b0a1756ece01756d15b53073895d"
+  },
+  "https://www.dickinsongov.com/city-commission": {
+   "bytes": 682,
+   "client": "hand",
+   "excerpt": "nd/data/source/councils/dickinson-2026-11-27.txt",
+   "final": "https://www.dickinsongov.com/city-commission",
+   "names": [
+    "Jason Fridrich",
+    "Joe Ridl",
+    "Robert Baer",
+    "Russ Murphy",
+    "Scott Decker"
+   ],
+   "phones": [
+    "7016906103"
+   ],
+   "read": "2026-11-27",
+   "sha256": "836785597b9e606c4a633dee5345f56e1579d709b3070c45a716f72e84e0a5a5"
+  },
+  "https://www.grandforksgov.com/government/city-leadership/city-council": {
+   "bytes": 958,
+   "client": "hand",
+   "excerpt": "nd/data/source/councils/grand-forks-2026-11-27.txt",
+   "final": "https://www.grandforksgov.com/government/city-leadership/city-council",
+   "names": [
+    "Berg, Tricia",
+    "Fridolfs, Mike",
+    "Osowski, Rebecca",
+    "Salentiny, Angela",
+    "Sande, Dana",
+    "Vein, Ken",
+    "Weigel, Danny"
+   ],
+   "phones": [
+    "7012152463",
+    "7012158021",
+    "7013309284",
+    "7017398356",
+    "7017402691",
+    "7017402692",
+    "7017871938"
+   ],
+   "read": "2026-11-27",
+   "sha256": "17b2e9783c3679484eea637480f424d103b3ccbe95faa11ab4178f158b0103dd"
+  },
+  "https://www.grandforksgov.com/government/city-leadership/mayor-bochenski": {
+   "bytes": 958,
+   "client": "hand",
+   "excerpt": "nd/data/source/councils/grand-forks-2026-11-27.txt",
+   "final": "https://www.grandforksgov.com/government/city-leadership/mayor-bochenski",
+   "names": [
+    "Brandon Bochenski"
+   ],
+   "read": "2026-11-27",
+   "sha256": "17b2e9783c3679484eea637480f424d103b3ccbe95faa11ab4178f158b0103dd"
+  },
+  "https://www.minotnd.gov/252/City-Council": {
+   "bytes": 129230,
+   "client": "token",
+   "final": "https://www.minotnd.gov/252/City-Council",
+   "names": [
+    "Eric Locken",
+    "John MacMartin",
+    "Mark Jantzer",
+    "Mike Blessum",
+    "Rob Fuller",
+    "Scott Samuelson",
+    "Steve Podrygula"
+   ],
+   "read": "2026-11-27",
+   "sha256": "30d05e2988b3107dd8eb2b3a8159e759fb7040aeadb798b94aaad8b926f325b5"
+  }
+ }
+}
