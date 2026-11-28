@@ -177,6 +177,18 @@ PROVENANCE = [
             "anchor per county plus OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "fl-judicial-circuit",
+        "app_file": "fl-judicial-districts.json",
+        "source_url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0026/Sections/0026.021.html",
+        "note": "Florida's 20 judicial circuits, dissolved from the 67 counties by scripts/build_state_courts.py from Florida Statutes 26.021 (excerpt in fl/data/source/courts/fl-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "fl-judicial-circuit",
+        "app_file": "fl-district-judges.json",
+        "source_url": "https://www.flcourts.gov/Florida-Courts/Trial-Courts-Circuit",
+        "note": "The circuit judges of sixteen circuits, read from each circuit's own website by scripts/build_state_courts.py --fetch fl, which stops if a circuit's site names more judges than Florida Statutes 26.031 sets or fewer than 85% of them. The monthly re-read is a row in fl/WATCH.md.",
+    },
 ]
 
 # Florida's envelope, as index.html writes it for the ZIP layer

@@ -77,7 +77,7 @@ in the researched-but-unbuilt backlog.
   "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
-  "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "florida": ["us-house", "fl-judicial-circuit", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "ohio": ["oh-court-of-appeals", "us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "washington": ["us-house", "wa-superior-court", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "county-subdivision", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "massachusetts": ["us-house", "county", "ma-senate", "school-district-secondary", "ma-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
@@ -4348,6 +4348,18 @@ trusted.
       }
   ],
   "florida": [
+      {
+            "id": "fl-circuit-judges",
+            "concept": "Circuit judges",
+            "area": "Florida — the Third, Twelfth, Thirteenth and Seventeenth Judicial Circuits",
+            "counties": [],
+            "kind": "data-quality",
+            "layer": "fl-judicial-circuit",
+            "summary": "Your Judicial Circuit card names the circuit judges in most of Florida's circuits. In the Third, Twelfth, Thirteenth and Seventeenth it names none, and says why.",
+            "why": "The Third Circuit's website refuses this app's reader. The other three list their judges by courtroom division without saying which are circuit judges and which are county judges.",
+            "wanted": "Each circuit's list of judges marking each one as a circuit judge or a county judge, or one statewide list of Florida's circuit judges.",
+            "blocker": "MEASURED 2026-11-27 by scripts/build_state_courts.py's reader (the districtry token, robots.txt read first) while building the fl-judicial-circuit layer. Florida Statutes 26.031 sets the four circuits' judges at 7 (Third), 24 (Twelfth), 45 (Thirteenth) and 58 (Seventeenth). THIRD: GET https://www.jud3.flcourts.org/ failed the TLS handshake three times that day, so robots.txt could not be read and nothing was fetched. TWELFTH: https://www.jud12.flcourts.org/forms/printjudges.aspx?lt=j, the list the circuit's About/Judges page links, answered 200 and lists each judge under a courtroom division, with no word saying circuit judge or county judge; county judges are assigned to circuit divisions in Florida, so the division does not settle it. THIRTEENTH: https://www.fljud13.org/Directory/Judges answered 200 with judges' surnames and divisions only; the alphabetical and by-division directory PDFs it links (marked Updated 10/1/2026) list county judges in circuit divisions (for one, Melissa C. Black), and one judge's page (Judge Alvarez) showed another judge's biography. SEVENTEENTH: the judges table on https://www.17th.flcourts.org/ fills itself in from https://www.17th.flcourts.org/wp-admin/admin-ajax.php (action sls_body_tbl_c, read the way the page posts it): 96 rows, each with a name and division and no court; the circuit's assignment chart PDF of 2 Oct 2026 counts 58 circuit and 32 county judges but is not read per judge. STATEWIDE: www.flcourts.gov's robots.txt disallows this client, so the Office of the State Courts Administrator's lists are not read. The other sixteen circuits' sites say which judges are circuit judges and are read (FL_PAGES). FL_UNNAMED in scripts/build_state_courts.py holds the card text for these four; the fetch writes a 'none' line for each, and the builder refuses a 'none' circuit that lists judges. A one-off read of the Third's page in Adam's Chrome is possible (CLAUDE.md, 'One-off reads in Adam's own Chrome'), not done. Listed as a letter candidate in /mnt/project-files/letters/least-complete-states-letter-candidates.md: each circuit's court administrator, or the Office of the State Courts Administrator for one statewide list. NOT YET ASKED, and no ask is drafted."
+      },
       {
             "id": "fl-county-officials",
             "concept": "County government",

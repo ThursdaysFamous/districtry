@@ -1,0 +1,523 @@
+# Florida court districts and judges, kept by scripts/build_state_courts.py --fetch fl
+# read: 2026-11-27
+# from: Florida Statutes 26.021 and 26.031 on www.leg.state.fl.us (circuits, counties and each circuit's number of judges), and each circuit's own website as FL_PAGES lists it: the First's judges page and each judge's page through the data files they load (judge type), the Fifth's five county judiciary pages, and the Fifteenth's directory (the chief judge) and judges list filtered to the circuit court (circuit judges; county, senior and retired judges, magistrates and hearing officers are not kept). The Third, Twelfth, Thirteenth and Seventeenth name nobody (FL_UNNAMED)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)
+# none | <district> | <why the card names no judge>  (a district whose judges are not read)
+district | 1 | Escambia, Okaloosa, Santa Rosa, Walton
+district | 2 | Franklin, Gadsden, Jefferson, Leon, Liberty, Wakulla
+district | 3 | Columbia, Dixie, Hamilton, Lafayette, Madison, Suwannee, Taylor
+district | 4 | Clay, Duval, Nassau
+district | 5 | Citrus, Hernando, Lake, Marion, Sumter
+district | 6 | Pasco, Pinellas
+district | 7 | Flagler, Putnam, St. Johns, Volusia
+district | 8 | Alachua, Baker, Bradford, Gilchrist, Levy, Union
+district | 9 | Orange, Osceola
+district | 10 | Hardee, Highlands, Polk
+district | 11 | Miami-Dade
+district | 12 | DeSoto, Manatee, Sarasota
+district | 13 | Hillsborough
+district | 14 | Bay, Calhoun, Gulf, Holmes, Jackson, Washington
+district | 15 | Palm Beach
+district | 16 | Monroe
+district | 17 | Broward
+district | 18 | Brevard, Seminole
+district | 19 | Indian River, Martin, Okeechobee, St. Lucie
+district | 20 | Charlotte, Collier, Glades, Hendry, Lee
+judge | 1 | Circuit Judge | Paul Bailey | 
+judge | 1 | Circuit Judge | W. Joel Boles | 
+judge | 1 | Circuit Judge | Amy P. Brodersen | 
+judge | 1 | Circuit Judge | Jennifer Frydrychowicz | 
+judge | 1 | Circuit Judge | Matt Gordon | 
+judge | 1 | Circuit Judge | R. Todd Harris | 
+judge | 1 | Circuit Judge | Jennie Kinsey | 
+judge | 1 | Circuit Judge | John L. Miller | 
+judge | 1 | Circuit Judge | Stephen A. Pitre | 
+judge | 1 | Circuit Judge | Coleman Lee Robinson | 
+judge | 1 | Chief Judge | John Simon | 
+judge | 1 | Circuit Judge | Thomas Williams | 
+judge | 1 | Circuit Judge | John Brown | 
+judge | 1 | Circuit Judge | Lacey Powell Clark | 
+judge | 1 | Circuit Judge | John Jay Gontarek | 
+judge | 1 | Circuit Judge | Terrance R. Ketchel | 
+judge | 1 | Circuit Judge | David Oberliesen | 
+judge | 1 | Circuit Judge | William F. Stone | 
+judge | 1 | Circuit Judge | Darlene F. Dickey | 
+judge | 1 | Circuit Judge | Clifton A. Drake | 
+judge | 1 | Circuit Judge | J. Scott Duncan | 
+judge | 1 | Circuit Judge | David L. Stevens | 
+judge | 1 | Circuit Judge | Steven Warrick | 
+judge | 1 | Circuit Judge | Jeffrey E. Lewis | 
+judge | 1 | Circuit Judge | J. Ryan Love | 
+judge | 1 | Circuit Judge | Jonathan Schlechter | 
+judge | 2 | Chief Judge | Frank Allman | 
+judge | 2 | Circuit Judge | Michael Beato | 
+judge | 2 | Circuit Judge | Tiffany Baker-Carper | 
+judge | 2 | Circuit Judge | Angela C. Dempsey | 
+judge | 2 | Circuit Judge | Stephen Everett | 
+judge | 2 | Circuit Judge | Ronald Flury | 
+judge | 2 | Circuit Judge | David Frank | 
+judge | 2 | Circuit Judge | Jeremiah M. Hawkes | 
+judge | 2 | Circuit Judge | Joshua M. Hawkes | 
+judge | 2 | Circuit Judge | Barbara Hobbs | 
+judge | 2 | Circuit Judge | Jason L. Jones | 
+judge | 2 | Circuit Judge | Andrew B. King | 
+judge | 2 | Circuit Judge | J. Lee Marsh | 
+judge | 2 | Circuit Judge | Anthony Miller | 
+judge | 2 | Circuit Judge | Andrew Sheeran | 
+judge | 2 | Circuit Judge | Jonathan Sjostrom | 
+judge | 2 | Circuit Judge | J. Layne Smith | 
+none | 3 | The Third Circuit's website refuses this app's reader, so its circuit judges are not named here.
+judge | 4 | Chief Judge | Lance M. Day | 
+judge | 4 | Circuit Judge | Waddell Wallace | 
+judge | 4 | Circuit Judge | Katie L. Dearing | 
+judge | 4 | Circuit Judge | Robert M. Dees | 
+judge | 4 | Circuit Judge | Virginia Norton | 
+judge | 4 | Circuit Judge | Bruce Anderson | 
+judge | 4 | Circuit Judge | James H. Daniel | 
+judge | 4 | Circuit Judge | Michael Sharrit | 
+judge | 4 | Circuit Judge | G. L. Feltel, Jr. | 
+judge | 4 | Circuit Judge | Marianne Aho | 
+judge | 4 | Circuit Judge | Kevin Blazs | 
+judge | 4 | Circuit Judge | Thomas M. Beverly | 
+judge | 4 | Circuit Judge | Russell Healey | 
+judge | 4 | Circuit Judge | Mark H. Mahon | 
+judge | 4 | Circuit Judge | Lindsay Tygart | 
+judge | 4 | Circuit Judge | Maureen Horkan | 
+judge | 4 | Circuit Judge | Ashley Wells Cox | 
+judge | 4 | Circuit Judge | John I. Guy | 
+judge | 4 | Circuit Judge | Nicole Saunders | 
+judge | 4 | Circuit Judge | L.E. Hutton | 
+judge | 4 | Circuit Judge | London Kite | 
+judge | 4 | Circuit Judge | Jonathan D. Sacks | 
+judge | 4 | Circuit Judge | Mark Borello | 
+judge | 4 | Circuit Judge | Tatiana Salvador | 
+judge | 4 | Circuit Judge | R. Anthony Salem | 
+judge | 4 | Circuit Judge | Eric Roberson | 
+judge | 4 | Circuit Judge | Jeb Branham | 
+judge | 4 | Circuit Judge | Michael A. Kalil | 
+judge | 4 | Circuit Judge | W. Collins Cooper | 
+judge | 4 | Circuit Judge | Steven B. Whittington | 
+judge | 4 | Circuit Judge | James E. Kallaher | 
+judge | 4 | Circuit Judge | Angela M. Cox | 
+judge | 4 | Circuit Judge | Gary Wilkinson | 
+judge | 4 | Circuit Judge | Kristina Mobley | 
+judge | 4 | Circuit Judge | Steven Fahlgren | 
+judge | 4 | Circuit Judge | Meredith Charbula | 
+judge | 4 | Circuit Judge | Lester Bass | 
+judge | 5 | Circuit Judge | Carol Falvey | 
+judge | 5 | Circuit Judge | Kristie M. Healis | 
+judge | 5 | Circuit Judge | Robert Kyle Lambert | 
+judge | 5 | Circuit Judge | George L. Singeltary II | 
+judge | 5 | Chief Judge | Daniel B. Merritt, Jr. | 
+judge | 5 | Circuit Judge | Thomas R. Eineman | 
+judge | 5 | Circuit Judge | Don Barbee | 
+judge | 5 | Circuit Judge | Joel D. Fritton | 
+judge | 5 | Circuit Judge | Donald E. Scaglione | 
+judge | 5 | Circuit Judge | Stephen E. Toner | 
+judge | 5 | Circuit Judge | James R. Baxley | 
+judge | 5 | Circuit Judge | Benjamin M. Boylston | 
+judge | 5 | Circuit Judge | Heidi Davis | 
+judge | 5 | Circuit Judge | Dan R. Mosley | 
+judge | 5 | Circuit Judge | Jason J. Nimeth | 
+judge | 5 | Circuit Judge | Cary F. Rada | 
+judge | 5 | Circuit Judge | Michael Takac | 
+judge | 5 | Circuit Judge | Brian M. Toti | 
+judge | 5 | Circuit Judge | Brian Welke | 
+judge | 5 | Circuit Judge | Steven G. Rogers | 
+judge | 5 | Circuit Judge | Jennifer Bass | 
+judge | 5 | Circuit Judge | Peter M. Brigham | 
+judge | 5 | Circuit Judge | Ann Melinda Craggs | 
+judge | 5 | Circuit Judge | Lisa Herndon | 
+judge | 5 | Circuit Judge | Robert W. Hodges | 
+judge | 5 | Circuit Judge | R. Gregg Jerald | 
+judge | 5 | Circuit Judge | Brad King | 
+judge | 5 | Circuit Judge | Barbara Kissner-Kwatkosky | 
+judge | 5 | Circuit Judge | Timothy McCourt | 
+judge | 5 | Circuit Judge | Shanae L. Pickens | 
+judge | 5 | Circuit Judge | Stacy M. Youmans | 
+judge | 5 | Circuit Judge | Charles L.W. Helm | 
+judge | 5 | Circuit Judge | Erin Daly | 
+judge | 5 | Circuit Judge | Mary P. Hatcher | 
+judge | 6 | Circuit Judge | Dustin Anderson | 
+judge | 6 | Circuit Judge | Michael F. Andrews | 
+judge | 6 | Circuit Judge | Linda Babb | 
+judge | 6 | Circuit Judge | Susan G. Barthle | 
+judge | 6 | Circuit Judge | Steve Berlin | 
+judge | 6 | Circuit Judge | Joseph A. Bulone | 
+judge | 6 | Circuit Judge | William H. Burgess III | 
+judge | 6 | Circuit Judge | Kimberly Byrd | 
+judge | 6 | Circuit Judge | Kim Campbell | 
+judge | 6 | Circuit Judge | Pamela A.M. Campbell | 
+judge | 6 | Circuit Judge | Sherwood Coleman | 
+judge | 6 | Circuit Judge | Shawn Crane | 
+judge | 6 | Circuit Judge | Daniel D. Diskey | 
+judge | 6 | Circuit Judge | Jennifer Dubbeld | 
+judge | 6 | Circuit Judge | David Ellis | 
+judge | 6 | Circuit Judge | Kevin Elmore | 
+judge | 6 | Circuit Judge | Philip J. Federico | 
+judge | 6 | Circuit Judge | Evan Frayman | 
+judge | 6 | Circuit Judge | Brian Gnage | 
+judge | 6 | Circuit Judge | Gregory G. Groger | 
+judge | 6 | Circuit Judge | Rebecca Hamilton | 
+judge | 6 | Circuit Judge | Mary M. Handsel | 
+judge | 6 | Circuit Judge | Aaron Hubbard | 
+judge | 6 | Circuit Judge | Elizabeth Jack | 
+judge | 6 | Circuit Judge | Christopher LaBruzzo | 
+judge | 6 | Circuit Judge | Kemba Johnson Lewis | 
+judge | 6 | Circuit Judge | Doneene Loar | 
+judge | 6 | Circuit Judge | Philippe Matthey | 
+judge | 6 | Circuit Judge | Keith Meyer | 
+judge | 6 | Circuit Judge | Patrice Moore | 
+judge | 6 | Circuit Judge | Knute J. Nathe | 
+judge | 6 | Circuit Judge | Cynthia J. Newton | 
+judge | 6 | Circuit Judge | Nicole Pearlman | 
+judge | 6 | Circuit Judge | Alicia Polk | 
+judge | 6 | Circuit Judge | Frederick L. Pollack | 
+judge | 6 | Circuit Judge | Thomas M. Ramsberger | 
+judge | 6 | Circuit Judge | Joshua Riba | 
+judge | 6 | Circuit Judge | Mark F. Robens | 
+judge | 6 | Circuit Judge | Julie L. Sercus | 
+judge | 6 | Circuit Judge | Pat Siracusa | 
+judge | 6 | Circuit Judge | Susan St. John | 
+judge | 6 | Circuit Judge | Benjamin S. Thomas | 
+judge | 6 | Circuit Judge | Kimberly Todd | 
+judge | 6 | Circuit Judge | Lauralee G. Westine | 
+judge | 6 | Circuit Judge | Amy M. Williams | 
+judge | 7 | Circuit Judge | Joan Anthony | 
+judge | 7 | Circuit Judge | Elizabeth A. Blackburn | 
+judge | 7 | Circuit Judge | Lauren P. Blocker | 
+judge | 7 | Circuit Judge | Leah R. Case | 
+judge | 7 | Circuit Judge | Dennis Craig | 
+judge | 7 | Circuit Judge | Randall A. Daugustinis | 
+judge | 7 | Circuit Judge | Christopher Ferebee | 
+judge | 7 | Circuit Judge | Karen A. Foxman | 
+judge | 7 | Circuit Judge | Christopher A. France | 
+judge | 7 | Circuit Judge | Linda L. Gaustad | 
+judge | 7 | Circuit Judge | Kenneth J. Janesk, II | 
+judge | 7 | Circuit Judge | Mary G. Jolley | 
+judge | 7 | Circuit Judge | Christopher Kelly | 
+judge | 7 | Circuit Judge | Howard M. Maltz | 
+judge | 7 | Circuit Judge | Howard O. McGillin, Jr. | 
+judge | 7 | Circuit Judge | A. Kathleen McNeilly | 
+judge | 7 | Circuit Judge | Katherine H. Miller | 
+judge | 7 | Circuit Judge | A. Christian Miller | 
+judge | 7 | Circuit Judge | Dawn D. Nichols | 
+judge | 7 | Circuit Judge | Michael S. Orfinger | 
+judge | 7 | Circuit Judge | Robert W. Pickens, III | 
+judge | 7 | Circuit Judge | Rose Marie Karadsheh Preddy | 
+judge | 7 | Circuit Judge | Randell H. Rowe, III | 
+judge | 7 | Circuit Judge | R. Lee Smith | 
+judge | 7 | Circuit Judge | Frank M. Talbot II | 
+judge | 7 | Circuit Judge | Sandra C. Upchurch | 
+judge | 7 | Circuit Judge | David S. Wainer, III | 
+judge | 7 | Circuit Judge | Alicia R. Washington | 
+judge | 7 | Circuit Judge | Kathryn D. Weston | 
+judge | 8 | Chief Judge | William E. Davis | 
+judge | 8 | Circuit Judge | Sean Brewer | 
+judge | 8 | Circuit Judge | Susanne Wilson Bullard | 
+judge | 8 | Circuit Judge | James M. Colaw | 
+judge | 8 | Circuit Judge | Craig C. DeThomasis | 
+judge | 8 | Circuit Judge | Denise R. Ferrero | 
+judge | 8 | Circuit Judge | Robert K. Groeb | 
+judge | 8 | Circuit Judge | Donna M. Keim | 
+judge | 8 | Circuit Judge | David P. Kreider | 
+judge | 8 | Circuit Judge | Phillip A. Pena | 
+judge | 8 | Circuit Judge | Jonathan D. Ramsey | 
+judge | 8 | Circuit Judge | Kristine Van Vorst | 
+judge | 8 | Circuit Judge | Gloria R. Walker | 
+judge | 8 | Circuit Judge | George M. Wright | 
+judge | 9 | Circuit Judge | Chad K. Alvaro | 
+judge | 9 | Circuit Judge | Christine E. Arendas | 
+judge | 9 | Circuit Judge | Andrew A. Bain | 
+judge | 9 | Circuit Judge | Elaine A. Barbour | 
+judge | 9 | Circuit Judge | Denise Kim Beamer | 
+judge | 9 | Circuit Judge | John D.W. Beamer | 
+judge | 9 | Circuit Judge | Mark S. Blechman | 
+judge | 9 | Circuit Judge | Luis F. Calderon | 
+judge | 9 | Circuit Judge | Keith A. Carsten | 
+judge | 9 | Circuit Judge | Vincent S. Chiu | 
+judge | 9 | Circuit Judge | Christy C. Collins | 
+judge | 9 | Circuit Judge | A. James Craner | 
+judge | 9 | Circuit Judge | Michael Deen | 
+judge | 9 | Circuit Judge | Holly Derenthal | 
+judge | 9 | Circuit Judge | Hal C. Epperson Jr. | 
+judge | 9 | Circuit Judge | Vincent Falcone III | 
+judge | 9 | Circuit Judge | Heather L. Higbee | 
+judge | 9 | Circuit Judge | LaShawnda K. Jackson | 
+judge | 9 | Circuit Judge | Alison Kerestes | 
+judge | 9 | Circuit Judge | Michael Kraynick | 
+judge | 9 | Circuit Judge | Alicia L. Latimore | 
+judge | 9 | Circuit Judge | Gisela T. Laurent | 
+judge | 9 | Circuit Judge | Barbara J. Leach | 
+judge | 9 | Circuit Judge | Diego M. Madrigal III | 
+judge | 9 | Circuit Judge | Leticia Marques | 
+judge | 9 | Circuit Judge | Craig A. McCarthy | 
+judge | 9 | Circuit Judge | Sonia Henriques McDowell | 
+judge | 9 | Chief Judge | Lisa T. Munyon | 
+judge | 9 | Circuit Judge | Michael Murphy | 
+judge | 9 | Circuit Judge | Mikaela Nix-Walker | 
+judge | 9 | Circuit Judge | Alicia Peyton Robinson | 
+judge | 9 | Circuit Judge | Heather Pinder Rodriguez | 
+judge | 9 | Circuit Judge | Brian S. Sandor | 
+judge | 9 | Circuit Judge | Therese A. Savona | 
+judge | 9 | Circuit Judge | Margaret H. Schreiber | 
+judge | 9 | Circuit Judge | Ralph V. Seegobin, Jr. | 
+judge | 9 | Circuit Judge | Laura Shaffer | 
+judge | 9 | Circuit Judge | Mark A. Skipper | 
+judge | 9 | Circuit Judge | Michael J. Snure | 
+judge | 9 | Circuit Judge | Greg A. Tynan | 
+judge | 9 | Circuit Judge | Kevin B. Weiss | 
+judge | 9 | Circuit Judge | Reginald K. Whitehead | 
+judge | 9 | Circuit Judge | Tanya Davis Wilson | 
+judge | 9 | Circuit Judge | Wayne C. Wooten | 
+judge | 9 | Circuit Judge | Tom Young | 
+judge | 10 | Circuit Judge | J. Kevin Abdoney | 
+judge | 10 | Circuit Judge | Susan L. Barber | 
+judge | 10 | Circuit Judge | Heather Beato | 
+judge | 10 | Circuit Judge | Taylor Bowman | 
+judge | 10 | Circuit Judge | Kelly P. Butz | 
+judge | 10 | Circuit Judge | Mark F. Carpanini | 
+judge | 10 | Circuit Judge | Catherine L. Combee | 
+judge | 10 | Circuit Judge | Angela J. Cowden | 
+judge | 10 | Circuit Judge | Cassandra L. Denmark | 
+judge | 10 | Circuit Judge | Peter F. Estrada | 
+judge | 10 | Circuit Judge | Sharon M. Franklin | 
+judge | 10 | Circuit Judge | Melissa Gravitt | 
+judge | 10 | Circuit Judge | Jalal A. Harb | 
+judge | 10 | Circuit Judge | Julie C. Hill | 
+judge | 10 | Circuit Judge | Gerald P. Hill, II | 
+judge | 10 | Circuit Judge | Kevin M. Kohl | 
+judge | 10 | Circuit Judge | Michael P. McDaniel | 
+judge | 10 | Circuit Judge | Dana Y. Moore | 
+judge | 10 | Circuit Judge | Reinaldo Ojeda | 
+judge | 10 | Circuit Judge | Michelle O. Pincket | 
+judge | 10 | Circuit Judge | Brandon J. Rafool | 
+judge | 10 | Circuit Judge | Brenda P. Ramirez | 
+judge | 10 | Circuit Judge | William D. Sites | 
+judge | 10 | Circuit Judge | Keith P. Spoto | 
+judge | 10 | Circuit Judge | Jennifer A. Swenson | 
+judge | 10 | Circuit Judge | David V. Ward | 
+judge | 10 | Circuit Judge | John C. Waters | 
+judge | 10 | Circuit Judge | Rachelle E. Williamson | 
+judge | 10 | Circuit Judge | Lori A. Winstead | 
+judge | 10 | Circuit Judge | James A. Yancey | 
+judge | 11 | Circuit Judge | Daryl E. Trawick | 
+judge | 11 | Circuit Judge | Ramiro C. Areces | 
+judge | 11 | Circuit Judge | Miguel M de la O | 
+judge | 11 | Circuit Judge | Lourdes Simon | 
+judge | 11 | Circuit Judge | Beatrice Butchko Sanchez | 
+judge | 11 | Circuit Judge | Barbara Areces | 
+judge | 11 | Circuit Judge | Antonio Arzola | 
+judge | 11 | Circuit Judge | Gina Beovides | 
+judge | 11 | Circuit Judge | Abby Cynamon | 
+judge | 11 | Circuit Judge | Vivianne Del Rio | 
+judge | 11 | Circuit Judge | Reemberto Diaz | 
+judge | 11 | Circuit Judge | Jason Emilios Dimitris | 
+judge | 11 | Circuit Judge | Javier Enriquez | 
+judge | 11 | Chief Judge | Ariana Fajardo Orshan | 
+judge | 11 | Circuit Judge | Christopher Green | 
+judge | 11 | Circuit Judge | Milton Hirsch | 
+judge | 11 | Circuit Judge | Peter R. Lopez | 
+judge | 11 | Circuit Judge | Valerie R. Manno Schurr | 
+judge | 11 | Circuit Judge | Joseph Perkins | 
+judge | 11 | Circuit Judge | Mavel Ruiz | 
+judge | 11 | Circuit Judge | Samantha Ruiz Cohen | 
+judge | 11 | Circuit Judge | Migna Sanchez-Llorens | 
+judge | 11 | Circuit Judge | William Thomas | 
+judge | 11 | Circuit Judge | Lisa S. Walsh | 
+judge | 11 | Circuit Judge | Robert T. Watson | 
+judge | 11 | Circuit Judge | Lody Jean | 
+judge | 11 | Circuit Judge | Christine Hernandez | 
+judge | 11 | Circuit Judge | Zachary N. James | 
+judge | 11 | Circuit Judge | William Altfield | 
+judge | 11 | Circuit Judge | Jason Bloch | 
+judge | 11 | Circuit Judge | Tanya Brinkley | 
+judge | 11 | Circuit Judge | Carmen Cabarga | 
+judge | 11 | Circuit Judge | Michelle Delancy | 
+judge | 11 | Circuit Judge | Carlos Gamez | 
+judge | 11 | Circuit Judge | Mindy S. Glazer | 
+judge | 11 | Circuit Judge | Laura Maria Gonzalez-Marques | 
+judge | 11 | Circuit Judge | Richard Hersch | 
+judge | 11 | Circuit Judge | Alberto Milian | 
+judge | 11 | Circuit Judge | Cristina Miranda | 
+judge | 11 | Circuit Judge | Ariel Rodriguez | 
+judge | 11 | Circuit Judge | Laura Anne Stuzin | 
+judge | 11 | Circuit Judge | Marisa Tinkler Mendez | 
+judge | 11 | Circuit Judge | Ellen Sue Venzer | 
+judge | 11 | Circuit Judge | Maria Elena Verde-Yanez | 
+judge | 11 | Circuit Judge | Andrea R. Wolfson | 
+judge | 11 | Circuit Judge | David Young | 
+judge | 11 | Circuit Judge | Spencer Multack | 
+judge | 11 | Circuit Judge | Victoria del Pino | 
+judge | 11 | Circuit Judge | Christine Bandin | 
+judge | 11 | Circuit Judge | Laura Shearon Cruz | 
+judge | 11 | Circuit Judge | Ivonne Cuesta | 
+judge | 11 | Circuit Judge | Marcia Del Rey | 
+judge | 11 | Circuit Judge | Veronica Diaz | 
+judge | 11 | Circuit Judge | Christina Marie DiRaimondo | 
+judge | 11 | Circuit Judge | Spencer Eig | 
+judge | 11 | Circuit Judge | Marlene Fernandez-Karavetsos | 
+judge | 11 | Circuit Judge | Stacy D. Glick | 
+judge | 11 | Circuit Judge | Oscar Rodriguez-Fonts | 
+judge | 11 | Circuit Judge | George A. Sarduy | 
+judge | 11 | Circuit Judge | Diana Vizcaino | 
+judge | 11 | Circuit Judge | Yvonne Colodny | 
+judge | 11 | Circuit Judge | Maria de Jesus Santovenia | 
+judge | 11 | Circuit Judge | Jorge E. Cueto | 
+judge | 11 | Circuit Judge | Jose L. Fernandez | 
+judge | 11 | Circuit Judge | Nushin G. Sayfie | 
+judge | 11 | Circuit Judge | Bertila Soto | 
+judge | 11 | Circuit Judge | Michelle Alvarez Barakat | 
+judge | 11 | Circuit Judge | Scott M. Bernstein | 
+judge | 11 | Circuit Judge | Dawn Denaro | 
+judge | 11 | Circuit Judge | Alicia Garcia Priovolos | 
+judge | 11 | Circuit Judge | Carlos Guzman | 
+judge | 11 | Circuit Judge | Charles Kenneth Johnson | 
+judge | 11 | Circuit Judge | Yery Marrero | 
+judge | 11 | Circuit Judge | Denise Martinez-Scanziani | 
+judge | 11 | Circuit Judge | Orlando A. Prescott | 
+judge | 11 | Circuit Judge | Angélica D. Zayas | 
+judge | 11 | Circuit Judge | Elisabeth Espinosa | 
+judge | 11 | Circuit Judge | Michaelle Gonzalez-Paulson | 
+judge | 11 | Circuit Judge | Heloiza Correa | 
+judge | 11 | Circuit Judge | Marie Mato | 
+judge | 11 | Circuit Judge | Jorge Perez Santiago | 
+judge | 11 | Circuit Judge | Cristina Rivera Correa | 
+none | 12 | The Twelfth Circuit's list of judges gives each judge's division but not which court the judge sits on, so its circuit judges are not named here.
+none | 13 | The Thirteenth Circuit's list of judges gives each judge's division but not which court the judge sits on, so its circuit judges are not named here.
+judge | 14 | Circuit Judge | Brantley S. Clark, Jr. | 
+judge | 14 | Circuit Judge | Devin D. Collier | 
+judge | 14 | Circuit Judge | Ana Maria Garcia | 
+judge | 14 | Circuit Judge | Shonna Young Gay | 
+judge | 14 | Circuit Judge | James J. Goodman | 
+judge | 14 | Circuit Judge | William S. Henry | 
+judge | 14 | Circuit Judge | Peter A. Mallory | 
+judge | 14 | Circuit Judge | Christopher N. Patterson | 
+judge | 14 | Circuit Judge | Jarred Patterson | 
+judge | 14 | Circuit Judge | Timothy Register | 
+judge | 14 | Circuit Judge | Russell S. Roberts | 
+judge | 14 | Circuit Judge | Elijah Smiley | 
+judge | 14 | Circuit Judge | Dustin Stephenson | 
+judge | 14 | Circuit Judge | Brandon J. Young | 
+judge | 15 | Chief Judge | Glenn Kelley | 
+judge | 15 | Circuit Judge | Carolyn Bell | 
+judge | 15 | Circuit Judge | Maxine Cheesman | 
+judge | 15 | Circuit Judge | G. Joseph Curley | 
+judge | 15 | Circuit Judge | Jaimie Goodman | 
+judge | 15 | Circuit Judge | Scott Ryan Kerner | 
+judge | 15 | Circuit Judge | Reid P. Scott II | 
+judge | 15 | Circuit Judge | James Sherman | 
+judge | 15 | Circuit Judge | Danielle Sherriff | 
+judge | 15 | Circuit Judge | Darren Dunifon Shull | 
+judge | 15 | Circuit Judge | Caryn Siperstein | 
+judge | 15 | Circuit Judge | Sara Alijewicz | 
+judge | 15 | Circuit Judge | Laura C. Burkhart | 
+judge | 15 | Circuit Judge | Howard Coates, Jr. | 
+judge | 15 | Circuit Judge | Sherri L. Collins | 
+judge | 15 | Circuit Judge | Donald W. Hafele | 
+judge | 15 | Circuit Judge | Bradley Harper | 
+judge | 15 | Circuit Judge | Jeff Martz | 
+judge | 15 | Circuit Judge | John J. Parnofiello | 
+judge | 15 | Circuit Judge | Scott Suskauer | 
+judge | 15 | Circuit Judge | Sarah Willis | 
+judge | 15 | Circuit Judge | Luis Delgado | 
+judge | 15 | Circuit Judge | Gabriel Ermine | 
+judge | 15 | Circuit Judge | Dina Keever-Agrama | 
+judge | 15 | Circuit Judge | Dane Leitner | 
+judge | 15 | Circuit Judge | Karen M. Miller | 
+judge | 15 | Circuit Judge | Cymonie S. Rowe | 
+judge | 15 | Circuit Judge | Rosemarie Scher | 
+judge | 15 | Circuit Judge | Daliah H. Weiss | 
+judge | 15 | Circuit Judge | Autumn Gurrola | 
+judge | 15 | Circuit Judge | Kathleen J. Kroll | 
+judge | 15 | Circuit Judge | Lisa S. Small | 
+judge | 15 | Circuit Judge | Melanie Dale Surber | 
+judge | 15 | Circuit Judge | Kirk C. Volker | 
+judge | 15 | Circuit Judge | Charles E. Burton | 
+judge | 15 | Circuit Judge | Samantha Schosberg Feuer | 
+judge | 16 | Chief Judge | Timothy J. Koenig | 
+judge | 16 | Circuit Judge | Mark H. Jones | 
+judge | 16 | Circuit Judge | James W. Morgan III | 
+judge | 16 | Circuit Judge | Bonnie J. Helms | 
+none | 17 | The Seventeenth Circuit's list of judges gives each judge's division but not which court the judge sits on, so its circuit judges are not named here.
+judge | 18 | Circuit Judge | Tesha Ballou | 
+judge | 18 | Circuit Judge | Scott Blaue | 
+judge | 18 | Circuit Judge | Samuel Bookhardt III | 
+judge | 18 | Circuit Judge | Charlie Crawford | 
+judge | 18 | Circuit Judge | Jigisa Dookhoo | 
+judge | 18 | Circuit Judge | Steve Henderson | 
+judge | 18 | Circuit Judge | Curt Jacobus | 
+judge | 18 | Circuit Judge | Kelly J. McKibben | 
+judge | 18 | Circuit Judge | Laura Moody | 
+judge | 18 | Circuit Judge | Michelle L. Naberhaus | 
+judge | 18 | Circuit Judge | George T. Paulk | 
+judge | 18 | Circuit Judge | Robert Segal | 
+judge | 18 | Circuit Judge | Christina Serrano | 
+judge | 18 | Circuit Judge | Kristen Smith-Rodriguez | 
+judge | 18 | Circuit Judge | Kathryn M. Speicher | 
+judge | 18 | Circuit Judge | Michelle Studstill | 
+judge | 18 | Circuit Judge | Melanie Chase | 
+judge | 18 | Circuit Judge | John D. Galluzzo | 
+judge | 18 | Circuit Judge | Donna M. Goerner | 
+judge | 18 | Circuit Judge | Mark E. Herr | 
+judge | 18 | Circuit Judge | William S. Orth | 
+judge | 18 | Circuit Judge | Jessica Recksiedler | 
+judge | 18 | Circuit Judge | Michael Rudisill | 
+judge | 18 | Circuit Judge | Melissa D. Souto | 
+judge | 18 | Circuit Judge | Christopher Sprysenski | 
+judge | 18 | Circuit Judge | Susan Stacy | 
+judge | 19 | Chief Judge | Charles A. Schwab | 
+judge | 19 | Circuit Judge | Sherwood Bauer, Jr. | 
+judge | 19 | Circuit Judge | Laurie E. Buchanan | 
+judge | 19 | Circuit Judge | Cynthia L. Cox | 
+judge | 19 | Circuit Judge | Lillian B. Ewen | 
+judge | 19 | Circuit Judge | Victoria L. Griffin | 
+judge | 19 | Circuit Judge | Michael C. Heisey | 
+judge | 19 | Circuit Judge | Steven J. Levin | 
+judge | 19 | Circuit Judge | Michael J. Linn | 
+judge | 19 | Circuit Judge | Michael J. McNicholas | 
+judge | 19 | Circuit Judge | Robert Meadows | 
+judge | 19 | Circuit Judge | Elizabeth Metzger | 
+judge | 19 | Circuit Judge | Katherine Mish | 
+judge | 19 | Circuit Judge | Leatha D. Mullins | 
+judge | 19 | Circuit Judge | Anastasia M. Norman | 
+judge | 19 | Circuit Judge | Michael D. Porter | 
+judge | 19 | Circuit Judge | William L. Roby | 
+judge | 19 | Circuit Judge | Robert E. Stone | 
+judge | 19 | Circuit Judge | Rebecca White | 
+judge | 19 | Circuit Judge | Steven R. Wilson | 
+judge | 20 | Chief Judge | J. Frank Porter | 
+judge | 20 | Circuit Judge | Elisabeth Adams | 
+judge | 20 | Circuit Judge | Kimberly Davis Bocelli | 
+judge | 20 | Circuit Judge | Robert Branning | 
+judge | 20 | Circuit Judge | Lauren L. Brodie | 
+judge | 20 | Circuit Judge | Christopher Brown | 
+judge | 20 | Circuit Judge | James W. Chandler | 
+judge | 20 | Circuit Judge | Kyle Cohen | 
+judge | 20 | Circuit Judge | Joseph G. Foster | 
+judge | 20 | Circuit Judge | Jean-Paul Galasso | 
+judge | 20 | Circuit Judge | Geoffrey H. Gentile | 
+judge | 20 | Circuit Judge | Amy Hawthorne | 
+judge | 20 | Circuit Judge | Darrell R. Hill | 
+judge | 20 | Circuit Judge | Russell T. Kirshy | 
+judge | 20 | Circuit Judge | Bruce Kyle | 
+judge | 20 | Circuit Judge | Keith R. Kyle | 
+judge | 20 | Circuit Judge | Alane Laboda | 
+judge | 20 | Circuit Judge | Amanda Levy-Reis | 
+judge | 20 | Circuit Judge | Rachael Loukonen | 
+judge | 20 | Circuit Judge | Andrew Marcus | 
+judge | 20 | Circuit Judge | Shannon H. McFee | 
+judge | 20 | Circuit Judge | John McGowan | 
+judge | 20 | Circuit Judge | Michael T. McHugh | 
+judge | 20 | Circuit Judge | Gilberto Perez | 
+judge | 20 | Circuit Judge | Lisa S. Porter | 
+judge | 20 | Circuit Judge | Tracey Redd | 
+judge | 20 | Circuit Judge | Trent Reichling | 
+judge | 20 | Circuit Judge | James Shenko | 
+judge | 20 | Circuit Judge | James F. Stewart | 
+judge | 20 | Circuit Judge | Carolyn Swift | 
+judge | 20 | Circuit Judge | Nicholas Thompson | 
+judge | 20 | Circuit Judge | Christopher Whitney | 

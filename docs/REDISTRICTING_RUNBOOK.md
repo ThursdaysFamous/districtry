@@ -361,9 +361,9 @@ cache-first; the judge list is not).
 | Judicial circuits (SD, 7) | **At no fixed time**: a change to the circuits under state law (which body makes it was not read here) | not measured; read from the Unified Judicial System's circuit pages | geometry and the judge list's keys; 66 counties in 7 circuits |
 
 
-### AL, CO, ID, MD, MT, NM, NV, OR, PA, UT, WA, WV, WY — COURT DISTRICTS ONLY
+### AL, CO, FL, ID, MD, MT, NM, NV, OR, PA, UT, WA, WV, WY — COURT DISTRICTS ONLY
 
-No other blast-radius entries for these thirteen states. Their court district layers were added
+No other blast-radius entries for these fourteen states. Their court district layers were added
 2026-11-27 the same way as the five above: `scripts/build_state_courts.py` dissolves whole counties
 out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then `<tag>` and a
 `sw.cache_name` bump (the map is cache-first; the judge list is not).
@@ -372,6 +372,7 @@ out of each app's `state-counties.json`, and a rebuild is `--fetch <tag>`, then 
 |---|---|---|---|
 | Judicial circuits (AL, 41) | **At no fixed time**: an act of the Legislature amending Code of Alabama 12-11-2 (counties) or 12-17-20 (judges) | the Legislature; read from those sections through the code page's own GraphQL address | geometry, the judge list's keys and the seat ceiling the fetch holds the county sites to; 67 counties in 41 circuits |
 | Judicial districts (CO, 23) | **At no fixed time**: an act of the General Assembly | the General Assembly (statute not read here); read from the Judicial Branch's trial courts by district page | geometry and the judge list's keys; 64 counties in 23 districts |
+| Judicial circuits (FL, 20) | **At no fixed time**: an act of the Legislature amending Florida Statutes 26.021 (counties) or 26.031 (judges) | the Legislature; read from those sections on the Legislature's statutes site, which also set each circuit's judges (630) | geometry, the judge list's keys and the seat ceiling the fetch holds each circuit's site to; 67 counties in 20 circuits. Four circuits (the Third, Twelfth, Thirteenth and Seventeenth) name no judge, and their 'none' lines must stay without judges |
 | Judicial districts (ID, 7) | **At no fixed time**: an act of the Legislature amending Idaho Code 1-802 to 1-808 | the Legislature; read from those sections, which also set each district's seats (51) | geometry, the judge list's keys and the seat count the fetch holds the directory to; 44 counties in 7 districts |
 | Appellate judicial circuits (MD, 7) | **At no fixed time**: an amendment to Article IV, section 14 of the Maryland Constitution, which names each circuit's counties | the voters, on an amendment the General Assembly proposes; read from section 14 as the Maryland Manual prints it | geometry, the judge list's keys and the count the fetch holds each circuit to (one justice and one Appellate Court judge, and eight at-large judges besides); 23 counties and Baltimore City in 7 circuits. Baltimore City is keyed as the county fabric names it, "Baltimore city" |
 | Judicial districts (MT, 22) | **At no fixed time**: an act of the Legislature | the Legislature (statute not read here); read from the county menu on the Judicial Branch's District Courts page | geometry and the judge list's keys, and the statewide count of district judges that page states; 56 counties in 22 districts |

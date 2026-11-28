@@ -3021,9 +3021,12 @@ ANSWERS = {
             "city, town or village the county governs. The 316 sub-county units "
             "the Census publishes for Florida are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # Circuit and county judges are elected; no circuit is drawn or judge
-        # named yet.
-        "courts-by-district": OPEN,
+        # The Judicial Circuit layer draws Florida's 20 judicial circuits of
+        # whole counties and names the circuit judges of sixteen of them (since
+        # 2026-11-27); the other four circuits' sites do not say which judges
+        # are circuit judges, or refuse this client. County judges are elected
+        # by county, whose ground the County map draws, and are not named.
+        "courts-by-district": answers("fl-judicial-circuit"),
         # School board members are elected from residence districts; no
         # school board district is drawn yet.
         "school-boards-by-district": OPEN,

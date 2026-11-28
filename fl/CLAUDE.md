@@ -86,6 +86,20 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Florida has no township governments,
 so outside a city, town or village the county governs.
 
+**THE COURT LAYER DRAWS FLORIDA'S 20 JUDICIAL CIRCUITS AND NAMES THE CIRCUIT JUDGES OF SIXTEEN**
+(`fl-judicial-circuit`, since 2026-11-27). Each circuit is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from Florida Statutes 26.021; 26.031 sets
+each circuit's judges (630 in all). Judges come from each circuit's own website, each read the way
+it prints them (`FL_PAGES` and the `fl_*` readers; the First's through the data file its judges page
+loads, one per judge, which says whether the judge is a circuit or county judge). 491 judges on
+2026-11-27; the fetch stops if a circuit names more than 26.031 sets or fewer than 85% of them. The
+Third's site refuses this client's connection, and the Twelfth's, Thirteenth's and Seventeenth's
+lists do not say which court each judge sits on, so those four circuits name nobody and their cards
+say why (`FL_UNNAMED`; gap `fl-circuit-judges`). They are kept as a dated excerpt in
+`data/source/courts/fl-courts.txt` and shipped network-first as `fl-district-judges.json`. Judges
+are elected for six-year terms (Florida Constitution, Article V, section 10). No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE FLORIDA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves. The archive keeps 1,013 of the 1,102 ZCTAs in the app's box
@@ -140,8 +154,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Florida (`florida`) — https://districtry.com/fl/
 - Geocoders: address Photon (Florida-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Florida-bounded, serial >=1s queue)
-- Ground truth: 30.43817,-84.28164 (Florida State Capitol, 400 South Monroe Street, Tallahassee, Leon County) → county Leon County; us-house 2; fl-senate 3; fl-house 9. Negative point 27.00000,-85.50000 (Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 7. Debug namespace `window.FloridaExplorer`.
+- Ground truth: 30.43817,-84.28164 (Florida State Capitol, 400 South Monroe Street, Tallahassee, Leon County) → county Leon County; us-house 2; fl-senate 3; fl-house 9; fl-judicial-circuit 2nd Judicial Circuit. Negative point 27.00000,-85.50000 (Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 8. Debug namespace `window.FloridaExplorer`.
 - Scheduled workflows: `update-fl-congress-roster.yml` (Mon 20:47 UTC); `update-fl-legislature-roster.yml` (Wed 20:47 UTC); `fl-validate-sources.yml` (1st of month 22:53 UTC).
 - Source registry: `fl/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
