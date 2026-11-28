@@ -92,7 +92,7 @@ different thing from one it failed.
 | wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,572 | all | 269 | all | 13 of 14 levels |
 | wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 17 | all | 11 of 14 levels |
-| wy | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
+| wy | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 15 | all | 10 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
 than county by county. That is a weaker statement than a record
@@ -113,8 +113,7 @@ per county, so each one is named under its state below.
   - **4. The county governing body, in every county of the state** — open. 0 of 30 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 3 units at 25,000+ name a governing body; unanswered: Anchorage municipality, Fairbanks city, Juneau city and borough
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -128,8 +127,7 @@ per county, so each one is named under its state below.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 67 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 24 units at 25,000+ name a governing body; unanswered: Alabaster city, Athens city, Auburn city, Bessemer city, Birmingham city, Daphne city, Decatur city, Dothan city and 16 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -155,8 +153,7 @@ per county, so each one is named under its state below.
   - **4. The county governing body, in every county of the state** — open. 0 of 15 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 31 units at 25,000+ name a governing body; unanswered: Apache Junction city, Avondale city, Buckeye city, Bullhead City city, Casa Grande city, Chandler city, El Mirage city, Flagstaff city and 23 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -188,8 +185,7 @@ per county, so each one is named under its state below.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 64 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 28 units at 25,000+ name a governing body; unanswered: Arvada city, Aurora city, Boulder city, Brighton city, Broomfield city, Castle Rock town, Centennial city, Colorado Springs city and 20 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -285,8 +281,7 @@ per county, so each one is named under its state below.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 44 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 13 units at 25,000+ name a governing body; unanswered: Boise City city, Caldwell city, Coeur d'Alene city, Eagle city, Idaho Falls city, Lewiston city, Meridian city, Moscow city and 5 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -370,8 +365,7 @@ per county, so each one is named under its state below.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 23 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 10 units at 25,000+ name a governing body; unanswered: Annapolis city, Baltimore city, Bowie city, College Park city, Frederick city, Gaithersburg city, Hagerstown city, Laurel city and 2 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -388,8 +382,7 @@ per county, so each one is named under its state below.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 4 units at 25,000+ name a governing body; unanswered: Bangor city, Lewiston city, Portland city, South Portland city
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 
@@ -442,8 +435,7 @@ per county, so each one is named under its state below.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 56 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 6 units at 25,000+ name a governing body; unanswered: Billings city, Bozeman city, Butte-Silver Bow (balance), Great Falls city, Helena city, Missoula city
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -533,8 +525,7 @@ this instance is in maintenance.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 33 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 10 units at 25,000+ name a governing body; unanswered: Alamogordo city, Albuquerque city, Carlsbad city, Clovis city, Farmington city, Hobbs city, Las Cruces city, Rio Rancho city and 2 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -600,8 +591,7 @@ this instance is in maintenance.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 36 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 24 units at 25,000+ name a governing body; unanswered: Albany city, Beaverton city, Bend city, Corvallis city, Eugene city, Forest Grove city, Grants Pass city, Gresham city and 16 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -616,8 +606,7 @@ this instance is in maintenance.
   - **4. The county governing body, in every county of the state** — open. 0 of 67 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 69 units at 25,000+ name a governing body; unanswered: Abington township, Allentown city, Altoona city, Bensalem township, Bethel Park municipality, Bethlehem city, Bethlehem township, Bristol township and 61 more
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -700,8 +689,7 @@ this instance is in maintenance.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 29 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 38 units at 25,000+ name a governing body; unanswered: American Fork city, Bountiful city, Cedar City city, Clearfield city, Cottonwood Heights city, Draper city, Eagle Mountain city, Herriman city and 30 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -726,8 +714,7 @@ this instance is in maintenance.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 1 units at 25,000+ name a governing body; unanswered: Burlington city
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -741,8 +728,7 @@ this instance is in maintenance.
 - **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 39 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 45 units at 25,000+ name a governing body; unanswered: Auburn city, Bellevue city, Bellingham city, Bothell city, Bremerton city, Burien city, Camas city, Des Moines city and 37 more
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -771,12 +757,11 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `wy-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 23 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wy/data/app/population/`, `state-counties.json`, `wy-district-judges.json`, `wy-house-districts.json`, `wy-judicial-districts.json`, `wy-senate-districts.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 23 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 4 units at 25,000+ name a governing body; unanswered: Casper city, Cheyenne city, Gillette city, Laramie city
-  - **10. School boards elected by district** — unsettled (required only where the state has the level)
-    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Wyoming has no sub-county general-purpose government — outside a city or town the county governs. The 71 sub-county units the Census publishes for Wyoming are census county divisions: statistical areas, not governments (measured 2026-11-12).
+  - **10. School boards elected by district** — Wyoming's school trustees are elected by the voters of the whole school district (W.S. 21-6-215(b)); a trustee residence area only says where a trustee must live, so there is no district a voter elects a member from.

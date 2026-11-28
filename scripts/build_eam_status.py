@@ -2780,9 +2780,14 @@ ANSWERS = {
         # municipality layer draws and whose supervisors or commissioners it
         # does not name.
         "sub-county-government": OPEN,
-        # Whether any board elects its directors by region has not been
-        # measured for Pennsylvania.
-        "school-boards-by-district": UNSETTLED,
+        # Public School Code of 1949, section 303(b) (palegis.us, read
+        # 2026-11-27): a board, or a quarter of the electors, may adopt a region
+        # plan the court of common pleas approves, and then the directors who
+        # reside in each region are elected by and from that region; a first
+        # class A district's board (section 302.1) is elected by specified
+        # districts, one member from each. Which districts use a region plan is
+        # not measured; no region is drawn or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -2865,7 +2870,12 @@ ANSWERS = {
         # judges by county outside the counties that use merit retention;
         # neither is drawn or named yet.
         "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # A.R.S. 15-431(A) (azleg.gov, read 2026-11-27): a district of 1,000 or
+        # more pupils, a quarter or more of them minority students, may vote to
+        # elect its board from single-member districts; boards are otherwise
+        # elected at large. Which districts have done so is not measured; no
+        # board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Drawn 2026-11-12: all 28 pieces the Census keeps in Arizona (21
@@ -3117,9 +3127,12 @@ ANSWERS = {
         # whole counties and names the judges each court's voters elect (since
         # 2026-11-27).
         "courts-by-district": answers("wa-superior-court"),
-        # Whether any board elects its members by district has not been
-        # measured for Washington.
-        "school-boards-by-district": UNSETTLED,
+        # RCW 28A.343.030 (read 2026-11-27): a district's director districts are
+        # a residency rule, and the whole district elects each director; RCW
+        # 29A.92.040, the Washington Voting Rights Act, lets a district adopt
+        # district-based elections. Which districts have done so is not
+        # measured; no director district is drawn or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Drawn 2026-11-12: all 50 pieces the Census keeps in Washington (28
@@ -3201,7 +3214,13 @@ ANSWERS = {
         # whole counties and names the district judges each district's voters
         # retain (since 2026-11-27).
         "courts-by-district": answers("co-judicial-district"),
-        "school-boards-by-district": UNSETTLED,
+        # C.R.S. 22-31-105(1)(b) and 22-31-131(1.5)(b)(I) (Colorado Revised
+        # Statutes 2024, read 2026-11-27): Denver Public Schools elects five of
+        # its seven directors from director districts, each voted on only by
+        # that district's electors; under 22-31-105(6.5) any other district may
+        # put such a plan to its voters. No director district is drawn or
+        # director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Colorado: the Census keeps two
@@ -3243,7 +3262,13 @@ ANSWERS = {
         # 2026-11-27). Circuit court judges are elected by county, whose ground
         # the County map draws, and are not named.
         "courts-by-district": answers("md-appellate-circuit"),
-        "school-boards-by-district": UNSETTLED,
+        # Education Article (mgaleg.maryland.gov, read 2026-11-27): Prince
+        # George's County's board members are elected by the voters of each of
+        # nine school board districts (section 3-1002), and Baltimore County's
+        # by the voters of each of seven councilmanic districts (section
+        # 3-2B-01). The other counties' sections are not read. No board district
+        # is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -3282,7 +3307,12 @@ ANSWERS = {
         # whole counties and names the circuit judges elected there (since
         # 2026-11-27). District and probate judges are not drawn or named yet.
         "courts-by-district": answers("al-judicial-circuit"),
-        "school-boards-by-district": UNSETTLED,
+        # Code of Alabama 16-8-1(b) (read 2026-11-27 through the Legislature's
+        # code page): unless another law provides otherwise, a county board of
+        # education may establish five or seven single-member election
+        # districts, one member elected from each. City boards and local acts
+        # are not read. No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alabama: the Census keeps the Poarch Band of
@@ -3324,7 +3354,11 @@ ANSWERS = {
         # whole counties and names the circuit judges each district's voters
         # elect (since 2026-11-27).
         "courts-by-district": answers("or-judicial-district"),
-        "school-boards-by-district": UNSETTLED,
+        # ORS 332.124 and 332.126 (read 2026-11-27): a school board is elected
+        # at large unless it provides for directors nominated and elected from
+        # zones. Which districts have done so is not measured; no zone is drawn
+        # or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Oregon: the Census keeps 10 reservations and
@@ -3402,7 +3436,11 @@ ANSWERS = {
         # counties and names the district judges each district's voters retain
         # (since 2026-11-27).
         "courts-by-district": answers("ut-judicial-district"),
-        "school-boards-by-district": UNSETTLED,
+        # Utah Code 20A-14-201(1) and 20A-14-202(3) (le.utah.gov, read
+        # 2026-11-27): every local school district is divided into local school
+        # board districts, and each member is elected from the district the
+        # member lives in. No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Utah: the Census keeps 7 reservations and 2
@@ -3642,7 +3680,13 @@ ANSWERS = {
             "a city or town the county governs. The 130 sub-county units the "
             "Census publishes for New Mexico are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # NMSA 1978, section 22-5-1.1 (nmonesource.com, the state's statutes
+        # site, read once by eye in Adam's Chrome on 2026-11-28 after its
+        # document address refused this client): members of a local school board
+        # in a district of more than 16,000 people reside in and are elected
+        # from single-member districts, and a smaller district may do the same.
+        # No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "New
@@ -3727,7 +3771,11 @@ ANSWERS = {
             "city or town the county governs. The 170 sub-county units the "
             "Census publishes for Idaho are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # Idaho Code 33-313(1) and 33-503(1) (read 2026-11-27): every school
+        # district is divided into trustee zones, three to nine, and each zone's
+        # trustee is the person with the most votes cast within the zone. No
+        # trustee zone is drawn or trustee named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Idaho: the
@@ -3817,7 +3865,13 @@ ANSWERS = {
         # are active towns and plantations, general-purpose governments the City
         # or Town layer draws and whose governing bodies it does not name.
         "sub-county-government": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # 20-A M.R.S. section 1472 (legislature.maine.gov, read 2026-11-27): a
+        # regional school unit's board may represent subdistricts, each with its
+        # own voting place (Method A), or member municipalities whose directors
+        # each municipality elects (Method B); Method C is at large. Which units
+        # use which method is not measured; no subdistrict is drawn or director
+        # named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Maine: the
@@ -3856,7 +3910,12 @@ ANSWERS = {
             "city or town the county governs. The 194 sub-county units the "
             "Census publishes for Montana are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # MCA 20-3-337 and 20-3-338 (leg.mt.gov, read 2026-11-27): a board of
+        # trustees may create single-member trustee districts, and each
+        # trustee's election is put to the electors of that trustee district.
+        # Which districts have done so is not measured; no trustee district is
+        # drawn or trustee named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Montana: the
@@ -4016,7 +4075,12 @@ ANSWERS = {
             "sub-county units the Census publishes for Alaska are census "
             "subareas: statistical areas, not governments (measured "
             "2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # AS 14.08.041(d) and 14.08.051(b) and (e) (akleg.gov, read 2026-11-27):
+        # a regional educational attendance area's board is elected at large
+        # unless its voters approve electing each member from a section by that
+        # section's voters. Borough and city school boards are not read. No
+        # section is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alaska: the
@@ -4052,7 +4116,12 @@ ANSWERS = {
         # are active towns, general-purpose governments the City or Town layer
         # draws and whose governing bodies it does not name.
         "sub-county-government": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # 16 V.S.A. section 730(a)(1) (legislature.vermont.gov, read
+        # 2026-11-27): where a unified union school district's board is
+        # apportioned to its towns by population, the voters of each town elect
+        # that town's members. Which districts are apportioned this way is not
+        # measured; no member is named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -4090,7 +4159,15 @@ ANSWERS = {
             "city or town the county governs. The 71 sub-county units the "
             "Census publishes for Wyoming are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # W.S. 21-6-215(b) (wyoleg.gov, read 2026-11-27): every trustee is
+        # elected by the electorate of the entire school district, and a trustee
+        # residence area only says where a trustee must live (21-3-111(b),
+        # 22-22-201(a)).
+        "school-boards-by-district": na(
+            "Wyoming's school trustees are elected by the voters of the whole "
+            "school district (W.S. 21-6-215(b)); a trustee residence area only "
+            "says where a trustee must live, so there is no district a voter "
+            "elects a member from."),
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Wyoming: the
