@@ -1,0 +1,128 @@
+{
+  "50001": {
+    "county": "Addison",
+    "probate": "Pamela Marsh",
+    "assistant": [
+      "Nicole Wilkerson",
+      "Patricia Ross"
+    ],
+    "read": "2026-11-28"
+  },
+  "50003": {
+    "county": "Bennington",
+    "probate": "Lon McClintock",
+    "assistant": [
+      "Mary Frost",
+      "Brian Peat"
+    ],
+    "read": "2026-11-28"
+  },
+  "50005": {
+    "county": "Caledonia",
+    "probate": "Annette Lorraine",
+    "assistant": [
+      "Joe Benning",
+      "Merle Haskins"
+    ],
+    "read": "2026-11-28"
+  },
+  "50007": {
+    "county": "Chittenden",
+    "probate": "Gregory Glennon",
+    "assistant": [
+      "Suzanne Brown",
+      "Connie C. Ramsey"
+    ],
+    "read": "2026-11-28"
+  },
+  "50009": {
+    "county": "Essex",
+    "probate": "Samuel Swope",
+    "assistant": [
+      "Evan Hammond",
+      "Kenn Stransky"
+    ],
+    "read": "2026-11-28"
+  },
+  "50011": {
+    "county": "Franklin",
+    "probate": "Robert Farrar",
+    "assistant": [
+      "Kelly Gosselin",
+      "Jay Sweeny"
+    ],
+    "read": "2026-11-28"
+  },
+  "50013": {
+    "county": "Grand Isle",
+    "probate": "George Spear",
+    "assistant": [
+      "Kim Kinney",
+      "Sherri Potvin"
+    ],
+    "read": "2026-11-28"
+  },
+  "50015": {
+    "county": "Lamoille",
+    "probate": "James R. Dean Mahoney",
+    "assistant": [
+      "Madeline Motta",
+      "Patricia Gabel"
+    ],
+    "read": "2026-11-28"
+  },
+  "50017": {
+    "county": "Orange",
+    "probate": "Kathryn Kennedy",
+    "assistant": [
+      "Laurel Mackin",
+      "Joyce McKeeman"
+    ],
+    "read": "2026-11-28"
+  },
+  "50019": {
+    "county": "Orleans",
+    "probate": "Angela Ross",
+    "assistant": [
+      "Curtis Hardy",
+      "Sean Selby"
+    ],
+    "read": "2026-11-28"
+  },
+  "50021": {
+    "county": "Rutland",
+    "probate": "Karl Anderson",
+    "assistant": [
+      "Stephen Benard",
+      "Kevin Geno"
+    ],
+    "read": "2026-11-28"
+  },
+  "50023": {
+    "county": "Washington",
+    "probate": "Jeffrey Kilgore",
+    "assistant": [
+      "Elizabeth Battey",
+      "Leah Jones"
+    ],
+    "read": "2026-11-28"
+  },
+  "50025": {
+    "county": "Windham",
+    "probate": "Jodi French",
+    "assistant": [
+      "Lamont Barnett",
+      "Carolyn Partridge"
+    ],
+    "read": "2026-11-28"
+  },
+  "50027": {
+    "county": "Windsor",
+    "probate": "Fred Glover",
+    "assistant": [
+      "Alison Johannensen",
+      "Michael Ricci"
+    ],
+    "read": "2026-11-28"
+  }
+}

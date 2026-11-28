@@ -211,7 +211,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Vermont's counties have no county board. Each elects officers such as a sheriff, a state's attorney, a probate judge and two assistant judges, who also oversee the county's budget, and the towns and cities are the general-purpose local governments. No list of them was read in this pass, so the card says so and names nobody. Recorded as gap vt-county-officials.",
+        "people": "vt-county-judges.json, read on 2026-11-28 from the Vermont Judiciary's court location pages: each county's probate judge, the judge its probate division page lists (the Secretary of State's Legislative Directory and State Manual, 2025-2026, lists the same judge as the probate division's judge in twelve counties, and in Grand Isle and Rutland as the one Superior Judge it gives no other division), and its two assistant judges, from its civil division page. Vermont's counties have no county board; the sheriff, the state's attorney and the high bailiff are not named yet. Recorded as gap vt-county-officials.",
         "applies": "Vermont — statewide, all 14 counties."
       }
     },
@@ -483,6 +483,11 @@
         "file": "vt-house-members.json",
         "min_keys": 109,
         "note": "Vermont House roster, one record per district holding its seat count and every member listed, refreshed weekly by update-vt-legislature-roster.yml."
+      },
+      {
+        "file": "vt-county-judges.json",
+        "min_keys": 14,
+        "note": "Each county's probate judge and two assistant judges, keyed by county FIPS code, read 2026-11-28 from the Vermont Judiciary's court location pages into vt/data/source/vt-county-judges.txt and built by vt/scripts/build_vt_county_judges.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       },
       {
         "file": "coverage-gaps.json",

@@ -16624,12 +16624,17 @@ function initVermontExplorer() {
    * VERMONT'S COUNTIES HAVE NO COUNTY BOARD. Each elects officers such as a
    * sheriff, a state's attorney, a probate judge and two assistant judges,
    * who also oversee the county's budget, and the towns and cities are the
-   * general-purpose local governments. No list of them was read in this
-   * pass, so the card says so and names nobody. Recorded as gap vt-county-
-   * officials.
+   * general-purpose local governments. The card names the probate judge and
+   * the two assistant judges from the Vermont Judiciary's own court location
+   * pages (data/app/vt-county-judges.json, built by
+   * vt/scripts/build_vt_county_judges.py); the sheriff and the state's
+   * attorney are not named yet (gap vt-county-officials).
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
+  });
+  var loadCountyJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/vt-county-judges.json", {}, 2);
   });
   // A county whose government differs from the state's usual form, by GEOID,
   // with the sentence its card prints instead of the general one.
@@ -16653,11 +16658,19 @@ function initVermontExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
-          seq: seq,
-          name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
-        };
+        var geoid = findPropCI(props, ["geoid"]);
+        var base = { seq: seq, name: findPropCI(props, ["name"]), geoid: geoid };
+        // The judges list failing to load leaves the county card standing.
+        return loadCountyJudges().then(function (doc) {
+          if (seq !== state.sequence) return base;
+          var rec = doc && geoid != null && doc.hasOwnProperty(String(geoid)) ? doc[String(geoid)] : null;
+          base.judges = rec || null;
+          base.judgesRead = rec && rec.read ? String(rec.read) : null;
+          return base;
+        }, function () {
+          base.judgesFailed = true;
+          return base;
+        });
       });
     },
     render: function (result) {
@@ -16667,14 +16680,28 @@ function initVermontExplorer() {
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
       var geoid = result.geoid != null ? String(result.geoid) : "";
+      var judges = result.judges;
+      if (judges) {
+        var people = [{ name: String(judges.probate), note: "Probate judge" }];
+        (judges.assistant || []).forEach(function (n) {
+          people.push({ name: String(n), note: "Assistant judge" });
+        });
+        wrap.appendChild(renderSectionLabel("Elected county judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
       var fields = [];
       if (VT_COUNTY_NOTES.hasOwnProperty(geoid)) {
         fields.push({ label: "County government", value: VT_COUNTY_NOTES[geoid] });
       } else {
         fields.push({
           label: "County officials",
-          value: "Vermont's counties have no county board. Each elects officers such as a sheriff, a state's attorney, a probate judge and two assistant judges, and the town or city is the local government over this point. None of them is named here yet, and this app does not guess in the meantime, so the county's own website is the current source."
+          value: "Vermont's counties have no county board. Each elects officers such as a sheriff, a state's attorney, a probate judge and two assistant judges, each for four years, and the town or city is the local government over this point. " +
+            (judges ? "The sheriff and the state's attorney are not named here yet, and this app does not guess in the meantime, so the county's own website is the current source for them."
+              : (result.judgesFailed ? "The list of county judges did not load, so no one is named here." : "None of them is named here yet, and this app does not guess in the meantime, so the county's own website is the current source."))
         });
+      }
+      if (judges && result.judgesRead) {
+        fields.push({ label: "Where the judges' names come from", value: "The Vermont Judiciary's court location pages for this county, read " + statewideDate(result.judgesRead) + ". The probate judge is the judge its probate division page lists; the assistant judges are those its civil division page lists. Judges elected in November 2026 take office on 1 February 2027." });
       }
       wrap.appendChild(renderFieldStack(fields));
       return wrap;

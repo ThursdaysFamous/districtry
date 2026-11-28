@@ -59,6 +59,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/vt-senate-members.json",
   "./data/app/vt-house-members.json",
+  "./data/app/vt-county-judges.json",
   "./data/app/coverage-gaps.json",
   "./data/app/statewide-officials.json",
 ];

@@ -550,11 +550,11 @@ measured until the next run describes it.
 | sd | 18 | 16 | 0 |
 | nd | 19 | 15 | 0 |
 | ak | 16 | 12 | 0 |
-| vt | 18 | 11 | 0 |
+| vt | 19 | 12 | 0 |
 | wy | 19 | 14 | 0 |
-| **total** | **1346** | **1579** | **12** |
+| **total** | **1347** | **1580** | **12** |
 
-**286 distinct source hosts** across the six manifests. Each instance's
+**287 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

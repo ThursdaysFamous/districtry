@@ -4095,10 +4095,11 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("vt-senate", "vt-house"),
         "county-boundaries": answers("county"),
-        # No county official is named yet. A Vermont county has no governing
-        # board; its voters elect two assistant judges, who run the county's
-        # budget, a sheriff, a state's attorney, a probate judge and a high
-        # bailiff.
+        # A Vermont county has no governing board; its voters elect two
+        # assistant judges, who run the county's budget, a sheriff, a state's
+        # attorney, a probate judge and a high bailiff. The County card names
+        # the judges (since 2026-11-28, vt-county-judges.json); the sheriff,
+        # state's attorney and high bailiff are not named yet.
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # No city or town council is named yet.
@@ -4108,10 +4109,13 @@ ANSWERS = {
         # Vermont's cities and towns ARE its county subdivisions (TIGERweb layer
         # 22), so the City or Town layer is this map.
         "subdivision-boundaries": answers("municipality"),
-        # Assistant judges and probate judges are elected by county, and none is
-        # named yet; every other judge is appointed by the Governor and
-        # confirmed by the Senate.
-        "courts-by-district": OPEN,
+        # Assistant judges and probate judges are elected by county, so the
+        # County map draws the ground their voters live on, and the County card
+        # names each county's probate judge and two assistant judges from the
+        # Vermont Judiciary's court location pages (since 2026-11-28,
+        # vt/scripts/build_vt_county_judges.py). Every other judge is appointed
+        # by the Governor and confirmed by the Senate.
+        "courts-by-district": answers("county"),
         # Measured 2026-11-12 on TIGERweb: 237 of Vermont's county subdivisions
         # are active towns, general-purpose governments the City or Town layer
         # draws and whose governing bodies it does not name.

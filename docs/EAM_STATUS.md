@@ -88,7 +88,7 @@ different thing from one it failed.
 | tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 8 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
-| vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
+| vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
 | wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,572 | all | 269 | all | 13 of 14 levels |
 | wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 17 | all | 11 of 14 levels |
@@ -708,11 +708,10 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `vt-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 14 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `vt/data/app/population/`, `state-counties.json`, `vt-house-districts.json`, `vt-senate-districts.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `vt/data/app/population/`, `state-counties.json`, `vt-county-judges.json`, `vt-house-districts.json`, `vt-senate-districts.json`
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 14 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 1 units at 25,000+ name a governing body; unanswered: Burlington city
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
