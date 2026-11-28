@@ -250,6 +250,18 @@ PROVENANCE = [
             "other county."
         ),
     },
+    {
+        "layer": "mo-judicial-circuit",
+        "app_file": "mo-judicial-districts.json",
+        "source_url": "https://www.courts.mo.gov/file.jsp?id=281",
+        "note": "Missouri's 46 judicial circuits, dissolved from the 114 counties and the city of St. Louis by scripts/build_state_courts.py from the Missouri courts' circuit table (excerpt in mo/data/source/courts/mo-courts.txt, read 2026-11-28).",
+    },
+    {
+        "layer": "mo-judicial-circuit",
+        "app_file": "mo-district-judges.json",
+        "source_url": "https://www.courts.mo.gov/page.jsp?id=1754",
+        "note": "The circuit judges of all 46 circuits, read from the Missouri courts' Find a Court/Person directory by scripts/build_state_courts.py --fetch mo, which stops unless every circuit has at least one judge and exactly one presiding judge. The monthly re-read is a row in mo/WATCH.md.",
+    },
 ]
 
 # Missouri's envelope, as index.html writes it for the ZIP layer

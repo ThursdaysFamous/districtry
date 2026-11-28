@@ -65,8 +65,16 @@ the elementary districts' ground, so a reader there is in two districts at once.
 named yet (gap `vt-school-board-members`).
 
 **VERMONT'S COUNTIES HAVE NO COUNTY BOARD.** Each elects officers such as a sheriff, a state's attorney, a
-probate judge and two assistant judges, and the town or city is the local government. The card names none
-of them yet and says so (gap `vt-county-officials`).
+probate judge and two assistant judges, each for four years from the first of February after the election,
+and the town or city is the local government. **THE COUNTY CARD NAMES EACH COUNTY'S PROBATE JUDGE AND TWO
+ASSISTANT JUDGES** (since 2026-11-28) from the Vermont Judiciary's court location pages:
+`vt/scripts/build_vt_county_judges.py --fetch` reads each county's probate division page (the judge under
+"Court Staff", which the page labels "Superior Judge"; the Secretary of State's Legislative Directory and
+State Manual lists the same judge as the probate division's) and its civil division page (the "Assistant
+Judge" line), keeps them as text in `data/source/vt-county-judges.txt`, and stops unless all 14 counties give
+one probate judge and two assistant judges. The build writes `vt-county-judges.json`, network-first, keyed by
+county FIPS code; no job refreshes it, and the monthly re-read is a row in `WATCH.md`. The sheriff, the
+state's attorney and the high bailiff are not named yet, and the card says so (gap `vt-county-officials`).
 
 **VERMONT HAS NO TRIBAL LAND TO DRAW.** Measured 2026-11-12 with `scripts/tribal_areas.py --report
 Vermont`: the three drawn classes keep no feature inside the state, with Vermont resolving to state code 50

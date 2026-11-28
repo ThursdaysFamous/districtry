@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ne-legislature", "ne-judicial-district"]
 const EXPECT_DISTRICT = { "county": "Lancaster County", "us-house": "1", "ne-legislature": "28", "ne-judicial-district": "Judicial District 3" };
 const NEGATIVE_POINT = "42.87000,-97.05000"; // Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry Nebraska";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NebraskaExplorer";
@@ -841,8 +841,9 @@ try {
         props: { GEOID: "3128000", NAME: "Lincoln city", BASENAME: "Lincoln", STATE: "31", LSADC: "25", FUNCSTAT: "A" },
         want: [/Lincoln city/, /Incorporated city — a general-purpose local government over this point, alongside the county/,
           /Leirion Gaylor Baird/, /Council, District 1/, /elected by District 1/, /Bennie Shobe/, /Council, At large/,
-          /How the seats are elected/, /Read on November 27, 2026/, /Which district this point is in/],
-        reject: [/inactive government/, /Not named here/]
+          /How the seats are elected/, /Read on [A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\./, /Which district this point is in/,
+          /The City Council District layer draws Lincoln's districts/],
+        reject: [/inactive government/, /Not named here/, /does not draw/]
       },
       {
         name: "a council elected at large names every member, and a mayor chosen from it",
@@ -1303,6 +1304,54 @@ try {
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("9 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
     }
+  }
+  // 11. CITY COUNCIL DISTRICT. A point inside each drawn city answers its
+  //     ward from the shipped file and names only the member or members that
+  //     ward's own voters elect, from the council roster the City card reads;
+  //     a point in a city whose wards are not drawn, or that elects every seat
+  //     by the whole city, answers nothing and the card says why. Each inside
+  //     point is the ward builder's own anchor (more than 400 metres inside
+  //     its ward and inside the Census outline of the city, TIGERweb, read
+  //     2026-11-28); each outside point is the Census's internal point of the
+  //     place named.
+  for (const c of [
+    { name: "Omaha", point: "41.29258,-96.12166",
+      want: [/District 7\b/, /Omaha City Council/, /Aimee Melton/, /elected by District 7/,
+        /The mayor\./, /the map Douglas County's GIS office keeps for the City of Omaha/, /within 4 metres/],
+      reject: [/John Ewing Jr\./, /Pete Festersen/, /elected by Ward/] },
+    { name: "Lincoln", point: "40.84607,-96.73911",
+      want: [/District 4\b/, /Lincoln City Council/, /Brodey Weber/, /elected by District 4/,
+        /Elected by the whole city/, /the City of Lincoln's own map/],
+      reject: [/Leirion Gaylor Baird/, /Bennie Shobe/, /Tom Duden/] },
+    { name: "Bellevue, drawn from Sarpy County's map", point: "41.14965,-95.92878",
+      want: [/Ward 6\b/, /Bellevue City Council/, /Jerry McCaw/, /elected by Ward 6/, /Sarpy County's election map/],
+      reject: [/Rusty Hike/, /Thomas Burns/] },
+    { name: "Grand Island", point: "40.92775,-98.36972",
+      want: [/Ward 5\b/, /Grand Island City Council/, /Doug Lanfear/, /Chuck Haase/, /elected by Ward 5/,
+        /the City of Grand Island's own map/],
+      reject: [/Roger Steele/, /Jack Sheard/] },
+    { name: "Fremont", point: "41.43090,-96.47119",
+      want: [/Ward 4\b/, /Fremont City Council/, /Lori Lathrop/, /Sally Ganem/, /elected by Ward 4/,
+        /the City of Fremont's own map/],
+      reject: [/Dev Sookram/, /Paul Von Behren/] },
+    { name: "Hastings", point: "40.59875,-98.37691",
+      want: [/Ward 4\b/, /Hastings City Council/, /Matt Fong/, /Brian Hoffman/, /elected by Ward 4/,
+        /the City of Hastings's own map/],
+      reject: [/Steven Huntley/, /Michael Anderson/] },
+    { name: "Kearney, which elects every seat by the whole city", point: "40.70175,-99.08231",
+      want: [/not in a council (?:ward or district|ward|district) this map draws/, /Kearney elects every seat by the whole city/],
+      reject: [/Kearney City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
   }
 } finally {
   await browser.close();

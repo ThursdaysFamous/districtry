@@ -85,6 +85,17 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Idaho has no township governments, so
 outside a city the county governs.
 
+**THE COURT LAYER DRAWS IDAHO'S 7 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`id-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from Idaho Code sections 1-802 to 1-808,
+which also set each district's number of judges (51). The Supreme Court's judicial directory names
+them (50, read 2026-11-27, and one seat it prints as vacant); the page fills its list from data it
+carries inline, and the fetch reads that data the way the page does and stops unless each district's
+seats match the statute. They are kept as a dated excerpt in `data/source/courts/id-courts.txt` and
+shipped network-first as `id-district-judges.json`. The district's voters elect its judges for
+four-year terms (Idaho Constitution, Article V, section 11). Magistrate judges are not kept. No job
+refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE IDAHO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -112,8 +123,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Idaho (`idaho`) — https://districtry.com/id/
 - Geocoders: address Photon (Idaho-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Idaho-bounded, serial >=1s queue)
-- Ground truth: 43.61771,-116.19975 (Idaho State Capitol, 700 West Jefferson Street, Boise, Ada County) → county Ada County; us-house 2; id-senate 19; id-house 19. Negative point 49.08000,-116.45000 (British Columbia, Canada, north of Bonners Ferry — outside Idaho and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Idaho State Capitol returns Idaho), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.IdahoExplorer`.
+- Ground truth: 43.61771,-116.19975 (Idaho State Capitol, 700 West Jefferson Street, Boise, Ada County) → county Ada County; us-house 2; id-senate 19; id-house 19; id-judicial-district 4th Judicial District. Negative point 49.08000,-116.45000 (British Columbia, Canada, north of Bonners Ferry — outside Idaho and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Idaho State Capitol returns Idaho), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.IdahoExplorer`.
 - Scheduled workflows: `update-id-congress-roster.yml` (Wed 22:21 UTC); `update-id-legislature-roster.yml` (Thu 22:21 UTC); `id-validate-sources.yml` (2nd of month 22:21 UTC).
 - Source registry: `id/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

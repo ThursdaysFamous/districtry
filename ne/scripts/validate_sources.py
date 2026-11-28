@@ -150,6 +150,42 @@ PROVENANCE = [
         "source_url": "https://nebraskajudicial.gov/directories/district-court-judges",
         "note": "Nebraska's district judges, read from the Judicial Branch's district court judges directory by scripts/build_state_courts.py --fetch ne. The monthly re-read is a row in ne/WATCH.md.",
     },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://dcgis.org/server/rest/services/Hosted/Omaha_City_Council_Districts_(source)_view/FeatureServer/0",
+        "note": "Omaha's 7 council districts, from the map Douglas County's GIS office keeps for the city, one of the 30 wards and districts of the 6 Nebraska cities of 25,000 people or more whose wards elect their own members, pre-built by ne/scripts/build_ne_city_wards.py through scripts/city_ward_maps.py, which takes the cities to draw from ne/data/source/ne-city-council-seats.json; the quarterly --watch row in ne/WATCH.md compares each map's fingerprint recorded at the build. The names on the cards come from each city's own pages, and ne/scripts/build_ne_city_councils.py is what notices one of those changing.",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://gis.lincoln.ne.gov/public/rest/services/Planning/Elections/MapServer/0",
+        "note": "Lincoln's 4 council districts, from the city's own map server (see the Omaha row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://services.arcgis.com/OiG7dbwhQEWoy77N/ArcGIS/rest/services/ElectionAdmin_BV_vw/FeatureServer/8",
+        "note": "Bellevue's 6 wards, from Sarpy County's election map, asked for Bellevue's alone (see the Omaha row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://services3.arcgis.com/H1fomogcAqX4720J/ArcGIS/rest/services/PV1_DistrictManagement/FeatureServer/5",
+        "note": "Grand Island's 5 wards, from the city's own map in ArcGIS Online (see the Omaha row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://services5.arcgis.com/6VKlIQXg1rgWny7H/arcgis/rest/services/Wards/FeatureServer/1",
+        "note": "Fremont's 4 wards, from the city's own map in ArcGIS Online (see the Omaha row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ne-city-wards.json",
+        "source_url": "https://services1.arcgis.com/TYPEVuuXULssEXx8/arcgis/rest/services/Voting_Wards/FeatureServer/0",
+        "note": "Hastings's 4 wards, from the city's own map in ArcGIS Online (see the Omaha row).",
+    },
 ]
 
 # Nebraska's envelope, as index.html writes it for the ZIP layer

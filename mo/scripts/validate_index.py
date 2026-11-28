@@ -87,17 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 10
+MIN_REGISTER_LAYER = 11
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "mo-senate", "county", "mo-house", "county-commissioner",
-    "school-district-unified", "school-district-elementary", "zip-code",
-    "county-subdivision", "municipality", "police-station", "fire-station",
-    "post-office",
+    "us-house", "mo-senate", "mo-judicial-circuit", "county", "mo-house",
+    "county-commissioner", "school-district-unified",
+    "school-district-elementary", "zip-code", "county-subdivision",
+    "municipality", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +110,7 @@ GEOMETRY_FILES = {
     "mo-senate-districts.json": (34, 34),  # The 34 Missouri Senate districts, from the state's own map of the 2022 plan.
     "mo-house-districts.json": (163, 163),  # The 163 Missouri House districts, from the state's own map of the 2022 plan.
     "mo-commission-districts.json": (86, 86),  # The county commission districts of the 43 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
+    "mo-judicial-districts.json": (46, 46),  # The 46 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in mo/data/source/courts/mo-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -121,6 +122,7 @@ ROSTER_FILES = {
     "mo-county-officials.json": 115,  # Every county's commission or council, county executive and other elected officers from the Secretary of State's Missouri Roster, one record for each of the 114 counties and the City of St. Louis, refreshed weekly by update-mo-county-officials.yml.
     "mo-commission-counties.json": 43,  # The 43 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "mo-district-judges.json": 46,  # The judges of each of the 46 court districts, keyed by district, 157 seats read 2026-11-28 from the state's own court website into mo/data/source/courts/mo-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

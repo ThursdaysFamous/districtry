@@ -204,6 +204,18 @@ PROVENANCE = [
             "anchor per county plus OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "tx-court-of-appeals",
+        "app_file": "tx-judicial-districts.json",
+        "source_url": "https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm",
+        "note": "Texas's 15 courts of appeals districts, dissolved from the 254 counties by scripts/build_state_courts.py from Texas Government Code 22.201 (excerpt in tx/data/source/courts/tx-courts.txt, read 2026-11-28); counties two districts share are their own pieces, and the 15th's district is the whole state.",
+    },
+    {
+        "layer": "tx-court-of-appeals",
+        "app_file": "tx-district-judges.json",
+        "source_url": "https://www.txcourts.gov/about-texas-courts/courts-of-appeals/",
+        "note": "The chief justice and justices of all 15 courts of appeals, read from each court's justices page on txcourts.gov by scripts/build_state_courts.py --fetch tx, which stops if a court names more justices than Texas Government Code 22.216 sets or fewer than 85% of them. The monthly re-read is a row in tx/WATCH.md.",
+    },
 ]
 
 # Texas's envelope, as index.html writes it for the ZIP layer

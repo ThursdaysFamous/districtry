@@ -1,0 +1,19 @@
+Read once by hand in Adam's Chrome on 2026-11-27 (nvcourts.gov answers this project's reader with HTTP 403; the list is a PDF whose pages say "Updated August 10, 2026").
+https://nvcourts.gov/__data/assets/pdf_file/0007/12202/Judicial_Directory-Term_of_Office_08.10.26.pdf
+Kept: the rows of every district but the Second and Eighth, whose courts' own pages are read instead, as the list prints them (name | court). Every term on the list expires 01/03/2027.
+Jason Woodbury | First Judicial District Court (Dept. 1)
+Kristin Luis | First Judicial District Court (Dept. 2)
+John Schlegelmilch | Third Judicial District Court (Dept. 1)
+Leon Aberasturi | Third Judicial District Court (Dept. 2)
+Kriston N. Hill | Fourth Judicial District Court (Dept. 1)
+Alvin R. Kacin | Fourth Judicial District Court (Dept. 2)
+Mason Simons | Fourth Judicial District Court (Dept. 3)
+Kimberly W. Wanker | Fifth Judicial District Court (Dept. 1)
+Robert W. Lane | Fifth Judicial District Court (Dept. 2)
+Michael Montero | Sixth Judicial District Court (Dept. 2)
+Steven Dobrescu | Seventh Judicial District Court (Dept. 1)
+Dylan Frehner | Seventh Judicial District Court (Dept. 2)
+Nathan Tod Young | Ninth Judicial District Court (Dept. 1)
+Thomas W. Gregory | Ninth Judicial District Court (Dept. 2)
+Thomas L. Stockard | Tenth Judicial District Court (Dept. 1)
+Bryce Shields | Eleventh Judicial District Court (Dept. 1)

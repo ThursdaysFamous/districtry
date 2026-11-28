@@ -221,10 +221,28 @@
       }
     },
     {
+      "id": "mo-judicial-circuit",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "46 judicial circuits of whole counties, 3,925 km2 mean area, measured 2026-11-28 on the drawn file — larger on average than a county, smaller than a Senate district",
+      "source": {
+        "answers": "The judicial circuit covering the point, its counties, and the circuit judges the Missouri courts' directory names.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Missouri courts' table of the 46 judicial circuits and their counties, read 2026-11-28.",
+            "url": "https://www.courts.mo.gov/file.jsp?id=281"
+          }
+        ],
+        "people": "Each circuit's judges are named from the Missouri courts' Find a Court/Person directory, asked once on 2026-11-28 for every person whose position is Circuit Judge, with this project's own client, and kept as text in mo/data/source/courts/mo-courts.txt. A judge's circuit is the one the judge's courthouses lie in, and the fetch stops unless every circuit has at least one judge and exactly one presiding judge. No weekly job re-reads the directory, so the card gives the date. How judges are chosen is from the Missouri Constitution, Article V, sections 19 and 25, and the courts' Nonpartisan Court Plan page.",
+        "applies": "Missouri — statewide, all 115 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, who sits on its county commission or county council (with its county executive where the county elects one), and who holds its other elected county offices.",
@@ -242,7 +260,7 @@
       "id": "mo-house",
       "label": "Missouri House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "163 House districts — smaller on average than a county, larger than a school district",
       "source": {
         "answers": "The Missouri House district covering the point, and the representative holding it.",
@@ -260,7 +278,7 @@
       "id": "county-commissioner",
       "label": "County Commission District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 43 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
       "source": {
         "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 43 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
@@ -346,7 +364,7 @@
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "445 unified districts, about 372 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with the 71 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -364,7 +382,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "71 elementary districts, about 177 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -382,7 +400,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "1,040 ZIP Code Tabulation Areas overlapping Missouri, of the 1,977 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-26); about 163 km2 of land on average for the 1,977, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Missouri",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -400,7 +418,7 @@
       "id": "county-subdivision",
       "label": "Township",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "1,394 records tiling the state — 1,393 townships and the City of St. Louis, which the Census files as its own — about 128 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The township containing the point and its county, and whether the township has a government of its own.",
@@ -418,7 +436,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "947 incorporated places, about 8 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -436,7 +454,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -454,7 +472,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -472,7 +490,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -487,7 +505,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 38.5791,
     "lng": -92.1729,
@@ -509,6 +527,10 @@
     {
       "layer": "mo-house",
       "expected": "60"
+    },
+    {
+      "layer": "mo-judicial-circuit",
+      "expected": "19th Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -573,6 +595,12 @@
         "min_features": 86,
         "max_features": 86,
         "note": "The county commission districts of the 43 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
+      },
+      {
+        "file": "mo-judicial-districts.json",
+        "min_features": 46,
+        "max_features": 46,
+        "note": "The 46 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in mo/data/source/courts/mo-courts.txt."
       }
     ],
     "rosters": [
@@ -610,6 +638,11 @@
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "mo-district-judges.json",
+        "min_keys": 46,
+        "note": "The judges of each of the 46 court districts, keyed by district, 157 seats read 2026-11-28 from the state's own court website into mo/data/source/courts/mo-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

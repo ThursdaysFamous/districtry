@@ -198,10 +198,28 @@
       }
     },
     {
+      "id": "ut-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "8 judicial districts of whole counties, 27,486 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a Senate district, smaller than a congressional district",
+      "source": {
+        "answers": "The judicial district covering the point, its counties, and the district court judges the Utah State Courts list for it.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Utah State Courts' list of counties within districts, read 2026-11-27.",
+            "url": "https://www.utcourts.gov/en/about/miscellaneous/directory/map-of-judicial-districts.html"
+          }
+        ],
+        "people": "Each district's presiding judge, associate presiding judge and district judges are named from the Utah State Courts' page of district court judges, read 2026-11-27 with this project's own client and kept as text in ut/data/source/courts/ut-courts.txt. The page prints names in capitals, so they are re-cased, and a name no rule re-cases is spelled as a government page spells it. No weekly job re-reads the page, so the card gives the date. How judges are chosen is from the Utah Constitution, Article VIII, sections 8 and 9.",
+        "applies": "Utah — statewide, all 29 counties."
+      }
+    },
+    {
       "id": "ut-senate",
       "label": "Utah Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "29 Senate districts, each electing one senator",
       "source": {
         "answers": "The Senate district covering the point, and the senator it elects.",
@@ -219,7 +237,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "29 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -237,7 +255,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "41 school districts, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -255,7 +273,7 @@
       "id": "ut-house",
       "label": "Utah House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "75 House districts, each electing one representative",
       "source": {
         "answers": "The House district covering the point, and the representative it elects.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "303 ZIP Code Tabulation Areas that reach into Utah (361 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "93 census county divisions, about 2,300 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -309,7 +327,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "255 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city or town containing the point, or that the point is outside every one.",
@@ -327,7 +345,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — Utah has 9 pieces, 7 reservations and 2 pieces of off-reservation trust land, held by 7 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Uintah and Ouray Reservation (17,671.4 km², mostly Duchesne and Uintah counties), the Navajo Nation Reservation (5,188.9 km² in Utah, 8.9% of it, San Juan County), the Goshute Reservation (202.5 km² in Utah, 41.6% of it, Juab County), the Paiute (UT) Reservation (131.2 km²) and the Skull Valley Reservation (72.9 km², Tooele County); the smallest is the Northwestern Shoshone Reservation (0.788 km², Box Elder County). Three pieces cross the state line and are drawn whole: the Navajo Nation, Goshute and Ute Mountain reservations. The Navajo Nation is seated in Arizona and the Ute Mountain Ute Tribe in Colorado. The Census draws tribal subdivisions on the Navajo Nation alone. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Utah has 9 such areas, held by 7 nations: five seated in Utah, the Navajo Nation in Arizona and the Ute Mountain Ute Tribe in Colorado.",
@@ -345,7 +363,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -396,7 +414,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 40.77749,
     "lng": -111.888,
@@ -418,6 +436,10 @@
     {
       "layer": "ut-house",
       "expected": "22"
+    },
+    {
+      "layer": "ut-judicial-district",
+      "expected": "3rd Judicial District"
     }
   ],
   "negative_point": {
@@ -472,6 +494,12 @@
         "min_features": 9,
         "max_features": 9,
         "note": "Utah's tribal land (scripts/build_tribal_areas.py) — 7 reservations and 2 pieces of off-reservation trust land, held by 7 nations, three pieces drawn whole across the state line, simplified by one Douglas-Peucker run at 3 m because the Navajo Nation drawn whole made 2.17 MB (915 KB, 240 KB gzipped; worst stray from the Census's line 3.3 m against a 25 m ceiling). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "ut-judicial-districts.json",
+        "min_features": 8,
+        "max_features": 8,
+        "note": "The 8 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in ut/data/source/courts/ut-courts.txt."
       }
     ],
     "rosters": [
@@ -504,6 +532,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Utah elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ut/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "ut-district-judges.json",
+        "min_keys": 8,
+        "note": "The judges of each of the 8 court districts, keyed by district, 80 seats read 2026-11-27 from the state's own court website into ut/data/source/courts/ut-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

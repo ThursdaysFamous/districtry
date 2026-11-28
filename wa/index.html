@@ -4673,18 +4673,19 @@ function initWashingtonExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "county": "co", "wa-senate": "was", "wa-house": "wah",
-    "school-district-unified": "su", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "wa-superior-court": "wau", "county": "co",
+    "wa-senate": "was", "wa-house": "wah", "school-district-unified": "su", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["wa-senate"],
-    "state-house": ["wa-house"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["wa-house"], "trial-court-district": ["wa-superior-court"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4705,7 +4706,8 @@ function initWashingtonExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "wa-legislative-districts.json", "zip-index.json", "tribal-areas.json" ];
+    "wa-legislative-districts.json", "zip-index.json", "tribal-areas.json",
+    "wa-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11602,6 +11604,7 @@ function initWashingtonExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 10 congressional districts — the largest districts Washington carries below the state itself
+    "wa-superior-court", // 32 superior courts of whole counties, 5,771 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a congressional district
     "county",            // 39 counties, pre-built from TIGERweb; the instance's offline anchor layer, larger on average than a legislative district
     "wa-senate",         // 49 legislative districts, each electing one senator — smaller on average than a county
     "wa-house",          // the same 49 legislative districts as the Senate, each electing two representatives
@@ -17297,6 +17300,133 @@ function initWashingtonExplorer() {
     }
   });
 
+  /* ---------- 9b. Superior Court — Washington's superior courts, whole counties ----------
+   * 32 superior courts of whole counties, dissolved from this app's own county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the Washington Courts' Judicial Districts Reference List and the
+   * judges from each county's Court Directory page on courts.wa.gov,
+   * kept as text in wa/data/source/courts/. The districts are geometry
+   * (wa-judicial-districts.json, cache-first); the judges are a roster
+   * (wa-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * wa/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Washington Constitution, Article
+   * IV, section 5 (lawfilesext.leg.wa.gov, read 2026-11-27): each county's
+   * superior court judges are elected by the county's voters for four-year
+   * terms, and for a vacancy the Governor appoints a judge who serves until
+   * the next general election. THE COUNT IS BOUNDED: RCW 2.08.061 to 2.08.065
+   * set how many judges each court may have, and the fetch stops if the
+   * directory lists more. It may list fewer (measured 2026-11-27: Chelan,
+   * Pierce, Skagit and Spokane one fewer than the law provides, King two fewer
+   * than its ceiling of 58; 205 named of 211), because the directory names
+   * sitting judges and a seat can be open or not yet funded, so no seat is
+   * called vacant; the card says the law sets the number and the directory
+   * lists the judges sitting now. Counties that share one court must list the
+   * same judges.
+   * ---------- */
+  var loadWaCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wa-judicial-districts.json", {}, 2);
+  });
+  var loadWaJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wa-district-judges.json", {}, 2);
+  });
+  var WA_COURT = {
+    how: "The county's voters elect its superior court judges for four-year terms. For a vacancy the Governor appoints a judge who serves until the next general election (Washington Constitution, Article IV, section 5).",
+    court: "The superior court is Washington's court of general jurisdiction. Two or three small counties can share one court and its judges. The number of judges each court may have is set by law (RCW 2.08.061 to 2.08.065), and the directory lists the judges sitting now. Court commissioners and district court judges are not listed here.",
+    from: "The Washington Courts' Court Directory pages for this court's counties",
+    link: { label: "Washington court directory", url: "https://www.courts.wa.gov/court_dir/" }
+  };
+  function waCourtTitle(unit) {
+    return unit + " Superior Court";
+  }
+  // "Atchison and Leavenworth Counties"
+  function waCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "wa-superior-court",
+    group: "political",
+    label: "Superior Court",
+    emptyNote: "No superior court here. This map holds Washington's superior courts, so a point outside the state gets none.",
+    overlay: {
+      load: loadWaCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : waCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadWaCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadWaJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? waCourtTitle(result.unit) : "Unknown superior court",
+        note: waCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Superior court judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: WA_COURT.how });
+      rows.push({ label: "The court", value: WA_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: WA_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return WA_COURT.link; }
+  });
+
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19189,7 +19319,7 @@ function initWashingtonExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "wa-senate", "wa-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "wa-senate", "wa-house", "wa-superior-court",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
@@ -19720,8 +19850,8 @@ function initWashingtonExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

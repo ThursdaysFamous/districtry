@@ -1,0 +1,47 @@
+# Vermont's elected county judges, read 2026-11-28 from the Vermont Judiciary's court location pages
+# by vt/scripts/build_vt_county_judges.py --fetch. Never hand-edit; re-run the fetch.
+# probate | <county> | <name>   (the probate division page's Superior Judge)
+# assistant | <county> | <name> (the civil division page's Assistant Judge line, two per county)
+read | 2026-11-28
+probate | Addison | Pamela Marsh
+assistant | Addison | Nicole Wilkerson
+assistant | Addison | Patricia Ross
+probate | Bennington | Lon McClintock
+assistant | Bennington | Mary Frost
+assistant | Bennington | Brian Peat
+probate | Caledonia | Annette Lorraine
+assistant | Caledonia | Joe Benning
+assistant | Caledonia | Merle Haskins
+probate | Chittenden | Gregory Glennon
+assistant | Chittenden | Suzanne Brown
+assistant | Chittenden | Connie C. Ramsey
+probate | Essex | Samuel Swope
+assistant | Essex | Evan Hammond
+assistant | Essex | Kenn Stransky
+probate | Franklin | Robert Farrar
+assistant | Franklin | Kelly Gosselin
+assistant | Franklin | Jay Sweeny
+probate | Grand Isle | George Spear
+assistant | Grand Isle | Kim Kinney
+assistant | Grand Isle | Sherri Potvin
+probate | Lamoille | James R. Dean Mahoney
+assistant | Lamoille | Madeline Motta
+assistant | Lamoille | Patricia Gabel
+probate | Orange | Kathryn Kennedy
+assistant | Orange | Laurel Mackin
+assistant | Orange | Joyce McKeeman
+probate | Orleans | Angela Ross
+assistant | Orleans | Curtis Hardy
+assistant | Orleans | Sean Selby
+probate | Rutland | Karl Anderson
+assistant | Rutland | Stephen Benard
+assistant | Rutland | Kevin Geno
+probate | Washington | Jeffrey Kilgore
+assistant | Washington | Elizabeth Battey
+assistant | Washington | Leah Jones
+probate | Windham | Jodi French
+assistant | Windham | Lamont Barnett
+assistant | Windham | Carolyn Partridge
+probate | Windsor | Fred Glover
+assistant | Windsor | Alison Johannensen
+assistant | Windsor | Michael Ricci

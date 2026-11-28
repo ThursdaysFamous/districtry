@@ -1039,24 +1039,40 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES NOBODY AND SAYS SO. No list of county officials
-  //    has been read (gap vt-county-officials), so the card must name the
-  //    county and say that Vermont's counties have no county board and that
-  //    their elected officers are not named, rather than leave a reader to
-  //    assume the list is empty. Which county holds the Capitol is read from
-  //    the shipped county file, so the fixture moves with a rebuild.
+  // 9. THE COUNTY CARD NAMES THE COUNTY'S ELECTED JUDGES AND SAYS WHO IS NOT
+  //    NAMED. The probate judge and the two assistant judges come from the
+  //    shipped vt-county-judges.json (the Judiciary's court location pages),
+  //    so the fixture is read from that file and moves with a rebuild; the
+  //    sheriff and state's attorney are not named (gap vt-county-officials),
+  //    and the card must say so. Which county holds the Capitol is read from
+  //    the shipped county file. A second open fails the judges file and
+  //    holds the card to naming nobody and saying the list did not load.
   {
     const counties = shipped("state-counties.json");
     const at = propsAt(counties, POINT)[0] || {};
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
-    const info = await cardText(page, "county");
-    const text = info.text || "";
-    const want = [/Vermont's counties have no county board/, /two assistant judges/, /None of them is named here yet/];
-    const missing = want.filter((re) => !re.test(text));
-    check("the County card at the Capitol names the county and says no county official is named",
-      !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0,
-      `file=${at.NAME} missing=${missing} text=${text.slice(0, 120)}`);
+    const judges = shipped("vt-county-judges.json")[at.GEOID] || {};
+    const names = [judges.probate].concat(judges.assistant || []).filter(Boolean);
+    let context = await browser.newContext({ serviceWorkers: "block" });
+    let page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
+    let info = await cardText(page, "county");
+    let text = info.text || "";
+    const want = [/Vermont's counties have no county board/, /Probate judge/, /Assistant judge/,
+      /sheriff and the state's attorney are not named/];
+    const missing = want.filter((re) => !re.test(text)).concat(names.filter((n) => !text.includes(n)));
+    check("the County card at the Capitol names the county's probate judge and two assistant judges",
+      !info.error && !!at.NAME && text.includes(at.NAME) && names.length === 3 && missing.length === 0,
+      `file=${at.NAME} names=${names} missing=${missing} text=${text.slice(0, 160)}`);
+    await context.close();
+
+    context = await browser.newContext({ serviceWorkers: "block" });
+    page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (p) => {
+      await p.route("**/vt-county-judges.json", (r) => r.abort());
+    });
+    info = await cardText(page, "county");
+    text = info.text || "";
+    check("the County card still answers when the judges list fails, naming no one",
+      !info.error && text.includes(at.NAME || "?") && /did not load/.test(text) && !names.some((n) => text.includes(n)),
+      `text=${text.slice(0, 160)}`);
     await context.close();
   }
 } finally {

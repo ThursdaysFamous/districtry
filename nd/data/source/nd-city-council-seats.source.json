@@ -12,8 +12,8 @@
     "Michael Connelly",
     "Michael Schmitz"
    ],
-   "read": "2026-11-27",
-   "sha256": "cbd80661c2beedf9b5e4df9b948e7fad125abcf61812bf69c5c1cf06ad36952e"
+   "read": "2026-11-28",
+   "sha256": "776580bce46783db596ad7ee1d633157f7fad36a36481f97f007d14c5dbff3d5"
   },
   "https://fargond.gov/city-government/departments/city-commission/members": {
    "bytes": 29127,
@@ -26,7 +26,7 @@
     "Michelle Turnberg",
     "Nikkie Gullickson"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "ec4d56b4c3cb2af23e767b2ccbd393be7e6730afcd1338c4b86835e966748602"
   },
   "https://westfargond.gov/365/City-Commission": {
@@ -40,7 +40,7 @@
     "Rory Jorgensen",
     "Tyler Erickson"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "7a51f13254e80c5ac572d94bdcbbe1ba772fda5d324faebd53f181978f3175f7"
   },
   "https://www.cityofwilliston.com/government/city_commission/index.php": {
@@ -120,8 +120,8 @@
     "Scott Samuelson",
     "Steve Podrygula"
    ],
-   "read": "2026-11-27",
-   "sha256": "30d05e2988b3107dd8eb2b3a8159e759fb7040aeadb798b94aaad8b926f325b5"
+   "read": "2026-11-28",
+   "sha256": "eec1b6e9f15faf3e39942fc28dbdc200487b15b71a06ddb028d9269daf887890"
   }
  }
 }

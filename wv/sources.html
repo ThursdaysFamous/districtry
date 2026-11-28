@@ -1186,7 +1186,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1195,7 +1195,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1224,6 +1224,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">wv-senate-members.json, rebuilt weekly by CI from the West Virginia Senate's own roster page: each senator's name, party, Capitol office (room, telephone) and e-mail address. The page also prints each senator's home county, which is not read. Each district elects two senators, and the card names both.</td>
                 <td data-label="Where it applies">West Virginia — statewide, all 17 districts.</td>
+              </tr>
+              <tr id="layer-wv-judicial-circuit">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>wv-judicial-circuit</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point, its counties, and the circuit judges the West Virginia Judiciary's circuit court map names for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.courtswv.gov/lower-courts/circuit-courts" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the West Virginia Judiciary's circuit court map, which lists each circuit's counties, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each circuit's judges are named from the West Virginia Judiciary's circuit court map (a PDF linked from its Circuit Courts page), read 2026-11-27 with this project's own client and kept as text in wv/data/source/courts/wv-courts.txt; the fetch stops unless they total the 80 circuit judges the Circuit Courts page states. No weekly job re-reads the map, so the card gives the date. How judges are chosen is from the Circuit Courts page.</td>
+                <td data-label="Where it applies">West Virginia — statewide, all 55 counties.</td>
               </tr>
               <tr id="layer-wv-house">
                 <th scope="row"><span class="layer-name">House of Delegates District</span><code>wv-house</code></th>
@@ -1439,6 +1450,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "West Virginia — statewide, all 17 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wv/sources.html#dataset-wv-judicial-circuit",
+      "identifier": "wv-judicial-circuit",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point, its counties, and the circuit judges the West Virginia Judiciary's circuit court map names for it. Each circuit's judges are named from the West Virginia Judiciary's circuit court map (a PDF linked from its Circuit Courts page), read 2026-11-27 with this project's own client and kept as text in wv/data/source/courts/wv-courts.txt; the fetch stops unless they total the 80 circuit judges the Circuit Courts page states. No weekly job re-reads the map, so the card gives the date. How judges are chosen is from the Circuit Courts page.",
+      "url": "https://districtry.com/wv/sources.html#layer-wv-judicial-circuit",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/wv/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the West Virginia Judiciary's circuit court map, which lists each circuit's counties, read 2026-11-27.",
+          "url": "https://www.courtswv.gov/lower-courts/circuit-courts"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "West Virginia — statewide, all 55 counties"
       }
     },
     {

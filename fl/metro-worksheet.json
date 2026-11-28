@@ -180,10 +180,28 @@
   ],
   "layers": [
     {
+      "id": "fl-judicial-circuit",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "20 judicial circuits of whole counties, 9,247 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a congressional district",
+      "source": {
+        "answers": "The judicial circuit covering the point, its counties, and the circuit judges the circuit's own website names.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Florida Statutes section 26.021, which names each circuit's counties, read 2026-11-27 from the Legislature's site.",
+            "url": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0026/Sections/0026.021.html"
+          }
+        ],
+        "people": "Each circuit's judges are named from the circuit's own website, read 2026-11-27 with this project's own client and kept as text in fl/data/source/courts/fl-courts.txt; the fetch stops if a circuit's site names more judges than Florida Statutes 26.031 sets, or fewer than 85% of them. Four circuits name nobody, and their cards say why. No weekly job re-reads the sites, so the card gives the date. How judges are chosen is from the Florida Constitution, Article V, sections 10 and 11.",
+        "applies": "Florida — statewide, all 67 counties."
+      }
+    },
+    {
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
+      "area_rank": 2,
       "rank_note": "28 congressional districts — the largest districts Florida carries below the state itself, larger on average than its 40 Senate districts",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
@@ -201,7 +219,7 @@
       "id": "fl-senate",
       "label": "Florida Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "40 Senate districts — smaller on average than a congressional district",
       "source": {
         "answers": "The Florida Senate district covering the point, and the senator holding it.",
@@ -219,7 +237,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "67 counties, pre-built from TIGERweb; the instance's offline anchor layer, larger on average than a House district",
       "source": {
         "answers": "Which county contains the point.",
@@ -237,7 +255,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "67 school districts, one for each county and the same ground, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -255,7 +273,7 @@
       "id": "fl-house",
       "label": "Florida House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "120 House districts — about three in each Senate district, though no rule nests them, and smaller on average than a county",
       "source": {
         "answers": "The Florida House district covering the point, and the member holding it.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "1,013 ZIP Code Tabulation Areas inside Florida (1,102 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "316 census county divisions, about 440 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The census county division containing the point, and its county.",
@@ -309,7 +327,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "411 incorporated cities, towns and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city, town or village containing the point, or that the point is outside every one.",
@@ -327,7 +345,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — Florida has 11 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines: the Miccosukee Reservation (310.165 km² in 6 parts, all but 3.0 km² of it in Broward County and the rest in Miami-Dade) and the Miccosukee Off-Reservation Trust Land (20.341 km² in 3 parts, in Hendry, Highlands and Miami-Dade counties); the Seminole Tribe of Florida's Big Cypress Reservation (213.677 km², 174.9 km² of it in Hendry County and the rest in Broward), Brighton Reservation (148.241 km², Glades County), Immokalee Reservation (2.492 km², Collier County), Hollywood Reservation (2.049 km², Broward County), Fort Pierce Reservation (0.245 km², St. Lucie County), Tampa Reservation (0.182 km², Hillsborough County), Coconut Creek Trust Land (0.026 km²) and Seminole (FL) Trust Land (0.004 km²), the last two in Broward County; and the 0.007 km² of the Poarch Creek Off-Reservation Trust Land that lies in Florida, in Escambia County, about 1% of that trust land, whose nation is seated in Alabama. Ranked after municipalities and before the point layers, as Louisiana's and Mississippi's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Florida has 11 such areas, held by the Miccosukee Tribe of Indians, the Seminole Tribe of Florida and the Poarch Band of Creek Indians.",
@@ -345,7 +363,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -396,7 +414,7 @@
       }
     }
   ],
-  "min_register_layer": 7,
+  "min_register_layer": 8,
   "anchor_point": {
     "lat": 30.43817,
     "lng": -84.28164,
@@ -418,6 +436,10 @@
     {
       "layer": "fl-house",
       "expected": "9"
+    },
+    {
+      "layer": "fl-judicial-circuit",
+      "expected": "2nd Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -472,6 +494,12 @@
         "min_features": 11,
         "max_features": 11,
         "note": "Florida's tribal land (scripts/build_tribal_areas.py) — seven reservations and four pieces of off-reservation trust land, held by three nations, one of them the Florida sliver of a trust land whose nation is seated in Alabama. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "fl-judicial-districts.json",
+        "min_features": 20,
+        "max_features": 20,
+        "note": "The 20 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in fl/data/source/courts/fl-courts.txt."
       }
     ],
     "rosters": [
@@ -504,6 +532,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Florida elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from fl/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "fl-district-judges.json",
+        "min_keys": 20,
+        "note": "The judges of each of the 20 court districts, keyed by district, 491 seats read 2026-11-27 from the state's own court website into fl/data/source/courts/fl-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

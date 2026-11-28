@@ -1,0 +1,211 @@
+# Missouri court districts and judges, kept by scripts/build_state_courts.py --fetch mo
+# read: 2026-11-28
+# from: https://www.courts.mo.gov/file.jsp?id=281, the table the courts' Local Courts page links as the map of the 46 circuits (circuits and counties), and the courts' Find a Court/Person directory, https://www.courts.mo.gov/mcw/findacourt/resultsAction.htm, asked once for every person whose position is Circuit Judge (circuit and presiding judges; associate circuit judges are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)
+# none | <district> | <why the card names no judge>  (a district whose judges are not read)
+district | 1 | Clark, Schuyler, Scotland
+district | 2 | Adair, Knox, Lewis
+district | 3 | Grundy, Harrison, Mercer, Putnam
+district | 4 | Atchison, Gentry, Holt, Nodaway, Worth
+district | 5 | Andrew, Buchanan
+district | 6 | Platte
+district | 7 | Clay
+district | 8 | Carroll, Ray
+district | 9 | Chariton, Linn, Sullivan
+district | 10 | Marion, Monroe, Ralls
+district | 11 | St. Charles
+district | 12 | Audrain, Montgomery, Warren
+district | 13 | Boone, Callaway
+district | 14 | Howard, Randolph
+district | 15 | Lafayette, Saline
+district | 16 | Jackson
+district | 17 | Cass, Johnson
+district | 18 | Cooper, Pettis
+district | 19 | Cole
+district | 20 | Franklin, Gasconade, Osage
+district | 21 | St. Louis
+district | 22 | St. Louis city
+district | 23 | Jefferson
+district | 24 | Madison, St. Francois, Ste. Genevieve, Washington
+district | 25 | Maries, Phelps, Pulaski, Texas
+district | 26 | Camden, Laclede, Miller, Moniteau, Morgan
+district | 27 | Bates, Benton, Henry, St. Clair
+district | 28 | Barton, Cedar, Dade, Vernon
+district | 29 | Jasper
+district | 30 | Dallas, Hickory, Polk, Webster
+district | 31 | Greene
+district | 32 | Bollinger, Cape Girardeau, Perry
+district | 33 | Mississippi, Scott
+district | 34 | New Madrid, Pemiscot
+district | 35 | Dunklin, Stoddard
+district | 36 | Butler, Carter, Ripley
+district | 37 | Howell, Oregon, Shannon
+district | 38 | Christian
+district | 39 | Barry, Lawrence, Stone
+district | 40 | McDonald, Newton
+district | 41 | Macon, Shelby
+district | 42 | Crawford, Dent, Iron, Reynolds, Wayne
+district | 43 | Caldwell, Clinton, Daviess, DeKalb, Livingston
+district | 44 | Douglas, Ozark, Wright
+district | 45 | Lincoln, Pike
+district | 46 | Taney
+judge | 1 | Presiding Judge | Lindsay Gravett | 
+judge | 2 | Presiding Judge | Matthew Wilson | 
+judge | 3 | Presiding Judge | Matthew M. Krohn | 
+judge | 4 | Presiding Judge | Corey K. Herron | 
+judge | 5 | Presiding Judge | Kate H. Schaefer | 
+judge | 5 | Circuit Judge | Daniel F. Kellogg | 
+judge | 5 | Circuit Judge | David L. Bolander | 
+judge | 5 | Circuit Judge | Terry White | 
+judge | 6 | Presiding Judge | Myles Perry | 
+judge | 6 | Circuit Judge | Blake Sherer | 
+judge | 6 | Circuit Judge | W. Ann Hansbrough | 
+judge | 7 | Presiding Judge | Shane T. Alexander | 
+judge | 7 | Circuit Judge | Alisha D. O'Hara | 
+judge | 7 | Circuit Judge | David Chamberlain | 
+judge | 7 | Circuit Judge | Timothy J. Flook | 
+judge | 8 | Presiding Judge | Kevin Walden | 
+judge | 9 | Presiding Judge | Terry A. Tschannen | 
+judge | 10 | Presiding Judge | John J. Jackson | 
+judge | 11 | Presiding Judge | Chris McDonough | 
+judge | 11 | Circuit Judge | Brittney Smith | 
+judge | 11 | Circuit Judge | Deborah J. Alessi | 
+judge | 11 | Circuit Judge | Dwayne Johnson | 
+judge | 11 | Circuit Judge | Erin Burlison | 
+judge | 11 | Circuit Judge | Robert Cornejo | 
+judge | 12 | Presiding Judge | Richard Scheibe | 
+judge | 13 | Presiding Judge | Joshua Devine | 
+judge | 13 | Circuit Judge | Benjamin Miller | 
+judge | 13 | Circuit Judge | Brouck Jacobs | 
+judge | 13 | Circuit Judge | Jeff Harris | 
+judge | 13 | Circuit Judge | Stephanie M. Morrell | 
+judge | 14 | Presiding Judge | Scott Hayes | 
+judge | 15 | Presiding Judge | Josh Taylor | 
+judge | 16 | Presiding Judge | Kevin D. Harrell | 
+judge | 16 | Circuit Judge | Adam L. Caine | 
+judge | 16 | Circuit Judge | Bryan E. Round | 
+judge | 16 | Circuit Judge | Charles H. McKenzie | 
+judge | 16 | Circuit Judge | Cory Atkins | 
+judge | 16 | Circuit Judge | Jalilah Otto | 
+judge | 16 | Circuit Judge | James F. Kanatzer | 
+judge | 16 | Circuit Judge | Jennifer Phillips | 
+judge | 16 | Circuit Judge | Jerri J. Zhang | 
+judge | 16 | Circuit Judge | Jessica Agnelly | 
+judge | 16 | Circuit Judge | Joel P. Fahnestock | 
+judge | 16 | Circuit Judge | John Gromowsky | 
+judge | 16 | Circuit Judge | Kenneth R. Garrett III | 
+judge | 16 | Circuit Judge | Lauren Barrett | 
+judge | 16 | Circuit Judge | Mark A. Styles | 
+judge | 16 | Circuit Judge | Marty W. Seaton | 
+judge | 16 | Circuit Judge | Michelle Cocayne | 
+judge | 16 | Circuit Judge | Patrick C. Edwards | 
+judge | 16 | Circuit Judge | Sarah A. Castle | 
+judge | 17 | Presiding Judge | Michael R. Wagner | 
+judge | 17 | Circuit Judge | Stacey J. Lett | 
+judge | 18 | Presiding Judge | Jeff A. Mittelhauser | 
+judge | 19 | Presiding Judge | Daniel R. Green | 
+judge | 19 | Circuit Judge | Brian K. Stumpe | 
+judge | 19 | Circuit Judge | Christopher K. Limbaugh | 
+judge | 19 | Circuit Judge | S. Cotton Walker | 
+judge | 20 | Presiding Judge | Ryan J. Helfrich | 
+judge | 20 | Circuit Judge | Craig Hellmann | 
+judge | 21 | Presiding Judge | Bruce Hilton | 
+judge | 21 | Circuit Judge | Amanda McNelley | 
+judge | 21 | Circuit Judge | Brian May | 
+judge | 21 | Circuit Judge | Bridget Halquist | 
+judge | 21 | Circuit Judge | David Lee Vincent III | 
+judge | 21 | Circuit Judge | Ellen S. Levy | 
+judge | 21 | Circuit Judge | Ellen Dunne | 
+judge | 21 | Circuit Judge | Heather R. Cunningham | 
+judge | 21 | Circuit Judge | Jason Dodson | 
+judge | 21 | Circuit Judge | Jeffery McPherson | 
+judge | 21 | Circuit Judge | Jeffrey P. Medler | 
+judge | 21 | Circuit Judge | John N. Borbonus | 
+judge | 21 | Circuit Judge | John R. Lasater Jr. | 
+judge | 21 | Circuit Judge | Joseph S. Dueker | 
+judge | 21 | Circuit Judge | Kristine A. Kerr | 
+judge | 21 | Circuit Judge | Lorne J. Baker | 
+judge | 21 | Circuit Judge | Mary E. Ott | 
+judge | 21 | Circuit Judge | Matthew Hearne | 
+judge | 21 | Circuit Judge | Megan Julian | 
+judge | 21 | Circuit Judge | Nellie Ribaudo | 
+judge | 21 | Circuit Judge | Nicole Zellweger | 
+judge | 21 | Circuit Judge | Richard M. Stewart | 
+judge | 21 | Circuit Judge | Stanley J. Wallach | 
+judge | 22 | Presiding Judge | Christopher E. McGraugh | 
+judge | 22 | Circuit Judge | Annette Llewellyn | 
+judge | 22 | Circuit Judge | Calea Stovall-Reid | 
+judge | 22 | Circuit Judge | Catherine Dierker | 
+judge | 22 | Circuit Judge | Clinton Wright | 
+judge | 22 | Circuit Judge | Craig Higgins | 
+judge | 22 | Circuit Judge | David Roither | 
+judge | 22 | Circuit Judge | Elizabeth Hogan | 
+judge | 22 | Circuit Judge | Heather Hays | 
+judge | 22 | Circuit Judge | Jason M. Sengheiser | 
+judge | 22 | Circuit Judge | Joan L. Moriarty | 
+judge | 22 | Circuit Judge | John T. Bird | 
+judge | 22 | Circuit Judge | Joseph Whyte | 
+judge | 22 | Circuit Judge | Katherine M. Fowler | 
+judge | 22 | Circuit Judge | Lynne R. Perkins | 
+judge | 22 | Circuit Judge | Madeline Connolly | 
+judge | 22 | Circuit Judge | Michael F. Stelzer | 
+judge | 22 | Circuit Judge | Michael W. Noble | 
+judge | 22 | Circuit Judge | Nicole Colbert-Botchway | 
+judge | 22 | Circuit Judge | Patrick Richmond | 
+judge | 22 | Circuit Judge | Scott Millikan | 
+judge | 22 | Circuit Judge | Theresa Counts Burke | 
+judge | 22 | Circuit Judge | Thomas McCarthy | 
+judge | 22 | Circuit Judge | Timothy J. Boyer | 
+judge | 23 | Presiding Judge | Vic Melenbrink | 
+judge | 23 | Circuit Judge | Brenda Stacey | 
+judge | 23 | Circuit Judge | Jeffrey T. Coleman | 
+judge | 23 | Circuit Judge | Joseph A. Rathert III | 
+judge | 23 | Circuit Judge | Shannon Dougherty | 
+judge | 23 | Circuit Judge | Travis Partney | 
+judge | 24 | Presiding Judge | Brice Sechrest II | 
+judge | 24 | Circuit Judge | Joseph A. Murray III | 
+judge | 24 | Circuit Judge | Wendy L. Wexler Horn | 
+judge | 25 | Presiding Judge | William E. Hickle | 
+judge | 25 | Circuit Judge | Brendon Fox | 
+judge | 25 | Circuit Judge | Zachary Armfield | 
+judge | 26 | Presiding Judge | Aaron G. Koeppen | 
+judge | 26 | Circuit Judge | Andrew Hardwick | 
+judge | 26 | Circuit Judge | Kenneth M. Hayden | 
+judge | 27 | Presiding Judge | M. Brandon Baker | 
+judge | 28 | Presiding Judge | David R. Munton | 
+judge | 29 | Presiding Judge | Dean G. Dankelson | 
+judge | 29 | Circuit Judge | David B. Mouton | 
+judge | 29 | Circuit Judge | Troy Salchow | 
+judge | 30 | Presiding Judge | D. Charles Replogle | 
+judge | 31 | Presiding Judge | T. Todd Myers | 
+judge | 31 | Circuit Judge | Daniel Wichmer | 
+judge | 31 | Circuit Judge | Derek Ankrom | 
+judge | 31 | Circuit Judge | Jerry Harmison Jr. | 
+judge | 31 | Circuit Judge | Joshua B. Christensen | 
+judge | 31 | Circuit Judge | Kaiti Greenwade | 
+judge | 31 | Circuit Judge | Nathan Taylor | 
+judge | 32 | Presiding Judge | Scott A. Lipke | 
+judge | 32 | Circuit Judge | Frank Miller | 
+judge | 32 | Circuit Judge | Julia Koester | 
+judge | 33 | Presiding Judge | R. Zac Horack | 
+judge | 34 | Presiding Judge | Joshua D. Underwood | 
+judge | 35 | Presiding Judge | Robert N. Mayer | 
+judge | 36 | Presiding Judge | Kacey Proctor | 
+judge | 37 | Presiding Judge | Steven Privette | 
+judge | 38 | Presiding Judge | Laura Johnson | 
+judge | 38 | Circuit Judge | Jessica Kruse | 
+judge | 39 | Presiding Judge | David A. Cole | 
+judge | 39 | Circuit Judge | Alan Blankenship | 
+judge | 40 | Presiding Judge | Charles Genisio | 
+judge | 40 | Circuit Judge | Kevin Selby | 
+judge | 41 | Presiding Judge | Frederick P. Tucker | 
+judge | 42 | Presiding Judge | Michael Randazzo | 
+judge | 42 | Circuit Judge | Megan Seay | 
+judge | 43 | Presiding Judge | Ryan Horsman | 
+judge | 43 | Circuit Judge | Daren L. Adkins | 
+judge | 44 | Presiding Judge | R. Craig Carter | 
+judge | 45 | Presiding Judge | James D. Beck | 
+judge | 46 | Presiding Judge | Jeffrey Merrell | 

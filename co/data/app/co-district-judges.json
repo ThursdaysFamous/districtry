@@ -1,0 +1,949 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Jeffrey R. Pilkington"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tamara S. Russell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lindsay VanGilder"
+   },
+   {
+    "role": "District Judge",
+    "name": "Todd L. Vriesman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christopher Zenisek"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jason Carrithers"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chantel Contiguglia"
+   },
+   {
+    "role": "District Judge",
+    "name": "Diego G. Hunt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Adam Kendall"
+   },
+   {
+    "role": "District Judge",
+    "name": "Russell Klein"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ryan P. Loewer"
+   },
+   {
+    "role": "District Judge",
+    "name": "Meegan A. Miloud"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew Poland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christopher B. Rhamey"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Christopher J. Baumann"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael W.V. Angel"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lisa C. Arnolds"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mark T. Bailey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Nikea T. Bland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Angela Boykins"
+   },
+   {
+    "role": "District Judge",
+    "name": "Karen L. Brody"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jill D. Dorancy"
+   },
+   {
+    "role": "District Judge",
+    "name": "J. Eric Elliff"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ericka F. H. Englert"
+   },
+   {
+    "role": "District Judge",
+    "name": "Adam J. Espinosa"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kandace C. Gerdes"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jay S. Grant"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric M. Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "A. Bruce Jones"
+   },
+   {
+    "role": "District Judge",
+    "name": "Ian J. Kellogg"
+   },
+   {
+    "role": "District Judge",
+    "name": "Heidi L. Kutcher"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew J. Luxen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew P. McCallin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Marie Avery Moses"
+   },
+   {
+    "role": "District Judge",
+    "name": "Alex C. Myers"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jon J. Olafson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Anita M. Schutte"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stephanie L. Scoville"
+   },
+   {
+    "role": "District Judge",
+    "name": "Demetria E. Trujillo"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sarah B. Wallace"
+   },
+   {
+    "role": "Presiding Judge, Juvenile Court",
+    "name": "Elizabeth (Libbie) McCarthy"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laurie Clark"
+   },
+   {
+    "role": "Juvenile Court Judge",
+    "name": "Lisa Gomez"
+   },
+   {
+    "role": "Presiding Judge, Probate Court",
+    "name": "Elizabeth D. Leith"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "John \"Clay\" McKisson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Pierce L. Fowler"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Erin Sokol"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Bain"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric Bentley"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lin Billings Vela"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jill Brady"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robin Chittum"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amy Cullen Cano"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jessica Curtis"
+   },
+   {
+    "role": "District Judge",
+    "name": "Samuel Evig"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laura N. Findorff"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sherri Gryboski"
+   },
+   {
+    "role": "District Judge",
+    "name": "Hilary Gurney"
+   },
+   {
+    "role": "District Judge",
+    "name": "Marcus Henson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Frances Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mary Linden"
+   },
+   {
+    "role": "District Judge",
+    "name": "Diana May"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dennis McGuire"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael McHenry"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kelly McPherson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Chad Miller"
+   },
+   {
+    "role": "District Judge",
+    "name": "Catherine Mitchell Helton"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lara Nafziger"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amanda Philipps"
+   },
+   {
+    "role": "District Judge",
+    "name": "David Prince"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jennifer Viehman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gregory R. Werner"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sarah Zane"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Moller"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Paul R. Dunkelman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Catherine J. Cheroutes"
+   },
+   {
+    "role": "District Judge",
+    "name": "Rachel J. Olguin-Fresquez"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jonathan Shamis"
+   },
+   {
+    "role": "District Judge",
+    "name": "Reed W. Owens"
+   },
+   {
+    "role": "District Judge",
+    "name": "Karen A. Romeo"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kim S. Shropshire"
+   },
+   {
+    "role": "District Judge",
+    "name": "Justin P. Fay"
+   },
+   {
+    "role": "District Judge",
+    "name": "David Ottman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Reid Stewart"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "D. Cory Jackson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laura E. H. Harvell"
+   },
+   {
+    "role": "District Judge",
+    "name": "Matthew G. Margeson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Steven L. Schultz"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kellie Starritt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Keri A. Yoder"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Gregory M. Lammons"
+   },
+   {
+    "role": "District Judge",
+    "name": "Joseph D. Findley"
+   },
+   {
+    "role": "District Judge",
+    "name": "C.Michelle Brinegar"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kara E. Clark"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sarah B. Cure"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laurie K. Dean"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel M. McDonald"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey M. Schwartz"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel M. St. John II"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Anne K. Norrdin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Alexander Haynes"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laura C. Makar"
+   },
+   {
+    "role": "District Judge",
+    "name": "Elise Myer"
+   },
+   {
+    "role": "District Judge",
+    "name": "Susan Ryan"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Gregory Styduhar"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Alexander"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michelle Chostner"
+   },
+   {
+    "role": "District Judge",
+    "name": "Allison P. Ernst"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas Flesher"
+   },
+   {
+    "role": "District Judge",
+    "name": "Amiel Markenson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tim O'Shea"
+   },
+   {
+    "role": "District Judge",
+    "name": "Tayler Thomas"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Amanda Hunter"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dayna Vise"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lauren Swan"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kaitlin Turner"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Amanda C. Hopkins"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kim Cortez-Rodriguez"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael A. Gonzales"
+   },
+   {
+    "role": "District Judge",
+    "name": "Crista Newmyer-Olsen"
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Carl S. McGuire III"
+   },
+   {
+    "role": "District Judge",
+    "name": "Matthew W. E. Bradley"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dina M. Christiansen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stevie M.G. Gagliano"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robert C. James"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kimbra L. Killin"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Brittany A. Schneider"
+   },
+   {
+    "role": "District Judge",
+    "name": "Billy-George Hertzke"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mary C. Hoak"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Tarryn L. Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mike Davidson"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Samuel S. Vigil"
+   },
+   {
+    "role": "District Judge",
+    "name": "Deni E. Eiring"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Kyle Seedorf"
+   },
+   {
+    "role": "District Judge",
+    "name": "Caryn A. Datz"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sean Finn"
+   },
+   {
+    "role": "District Judge",
+    "name": "Emily Lieberman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Priscilla J. Loew"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michal Lord-Blegen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Brett Martin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sara Price"
+   },
+   {
+    "role": "District Judge",
+    "name": "Patrick H. Pugh"
+   },
+   {
+    "role": "District Judge",
+    "name": "Lochlin Rosen"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey Ruff"
+   },
+   {
+    "role": "District Judge",
+    "name": "Meghan P. Saleebey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kelley R. Southerland"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas M. Ward"
+   },
+   {
+    "role": "District Judge",
+    "name": "Mark Warner"
+   },
+   {
+    "role": "District Judge",
+    "name": "Toni J. Wehman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeffrey Smith"
+   },
+   {
+    "role": "District Judge",
+    "name": "Teri L. Vasquez"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Michelle Amico"
+   },
+   {
+    "role": "District Judge",
+    "name": "David Karpel"
+   },
+   {
+    "role": "District Judge",
+    "name": "Darren Vahle"
+   },
+   {
+    "role": "District Judge",
+    "name": "Laqunya Baker"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jacob Edson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Benjamin Figa"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas Henderson"
+   },
+   {
+    "role": "District Judge",
+    "name": "H. Clay Hurst"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michelle Jones"
+   },
+   {
+    "role": "District Judge",
+    "name": "Bonnie McLean"
+   },
+   {
+    "role": "District Judge",
+    "name": "James Quinn"
+   },
+   {
+    "role": "District Judge",
+    "name": "Natalie Stricklin"
+   },
+   {
+    "role": "District Judge",
+    "name": "A.Danielle Touart"
+   },
+   {
+    "role": "District Judge",
+    "name": "Don J. Toussaint"
+   },
+   {
+    "role": "District Judge",
+    "name": "Christine Washburn"
+   },
+   {
+    "role": "District Judge",
+    "name": "Shay Whitaker"
+   },
+   {
+    "role": "District Judge",
+    "name": "Eric White"
+   },
+   {
+    "role": "District Judge",
+    "name": "Joseph Whitfield"
+   },
+   {
+    "role": "District Judge",
+    "name": "J. Jay Williford"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Julie Hoskins"
+   },
+   {
+    "role": "District Judge",
+    "name": "Allison J. Esser"
+   },
+   {
+    "role": "District Judge",
+    "name": "Audrey Galloway"
+   },
+   {
+    "role": "District Judge",
+    "name": "Troy Hause"
+   },
+   {
+    "role": "District Judge",
+    "name": "Anita Jain Crowther"
+   },
+   {
+    "role": "District Judge",
+    "name": "Timothy Kerns"
+   },
+   {
+    "role": "District Judge",
+    "name": "Annette Kundelius"
+   },
+   {
+    "role": "District Judge",
+    "name": "Sean J. Lacefield"
+   },
+   {
+    "role": "District Judge",
+    "name": "Shannon Lyons"
+   },
+   {
+    "role": "District Judge",
+    "name": "Kimberly B. Schutt"
+   },
+   {
+    "role": "District Judge",
+    "name": "Todd Taylor"
+   },
+   {
+    "role": "District Judge",
+    "name": "Vincente G. Vigil"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Nancy W. Salomone"
+   },
+   {
+    "role": "District Judge",
+    "name": "J. Keith Collins"
+   },
+   {
+    "role": "District Judge",
+    "name": "Robert R. Gunning"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew Hartman"
+   },
+   {
+    "role": "District Judge",
+    "name": "Timothy Johnson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Michael Kotlarczyk"
+   },
+   {
+    "role": "District Judge",
+    "name": "J. Chris Larson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Dea M. Lindsey"
+   },
+   {
+    "role": "District Judge",
+    "name": "Thomas F. Mulvahill"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Brian J. Flynn"
+   },
+   {
+    "role": "District Judge",
+    "name": "Matthew D. Barrett"
+   },
+   {
+    "role": "District Judge",
+    "name": "Jeremy L. Chaffin"
+   },
+   {
+    "role": "District Judge",
+    "name": "Craig P. Henderson"
+   },
+   {
+    "role": "District Judge",
+    "name": "Gretchen B. Larson"
+   },
+   {
+    "role": "District Judge",
+    "name": "JenniLynn E. Lawrence"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Todd Jay Plewe"
+   },
+   {
+    "role": "District Judge",
+    "name": "William Young Furse"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Chief Judge",
+    "name": "Ryan J. Stuart"
+   },
+   {
+    "role": "District Judge",
+    "name": "Beth Elliott-Dumler"
+   },
+   {
+    "role": "District Judge",
+    "name": "Andrew Baum"
+   },
+   {
+    "role": "District Judge",
+    "name": "Shelby Fyles"
+   },
+   {
+    "role": "District Judge",
+    "name": "Stacy Guillon"
+   },
+   {
+    "role": "District Judge",
+    "name": "Victoria Klingensmith"
+   },
+   {
+    "role": "District Judge",
+    "name": "Donna Stewart"
+   },
+   {
+    "role": "District Judge",
+    "name": "Daniel Warhola"
+   },
+   {
+    "role": "District Judge",
+    "name": "Theresa Slade"
+   }
+  ]
+ }
+}

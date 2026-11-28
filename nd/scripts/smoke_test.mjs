@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "nd-senate", "nd-house", "nd-judicial-dis
 const EXPECT_DISTRICT = { "county": "Burleigh County", "us-house": "Congressional District (at Large)", "nd-senate": "35", "nd-house": "35", "nd-judicial-district": "South Central Judicial District" };
 const NEGATIVE_POINT = "49.15000,-99.00000"; // Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry North Dakota";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NorthDakotaExplorer";
@@ -858,16 +858,16 @@ try {
         layer: "municipality", service: PLACES,
         props: { GEOID: "3807200", NAME: "Bismarck city", BASENAME: "Bismarck", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
         want: [/Bismarck city/, /Incorporated city — a general-purpose local government over this point, alongside the county/,
-          /Michael Schmitz/, /Commissioner, At large/, /How the seats are elected/, /Read on November 27, 2026/],
+          /Michael Schmitz/, /Commissioner, At large/, /How the seats are elected/, /Read on [A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\./],
         reject: [/inactive government/, /Not named here/, /elected by Ward/, /Which ward/]
       },
       {
-        name: "a council elected by ward names each member's ward and says the wards are not drawn",
+        name: "a council elected by ward names each member's ward and says which layer draws the wards",
         layer: "municipality", service: PLACES,
         props: { GEOID: "3832060", NAME: "Grand Forks city", BASENAME: "Grand Forks", STATE: "38", LSADC: "25", FUNCSTAT: "A" },
         want: [/Brandon Bochenski/, /Council, Ward 1/, /elected by Ward 1/, /Which ward this point is in/,
-          /read once by hand in a web browser/],
-        reject: [/Not named here/]
+          /The City Council District layer draws Grand Forks's wards/, /read once by hand in a web browser/],
+        reject: [/Not named here/, /does not draw/]
       },
       {
         name: "a commission whose page names nobody names nobody and says why",
@@ -1323,6 +1323,35 @@ try {
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("7 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
     }
+  }
+  // 11. CITY COUNCIL DISTRICT. A point inside each drawn city answers its
+  //     ward from the shipped file and names only the member or members that
+  //     ward's own voters elect, from the council roster the City card reads;
+  //     a point in a city whose wards are not drawn, or that elects every seat
+  //     by the whole city, answers nothing and the card says why. Each inside
+  //     point is the ward builder's own anchor (more than 400 metres inside
+  //     its ward and inside the Census outline of the city, TIGERweb, read
+  //     2026-11-28); each outside point is the Census's internal point of the
+  //     place named.
+  for (const c of [
+    { name: "Grand Forks", point: "47.90727,-97.07116",
+      want: [/Ward 7\b/, /Grand Forks City Council/, /Ken Vein/, /elected by Ward 7/,
+        /The mayor\./, /the City of Grand Forks's own map/, /within 4 metres/],
+      reject: [/Brandon Bochenski/, /Danny Weigel/, /Rebecca Osowski/] },
+    { name: "Bismarck, which elects every seat by the whole city", point: "46.81586,-100.76857",
+      want: [/not in a council (?:ward or district|ward|district) this map draws/, /elect every seat by the whole city/],
+      reject: [/Bismarck City Commission/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
   }
 } finally {
   await browser.close();

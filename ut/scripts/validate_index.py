@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ut-senate", "county", "school-district-unified", "ut-house",
-    "zip-code", "county-subdivision", "municipality", "tribal-government",
-    "police-station", "fire-station", "post-office",
+    "us-house", "ut-judicial-district", "ut-senate", "county",
+    "school-district-unified", "ut-house", "zip-code", "county-subdivision",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +109,7 @@ GEOMETRY_FILES = {
     "ut-house-districts.json": (75, 75),  # The 75 Utah House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (298, 298),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
     "tribal-areas.json": (9, 9),  # Utah's tribal land (scripts/build_tribal_areas.py) — 7 reservations and 2 pieces of off-reservation trust land, held by 7 nations, three pieces drawn whole across the state line, simplified by one Douglas-Peucker run at 3 m because the Navajo Nation drawn whole made 2.17 MB (915 KB, 240 KB gzipped; worst stray from the Census's line 3.3 m against a 25 m ceiling). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "ut-judicial-districts.json": (8, 8),  # The 8 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in ut/data/source/courts/ut-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,6 +120,7 @@ ROSTER_FILES = {
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "tribal-councils.json": 2,  # The councils of the Navajo Nation and the Confederated Tribes of the Goshute Reservation, from their own pages, the same councils Arizona's and Nevada's cards name, keyed by the Census AIANNH code of each piece of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "statewide-officials.json": 5,  # The officers Utah elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ut/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
+    "ut-district-judges.json": 8,  # The judges of each of the 8 court districts, keyed by district, 80 seats read 2026-11-27 from the state's own court website into ut/data/source/courts/ut-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

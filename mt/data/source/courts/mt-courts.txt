@@ -1,0 +1,81 @@
+# Montana court districts and judges, kept by scripts/build_state_courts.py --fetch mt
+# read: 2026-11-27
+# from: https://courts.mt.gov/courts/dcourt/ (counties, from its county menu, and the statewide number of district judges) and each district's Court Locator page, https://courts.mt.gov/CourtLocator/<n>JudicialDistrict (district judges; standing masters and limited-jurisdiction judges are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Broadwater, Lewis and Clark
+district | 2 | Silver Bow
+district | 3 | Deer Lodge, Granite, Powell
+district | 4 | Mineral, Missoula
+district | 5 | Beaverhead, Jefferson, Madison
+district | 6 | Park, Sweet Grass
+district | 7 | Dawson, McCone, Prairie, Richland, Wibaux
+district | 8 | Cascade
+district | 9 | Glacier, Pondera, Teton, Toole
+district | 10 | Fergus, Judith Basin, Petroleum
+district | 11 | Flathead
+district | 12 | Chouteau, Hill, Liberty
+district | 13 | Yellowstone
+district | 14 | Golden Valley, Meagher, Musselshell, Wheatland
+district | 15 | Daniels, Roosevelt, Sheridan
+district | 16 | Carter, Custer, Fallon, Garfield, Powder River, Rosebud, Treasure
+district | 17 | Blaine, Phillips, Valley
+district | 18 | Gallatin
+district | 19 | Lincoln
+district | 20 | Lake, Sanders
+district | 21 | Ravalli
+district | 22 | Big Horn, Carbon, Stillwater
+judge | 1 | District Judge | Chris Abbott | 
+judge | 1 | District Judge | Michael McMahon | 
+judge | 1 | District Judge | Mike Menahan | 
+judge | 1 | District Judge | Kathy Seeley | 
+judge | 2 | District Judge | Frank Joseph | 
+judge | 2 | District Judge | Robert "Bob" Whelan | 
+judge | 3 | District Judge | Jeffrey Dahood | 
+judge | 4 | District Judge | Leslie Halligan | 
+judge | 4 | District Judge | Tara Elliott | 
+judge | 4 | District Judge | John W. Larson | 
+judge | 4 | District Judge | Jason Marks | 
+judge | 4 | District Judge | Shane A. Vannatta | 
+judge | 5 | District Judge | Luke Berger | 
+judge | 6 | District Judge | Rebecca Swandal | 
+judge | 7 | District Judge | Scott Herring | 
+judge | 7 | District Judge | Olivia Rieger | 
+judge | 8 | District Judge | David Grubich | 
+judge | 8 | District Judge | Elizabeth Best | 
+judge | 8 | District Judge | John Kutzman | 
+judge | 8 | District Judge | John W. Parker | 
+judge | 9 | District Judge | Greg Bonilla | 
+judge | 10 | District Judge | Heather Perry | 
+judge | 11 | District Judge | Paul Sullivan | 
+judge | 11 | District Judge | Amy Eddy | 
+judge | 11 | District Judge | Heidi J. Ulbricht | 
+judge | 11 | District Judge | Dan Wilson | 
+judge | 11 | District Judge | Danielle Coffman | 
+judge | 12 | District Judge | Kaydee Snipes Ruiz | 
+judge | 13 | District Judge | Jessica Fehr | 
+judge | 13 | District Judge | Donald L. Harris | 
+judge | 13 | District Judge | Thomas Pardy | 
+judge | 13 | District Judge | Brett Linneweber | 
+judge | 13 | District Judge | Rod Souza | 
+judge | 13 | District Judge | Mary Jane Knisely | 
+judge | 13 | District Judge | Colette B. Davies | 
+judge | 13 | District Judge | Ashley Harada | 
+judge | 13 | District Judge | Seth Cunningham | 
+judge | 13 | District Judge | Ed Zink | 
+judge | 14 | District Judge | Adam Larsen | 
+judge | 15 | District Judge | Ben Fosland | 
+judge | 16 | District Judge | Michael Hayworth | 
+judge | 16 | District Judge | Rennie Wittman | 
+judge | 17 | District Judge | Yvonne Laird | 
+judge | 18 | District Judge | Peter Ohman | 
+judge | 18 | District Judge | Rienne H. McElyea | 
+judge | 18 | District Judge | John C. Brown | 
+judge | 18 | District Judge | Andrew Breuner | 
+judge | 19 | District Judge | Matthew Cuffe | 
+judge | 20 | District Judge | Molly Owen | 
+judge | 20 | District Judge | John Mercer | 
+judge | 21 | District Judge | Howard F. Recht | 
+judge | 21 | District Judge | Jennifer Lint | 
+judge | 22 | District Judge | Matthew Wald | 

@@ -91,6 +91,19 @@ from TIGERweb's layer 1. The card names the district and its county and says it 
 and that outside a city, town or village the county governs; in Baltimore city it says the city's
 own government governs.
 
+**THE APPELLATE CIRCUIT LAYER DRAWS MARYLAND'S 7 APPELLATE JUDICIAL CIRCUITS AND NAMES THE JUSTICE
+AND JUDGE EACH ONE RETAINS** (`md-appellate-circuit`, since 2026-11-27). Each circuit is whole
+counties (Baltimore City alone is the 6th), dissolved from `state-counties.json` by
+`scripts/build_state_courts.py` from Article IV, section 14 of the Constitution as the Maryland
+State Archives' Maryland Manual prints it. The Manual's pages for the Supreme Court of Maryland and
+the Appellate Court of Maryland name each circuit's justice and Appellate Court judge (14 on
+2026-11-27); the fetch stops unless every circuit has one of each and the Appellate Court eight
+at-large judges, who are not listed. They are kept as a dated excerpt in
+`data/source/courts/md-courts.txt` and shipped network-first as `md-district-judges.json`. The
+Governor appoints with the Senate's consent and the circuit's voters retain them for ten-year terms
+(Article IV, section 5A). Circuit court judges, elected by each county, are not drawn here. No job
+refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE MARYLAND.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -119,8 +132,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Maryland (`maryland`) — https://districtry.com/md/
 - Geocoders: address Photon (Maryland-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Maryland-bounded, serial >=1s queue)
-- Ground truth: 38.97864,-76.49077 (Maryland State House, 100 State Circle, Annapolis, Anne Arundel County) → county Anne Arundel County; us-house 3; md-senate 30; md-house 30A. Negative point 38.35000,-74.95000 (The Atlantic about 15 km east of Ocean City — outside Maryland and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Maryland), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.MarylandExplorer`.
+- Ground truth: 38.97864,-76.49077 (Maryland State House, 100 State Circle, Annapolis, Anne Arundel County) → county Anne Arundel County; us-house 3; md-senate 30; md-house 30A; md-appellate-circuit 5th Appellate Judicial Circuit. Negative point 38.35000,-74.95000 (The Atlantic about 15 km east of Ocean City — outside Maryland and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Maryland), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.MarylandExplorer`.
 - Scheduled workflows: `update-md-congress-roster.yml` (Mon 22:31 UTC); `update-md-legislature-roster.yml` (Tue 22:31 UTC); `md-validate-sources.yml` (1st of month 23:25 UTC).
 - Source registry: `md/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

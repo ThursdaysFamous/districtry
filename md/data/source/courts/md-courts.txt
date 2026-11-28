@@ -1,0 +1,28 @@
+# Maryland court districts and judges, kept by scripts/build_state_courts.py --fetch md
+# read: 2026-11-27
+# from: Article IV, section 14 of the Maryland Constitution on https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html (circuits and counties), and the Maryland Manual's pages for the Supreme Court of Maryland, https://msa.maryland.gov/msa/mdmanual/29ap/html/ap.html, and the Appellate Court of Maryland, https://msa.maryland.gov/msa/mdmanual/30sp/html/sp.html (each circuit's justice and Appellate Court judge; the eight at-large judges are counted and not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)
+district | 1 | Caroline, Cecil, Dorchester, Kent, Queen Anne's, Somerset, Talbot, Wicomico, Worcester
+district | 2 | Baltimore, Harford
+district | 3 | Allegany, Carroll, Frederick, Garrett, Howard, Washington
+district | 4 | Prince George's
+district | 5 | Anne Arundel, Calvert, Charles, St. Mary's
+district | 6 | Baltimore city
+district | 7 | Montgomery
+judge | 1 | Justice, Supreme Court of Maryland | Brynja M. Booth | 
+judge | 1 | Judge, Appellate Court of Maryland | Stephen H. Kehoe | 
+judge | 2 | Justice, Supreme Court of Maryland | Angela M. Eaves | 
+judge | 2 | Judge, Appellate Court of Maryland | Douglas R. M. Nazarian | 
+judge | 3 | Chief Justice, Supreme Court of Maryland | Matthew J. Fader | 
+judge | 3 | Judge, Appellate Court of Maryland | Kathryn Grill Graeff | 
+judge | 4 | Justice, Supreme Court of Maryland | Peter K. Killough | 
+judge | 4 | Judge, Appellate Court of Maryland | Melanie M. Shaw | 
+judge | 5 | Justice, Supreme Court of Maryland | Jonathan Biran | 
+judge | 5 | Judge, Appellate Court of Maryland | Laura S. Ripken | 
+judge | 6 | Justice, Supreme Court of Maryland | Shirley M. Watts | 
+judge | 6 | Judge, Appellate Court of Maryland | Michael W. Reed | 
+judge | 7 | Justice, Supreme Court of Maryland | Steven B. Gould | 
+judge | 7 | Judge, Appellate Court of Maryland | Rosalyn Tang | 

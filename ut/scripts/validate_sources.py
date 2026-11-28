@@ -151,6 +151,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 29 counties by ut/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "ut-judicial-district",
+        "app_file": "ut-judicial-districts.json",
+        "source_url": "https://www.utcourts.gov/en/about/miscellaneous/directory/map-of-judicial-districts.html",
+        "note": "Utah's 8 judicial districts, dissolved from the 29 counties by scripts/build_state_courts.py from the Utah State Courts' map of judicial districts (excerpt in ut/data/source/courts/ut-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "ut-judicial-district",
+        "app_file": "ut-district-judges.json",
+        "source_url": "https://www.utcourts.gov/en/courts/other-court-info/judges-bios/district-courts.html",
+        "note": "The district judges of each district, read from the Utah State Courts' page of district court judges by scripts/build_state_courts.py --fetch ut (court commissioners are not kept). The monthly re-read is a row in ut/WATCH.md.",
+    },
 ]
 
 # Utah's envelope, as index.html writes it for the ZIP layer

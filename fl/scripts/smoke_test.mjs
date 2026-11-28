@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "30.43817,-84.28164"; // Florida State Capitol, 400 South Monroe Street, Tallahassee, Leon County
-const OFFLINE = ["county", "us-house", "fl-senate", "fl-house"];
-const EXPECT_DISTRICT = { "county": "Leon County", "us-house": "2", "fl-senate": "3", "fl-house": "9" };
+const OFFLINE = ["county", "us-house", "fl-senate", "fl-house", "fl-judicial-circuit"];
+const EXPECT_DISTRICT = { "county": "Leon County", "us-house": "2", "fl-senate": "3", "fl-house": "9", "fl-judicial-circuit": "2nd Judicial Circuit" };
 const NEGATIVE_POINT = "27.00000,-85.50000"; // Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Florida";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "FloridaExplorer";
@@ -997,6 +997,32 @@ try {
       check(`the county subdivision archive answers at ${where} with no Census request`,
         !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
         `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
+
+  // 7f. THE JUDICIAL CIRCUIT CARD NAMES A CIRCUIT'S JUDGES WHERE ITS SITE IS
+  //     READ, AND SAYS WHY WHERE IT IS NOT. The State Capitol is in the 2nd
+  //     Judicial Circuit, whose chief judge the circuit's own page names; a
+  //     point in downtown Tampa is in the 13th, whose list does not say which
+  //     court each judge sits on, so the card names nobody, gives the reason,
+  //     and prints no "Where the names come from" line.
+  {
+    for (const [where, point, want, refuse] of [
+      ["the State Capitol", POINT, [/2nd Judicial Circuit/, /Frank Allman/, /Where the names come from/], []],
+      ["downtown Tampa", "27.95060,-82.45720", [/13th Judicial Circuit/, /Thirteenth Circuit's list of judges/],
+        // the section label renders in capitals; the prose says "circuit judges"
+        [/Where the names come from/, /CIRCUIT JUDGES/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${point}&layers=fl-judicial-circuit`);
+      const card = await cardText(page, "fl-judicial-circuit");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      const leaked = refuse.filter((re) => re.test(text));
+      check(`the judicial circuit card at ${where} says what its circuit's source allows`,
+        !card.error && missing.length === 0 && leaked.length === 0,
+        `missing=${missing} leaked=${leaked} ${text.slice(0, 160)}`);
       await context.close();
     }
   }

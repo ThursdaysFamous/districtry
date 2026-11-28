@@ -76,6 +76,22 @@ rule county may elect a council and an executive, and Philadelphia's county gove
 city's, which its County card says. Recorded as gaps `pa-county-officials` and
 `pa-municipal-officeholders`.
 
+**THE COURT LAYER DRAWS PENNSYLVANIA'S 60 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`pa-judicial-district`, since 2026-11-27). Each district is one county or two (seven districts of
+two counties), dissolved from `state-counties.json` by `scripts/build_state_courts.py` from the
+Unified Judicial System's Judicial Districts page. Judges come from the feed the Common Pleas Judges
+page fills its table from (`/api/judgeView`, judge type 1, fifteen at a time); a judge is placed by
+the feed's county, senior judges are not kept, a record printed "(Vacant) <name>" is an open seat,
+and Philadelphia Municipal Court's President Judge, whom the feed carries, is left out by
+`PA_OTHER_COURT` (checked against courts.phila.gov). 449 judges on 2026-11-27. 42 Pa.C.S. section
+911 (read as the General Assembly's PDF) sets each district's number of judges, 470 in all, and the
+fetch stops if a district lists more; it lists fewer in seven, and an open-seat record beside a
+district already full (Chester, Columbia-Montour on 2026-11-27) is not shown. They are kept as a
+dated excerpt in `data/source/courts/pa-courts.txt` and shipped network-first as
+`pa-district-judges.json`. Judges are elected in odd-numbered years for ten-year terms, then
+retained by yes or no votes (How Judges Are Elected page). No job refreshes the names; the monthly
+re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE PENNSYLVANIA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -98,8 +114,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Pennsylvania (`pennsylvania`) — https://districtry.com/pa/
 - Geocoders: address Photon (Pennsylvania-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Pennsylvania-bounded, serial >=1s queue)
-- Ground truth: 40.26450,-76.88330 (Pennsylvania State Capitol, 501 North 3rd Street, Harrisburg, Dauphin County) → county Dauphin County; us-house 10; pa-senate 15; pa-house 103. Negative point 42.62000,-79.85000 (Lake Erie on the Canadian side of the international line, north of Erie — outside Pennsylvania and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer places it in no state (controls: the State Capitol returns Pennsylvania, and a point in the open Atlantic returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.PennsylvaniaExplorer`.
+- Ground truth: 40.26450,-76.88330 (Pennsylvania State Capitol, 501 North 3rd Street, Harrisburg, Dauphin County) → county Dauphin County; us-house 10; pa-senate 15; pa-house 103; pa-judicial-district 12th Judicial District. Negative point 42.62000,-79.85000 (Lake Erie on the Canadian side of the international line, north of Erie — outside Pennsylvania and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer places it in no state (controls: the State Capitol returns Pennsylvania, and a point in the open Atlantic returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.PennsylvaniaExplorer`.
 - Scheduled workflows: `update-pa-congress-roster.yml` (Mon 20:07 UTC); `update-pa-legislature-roster.yml` (Tue 20:07 UTC); `pa-validate-sources.yml` (1st of month 21:57 UTC).
 - Source registry: `pa/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

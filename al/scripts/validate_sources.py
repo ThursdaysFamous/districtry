@@ -151,6 +151,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 67 counties by al/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "al-judicial-circuit",
+        "app_file": "al-judicial-districts.json",
+        "source_url": "https://alison.legislature.state.al.us/code-of-alabama?section=12-11-2",
+        "note": "Alabama's 41 judicial circuits, dissolved from the 67 counties by scripts/build_state_courts.py from Code of Alabama 12-11-2 (excerpt in al/data/source/courts/al-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "al-judicial-circuit",
+        "app_file": "al-district-judges.json",
+        "source_url": "https://www.alacourt.gov/JudicialCircuits.aspx",
+        "note": "The circuit judges of each circuit, read from its counties' circuit court sites by scripts/build_state_courts.py --fetch al, which stops if a circuit's sites name more judges than Code of Alabama 12-17-20 sets. The monthly re-read is a row in al/WATCH.md.",
+    },
 ]
 
 # Alabama's envelope, as index.html writes it for the ZIP layer

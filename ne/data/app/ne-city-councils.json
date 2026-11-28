@@ -3,7 +3,7 @@
   "body": "City Council",
   "how": "Each of six council members is elected by one ward, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
   "name": "Bellevue",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -60,14 +60,13 @@
     "sourceUrl": "https://www.bellevue.net/426/City-Council",
     "ward": "6"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "3117670": {
   "body": "City Council",
   "how": "Two council members are elected by each of four wards, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
   "name": "Fremont",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -149,14 +148,13 @@
     "sourceUrl": "https://www.fremontne.gov/29/City-Council",
     "ward": "4"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "3119595": {
   "body": "City Council",
   "how": "Two council members are elected by each of five wards, and the mayor by the whole city (Nebraska law for a city of the first class, section 32-534).",
   "name": "Grand Island",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -245,14 +243,13 @@
     "sourceUrl": "https://www.grand-island.com/page/city-council",
     "ward": "5"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "3121415": {
   "body": "City Council",
   "how": "Two council members are elected by the voters of each of four wards (the council's own page), and the mayor by the whole city.",
   "name": "Hastings",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -325,15 +322,14 @@
     "sourceUrl": "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html",
     "ward": "4"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "3125055": {
   "body": "City Council",
   "how": "All five council members are elected by the whole city, and the council chooses one of its members as its president, who is the mayor (the city's form of government page).",
   "name": "Kearney",
   "note": "As listed on Kearney's own website, which says Pete Kotsiopulos is serving as acting council member in place of Alex Straatmann, who is mobilized for the U.S. military.",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -376,7 +372,7 @@
   "body": "City Council",
   "how": "Four council members are each elected by the voters of one district, and three council members and the mayor by the whole city (the council's own questions page).",
   "name": "Lincoln",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -446,8 +442,7 @@
     "sourceUrl": "https://www.lincoln.ne.gov/City/City-Council/Council-Members"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  },
  "3137000": {
   "body": "City Council",
@@ -520,7 +515,6 @@
     "ward": "7"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  }
 }

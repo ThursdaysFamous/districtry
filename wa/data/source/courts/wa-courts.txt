@@ -1,0 +1,243 @@
+# Washington court districts and judges, kept by scripts/build_state_courts.py --fetch wa
+# read: 2026-11-27
+# from: https://www.courts.wa.gov/court_dir/?fa=court_dir.judicialdistricts (the superior courts and their counties), each county's Court Directory page (superior court judges; commissioners are not kept) and RCW 2.08.061 to 2.08.065 on lawfilesext.leg.wa.gov (the number of judges each court may have)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | Adams County | Adams
+district | Asotin, Columbia and Garfield Counties | Asotin, Columbia, Garfield
+district | Benton and Franklin Counties | Benton, Franklin
+district | Chelan County | Chelan
+district | Clallam County | Clallam
+district | Clark County | Clark
+district | Cowlitz County | Cowlitz
+district | Douglas County | Douglas
+district | Ferry, Pend Oreille and Stevens Counties | Ferry, Pend Oreille, Stevens
+district | Grant County | Grant
+district | Grays Harbor County | Grays Harbor
+district | Island County | Island
+district | Jefferson County | Jefferson
+district | King County | King
+district | Kitsap County | Kitsap
+district | Kittitas County | Kittitas
+district | Klickitat and Skamania Counties | Klickitat, Skamania
+district | Lewis County | Lewis
+district | Lincoln County | Lincoln
+district | Mason County | Mason
+district | Okanogan County | Okanogan
+district | Pacific and Wahkiakum Counties | Pacific, Wahkiakum
+district | Pierce County | Pierce
+district | San Juan County | San Juan
+district | Skagit County | Skagit
+district | Snohomish County | Snohomish
+district | Spokane County | Spokane
+district | Thurston County | Thurston
+district | Walla Walla County | Walla Walla
+district | Whatcom County | Whatcom
+district | Whitman County | Whitman
+district | Yakima County | Yakima
+judge | Adams County | Superior Court Judge | K. Peter Palubicki | 
+judge | Asotin, Columbia and Garfield Counties | Superior Court Judge | Brooke J. Burns | 
+judge | Benton and Franklin Counties | Superior Court Judge | Bronson J. Brown | 
+judge | Benton and Franklin Counties | Superior Court Judge | Joseph M. Burrowes | 
+judge | Benton and Franklin Counties | Superior Court Judge | Andrew M. Howell | 
+judge | Benton and Franklin Counties | Superior Court Judge | David L. Petersen | 
+judge | Benton and Franklin Counties | Superior Court Judge | Norma Rodriguez | 
+judge | Benton and Franklin Counties | Superior Court Judge | Jacqueline Shea-Brown | 
+judge | Benton and Franklin Counties | Superior Court Judge | Jacqueline I. Stam | 
+judge | Chelan County | Superior Court Judge | Travis C. Brandt | 
+judge | Chelan County | Superior Court Judge | Kristin Ferrera | 
+judge | Chelan County | Superior Court Judge | Robert E. Jourdan | 
+judge | Clallam County | Superior Court Judge | Simon Barnhart | 
+judge | Clallam County | Superior Court Judge | W. Brent Basden | 
+judge | Clallam County | Superior Court Judge | Elizabeth A. Stanley | 
+judge | Clark County | Superior Court Judge | Camara L.J. Banfield | 
+judge | Clark County | Superior Court Judge | Suzan L. Clark | 
+judge | Clark County | Superior Court Judge | Tsering D. Cornell | 
+judge | Clark County | Superior Court Judge | Gregory M. Gonzales | 
+judge | Clark County | Superior Court Judge | David E. Gregerson | 
+judge | Clark County | Superior Court Judge | Christine Hayes | 
+judge | Clark County | Superior Court Judge | Robert A. Lewis | 
+judge | Clark County | Superior Court Judge | Nancy N. Retsinas | 
+judge | Clark County | Superior Court Judge | Jennifer K. Snider | 
+judge | Clark County | Superior Court Judge | Derek J. Vanderwood | 
+judge | Clark County | Superior Court Judge | John P. Fairgrieve | 
+judge | Clark County | Superior Court Judge | Emily A. Sheldrick | 
+judge | Cowlitz County | Superior Court Judge | Gary B. Bashor | 
+judge | Cowlitz County | Superior Court Judge | Michael H. Evans | 
+judge | Cowlitz County | Superior Court Judge | Patricia M. Fassett | 
+judge | Cowlitz County | Superior Court Judge | Jill Karmy | 
+judge | Cowlitz County | Superior Court Judge | Thad E. Scudder | 
+judge | Douglas County | Superior Court Judge | Brian C. Huber | 
+judge | Ferry, Pend Oreille and Stevens Counties | Superior Court Judge | Lisa Malpass | 
+judge | Ferry, Pend Oreille and Stevens Counties | Superior Court Judge | Lech J. Radzimski | 
+judge | Ferry, Pend Oreille and Stevens Counties | Superior Court Judge | Thomas F. Webster | 
+judge | Grant County | Superior Court Judge | Melissa K. Chlarson | 
+judge | Grant County | Superior Court Judge | Anna L. Gigliotti | 
+judge | Grant County | Superior Court Judge | Jennifer Richardson | 
+judge | Grays Harbor County | Superior Court Judge | Steven G. Jackson | 
+judge | Grays Harbor County | Superior Court Judge | Vini E. Samuel | 
+judge | Grays Harbor County | Superior Court Judge | Katherine L. Svoboda | 
+judge | Island County | Superior Court Judge | Carolyn Cliff | 
+judge | Island County | Superior Court Judge | Christon C. Skinner | 
+judge | Jefferson County | Superior Court Judge | Brandon Mack | 
+judge | King County | Superior Court Judge | Monica Kaup Cary | 
+judge | King County | Superior Court Judge | Samuel Chung | 
+judge | King County | Superior Court Judge | Janet Helson | 
+judge | King County | Superior Court Judge | Jason Holloway | 
+judge | King County | Superior Court Judge | Nelson K.H. Lee | 
+judge | King County | Superior Court Judge | Hillary Madsen | 
+judge | King County | Superior Court Judge | Jessica M. Manca | 
+judge | King County | Superior Court Judge | Brian McDonald | 
+judge | King County | Superior Court Judge | John F. McHale | 
+judge | King County | Superior Court Judge | Maureen McKee | 
+judge | King County | Superior Court Judge | Sean Patrick O'Donnell | 
+judge | King County | Superior Court Judge | Patrick H. Oishi | 
+judge | King County | Superior Court Judge | Suzanne Parisien | 
+judge | King County | Superior Court Judge | Jennifer R. Petersen | 
+judge | King County | Superior Court Judge | Cindi S. Port | 
+judge | King County | Superior Court Judge | Jason Poydras | 
+judge | King County | Superior Court Judge | Andrea K. Robertson | 
+judge | King County | Superior Court Judge | Averil Rothrock | 
+judge | King County | Superior Court Judge | Michael K. Ryan | 
+judge | King County | Superior Court Judge | Benjamin Santos | 
+judge | King County | Superior Court Judge | Tenaya Scheinman | 
+judge | King County | Superior Court Judge | Ken Schubert | 
+judge | King County | Superior Court Judge | Michael R. Scott | 
+judge | King County | Superior Court Judge | Ketu Shah | 
+judge | King County | Superior Court Judge | Nicholas Straley | 
+judge | King County | Superior Court Judge | Aimee M. Sutton | 
+judge | King County | Superior Court Judge | Tanya Thorp | 
+judge | King County | Superior Court Judge | Todd D. Tinker | 
+judge | King County | Superior Court Judge | Haydee Vargas | 
+judge | King County | Superior Court Judge | David L. Whedbee | 
+judge | King County | Superior Court Judge | Daniel Taylor York | 
+judge | King County | Superior Court Judge | Melinda Young | 
+judge | King County | Superior Court Judge | Kristin Ballinger | 
+judge | King County | Superior Court Judge | Elizabeth J. Berns | 
+judge | King County | Superior Court Judge | Paul M. Crisalli | 
+judge | King County | Superior Court Judge | William L. Dixon V | 
+judge | King County | Superior Court Judge | Taki Flevaris | 
+judge | King County | Superior Court Judge | Jaime Hawk | 
+judge | King County | Superior Court Judge | Nikole E. Hecklinger | 
+judge | King County | Superior Court Judge | David S Keenan | 
+judge | King County | Superior Court Judge | Matthew P Lapin | 
+judge | King County | Superior Court Judge | Mark Larranaga | 
+judge | King County | Superior Court Judge | Nicole AG Phelps | 
+judge | King County | Superior Court Judge | Sandra E. Widlan | 
+judge | King County | Superior Court Judge | Josephine Wiggs | 
+judge | King County | Superior Court Judge | Coreen Wilson | 
+judge | King County | Superior Court Judge | Johanna Bender | 
+judge | King County | Superior Court Judge | Joe Campagna | 
+judge | King County | Superior Court Judge | Marshall Ferguson | 
+judge | King County | Superior Court Judge | Veronica Galvan | 
+judge | King County | Superior Court Judge | Angela J. Kaake | 
+judge | King County | Superior Court Judge | Kent Liu | 
+judge | King County | Superior Court Judge | Susan Llorens | 
+judge | King County | Superior Court Judge | Adrienne McCoy | 
+judge | King County | Superior Court Judge | E Rania Rampersad | 
+judge | King County | Superior Court Judge | Wyman Yip | 
+judge | Kitsap County | Superior Court Judge | Michelle Adams | 
+judge | Kitsap County | Superior Court Judge | Jeffrey P. Bassett | 
+judge | Kitsap County | Superior Court Judge | Cadine Ferguson-Brown | 
+judge | Kitsap County | Superior Court Judge | Jennifer A. Forbes | 
+judge | Kitsap County | Superior Court Judge | Melissa A. Hemstreet | 
+judge | Kitsap County | Superior Court Judge | William C. Houser | 
+judge | Kitsap County | Superior Court Judge | Maureen McKeeman | 
+judge | Kitsap County | Superior Court Judge | Tina Robinson | 
+judge | Kittitas County | Superior Court Judge | Chris Herion | 
+judge | Kittitas County | Superior Court Judge | James Kirkham | 
+judge | Klickitat and Skamania Counties | Superior Court Judge | Randall C. Krog | 
+judge | Lewis County | Superior Court Judge | Paul A. Strophy | 
+judge | Lewis County | Superior Court Judge | J. Andrew Toynbee | 
+judge | Lewis County | Superior Court Judge | Joely A. Yeager | 
+judge | Lincoln County | Superior Court Judge | Adam Walser | 
+judge | Mason County | Superior Court Judge | Tirsa Butler | 
+judge | Mason County | Superior Court Judge | Monty D. Cobb | 
+judge | Mason County | Superior Court Judge | David Stevens | 
+judge | Okanogan County | Superior Court Judge | Kathryn I. Burke | 
+judge | Okanogan County | Superior Court Judge | Rachel Hong | 
+judge | Pacific and Wahkiakum Counties | Superior Court Judge | Donald J. Richter | 
+judge | Pierce County | Superior Court Judge | Susan Adams | 
+judge | Pierce County | Superior Court Judge | Sabrina Ahrens | 
+judge | Pierce County | Superior Court Judge | Jennifer D. Andrews | 
+judge | Pierce County | Superior Court Judge | Timothy L. Ashcraft | 
+judge | Pierce County | Superior Court Judge | Grant E. Blinn | 
+judge | Pierce County | Superior Court Judge | Alicia M. Burton | 
+judge | Pierce County | Superior Court Judge | TaTeasha Davis | 
+judge | Pierce County | Superior Court Judge | Joseph A. Evans | 
+judge | Pierce County | Superior Court Judge | Clarence Henderson | 
+judge | Pierce County | Superior Court Judge | Diana L. Kiesel | 
+judge | Pierce County | Superior Court Judge | Ingrid McLeod | 
+judge | Pierce County | Superior Court Judge | Shelly K. Moss | 
+judge | Pierce County | Superior Court Judge | Andre M. Penalver | 
+judge | Pierce County | Superior Court Judge | Scott Peters | 
+judge | Pierce County | Superior Court Judge | Thomas P. Quinlan | 
+judge | Pierce County | Superior Court Judge | Rebecca K. Reeder | 
+judge | Pierce County | Superior Court Judge | Stan J. Rumbaugh | 
+judge | Pierce County | Superior Court Judge | Michael E. Schwartz | 
+judge | Pierce County | Superior Court Judge | Philip K. Sorensen | 
+judge | Pierce County | Superior Court Judge | Matthew H. Thomas | 
+judge | Pierce County | Superior Court Judge | Philip Thornton | 
+judge | Pierce County | Superior Court Judge | Doris Walkins | 
+judge | Pierce County | Superior Court Judge | Angelica Williams | 
+judge | San Juan County | Superior Court Judge | Kathryn C. Loring | 
+judge | Skagit County | Superior Court Judge | Mary K. Crandall | 
+judge | Skagit County | Superior Court Judge | Elizabeth Yost Neidzwski | 
+judge | Skagit County | Superior Court Judge | Laura M. Riquelme | 
+judge | Skagit County | Superior Court Judge | Heather D. Shand | 
+judge | Snohomish County | Superior Court Judge | Anna G. Alexander | 
+judge | Snohomish County | Superior Court Judge | George F.B. Appel | 
+judge | Snohomish County | Superior Court Judge | Jehiel I. Baer | 
+judge | Snohomish County | Superior Court Judge | Miguel M. Duran | 
+judge | Snohomish County | Superior Court Judge | Jennifer R. Langbehn | 
+judge | Snohomish County | Superior Court Judge | Cindy A. Larsen | 
+judge | Snohomish County | Superior Court Judge | Karen D. Moore | 
+judge | Snohomish County | Superior Court Judge | Patrick M. Moriarty | 
+judge | Snohomish County | Superior Court Judge | Lacie N. B. Nelson | 
+judge | Snohomish County | Superior Court Judge | Edirin O. Okoloko | 
+judge | Snohomish County | Superior Court Judge | Richard T. Okrent | 
+judge | Snohomish County | Superior Court Judge | Whitney M. Rivera | 
+judge | Snohomish County | Superior Court Judge | Jon T. Scott | 
+judge | Snohomish County | Superior Court Judge | William C. Steffener | 
+judge | Snohomish County | Superior Court Judge | Paul W. Thompson | 
+judge | Snohomish County | Superior Court Judge | Bruce I. Weiss | 
+judge | Snohomish County | Superior Court Judge | Joseph P. Wilson | 
+judge | Spokane County | Superior Court Judge | Rachelle E. Anderson | 
+judge | Spokane County | Superior Court Judge | Breean L. Beggs | 
+judge | Spokane County | Superior Court Judge | Charnelle M. Bjelkengren | 
+judge | Spokane County | Superior Court Judge | Dean Tze-Ming Chuang | 
+judge | Spokane County | Superior Court Judge | Candie M. Dibble | 
+judge | Spokane County | Superior Court Judge | Tony D. Hazel | 
+judge | Spokane County | Superior Court Judge | Jacquelyn High-Edward | 
+judge | Spokane County | Superior Court Judge | Julie M. McKay | 
+judge | Spokane County | Superior Court Judge | Marla L. Polin | 
+judge | Spokane County | Superior Court Judge | Jeremy T. Schmidt | 
+judge | Spokane County | Superior Court Judge | Michelle "Shelley" D. Szambelan | 
+judge | Spokane County | Superior Court Judge | Andrew B. Van Winkle | 
+judge | Thurston County | Superior Court Judge | Anne Egeler | 
+judge | Thurston County | Superior Court Judge | Chris Lanese | 
+judge | Thurston County | Superior Court Judge | Christine Schaller | 
+judge | Thurston County | Superior Court Judge | John C. Skinder | 
+judge | Thurston County | Superior Court Judge | Mary Sue Wilson | 
+judge | Thurston County | Superior Court Judge | Kelly Wood | 
+judge | Thurston County | Superior Court Judge | Allyson Zipp | 
+judge | Thurston County | Chief Judge | Indu Thomas | 
+judge | Thurston County | Superior Court Judge | Sharonda D. Amamilo | 
+judge | Walla Walla County | Superior Court Judge | Brandon L. Johnson | 
+judge | Walla Walla County | Superior Court Judge | Patricia Fulton | 
+judge | Whatcom County | Superior Court Judge | David E. Freeman | 
+judge | Whatcom County | Superior Court Judge | Lee Grochmal | 
+judge | Whatcom County | Superior Court Judge | Evan P. Jones | 
+judge | Whatcom County | Superior Court Judge | Robert E. Olson | 
+judge | Whatcom County | Superior Court Judge | Jennifer E. Slattery | 
+judge | Whitman County | Superior Court Judge | Roger Sandberg | 
+judge | Yakima County | Superior Court Judge | Bree Black Horse | 
+judge | Yakima County | Superior Court Judge | Jared A. Boswell | 
+judge | Yakima County | Superior Court Judge | James S. Elliott | 
+judge | Yakima County | Superior Court Judge | Kevin S. Naught | 
+judge | Yakima County | Superior Court Judge | Ruth E. Reukauf | 
+judge | Yakima County | Superior Court Judge | Sonia Rodriguez True | 
+judge | Yakima County | Superior Court Judge | Shane Silverthorn | 
+judge | Yakima County | Superior Court Judge | Jeffery B. Swan | 
+judge | Yakima County | Superior Court Judge | Elisabeth Tutsch | 

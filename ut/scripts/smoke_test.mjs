@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "40.77749,-111.88800"; // Utah State Capitol, 350 State Street, Salt Lake City, Salt Lake County
-const OFFLINE = ["county", "us-house", "ut-senate", "ut-house"];
-const EXPECT_DISTRICT = { "county": "Salt Lake County", "us-house": "1", "ut-senate": "8", "ut-house": "22" };
+const OFFLINE = ["county", "us-house", "ut-senate", "ut-house", "ut-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Salt Lake County", "us-house": "1", "ut-senate": "8", "ut-house": "22", "ut-judicial-district": "3rd Judicial District" };
 const NEGATIVE_POINT = "41.45000,-110.90000"; // Uinta County, Wyoming, north of Evanston and about 12 km east of the Utah line — outside Utah and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Utah), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Utah and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Utah";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "UtahExplorer";

@@ -109,6 +109,23 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Washington has no township
 governments, so outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS WASHINGTON'S 32 SUPERIOR COURTS AND NAMES THEIR JUDGES**
+(`wa-superior-court`, since 2026-11-27). Each court is one county or a few that share it (Asotin,
+Columbia and Garfield; Benton and Franklin; Ferry, Pend Oreille and Stevens; Klickitat and Skamania;
+Pacific and Wahkiakum), dissolved from `state-counties.json` by `scripts/build_state_courts.py` from
+the Court Directory's Judicial Districts Reference List; the district key is the court's name, not a
+number, as in North Dakota. Each county's directory page names its superior court judges "<name>,
+Judge" in its Superior Court section (King's also lists its Kent courthouse and juvenile court
+there); 205 judges on 2026-11-27. Counties that share a court must list the same judges. RCW
+2.08.061 to 2.08.065 (read from lawfilesext.leg.wa.gov; app.leg.wa.gov's robots.txt disallows
+everything) set each court's number of judges, and the fetch stops if the directory lists more; it
+lists fewer in five courts (Chelan, King, Pierce, Skagit, Spokane; 205 of 211 on 2026-11-27), and no
+seat is called vacant, since the directory cannot say whether a seat is open or unfunded. They are
+kept as a dated excerpt in `data/source/courts/wa-courts.txt` and shipped network-first as
+`wa-district-judges.json`. The county's voters elect its judges for four-year terms (Washington
+Constitution, Article IV, section 5). No job refreshes the names; the monthly re-read is a row in
+`WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE WASHINGTON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves. The archive keeps 606 of the 740 ZCTAs in the app's box,
@@ -139,8 +156,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Washington (`washington`) — https://districtry.com/wa/
 - Geocoders: address Photon (Washington-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Washington-bounded, serial >=1s queue)
-- Ground truth: 47.03579,-122.90494 (The Legislative Building, Olympia, Thurston County. Measured 2026-11-11 against the shipped files: 3,815 m inside its legislative district and 13,515 m inside its congressional district and county.) → county Thurston County; us-house 10; wa-senate 22; wa-house 22. Negative point 48.42840,-123.36560 (Victoria, British Columbia, across the Strait of Juan de Fuca — outside Washington and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Legislative Building in Olympia returns Washington), none of the state's shipped boundary files contains it, and none of the outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 7. Debug namespace `window.WashingtonExplorer`.
+- Ground truth: 47.03579,-122.90494 (The Legislative Building, Olympia, Thurston County. Measured 2026-11-11 against the shipped files: 3,815 m inside its legislative district and 13,515 m inside its congressional district and county.) → county Thurston County; us-house 10; wa-senate 22; wa-house 22; wa-superior-court Thurston County Superior Court. Negative point 48.42840,-123.36560 (Victoria, British Columbia, across the Strait of Juan de Fuca — outside Washington and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Legislative Building in Olympia returns Washington), none of the state's shipped boundary files contains it, and none of the outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 8. Debug namespace `window.WashingtonExplorer`.
 - Scheduled workflows: `update-wa-congress-roster.yml` (Tue 21:23 UTC); `update-wa-legislature-roster.yml` (Thu 21:23 UTC); `wa-validate-sources.yml` (1st of month 23:37 UTC).
 - Source registry: `wa/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

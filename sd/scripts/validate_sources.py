@@ -162,6 +162,18 @@ PROVENANCE = [
         "source_url": "https://ujs.sd.gov/court-finder/",
         "note": "Each circuit's circuit judges, read from its contacts page on ujs.sd.gov by scripts/build_state_courts.py --fetch sd; magistrates are not listed. The monthly re-read is a row in sd/WATCH.md.",
     },
+    {
+        "layer": "city-ward",
+        "app_file": "sd-city-wards.json",
+        "source_url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5",
+        "note": "Sioux Falls's 5 council districts, from the city's own map server, one of the 9 districts of the 2 South Dakota cities drawn, pre-built by sd/scripts/build_sd_city_wards.py through scripts/city_ward_maps.py, which takes the cities to draw from sd/data/source/sd-city-council-seats.json; the quarterly --watch row in sd/WATCH.md compares each map's fingerprint recorded at the build. The names on the cards come from each city's own pages, and sd/scripts/build_sd_city_councils.py is what notices one of those changing.",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "sd-city-wards.json",
+        "source_url": "https://services5.arcgis.com/H3Xuuu0h4PaTeWwU/arcgis/rest/services/New_Final_Districts/FeatureServer/1",
+        "note": "Aberdeen's 4 council districts, \"City Council Districts (2021 Finalized)\" (see the Sioux Falls row).",
+    },
 ]
 
 # South Dakota's envelope, as index.html writes it for the ZIP layer

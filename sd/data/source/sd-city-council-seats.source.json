@@ -15,8 +15,8 @@
     "Rob Ronayne",
     "Talmage Ekanger"
    ],
-   "read": "2026-11-27",
-   "sha256": "0ea113e7d93dc27adbab8829ea2d83855174fd2a2b8c99f531caa96963640bff"
+   "read": "2026-11-28",
+   "sha256": "f2e2fbc47a76cedae793b50a878b1f21d4e6fe04bee2d6db60eedcf5b254c517"
   },
   "https://www.aberdeen.sd.us/75/Mayor": {
    "bytes": 100038,
@@ -25,8 +25,8 @@
    "names": [
     "Travis Schaunaman"
    ],
-   "read": "2026-11-27",
-   "sha256": "c682a783b3bad3ec12179cf60603492a104e80e6b0c40b4d97f38d3a9721cdf2"
+   "read": "2026-11-28",
+   "sha256": "c42d97b5297bc5ace2d62b967387eab833687113b955ee23d219bacb7458d3a1"
   },
   "https://www.rcgov.org/departments/mayor-s-office-city-council/city-council.html": {
    "bytes": 81775,
@@ -44,8 +44,8 @@
     "Lindsey Seachris",
     "Stephen Tamang"
    ],
-   "read": "2026-11-27",
-   "sha256": "16845c43267ee06c712e99182b9da6dfca9da973e158d0b039dec74a0d6f89d4"
+   "read": "2026-11-28",
+   "sha256": "8733e332979a58d7ff23e48fff2f7ab5e4f3cbe119f3b8e4efd1baddf3e82b8e"
   },
   "https://www.rcgov.org/departments/mayor-s-office-city-council/mayor-s-office.html": {
    "bytes": 75933,
@@ -54,11 +54,11 @@
    "names": [
     "Jason Salamun"
    ],
-   "read": "2026-11-27",
-   "sha256": "097b40e5591b29d9373730bca4df967b0015751f7f1509f75c6a57fc633e34b1"
+   "read": "2026-11-28",
+   "sha256": "00c87e5e6c6b0084cb554af8ca4bb282d98e12ac5e1560ad5950a4d06fb45af6"
   },
   "https://www.siouxfalls.gov/government/council/council-members": {
-   "bytes": 97302,
+   "bytes": 97304,
    "client": "token",
    "emails": [
     "james.oppenheimer@siouxfalls.gov",
@@ -91,18 +91,18 @@
     "6053678865",
     "6053678898"
    ],
-   "read": "2026-11-27",
-   "sha256": "8c2c73788b33aac4961a7686eb01a29549dbe8200e59bdea54e568e927cabc24"
+   "read": "2026-11-28",
+   "sha256": "9f94c2a8158eca84aff2e64f6a97ebe0c41f8fda4166e88da2aa3e97cc758a4e"
   },
   "https://www.siouxfalls.gov/government/mayor/biography-ce": {
-   "bytes": 93087,
+   "bytes": 93089,
    "client": "token",
    "final": "https://www.siouxfalls.gov/government/mayor/biography-ce",
    "names": [
     "Christine Erickson"
    ],
-   "read": "2026-11-27",
-   "sha256": "90efacc7eb35e5aa7ac2d4a470223dc423f115a3f29744de5f09f4a167fcb572"
+   "read": "2026-11-28",
+   "sha256": "89896efc25cd9e2196c6093a5ce7dcdb718c32cbc944bdce1b65a2f887217ac8"
   }
  }
 }

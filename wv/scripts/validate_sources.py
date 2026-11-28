@@ -217,6 +217,18 @@ PROVENANCE = [
             "it is never read."
         ),
     },
+    {
+        "layer": "wv-judicial-circuit",
+        "app_file": "wv-judicial-districts.json",
+        "source_url": "https://www.courtswv.gov/lower-courts/circuit-courts",
+        "note": "West Virginia's 30 judicial circuits, dissolved from the 55 counties by scripts/build_state_courts.py from the Judiciary's circuit court map (excerpt in wv/data/source/courts/wv-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "wv-judicial-circuit",
+        "app_file": "wv-district-judges.json",
+        "source_url": "https://www.courtswv.gov/lower-courts/circuit-courts",
+        "note": "The circuit judges of each circuit, read from the Judiciary's circuit court map by scripts/build_state_courts.py --fetch wv, which stops unless they total the statewide count the Circuit Courts page states. The monthly re-read is a row in wv/WATCH.md.",
+    },
 ]
 
 # West Virginia's envelope, as index.html writes it for the ZIP layer

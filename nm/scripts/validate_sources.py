@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 33 counties by nm/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "nm-judicial-district",
+        "app_file": "nm-judicial-districts.json",
+        "source_url": "https://nmcourts.gov/courts-by-district/",
+        "note": "New Mexico's 13 judicial districts, dissolved from the 33 counties by scripts/build_state_courts.py from the Judicial Branch's Courts by District page (excerpt in nm/data/source/courts/nm-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "nm-judicial-district",
+        "app_file": "nm-district-judges.json",
+        "source_url": "https://nmcourts.gov/resources/judicial-terms-and-retention-schedule/",
+        "note": "The district judges of each district, read from the District Court Staggered Terms list (a PDF linked from the Judicial Terms and Retention Schedule page) by scripts/build_state_courts.py --fetch nm, which stops unless each district's divisions run from 1 with none skipped; a vacant division is listed as vacant. The monthly re-read is a row in nm/WATCH.md.",
+    },
 ]
 
 # New Mexico's envelope, as index.html writes it for the ZIP layer

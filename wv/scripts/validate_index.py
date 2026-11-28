@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 10
+MIN_REGISTER_LAYER = 11
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "wv-senate", "county", "school-district-unified", "wv-house",
-    "county-subdivision", "zip-code", "municipality", "city-ward",
-    "police-station", "fire-station", "post-office",
+    "us-house", "wv-senate", "wv-judicial-circuit", "county",
+    "school-district-unified", "wv-house", "county-subdivision", "zip-code",
+    "municipality", "city-ward", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +110,7 @@ GEOMETRY_FILES = {
     "wv-magisterial-districts.json": (195, 195),  # The 195 magisterial districts, from the state GIS centre's Magisterial 2026 layer. Exact count, because a change is a county redistricting, which wants reading rather than a widened bound.
     "wv-city-wards.json": (20, 20),  # The 20 council wards of Charleston, from the City's own map, cut at the city's limits on the Census Bureau's map (wv/scripts/build_wv_city_wards.py). Every ward's 2020 census people are pinned in the builder, so the floor and the ceiling are equal: a new city or a new ward plan changes this entry in the same change.
     "zip-index.json": (737, 737),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "wv-judicial-districts.json": (30, 30),  # The 30 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in wv/data/source/courts/wv-courts.txt.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -119,6 +121,7 @@ ROSTER_FILES = {
     "wv-county-officials.json": 55,  # Every county's commissioners and other elected officers from the Secretary of State's directory of county officials, one record for each of the 55 counties, refreshed weekly by update-wv-county-officials.yml.
     "wv-city-councils.json": 1,  # The council members of each city whose wards the City Council Ward layer draws, from the city's own council page, one record per city keyed by its Census place id, refreshed weekly by update-wv-city-councils.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "wv-district-judges.json": 30,  # The judges of each of the 30 court districts, keyed by district, 80 seats read 2026-11-27 from the state's own court website into wv/data/source/courts/wv-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

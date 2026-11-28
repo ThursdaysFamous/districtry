@@ -215,10 +215,28 @@
       }
     },
     {
+      "id": "wv-judicial-circuit",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "30 judicial circuits of whole counties, 2,092 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a Senate district",
+      "source": {
+        "answers": "The judicial circuit covering the point, its counties, and the circuit judges the West Virginia Judiciary's circuit court map names for it.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the West Virginia Judiciary's circuit court map, which lists each circuit's counties, read 2026-11-27.",
+            "url": "https://www.courtswv.gov/lower-courts/circuit-courts"
+          }
+        ],
+        "people": "Each circuit's judges are named from the West Virginia Judiciary's circuit court map (a PDF linked from its Circuit Courts page), read 2026-11-27 with this project's own client and kept as text in wv/data/source/courts/wv-courts.txt; the fetch stops unless they total the 80 circuit judges the Circuit Courts page states. No weekly job re-reads the map, so the card gives the date. How judges are chosen is from the Circuit Courts page.",
+        "applies": "West Virginia — statewide, all 55 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "55 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, who sits on its county commission, and who holds its other elected county offices.",
@@ -236,7 +254,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "55 county school districts, one for each county, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The public school district covering the point.",
@@ -254,7 +272,7 @@
       "id": "wv-house",
       "label": "House of Delegates District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "100 single-member delegate districts — smaller on average than a county, larger than a magisterial district",
       "source": {
         "answers": "The West Virginia House of Delegates district covering the point, and the delegate holding it.",
@@ -272,7 +290,7 @@
       "id": "county-subdivision",
       "label": "Magisterial District",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "195 magisterial districts, three to eight in each county, pre-built from the state's own map",
       "source": {
         "answers": "The magisterial district containing the point and its county. The county commission and board of education draw their members from these districts, so the card says what that means.",
@@ -290,7 +308,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "2,017 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside West Virginia",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -308,7 +326,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "229 incorporated places, about 5 km2 of land on average, live from TIGERweb",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -326,7 +344,7 @@
       "id": "city-ward",
       "label": "City Council Ward",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "20 wards in Charleston, the one city whose ward map this app has, a mean 4.07 km2 (median 3.12, from 1.00 for Ward 3 to 10.14 for Ward 20), measured 2026-11-02 — ranked just after City, Town or Village, which each one divides, so a ward draws on top of its city",
       "source": {
         "answers": "The council ward containing the point, in the West Virginia cities whose ward map this app has (today Charleston), the council member elected from it and the members the city elects at large.",
@@ -348,7 +366,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -366,7 +384,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -384,7 +402,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -399,7 +417,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 38.3365,
     "lng": -81.6123,
@@ -421,6 +439,10 @@
     {
       "layer": "wv-house",
       "expected": "54"
+    },
+    {
+      "layer": "wv-judicial-circuit",
+      "expected": "8th Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -487,6 +509,12 @@
         "min_features": 737,
         "max_features": 737,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "wv-judicial-districts.json",
+        "min_features": 30,
+        "max_features": 30,
+        "note": "The 30 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in wv/data/source/courts/wv-courts.txt."
       }
     ],
     "rosters": [
@@ -519,6 +547,11 @@
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "wv-district-judges.json",
+        "min_keys": 30,
+        "note": "The judges of each of the 30 court districts, keyed by district, 80 seats read 2026-11-27 from the state's own court website into wv/data/source/courts/wv-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

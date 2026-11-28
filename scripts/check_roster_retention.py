@@ -290,6 +290,22 @@ ACCEPTED_DROPS = {
     "il/data/app/mason-county-board-members.json:seatNote":
         "2026-11-25 -- Bender and Sarnes won full terms on 3 Nov; the Clerk's "
         "sheet, read that day, carries a note on none of its 8 rows.",
+
+    # City council wards, Kansas and Nebraska, 2026-11-28. `wardsDrawn: false`
+    # is written only for a city that elects by ward and whose wards are NOT
+    # drawn (scripts/city_councils.py), so it leaves a city's record when the
+    # City Council District layer starts drawing that city's wards
+    # (<tag>/scripts/build_<tag>_city_wards.py). Kansas's seven drawn that day
+    # dropped it and Lenexa, Shawnee and Leawood keep it, so its entry records
+    # the three that remain; a further loss, or a city whose wards stop being
+    # drawn, fails here.
+    "ks/data/app/ks-city-councils.json:wardsDrawn": (
+        3, "2026-11-28 -- seven Kansas cities' wards are drawn on the City Council "
+           "District layer (ks/scripts/build_ks_city_wards.py); Lenexa, Shawnee "
+           "and Leawood still carry the flag"),
+    "ne/data/app/ne-city-councils.json:wardsDrawn":
+        "2026-11-28 -- all six Nebraska cities that elect by ward have their wards "
+        "drawn on the City Council District layer (ne/scripts/build_ne_city_wards.py)",
 }
 
 
@@ -559,6 +575,24 @@ def audit_source_prefixes():
     return out
 
 
+def accepted_why(key, now=None):
+    """The reason recorded for an accepted drop, or None.
+
+    A value of `(remaining, why)` accepts a file-wide drop that leaves some
+    records behind: it holds only while exactly `remaining` records still carry
+    the field (`now`), so it cannot excuse any further loss, and audit_accepted
+    fails it the day the shipped count moves. Kansas's city councils are the
+    first (2026-11-28): `wardsDrawn` left the seven cities whose wards were
+    drawn that day and stays on the three that are not.
+    """
+    why = ACCEPTED_DROPS.get(key)
+    if isinstance(why, tuple):
+        remaining, why = why
+        if now != remaining:
+            return None
+    return why
+
+
 def audit_accepted():
     """Findings for the exception list itself: (severity, key, message).
 
@@ -572,6 +606,9 @@ def audit_accepted():
     out = []
     for key in sorted(ACCEPTED_DROPS):
         why = ACCEPTED_DROPS[key]
+        remaining = None
+        if isinstance(why, tuple):
+            remaining, why = why
         parts = key.split(":")
         if len(parts) < 2 or not parts[0].endswith(".json"):
             out.append(("FAIL", key, "is not in the form `<instance>/data/app/"
@@ -595,7 +632,11 @@ def audit_accepted():
         counts, _ = coverage(payload)
         groups = groups_of(payload, label)
         back = None
-        if len(rest) == 1:
+        if len(rest) == 1 and remaining is not None:
+            if counts.get(rest[0], 0) != remaining:
+                back = ("the field `%s` is on %d record(s), not the %d this entry "
+                        "records" % (rest[0], counts.get(rest[0], 0), remaining))
+        elif len(rest) == 1:
             name = rest[0]
             if counts.get(name, 0) >= MIN_PRESENT:
                 back = ("the field `%s` is back on %d record(s)"
@@ -707,7 +748,7 @@ def excused_group_drops(name, old_groups, new_groups):
             # and `name` and `party` then failed file-wide on exactly those
             # records. Without the group key the drop is NOT excused, so an
             # unexplained source disappearing still takes its fields with it.
-            if ACCEPTED_DROPS.get("%s:%s" % (name, label)):
+            if accepted_why("%s:%s" % (name, label)):
                 sub_old, sub_old_recs = coverage(old_sub)
                 if sub_old_recs >= MIN_GROUP_RECORDS:
                     for field, was in sub_old.items():
@@ -720,8 +761,8 @@ def excused_group_drops(name, old_groups, new_groups):
         for field, was in sub_old.items():
             if sub_new.get(field, 0) or was < MIN_PRESENT:
                 continue                  # still published, or too few to judge
-            if ACCEPTED_DROPS.get("%s:%s:%s" % (name, label, field)) \
-                    or ACCEPTED_DROPS.get("%s:%s" % (name, field)):
+            if accepted_why("%s:%s:%s" % (name, label, field)) \
+                    or accepted_why("%s:%s" % (name, field)):
                 excused[(label, field)] = was
     return excused
 
@@ -766,7 +807,7 @@ def compare(name, old, new):
     for label, old_sub in sorted(old_groups.items()):
         if label in new_groups:
             continue
-        if not ACCEPTED_DROPS.get("%s:%s" % (name, label)):
+        if not accepted_why("%s:%s" % (name, label)):
             continue
         _, lost = coverage(old_sub)
         gone_recs += lost
@@ -784,7 +825,7 @@ def compare(name, old, new):
         now = new_counts.get(field, 0)
         if now >= was:
             continue
-        accepted = ACCEPTED_DROPS.get("%s:%s" % (name, field))
+        accepted = accepted_why("%s:%s" % (name, field), now)
         spared = excused_recs.get(field, 0)
         # What is left once the accepted per-source drops are set aside. The
         # THRESHOLDS read this and the MESSAGES read the real counts, so a
@@ -831,7 +872,7 @@ def compare(name, old, new):
             _, lost_recs = coverage(old_sub)
             if lost_recs < MIN_PRESENT:
                 continue                  # a one-record group: turnover, not a source
-            accepted = ACCEPTED_DROPS.get("%s:%s" % (name, label))
+            accepted = accepted_why("%s:%s" % (name, label))
             # These files are keyed by FIPS, so the label alone is a number
             # nobody can act on. Where the group names itself, say the name.
             named = group_name(old_sub)
@@ -851,8 +892,8 @@ def compare(name, old, new):
         for field, was in sorted(sub_old.items()):
             if sub_new.get(field, 0) or was < MIN_PRESENT:
                 continue
-            accepted = ACCEPTED_DROPS.get("%s:%s:%s" % (name, label, field)) \
-                or ACCEPTED_DROPS.get("%s:%s" % (name, field))
+            accepted = accepted_why("%s:%s:%s" % (name, label, field)) \
+                or accepted_why("%s:%s" % (name, field))
             # The EXCEPTION KEY is the raw label and the MESSAGE is the named
             # one: `55065` is what an ACCEPTED_DROPS entry has to be written
             # against and is not something a reader can act on, so the county

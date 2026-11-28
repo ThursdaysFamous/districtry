@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "35.68226,-105.93964"; // New Mexico State Capitol, 490 Old Santa Fe Trail, Santa Fe, Santa Fe County
-const OFFLINE = ["county", "us-house", "nm-senate", "nm-house"];
-const EXPECT_DISTRICT = { "county": "Santa Fe County", "us-house": "3", "nm-senate": "25", "nm-house": "47" };
+const OFFLINE = ["county", "us-house", "nm-senate", "nm-house", "nm-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Santa Fe County", "us-house": "3", "nm-senate": "25", "nm-house": "47", "nm-judicial-district": "1st Judicial District" };
 const NEGATIVE_POINT = "31.25000,-108.60000"; // Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry New Mexico";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "NewMexicoExplorer";

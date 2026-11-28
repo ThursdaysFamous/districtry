@@ -50,9 +50,12 @@ HOW EACH CITY ELECTS, read on 2026-11-27:
     District contest 326, at the same three voting centers, which a contest
     the whole city votes in could not do.
 
-WARDS. All three cities elect members by ward or district and none of the
-maps is drawn yet; `undrawn` says so city by city, and the City card says the
-ward map is not drawn. The status page counts each as owed a ward map.
+WARDS. All three cities elect members by ward or district. Sioux Falls's and
+Aberdeen's districts are drawn by the City Council District layer since
+2026-11-28 (sd/scripts/build_sd_city_wards.py, from each city's own map),
+whose --check holds every drawn ward to a seat here. Rapid City's are not,
+and `undrawn` says why; its City card says the ward map is not drawn, and the
+status page counts it as owed a ward map.
 
 RE-READ. Sioux Falls elects in June of even years and Rapid City and Aberdeen
 every June; sd/WATCH.md carries the re-read after each election.
@@ -76,7 +79,10 @@ SEATS = {
     "4600100": 9,   # Aberdeen: mayor, 2 members from each of 4 districts
 }
 
-NOT_DRAWN = "its wards are not drawn yet; the city publishes them as a map"
+NOT_DRAWN = {
+    "4652980": "it publishes no map of its wards that can be drawn: the city's GIS office "
+               "lists its voter precinct map as a PDF (searched 2026-11-28)",
+}
 
 SPEC = cc.Spec(
     tag="sd",
@@ -89,7 +95,8 @@ SPEC = cc.Spec(
     # 2026-11-27, all Sioux Falls's; these floors are about two thirds of each.
     min_emails=5,
     min_phones=5,
-    undrawn={geoid: NOT_DRAWN for geoid in SEATS},
+    wards_file="sd-city-wards.json",
+    undrawn=NOT_DRAWN,
 )
 
 if __name__ == "__main__":

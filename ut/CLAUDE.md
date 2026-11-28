@@ -85,6 +85,17 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Utah has no township governments, so
 outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS UTAH'S 8 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`ut-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the courts' map of judicial districts;
+the courts' page of district court judges names them (80, read 2026-11-27), kept as a dated excerpt
+in `data/source/courts/ut-courts.txt` and shipped network-first as `ut-district-judges.json`. The
+page prints every name in capitals: the builder re-cases them and stops on a part no rule re-cases
+(Mc, Van and the like) unless `UT_SPELLED` holds the name as a government page spells it. Court
+commissioners are on the same page and are not kept. The Governor appoints, the Senate approves, and
+the district's voters retain each judge every six years (Utah Constitution, Article VIII, sections 8
+and 9). No job refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE UTAH.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -112,8 +123,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Utah (`utah`) — https://districtry.com/ut/
 - Geocoders: address Photon (Utah-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Utah-bounded, serial >=1s queue)
-- Ground truth: 40.77749,-111.88800 (Utah State Capitol, 350 State Street, Salt Lake City, Salt Lake County) → county Salt Lake County; us-house 1; ut-senate 8; ut-house 22. Negative point 41.45000,-110.90000 (Uinta County, Wyoming, north of Evanston and about 12 km east of the Utah line — outside Utah and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Utah), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Utah and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.UtahExplorer`.
+- Ground truth: 40.77749,-111.88800 (Utah State Capitol, 350 State Street, Salt Lake City, Salt Lake County) → county Salt Lake County; us-house 1; ut-senate 8; ut-house 22; ut-judicial-district 3rd Judicial District. Negative point 41.45000,-110.90000 (Uinta County, Wyoming, north of Evanston and about 12 km east of the Utah line — outside Utah and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Wyoming here (control: the State Capitol returns Utah), and none of the state's shipped boundary files contains it. WYOMING'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED WYOMING (batch 4 of the state-level launch, written 2026-11-12), which found it inside Wyoming's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Utah and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Wyoming routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.UtahExplorer`.
 - Scheduled workflows: `update-ut-congress-roster.yml` (Mon 23:19 UTC); `update-ut-legislature-roster.yml` (Tue 23:19 UTC); `ut-validate-sources.yml` (1st of month 23:49 UTC).
 - Source registry: `ut/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

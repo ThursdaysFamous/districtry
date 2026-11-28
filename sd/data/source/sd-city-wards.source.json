@@ -1,0 +1,47 @@
+{
+ "districts_per_geoid": {
+  "4600100": 4,
+  "4659020": 5
+ },
+ "fetched": "2026-11-28",
+ "fingerprint": {
+  "districts": 9,
+  "sha256": "b8a6435f796484b2a1747a71f5826117caccf412d7755b850be0fde95dedc498"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "414b9887dc8706cd837bf014bb7bbce4bcf92ba938d6ef42ed61a747aec58884",
+ "sources": {
+  "4600100": {
+   "city": "Aberdeen",
+   "covers_place_pct": 96.8,
+   "field": "District",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "1b720ac0bcad94fb5369577817dfa0b8dad2c230bb0475bf370affd8b402d1b0"
+   },
+   "item": "fd2736ff6ace4ae3b84d2dffc3c3c108",
+   "layer": "https://services5.arcgis.com/H3Xuuu0h4PaTeWwU/arcgis/rest/services/New_Final_Districts/FeatureServer/1",
+   "layer_edited": "2025-12-30T15:24:49Z",
+   "outside_place_pct": 0.5,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "4659020": {
+   "city": "Sioux Falls",
+   "covers_place_pct": 99.9,
+   "field": "districtid",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "7e4c97566cc7117eb5b8261ab13f3e32fa7655ab9affdc1769c1648aae82a486"
+   },
+   "item": null,
+   "layer": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5",
+   "layer_edited": null,
+   "outside_place_pct": 1.3,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  }
+ }
+}

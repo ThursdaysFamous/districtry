@@ -216,10 +216,28 @@
       }
     },
     {
+      "id": "pa-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "60 judicial districts of whole counties, 1,988 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a Senate district",
+      "source": {
+        "answers": "The judicial district covering the point, its counties, and the Common Pleas judges the Unified Judicial System lists for it.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Unified Judicial System's Judicial Districts page, which lists each district's counties, read 2026-11-27.",
+            "url": "https://www.pacourts.us/courts/courts-of-common-pleas/judicial-districts"
+          }
+        ],
+        "people": "Each district's judges are named from the Unified Judicial System's list of Common Pleas judges, read 2026-11-27 through the feed its page fills from, with this project's own client, and kept as text in pa/data/source/courts/pa-courts.txt; the fetch stops if a district lists more judges than 42 Pa.C.S. section 911 sets. No weekly job re-reads the list, so the card gives the date. How judges are chosen is from the How Judges Are Elected page.",
+        "applies": "Pennsylvania — statewide, all 67 counties."
+      }
+    },
+    {
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "67 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -237,7 +255,7 @@
       "id": "pa-house",
       "label": "Pennsylvania House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "203 single-member House districts — smaller on average than a county, larger than a school district",
       "source": {
         "answers": "The Pennsylvania House of Representatives district covering the point, and the representative holding it.",
@@ -255,7 +273,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "500 school districts, every one unified, plus the Census placeholder for Lake Erie, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "2,382 ZIP Code Tabulation Areas in the state's own bounding box, drawn from a tile archive of the ones inside Pennsylvania; the layer hides outside the state",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "municipality",
       "label": "City, Borough or Township",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "2,567 municipalities (1,544 townships, 960 borough pieces, 56 city pieces, 6 home rule municipalities and the town of Bloomsburg), about 46 km2 on average, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The city, borough, township or town containing the point, and its county.",
@@ -309,7 +327,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -360,7 +378,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 40.2645,
     "lng": -76.8833,
@@ -382,6 +400,10 @@
     {
       "layer": "pa-house",
       "expected": "103"
+    },
+    {
+      "layer": "pa-judicial-district",
+      "expected": "12th Judicial District"
     }
   ],
   "negative_point": {
@@ -430,6 +452,12 @@
         "min_features": 1820,
         "max_features": 1820,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "pa-judicial-districts.json",
+        "min_features": 60,
+        "max_features": 60,
+        "note": "The 60 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in pa/data/source/courts/pa-courts.txt."
       }
     ],
     "rosters": [
@@ -457,6 +485,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Pennsylvania elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from pa/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "pa-district-judges.json",
+        "min_keys": 60,
+        "note": "The judges of each of the 60 court districts, keyed by district, 456 seats read 2026-11-27 from the state's own court website into pa/data/source/courts/pa-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

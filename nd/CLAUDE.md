@@ -69,12 +69,18 @@ because Grand Forks and Dickinson answer this project's reader with HTTP 403 and
 robots.txt disallows every page; each is kept as a dated excerpt in `data/source/councils/` that the
 build proves names against, and the card says it was read by hand. **WILLISTON NAMES NOBODY**: its
 commission page names no commissioner and its minutes give surnames only, and a surname is not a
-name, so its card says so. Grand Forks elects by ward and its wards are not drawn, and the card says so; the five
+name, so its card says so. Grand Forks elects by ward and its wards are drawn on the City Council District layer (below); the five
 commission cities elect every seat at large by state law (NDCC 40-09-03), and Minot's aldermen are
 elected citywide. A member's own e-mail address or number ships where the city's page prints it
 beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
 and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller place names nobody (gap
 `nd-municipal-officeholders`).
+
+**THE CITY COUNCIL DISTRICT LAYER DRAWS GRAND FORKS'S 7 WARDS** (`city-ward`, since 2026-11-28),
+from the city GIS office's map, built by `nd/scripts/build_nd_city_wards.py` through the fleet module
+`scripts/city_ward_maps.py` (Douglas-Peucker at 4 m), cache-first as `nd-city-wards.json`. The six other
+cities of 25,000 or more elect every seat by the whole city. The card names the member for the ward from
+the council file. The quarterly re-read is a row in `WATCH.md`.
 
 **TWO SCHOOL LAYERS.** Measured 2026-11-12: 147 unified districts and 20 elementary districts, which
 between them cover the state's land, and nothing on TIGER's secondary layer, so it is not drawn. No school
@@ -148,7 +154,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: North Dakota (`northdakota`) — https://districtry.com/nd/
 - Geocoders: address Photon (North Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Dakota-bounded, serial >=1s queue)
 - Ground truth: 46.82078,-100.78267 (North Dakota State Capitol, 600 East Boulevard Avenue, Bismarck, Burleigh County) → county Burleigh County; us-house Congressional District (at Large); nd-senate 35; nd-house 35; nd-judicial-district South Central Judicial District. Negative point 49.15000,-99.00000 (Manitoba, Canada, north of the North Dakota line — outside North Dakota and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the North Dakota State Capitol returns North Dakota), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 11. Debug namespace `window.NorthDakotaExplorer`.
+- Layers: 15 registered (political 6, safety 2, schools 2, geography 5); `registerLayer(` floor 11. Debug namespace `window.NorthDakotaExplorer`.
 - Scheduled workflows: `update-nd-congress-roster.yml` (Wed 23:27 UTC); `update-nd-legislature-roster.yml` (Thu 23:27 UTC); `nd-validate-sources.yml` (2nd of month 23:27 UTC).
 - Source registry: `nd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

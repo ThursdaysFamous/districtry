@@ -3,7 +3,7 @@
   "body": "City Commission",
   "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (North Dakota law for a city governed by a board of city commissioners, NDCC 40-09-03).",
   "name": "Bismarck",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -91,7 +91,7 @@
   "body": "City Commission",
   "how": "The mayor and four commissioners are all elected by the whole city (the city's own commission page).",
   "name": "Fargo",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -207,14 +207,13 @@
     "sourceUrl": "https://www.grandforksgov.com/government/city-leadership/city-council",
     "ward": "7"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "3853380": {
   "body": "City Council",
   "how": "The mayor and six council members are all elected by the whole city, three council members every two years.",
   "name": "Minot",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -271,7 +270,7 @@
   "body": "City Commission",
   "how": "The mayor, who presides over the commission, and four commissioners are all elected by the whole city (the city's own commission page).",
   "name": "West Fargo",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,

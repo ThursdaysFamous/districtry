@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "38.97864,-76.49077"; // Maryland State House, 100 State Circle, Annapolis, Anne Arundel County
-const OFFLINE = ["county", "us-house", "md-senate", "md-house"];
-const EXPECT_DISTRICT = { "county": "Anne Arundel County", "us-house": "3", "md-senate": "30", "md-house": "30A" };
+const OFFLINE = ["county", "us-house", "md-senate", "md-house", "md-appellate-circuit"];
+const EXPECT_DISTRICT = { "county": "Anne Arundel County", "us-house": "3", "md-senate": "30", "md-house": "30A", "md-appellate-circuit": "5th Appellate Judicial Circuit" };
 const NEGATIVE_POINT = "38.35000,-74.95000"; // The Atlantic about 15 km east of Ocean City — outside Maryland and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Maryland), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Maryland";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "MarylandExplorer";

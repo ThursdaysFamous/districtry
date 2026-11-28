@@ -4673,16 +4673,18 @@ function initMissouriExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "mo-senate": "mos", "county": "co", "mo-house": "moh",
-    "county-commissioner": "cm", "school-district-unified": "su",
-    "school-district-elementary": "se", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "mo-senate": "mos", "mo-judicial-circuit": "moj",
+    "county": "co", "mo-house": "moh", "county-commissioner": "cm",
+    "school-district-unified": "su", "school-district-elementary": "se", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["mo-senate"],
-    "state-house": ["mo-house"], "county": ["county"], "county-board": ["county-commissioner"],
+    "state-house": ["mo-house"], "trial-court-district": ["mo-judicial-circuit"],
+    "county": ["county"], "county-board": ["county-commissioner"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
@@ -4707,7 +4709,7 @@ function initMissouriExplorer() {
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "mo-state-outline.json", "zip-index.json",
     "state-counties.json", "congress-districts.json", "mo-senate-districts.json",
-    "mo-house-districts.json", "mo-commission-districts.json" ];
+    "mo-house-districts.json", "mo-commission-districts.json", "mo-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11605,6 +11607,7 @@ function initMissouriExplorer() {
   var LAYER_AREA_RANK = [
     "us-house",          // 8 congressional districts — the largest districts Missouri carries below the state itself
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
+    "mo-judicial-circuit", // 46 judicial circuits of whole counties, 3,925 km2 mean area, measured 2026-11-28 on the drawn file — larger on average than a county, smaller than a Senate district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
     "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 43 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
@@ -17680,6 +17683,137 @@ function initMissouriExplorer() {
   });
 
 
+  /* ---------- 9b. Judicial Circuit — Missouri's judicial circuits, whole counties ----------
+   * 46 judicial circuits of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the Missouri courts' table of the 46 circuits and their counties and
+   * the judges from the Missouri courts' Find a Court/Person directory,
+   * kept as text in mo/data/source/courts/. The districts are geometry
+   * (mo-judicial-districts.json, cache-first); the judges are a roster
+   * (mo-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * mo/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Missouri Constitution, Article V,
+   * sections 19, 25(a) and 25(b), as the Revisor of Statutes prints it
+   * (revisor.mo.gov, read 2026-11-28), and the courts' Nonpartisan Court Plan
+   * page (courts.mo.gov, page 297, read 2026-11-28): circuit judges serve
+   * six-year terms; in the city of St. Louis and Jackson County the Governor
+   * appoints them from three names a nonpartisan judicial commission submits,
+   * and the voters of the St. Louis County, Clay, Platte and Greene circuits
+   * adopted the same plan by vote (section 25(b)); the judge then stands for
+   * retention. Elsewhere the circuit's voters elect them. THE COUNT IS
+   * BOUNDED: the fetch stops unless every circuit has at least one circuit
+   * judge and exactly one presiding judge. The directory lists people, not
+   * seats, so no seat is called vacant. A judge's circuit is the one the
+   * judge's courthouses lie in, read from the directory's own courthouse
+   * names.
+   * ---------- */
+  var loadMoCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-judicial-districts.json", {}, 2);
+  });
+  var loadMoJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-district-judges.json", {}, 2);
+  });
+  var MO_COURT = {
+    how: "In the 6th, 7th, 16th, 21st, 22nd and 31st Circuits the Governor appoints each circuit judge from three people a nonpartisan judicial commission names, and the circuit's voters then decide whether to keep the judge. In the other circuits the voters elect their circuit judges. Terms are six years (Missouri Constitution, Article V, sections 19 and 25).",
+    court: "The circuit court is Missouri's trial court, and it sits in every county of the circuit. The circuit's judges elect one circuit judge as presiding judge. Associate circuit judges are not listed here.",
+    from: "The Missouri courts' directory of circuit judges",
+    link: { label: "Missouri's circuit courts", url: "https://www.courts.mo.gov/page.jsp?id=321" }
+  };
+  function moCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial Circuit";
+  }
+  // "Atchison and Leavenworth Counties"
+  function moCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    // the 22nd Circuit is the independent city alone, which is no county
+    if (list.length === 1 && list[0] === "St. Louis city") return "The city of St. Louis";
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "mo-judicial-circuit",
+    group: "political",
+    label: "Judicial Circuit",
+    emptyNote: "No judicial circuit here. This map holds Missouri's judicial circuits, so a point outside the state gets none.",
+    overlay: {
+      load: loadMoCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : moCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMoCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadMoJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? moCourtTitle(result.unit) : "Unknown judicial circuit",
+        note: moCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Circuit judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: MO_COURT.how });
+      rows.push({ label: "The court", value: MO_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: (bench.from ? String(bench.from) : MO_COURT.from) + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return MO_COURT.link; }
+  });
+
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19571,7 +19705,7 @@ function initMissouriExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "mo-senate", "mo-house", "county-commissioner",
+  var LAYER_SIDEBAR_RANK = ["us-house", "mo-senate", "mo-house", "mo-judicial-circuit", "county-commissioner",
     // Missouri runs two school tilings that partition the state between
     // them, so the two sit together.
     "school-district-unified", "school-district-elementary",
@@ -20105,9 +20239,9 @@ function initMissouriExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#74BBFF",
     "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
-    "#D19133": "#FFD6A3"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

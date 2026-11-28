@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 4 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1205,6 +1205,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Oregon — statewide, all 6 districts.</td>
+              </tr>
+              <tr id="layer-or-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>or-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point, its counties, and the circuit judges the Oregon Judicial Department lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.oregonlegislature.gov/bills_laws/ors/ors003.html" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following ORS 3.012, which names each district's counties, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's presiding judge and circuit judges are named from the Oregon Judicial Department's judges list, read 2026-11-27 with this project's own client through the list's own address and kept as text in or/data/source/courts/or-courts.txt; a seat the list names Vacant shows as vacant, and the fetch stops unless each district's seats match ORS 3.012. No weekly job re-reads the list, so the card gives the date. How judges are chosen is from the Oregon Constitution, Article VII (Amended), section 1.</td>
+                <td data-label="Where it applies">Oregon — statewide, all 36 counties.</td>
               </tr>
               <tr id="layer-or-senate">
                 <th scope="row"><span class="layer-name">Oregon Senate District</span><code>or-senate</code></th>
@@ -1452,6 +1463,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Oregon — part of the elementary districts' ground; the layer answers nothing elsewhere"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/or/sources.html#dataset-or-judicial-district",
+      "identifier": "or-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point, its counties, and the circuit judges the Oregon Judicial Department lists for it. Each district's presiding judge and circuit judges are named from the Oregon Judicial Department's judges list, read 2026-11-27 with this project's own client through the list's own address and kept as text in or/data/source/courts/or-courts.txt; a seat the list names Vacant shows as vacant, and the fetch stops unless each district's seats match ORS 3.012. No weekly job re-reads the list, so the card gives the date. How judges are chosen is from the Oregon Constitution, Article VII (Amended), section 1.",
+      "url": "https://districtry.com/or/sources.html#layer-or-judicial-district",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/or/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following ORS 3.012, which names each district's counties, read 2026-11-27.",
+          "url": "https://www.oregonlegislature.gov/bills_laws/ors/ors003.html"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Oregon — statewide, all 36 counties"
       }
     },
     {

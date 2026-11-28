@@ -4673,16 +4673,17 @@ function initPennsylvaniaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "pa-senate": "pas", "county": "co", "pa-house": "pah",
-    "school-district-unified": "su", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "pa-senate": "pas", "pa-judicial-district": "paj",
+    "county": "co", "pa-house": "pah", "school-district-unified": "su", "zip-code": "zp",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["pa-senate"],
-    "state-house": ["pa-house"], "county": ["county"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["pa-house"], "trial-court-district": ["pa-judicial-district"],
+    "county": ["county"], "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4703,7 +4704,8 @@ function initPennsylvaniaExplorer() {
   // files host (ENGINE files-origin and fetch-retry); the deploy copies exactly
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
-    "pa-senate-districts.json", "pa-house-districts.json", "zip-index.json" ];
+    "pa-senate-districts.json", "pa-house-districts.json", "zip-index.json",
+    "pa-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11601,6 +11603,7 @@ function initPennsylvaniaExplorer() {
   var LAYER_AREA_RANK = [
     "us-house",          // 17 congressional districts — the largest districts Pennsylvania carries below the state itself
     "pa-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
+    "pa-judicial-district", // 60 judicial districts of whole counties, 1,988 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a Senate district
     "county",            // 67 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "pa-house",          // 203 single-member House districts — smaller on average than a county, larger than a school district
     "school-district-unified", // 500 school districts, every one unified, plus the Census placeholder for Lake Erie, drawn from a tile archive mirrored from TIGERweb
@@ -17101,6 +17104,140 @@ function initPennsylvaniaExplorer() {
   });
 
 
+  /* ---------- 7b. Judicial District — Pennsylvania's judicial districts, whole counties ----------
+   * 60 judicial districts of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from the Unified Judicial System's Judicial Districts page and the judges
+   * from the Unified Judicial System's list of Common Pleas judges,
+   * kept as text in pa/data/source/courts/. The districts are geometry
+   * (pa-judicial-districts.json, cache-first); the judges are a roster
+   * (pa-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * pa/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Unified Judicial System's How
+   * Judges Are Elected page (pacourts.us, read 2026-11-27): judicial elections
+   * occur in odd-numbered years, Courts of Common Pleas judges serve ten-year
+   * terms and are retained with a yes or no vote, and a vacancy before an
+   * election may be filled by the Governor's appointment, subject to Senate
+   * confirmation, until an election is held. THE COUNT IS BOUNDED: 42 Pa.C.S.
+   * section 911 sets each district's number of judges (470), and the fetch
+   * stops if the list names more in any district. It names fewer in seven
+   * (measured 2026-11-27: Philadelphia 86 and one vacant of 93, Berks 12 of
+   * 13, Washington 5 of 7, Lycoming 4 of 5, Lehigh 10 of 11, Armstrong 1 of 2,
+   * Montgomery 24 of 26, whose two new seats begin in January 2028), because
+   * the list names sitting judges; a seat the list itself marks vacant prints
+   * as vacant, and no other seat is called vacant. The card says the law sets
+   * the number. Where the list marks a seat vacant beside a district whose
+   * judges already fill every seat the law sets (Chester and Columbia-Montour
+   * on 2026-11-27), the vacancy is not shown. The list's page fills its table
+   * from the court's own feed, read the way the page reads it; senior judges
+   * are not kept, and Philadelphia Municipal Court's President Judge, whom the
+   * list carries, is left out (PA_OTHER_COURT).
+   * ---------- */
+  var loadPaCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/pa-judicial-districts.json", {}, 2);
+  });
+  var loadPaJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/pa-district-judges.json", {}, 2);
+  });
+  var PA_COURT = {
+    how: "Judges of the Courts of Common Pleas are elected in odd-numbered years for ten-year terms, then kept or removed by a yes or no retention vote. The Governor may fill a vacancy, with Senate confirmation, until an election is held (Unified Judicial System of Pennsylvania).",
+    court: "The court of common pleas is Pennsylvania's trial court of general jurisdiction. A district of two counties has one court with a branch in each county. State law sets each district's number of judges (42 Pa.C.S. section 911), and the list names the judges sitting now. Senior judges and magisterial district judges are not listed here.",
+    from: "The Unified Judicial System of Pennsylvania's list of Common Pleas judges",
+    link: { label: "Pennsylvania Common Pleas judges", url: "https://www.pacourts.us/courts/courts-of-common-pleas/common-pleas-judges" }
+  };
+  function paCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial District";
+  }
+  // "Atchison and Leavenworth Counties"
+  function paCourtCounties(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "pa-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Pennsylvania's judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadPaCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : paCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadPaCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadPaJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? paCourtTitle(result.unit) : "Unknown judicial district",
+        note: paCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("Common pleas judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: PA_COURT.how });
+      rows.push({ label: "The court", value: PA_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: PA_COURT.from + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return PA_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18993,7 +19130,7 @@ function initPennsylvaniaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "pa-senate", "pa-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "pa-senate", "pa-house", "pa-judicial-district",
     "school-district-unified",
     "county", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -19524,7 +19661,7 @@ function initPennsylvaniaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
     "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

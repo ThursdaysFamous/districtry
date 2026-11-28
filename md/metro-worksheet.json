@@ -180,10 +180,28 @@
   ],
   "layers": [
     {
+      "id": "md-appellate-circuit",
+      "label": "Appellate Circuit",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "7 appellate judicial circuits of whole counties, 4,590 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a congressional district",
+      "source": {
+        "answers": "The appellate judicial circuit covering the point, its counties, and the justice of the Supreme Court of Maryland and the judge of the Appellate Court of Maryland its voters retain.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Article IV, section 14 of the Maryland Constitution, which names each appellate judicial circuit's counties, read 2026-11-27 from the Maryland Manual.",
+            "url": "https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html"
+          }
+        ],
+        "people": "Each circuit's justice and Appellate Court judge are named from the Maryland Manual's pages for the two courts (msa.maryland.gov), read 2026-11-27 with this project's own client and kept as text in md/data/source/courts/md-courts.txt; the fetch stops unless every circuit has exactly one of each. No weekly job re-reads the pages, so the card gives the date. How they are chosen is from Article IV, sections 5A and 14.",
+        "applies": "Maryland — statewide, all 24 counties."
+      }
+    },
+    {
       "id": "us-house",
       "label": "U.S. House",
       "group": "political",
-      "area_rank": 1,
+      "area_rank": 2,
       "rank_note": "8 congressional districts — the largest districts Maryland carries below the state itself",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
@@ -201,7 +219,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "24 county equivalents (23 counties and Baltimore City), pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -219,7 +237,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "24 school districts, one for each county and Baltimore City and the same ground, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
@@ -237,7 +255,7 @@
       "id": "md-senate",
       "label": "Maryland Senate District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "47 Senate districts, each exactly the delegates' unit or units drawn over it",
       "source": {
         "answers": "The Senate district covering the point, and the senator it elects.",
@@ -255,7 +273,7 @@
       "id": "md-house",
       "label": "Maryland House of Delegates District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "71 delegate units: 29 whole districts electing three delegates and 42 subdistricts electing one or two",
       "source": {
         "answers": "The House of Delegates district or subdistrict covering the point, and every delegate it elects.",
@@ -273,7 +291,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "478 ZIP Code Tabulation Areas that reach into Maryland (1131 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -291,7 +309,7 @@
       "id": "county-subdivision",
       "label": "Election District",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "290 county subdivisions, 289 election districts and Baltimore city, about 87 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The election district containing the point (or Baltimore city), and its county.",
@@ -309,7 +327,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "157 incorporated cities, towns and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city, town or village containing the point, or that the point is outside every one.",
@@ -327,7 +345,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -378,7 +396,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 38.97864,
     "lng": -76.49077,
@@ -400,6 +418,10 @@
     {
       "layer": "md-house",
       "expected": "30A"
+    },
+    {
+      "layer": "md-appellate-circuit",
+      "expected": "5th Appellate Judicial Circuit"
     }
   ],
   "negative_point": {
@@ -448,6 +470,12 @@
         "min_features": 476,
         "max_features": 476,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "md-judicial-districts.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "The 7 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in md/data/source/courts/md-courts.txt."
       }
     ],
     "rosters": [
@@ -475,6 +503,11 @@
         "file": "statewide-officials.json",
         "min_keys": 5,
         "note": "The officers Maryland elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from md/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
+        "file": "md-district-judges.json",
+        "min_keys": 7,
+        "note": "The judges of each of the 7 court districts, keyed by district, 14 seats read 2026-11-27 from the state's own court website into md/data/source/courts/md-courts.txt and built by scripts/build_state_courts.py, whose --check holds this file to that text; no weekly job. Network-first: a corrected list must reach a returning visitor at once."
       }
     ]
   },

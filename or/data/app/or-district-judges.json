@@ -1,0 +1,881 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Tim Barnack"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ben M Bloom"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Laura A Cromwell"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Christine K Herbert"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Sara J Collins"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "David J Orr"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "David G Hoppe"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jeremy Markiewicz"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kelly W Ravassipour"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Charles G Kochlacs"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Matt A Rowan"
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Michelle P Bassi"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Erin A Fennerty"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Curtis Conover"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Beatrice N Grace"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Bradley A Cascagnette"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Valeri L Love"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jay A McAlpin"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Karrie K McIntyre"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Amit K Kapoor"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kamala H Shugar"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Debra E. Velure"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Clara L Rigmaiden"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Stephen W Morgan"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Nathan J. Lichvarcik"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Charles M Zennaché"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jessica E May"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Allison E Knight"
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Michelle Vlach-Ing"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Sean Armstrong"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "J Channing Bennett"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Audrey Broyles"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jodie A Bureta"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Daniel J Wren"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Courtland Geyer"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Thomas M Hart"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "James C Edmonds"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Natasha A Zimmerman"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Lindsay R Partridge"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jennifer K Gardiner"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Tracy A Prall"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Amy M Queen"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Manuel D Perez"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Cheryl A Albrecht"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Celia A Howes"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Bryan B Francesconi"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Sonia A Montalbano"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Rima I Ghandour"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Eric L Dahlin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Maurisa R Gates"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Katharine von Ter Stegge"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael A Greenlick"
+   },
+   {
+    "role": "Circuit Judge",
+    "vacant": true
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patrick W Henry"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jacqueline L Alarcón"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Steffan Alexander"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Melvin Oden-Orr"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Benjamin N Souede"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Andrew M Lavin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jeffrey D Auxier"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Chanpone P Sinlapasai"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Pamela L Haan"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Christopher J Marshall"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Judith H Matarazzo"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Morgan W Long"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Shelley D Russell"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "David F Rees"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jenna R Plank"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Adrian L Brown"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kelly Skye"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Christopher A Ramras"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael J Riedel"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Francis G Troy"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Chris A Martin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Angela F Lucero"
+   },
+   {
+    "role": "Circuit Judge",
+    "vacant": true
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Heidi H Moawad"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Patricia L McGuire"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Adele J Ridenour"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Elisa J Dozono"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Xiomara Torres H."
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Ann M Lininger"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Todd L Van Rysselberghe"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jeffrey S Jones"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Heather L Karabeika"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ulanda L Watkins"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Susie L Norby"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Thanh H Tran"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cody M Weston"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kara A Brooks"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michael C Wetzel"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Colleen F Gilmartin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cierra D Brown"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michelle S Bartov"
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "John L Ballard"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Robert W Collins"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Daniel J Hill"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jon Lieuallen"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Eva J. Temple"
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "John A Olson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Karen Ostrye"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Marion T Weatherford"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "John A Wolf"
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Matthew B Shirtcliff"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Lung S Hung"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Erin K Landis"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Thomas Powers"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Jared D Boyd"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Alycia N Sykora"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Wells B Ashby"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Beth M Bagley"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Raymond D Crutchley"
+   },
+   {
+    "role": "Circuit Judge",
+    "vacant": true
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Alison M Emerson"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Randy Miller"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michelle A McIver"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Alycia M Herriott"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Rafael A Caso"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Monte S Campbell"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Norm R Hill"
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Marci W Adkisson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Stephen R Hedlund"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Andrea M Janney"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kelly N Kritzer"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Sarah K Dougherty"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Sarah E McGlaughlin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brandon S Thueson"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Robert S Bain"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Laurie R Norman"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Matthew G Galli"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Andrew E Combs"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brett A. Pruess"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Matthew P Muenchrath"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Martin E Stone"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cynthia L Beaman"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jesse Margolis"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "George W Ambrosini"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Robert B Johnson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kathleen E Johnson"
+   },
+   {
+    "role": "Acting Presiding Judge",
+    "name": "Steve H Hoddle"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ann Marie Simmons"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cadence L Whiteley"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Sheryl Bachart"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Amanda R Benjamin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Marcia L Buckley"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Beau V Peterson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kirk C Wintermute"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Dawn M McIntosh"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Nickolas A Brajcich"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Michael T Clarke"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Denise E Keppinger"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "D Charles Bailey"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Eric E Butterfield"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Andrew R Erwin"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Michele C Rini"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Oscar Garcia"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Erik M Buchér"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Ricardo J Menchaca"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Maalik M. Summer"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kelly D Lemarr"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Hafez Daraee"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Zohra B Tourville"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Rebecca D Guptill"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brandon M Thompson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Janelle F Wipper"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Kathleen J Proctor"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Elizabeth R Lemoine"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Joan E Demarest"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Matthew J Donohue"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Keri J Smith"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Daina A Vitolins"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Wade L Whiting"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Annette C Hillman"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Michael B Wynhausen"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Keith B Stein"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Thomas A McHill"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Rachel L Kittson"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Brendan J Kane"
+   }
+  ]
+ },
+ "24": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Robert S Raschio"
+   }
+  ]
+ },
+ "25": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Circuit Judge",
+    "name": "Cynthia Kaufman Noble"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Cynthia L Easterday"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Jennifer K Chapman"
+   },
+   {
+    "role": "Presiding Judge",
+    "name": "Ladd J Wiles"
+   }
+  ]
+ },
+ "26": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "David M Vandenberg"
+   }
+  ]
+ },
+ "27": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Presiding Judge",
+    "name": "Jon R Hill"
+   },
+   {
+    "role": "Circuit Judge",
+    "name": "Mari G Trevino"
+   }
+  ]
+ }
+}

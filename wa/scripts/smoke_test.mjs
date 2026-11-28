@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "47.03579,-122.90494"; // The Legislative Building, Olympia, Thurston County. Measured 2026-11-11 against the shipped files: 3,815 m inside its legislative district and 13,515 m inside its congressional district and county.
-const OFFLINE = ["county", "us-house", "wa-senate", "wa-house"];
-const EXPECT_DISTRICT = { "county": "Thurston County", "us-house": "10", "wa-senate": "22", "wa-house": "22" };
+const OFFLINE = ["county", "us-house", "wa-senate", "wa-house", "wa-superior-court"];
+const EXPECT_DISTRICT = { "county": "Thurston County", "us-house": "10", "wa-senate": "22", "wa-house": "22", "wa-superior-court": "Thurston County Superior Court" };
 const NEGATIVE_POINT = "48.42840,-123.36560"; // Victoria, British Columbia, across the Strait of Juan de Fuca — outside Washington and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (control: the Legislative Building in Olympia returns Washington), none of the state's shipped boundary files contains it, and none of the outlines in fleet-outlines.json does. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Washington";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "WashingtonExplorer";

@@ -1,0 +1,94 @@
+# Utah court districts and judges, kept by scripts/build_state_courts.py --fetch ut
+# read: 2026-11-27
+# from: https://www.utcourts.gov/en/about/miscellaneous/directory/map-of-judicial-districts.html (counties) and https://www.utcourts.gov/en/courts/other-court-info/judges-bios/district-courts.html (district judges, printed in capitals and re-cased; court commissioners are not kept)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Box Elder, Cache, Rich
+district | 2 | Davis, Morgan, Weber
+district | 3 | Salt Lake, Summit, Tooele
+district | 4 | Juab, Millard, Utah, Wasatch
+district | 5 | Beaver, Washington, Iron
+district | 6 | Garfield, Kane, Piute, Sanpete, Sevier, Wayne
+district | 7 | Carbon, Emery, Grand, San Juan
+district | 8 | Daggett, Duchesne, Uintah
+judge | 1 | Presiding Judge | Brian G. Cannell | 
+judge | 1 | District Judge | Angela F. Fonnesbeck | 
+judge | 1 | Associate Presiding Judge | Spencer D. Walsh | 
+judge | 1 | District Judge | Brandon J. Maynard | 
+judge | 2 | Presiding Judge | Reuben J. Renstrom | 
+judge | 2 | District Judge | Joseph Bean | 
+judge | 2 | District Judge | Michael D. Direda | 
+judge | 2 | District Judge | Craig Hall | 
+judge | 2 | District Judge | Camille L. Neider | 
+judge | 2 | District Judge | Cristina P. Ortega | 
+judge | 2 | District Judge | David J. Williams | 
+judge | 2 | Associate Presiding Judge | Jennifer L. Valencia | 
+judge | 2 | District Judge | Catherine Conklin | 
+judge | 2 | District Judge | Michael S. Edwards | 
+judge | 2 | District Judge | Matthew J. Hansen | 
+judge | 2 | District Judge | Jason C. Nelson | 
+judge | 2 | District Judge | E. Blaine Rawson | 
+judge | 2 | District Judge | Ronald G. Russell | 
+judge | 3 | Presiding Judge | Adam T. Mow | 
+judge | 3 | District Judge | Matthew Bates | 
+judge | 3 | District Judge | Heather Brereton | 
+judge | 3 | District Judge | Richard W. Daynes | 
+judge | 3 | District Judge | Joel A. Ferre | 
+judge | 3 | District Judge | Dianna Gibson | 
+judge | 3 | District Judge | Todd C. Hilbig | 
+judge | 3 | District Judge | Kristine E. Johnson | 
+judge | 3 | District Judge | Chelsea Koch | 
+judge | 3 | District Judge | Thaddeus May | 
+judge | 3 | District Judge | Richard E. Mrazik | 
+judge | 3 | District Judge | Laura Scott | 
+judge | 3 | District Judge | Charles A. Stormont | 
+judge | 3 | District Judge | Teresa L. Welch | 
+judge | 3 | Associate Presiding Judge | Kara L. Pettit | 
+judge | 3 | District Judge | James T. Blanch | 
+judge | 3 | District Judge | Patrick W. Corum | 
+judge | 3 | District Judge | Robert P. Faust | 
+judge | 3 | District Judge | James D. Gardner | 
+judge | 3 | District Judge | Douglas Hogan | 
+judge | 3 | District Judge | Elizabeth A. Hruby-Mills | 
+judge | 3 | District Judge | Linda M. Jones | 
+judge | 3 | District Judge | Barry G. Lawrence | 
+judge | 3 | District Judge | Jeff Mann | 
+judge | 3 | District Judge | Amber M. Mettler | 
+judge | 3 | District Judge | Amanda N. Montague | 
+judge | 3 | District Judge | Stephen L. Nelson | 
+judge | 3 | District Judge | Richard Pehrson | 
+judge | 3 | District Judge | Coral Sanchez | 
+judge | 3 | District Judge | Todd M. Shaughnessy | 
+judge | 3 | District Judge | Vernice Trease | 
+judge | 3 | District Judge | Derek J. Williams | 
+judge | 4 | Presiding Judge | Sean M. Petersen | 
+judge | 4 | District Judge | Tony F. Graf, Jr. | 
+judge | 4 | District Judge | Shawn Rice Howell | 
+judge | 4 | District Judge | Christine S. Johnson | 
+judge | 4 | District Judge | Jennifer A. Mabey (Brown) | 
+judge | 4 | District Judge | Kraig Powell | 
+judge | 4 | District Judge | Ryan P.C. Stack | 
+judge | 4 | Associate Presiding Judge | Jared Eldridge | 
+judge | 4 | District Judge | Roger Griffin | 
+judge | 4 | District Judge | Anthony L. Howell | 
+judge | 4 | District Judge | Thomas Low | 
+judge | 4 | District Judge | Denise M. Porter | 
+judge | 4 | District Judge | Derek P. Pullan | 
+judge | 4 | District Judge | Kasey L. Wright | 
+judge | 5 | District Judge | Meb W. Anderson | 
+judge | 5 | District Judge | Jack B. Burns | 
+judge | 5 | District Judge | Eric R. Gentry | 
+judge | 5 | District Judge | Bryan J. Pattison | 
+judge | 5 | District Judge | Matthew L. Bell | 
+judge | 5 | District Judge | Ryan E. Christiansen | 
+judge | 5 | District Judge | L. Rachel Munoz | 
+judge | 5 | District Judge | Jay T. Winward | 
+judge | 6 | Presiding Judge | Mandy Larsen | 
+judge | 6 | District Judge | Robert Van Dyke | 
+judge | 7 | Presiding Judge | Don M. Torgerson | 
+judge | 7 | District Judge | Jeremiah Humes | 
+judge | 7 | District Judge | Brian D. Bolinder | 
+judge | 8 | Presiding Judge | Samuel P. Chiara | 
+judge | 8 | District Judge | Cameron M. Beech | 
+judge | 8 | Associate Presiding Judge | Greg Lamb | 

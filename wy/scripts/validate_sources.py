@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 23 counties by wy/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "wy-judicial-district",
+        "app_file": "wy-judicial-districts.json",
+        "source_url": "https://www.wyocourts.gov/find-a-court/",
+        "note": "Wyoming's 9 judicial districts, dissolved from the 23 counties by scripts/build_state_courts.py from the Wyoming Judicial Branch's Find a Court list (excerpt in wy/data/source/courts/wy-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "wy-judicial-district",
+        "app_file": "wy-district-judges.json",
+        "source_url": "https://www.wyocourts.gov/district-courts/",
+        "note": "The district judges of each district, read from each county's district court page on wyocourts.gov by scripts/build_state_courts.py --fetch wy, which stops unless they total the statewide count the district courts page states. The monthly re-read is a row in wy/WATCH.md.",
+    },
 ]
 
 # Wyoming's envelope, as index.html writes it for the ZIP layer

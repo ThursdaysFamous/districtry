@@ -1,0 +1,219 @@
+# Oregon court districts and judges, kept by scripts/build_state_courts.py --fetch or
+# read: 2026-11-27
+# from: https://www.oregonlegislature.gov/bills_laws/ors/ors003.html (ORS 3.012, counties and seats of each district) and the Judicial Department's judges list, https://www.courts.oregon.gov/courts/Pages/judges.aspx, read through the SharePoint list address its table reads (circuit judges)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+district | 1 | Jackson
+district | 2 | Lane
+district | 3 | Marion
+district | 4 | Multnomah
+district | 5 | Clackamas
+district | 6 | Morrow, Umatilla
+district | 7 | Gilliam, Hood River, Sherman, Wasco, Wheeler
+district | 8 | Baker
+district | 9 | Malheur
+district | 10 | Union, Wallowa
+district | 11 | Deschutes
+district | 12 | Polk
+district | 13 | Klamath
+district | 14 | Josephine
+district | 15 | Coos, Curry
+district | 16 | Douglas
+district | 17 | Lincoln
+district | 18 | Clatsop
+district | 19 | Columbia
+district | 20 | Washington
+district | 21 | Benton
+district | 22 | Crook, Jefferson
+district | 23 | Linn
+district | 24 | Grant, Harney
+district | 25 | Yamhill
+district | 26 | Lake
+district | 27 | Tillamook
+judge | 1 | Circuit Judge | Tim Barnack | 
+judge | 1 | Circuit Judge | Ben M Bloom | 
+judge | 1 | Circuit Judge | Laura A Cromwell | 
+judge | 1 | Circuit Judge | Christine K Herbert | 
+judge | 1 | Circuit Judge | Sara J Collins | 
+judge | 1 | Circuit Judge | David J Orr | 
+judge | 1 | Presiding Judge | David G Hoppe | 
+judge | 1 | Circuit Judge | Jeremy Markiewicz | 
+judge | 1 | Circuit Judge | Kelly W Ravassipour | 
+judge | 1 | Circuit Judge | Charles G Kochlacs | 
+judge | 1 | Circuit Judge | Matt A Rowan | 
+judge | 2 | Circuit Judge | Michelle P Bassi | 
+judge | 2 | Circuit Judge | Erin A Fennerty | 
+judge | 2 | Circuit Judge | Curtis Conover | 
+judge | 2 | Circuit Judge | Beatrice N Grace | 
+judge | 2 | Circuit Judge | Bradley A Cascagnette | 
+judge | 2 | Circuit Judge | Valeri L Love | 
+judge | 2 | Circuit Judge | Jay A McAlpin | 
+judge | 2 | Presiding Judge | Karrie K McIntyre | 
+judge | 2 | Circuit Judge | Amit K Kapoor | 
+judge | 2 | Circuit Judge | Kamala H Shugar | 
+judge | 2 | Circuit Judge | Debra E. Velure | 
+judge | 2 | Circuit Judge | Clara L Rigmaiden | 
+judge | 2 | Circuit Judge | Stephen W Morgan | 
+judge | 2 | Circuit Judge | Nathan J. Lichvarcik | 
+judge | 2 | Circuit Judge | Charles M Zennaché | 
+judge | 2 | Circuit Judge | Jessica E May | 
+judge | 2 | Circuit Judge | Allison E Knight | 
+judge | 3 | Circuit Judge | Michelle Vlach-Ing | 
+judge | 3 | Circuit Judge | Sean Armstrong | 
+judge | 3 | Circuit Judge | J Channing Bennett | 
+judge | 3 | Circuit Judge | Audrey Broyles | 
+judge | 3 | Circuit Judge | Jodie A Bureta | 
+judge | 3 | Circuit Judge | Daniel J Wren | 
+judge | 3 | Circuit Judge | Courtland Geyer | 
+judge | 3 | Circuit Judge | Thomas M Hart | 
+judge | 3 | Presiding Judge | James C Edmonds | 
+judge | 3 | Circuit Judge | Natasha A Zimmerman | 
+judge | 3 | Circuit Judge | Lindsay R Partridge | 
+judge | 3 | Circuit Judge | Jennifer K Gardiner | 
+judge | 3 | Circuit Judge | Tracy A Prall | 
+judge | 3 | Circuit Judge | Amy M Queen | 
+judge | 3 | Circuit Judge | Manuel D Perez | 
+judge | 4 | Circuit Judge | Cheryl A Albrecht | 
+judge | 4 | Circuit Judge | Celia A Howes | 
+judge | 4 | Circuit Judge | Bryan B Francesconi | 
+judge | 4 | Circuit Judge | Sonia A Montalbano | 
+judge | 4 | Circuit Judge | Rima I Ghandour | 
+judge | 4 | Circuit Judge | Eric L Dahlin | 
+judge | 4 | Circuit Judge | Maurisa R Gates | 
+judge | 4 | Circuit Judge | Katharine von Ter Stegge | 
+judge | 4 | Circuit Judge | Michael A Greenlick | 
+vacant | 4 | Circuit Judge | | 
+judge | 4 | Circuit Judge | Patrick W Henry | 
+judge | 4 | Circuit Judge | Jacqueline L Alarcón | 
+judge | 4 | Circuit Judge | Steffan Alexander | 
+judge | 4 | Circuit Judge | Melvin Oden-Orr | 
+judge | 4 | Circuit Judge | Benjamin N Souede | 
+judge | 4 | Circuit Judge | Andrew M Lavin | 
+judge | 4 | Circuit Judge | Jeffrey D Auxier | 
+judge | 4 | Circuit Judge | Chanpone P Sinlapasai | 
+judge | 4 | Circuit Judge | Pamela L Haan | 
+judge | 4 | Circuit Judge | Christopher J Marshall | 
+judge | 4 | Presiding Judge | Judith H Matarazzo | 
+judge | 4 | Circuit Judge | Morgan W Long | 
+judge | 4 | Circuit Judge | Shelley D Russell | 
+judge | 4 | Circuit Judge | David F Rees | 
+judge | 4 | Circuit Judge | Jenna R Plank | 
+judge | 4 | Circuit Judge | Adrian L Brown | 
+judge | 4 | Circuit Judge | Kelly Skye | 
+judge | 4 | Circuit Judge | Christopher A Ramras | 
+judge | 4 | Circuit Judge | Michael J Riedel | 
+judge | 4 | Circuit Judge | Francis G Troy | 
+judge | 4 | Circuit Judge | Chris A Martin | 
+judge | 4 | Circuit Judge | Angela F Lucero | 
+vacant | 4 | Circuit Judge | | 
+judge | 4 | Circuit Judge | Heidi H Moawad | 
+judge | 4 | Circuit Judge | Patricia L McGuire | 
+judge | 4 | Circuit Judge | Adele J Ridenour | 
+judge | 4 | Circuit Judge | Elisa J Dozono | 
+judge | 4 | Circuit Judge | Xiomara Torres H. | 
+judge | 5 | Presiding Judge | Ann M Lininger | 
+judge | 5 | Circuit Judge | Todd L Van Rysselberghe | 
+judge | 5 | Circuit Judge | Jeffrey S Jones | 
+judge | 5 | Circuit Judge | Heather L Karabeika | 
+judge | 5 | Circuit Judge | Ulanda L Watkins | 
+judge | 5 | Circuit Judge | Susie L Norby | 
+judge | 5 | Circuit Judge | Thanh H Tran | 
+judge | 5 | Circuit Judge | Cody M Weston | 
+judge | 5 | Circuit Judge | Kara A Brooks | 
+judge | 5 | Circuit Judge | Michael C Wetzel | 
+judge | 5 | Circuit Judge | Colleen F Gilmartin | 
+judge | 5 | Circuit Judge | Cierra D Brown | 
+judge | 5 | Circuit Judge | Michelle S Bartov | 
+judge | 6 | Circuit Judge | John L Ballard | 
+judge | 6 | Circuit Judge | Robert W Collins | 
+judge | 6 | Circuit Judge | Daniel J Hill | 
+judge | 6 | Circuit Judge | Jon Lieuallen | 
+judge | 6 | Presiding Judge | Eva J. Temple | 
+judge | 7 | Circuit Judge | John A Olson | 
+judge | 7 | Circuit Judge | Karen Ostrye | 
+judge | 7 | Circuit Judge | Marion T Weatherford | 
+judge | 7 | Presiding Judge | John A Wolf | 
+judge | 8 | Presiding Judge | Matthew B Shirtcliff | 
+judge | 9 | Presiding Judge | Lung S Hung | 
+judge | 9 | Circuit Judge | Erin K Landis | 
+judge | 10 | Circuit Judge | Thomas Powers | 
+judge | 10 | Presiding Judge | Jared D Boyd | 
+judge | 11 | Circuit Judge | Alycia N Sykora | 
+judge | 11 | Circuit Judge | Wells B Ashby | 
+judge | 11 | Circuit Judge | Beth M Bagley | 
+judge | 11 | Circuit Judge | Raymond D Crutchley | 
+vacant | 11 | Circuit Judge | | 
+judge | 11 | Circuit Judge | Alison M Emerson | 
+judge | 11 | Presiding Judge | Randy Miller | 
+judge | 11 | Circuit Judge | Michelle A McIver | 
+judge | 11 | Circuit Judge | Alycia M Herriott | 
+judge | 12 | Circuit Judge | Rafael A Caso | 
+judge | 12 | Circuit Judge | Monte S Campbell | 
+judge | 12 | Presiding Judge | Norm R Hill | 
+judge | 13 | Circuit Judge | Marci W Adkisson | 
+judge | 13 | Circuit Judge | Stephen R Hedlund | 
+judge | 13 | Presiding Judge | Andrea M Janney | 
+judge | 13 | Circuit Judge | Kelly N Kritzer | 
+judge | 13 | Circuit Judge | Sarah K Dougherty | 
+judge | 14 | Circuit Judge | Sarah E McGlaughlin | 
+judge | 14 | Circuit Judge | Brandon S Thueson | 
+judge | 14 | Presiding Judge | Robert S Bain | 
+judge | 14 | Circuit Judge | Laurie R Norman | 
+judge | 14 | Circuit Judge | Matthew G Galli | 
+judge | 15 | Circuit Judge | Andrew E Combs | 
+judge | 15 | Circuit Judge | Brett A. Pruess | 
+judge | 15 | Circuit Judge | Matthew P Muenchrath | 
+judge | 15 | Presiding Judge | Martin E Stone | 
+judge | 15 | Circuit Judge | Cynthia L Beaman | 
+judge | 15 | Circuit Judge | Jesse Margolis | 
+judge | 16 | Circuit Judge | George W Ambrosini | 
+judge | 16 | Circuit Judge | Robert B Johnson | 
+judge | 16 | Circuit Judge | Kathleen E Johnson | 
+judge | 16 | Acting Presiding Judge | Steve H Hoddle | 
+judge | 16 | Circuit Judge | Ann Marie Simmons | 
+judge | 16 | Circuit Judge | Cadence L Whiteley | 
+judge | 17 | Presiding Judge | Sheryl Bachart | 
+judge | 17 | Circuit Judge | Amanda R Benjamin | 
+judge | 17 | Circuit Judge | Marcia L Buckley | 
+judge | 18 | Presiding Judge | Beau V Peterson | 
+judge | 18 | Circuit Judge | Kirk C Wintermute | 
+judge | 18 | Circuit Judge | Dawn M McIntosh | 
+judge | 19 | Circuit Judge | Nickolas A Brajcich | 
+judge | 19 | Presiding Judge | Michael T Clarke | 
+judge | 19 | Circuit Judge | Denise E Keppinger | 
+judge | 20 | Circuit Judge | D Charles Bailey | 
+judge | 20 | Circuit Judge | Eric E Butterfield | 
+judge | 20 | Circuit Judge | Andrew R Erwin | 
+judge | 20 | Circuit Judge | Michele C Rini | 
+judge | 20 | Circuit Judge | Oscar Garcia | 
+judge | 20 | Circuit Judge | Erik M Buchér | 
+judge | 20 | Circuit Judge | Ricardo J Menchaca | 
+judge | 20 | Circuit Judge | Maalik M. Summer | 
+judge | 20 | Circuit Judge | Kelly D Lemarr | 
+judge | 20 | Circuit Judge | Hafez Daraee | 
+judge | 20 | Circuit Judge | Zohra B Tourville | 
+judge | 20 | Presiding Judge | Rebecca D Guptill | 
+judge | 20 | Circuit Judge | Brandon M Thompson | 
+judge | 20 | Circuit Judge | Janelle F Wipper | 
+judge | 20 | Circuit Judge | Kathleen J Proctor | 
+judge | 20 | Circuit Judge | Elizabeth R Lemoine | 
+judge | 21 | Circuit Judge | Joan E Demarest | 
+judge | 21 | Presiding Judge | Matthew J Donohue | 
+judge | 21 | Circuit Judge | Keri J Smith | 
+judge | 22 | Circuit Judge | Daina A Vitolins | 
+judge | 22 | Presiding Judge | Wade L Whiting | 
+judge | 22 | Circuit Judge | Annette C Hillman | 
+judge | 23 | Circuit Judge | Michael B Wynhausen | 
+judge | 23 | Circuit Judge | Keith B Stein | 
+judge | 23 | Presiding Judge | Thomas A McHill | 
+judge | 23 | Circuit Judge | Rachel L Kittson | 
+judge | 23 | Circuit Judge | Brendan J Kane | 
+judge | 24 | Presiding Judge | Robert S Raschio | 
+judge | 25 | Circuit Judge | Cynthia Kaufman Noble | 
+judge | 25 | Circuit Judge | Cynthia L Easterday | 
+judge | 25 | Circuit Judge | Jennifer K Chapman | 
+judge | 25 | Presiding Judge | Ladd J Wiles | 
+judge | 26 | Presiding Judge | David M Vandenberg | 
+judge | 27 | Presiding Judge | Jon R Hill | 
+judge | 27 | Circuit Judge | Mari G Trevino | 

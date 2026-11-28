@@ -162,6 +162,48 @@ PROVENANCE = [
         "source_url": "https://www.kscourts.gov/About-the-Courts/District-Courts",
         "note": "The district, magistrate and other judges of each district, read from the same 31 pages by scripts/build_state_courts.py --fetch ks; a vacant seat is listed as vacant. The monthly re-read is a row in ks/WATCH.md.",
     },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://gismaps.wichita.gov/ageweb/rest/services/COWGIS/Districts/MapServer/3",
+        "note": "Wichita's 6 council districts, from the city's own map server, one of the 41 wards and districts of the 7 Kansas cities of 25,000 people or more whose wards elect their own members and are drawn, pre-built by ks/scripts/build_ks_city_wards.py through scripts/city_ward_maps.py, which takes the cities to draw from ks/data/source/ks-city-council-seats.json; the quarterly --watch row in ks/WATCH.md compares each map's fingerprint recorded at the build. The names on the cards come from each city's own pages, and ks/scripts/build_ks_city_councils.py is what notices one of those changing.",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://services7.arcgis.com/McLat6HlPl45bNBv/arcgis/rest/services/Sedgwick_County_Voter_Districts/FeatureServer/20",
+        "note": "Derby's 4 wards, from Sedgwick County's map of voting districts, asked for Derby's alone (see the Wichita row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://services1.arcgis.com/YQsWDBr0DjMtoTQo/arcgis/rest/services/Ward_Precincts/FeatureServer/0",
+        "note": "Overland Park's 6 wards, merged from the city's map of its 144 ward precincts (see the Wichita row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://services1.arcgis.com/Qo2HHQp8vgPs2wg3/arcgis/rest/services/Commission_Districts_Aug_2023/FeatureServer/66",
+        "note": "The Unified Government's 8 commission districts, \"Updated 08-25-2023\", which cover all of Wyandotte County (see the Wichita row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://arcgis.olatheks.org/arcgis/rest/services/Public/Planning/MapServer/5",
+        "note": "Olathe's 4 wards, from the city's own map server (see the Wichita row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://services1.arcgis.com/EvtgI3PZ9PyCGJZS/arcgis/rest/services/CityCouncil/FeatureServer/0",
+        "note": "Topeka's 9 council districts, from the city's own map in ArcGIS Online (see the Wichita row).",
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "ks-city-wards.json",
+        "source_url": "https://services.arcgis.com/H9W1xrHipXQYSaRp/arcgis/rest/services/City_Council_Districts_2024/FeatureServer/0",
+        "note": "Hutchinson's 4 named council districts, from the city's \"City Council Districts 2024\" (see the Wichita row).",
+    },
 ]
 
 # Kansas's envelope, as index.html writes it for the ZIP layer

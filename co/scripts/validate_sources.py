@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 64 counties by co/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "co-judicial-district",
+        "app_file": "co-judicial-districts.json",
+        "source_url": "https://www.coloradojudicial.gov/trial-courts-district",
+        "note": "Colorado's 23 judicial districts, dissolved from the 64 counties by scripts/build_state_courts.py from the Colorado Judicial Branch's list of trial courts by district (excerpt in co/data/source/courts/co-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "co-judicial-district",
+        "app_file": "co-district-judges.json",
+        "source_url": "https://www.coloradojudicial.gov/trial-courts-district",
+        "note": "The district judges of each district (and Denver's juvenile and probate judges), read from the Judges and Staff page of each county's court by scripts/build_state_courts.py --fetch co. The monthly re-read is a row in co/WATCH.md.",
+    },
 ]
 
 # Colorado's envelope, as index.html writes it for the ZIP layer

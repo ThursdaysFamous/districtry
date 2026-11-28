@@ -1190,7 +1190,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1199,7 +1199,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1228,6 +1228,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">mo-senate-members.json, rebuilt weekly by CI from the Missouri Senate's own pages for each senator: the name, the party, and the Capitol office's room and telephone, with each senator's e-mail address from the Secretary of State's roster of the General Assembly. A vacant seat carries a record saying so.</td>
                 <td data-label="Where it applies">Missouri — statewide, all 34 districts.</td>
+              </tr>
+              <tr id="layer-mo-judicial-circuit">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>mo-judicial-circuit</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point, its counties, and the circuit judges the Missouri courts' directory names.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.courts.mo.gov/file.jsp?id=281" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Missouri courts' table of the 46 judicial circuits and their counties, read 2026-11-28.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each circuit's judges are named from the Missouri courts' Find a Court/Person directory, asked once on 2026-11-28 for every person whose position is Circuit Judge, with this project's own client, and kept as text in mo/data/source/courts/mo-courts.txt. A judge's circuit is the one the judge's courthouses lie in, and the fetch stops unless every circuit has at least one judge and exactly one presiding judge. No weekly job re-reads the directory, so the card gives the date. How judges are chosen is from the Missouri Constitution, Article V, sections 19 and 25, and the courts' Nonpartisan Court Plan page.</td>
+                <td data-label="Where it applies">Missouri — statewide, all 115 counties.</td>
               </tr>
               <tr id="layer-mo-house">
                 <th scope="row"><span class="layer-name">Missouri House District</span><code>mo-house</code></th>
@@ -1470,6 +1481,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Missouri — statewide, all 34 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mo/sources.html#dataset-mo-judicial-circuit",
+      "identifier": "mo-judicial-circuit",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point, its counties, and the circuit judges the Missouri courts' directory names. Each circuit's judges are named from the Missouri courts' Find a Court/Person directory, asked once on 2026-11-28 for every person whose position is Circuit Judge, with this project's own client, and kept as text in mo/data/source/courts/mo-courts.txt. A judge's circuit is the one the judge's courthouses lie in, and the fetch stops unless every circuit has at least one judge and exactly one presiding judge. No weekly job re-reads the directory, so the card gives the date. How judges are chosen is from the Missouri Constitution, Article V, sections 19 and 25, and the courts' Nonpartisan Court Plan page.",
+      "url": "https://districtry.com/mo/sources.html#layer-mo-judicial-circuit",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/mo/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the Missouri courts' table of the 46 judicial circuits and their counties, read 2026-11-28.",
+          "url": "https://www.courts.mo.gov/file.jsp?id=281"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Missouri — statewide, all 115 counties"
       }
     },
     {

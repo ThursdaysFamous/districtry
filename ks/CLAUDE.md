@@ -65,11 +65,24 @@ Adam's Chrome, because their sites answer this project's reader with HTTP 403 or
 disallows it, and **OVERLAND PARK'S AND HUTCHINSON'S WERE RENDERED ONCE**, because their member lists
 are filled in by a script; each is kept as a dated excerpt in `data/source/councils/` that the build
 proves names against, and the card says a hand-read page was read by hand. Kansas City's card names
-the Unified Government's Board of Commissioners, whose two at-large seats are labelled "At large". The ten cities that elect by ward or district do not have their wards drawn, and the card
-says so. A member's own e-mail address or number ships where the city's page prints it
+the Unified Government's Board of Commissioners, whose two at-large seats are labelled "At large". Seven of the ten cities that elect by ward or district have their wards drawn on the City
+Council District layer (below); for Lenexa, Shawnee and Leawood the card says why not. A member's own e-mail address or number ships where the city's page prints it
 beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
 and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller place names nobody (gap
 `ks-municipal-officeholders`).
+
+**THE CITY COUNCIL DISTRICT LAYER DRAWS 41 WARDS AND DISTRICTS IN 7 CITIES** (`city-ward`, since
+2026-11-28): Wichita, Derby, Overland Park, Kansas City, Olathe, Topeka and Hutchinson, each from the
+map the city or its county publishes, built by `ks/scripts/build_ks_city_wards.py` through the fleet
+module `scripts/city_ward_maps.py` (Douglas-Peucker at 4 m), cache-first as `ks-city-wards.json`. Which
+cities are drawn is read from the seats file, less the three in `NOT_DRAWN` in the council builder:
+Lenexa (its wards can be read only from Johnson County's map server, whose robots.txt disallows this
+project's reader), Shawnee and Leawood (their wards are 18.8% and 18.7% apart on the 2020 census, so
+which map is in force is a question for each city). Overland Park publishes only precincts, merged
+here into wards; Kansas City's map is the Unified Government's commission districts, which cover all of
+Wyandotte County, and the card says the district reaches past the city. Every map was measured against
+the 2020 census before it was drawn; the builder's docstring has the figures. The card names the
+member or members for the ward from the council file. The quarterly re-read is a row in `WATCH.md`.
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 285 unified districts for Kansas and nothing on its
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school
@@ -146,7 +159,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Kansas (`kansas`) — https://districtry.com/ks/
 - Geocoders: address Photon (Kansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Kansas-bounded, serial >=1s queue)
 - Ground truth: 39.04807,-95.67803 (Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County) → county Shawnee County; us-house 2; ks-senate 19; ks-house 57; ks-judicial-district 3rd Judicial District. Negative point 40.20000,-98.50000 (Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.KansasExplorer`.
+- Layers: 14 registered (political 6, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.KansasExplorer`.
 - Scheduled workflows: `update-ks-congress-roster.yml` (Mon 23:31 UTC); `update-ks-legislature-roster.yml` (Tue 23:31 UTC); `ks-validate-sources.yml` (1st of month 23:55 UTC).
 - Source registry: `ks/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

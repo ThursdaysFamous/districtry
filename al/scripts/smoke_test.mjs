@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "32.37771,-86.30091"; // Alabama State Capitol, 600 Dexter Avenue, Montgomery, Montgomery County
-const OFFLINE = ["county", "us-house", "al-senate", "al-house"];
-const EXPECT_DISTRICT = { "county": "Montgomery County", "us-house": "2", "al-senate": "26", "al-house": "77" };
+const OFFLINE = ["county", "us-house", "al-senate", "al-house", "al-judicial-circuit"];
+const EXPECT_DISTRICT = { "county": "Montgomery County", "us-house": "2", "al-senate": "26", "al-house": "77", "al-judicial-circuit": "15th Judicial Circuit" };
 const NEGATIVE_POINT = "29.95000,-88.00000"; // The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Alabama";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "AlabamaExplorer";

@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "40.26450,-76.88330"; // Pennsylvania State Capitol, 501 North 3rd Street, Harrisburg, Dauphin County
-const OFFLINE = ["county", "us-house", "pa-senate", "pa-house"];
-const EXPECT_DISTRICT = { "county": "Dauphin County", "us-house": "10", "pa-senate": "15", "pa-house": "103" };
+const OFFLINE = ["county", "us-house", "pa-senate", "pa-house", "pa-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Dauphin County", "us-house": "10", "pa-senate": "15", "pa-house": "103", "pa-judicial-district": "12th Judicial District" };
 const NEGATIVE_POINT = "42.62000,-79.85000"; // Lake Erie on the Canadian side of the international line, north of Erie — outside Pennsylvania and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer places it in no state (controls: the State Capitol returns Pennsylvania, and a point in the open Atlantic returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Pennsylvania";
-const EXPECT_LAYERS = 10;
+const EXPECT_LAYERS = 11;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "PennsylvaniaExplorer";

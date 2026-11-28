@@ -150,6 +150,18 @@ PROVENANCE = [
         "source_url": STATE_COUNTY,
         "note": "The state outline for the coverage wash, dissolved from the 36 counties by or/scripts/build_metro_outline.py. Its --check is offline and holds the shipped file to one INSIDE anchor per county plus OUTSIDE anchors over the state line.",
     },
+    {
+        "layer": "or-judicial-district",
+        "app_file": "or-judicial-districts.json",
+        "source_url": "https://www.oregonlegislature.gov/bills_laws/ors/ors003.html",
+        "note": "Oregon's 27 judicial districts, dissolved from the 36 counties by scripts/build_state_courts.py from ORS 3.012 (excerpt in or/data/source/courts/or-courts.txt, read 2026-11-27).",
+    },
+    {
+        "layer": "or-judicial-district",
+        "app_file": "or-district-judges.json",
+        "source_url": "https://www.courts.oregon.gov/courts/Pages/judges.aspx",
+        "note": "The circuit judges of each district, read from the Oregon Judicial Department's judges list by scripts/build_state_courts.py --fetch or, which stops unless each district's seats match ORS 3.012; a vacant seat is listed as vacant. The monthly re-read is a row in or/WATCH.md.",
+    },
 ]
 
 # Oregon's envelope, as index.html writes it for the ZIP layer

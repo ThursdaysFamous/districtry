@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1205,6 +1205,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Idaho — statewide, all 2 districts.</td>
+              </tr>
+              <tr id="layer-id-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>id-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point, its counties, and the district judges the Idaho Supreme Court's judicial directory lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://legislature.idaho.gov/statutesrules/idstat/title1/t1ch8/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Idaho Code sections 1-802 to 1-808, which name each district's counties, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's administrative district judge and district judges are named from the Idaho Supreme Court's judicial directory, read 2026-11-27 with this project's own client from the data the page carries inline, and kept as text in id/data/source/courts/id-courts.txt; a seat the directory prints as vacant shows as vacant. No weekly job re-reads the page, so the card gives the date. How judges are chosen is from the Idaho Constitution, Article V, section 11.</td>
+                <td data-label="Where it applies">Idaho — statewide, all 44 counties.</td>
               </tr>
               <tr id="layer-id-senate">
                 <th scope="row"><span class="layer-name">Idaho Senate District</span><code>id-senate</code></th>
@@ -1408,6 +1419,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Idaho — statewide, all 2 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/id/sources.html#dataset-id-judicial-district",
+      "identifier": "id-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point, its counties, and the district judges the Idaho Supreme Court's judicial directory lists for it. Each district's administrative district judge and district judges are named from the Idaho Supreme Court's judicial directory, read 2026-11-27 with this project's own client from the data the page carries inline, and kept as text in id/data/source/courts/id-courts.txt; a seat the directory prints as vacant shows as vacant. No weekly job re-reads the page, so the card gives the date. How judges are chosen is from the Idaho Constitution, Article V, section 11.",
+      "url": "https://districtry.com/id/sources.html#layer-id-judicial-district",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/id/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Idaho Code sections 1-802 to 1-808, which name each district's counties, read 2026-11-27.",
+          "url": "https://legislature.idaho.gov/statutesrules/idstat/title1/t1ch8/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Idaho — statewide, all 44 counties"
       }
     },
     {

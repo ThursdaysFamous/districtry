@@ -1,0 +1,2126 @@
+{
+ "1": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative Judge",
+    "name": "Daniel J. Anders"
+   },
+   {
+    "role": "President Judge",
+    "name": "Nina N. Wright Padilla"
+   },
+   {
+    "role": "Administrative Judge",
+    "name": "Sheila A. Woods-Skipper"
+   },
+   {
+    "role": "Administrative Judge",
+    "name": "Walter J. Olszewski"
+   },
+   {
+    "role": "Judge",
+    "name": "Anne Marie B. Coyle"
+   },
+   {
+    "role": "Judge",
+    "name": "Anthony E. Stefanski"
+   },
+   {
+    "role": "Judge",
+    "name": "Anthony G. Kyriakakis"
+   },
+   {
+    "role": "Judge",
+    "name": "Betsy Jo Wahl"
+   },
+   {
+    "role": "Judge",
+    "name": "Brian E. McLaughlin"
+   },
+   {
+    "role": "Judge",
+    "name": "Brian R. Kisielewski"
+   },
+   {
+    "role": "Judge",
+    "name": "Carmella G. Jacquinto"
+   },
+   {
+    "role": "Judge",
+    "name": "Caroline M. Turner"
+   },
+   {
+    "role": "Judge",
+    "name": "Cateria R. McCabe"
+   },
+   {
+    "role": "Judge",
+    "name": "Charles A. Ehrlich"
+   },
+   {
+    "role": "Judge",
+    "name": "Chesley A. Lightsey"
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher P. Mallios Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher R. Hall"
+   },
+   {
+    "role": "Judge",
+    "name": "Craig R. Levin"
+   },
+   {
+    "role": "Judge",
+    "name": "Crystal Bryant Powell"
+   },
+   {
+    "role": "Judge",
+    "name": "Daine A. Grey"
+   },
+   {
+    "role": "Judge",
+    "name": "Damaris L. Garcia"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel R. Sulman"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah D. Cianfrani"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah L. Canty"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah Watson-Stokes"
+   },
+   {
+    "role": "Judge",
+    "name": "Denis P. Cohen"
+   },
+   {
+    "role": "Judge",
+    "name": "Diana L. Anhalt"
+   },
+   {
+    "role": "Judge",
+    "name": "Donna M. Woelpper"
+   },
+   {
+    "role": "Judge",
+    "name": "Edward C. Wright"
+   },
+   {
+    "role": "Judge",
+    "name": "Elizabeth Jackson"
+   },
+   {
+    "role": "Judge",
+    "name": "Elvin P. Ross III"
+   },
+   {
+    "role": "Judge",
+    "name": "Frank Palumbo"
+   },
+   {
+    "role": "Judge",
+    "name": "Giovanni O. Campbell"
+   },
+   {
+    "role": "Judge",
+    "name": "Glynnis D. Hill"
+   },
+   {
+    "role": "Judge",
+    "name": "Gwendolyn N. Bright"
+   },
+   {
+    "role": "Judge",
+    "name": "Ida K. Chen"
+   },
+   {
+    "role": "Judge",
+    "name": "Irina G. Ehrlich"
+   },
+   {
+    "role": "Judge",
+    "name": "James C. Crumlish III"
+   },
+   {
+    "role": "Judge",
+    "name": "James J. Eisenhower"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer A. Santiago"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer Schultz"
+   },
+   {
+    "role": "Judge",
+    "name": "Jessica R. Brown"
+   },
+   {
+    "role": "Judge",
+    "name": "John R. Padova Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Jonathan Q. Irvine"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph J. Russo"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph L. Fernandes"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph Scott O'Keefe"
+   },
+   {
+    "role": "Judge",
+    "name": "Joshua H. Roberts"
+   },
+   {
+    "role": "Judge",
+    "name": "Kay K. Yu"
+   },
+   {
+    "role": "Judge",
+    "name": "Kia Ghee"
+   },
+   {
+    "role": "Judge",
+    "name": "Lawrence M. Farnese Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Leanne L. Litwin"
+   },
+   {
+    "role": "Judge",
+    "name": "Leon A. King II"
+   },
+   {
+    "role": "Judge",
+    "name": "Linda A. Carpenter"
+   },
+   {
+    "role": "Judge",
+    "name": "Lucretia Clemons"
+   },
+   {
+    "role": "Judge",
+    "name": "Lyris F. Younge"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark J. Moore"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael E. Erdos"
+   },
+   {
+    "role": "Judge",
+    "name": "Michele D. Hangley"
+   },
+   {
+    "role": "Judge",
+    "name": "Monica N. Gibbs"
+   },
+   {
+    "role": "Judge",
+    "name": "Natasha Taylor-Smith"
+   },
+   {
+    "role": "Judge",
+    "name": "Nicholas S. Kamau"
+   },
+   {
+    "role": "Judge",
+    "name": "Ourania Papademetriou"
+   },
+   {
+    "role": "Judge",
+    "name": "Paula A. Patrick"
+   },
+   {
+    "role": "Judge",
+    "name": "Rajinderpal S. Sandher"
+   },
+   {
+    "role": "Judge",
+    "name": "Ramy I. Djerassi"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard J. Gordon Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Rose Marie DeFino-Nastasi"
+   },
+   {
+    "role": "Judge",
+    "name": "Roxanne E. Covington"
+   },
+   {
+    "role": "Judge",
+    "name": "Samantha J. Williams"
+   },
+   {
+    "role": "Judge",
+    "name": "Sarah Jones"
+   },
+   {
+    "role": "Judge",
+    "name": "Scott DiClaudio"
+   },
+   {
+    "role": "Judge",
+    "name": "Sean Kennedy"
+   },
+   {
+    "role": "Judge",
+    "name": "Shanese I. Johnson"
+   },
+   {
+    "role": "Judge",
+    "name": "Sierra L. Thomas-Street"
+   },
+   {
+    "role": "Judge",
+    "name": "Stephanie M. Sawyer"
+   },
+   {
+    "role": "Judge",
+    "name": "Susan I. Schulman"
+   },
+   {
+    "role": "Judge",
+    "name": "Tamika N. Washington"
+   },
+   {
+    "role": "Judge",
+    "name": "Tiffany L. Palmer"
+   },
+   {
+    "role": "Judge",
+    "name": "Tracy Roman"
+   },
+   {
+    "role": "Judge",
+    "name": "Viktoria Kristiansson"
+   },
+   {
+    "role": "Judge",
+    "name": "Vincent L. Johnson"
+   },
+   {
+    "role": "Judge",
+    "name": "Vincent W. Furlong"
+   },
+   {
+    "role": "Judge",
+    "name": "Wendi D. Barish"
+   },
+   {
+    "role": "Judge",
+    "name": "William S. Braveman"
+   },
+   {
+    "role": "Judge",
+    "name": "Zachary C. Shaffer"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "2": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Leonard G. Brown III"
+   },
+   {
+    "role": "Judge",
+    "name": "Christina M. Parsons"
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher A. Hackman"
+   },
+   {
+    "role": "Judge",
+    "name": "Craig W. Stedman"
+   },
+   {
+    "role": "Judge",
+    "name": "Dennis E. Reinaker"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffery D. Wright"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffrey A. Conrad"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffrey J. Reich"
+   },
+   {
+    "role": "Judge",
+    "name": "JoAnne Murphy"
+   },
+   {
+    "role": "Judge",
+    "name": "Merrill M. Spahn Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Shawn P. McLaughlin"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas B. Sponaugle"
+   },
+   {
+    "role": "Judge",
+    "name": "Todd E. Brown"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "3": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Craig A. Dally"
+   },
+   {
+    "role": "Judge",
+    "name": "Abraham P. Kassis"
+   },
+   {
+    "role": "Judge",
+    "name": "Brian J. Panella"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer R. Sletvold"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeremy Clark"
+   },
+   {
+    "role": "Judge",
+    "name": "John M. Morganelli"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael J. Koury Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Paula A. Roscioli"
+   },
+   {
+    "role": "Judge",
+    "name": "Samuel P. Murray"
+   }
+  ]
+ },
+ "4": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "George W. Wheeler"
+   }
+  ]
+ },
+ "5": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "Administrative Judge",
+    "name": "Alan D. Hertzberg"
+   },
+   {
+    "role": "Administrative Judge",
+    "name": "Bruce R. Beemer"
+   },
+   {
+    "role": "Administrative Judge",
+    "name": "Hugh F. McGough"
+   },
+   {
+    "role": "Administrative Judge",
+    "name": "Jennifer S. McCrady"
+   },
+   {
+    "role": "President Judge",
+    "name": "Susan Evashavik DiLucente"
+   },
+   {
+    "role": "Judge",
+    "name": "Amanda Green-Hawkins"
+   },
+   {
+    "role": "Judge",
+    "name": "Arnold I. Klein"
+   },
+   {
+    "role": "Judge",
+    "name": "Beth A. Lazzara"
+   },
+   {
+    "role": "Judge",
+    "name": "Cathleen Cawood Bubash"
+   },
+   {
+    "role": "Judge",
+    "name": "Chelsa L. Wagner"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel D. Regan"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel Laurenzano Miller"
+   },
+   {
+    "role": "Judge",
+    "name": "David L. Spurgeon"
+   },
+   {
+    "role": "Judge",
+    "name": "Dwayne D. Woodruff"
+   },
+   {
+    "role": "Judge",
+    "name": "Edward J. Borkowski"
+   },
+   {
+    "role": "Judge",
+    "name": "Eleanor L. Bush"
+   },
+   {
+    "role": "Judge",
+    "name": "Elliot C. Howsie"
+   },
+   {
+    "role": "Judge",
+    "name": "Heather Schmidt Bresnahan"
+   },
+   {
+    "role": "Judge",
+    "name": "Jaime M. Hickton"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer Satler"
+   },
+   {
+    "role": "Judge",
+    "name": "Jessel A. Costa"
+   },
+   {
+    "role": "Judge",
+    "name": "Jill E. Rangos"
+   },
+   {
+    "role": "Judge",
+    "name": "John T. McVay Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Julie Capone"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelly Eileen Bigley"
+   },
+   {
+    "role": "Judge",
+    "name": "Kevin G. Sasinoski"
+   },
+   {
+    "role": "Judge",
+    "name": "Kim D. Eaton"
+   },
+   {
+    "role": "Judge",
+    "name": "Lisa G. Middleman"
+   },
+   {
+    "role": "Judge",
+    "name": "Mary C. McGinley"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew V. Rudzki"
+   },
+   {
+    "role": "Judge",
+    "name": "Nicola Henry-Taylor"
+   },
+   {
+    "role": "Judge",
+    "name": "Patrick A. Sweeney"
+   },
+   {
+    "role": "Judge",
+    "name": "Patrick M. Connelly"
+   },
+   {
+    "role": "Judge",
+    "name": "Paul E. Cozza"
+   },
+   {
+    "role": "Judge",
+    "name": "Philip A. Ignelzi"
+   },
+   {
+    "role": "Judge",
+    "name": "R. Anthony DeLuca"
+   },
+   {
+    "role": "Judge",
+    "name": "Randal B. Todd"
+   },
+   {
+    "role": "Judge",
+    "name": "Sabrina Korbel"
+   },
+   {
+    "role": "Judge",
+    "name": "Simquita Bridges"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas P. Caulfield"
+   },
+   {
+    "role": "Judge",
+    "name": "Tiffany E. Sizemore"
+   },
+   {
+    "role": "Judge",
+    "name": "Wrenna L. Watson"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "6": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "John J. Mead"
+   },
+   {
+    "role": "Judge",
+    "name": "David G. Ridge"
+   },
+   {
+    "role": "Judge",
+    "name": "Emily M. Merski"
+   },
+   {
+    "role": "Judge",
+    "name": "Erin C. Connelly Marucci"
+   },
+   {
+    "role": "Judge",
+    "name": "John J. Trucilla"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph M. Walsh III"
+   },
+   {
+    "role": "Judge",
+    "name": "Marshall J. Piccinini"
+   },
+   {
+    "role": "Judge",
+    "name": "Peter J. Sala"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "7": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Raymond F. McHugh"
+   },
+   {
+    "role": "Judge",
+    "name": "Amy Fitzpatrick"
+   },
+   {
+    "role": "Judge",
+    "name": "Brian T. McGuffin"
+   },
+   {
+    "role": "Judge",
+    "name": "C. Theodore Fritsch Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Charissa J. Liller"
+   },
+   {
+    "role": "Judge",
+    "name": "Dawn Marie DiDonato Burke"
+   },
+   {
+    "role": "Judge",
+    "name": "Denise M. Bowman"
+   },
+   {
+    "role": "Judge",
+    "name": "James M. McMaster"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffrey G. Trauger"
+   },
+   {
+    "role": "Judge",
+    "name": "Jordan B. Yeager"
+   },
+   {
+    "role": "Judge",
+    "name": "Linda Bobrin"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew D. Weintraub"
+   },
+   {
+    "role": "Judge",
+    "name": "Stephen A. Corr"
+   },
+   {
+    "role": "Judge",
+    "name": "Tiffany Thomas-Smith"
+   },
+   {
+    "role": "Judge",
+    "name": "Wallace H. Bateman Jr."
+   }
+  ]
+ },
+ "8": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Paige Rosini"
+   },
+   {
+    "role": "Judge",
+    "name": "Edward Greco"
+   },
+   {
+    "role": "Judge",
+    "name": "Frank W. Garrigan"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael P. Toomey"
+   }
+  ]
+ },
+ "9": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Albert H. Masland"
+   },
+   {
+    "role": "Judge",
+    "name": "Alexandra E. Sacavage"
+   },
+   {
+    "role": "Judge",
+    "name": "Carrie E. Hyams"
+   },
+   {
+    "role": "Judge",
+    "name": "Christylee L. Peck"
+   },
+   {
+    "role": "Judge",
+    "name": "Jessica E. Brewbaker"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew P. Smith"
+   },
+   {
+    "role": "Judge",
+    "name": "Michelle H. Sibert"
+   }
+  ]
+ },
+ "10": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Christopher A. Feliciani"
+   },
+   {
+    "role": "Judge",
+    "name": "Christian F. Scherer"
+   },
+   {
+    "role": "Judge",
+    "name": "Harry F. Smail Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "James P. Silvis"
+   },
+   {
+    "role": "Judge",
+    "name": "Justin M. Walsh"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew Schimizzi"
+   },
+   {
+    "role": "Judge",
+    "name": "Meagan A. Bilik-DeFazio"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael J. Stewart"
+   },
+   {
+    "role": "Judge",
+    "name": "Michele G. Bononi"
+   },
+   {
+    "role": "Judge",
+    "name": "Scott O. Mears"
+   },
+   {
+    "role": "Judge",
+    "name": "Timothy A. Krieger"
+   }
+  ]
+ },
+ "11": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Stefanie J. Salavantis"
+   },
+   {
+    "role": "Judge",
+    "name": "David W. Lupas"
+   },
+   {
+    "role": "Judge",
+    "name": "Fred A. Pierantoni III"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer L. Rogers"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph F. Sklarosky Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Lesa S. Gelb"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark Bufalino"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael T. Vough"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard M. Hughes"
+   },
+   {
+    "role": "Judge",
+    "name": "Tarah C. Toohil"
+   },
+   {
+    "role": "Judge",
+    "name": "Tina Polachek Gartley"
+   }
+  ]
+ },
+ "12": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Andrew H. Dowling"
+   },
+   {
+    "role": "Judge",
+    "name": "Courtney K. Powell"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah E. Curcillo"
+   },
+   {
+    "role": "Judge",
+    "name": "Edward M. Marsico Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffrey B. Engle"
+   },
+   {
+    "role": "Judge",
+    "name": "John Joseph McNally"
+   },
+   {
+    "role": "Judge",
+    "name": "Katherine E. McShane"
+   },
+   {
+    "role": "Judge",
+    "name": "La Tasha C. Williams"
+   },
+   {
+    "role": "Judge",
+    "name": "Royce L. Morris"
+   },
+   {
+    "role": "Judge",
+    "name": "Scott Arthur Evans"
+   },
+   {
+    "role": "Judge",
+    "name": "William T. Tully"
+   }
+  ]
+ },
+ "13": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Jeffry N. Grimes"
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher M. Simms"
+   }
+  ]
+ },
+ "14": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Steve P. Leskinen"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph M. George Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Linda R. Cordaro"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark M. Mehalov"
+   },
+   {
+    "role": "Judge",
+    "name": "Nancy D. Vernon"
+   }
+  ]
+ },
+ "15": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Ann Marie M. Wheatcraft"
+   },
+   {
+    "role": "Judge",
+    "name": "Alita A. Rovito"
+   },
+   {
+    "role": "Judge",
+    "name": "Allison Bell Royer"
+   },
+   {
+    "role": "Judge",
+    "name": "Analisa S. Sondergaard"
+   },
+   {
+    "role": "Judge",
+    "name": "Anthony T. Verwey"
+   },
+   {
+    "role": "Judge",
+    "name": "Bret M. Binder"
+   },
+   {
+    "role": "Judge",
+    "name": "Clay N. Cauley Sr."
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah S. Ryan"
+   },
+   {
+    "role": "Judge",
+    "name": "Fredda L. Maddox"
+   },
+   {
+    "role": "Judge",
+    "name": "John L. Hall"
+   },
+   {
+    "role": "Judge",
+    "name": "Mackenzie W. Smith"
+   },
+   {
+    "role": "Judge",
+    "name": "Nicole R. Forzato"
+   },
+   {
+    "role": "Judge",
+    "name": "Patrick Carmody"
+   },
+   {
+    "role": "Judge",
+    "name": "Sarah B. Black"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas P. McCabe"
+   }
+  ]
+ },
+ "16": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Scott P. Bittner"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel W. Rullo"
+   },
+   {
+    "role": "Judge",
+    "name": "Molly Metzgar"
+   }
+  ]
+ },
+ "17": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Lori R. Hackenberg"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael Piecuch"
+   }
+  ]
+ },
+ "18": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Sara J. Seidle-Patton"
+   }
+  ]
+ },
+ "19": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Michael W. Flannelly"
+   },
+   {
+    "role": "Judge",
+    "name": "Amber A. Kraft"
+   },
+   {
+    "role": "Judge",
+    "name": "Andrea Marceca Strong"
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher A. Ferro"
+   },
+   {
+    "role": "Judge",
+    "name": "Clyde W. Vedder"
+   },
+   {
+    "role": "Judge",
+    "name": "Gregory M. Snyder"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph C. Adams"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph N. Gothie"
+   },
+   {
+    "role": "Judge",
+    "name": "Kathleen J. Prendergast"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelley L. Margetas"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew D. Menges"
+   },
+   {
+    "role": "Judge",
+    "name": "N. Christopher Menges"
+   },
+   {
+    "role": "Judge",
+    "name": "Paul W. Minnich"
+   },
+   {
+    "role": "Judge",
+    "name": "Steven D. Stambaugh"
+   },
+   {
+    "role": "Judge",
+    "name": "Todd R. Platts"
+   }
+  ]
+ },
+ "20": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "George N. Zanic"
+   },
+   {
+    "role": "Judge",
+    "name": "Ray A. Ghaner"
+   }
+  ]
+ },
+ "21": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Jacqueline L. Russell"
+   },
+   {
+    "role": "Judge",
+    "name": "Andrew J. Serina Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Christina E. Hale"
+   },
+   {
+    "role": "Judge",
+    "name": "Christopher W. Hobbs"
+   },
+   {
+    "role": "Judge",
+    "name": "James P. Goodman"
+   },
+   {
+    "role": "Judge",
+    "name": "William L. Burke"
+   }
+  ]
+ },
+ "22": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Janine Edwards"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew L. Meagher"
+   }
+  ]
+ },
+ "23": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "M. Theresa Johnson"
+   },
+   {
+    "role": "Judge",
+    "name": "Eleni V. Dimitriou Geishauser"
+   },
+   {
+    "role": "Judge",
+    "name": "Eric J. Taylor"
+   },
+   {
+    "role": "Judge",
+    "name": "James E. Gavin"
+   },
+   {
+    "role": "Judge",
+    "name": "Jill M. Scheidt"
+   },
+   {
+    "role": "Judge",
+    "name": "John Benjamin Nevius"
+   },
+   {
+    "role": "Judge",
+    "name": "Justin D. Bodor"
+   },
+   {
+    "role": "Judge",
+    "name": "Madelyn S. Fudeman"
+   },
+   {
+    "role": "Judge",
+    "name": "Patrick T. Barrett"
+   },
+   {
+    "role": "Judge",
+    "name": "Scott E. Lash"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas G. Parisi"
+   },
+   {
+    "role": "Judge",
+    "name": "Tina M. Boyd"
+   }
+  ]
+ },
+ "24": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Wade A. Kagarise"
+   },
+   {
+    "role": "Judge",
+    "name": "David B. Consiglio"
+   },
+   {
+    "role": "Judge",
+    "name": "Jackie L. Bernard"
+   },
+   {
+    "role": "Judge",
+    "name": "Louis C. Schmitt Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Paula M. Aigner"
+   }
+  ]
+ },
+ "25": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Craig P. Miller"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael F. Salisbury"
+   }
+  ]
+ },
+ "26": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Gary E. Norton"
+   },
+   {
+    "role": "Judge",
+    "name": "David C. James"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard W. Knecht"
+   }
+  ]
+ },
+ "27": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Valarie S. Costanzo"
+   },
+   {
+    "role": "Judge",
+    "name": "Jesse Pettit"
+   },
+   {
+    "role": "Judge",
+    "name": "John F. DiSalle"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael J. Lucas"
+   },
+   {
+    "role": "Judge",
+    "name": "Traci L. McDonald"
+   }
+  ]
+ },
+ "28": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Matthew T. Kirtland"
+   },
+   {
+    "role": "Judge",
+    "name": "Justin S. Fleeger"
+   }
+  ]
+ },
+ "29": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Eric R. Linhardt"
+   },
+   {
+    "role": "Judge",
+    "name": "Ryan C. Gardner"
+   },
+   {
+    "role": "Judge",
+    "name": "Ryan M. Tira"
+   },
+   {
+    "role": "Judge",
+    "name": "William P. Carlucci"
+   }
+  ]
+ },
+ "30": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "John F. Spataro"
+   },
+   {
+    "role": "Judge",
+    "name": "Francis J. Schultz"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark D. Stevens"
+   }
+  ]
+ },
+ "31": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Douglas G. Reichley"
+   },
+   {
+    "role": "Judge",
+    "name": "Anna-Kristie M. Marks"
+   },
+   {
+    "role": "Judge",
+    "name": "J. Brian Johnson"
+   },
+   {
+    "role": "Judge",
+    "name": "James T. Anthony"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark B. Stanziola"
+   },
+   {
+    "role": "Judge",
+    "name": "Melissa T. Pavlack"
+   },
+   {
+    "role": "Judge",
+    "name": "Robert L. Steinberg"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas A. Capehart"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas M. Caffrey"
+   },
+   {
+    "role": "Judge",
+    "name": "Zachary J. Cohen"
+   }
+  ]
+ },
+ "32": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Linda A. Cartisano"
+   },
+   {
+    "role": "Judge",
+    "name": "Anthony D. Scanlon"
+   },
+   {
+    "role": "Judge",
+    "name": "Atinuke B. Moss"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah A. Krull"
+   },
+   {
+    "role": "Judge",
+    "name": "Dominic F. Pileggi"
+   },
+   {
+    "role": "Judge",
+    "name": "Frederick J. Stollsteimer IV"
+   },
+   {
+    "role": "Judge",
+    "name": "G. Michael Green"
+   },
+   {
+    "role": "Judge",
+    "name": "George A. Pagano"
+   },
+   {
+    "role": "Judge",
+    "name": "John J. Whelan"
+   },
+   {
+    "role": "Judge",
+    "name": "Kathrynann W. Durham"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelly D. Eckel"
+   },
+   {
+    "role": "Judge",
+    "name": "Kevin F. Kelly"
+   },
+   {
+    "role": "Judge",
+    "name": "Margaret J. Amoroso"
+   },
+   {
+    "role": "Judge",
+    "name": "Mary Alice Brennan"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael D. Power"
+   },
+   {
+    "role": "Judge",
+    "name": "Nusrat J. Rashid"
+   },
+   {
+    "role": "Judge",
+    "name": "Rachel Ezzell Berry"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard H. Lowe"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard M. Cappelli"
+   },
+   {
+    "role": "Judge",
+    "name": "Stephanie H. Klein"
+   },
+   {
+    "role": "Judge",
+    "name": "William C. Mackrides"
+   }
+  ]
+ },
+ "33": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Chase G. McClister"
+   }
+  ]
+ },
+ "34": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Jason J. Legg"
+   }
+  ]
+ },
+ "35": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Tedd C. Nesbit"
+   },
+   {
+    "role": "Judge",
+    "name": "D. Neil McEwen"
+   },
+   {
+    "role": "Judge",
+    "name": "Ronald D. Amrhein"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "36": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Richard Mancini"
+   },
+   {
+    "role": "Judge",
+    "name": "Dale M. Fouse"
+   },
+   {
+    "role": "Judge",
+    "name": "Deborah L. DeCostro"
+   },
+   {
+    "role": "Judge",
+    "name": "James J. Ross"
+   },
+   {
+    "role": "Judge",
+    "name": "Kim Tesla"
+   },
+   {
+    "role": "Judge",
+    "name": "Laura J. Tocci"
+   },
+   {
+    "role": "Judge",
+    "name": "Mitchell P. Shahen"
+   }
+  ]
+ },
+ "37": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Gregory J. Hammond"
+   },
+   {
+    "role": "Judge",
+    "name": "Todd A. Woodin"
+   }
+  ]
+ },
+ "38": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Carolyn Tornetta Carluccio"
+   },
+   {
+    "role": "Judge",
+    "name": "Andrea Nicole Tate-Wilborn"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel G. Ronca"
+   },
+   {
+    "role": "Judge",
+    "name": "Daniel J. Clifford"
+   },
+   {
+    "role": "Judge",
+    "name": "Garrett D. Page"
+   },
+   {
+    "role": "Judge",
+    "name": "Henry S. Hilles III"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeffrey S. Saltz"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelly C. Wall"
+   },
+   {
+    "role": "Judge",
+    "name": "Lauren A. Hughes"
+   },
+   {
+    "role": "Judge",
+    "name": "Lois E. Murphy"
+   },
+   {
+    "role": "Judge",
+    "name": "Mary Coyne Pugh"
+   },
+   {
+    "role": "Judge",
+    "name": "Melissa S. Sterling"
+   },
+   {
+    "role": "Judge",
+    "name": "Patricia E. Coonahan"
+   },
+   {
+    "role": "Judge",
+    "name": "Raymond McGarry"
+   },
+   {
+    "role": "Judge",
+    "name": "Richard P. Haaz"
+   },
+   {
+    "role": "Judge",
+    "name": "Risa Vetri Ferman"
+   },
+   {
+    "role": "Judge",
+    "name": "Steven C. Tolliver"
+   },
+   {
+    "role": "Judge",
+    "name": "Steven T. O'Neill"
+   },
+   {
+    "role": "Judge",
+    "name": "Thomas M. Del Ricci"
+   },
+   {
+    "role": "Judge",
+    "name": "Todd D. Eisenberg"
+   },
+   {
+    "role": "Judge",
+    "name": "Virgil B. Walker"
+   },
+   {
+    "role": "Judge",
+    "name": "Wendy Demchick-Alloy"
+   },
+   {
+    "role": "Judge",
+    "name": "Wendy G. Rothstein"
+   },
+   {
+    "role": "Judge",
+    "name": "William R. Carpenter"
+   }
+  ]
+ },
+ "39": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Shawn D. Meyers"
+   },
+   {
+    "role": "Judge",
+    "name": "Angela R. Krom"
+   },
+   {
+    "role": "Judge",
+    "name": "Jeremiah D. Zook"
+   },
+   {
+    "role": "Judge",
+    "name": "Mary Beth Shank"
+   },
+   {
+    "role": "Judge",
+    "name": "Todd M. Sponseller"
+   }
+  ]
+ },
+ "40": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Thomas M. Bianco"
+   },
+   {
+    "role": "Judge",
+    "name": "Gina R. Force"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael T. Clark"
+   }
+  ]
+ },
+ "41": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Kenneth A. Mummah"
+   },
+   {
+    "role": "Judge",
+    "name": "Andrew J. Bender"
+   }
+  ]
+ },
+ "42": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Maureen T. Beirne"
+   },
+   {
+    "role": "Judge",
+    "name": "Evan S. Williams III"
+   }
+  ]
+ },
+ "43": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Jonathan Mark"
+   },
+   {
+    "role": "Judge",
+    "name": "Cyril D. Higgins"
+   },
+   {
+    "role": "Judge",
+    "name": "David J. Williamson"
+   },
+   {
+    "role": "Judge",
+    "name": "Janet Jackson"
+   },
+   {
+    "role": "Judge",
+    "name": "Jennifer H. Sibum"
+   },
+   {
+    "role": "Judge",
+    "name": "Patrick J. Best"
+   },
+   {
+    "role": "Judge",
+    "name": "Stephen M. Higgins"
+   }
+  ]
+ },
+ "44": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Russell D. Shurtleff"
+   },
+   {
+    "role": "Judge",
+    "name": "Nina M. Sordoni"
+   }
+  ]
+ },
+ "45": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "James A. Gibbons"
+   },
+   {
+    "role": "Judge",
+    "name": "Andrew J. Jarbola III"
+   },
+   {
+    "role": "Judge",
+    "name": "Frank J. Ruggiero"
+   },
+   {
+    "role": "Judge",
+    "name": "Margaret A. Bisignani Moyle"
+   },
+   {
+    "role": "Judge",
+    "name": "Mark Powell"
+   },
+   {
+    "role": "Judge",
+    "name": "Mary D. Walsh Dempsey"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael J. Barrasse"
+   },
+   {
+    "role": "Judge",
+    "name": "Terrence R. Nealon"
+   },
+   {
+    "role": "Judge",
+    "vacant": true
+   }
+  ]
+ },
+ "46": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Paul E. Cherry"
+   },
+   {
+    "role": "Judge",
+    "name": "Joshua S. Maines"
+   }
+  ]
+ },
+ "47": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Linda R. Fleming"
+   },
+   {
+    "role": "Judge",
+    "name": "Forrest B. Fordham III"
+   },
+   {
+    "role": "Judge",
+    "name": "Gregory J. Neugebauer"
+   },
+   {
+    "role": "Judge",
+    "name": "Michael A. Carbonara"
+   },
+   {
+    "role": "Judge",
+    "name": "Tamara R. Bernstein"
+   }
+  ]
+ },
+ "48": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "John H. Pavlock"
+   },
+   {
+    "role": "Judge",
+    "name": "Michele D. Alfieri-Causer"
+   }
+  ]
+ },
+ "49": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Jonathan D. Grine"
+   },
+   {
+    "role": "Judge",
+    "name": "Brian K. Marshall"
+   },
+   {
+    "role": "Judge",
+    "name": "Julia R. Rater"
+   },
+   {
+    "role": "Judge",
+    "name": "Katherine V. Oliver"
+   }
+  ]
+ },
+ "50": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "S. Michael Yeager"
+   },
+   {
+    "role": "Judge",
+    "name": "John C. Scialabba"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph E. Kubit"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelley T.D. Streib"
+   },
+   {
+    "role": "Judge",
+    "name": "Matthew T. McCune"
+   },
+   {
+    "role": "Judge",
+    "name": "Maura L. Palumbi"
+   },
+   {
+    "role": "Judge",
+    "name": "William C. Robinson Jr."
+   }
+  ]
+ },
+ "51": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Thomas R. Campbell"
+   },
+   {
+    "role": "Judge",
+    "name": "Christina M. Simpson"
+   },
+   {
+    "role": "Judge",
+    "name": "Shawn C. Wagner"
+   },
+   {
+    "role": "Judge",
+    "name": "Torren C. Ecker"
+   }
+  ]
+ },
+ "52": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "John C. Tylwalk"
+   },
+   {
+    "role": "Judge",
+    "name": "Bradford H. Charles"
+   },
+   {
+    "role": "Judge",
+    "name": "Charles T. Jones Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Donna Long Brightbill"
+   }
+  ]
+ },
+ "53": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "J. Craig Cox"
+   },
+   {
+    "role": "Judge",
+    "name": "Bradley G. Olson Jr."
+   },
+   {
+    "role": "Judge",
+    "name": "Lawrence J. Keith"
+   },
+   {
+    "role": "Judge",
+    "name": "William J. Flannery"
+   }
+  ]
+ },
+ "54": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "John H. Foradora"
+   }
+  ]
+ },
+ "55": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Stephen P.B. Minor"
+   }
+  ]
+ },
+ "56": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Roger N. Nanovic"
+   },
+   {
+    "role": "Judge",
+    "name": "Joseph J. Matika"
+   },
+   {
+    "role": "Judge",
+    "name": "Steven R. Serfass"
+   }
+  ]
+ },
+ "57": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Travis W. Livengood"
+   },
+   {
+    "role": "Judge",
+    "name": "Brandi J. Hershey"
+   }
+  ]
+ },
+ "58": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Aaron L. Gingrich"
+   },
+   {
+    "role": "Judge",
+    "name": "Jonathan W. Reed"
+   }
+  ]
+ },
+ "59": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Shawn T. McMahon"
+   }
+  ]
+ },
+ "60": {
+  "read": "2026-11-27",
+  "judges": [
+   {
+    "role": "President Judge",
+    "name": "Gregory H. Chelak"
+   },
+   {
+    "role": "Judge",
+    "name": "Kelly A. Gaughan"
+   }
+  ]
+ }
+}

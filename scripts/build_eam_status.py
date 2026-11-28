@@ -2625,7 +2625,11 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified",
                                               "school-district-elementary"),
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The Judicial Circuit layer draws Missouri's 46 judicial circuits of
+        # whole counties (the city of St. Louis is its own) and names every
+        # circuit's circuit judges (since 2026-11-28). Associate circuit judges
+        # are not named.
+        "courts-by-district": answers("mo-judicial-circuit"),
         # The 20 counties that adopted township organization (RSMo chapter 65)
         # elect township boards, 282 active townships, and nothing here names
         # them (gap mo-township-officers).
@@ -2715,10 +2719,11 @@ ANSWERS = {
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
-        # Circuit judges, family court judges and magistrates are elected by
-        # circuit or county, and no court's districts are drawn or its judges
+        # The Judicial Circuit layer draws West Virginia's 30 judicial circuits
+        # of whole counties and names the circuit judges elected there (since
+        # 2026-11-27). Family court judges and magistrates are not drawn or
         # named yet.
-        "courts-by-district": OPEN,
+        "courts-by-district": answers("wv-judicial-circuit"),
         # Measured 2026-11-10 on TIGERweb's Census 2020 county subdivisions,
         # with Illinois as the control (1,412 active): all 228 of West
         # Virginia's are FUNCSTAT N. They are the counties' magisterial
@@ -2769,18 +2774,24 @@ ANSWERS = {
         # Pennsylvania's municipalities ARE its county subdivisions (TIGERweb layer 1),
         # so the municipality layer is this map.
         "subdivision-boundaries": answers("municipality"),
-        # Common pleas judges are elected by judicial district (a county or two)
-        # and magisterial district judges by magisterial district; neither is
-        # drawn or named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Pennsylvania's 60 judicial districts
+        # of whole counties and names the Common Pleas judges the voters elect
+        # there (since 2026-11-27). Magisterial district judges, elected by
+        # magisterial district, are not drawn or named yet.
+        "courts-by-district": answers("pa-judicial-district"),
         # Measured 2026-11-11 on TIGERweb: 1,543 of Pennsylvania's county
         # subdivisions are active townships, general-purpose governments the
         # municipality layer draws and whose supervisors or commissioners it
         # does not name.
         "sub-county-government": OPEN,
-        # Whether any board elects its directors by region has not been
-        # measured for Pennsylvania.
-        "school-boards-by-district": UNSETTLED,
+        # Public School Code of 1949, section 303(b) (palegis.us, read
+        # 2026-11-27): a board, or a quarter of the electors, may adopt a region
+        # plan the court of common pleas approves, and then the directors who
+        # reside in each region are elected by and from that region; a first
+        # class A district's board (section 302.1) is elected by specified
+        # districts, one member from each. Which districts use a region plan is
+        # not measured; no region is drawn or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -2812,9 +2823,11 @@ ANSWERS = {
             "or town limit the county governs. The 71 sub-county units the "
             "Census publishes for Nevada are census county divisions: statistical "
             "areas, not governments (measured 2026-11-11)."),
-        # District court judges are elected by judicial district and justices
-        # of the peace by township; neither is drawn or named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Nevada's 11 judicial districts of
+        # whole counties and names the district judges elected there (since
+        # 2026-11-27). Justices of the peace, elected by township, are not
+        # drawn or named yet.
+        "courts-by-district": answers("nv-judicial-district"),
         # The Clark County and Washoe County school boards elect trustees from
         # districts; no district is drawn or trustee named yet.
         "school-boards-by-district": OPEN,
@@ -2861,7 +2874,12 @@ ANSWERS = {
         # judges by county outside the counties that use merit retention;
         # neither is drawn or named yet.
         "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # A.R.S. 15-431(A) (azleg.gov, read 2026-11-27): a district of 1,000 or
+        # more pupils, a quarter or more of them minority students, may vote to
+        # elect its board from single-member districts; boards are otherwise
+        # elected at large. Which districts have done so is not measured; no
+        # board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Drawn 2026-11-12: all 28 pieces the Census keeps in Arizona (21
@@ -2977,9 +2995,12 @@ ANSWERS = {
             "city, town or village the county governs. The 862 sub-county units "
             "the Census publishes for Texas are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # District, county-court-at-law and justice of the peace judges are
-        # elected; no court district is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Court of Appeals District layer draws Texas's 15 courts of appeals
+        # districts of whole counties, the overlapping ones as shared pieces,
+        # and names every court's justices (since 2026-11-28). District, county-
+        # court-at-law and justice of the peace judges are elected too and are
+        # not drawn or named.
+        "courts-by-district": answers("tx-court-of-appeals"),
         # Several large independent school districts elect trustees from
         # single-member districts; no trustee district is drawn yet.
         "school-boards-by-district": OPEN,
@@ -3017,9 +3038,12 @@ ANSWERS = {
             "city, town or village the county governs. The 316 sub-county units "
             "the Census publishes for Florida are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # Circuit and county judges are elected; no circuit is drawn or judge
-        # named yet.
-        "courts-by-district": OPEN,
+        # The Judicial Circuit layer draws Florida's 20 judicial circuits of
+        # whole counties and names the circuit judges of sixteen of them (since
+        # 2026-11-27); the other four circuits' sites do not say which judges
+        # are circuit judges, or refuse this client. County judges are elected
+        # by county, whose ground the County map draws, and are not named.
+        "courts-by-district": answers("fl-judicial-circuit"),
         # School board members are elected from residence districts; no
         # school board district is drawn yet.
         "school-boards-by-district": OPEN,
@@ -3106,13 +3130,16 @@ ANSWERS = {
             "city or town limit the county governs. The 242 sub-county units the "
             "Census publishes for Washington are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # Superior court judges are elected by county and Court of Appeals
-        # judges by district within each division; neither is drawn or named
-        # yet.
-        "courts-by-district": OPEN,
-        # Whether any board elects its members by district has not been
-        # measured for Washington.
-        "school-boards-by-district": UNSETTLED,
+        # The Superior Court layer draws Washington's 32 superior courts of
+        # whole counties and names the judges each court's voters elect (since
+        # 2026-11-27).
+        "courts-by-district": answers("wa-superior-court"),
+        # RCW 28A.343.030 (read 2026-11-27): a district's director districts are
+        # a residency rule, and the whole district elects each director; RCW
+        # 29A.92.040, the Washington Voting Rights Act, lets a district adopt
+        # district-based elections. Which districts have done so is not
+        # measured; no director district is drawn or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Drawn 2026-11-12: all 50 pieces the Census keeps in Washington (28
@@ -3190,10 +3217,17 @@ ANSWERS = {
             "city or town the county governs. The 209 sub-county units the Census "
             "publishes for Colorado are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # District and county court judges stand for retention by judicial
-        # district and county; no district is drawn or judge named yet.
-        "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # The Judicial District layer draws Colorado's 23 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # retain (since 2026-11-27).
+        "courts-by-district": answers("co-judicial-district"),
+        # C.R.S. 22-31-105(1)(b) and 22-31-131(1.5)(b)(I) (Colorado Revised
+        # Statutes 2024, read 2026-11-27): Denver Public Schools elects five of
+        # its seven directors from director districts, each voted on only by
+        # that district's electors; under 22-31-105(6.5) any other district may
+        # put such a plan to its voters. No director district is drawn or
+        # director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Colorado: the Census keeps two
@@ -3229,11 +3263,19 @@ ANSWERS = {
             "city or town the county governs. Its county subdivisions are its "
             "counties' election districts, which the Census marks "
             "non-functioning (measured 2026-11-12)."),
-        # Circuit court judges stand for election by county after appointment,
-        # and the appellate judges for retention; no district is drawn or judge
-        # named yet.
-        "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # The Appellate Circuit layer draws Maryland's 7 appellate judicial
+        # circuits and names the justice of the Supreme Court of Maryland and
+        # the Appellate Court judge each circuit's voters retain (since
+        # 2026-11-27). Circuit court judges are elected by county, whose ground
+        # the County map draws, and are not named.
+        "courts-by-district": answers("md-appellate-circuit"),
+        # Education Article (mgaleg.maryland.gov, read 2026-11-27): Prince
+        # George's County's board members are elected by the voters of each of
+        # nine school board districts (section 3-1002), and Baltimore County's
+        # by the voters of each of seven councilmanic districts (section
+        # 3-2B-01). The other counties' sections are not read. No board district
+        # is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -3268,10 +3310,16 @@ ANSWERS = {
             "city or town the county governs. The 390 sub-county units the Census "
             "publishes for Alabama are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # Circuit and district judges are elected by judicial circuit and
-        # county; no circuit is drawn or judge named yet.
-        "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # The Judicial Circuit layer draws Alabama's 41 judicial circuits of
+        # whole counties and names the circuit judges elected there (since
+        # 2026-11-27). District and probate judges are not drawn or named yet.
+        "courts-by-district": answers("al-judicial-circuit"),
+        # Code of Alabama 16-8-1(b) (read 2026-11-27 through the Legislature's
+        # code page): unless another law provides otherwise, a county board of
+        # education may establish five or seven single-member election
+        # districts, one member elected from each. City boards and local acts
+        # are not read. No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alabama: the Census keeps the Poarch Band of
@@ -3309,10 +3357,15 @@ ANSWERS = {
             "city the county governs. The 212 sub-county units the Census "
             "publishes for Oregon are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # Circuit court judges are elected by judicial district; no district is
-        # drawn or judge named yet.
-        "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # The Judicial District layer draws Oregon's 27 judicial districts of
+        # whole counties and names the circuit judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("or-judicial-district"),
+        # ORS 332.124 and 332.126 (read 2026-11-27): a school board is elected
+        # at large unless it provides for directors nominated and elected from
+        # zones. Which districts have done so is not measured; no zone is drawn
+        # or director named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Oregon: the Census keeps 10 reservations and
@@ -3386,10 +3439,15 @@ ANSWERS = {
             "city or town the county governs. The 93 sub-county units the Census "
             "publishes for Utah are census county divisions: statistical areas, "
             "not governments (measured 2026-11-12)."),
-        # District and justice court judges stand for retention by judicial
-        # district; no district is drawn or judge named yet.
-        "courts-by-district": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # The Judicial District layer draws Utah's 8 judicial districts of whole
+        # counties and names the district judges each district's voters retain
+        # (since 2026-11-27).
+        "courts-by-district": answers("ut-judicial-district"),
+        # Utah Code 20A-14-201(1) and 20A-14-202(3) (le.utah.gov, read
+        # 2026-11-27): every local school district is divided into local school
+        # board districts, and each member is elected from the district the
+        # member lives in. No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Utah: the Census keeps 7 reservations and 2
@@ -3408,8 +3466,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city commission or council is named yet.
-        "local-government": depth(),
+        # The 16 cities of 25,000 or more name their mayor and council or
+        # commission (ks/scripts/build_ks_city_councils.py), and the City Council
+        # District layer draws the wards of seven of the ten that elect by ward or
+        # district (ks/scripts/build_ks_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries Kansas's 285 school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -3620,15 +3681,22 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges are elected by judicial district; no district is drawn
-        # or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws New Mexico's 13 judicial districts
+        # of whole counties and names the district judges chosen there in
+        # partisan elections and retained (since 2026-11-27).
+        "courts-by-district": answers("nm-judicial-district"),
         "sub-county-government": na(
             "New Mexico has no sub-county general-purpose government \u2014 outside "
             "a city or town the county governs. The 130 sub-county units the "
             "Census publishes for New Mexico are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # NMSA 1978, section 22-5-1.1 (nmonesource.com, the state's statutes
+        # site, read once by eye in Adam's Chrome on 2026-11-28 after its
+        # document address refused this client): members of a local school board
+        # in a district of more than 16,000 people reside in and are elected
+        # from single-member districts, and a smaller district may do the same.
+        # No board district is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report "New
@@ -3648,8 +3716,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The 7 cities of 25,000 or more name their mayor and council
+        # (ne/scripts/build_ne_city_councils.py), and the City Council District
+        # layer draws the wards of all six that elect by ward or district
+        # (ne/scripts/build_ne_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries Nebraska's school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -3704,15 +3775,20 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges are elected by judicial district; no district is drawn
-        # or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Idaho's 7 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("id-judicial-district"),
         "sub-county-government": na(
             "Idaho has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 170 sub-county units the "
             "Census publishes for Idaho are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # Idaho Code 33-313(1) and 33-503(1) (read 2026-11-27): every school
+        # district is divided into trustee zones, three to nine, and each zone's
+        # trustee is the person with the most votes cast within the zone. No
+        # trustee zone is drawn or trustee named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Idaho: the
@@ -3802,7 +3878,13 @@ ANSWERS = {
         # are active towns and plantations, general-purpose governments the City
         # or Town layer draws and whose governing bodies it does not name.
         "sub-county-government": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # 20-A M.R.S. section 1472 (legislature.maine.gov, read 2026-11-27): a
+        # regional school unit's board may represent subdistricts, each with its
+        # own voting place (Method A), or member municipalities whose directors
+        # each municipality elects (Method B); Method C is at large. Which units
+        # use which method is not measured; no subdistrict is drawn or director
+        # named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Maine: the
@@ -3832,15 +3914,21 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District court judges are elected by judicial district; no district is
-        # drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Montana's 22 judicial districts of
+        # whole counties and names the district judges each district's voters
+        # elect (since 2026-11-27).
+        "courts-by-district": answers("mt-judicial-district"),
         "sub-county-government": na(
             "Montana has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 194 sub-county units the "
             "Census publishes for Montana are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # MCA 20-3-337 and 20-3-338 (leg.mt.gov, read 2026-11-27): a board of
+        # trustees may create single-member trustee districts, and each
+        # trustee's election is put to the electors of that trustee district.
+        # Which districts have done so is not measured; no trustee district is
+        # drawn or trustee named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Montana: the
@@ -3894,8 +3982,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The 3 cities of 25,000 or more name their mayor and council
+        # (sd/scripts/build_sd_city_councils.py), and the City Council District
+        # layer draws Sioux Falls's and Aberdeen's districts
+        # (sd/scripts/build_sd_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries South Dakota's school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -3937,8 +4028,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The cities of 25,000 or more name their mayor and council or commission
+        # (nd/scripts/build_nd_city_councils.py), and the City Council District
+        # layer draws Grand Forks's wards (nd/scripts/build_nd_city_wards.py).
+        # WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
         # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
@@ -4000,7 +4094,12 @@ ANSWERS = {
             "sub-county units the Census publishes for Alaska are census "
             "subareas: statistical areas, not governments (measured "
             "2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # AS 14.08.041(d) and 14.08.051(b) and (e) (akleg.gov, read 2026-11-27):
+        # a regional educational attendance area's board is elected at large
+        # unless its voters approve electing each member from a section by that
+        # section's voters. Borough and city school boards are not read. No
+        # section is drawn or member named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Alaska: the
@@ -4015,10 +4114,11 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("vt-senate", "vt-house"),
         "county-boundaries": answers("county"),
-        # No county official is named yet. A Vermont county has no governing
-        # board; its voters elect two assistant judges, who run the county's
-        # budget, a sheriff, a state's attorney, a probate judge and a high
-        # bailiff.
+        # A Vermont county has no governing board; its voters elect two
+        # assistant judges, who run the county's budget, a sheriff, a state's
+        # attorney, a probate judge and a high bailiff. The County card names
+        # the judges (since 2026-11-28, vt-county-judges.json); the sheriff,
+        # state's attorney and high bailiff are not named yet.
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
         # No city or town council is named yet.
@@ -4028,15 +4128,23 @@ ANSWERS = {
         # Vermont's cities and towns ARE its county subdivisions (TIGERweb layer
         # 22), so the City or Town layer is this map.
         "subdivision-boundaries": answers("municipality"),
-        # Assistant judges and probate judges are elected by county, and none is
-        # named yet; every other judge is appointed by the Governor and
-        # confirmed by the Senate.
-        "courts-by-district": OPEN,
+        # Assistant judges and probate judges are elected by county, so the
+        # County map draws the ground their voters live on, and the County card
+        # names each county's probate judge and two assistant judges from the
+        # Vermont Judiciary's court location pages (since 2026-11-28,
+        # vt/scripts/build_vt_county_judges.py). Every other judge is appointed
+        # by the Governor and confirmed by the Senate.
+        "courts-by-district": answers("county"),
         # Measured 2026-11-12 on TIGERweb: 237 of Vermont's county subdivisions
         # are active towns, general-purpose governments the City or Town layer
         # draws and whose governing bodies it does not name.
         "sub-county-government": OPEN,
-        "school-boards-by-district": UNSETTLED,
+        # 16 V.S.A. section 730(a)(1) (legislature.vermont.gov, read
+        # 2026-11-27): where a unified union school district's board is
+        # apportioned to its towns by population, the voters of each town elect
+        # that town's members. Which districts are apportioned this way is not
+        # measured; no member is named yet.
+        "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
         "tribal-government": na(
@@ -4065,15 +4173,24 @@ ANSWERS = {
         # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
         # and its card says they govern nobody (since 2026-11-27).
         "subdivision-boundaries": answers("county-subdivision"),
-        # District judges stand for retention by judicial district; no district
-        # is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Judicial District layer draws Wyoming's 9 judicial districts of
+        # whole counties and names the district judges who stand for retention
+        # there (since 2026-11-27).
+        "courts-by-district": answers("wy-judicial-district"),
         "sub-county-government": na(
             "Wyoming has no sub-county general-purpose government \u2014 outside a "
             "city or town the county governs. The 71 sub-county units the "
             "Census publishes for Wyoming are census county divisions: "
             "statistical areas, not governments (measured 2026-11-12)."),
-        "school-boards-by-district": UNSETTLED,
+        # W.S. 21-6-215(b) (wyoleg.gov, read 2026-11-27): every trustee is
+        # elected by the electorate of the entire school district, and a trustee
+        # residence area only says where a trustee must live (21-3-111(b),
+        # 22-22-201(a)).
+        "school-boards-by-district": na(
+            "Wyoming's school trustees are elected by the voters of the whole "
+            "school district (W.S. 21-6-215(b)); a trustee residence area only "
+            "says where a trustee must live, so there is no district a voter "
+            "elects a member from."),
         "precincts": OPEN,
         "special-districts": OPEN,
         # Measured 2026-11-12 with scripts/tribal_areas.py --report Wyoming: the
@@ -4857,23 +4974,31 @@ WARD_MAPS = {
         drawn={"5414600"},
         drawn_file=("wv/data/app/wv-city-wards.json", "geoid")),
     # The cities of 25,000 or more in Kansas, Nebraska, North Dakota and South
-    # Dakota that elect members by ward or district, none drawn yet
-    # (2026-11-27; each state's build_<tag>_city_councils.py says how each
-    # city elects). The others elect every seat by the whole city.
+    # Dakota that elect members by ward or district (each state's
+    # build_<tag>_city_councils.py says how each city elects). The City
+    # Council District layer draws 16 of the 20 (2026-11-28), each state's
+    # build_<tag>_city_wards.py from the map the city or its county
+    # publishes; the four owed are each council builder's NOT_DRAWN (Lenexa,
+    # whose only map this project may not read, Shawnee and Leawood, whose
+    # maps are unequal on the 2020 census, and Rapid City, which publishes its
+    # wards only as a PDF). The others elect every seat by the whole city.
     "ks": dict(
-        owed={"2079000": "Wichita", "2053775": "Overland Park",
-              "2036000": "Kansas City", "2052575": "Olathe",
-              "2071000": "Topeka", "2064500": "Shawnee",
-              "2039350": "Lenexa", "2033625": "Hutchinson",
-              "2039075": "Leawood", "2017800": "Derby"}),
+        drawn={"2079000", "2053775", "2036000", "2052575", "2071000",
+               "2033625", "2017800"},
+        drawn_file=("ks/data/app/ks-city-wards.json", "geoid"),
+        owed={"2064500": "Shawnee", "2039350": "Lenexa",
+              "2039075": "Leawood"}),
     "ne": dict(
-        owed={"3137000": "Omaha", "3128000": "Lincoln",
-              "3103950": "Bellevue", "3119595": "Grand Island",
-              "3117670": "Fremont", "3121415": "Hastings"}),
-    "nd": dict(owed={"3832060": "Grand Forks"}),
+        drawn={"3137000", "3128000", "3103950", "3119595", "3117670",
+               "3121415"},
+        drawn_file=("ne/data/app/ne-city-wards.json", "geoid")),
+    "nd": dict(
+        drawn={"3832060"},
+        drawn_file=("nd/data/app/nd-city-wards.json", "geoid")),
     "sd": dict(
-        owed={"4659020": "Sioux Falls", "4652980": "Rapid City",
-              "4600100": "Aberdeen"}),
+        drawn={"4659020", "4600100"},
+        drawn_file=("sd/data/app/sd-city-wards.json", "geoid"),
+        owed={"4652980": "Rapid City"}),
 }
 
 

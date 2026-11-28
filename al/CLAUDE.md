@@ -86,6 +86,24 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Alabama has no township governments,
 so outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS ALABAMA'S 41 JUDICIAL CIRCUITS AND NAMES THEIR JUDGES**
+(`al-judicial-circuit`, since 2026-11-27). Each circuit is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from Code of Alabama 12-11-2; 12-17-20 sets
+each circuit's judges (one unless it says more, 154 in all). Both are read through
+`https://alison.legislature.state.al.us/graphql`, the address the Legislature's code page posts to
+(the page itself is a script that fills itself in). Judges come from each county's court site
+`<county>.alacourt.gov` (the circuit map SVG on alacourt.gov links all 67), from its circuit judge
+page, whichever of /circuit-judges/, /circuit-court-judges/, /circuit-judge/, /circuit-court/,
+/judges/, /judiciary-directory/ or /phone-directory/ it links first and that names a circuit judge;
+Jefferson's site lists judges by division. `al_judges` keeps a name the page gives a circuit judge's
+title, or prints as Honorable under a Circuit Judges heading, and drops district, probate, juvenile
+and retired judges. 149 judges on 2026-11-27; the fetch stops if a circuit names more than 12-17-20
+sets, and five circuits name fewer. A presiding judge is marked only where no county site names
+another (the 20th and 25th Circuits' counties disagree). They are kept as a dated excerpt in
+`data/source/courts/al-courts.txt` and shipped network-first as `al-district-judges.json`. Judges
+are elected for six-year terms (Constitution of Alabama, sections 152 and 154). No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE ALABAMA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -116,8 +134,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Alabama (`alabama`) — https://districtry.com/al/
 - Geocoders: address Photon (Alabama-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Alabama-bounded, serial >=1s queue)
-- Ground truth: 32.37771,-86.30091 (Alabama State Capitol, 600 Dexter Avenue, Montgomery, Montgomery County) → county Montgomery County; us-house 2; al-senate 26; al-house 77. Negative point 29.95000,-88.00000 (The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.AlabamaExplorer`.
+- Ground truth: 32.37771,-86.30091 (Alabama State Capitol, 600 Dexter Avenue, Montgomery, Montgomery County) → county Montgomery County; us-house 2; al-senate 26; al-house 77; al-judicial-circuit 15th Judicial Circuit. Negative point 29.95000,-88.00000 (The Gulf about 25 km south of Dauphin Island — outside Alabama and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Alabama), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.AlabamaExplorer`.
 - Scheduled workflows: `update-al-congress-roster.yml` (Mon 22:43 UTC); `update-al-legislature-roster.yml` (Tue 22:43 UTC); `al-validate-sources.yml` (1st of month 23:31 UTC).
 - Source registry: `al/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

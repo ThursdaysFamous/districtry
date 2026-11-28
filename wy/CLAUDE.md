@@ -83,6 +83,17 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Wyoming has no township governments,
 so outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS WYOMING'S 9 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`wy-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the Judicial Branch's Find a Court
+list; each county's district court page names the judges who sit there, and a district's judges are
+the ones its counties' pages name, each once (27, read 2026-11-27). The fetch stops unless that
+total matches the district courts page's own count of district judges. They are kept as a dated
+excerpt in `data/source/courts/wy-courts.txt` and shipped network-first as
+`wy-district-judges.json`. The Governor appoints from the nominating commission's three names and
+judges stand for retention for six-year terms (the district courts page). No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE WYOMING.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -110,8 +121,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Wyoming (`wyoming`) — https://districtry.com/wy/
 - Geocoders: address Photon (Wyoming-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Wyoming-bounded, serial >=1s queue)
-- Ground truth: 41.14010,-104.82024 (Wyoming State Capitol, 200 West 24th Street, Cheyenne, Laramie County) → county Laramie County; us-house Congressional District (at Large); wy-senate 8; wy-house 11. Negative point 40.85000,-105.40000 (Larimer County, Colorado, south of the Wyoming line — outside Wyoming and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Colorado here (control: the Wyoming State Capitol returns Wyoming), none of the state's shipped boundary files contains it, and of every outline in the fleet only Colorado's does (Colorado went live in batch 3 of the state-level launch). Wyoming borders no water and no other country, and every one of its neighbours (Montana, South Dakota, Nebraska, Colorado, Utah and Idaho) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 13 registered (political 4, safety 2, schools 2, geography 5); `registerLayer(` floor 10. Debug namespace `window.WyomingExplorer`.
+- Ground truth: 41.14010,-104.82024 (Wyoming State Capitol, 200 West 24th Street, Cheyenne, Laramie County) → county Laramie County; us-house Congressional District (at Large); wy-senate 8; wy-house 11; wy-judicial-district 1st Judicial District. Negative point 40.85000,-105.40000 (Larimer County, Colorado, south of the Wyoming line — outside Wyoming and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Colorado here (control: the Wyoming State Capitol returns Wyoming), none of the state's shipped boundary files contains it, and of every outline in the fleet only Colorado's does (Colorado went live in batch 3 of the state-level launch). Wyoming borders no water and no other country, and every one of its neighbours (Montana, South Dakota, Nebraska, Colorado, Utah and Idaho) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
+- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 11. Debug namespace `window.WyomingExplorer`.
 - Scheduled workflows: `update-wy-congress-roster.yml` (Wed 23:51 UTC); `update-wy-legislature-roster.yml` (Thu 23:51 UTC); `wy-validate-sources.yml` (2nd of month 23:51 UTC).
 - Source registry: `wy/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

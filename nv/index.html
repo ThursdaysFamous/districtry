@@ -4673,18 +4673,19 @@ function initNevadaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "county": "co", "school-district-unified": "su",
-    "nv-senate": "nvs", "nv-assembly": "nva", "zip-code": "zp", "county-subdivision": "cs",
-    "municipality": "mu", "tribal-government": "tg", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "nv-judicial-district": "nvj", "county": "co",
+    "school-district-unified": "su", "nv-senate": "nvs", "nv-assembly": "nva", "zip-code": "zp",
+    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["nv-senate"],
-    "state-house": ["nv-assembly"], "county": ["county"],
-    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["nv-assembly"], "trial-court-district": ["nv-judicial-district"],
+    "county": ["county"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4706,7 +4707,7 @@ function initNevadaExplorer() {
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
     "nv-senate-districts.json", "nv-assembly-districts.json", "zip-index.json",
-    "tribal-areas.json" ];
+    "tribal-areas.json", "nv-judicial-districts.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11603,6 +11604,7 @@ function initNevadaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 4 congressional districts — the largest districts Nevada carries below the state itself
+    "nv-judicial-district", // 11 judicial districts of whole counties, 26,034 km2 mean area, measured 2026-11-27 on the drawn file — larger on average than a county, smaller than a congressional district
     "county",            // 16 counties and Carson City, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 17 school districts, as many as the state's 16 counties and Carson City, drawn from a tile archive mirrored from TIGERweb
     "nv-senate",         // 21 Senate districts — smaller on average than a county, each made of two Assembly districts
@@ -17272,6 +17274,141 @@ function initNevadaExplorer() {
     }
   });
 
+  /* ---------- 7b. Judicial District — Nevada's judicial districts, whole counties ----------
+   * 11 judicial districts of whole counties, dissolved from this app's own
+   * county
+   * fabric by scripts/build_state_courts.py, which reads the county lists
+   * from NRS 3.010 and the judges from the Second and Eighth district courts'
+   * own pages and the Nevada Judiciary's list of judges' terms of office,
+   * kept as text in nv/data/source/courts/. The districts are geometry
+   * (nv-judicial-districts.json, cache-first); the judges are a roster
+   * (nv-district-judges.json, network-first), so a new judge reaches a
+   * returning reader without a cache bump. No weekly job re-reads the pages;
+   * nv/WATCH.md carries the re-read and the card prints the date they were
+   * read. A seat the court prints as vacant shows as vacant, never as a name.
+   *
+   * HOW JUDGES ARE CHOSEN is read from the Nevada Constitution, Article 6,
+   * section 5 (leg.state.nv.us, read 2026-11-27): district judges are elected
+   * by the qualified electors of their districts and hold office for six years
+   * from the first Monday of January after their election. THE SEATS ARE
+   * COUNTED: NRS 3.011 to 3.0197 set each district's number of district judges
+   * (90, the Second's and Eighth's split between general and family judges),
+   * and the fetch stops unless each district's judges fill exactly that many.
+   * The Eighth District's judges are read from its two division pages on
+   * clarkcountycourts.us and the Second's from washoecourts.com. The Nevada
+   * Judiciary's own site answers this project's reader with HTTP 403, so the
+   * other nine districts' judges come from its list of judges' terms of
+   * office, read once by hand in Adam's Chrome on 2026-11-27 and kept as
+   * nv/data/source/courts/nv-term-of-office.txt; those districts' cards say
+   * so, through the roster's per-district source. Every term on that list ends
+   * in January 2027, after the November 2026 election, and the fetch stops
+   * from 4 January 2027 until the list is read again.
+   * ---------- */
+  var loadNvCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nv-judicial-districts.json", {}, 2);
+  });
+  var loadNvJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/nv-district-judges.json", {}, 2);
+  });
+  var NV_COURT = {
+    how: "The district's voters elect its district judges for six-year terms (Nevada Constitution, Article 6, section 5).",
+    court: "The district court is Nevada's trial court of general jurisdiction, and it sits in every county of the district. In the Second and Eighth Districts some of its judges hear family cases. Justices of the peace and municipal judges are not listed here.",
+    from: "The district court's own website",
+    link: { label: "Nevada district courts", url: "https://nvcourts.gov/find_a_court/district_courts" }
+  };
+  function nvCourtTitle(unit) {
+    return unit + (/(^|[^1])1$/.test(unit) ? "st" : /(^|[^1])2$/.test(unit) ? "nd" : /(^|[^1])3$/.test(unit) ? "rd" : "th") + " Judicial District";
+  }
+  // "Atchison and Leavenworth Counties"
+  // "Carson City and Storey County": Carson City is a consolidated city, not a
+  // county, and NRS 3.010 names it as "Carson City and the County of Storey"
+  function nvCourtCounties(names) {
+    var all = (names || []).map(function (n) { return String(n); });
+    var list = all.filter(function (n) { return n !== "Carson City"; });
+    var city = all.length > list.length ? "Carson City" : null;
+    if (!list.length) return city;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return (city ? city + " and " : "") + joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  registerLayer({
+    id: "nv-judicial-district",
+    group: "political",
+    label: "Judicial District",
+    emptyNote: "No judicial district here. This map holds Nevada's judicial districts, so a point outside the state gets none.",
+    overlay: {
+      load: loadNvCourtDistricts,
+      // the trial-court-district concept's colour and width (root layer-concepts.json)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+      return unit == null ? null : nvCourtTitle(String(unit));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadNvCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var unit = findPropCI(props, ["unit"]);
+        var result = {
+          seq: seq,
+          unit: unit == null ? null : String(unit),
+          counties: findPropCI(props, ["counties"]),
+          bench: null
+        };
+        // the judges file failing is not this layer failing: the district
+        // still answers, and the card says the names did not load
+        return loadNvJudges().then(function (roster) {
+          result.bench = roster && result.unit != null ? roster[result.unit] || null : null;
+          return result;
+        }, function () { return result; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null ? nvCourtTitle(result.unit) : "Unknown judicial district",
+        note: nvCourtCounties(result.counties)
+      }));
+      var bench = result.bench;
+      var seats = (bench && bench.judges) || [];
+      var people = [], vacant = [];
+      seats.forEach(function (s) {
+        var where = s.county ? String(s.county) + " County" : null;
+        if (s.vacant) {
+          vacant.push(String(s.role) + (where ? ", " + where : ""));
+          return;
+        }
+        people.push({
+          name: String(s.name),
+          note: [String(s.role), where].filter(Boolean).join(" · ")
+        });
+      });
+      if (people.length) {
+        wrap.appendChild(renderSectionLabel("District judges"));
+        wrap.appendChild(renderPersonRows(people, { tinted: true }));
+      }
+      var rows = [];
+      if (vacant.length) {
+        rows.push({ label: "Vacant", value: "The court lists " + (vacant.length === 1
+          ? "this seat as vacant: " : "these seats as vacant: ") + vacant.join("; ") + "." });
+      }
+      if (!bench) {
+        rows.push({ label: "Judges", value: "The list of judges did not load, so no one is named here." });
+      }
+      rows.push({ label: "How judges are chosen", value: NV_COURT.how });
+      rows.push({ label: "The court", value: NV_COURT.court });
+      if (bench && bench.read) {
+        rows.push({ label: "Where the names come from", value: (bench.from ? String(bench.from) : NV_COURT.from) + ", read " + statewideDate(bench.read) + "." });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () { return NV_COURT.link; }
+  });
+
   /* ---------- 8. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -19163,7 +19300,7 @@ function initNevadaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "nv-senate", "nv-assembly",
+  var LAYER_SIDEBAR_RANK = ["us-house", "nv-senate", "nv-assembly", "nv-judicial-district",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
@@ -19694,8 +19831,8 @@ function initNevadaExplorer() {
   var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
     "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

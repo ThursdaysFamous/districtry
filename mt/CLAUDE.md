@@ -89,6 +89,19 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Montana has no township governments,
 so outside a city or town the county governs.
 
+**THE COURT LAYER DRAWS MONTANA'S 22 JUDICIAL DISTRICTS AND NAMES THEIR JUDGES**
+(`mt-judicial-district`, since 2026-11-27). Each district is whole counties, dissolved from
+`state-counties.json` by `scripts/build_state_courts.py` from the county menu on the Judicial
+Branch's District Courts page, which sends each county to its district's Court Locator page. Each of
+those pages names the district judges "Hon. <name>" (the Fifth's in capitals, re-cased) above its
+clerks; the Eighth prints its judges twice, once for its calendar, and the fetch keeps each once. 53
+judges named on 2026-11-27, and the fetch stops unless that matches the District Courts page's own
+count of district court judges. They are kept as a dated excerpt in
+`data/source/courts/mt-courts.txt` and shipped network-first as `mt-district-judges.json`. The
+district's voters elect its judges for six-year terms, and the Governor fills a vacancy from
+nominees, with Senate confirmation (Montana Constitution, Article VII, sections 7 and 8). No job
+refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE MONTANA.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -117,8 +130,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Montana (`montana`) — https://districtry.com/mt/
 - Geocoders: address Photon (Montana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Montana-bounded, serial >=1s queue)
-- Ground truth: 46.58566,-112.01822 (Montana State Capitol, 1301 East 6th Avenue, Helena, Lewis and Clark County) → county Lewis and Clark County; us-house 2; mt-senate 41; mt-house 82. Negative point 49.15000,-107.00000 (Saskatchewan, Canada, north of the Montana line — outside Montana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Montana State Capitol returns Montana), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 11. Debug namespace `window.MontanaExplorer`.
+- Ground truth: 46.58566,-112.01822 (Montana State Capitol, 1301 East 6th Avenue, Helena, Lewis and Clark County) → county Lewis and Clark County; us-house 2; mt-senate 41; mt-house 82; mt-judicial-district 1st Judicial District. Negative point 49.15000,-107.00000 (Saskatchewan, Canada, north of the Montana line — outside Montana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Montana State Capitol returns Montana), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 15 registered (political 5, safety 2, schools 3, geography 5); `registerLayer(` floor 12. Debug namespace `window.MontanaExplorer`.
 - Scheduled workflows: `update-mt-congress-roster.yml` (Wed 22:45 UTC); `update-mt-legislature-roster.yml` (Thu 22:45 UTC); `mt-validate-sources.yml` (2nd of month 22:45 UTC).
 - Source registry: `mt/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

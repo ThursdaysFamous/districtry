@@ -62,11 +62,21 @@ it. **OMAHA'S PAGE WAS READ ONCE BY HAND** in Adam's Chrome, because its sites a
 project's reader with HTTP 403; it is kept as a dated excerpt in `data/source/councils/` that the
 build proves names against, and the card says it was read by hand. Kearney's members page prints
 home addresses and telephones, and neither is ever carried. The first-class cities seat the winners
-of November 2026 in December, so every name there is re-read then (`WATCH.md`). The six cities that elect by ward or district do not have their wards drawn, and the card
-says so. A member's own e-mail address or number ships where the city's page prints it
+of November 2026 in December, so every name there is re-read then (`WATCH.md`). The six cities that elect by ward or district have their wards drawn on the City Council
+District layer (below). A member's own e-mail address or number ships where the city's page prints it
 beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
 and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller city and every village names nobody (gap
 `ne-municipal-officeholders`).
+
+**THE CITY COUNCIL DISTRICT LAYER DRAWS 30 WARDS AND DISTRICTS IN 6 CITIES** (`city-ward`, since
+2026-11-28): Omaha, Lincoln, Bellevue, Grand Island, Fremont and Hastings, each from the map the city
+or its county publishes, built by `ne/scripts/build_ne_city_wards.py` through the fleet module
+`scripts/city_ward_maps.py` (Douglas-Peucker at 4 m), cache-first as `ne-city-wards.json`. Kearney
+elects every seat by the whole city and is not drawn. **FOUR MAPS OVERLAP THEMSELVES** in strips up to
+4.5 m wide along shared lines (Lincoln, Bellevue, Grand Island, Fremont); each strip is drawn in one
+ward and the build stops if one grows wider than the source's `overlap_max_m`. Every map was measured
+against the 2020 census before it was drawn; the builder's docstring has the figures. The card names
+the member for the ward from the council file. The quarterly re-read is a row in `WATCH.md`.
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 244 unified districts for Nebraska and nothing on its
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school board
@@ -142,7 +152,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Nebraska (`nebraska`) — https://districtry.com/ne/
 - Geocoders: address Photon (Nebraska-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Nebraska-bounded, serial >=1s queue)
 - Ground truth: 40.80814,-96.69957 (Nebraska State Capitol, 1445 K Street, Lincoln, Lancaster County) → county Lancaster County; us-house 1; ne-legislature 28; ne-judicial-district Judicial District 3. Negative point 42.87000,-97.05000 (Clay County, South Dakota, north of the Missouri River — outside Nebraska and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names South Dakota here (control: the Nebraska State Capitol returns Nebraska), none of the state's shipped boundary files contains it, and of every outline in the fleet only South Dakota's does (South Dakota goes live in the same change as Nebraska). Nebraska borders no water and no other country, and every one of its neighbours (South Dakota, Iowa, Missouri, Kansas, Colorado and Wyoming) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NebraskaExplorer`.
+- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NebraskaExplorer`.
 - Scheduled workflows: `update-ne-congress-roster.yml` (Wed 22:13 UTC); `update-ne-legislature-roster.yml` (Thu 22:13 UTC); `ne-validate-sources.yml` (2nd of month 22:13 UTC).
 - Source registry: `ne/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

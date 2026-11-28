@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 4 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1209,6 +1209,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Montana — statewide, all 2 districts.</td>
+              </tr>
+              <tr id="layer-mt-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>mt-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point, its counties, and the district judges the Montana Judicial Branch lists for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://courts.mt.gov/courts/dcourt/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county menu on the Montana Judicial Branch's District Courts page, which sends each county to its judicial district's page, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's judges are named from its Court Locator page on courts.mt.gov, read 2026-11-27 with this project's own client and kept as text in mt/data/source/courts/mt-courts.txt; the fetch stops unless they total the 53 district court judges the District Courts page says serve. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the Montana Constitution, Article VII.</td>
+                <td data-label="Where it applies">Montana — statewide, all 56 counties.</td>
               </tr>
               <tr id="layer-mt-senate">
                 <th scope="row"><span class="layer-name">Montana Senate District</span><code>mt-senate</code></th>
@@ -1434,6 +1445,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Montana — statewide, all 2 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mt/sources.html#dataset-mt-judicial-district",
+      "identifier": "mt-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point, its counties, and the district judges the Montana Judicial Branch lists for it. Each district's judges are named from its Court Locator page on courts.mt.gov, read 2026-11-27 with this project's own client and kept as text in mt/data/source/courts/mt-courts.txt; the fetch stops unless they total the 53 district court judges the District Courts page says serve. No weekly job re-reads the pages, so the card gives the date. How judges are chosen is from the Montana Constitution, Article VII.",
+      "url": "https://districtry.com/mt/sources.html#layer-mt-judicial-district",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/mt/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the county menu on the Montana Judicial Branch's District Courts page, which sends each county to its judicial district's page, read 2026-11-27.",
+          "url": "https://courts.mt.gov/courts/dcourt/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Montana — statewide, all 56 counties"
       }
     },
     {

@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1205,6 +1205,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">New Mexico — statewide, all 3 districts.</td>
+              </tr>
+              <tr id="layer-nm-judicial-district">
+                <th scope="row"><span class="layer-name">Judicial District</span><code>nm-judicial-district</code></th>
+                <td data-label="What it answers">The judicial district covering the point, its counties, and the district judges the New Mexico Judicial Branch lists for its divisions.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://nmcourts.gov/courts-by-district/" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the New Mexico Judicial Branch's Courts by District page, which names each judicial district's counties, read 2026-11-27.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each district's judges are named from the District Court Staggered Terms list the Judicial Performance Evaluation Commission keeps on nmcourts.gov (updated 2026-11-23), read 2026-11-27 with this project's own client and kept as text in nm/data/source/courts/nm-courts.txt; a division the list names Vacant shows as vacant, and the fetch stops unless each district's divisions run from 1 with none skipped. No weekly job re-reads the list, so the card gives the date. How judges are chosen is from the same list and its page.</td>
+                <td data-label="Where it applies">New Mexico — statewide, all 33 counties.</td>
               </tr>
               <tr id="layer-nm-senate">
                 <th scope="row"><span class="layer-name">New Mexico Senate District</span><code>nm-senate</code></th>
@@ -1408,6 +1419,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "New Mexico — statewide, all 3 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nm/sources.html#dataset-nm-judicial-district",
+      "identifier": "nm-judicial-district",
+      "name": "Judicial District",
+      "description": "The judicial district covering the point, its counties, and the district judges the New Mexico Judicial Branch lists for its divisions. Each district's judges are named from the District Court Staggered Terms list the Judicial Performance Evaluation Commission keeps on nmcourts.gov (updated 2026-11-23), read 2026-11-27 with this project's own client and kept as text in nm/data/source/courts/nm-courts.txt; a division the list names Vacant shows as vacant, and the fetch stops unless each district's divisions run from 1 with none skipped. No weekly job re-reads the list, so the card gives the date. How judges are chosen is from the same list and its page.",
+      "url": "https://districtry.com/nm/sources.html#layer-nm-judicial-district",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/nm/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following the New Mexico Judicial Branch's Courts by District page, which names each judicial district's counties, read 2026-11-27.",
+          "url": "https://nmcourts.gov/courts-by-district/"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New Mexico — statewide, all 33 counties"
       }
     },
     {

@@ -140,6 +140,12 @@ PROVENANCE = [
     },
     {
         "layer": "county",
+        "app_file": "vt-county-judges.json",
+        "source_url": "https://www.vermontjudiciary.org/court-locations",
+        "note": "Each county's probate judge (the judge its probate division page lists) and two assistant judges (its civil division page), read from the Vermont Judiciary's court location pages by vt/scripts/build_vt_county_judges.py --fetch into vt/data/source/vt-county-judges.txt; the fetch stops unless all 14 counties give one and two. No weekly job; the monthly re-read is a row in vt/WATCH.md.",
+    },
+    {
+        "layer": "county",
         "app_file": "state-counties.json",
         "source_url": STATE_COUNTY,
         "note": "The 14 counties pre-built from TIGERweb by vt/scripts/build_state_counties.py (Douglas-Peucker at 5 m, held to an 8 m fidelity ceiling).",
