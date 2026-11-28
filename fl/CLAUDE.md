@@ -78,6 +78,14 @@ and TIGER holds 67 unified districts for Florida and nothing on its elementary o
 to assume the office is empty. Recorded as gaps `fl-county-officials` and
 `fl-municipal-officeholders`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 316 OF FLORIDA'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Florida has no township governments,
+so outside a city, town or village the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE FLORIDA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves. The archive keeps 1,013 of the 1,102 ZCTAs in the app's box
@@ -133,7 +141,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Florida (`florida`) — https://districtry.com/fl/
 - Geocoders: address Photon (Florida-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Florida-bounded, serial >=1s queue)
 - Ground truth: 30.43817,-84.28164 (Florida State Capitol, 400 South Monroe Street, Tallahassee, Leon County) → county Leon County; us-house 2; fl-senate 3; fl-house 9. Negative point 27.00000,-85.50000 (Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.FloridaExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 7. Debug namespace `window.FloridaExplorer`.
 - Scheduled workflows: `update-fl-congress-roster.yml` (Mon 20:47 UTC); `update-fl-legislature-roster.yml` (Wed 20:47 UTC); `fl-validate-sources.yml` (1st of month 22:53 UTC).
 - Source registry: `fl/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -80,6 +80,14 @@ the Yakama's in Toppenish, Washington. The Confederated Tribes of the Umatilla I
 read 2026-11-13 for the Washington part of their trust land; the other nations are not carried yet
 (`ROSTER_NOT_SOUGHT` in `scripts/build_tribal_areas.py`), recorded in gap `or-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 212 OF OREGON'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Oregon has no township governments, so
+outside a city or town the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE OREGON.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -110,7 +118,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Oregon (`oregon`) — https://districtry.com/or/
 - Geocoders: address Photon (Oregon-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Oregon-bounded, serial >=1s queue)
 - Ground truth: 44.93809,-123.03013 (Oregon State Capitol, 900 Court Street NE, Salem, Marion County) → county Marion County; us-house 6; or-senate 11; or-house 21. Negative point 44.95000,-124.40000 (The Pacific about 30 km off Lincoln City — outside Oregon and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here (control: the State Capitol returns Oregon), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.OregonExplorer`.
+- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 11. Debug namespace `window.OregonExplorer`.
 - Scheduled workflows: `update-or-congress-roster.yml` (Mon 22:55 UTC); `update-or-legislature-roster.yml` (Tue 22:55 UTC); `or-validate-sources.yml` (1st of month 23:37 UTC).
 - Source registry: `or/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

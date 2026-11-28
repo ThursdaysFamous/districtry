@@ -288,10 +288,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "27 census county divisions, about 187 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 27 features for Delaware, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-11-27.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it. Delaware has no township governments, so outside a city, town or village the county governs. The card names the division and its county and says it governs nobody.",
+        "applies": "Delaware — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "57 incorporated cities, towns and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city, town or village containing the point, or that the point is outside every one.",
@@ -309,7 +327,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -360,7 +378,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 39.157,
     "lng": -75.51964,

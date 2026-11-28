@@ -109,6 +109,14 @@ all but one (Adam, 2026-11-13), and then the card's note says which seat the pag
 its five members and Hopi's 21 of its 22 village representatives. Recorded in gap
 `az-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 80 OF ARIZONA'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Arizona has no township governments,
+so outside a city or town the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE ARIZONA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -132,7 +140,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Arizona (`arizona`) — https://districtry.com/az/
 - Geocoders: address Photon (Arizona-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arizona-bounded, serial >=1s queue)
 - Ground truth: 33.44812,-112.09699 (Arizona State Capitol, 1700 West Washington Street, Phoenix) → county Maricopa County; us-house 3; az-senate 11; az-house 11. Negative point 31.00000,-111.50000 (Sonora, Mexico, about 37 km south of the Arizona line between Nogales and Sasabe — outside Arizona and outside every other instance in the fleet, and inside permalink_gate (minLat 30.90) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State Capitol and Tucson's city hall return Arizona, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. MEXICO BECAUSE NO INSTANCE WILL EVER SERVE IT: every U.S. neighbour of Arizona is in a later batch of the state-level launch, and a point on any of them would have to move the day that neighbour goes live.).
-- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 10. Debug namespace `window.ArizonaExplorer`.
+- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 11. Debug namespace `window.ArizonaExplorer`.
 - Scheduled workflows: `update-az-congress-roster.yml` (Mon 20:43 UTC); `update-az-legislature-roster.yml` (Tue 20:43 UTC); `az-validate-sources.yml` (1st of month 22:33 UTC).
 - Source registry: `az/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

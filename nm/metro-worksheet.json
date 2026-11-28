@@ -288,10 +288,28 @@
       }
     },
     {
+      "id": "county-subdivision",
+      "label": "Census County Division",
+      "group": "geography",
+      "area_rank": 7,
+      "rank_note": "130 census county divisions, about 2,417 km2 of land on average (measured 2026-11-27), from TIGERweb, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The census county division containing the point, and its county.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 130 features for New Mexico, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-11-27.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it. New Mexico has no township governments, so outside a city, town or village the county governs. The card names the division and its county and says it governs nobody.",
+        "applies": "New Mexico — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "105 incorporated cities, towns and villages, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The incorporated city, town or village containing the point, or that the point is outside every one.",
@@ -309,7 +327,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "Tribal land — New Mexico has 37 pieces, 24 reservations and 13 pieces of off-reservation trust land, held by 24 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Navajo Nation Reservation (11,376.8 km² in New Mexico, 19.5% of it, mostly San Juan and McKinley counties) and its trust land (4,869.5 km², 99.4% of it), the Jicarilla Apache Nation Reservation (3,418.8 km², Rio Arriba and Sandoval counties), the Laguna Pueblo (1,989.0 km²), the Mescalero Reservation (1,864.2 km², Otero County) and the Zuni Reservation (1,654.8 km², 96.9% of it); the smallest is the Fort Sill Apache Indian Reservation (0.121 km², Luna County). Four pieces cross the state line and are drawn whole: the Navajo Nation's reservation and trust land, the Ute Mountain Reservation and the Zuni Reservation. The Navajo Nation is seated in Arizona, the Ute Mountain Ute Tribe in Colorado and the Fort Sill Apache Tribe in Oklahoma. The Census draws tribal subdivisions on the Navajo Nation alone, 54 chapters on its New Mexico ground. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — New Mexico has 37 such areas, held by 24 nations: the 19 pueblos, the Jicarilla Apache Nation and the Mescalero Apache Tribe, all seated in New Mexico, the Navajo Nation, seated in Arizona, the Ute Mountain Ute Tribe, seated in Colorado, and the Fort Sill Apache Tribe, seated in Oklahoma.",
@@ -327,7 +345,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -378,7 +396,7 @@
       }
     }
   ],
-  "min_register_layer": 8,
+  "min_register_layer": 9,
   "anchor_point": {
     "lat": 35.68226,
     "lng": -105.93964,

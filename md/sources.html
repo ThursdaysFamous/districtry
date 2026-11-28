@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">10 layers — 3 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">11 layers — 3 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1295,7 +1295,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">4 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1324,6 +1324,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
                 <td data-label="Where it applies">Maryland. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code.</td>
+              </tr>
+              <tr id="layer-county-subdivision">
+                <th scope="row"><span class="layer-name">Election District</span><code>county-subdivision</code></th>
+                <td data-label="What it answers">The election district containing the point (or Baltimore city), and its county.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 290 features for Maryland, measured 2026-11-27: 289 of the counties' election districts (LSADC 28, FUNCSTAT N, legal areas with no functioning government) and Baltimore city (FUNCSTAT F).</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER. The Census Bureau records Maryland's election districts as legal areas with no functioning government, and Maryland has no township governments, so the county governs everyone outside a city, town or village. The card names the district and its county and says it governs nobody; in Baltimore city it says the city's own government governs.</td>
+                <td data-label="Where it applies">Maryland — statewide.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City, Town or Village</span><code>municipality</code></th>
@@ -1496,6 +1507,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Maryland. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/md/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Election District",
+      "description": "The election district containing the point (or Baltimore city), and its county. NO OFFICEHOLDER. The Census Bureau records Maryland's election districts as legal areas with no functioning government, and Maryland has no township governments, so the county governs everyone outside a city, town or village. The card names the district and its county and says it governs nobody; in Baltimore city it says the city's own government governs.",
+      "url": "https://districtry.com/md/sources.html#layer-county-subdivision",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/md/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 290 features for Maryland, measured 2026-11-27: 289 of the counties' election districts (LSADC 28, FUNCSTAT N, legal areas with no functioning government) and Baltimore city (FUNCSTAT F).",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Maryland — statewide"
       }
     },
     {

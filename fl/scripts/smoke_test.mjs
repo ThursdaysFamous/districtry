@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "fl-senate", "fl-house"];
 const EXPECT_DISTRICT = { "county": "Leon County", "us-house": "2", "fl-senate": "3", "fl-house": "9" };
 const NEGATIVE_POINT = "27.00000,-85.50000"; // Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Florida";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "FloridaExplorer";
@@ -838,6 +838,7 @@ try {
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
     const LOCAL = /Not named here/;
+    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     const cases = [
       {
         name: "a city names itself an incorporated city",
@@ -880,6 +881,27 @@ try {
         props: { GEOID: "1201110", NAME: "Leon County School District", STATE: "12" },
         want: [/Leon County School District/],
         reject: []
+      },
+      {
+        name: "a census county division names itself and its county and says no one is elected from it",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1207393295", NAME: "Tallahassee Central CCD", BASENAME: "Tallahassee Central", STATE: "12", COUNTY: "073", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Tallahassee Central/, /Leon County/, /no one is elected from it/, /no township governments/, /outside a city, town or village the county governs/],
+        reject: [/Tallahassee Central CCD/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1207393295", NAME: "Tallahassee Central CCD", BASENAME: "Tallahassee Central", STATE: "12", COUNTY: "073", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Tallahassee Central/, /no functioning government/],
+        reject: [/draws/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision", service: COUSUB,
+        props: { GEOID: "1207393295", NAME: "Tallahassee Central CCD", BASENAME: "Tallahassee Central", STATE: "12", COUNTY: "073", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Tallahassee Central/, /Leon County/],
+        reject: [/Government/]
       }
     ];
 
@@ -954,6 +976,30 @@ try {
     await context.close();
   }
 
+
+  // 7e. THE COUNTY SUBDIVISION ARCHIVE ANSWERS, WITH THE CENSUS
+  //     UNREACHABLE. The State Capitol is in Tallahassee Central CCD, Leon
+  //     County (TIGERweb's layer 1, read 2026-11-27, which the archive is
+  //     mirrored from). An archive that stopped being read would send the
+  //     click to the Census, which this check refuses.
+  {
+    for (const [where, point, want] of [
+      ["the State Capitol", POINT, [/Tallahassee Central/, /Leon County/, /no one is elected from it/]]
+    ]) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const census = [];
+      const page = await booted(context, `${BASE}#point=${point}&layers=county-subdivision`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => { census.push(r.request().url()); r.abort(); });
+      });
+      const card = await cardText(page, "county-subdivision");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      check(`the county subdivision archive answers at ${where} with no Census request`,
+        !card.error && missing.length === 0 && census.every((u) => !/Places_CouSub_ConCity_SubMCD/.test(u)),
+        `census=${census.length} missing=${missing} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
 
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose

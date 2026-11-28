@@ -67,6 +67,14 @@ Delaware`: the three drawn classes keep no feature inside the state, with Delawa
 as the control. Recorded as covered in `data/tribal-government-join.json`. The Nanticoke and Lenape
 statistical areas are statistical areas, which the fleet draws only in Oklahoma.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 27 OF DELAWARE'S COUNTY SUBDIVISIONS, AND THE CARD SAYS
+THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that Delaware has no township governments,
+so outside a city, town or village the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE DELAWARE.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -95,7 +103,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Delaware (`delaware`) — https://districtry.com/de/
 - Geocoders: address Photon (Delaware-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Delaware-bounded, serial >=1s queue)
 - Ground truth: 39.15700,-75.51964 (Legislative Hall, 411 Legislative Avenue, Dover, Kent County) → county Kent County; us-house Congressional District (at Large); de-senate 17; de-house 32. Negative point 38.70000,-74.92000 (the Atlantic Ocean east of Rehoboth Beach — outside Delaware and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is open water (control: the Legislative Hall returns Delaware), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS OPEN WATER, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.DelawareExplorer`.
+- Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.DelawareExplorer`.
 - Scheduled workflows: `update-de-congress-roster.yml` (Wed 23:11 UTC); `update-de-legislature-roster.yml` (Thu 23:11 UTC); `de-validate-sources.yml` (2nd of month 23:11 UTC).
 - Source registry: `de/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

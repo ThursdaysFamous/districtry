@@ -82,6 +82,14 @@ worst stray 3.5 m against a 25 m ceiling (`SIMPLIFY` in `scripts/build_tribal_ar
 Arizona land; the other nations are not carried yet (`ROSTER_NOT_SOUGHT` in
 `scripts/build_tribal_areas.py`), recorded in gap `nm-tribal-government`.
 
+**THE CENSUS COUNTY DIVISION LAYER DRAWS ALL 130 OF NEW MEXICO'S COUNTY SUBDIVISIONS, AND THE CARD
+SAYS THEY GOVERN NOBODY** (`county-subdivision`, since 2026-11-27, under the County layer, the done
+standard's level 14). Every one is a census county division (LSADC 22, FUNCSTAT S, measured that
+day): an area the Census Bureau draws to report its counts. The layer is Oklahoma's, drawn from a
+tile archive mirrored from TIGERweb's layer 1. The card names the division without TIGER's "CCD",
+names its county, and says no one is elected from it and that New Mexico has no township
+governments, so outside a city, town or village the county governs.
+
 **THE ZIP LAYER HIDES OUTSIDE NEW MEXICO.** A ZCTA carries no state field, so over the line the
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline,
 and the smoke test asserts both halves.
@@ -113,7 +121,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: New Mexico (`newmexico`) — https://districtry.com/nm/
 - Geocoders: address Photon (New Mexico-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, New Mexico-bounded, serial >=1s queue)
 - Ground truth: 35.68226,-105.93964 (New Mexico State Capitol, 490 Old Santa Fe Trail, Santa Fe, Santa Fe County) → county Santa Fe County; us-house 3; nm-senate 25; nm-house 47. Negative point 31.25000,-108.60000 (Sonora, Mexico, just south of New Mexico's bootheel — outside New Mexico and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Mexico (control: the New Mexico State Capitol returns New Mexico), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN MEXICO, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 8. Debug namespace `window.NewMexicoExplorer`.
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.NewMexicoExplorer`.
 - Scheduled workflows: `update-nm-congress-roster.yml` (Wed 22:05 UTC); `update-nm-legislature-roster.yml` (Thu 22:05 UTC); `nm-validate-sources.yml` (2nd of month 22:05 UTC).
 - Source registry: `nm/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

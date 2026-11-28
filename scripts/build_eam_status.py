@@ -2803,7 +2803,10 @@ ANSWERS = {
         # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
         # as the control (1,411 active of 1,695): all 71 of Nevada's are census
         # county divisions (FUNCSTAT S), statistical areas that govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 71 of Nevada's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Nevada has no sub-county general-purpose government — outside a city "
             "or town limit the county governs. The 71 sub-county units the "
@@ -2845,7 +2848,10 @@ ANSWERS = {
         # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
         # as the control (1,411 active of 1,695): all 80 of Arizona's are census
         # county divisions (FUNCSTAT S), statistical areas that govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 80 of Arizona's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Arizona has no sub-county general-purpose government — outside a city "
             "or town limit the county governs. The 80 sub-county units the "
@@ -2962,7 +2968,10 @@ ANSWERS = {
         # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
         # as the control (1,411 active of 1,695): all 862 of Texas's are census
         # county divisions (FUNCSTAT S), statistical areas that govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 862 of Texas's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Texas has no sub-county general-purpose government — outside a "
             "city, town or village the county governs. The 862 sub-county units "
@@ -2999,7 +3008,10 @@ ANSWERS = {
         # as the control (1,411 active of 1,695): all 316 of Florida's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 316 of Florida's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Florida has no sub-county general-purpose government — outside a "
             "city, town or village the county governs. The 316 sub-county units "
@@ -3085,7 +3097,10 @@ ANSWERS = {
         # as the control (1,411 active of 1,695): all 242 of Washington's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 242 of Washington's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Washington has no sub-county general-purpose government — outside a "
             "city or town limit the county governs. The 242 sub-county units the "
@@ -3166,7 +3181,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 209 of Colorado's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 209 of Colorado's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Colorado has no sub-county general-purpose government — outside a "
             "city or town the county governs. The 209 sub-county units the Census "
@@ -3202,7 +3220,10 @@ ANSWERS = {
         # Maryland's 290 are its counties' election districts, every one
         # non-functioning (FUNCSTAT N), and the 290th is Baltimore City, which
         # is counted as a place.
-        "subdivision-boundaries": OPEN,
+        # The Election District layer draws all 290 of Maryland's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Maryland has no sub-county general-purpose government — outside a "
             "city or town the county governs. Its county subdivisions are its "
@@ -3238,7 +3259,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 390 of Alabama's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 390 of Alabama's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Alabama has no sub-county general-purpose government — outside a "
             "city or town the county governs. The 390 sub-county units the Census "
@@ -3276,7 +3300,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 212 of Oregon's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 212 of Oregon's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Oregon has no sub-county general-purpose government — outside a "
             "city the county governs. The 212 sub-county units the Census "
@@ -3350,7 +3377,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 93 of Utah's are
         # census county divisions (FUNCSTAT S), statistical areas that govern
         # nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 93 of Utah's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         "sub-county-government": na(
             "Utah has no sub-county general-purpose government — outside a "
             "city or town the county governs. The 93 sub-county units the Census "
@@ -3586,7 +3616,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 130 of New
         # Mexico's are census county divisions (FUNCSTAT S), statistical areas
         # that govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 130 of New Mexico's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # District judges are elected by judicial district; no district is drawn
         # or judge named yet.
         "courts-by-district": OPEN,
@@ -3667,7 +3700,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 170 of Idaho's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 170 of Idaho's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # District judges are elected by judicial district; no district is drawn
         # or judge named yet.
         "courts-by-district": OPEN,
@@ -3714,7 +3750,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 44 of Hawaii's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 44 of Hawaii's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # Not re-read for this change: the constitution's own rule.
         "courts-by-district": na(
             "Hawaii elects no judge. Its judges are appointed by the Governor, "
@@ -3789,7 +3828,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 194 of Montana's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 194 of Montana's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # District court judges are elected by judicial district; no district is
         # drawn or judge named yet.
         "courts-by-district": OPEN,
@@ -3946,7 +3988,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 37 of Alaska's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census Subarea layer draws all 37 of Alaska's county subdivisions
+        # from TIGERweb's layer 1, mirrored into a tile archive, and its card
+        # says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # Judges stand for retention by judicial district; no district is drawn
         # or judge named yet.
         "courts-by-district": OPEN,
@@ -4016,7 +4061,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 71 of Wyoming's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 71 of Wyoming's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # District judges stand for retention by judicial district; no district
         # is drawn or judge named yet.
         "courts-by-district": OPEN,
@@ -4053,7 +4101,10 @@ ANSWERS = {
         # Illinois as the control (1,411 active of 1,695): all 27 of Delaware's
         # are census county divisions (FUNCSTAT S), statistical areas that
         # govern nobody.
-        "subdivision-boundaries": OPEN,
+        # The Census County Division layer draws all 27 of Delaware's county
+        # subdivisions from TIGERweb's layer 1, mirrored into a tile archive,
+        # and its card says they govern nobody (since 2026-11-27).
+        "subdivision-boundaries": answers("county-subdivision"),
         # Not re-read for this change: the constitution's own rule.
         "courts-by-district": na(
             "Delaware elects no judge. Its judges are nominated by the Governor "
