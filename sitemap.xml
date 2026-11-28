@@ -561,7 +561,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor.html</loc>
-    <lastmod>2026-11-01</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3368,12 +3368,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://districtry.com/ia/county-supervisor/carroll.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://districtry.com/ia/county-supervisor/cass.html</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -3428,12 +3422,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://districtry.com/ia/county-supervisor/crawford.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://districtry.com/ia/county-supervisor/dallas.html</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -3453,7 +3441,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/delaware.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3483,7 +3471,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/fayette.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3561,7 +3549,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/humboldt.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3753,7 +3741,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/pottawattamie.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -13299,7 +13287,7 @@
   </url>
   <url>
     <loc>https://districtry.com/about.html</loc>
-    <lastmod>2026-11-27</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
