@@ -589,7 +589,6 @@
   }
  },
  "19027": {
-  "boardPhone": "(712) 792-4923",
   "county": "Carroll",
   "countyAttorney": {
    "email": "csteger@carrollcountyattorney.org",
@@ -608,30 +607,7 @@
    "name": "Ken Pingrey",
    "phone": "(712) 792-4393"
   },
-  "supervisorPlan": "PLAN 2",
-  "supervisorSeats": 5,
-  "supervisors": [
-   {
-    "name": "Michael Andersen",
-    "party": "Republican"
-   },
-   {
-    "name": "Stephanie Hausman",
-    "party": "Republican"
-   },
-   {
-    "name": "Scott Johnson",
-    "party": "Republican"
-   },
-   {
-    "name": "Mark McCrea",
-    "party": "Republican"
-   },
-   {
-    "name": "Eugene Meiners",
-    "party": "Democratic"
-   }
-  ],
+  "supervisorsWithheld": "the county directory lists 6, and Iowa Code 331.201 allows only 3 or 5",
   "treasurer": {
    "email": "lwagner@carrollcountyiowa.org",
    "name": "Lisa Wagner",
@@ -831,6 +807,7 @@
    }
   ],
   "treasurer": {
+   "email": "cherokeetreas@co.cherokee.ia.us",
    "name": "Rob Byers",
    "party": "Republican",
    "phone": "(712) 225-6740"
@@ -1071,7 +1048,6 @@
   }
  },
  "19047": {
-  "boardPhone": "(712) 263-5356",
   "county": "Crawford",
   "countyAttorney": {
    "email": "colin.johnson@crawfordca.org",
@@ -1090,30 +1066,7 @@
    "name": "James Steinkuehler",
    "phone": "(712) 263-2146"
   },
-  "supervisorPlan": "PLAN 1",
-  "supervisorSeats": 5,
-  "supervisors": [
-   {
-    "name": "Craig Dozark",
-    "party": "Republican"
-   },
-   {
-    "name": "Jean Heiden",
-    "party": "Republican"
-   },
-   {
-    "name": "Dave Muhlbauer",
-    "party": "Democratic"
-   },
-   {
-    "name": "Ty Rosburg",
-    "party": "Republican"
-   },
-   {
-    "name": "Kyle Schultz",
-    "party": "Republican"
-   }
-  ],
+  "supervisorsWithheld": "the county directory lists 4, and Iowa Code 331.201 allows only 3 or 5",
   "treasurer": {
    "email": "Treasurer@crawfordcounty.iowa.gov",
    "name": "Sheri Neddermeyer",
@@ -1278,7 +1231,8 @@
     "party": "Republican"
    },
    {
-    "name": "Dan Wheeler"
+    "name": "Dan Wheeler",
+    "party": "Republican"
    }
   ],
   "treasurer": {
@@ -1508,7 +1462,7 @@
     "party": "Republican"
    },
    {
-    "name": "Alex Popenhagen"
+    "name": "Larry Popenhagen"
    }
   ],
   "treasurer": {
@@ -2061,6 +2015,7 @@
   }
  },
  "19091": {
+  "boardPhone": "(515) 332-5677",
   "county": "Humboldt",
   "countyAttorney": {
    "email": "jbeaty@humboldtcounty.iowa.gov",
@@ -2068,7 +2023,12 @@
    "party": "Republican",
    "phone": "515-332-7139"
   },
-  "recorderWithheld": "the county directory names Diane Amundson and the recorder's own statewide directory names Nicole Niemeyer",
+  "recorder": {
+   "email": "nniemeyer@humboldtcountyia.org",
+   "name": "Nicole Niemeyer",
+   "party": "Republican",
+   "phone": "(515) 332-3693"
+  },
   "sheriff": {
    "name": "Dean Kruger",
    "party": "Republican",
@@ -2076,31 +2036,35 @@
   },
   "supervisorPlan": "PLAN 3",
   "supervisorSeats": 5,
-  "supervisorSource": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php",
   "supervisors": [
    {
     "email": "mcarpenter@humboldtcounty.iowa.gov",
     "name": "Mike Carpenter",
+    "party": "Republican",
     "phone": "515 332-0596"
    },
    {
     "email": "rpedersen@humboldtcounty.iowa.gov",
     "name": "Rick Pedersen",
+    "party": "Republican",
     "phone": "515 779-4591"
    },
    {
     "email": "brasmussen@humboldtcounty.iowa.gov",
     "name": "Bob Rasmussen",
+    "party": "Republican",
     "phone": "515 770-0014"
    },
    {
     "email": "breimers@humboldtcounty.iowa.gov",
     "name": "Bruce Reimers",
+    "party": "Republican",
     "phone": "515 770-1067"
    },
    {
     "email": "dthompson@humboldtcounty.iowa.gov",
     "name": "Dennis Thompson",
+    "party": "Republican",
     "phone": "515 332-0597"
    }
   ],
@@ -3570,9 +3534,6 @@
   "supervisorSeats": 5,
   "supervisors": [
    {
-    "name": "Keith Jones"
-   },
-   {
     "name": "Jeff Jorgensen",
     "party": "Republican"
    },
@@ -3583,6 +3544,9 @@
    {
     "name": "Brian Shea",
     "party": "Republican"
+   },
+   {
+    "name": "Mark Shoemaker"
    },
    {
     "name": "Tim Wichman",
