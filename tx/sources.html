@@ -1182,7 +1182,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 4 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 3 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1191,7 +1191,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1199,6 +1199,17 @@ table.matrix code {
               <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
             </thead>
             <tbody>
+              <tr id="layer-tx-court-of-appeals">
+                <th scope="row"><span class="layer-name">Court of Appeals District</span><code>tx-court-of-appeals</code></th>
+                <td data-label="What it answers">The court of appeals district (or the two districts) covering the point, its counties, and the justices each court's own page names, with the justices of the 15th Court of Appeals, whose district is the whole state.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm" target="_blank" rel="noopener">Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Texas Government Code section 22.201, which names each district's counties, read 2026-11-28 from the Legislature's statutes site. Counties two districts share are their own pieces.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each court's chief justice and justices are named from the court's own justices page on txcourts.gov, read 2026-11-28 with this project's own client and kept as text in tx/data/source/courts/tx-courts.txt; the fetch stops if a court's page names more justices than Texas Government Code 22.216 sets, or fewer than 85% of them, or not exactly one chief justice. No weekly job re-reads the pages, so the card gives the date. How justices are chosen is from the Texas Constitution, Article 5, sections 6 and 28.</td>
+                <td data-label="Where it applies">Texas — statewide, all 254 counties.</td>
+              </tr>
               <tr id="layer-tx-senate">
                 <th scope="row"><span class="layer-name">Texas Senate District</span><code>tx-senate</code></th>
                 <td data-label="What it answers">The Texas Senate district covering the point, and the senator holding it.</td>
@@ -1414,6 +1425,28 @@ table.matrix code {
     "url": "https://overberg.co"
   },
   "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/tx/sources.html#dataset-tx-court-of-appeals",
+      "identifier": "tx-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The court of appeals district (or the two districts) covering the point, its counties, and the justices each court's own page names, with the justices of the 15th Court of Appeals, whose district is the whole state. Each court's chief justice and justices are named from the court's own justices page on txcourts.gov, read 2026-11-28 with this project's own client and kept as text in tx/data/source/courts/tx-courts.txt; the fetch stops if a court's page names more justices than Texas Government Code 22.216 sets, or fewer than 85% of them, or not exactly one chief justice. No weekly job re-reads the pages, so the card gives the date. How justices are chosen is from the Texas Constitution, Article 5, sections 6 and 28.",
+      "url": "https://districtry.com/tx/sources.html#layer-tx-court-of-appeals",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/tx/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by scripts/build_state_courts.py, following Texas Government Code section 22.201, which names each district's counties, read 2026-11-28 from the Legislature's statutes site. Counties two districts share are their own pieces.",
+          "url": "https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Texas — statewide, all 254 counties"
+      }
+    },
     {
       "@type": "Dataset",
       "@id": "https://districtry.com/tx/sources.html#dataset-tx-senate",

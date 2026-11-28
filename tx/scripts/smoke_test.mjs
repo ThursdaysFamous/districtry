@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "30.27467,-97.74035"; // Texas State Capitol, 1100 Congress Avenue, Austin, Travis County
-const OFFLINE = ["county", "us-house", "tx-senate", "tx-house"];
-const EXPECT_DISTRICT = { "county": "Travis County", "us-house": "37", "tx-senate": "14", "tx-house": "49" };
+const OFFLINE = ["county", "us-house", "tx-senate", "tx-house", "tx-court-of-appeals"];
+const EXPECT_DISTRICT = { "county": "Travis County", "us-house": "37", "tx-senate": "14", "tx-house": "49", "tx-court-of-appeals": "3rd Court of Appeals District" };
 const NEGATIVE_POINT = "28.50000,-101.50000"; // The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry Texas";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "TexasExplorer";
@@ -1350,6 +1350,37 @@ try {
         propsAt(areas, POINT).length === 0 &&
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("6 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
+    }
+  }
+
+  // 11. THE COURT OF APPEALS DISTRICT CARD names each court's chief justice,
+  //     read from the shipped roster, and the 15th's, whose district is the
+  //     whole state. The State Capitol is in the 3rd alone; downtown Houston is
+  //     in the 1st and 14th, which share their ten counties and draw each
+  //     appeal at random; Greenville is in Hunt County, in the 5th and 6th.
+  //     Each piece was measured in the drawn file.
+  {
+    const roster = shipped("tx-district-judges.json");
+    const chief = (c) => (((roster[c] || {}).judges || []).find((s) => s.role === "Chief Justice") || {}).name;
+    for (const [where, point, courts, want, refuse] of [
+      ["the State Capitol", POINT, ["3"], [/3rd Court of Appeals District/, /Travis/], [/Two courts/]],
+      ["downtown Houston", "29.76040,-95.36980", ["1", "14"],
+        [/1st and 14th Court of Appeals Districts/, /drawn at random/], []],
+      ["Greenville", "33.13840,-96.11080", ["5", "6"],
+        [/5th and 6th Court of Appeals Districts/, /Hunt County/, /elect the justices of both/], []]
+    ]) {
+      const names = courts.concat(["15"]).map(chief);
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${point}&layers=tx-court-of-appeals`);
+      const card = await cardText(page, "tx-court-of-appeals");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      const leaked = refuse.filter((re) => re.test(text));
+      check(`the court of appeals card at ${where} names each court's chief justice and the 15th's`,
+        !card.error && names.every((n) => n && text.includes(n)) && missing.length === 0 &&
+          leaked.length === 0 && /Where the names come from/.test(text),
+        `missing=${missing} leaked=${leaked} ${text.slice(0, 160)}`);
+      await context.close();
     }
   }
 } finally {

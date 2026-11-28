@@ -52,6 +52,7 @@ const GEOMETRY_URLS = [
   "./data/app/mo-senate-districts.json",
   "./data/app/mo-house-districts.json",
   "./data/app/mo-commission-districts.json",
+  "./data/app/mo-judicial-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -65,6 +66,7 @@ const ROSTER_URLS = [
   "./data/app/mo-county-officials.json",
   "./data/app/mo-commission-counties.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/mo-district-judges.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **355 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 310 are links.
+makes from a link a reader clicks. Of **357 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 312 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -170,7 +170,7 @@ prose.
 | ar | 0 | 18 |
 | ms | 0 | 17 |
 | la | 0 | 17 |
-| mo | 0 | 13 |
+| mo | 0 | 14 |
 | va | 0 | 17 |
 | wv | 0 | 13 |
 | ga | 0 | 16 |
@@ -179,7 +179,7 @@ prose.
 | az | 0 | 14 |
 | nj | 0 | 12 |
 | nh | 0 | 12 |
-| tx | 0 | 14 |
+| tx | 0 | 15 |
 | fl | 0 | 13 |
 | oh | 0 | 12 |
 | wa | 0 | 13 |
@@ -518,7 +518,7 @@ measured until the next run describes it.
 | ar | 28 | 21 | 0 |
 | ms | 41 | 25 | 0 |
 | la | 28 | 25 | 0 |
-| mo | 23 | 15 | 0 |
+| mo | 25 | 17 | 0 |
 | va | 23 | 20 | 0 |
 | wv | 23 | 16 | 0 |
 | ga | 21 | 18 | 0 |
@@ -527,7 +527,7 @@ measured until the next run describes it.
 | az | 17 | 12 | 0 |
 | nj | 17 | 10 | 0 |
 | nh | 19 | 11 | 0 |
-| tx | 18 | 15 | 0 |
+| tx | 20 | 17 | 0 |
 | fl | 18 | 15 | 0 |
 | oh | 18 | 14 | 0 |
 | wa | 17 | 14 | 0 |
@@ -552,9 +552,9 @@ measured until the next run describes it.
 | ak | 16 | 12 | 0 |
 | vt | 19 | 12 | 0 |
 | wy | 19 | 14 | 0 |
-| **total** | **1347** | **1580** | **12** |
+| **total** | **1351** | **1584** | **12** |
 
-**287 distinct source hosts** across the six manifests. Each instance's
+**289 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

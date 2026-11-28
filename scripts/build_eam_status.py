@@ -2625,7 +2625,11 @@ ANSWERS = {
         "school-district-boundaries": answers("school-district-unified",
                                               "school-district-elementary"),
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The Judicial Circuit layer draws Missouri's 46 judicial circuits of
+        # whole counties (the city of St. Louis is its own) and names every
+        # circuit's circuit judges (since 2026-11-28). Associate circuit judges
+        # are not named.
+        "courts-by-district": answers("mo-judicial-circuit"),
         # The 20 counties that adopted township organization (RSMo chapter 65)
         # elect township boards, 282 active townships, and nothing here names
         # them (gap mo-township-officers).
@@ -2991,9 +2995,12 @@ ANSWERS = {
             "city, town or village the county governs. The 862 sub-county units "
             "the Census publishes for Texas are census county divisions: "
             "statistical areas, not governments (measured 2026-11-11)."),
-        # District, county-court-at-law and justice of the peace judges are
-        # elected; no court district is drawn or judge named yet.
-        "courts-by-district": OPEN,
+        # The Court of Appeals District layer draws Texas's 15 courts of appeals
+        # districts of whole counties, the overlapping ones as shared pieces,
+        # and names every court's justices (since 2026-11-28). District, county-
+        # court-at-law and justice of the peace judges are elected too and are
+        # not drawn or named.
+        "courts-by-district": answers("tx-court-of-appeals"),
         # Several large independent school districts elect trustees from
         # single-member districts; no trustee district is drawn yet.
         "school-boards-by-district": OPEN,

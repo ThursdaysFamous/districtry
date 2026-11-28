@@ -66,7 +66,7 @@ different thing from one it failed.
 | me | **EAM·** | 16 | 16/16 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 73 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 29 | all | 13 of 14 levels |
-| mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 16 | all | 7 of 14 levels |
+| mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 18 | all | 8 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 26 | all | 8 of 14 levels |
 | mt | **EAM·** | 56 | 56/56 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 23 | all | all 14 levels |
@@ -85,7 +85,7 @@ different thing from one it failed.
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 17 | all | 8 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,065 | all | 24 | all | 10 of 14 levels |
-| tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 16 | all | 8 of 14 levels |
+| tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 18 | all | 9 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
@@ -402,11 +402,10 @@ per county, so each one is named under its state below.
 
 ### mo — EAM·
 
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mo-commission-counties.json`, `mo-commission-districts.json`, `mo-house-districts.json`, `mo-senate-districts.json`, `mo-state-outline.json`, `mo/data/app/population/`, `state-counties.json`
-- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mo-commission-counties.json`, `mo-commission-districts.json`, `mo-district-judges.json`, `mo-house-districts.json`, `mo-judicial-districts.json`, `mo-senate-districts.json`, `mo-state-outline.json`, `mo/data/app/population/`, `state-counties.json`
+- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 43 of 114 counties name a governing body and draw it where it is elected by district; 71 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
@@ -670,11 +669,10 @@ this instance is in maintenance.
 ### tx — EAM·
 
 - **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 237 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-house-districts.json`, `tx-senate-districts.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-district-judges.json`, `tx-house-districts.json`, `tx-judicial-districts.json`, `tx-senate-districts.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 237 of 254 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 119 units at 25,000+ name a governing body; unanswered: Abilene city, Allen city, Alvin city, Amarillo city, Arlington city, Austin city, Balch Springs city, Baytown city and 111 more
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)

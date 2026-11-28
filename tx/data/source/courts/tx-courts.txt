@@ -1,0 +1,105 @@
+# Texas court districts and judges, kept by scripts/build_state_courts.py --fetch tx
+# read: 2026-11-28
+# from: Texas Government Code sections 22.201 and 22.216 on https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm, the file the Legislature's statutes site reads (each district's counties and each court's number of justices), and each court's justices page, https://www.txcourts.gov/<n>coa/about-the-court/justices/ (chief justice and justices)
+# district | <district> | <counties, as the court lists them>
+# judge | <district> | <title> | <name> | <county the court prints beside the judge, if any>
+# vacant | <district> | <title> | | <county>
+# read | <district> | <date> | <where the names come from>  (a district read apart from the rest)
+# none | <district> | <why the card names no judge>  (a district whose judges are not read)
+district | 1 | Austin, Brazoria, Chambers, Colorado, Fort Bend, Galveston, Grimes, Harris, Waller, Washington
+district | 2 | Archer, Clay, Cooke, Denton, Hood, Jack, Montague, Parker, Tarrant, Wichita, Wise, Young
+district | 3 | Bastrop, Bell, Blanco, Burnet, Caldwell, Coke, Comal, Concho, Fayette, Hays, Irion, Lampasas, Lee, Llano, McCulloch, Milam, Mills, Runnels, San Saba, Schleicher, Sterling, Tom Green, Travis, Williamson
+district | 4 | Atascosa, Bandera, Bexar, Brooks, Dimmit, Duval, Edwards, Frio, Gillespie, Guadalupe, Jim Hogg, Jim Wells, Karnes, Kendall, Kerr, Kimble, Kinney, La Salle, McMullen, Mason, Maverick, Medina, Menard, Real, Starr, Sutton, Uvalde, Val Verde, Webb, Wilson, Zapata, Zavala
+district | 5 | Collin, Dallas, Grayson, Hunt, Kaufman, Rockwall
+district | 6 | Bowie, Camp, Cass, Delta, Fannin, Franklin, Gregg, Harrison, Hopkins, Hunt, Lamar, Marion, Morris, Panola, Red River, Rusk, Titus, Upshur, Wood
+district | 7 | Armstrong, Bailey, Briscoe, Carson, Castro, Childress, Cochran, Collingsworth, Cottle, Crosby, Dallam, Deaf Smith, Dickens, Donley, Floyd, Foard, Garza, Gray, Hale, Hall, Hansford, Hardeman, Hartley, Hemphill, Hockley, Hutchinson, Kent, King, Lamb, Lipscomb, Lubbock, Lynn, Moore, Motley, Ochiltree, Oldham, Parmer, Potter, Randall, Roberts, Sherman, Swisher, Terry, Wilbarger, Wheeler, Yoakum
+district | 8 | Andrews, Brewster, Crane, Crockett, Culberson, El Paso, Hudspeth, Jeff Davis, Loving, Pecos, Presidio, Reagan, Reeves, Terrell, Upton, Ward, Winkler
+district | 9 | Hardin, Jasper, Jefferson, Liberty, Montgomery, Newton, Orange, Polk, San Jacinto, Tyler
+district | 10 | Bosque, Burleson, Brazos, Coryell, Ellis, Falls, Freestone, Hamilton, Hill, Johnson, Leon, Limestone, Madison, McLennan, Navarro, Robertson, Somervell, Walker
+district | 11 | Baylor, Borden, Brown, Callahan, Coleman, Comanche, Dawson, Eastland, Ector, Erath, Fisher, Gaines, Glasscock, Haskell, Howard, Jones, Knox, Martin, Midland, Mitchell, Nolan, Palo Pinto, Scurry, Shackelford, Stephens, Stonewall, Taylor, Throckmorton
+district | 12 | Anderson, Angelina, Cherokee, Gregg, Henderson, Houston, Nacogdoches, Rains, Rusk, Sabine, San Augustine, Shelby, Smith, Trinity, Upshur, Van Zandt, Wood
+district | 13 | Aransas, Bee, Calhoun, Cameron, DeWitt, Goliad, Gonzales, Hidalgo, Jackson, Kenedy, Kleberg, Lavaca, Live Oak, Matagorda, Nueces, Refugio, San Patricio, Victoria, Wharton, Willacy
+district | 14 | Austin, Brazoria, Chambers, Colorado, Fort Bend, Galveston, Grimes, Harris, Waller, Washington
+district | 15 | statewide
+judge | 1 | Chief Justice | Terry Adams | 
+judge | 1 | Justice | Veronica Rivas-Molloy | 
+judge | 1 | Justice | Amparo "Amy" Guerra | 
+judge | 1 | Justice | David M. Gunn | 
+judge | 1 | Justice | Jennifer Caughey | 
+judge | 1 | Justice | Clint Morgan | 
+judge | 1 | Justice | Andrew Johnson | 
+judge | 1 | Justice | Susanna Dokupil | 
+judge | 2 | Chief Justice | Bonnie Sudderth | 
+judge | 2 | Justice | Elizabeth Kerr | 
+judge | 2 | Justice | J. Wade Birdwell | 
+judge | 2 | Justice | Dabney Bassel | 
+judge | 2 | Justice | Dana Womack | 
+judge | 2 | Justice | Mike Wallach | 
+judge | 2 | Justice | Brian Walker | 
+judge | 3 | Chief Justice | Darlene Byrne | 
+judge | 3 | Justice | Gisela D. Triana | 
+judge | 3 | Justice | Chari L. Kelly | 
+judge | 3 | Justice | Rosa Lopez Theofanis | 
+judge | 3 | Justice | Karin Crump | 
+judge | 3 | Justice | Maggie Ellis | 
+judge | 4 | Chief Justice | Rebeca Martinez | 
+judge | 4 | Justice | Irene Rios | 
+judge | 4 | Justice | Lori I. Valenzuela | 
+judge | 4 | Justice | Lori Massey Brissette | 
+judge | 4 | Justice | Adrian A. Spears, II | 
+judge | 4 | Justice | H. Todd McCray | 
+judge | 4 | Justice | Velia J. Meza | 
+judge | 5 | Chief Justice | J.J. Koch | 
+judge | 5 | Justice | Bonnie Lee Goldstein | 
+judge | 5 | Justice | Craig Smith | 
+judge | 5 | Justice | Dennise Garcia | 
+judge | 5 | Justice | Emily Miskel | 
+judge | 5 | Justice | Maricela Moore Breedlove | 
+judge | 5 | Justice | Nancy Kennedy | 
+judge | 5 | Justice | Tina Clinton | 
+judge | 5 | Justice | Jessica Lewis | 
+judge | 5 | Justice | Gino J. Rossini | 
+judge | 5 | Justice | Cynthia M. Barbare | 
+judge | 5 | Justice | Earl Jackson | 
+judge | 5 | Justice | Mike Lee | 
+judge | 6 | Chief Justice | Scott E. Stevens | 
+judge | 6 | Justice | Jeff Rambin | 
+judge | 6 | Justice | Charles van Cleef | 
+judge | 7 | Chief Justice | Judy C. Parker | 
+judge | 7 | Justice | Lawrence M. Doss | 
+judge | 7 | Justice | Alex L. Yarbrough | 
+judge | 7 | Justice | Laura A. W. Pratt | 
+judge | 8 | Chief Justice | Salas Mendoza | 
+judge | 8 | Justice | Gina M. Palafox | 
+judge | 8 | Justice | Lisa Soto | 
+judge | 9 | Chief Justice | Scott Golemon | 
+judge | 9 | Justice | Leanne Johnson | 
+judge | 9 | Justice | Jay Wright | 
+judge | 9 | Justice | Kent Chambers | 
+judge | 10 | Chief Justice | Matt Johnson | 
+judge | 10 | Justice | Lee Harris | 
+judge | 10 | Justice | Andrea Westerfeld | 
+judge | 11 | Chief Justice | John M. Bailey | 
+judge | 11 | Justice | W. Stacy Trotter | 
+judge | 11 | Justice | Bruce Williams | 
+judge | 12 | Chief Justice | James T. Worthen | 
+judge | 12 | Justice | Brian Hoyle | 
+judge | 12 | Justice | C. Michael Davis | 
+judge | 13 | Chief Justice | Jaime E. Tijerina | 
+judge | 13 | Justice | Clarissa Silva | 
+judge | 13 | Justice | Lionel Aron Peña Jr. | 
+judge | 13 | Justice | Jon West | 
+judge | 13 | Justice | Jenny Cron | 
+judge | 13 | Justice | Ysmael D. Fonseca | 
+judge | 14 | Chief Justice | Tracy Christopher | 
+judge | 14 | Justice | Ken Wise | 
+judge | 14 | Justice | Kevin Jewell | 
+judge | 14 | Justice | Randy Wilson | 
+judge | 14 | Justice | Brad Hart | 
+judge | 14 | Justice | Tonya McLaughlin | 
+judge | 14 | Justice | Chad Bridges | 
+judge | 14 | Justice | Katy Boatman | 
+judge | 14 | Justice | Maritza M. Antu | 
+judge | 15 | Chief Justice | Scott Brister | 
+judge | 15 | Justice | Scott Field | 
+judge | 15 | Justice | April Farris | 

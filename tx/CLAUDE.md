@@ -155,6 +155,21 @@ tile archive mirrored from TIGERweb's layer 1. The card names the division witho
 names its county, and says no one is elected from it and that Texas has no township governments, so
 outside a city, town or village the county governs.
 
+**THE COURT LAYER DRAWS TEXAS'S 15 COURTS OF APPEALS DISTRICTS AND NAMES EVERY COURT'S JUSTICES**
+(`tx-court-of-appeals`, since 2026-11-28). Texas Government Code 22.201 sets each district's
+counties and 22.216 each court's number of justices; `scripts/build_state_courts.py` reads both from
+the Legislature's statutes file and dissolves `state-counties.json`. THE DISTRICTS OVERLAP: the 1st
+and 14th have the same ten counties, Hunt is in the 5th and 6th, and Gregg, Rusk, Upshur and Wood in
+the 6th and 12th, so each piece drawn is the counties the same courts share, named by those courts
+(`tx_tiling`, units such as `6-12`), and the card names each court's justices. The 15th's district
+is the whole state, so it is drawn nowhere and every card names its justices. Justices come from
+each court's justices page on txcourts.gov (`tx_justices`); 82 on 2026-11-28; the fetch stops if a
+court's page names more than 22.216 sets, fewer than 85% of them, or not exactly one chief justice.
+They are kept as a dated excerpt in `data/source/courts/tx-courts.txt` and shipped network-first as
+`tx-district-judges.json`, keyed by court. Justices are elected for six-year terms (Texas
+Constitution, Article 5, section 6). District, county-court-at-law and justice of the peace judges
+are not drawn or named. No job refreshes the names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE TEXAS.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -198,8 +213,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Texas (`texas`) — https://districtry.com/tx/
 - Geocoders: address Photon (Texas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Texas-bounded, serial >=1s queue)
-- Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 14 registered (political 4, safety 2, schools 3, geography 5); `registerLayer(` floor 9. Debug namespace `window.TexasExplorer`.
+- Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49; tx-court-of-appeals 3rd Court of Appeals District. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
+- Layers: 15 registered (political 5, safety 2, schools 3, geography 5); `registerLayer(` floor 10. Debug namespace `window.TexasExplorer`.
 - Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `update-tx-county-officials.yml` (Wed 20:33 UTC); `update-tx-county-commissioners.yml` (Thu 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
 - Source registry: `tx/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

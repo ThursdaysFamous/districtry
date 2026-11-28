@@ -51,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "38.57910,-92.17290"; // Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County
-const OFFLINE = ["county", "us-house", "mo-senate", "mo-house"];
-const EXPECT_DISTRICT = { "county": "Cole County", "us-house": "3", "mo-senate": "6", "mo-house": "60" };
+const OFFLINE = ["county", "us-house", "mo-senate", "mo-house", "mo-judicial-circuit"];
+const EXPECT_DISTRICT = { "county": "Cole County", "us-house": "3", "mo-senate": "6", "mo-house": "60", "mo-judicial-circuit": "19th Judicial Circuit" };
 const NEGATIVE_POINT = "40.30000,-95.95000"; // Nemaha County, NEBRASKA, about 25 km from Missouri's outline and west of the Missouri River — outside Missouri and inside permalink_gate (maxLat 40.80, minLng -96.00), so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County). THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which made the old point a routing case. NEBRASKA'S OUTLINE HAS COVERED THIS ONE SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Missouri and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Missouri";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "MissouriExplorer";
@@ -1378,6 +1378,33 @@ try {
         !info.error && !!p.seat && text.includes(p.seat) &&
           /did not load, so no one is named here/.test(text) && named.length === 0,
         `named=${named.length} ${text.slice(0, 100)}`);
+      await context.close();
+    }
+  }
+
+  // 11. THE JUDICIAL CIRCUIT CARD names the circuit, its counties and its
+  //     presiding judge, read from the shipped roster. The State Capitol is in
+  //     the 19th (Cole County); a point at the Gateway Arch, measured inside
+  //     the city of St. Louis in state-counties.json, is in the 22nd, which is
+  //     the city alone and must not be called a county.
+  {
+    const judges = shipped("mo-district-judges.json");
+    for (const [where, point, unit, want, refuse] of [
+      ["the State Capitol", POINT, "19", [/19th Judicial Circuit/, /Cole County/], []],
+      ["the Gateway Arch", "38.62470,-90.18480", "22", [/22nd Judicial Circuit/, /The city of St\. Louis/],
+        [/city County/]]
+    ]) {
+      const presiding = ((judges[unit] || {}).judges || []).find((s) => s.role === "Presiding Judge") || {};
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${point}&layers=mo-judicial-circuit`);
+      const card = await cardText(page, "mo-judicial-circuit");
+      const text = card.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      const leaked = refuse.filter((re) => re.test(text));
+      check(`the judicial circuit card at ${where} names its circuit, its ground and its presiding judge`,
+        !card.error && !!presiding.name && text.includes(presiding.name) && missing.length === 0 &&
+          leaked.length === 0 && /Where the names come from/.test(text),
+        `missing=${missing} leaked=${leaked} ${text.slice(0, 160)}`);
       await context.close();
     }
   }

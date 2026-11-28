@@ -119,6 +119,20 @@ government (N), one is the City of St. Louis (F) and one, Barton County's City t
 recorded as partly consolidated (B); the card states each in the Census's own terms. No township
 officer is named yet (gap `mo-township-officers`).
 
+**THE COURT LAYER DRAWS MISSOURI'S 46 JUDICIAL CIRCUITS AND NAMES EVERY CIRCUIT'S CIRCUIT JUDGES**
+(`mo-judicial-circuit`, since 2026-11-28). Each circuit is whole counties (the city of St. Louis is
+the 22nd on its own), dissolved from `state-counties.json` by `scripts/build_state_courts.py` from
+the courts' circuit table (courts.mo.gov file 281, the table behind the Local Courts page's circuit
+map). Judges come from the courts' Find a Court/Person directory, asked once for every person whose
+position is Circuit Judge; a judge's circuit is the one the judge's courthouses lie in (`mo_judges`;
+`MO_HOUSES` names the two courthouses whose names carry no county). 157 judges on 2026-11-28; the
+fetch stops unless every circuit has at least one judge and exactly one presiding judge. The
+directory lists people, not seats, so no seat is called vacant. They are kept as a dated excerpt in
+`data/source/courts/mo-courts.txt` and shipped network-first as `mo-district-judges.json`. Terms are
+six years; the 6th, 7th, 16th, 21st, 22nd and 31st Circuits use the nonpartisan court plan (Missouri
+Constitution, Article V, section 25). Associate circuit judges are not named. No job refreshes the
+names; the monthly re-read is a row in `WATCH.md`.
+
 **THE ZIP LAYER HIDES OUTSIDE MISSOURI.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
@@ -137,8 +151,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: Missouri (`missouri`) — https://districtry.com/mo/
 - Geocoders: address Photon (Missouri-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Missouri-bounded, serial >=1s queue)
-- Ground truth: 38.57910,-92.17290 (Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County) → county Cole County; us-house 3; mo-senate 6; mo-house 60. Negative point 40.30000,-95.95000 (Nemaha County, NEBRASKA, about 25 km from Missouri's outline and west of the Missouri River — outside Missouri and inside permalink_gate (maxLat 40.80, minLng -96.00), so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County). THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which made the old point a routing case. NEBRASKA'S OUTLINE HAS COVERED THIS ONE SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Missouri and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
-- Layers: 13 registered (political 4, safety 2, schools 2, geography 5); `registerLayer(` floor 10. Debug namespace `window.MissouriExplorer`.
+- Ground truth: 38.57910,-92.17290 (Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County) → county Cole County; us-house 3; mo-senate 6; mo-house 60; mo-judicial-circuit 19th Judicial Circuit. Negative point 40.30000,-95.95000 (Nemaha County, NEBRASKA, about 25 km from Missouri's outline and west of the Missouri River — outside Missouri and inside permalink_gate (maxLat 40.80, minLng -96.00), so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County). THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which made the old point a routing case. NEBRASKA'S OUTLINE HAS COVERED THIS ONE SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Missouri and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.).
+- Layers: 14 registered (political 5, safety 2, schools 2, geography 5); `registerLayer(` floor 11. Debug namespace `window.MissouriExplorer`.
 - Scheduled workflows: `update-mo-congress-roster.yml` (Mon 18:37 UTC); `update-mo-legislature-roster.yml` (Tue 18:37 UTC); `update-mo-county-officials.yml` (Wed 18:37 UTC); `mo-validate-sources.yml` (1st of month 21:13 UTC).
 - Source registry: `mo/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

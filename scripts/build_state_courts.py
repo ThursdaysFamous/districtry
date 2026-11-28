@@ -163,6 +163,20 @@ STATES = {
         "authority": "Florida Statutes section 26.021 (leg.state.fl.us)",
         "source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0026/Sections/0026.021.html",
     },
+    "tx": {
+        "name": "Texas",
+        "districts": 15, "units": 15, "counties": 254, "min_judges": 75,
+        "unit_word": "court of appeals district",
+        "authority": "Texas Government Code section 22.201 (tcss.legis.texas.gov)",
+        "source": "https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm",
+    },
+    "mo": {
+        "name": "Missouri",
+        "districts": 46, "counties": 115, "min_judges": 140,
+        "unit_word": "judicial circuit",
+        "authority": "The Missouri courts' table of the 46 judicial circuits and their counties (courts.mo.gov)",
+        "source": "https://www.courts.mo.gov/file.jsp?id=281",
+    },
     "ks": {
         "name": "Kansas",
         "districts": 31, "counties": 105, "min_judges": 250,
@@ -237,6 +251,19 @@ class Reader(object):
 
     def get(self, url):
         return page_lines(self.html(url))
+
+    def post_form(self, url, fields):
+        """POST a form the way the page that owns the address does."""
+        import requests
+        self.sc.require_robots_once(url, self.headers["User-Agent"],
+                                    headers=self.headers, label=LABEL)
+        wait = 2.0 - (time.time() - self.last)
+        if wait > 0:
+            time.sleep(wait)
+        resp = requests.post(url, data=fields, headers=self.headers, timeout=60)
+        self.last = time.time()
+        resp.raise_for_status()
+        return resp.text
 
     def post_json(self, url, payload):
         """POST a JSON query the way the page that owns the address does."""
@@ -1813,11 +1840,186 @@ def fetch_fl(reader):
     return out
 
 
-FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al, "nv": fetch_nv, "md": fetch_md, "fl": fetch_fl,
+MO_BASE = "https://www.courts.mo.gov"
+MO_TABLE = MO_BASE + "/file.jsp?id=281"
+MO_FINDER = MO_BASE + "/mcw/findacourt/resultsAction.htm"
+# Courthouses the finder names without their county. Measured 2026-11-28: the
+# finder's own Jackson County and St. Louis City court pages list these names.
+MO_HOUSES = {"Kansas City Courthouse": "Jackson", "St. Louis Circuit Court": "St. Louis city"}
+
+
+def mo_table(text):
+    """{circuit: [counties]} from the courts' circuit table (the PDF the Local
+    Courts page links as the map of the 46 circuits): one row per county,
+    '<circuit> <county> <Eastern|Western|Southern> <Yes|No> ...'. The city of
+    St. Louis is keyed as the county fabric names it."""
+    out = {}
+    for m in re.finditer(r"^(\d{1,2}) (.+?) (?:Eastern|Western|Southern) (?:Yes|No) ", text, re.M):
+        name = "St. Louis city" if m.group(2) == "St. Louis City" else m.group(2)
+        out.setdefault(int(m.group(1)), []).append(name)
+    return out
+
+
+def mo_judges(lines, circuit_of):
+    """(circuit, name, presiding) from the finder's list of circuit judges: a
+    name, 'Circuit Judge' or 'Presiding Judge', then the courthouses the judge
+    sits in and their telephone lines. The judge's circuit is the one every
+    courthouse named after a county lies in. A line naming no county (a
+    telephone line, or a building such as 'Lafayette Hall') is passed over,
+    and a judge left with no county stops the fetch."""
+    a = lines.index("Contact", lines.index("Position - Circuit Judge")) + 1
+    rows = lines[a:lines.index("Find a Court/Person", a)]
+    idx = [k for k in range(len(rows) - 1) if rows[k + 1] in ("Circuit Judge", "Presiding Judge")]
+    out = []
+    for n, k in enumerate(idx):
+        circuits = set()
+        for house in rows[k + 2:idx[n + 1] if n + 1 < len(idx) else len(rows)]:
+            m = re.match(r"^(.+?) County\b", house)
+            county = MO_HOUSES.get(house) or (m and m.group(1))
+            if not county:
+                continue
+            if county not in circuit_of:
+                wcc.fail(LABEL, "mo: %s sits in %r, which names no county in the circuit table"
+                         % (rows[k], house))
+            circuits.add(circuit_of[county])
+        if len(circuits) != 1:
+            wcc.fail(LABEL, "mo: %s's courthouses lie in %d circuits (%s)"
+                     % (rows[k], len(circuits), sorted(circuits)))
+        out.append((circuits.pop(), rows[k], rows[k + 1] == "Presiding Judge"))
+    return out
+
+
+def fetch_mo(reader):
+    """Circuits and their counties from the courts' circuit table; circuit
+    judges from the courts' Find a Court/Person directory, asked once for
+    every person whose position is Circuit Judge (presiding judges come
+    with them). Every circuit must have at least one judge and exactly one
+    presiding judge. Associate circuit judges are not kept."""
+    reader.sc.require_robots_once(MO_TABLE, reader.headers["User-Agent"],
+                                  headers=reader.headers, label=LABEL)
+    body = reader.sc.fetch(MO_TABLE, reader.headers, timeout=60).content
+    if not body.startswith(b"%PDF"):
+        wcc.fail(LABEL, "mo: %s answered with %r, not a PDF" % (MO_TABLE, body[:40]))
+    import pypdf
+    counties = mo_table("\n".join(pg.extract_text() for pg in pypdf.PdfReader(io.BytesIO(body)).pages))
+    circuit_of = {c: n for n, cs in counties.items() for c in cs}
+    found = mo_judges(page_lines(reader.post_form(MO_FINDER, {
+        "personPageType": "person", "personQueryTitleFooter": "Circuit Judge"})), circuit_of)
+    out = ["district | %d | %s" % (n, ", ".join(counties[n])) for n in sorted(counties)]
+    for n in sorted(counties):
+        bench = [(person(name, "mo %d" % n), chief) for c, name, chief in found if c == n]
+        if not bench or sum(1 for _name, chief in bench if chief) != 1:
+            wcc.fail(LABEL, "mo circuit %d: %d circuit judges, %d presiding"
+                     % (n, len(bench), sum(1 for _name, chief in bench if chief)))
+        out.extend("judge | %d | %s | %s | " % (n, "Presiding Judge" if chief else "Circuit Judge", name)
+                   for name, chief in sorted(bench, key=lambda b: not b[1]))
+    return out
+
+
+TX_LAW = "https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm"
+TX_PAGE = "https://www.txcourts.gov/%scoa/about-the-court/justices/"
+TX_WORDS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth",
+            "Tenth", "Eleventh", "Twelfth", "Thirteenth", "Fourteenth", "Fifteenth"]
+# Section 22.201 writes "LaSalle"; the Census's county fabric "La Salle".
+TX_FABRIC = {"LaSalle": "La Salle"}
+TX_COUNTS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+             "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12}
+
+
+def tx_count(word):
+    return int(word) if word.isdigit() else TX_COUNTS[word]
+
+
+def tx_statute(lines):
+    """Government Code 22.201 and 22.216: {court: [counties]} (the Fifteenth,
+    whose district is every county, as ["statewide"]) and {court: (fewest,
+    most)} justices, the chief justice counted. The most is what 22.216 sets;
+    the fewest is 85% of it, except for the Fifteenth, whose subsection (n-2)
+    holds it to a chief justice and two justices in its first three years."""
+    text = "\n".join(lines)
+    counties, seats = {}, {}
+    for n, word in enumerate(TX_WORDS, 1):
+        m = re.search(r"^\([a-p]\) The %s Court of Appeals District is composed of "
+                      r"(?:the counties of (.+)|(all counties in this state))\.$" % word, text, re.M)
+        if not m:
+            wcc.fail(LABEL, "tx: section 22.201 has no sentence for the %s district" % word)
+        counties[n] = ["statewide"] if m.group(2) else [
+            TX_FABRIC.get(c, c) for c in re.split(r",\s*(?:and\s+)?|\s+and\s+", m.group(1)) if c]
+        m = re.search(r"^\([a-n](?:-1)?\) The Court of Appeals for the %s Court of Appeals District "
+                      r"consists of a chief justice and of (\w+) justices" % word, text, re.M)
+        if not m:
+            wcc.fail(LABEL, "tx: section 22.216 sets no number of justices for the %s court" % word)
+        most = 1 + tx_count(m.group(1))
+        seats[n] = (-(-most * 85 // 100), most)
+    m = re.search(r"^\(n-2\) Notwithstanding Subsection \(n-1\), the Court of Appeals for the Fifteenth "
+                  r"Court of Appeals District consists of a chief justice and of (\w+) justices", text, re.M)
+    if m:
+        seats[15] = (1 + tx_count(m.group(1)), seats[15][1])
+    return counties, seats
+
+
+def tx_justices(page, n):
+    """(name, chief) from a court's justices page: the links to each justice's
+    own page, '/<n>coa/about-the-court/justices/<slug>/', whose text is
+    'Chief Justice <name>' or 'Justice <name>'. A page links each justice more
+    than once, so a name is kept once."""
+    out = []
+    for txt in re.findall(r'<a href="/%scoa/about-the-court/justices/[^"/]+/"[^>]*>\s*([^<]+)'
+                          % ordinal_suffix(n), page):
+        m = re.match(r"^(Chief )?Justice (.+)$", html.unescape(txt).strip())
+        if m and m.group(2) not in [name for name, _c in out]:
+            out.append((m.group(2), bool(m.group(1))))
+    return out
+
+
+def fetch_tx(reader):
+    """The fifteen courts of appeals districts and their justices: counties
+    and the number of justices from Government Code 22.201 and 22.216 on the
+    Legislature's statutes site, justices from each court's justices page on
+    txcourts.gov. A court must name exactly one chief justice, and no more
+    justices than 22.216 sets nor fewer than its floor (tx_statute)."""
+    counties, seats = tx_statute(reader.get(TX_LAW))
+    out = ["district | %d | %s" % (n, ", ".join(counties[n])) for n in sorted(counties)]
+    for n in sorted(counties):
+        bench = [(person(name, "tx %d" % n), chief)
+                 for name, chief in tx_justices(reader.html(TX_PAGE % ordinal_suffix(n)), n)]
+        fewest, most = seats[n]
+        chiefs = sum(1 for _name, chief in bench if chief)
+        if not (fewest <= len(bench) <= most) or chiefs != 1:
+            wcc.fail(LABEL, "tx court %d: %d justices named (%d chief), section 22.216 sets %d"
+                     % (n, len(bench), chiefs, most))
+        out.extend("judge | %d | %s | %s | " % (n, "Chief Justice" if chief else "Justice", name)
+                   for name, chief in sorted(bench, key=lambda b: not b[1]))
+    return out
+
+
+def tx_tiling(cfg, districts):
+    """Texas's districts overlap: the First and Fourteenth have the same ten
+    counties, Hunt is in the Fifth and Sixth, and Gregg, Rusk, Upshur and Wood
+    in the Sixth and Twelfth, and the Fifteenth's district is the whole state.
+    So each piece drawn is the counties that the same courts share, named by
+    those courts ("6-12"), and the Fifteenth is in none of them."""
+    courts = {}
+    for n, names in districts.items():
+        if names != ["statewide"]:
+            for c in names:
+                courts.setdefault(c, []).append(n)
+    if len(courts) != cfg["counties"]:
+        wcc.fail(LABEL, "tx: the districts list %d counties, Texas has %d" % (len(courts), cfg["counties"]))
+    groups = {}
+    for c, ns in courts.items():
+        groups.setdefault(tuple(sorted(ns)), []).append(c)
+    rows = [("-".join(map(str, k)), sorted(v), {"courts": list(k)}) for k, v in sorted(groups.items())]
+    return wcc.Tiling("tx-judicial-districts.json", cfg["unit_word"], rows, cfg["units"], cfg["authority"])
+
+
+FETCHERS = {"co": fetch_co, "id": fetch_id, "ut": fetch_ut, "wy": fetch_wy, "nm": fetch_nm, "mt": fetch_mt, "wa": fetch_wa, "pa": fetch_pa, "wv": fetch_wv, "al": fetch_al, "nv": fetch_nv, "md": fetch_md, "fl": fetch_fl, "mo": fetch_mo, "tx": fetch_tx,
             "or": fetch_or, "ks": fetch_ks, "ne": fetch_ne, "nd": fetch_nd, "oh": fetch_oh,
             "sd": fetch_sd}
 
 SOURCES_READ = {
+    "tx": "Texas Government Code sections 22.201 and 22.216 on https://tcss.legis.texas.gov/resources/GV/htm/GV.22.htm, the file the Legislature's statutes site reads (each district's counties and each court's number of justices), and each court's justices page, https://www.txcourts.gov/<n>coa/about-the-court/justices/ (chief justice and justices)",
+    "mo": "https://www.courts.mo.gov/file.jsp?id=281, the table the courts' Local Courts page links as the map of the 46 circuits (circuits and counties), and the courts' Find a Court/Person directory, https://www.courts.mo.gov/mcw/findacourt/resultsAction.htm, asked once for every person whose position is Circuit Judge (circuit and presiding judges; associate circuit judges are not kept)",
     "fl": "Florida Statutes 26.021 and 26.031 on www.leg.state.fl.us (circuits, counties and each circuit's number of judges), and each circuit's own website as FL_PAGES lists it: the First's judges page and each judge's page through the data files they load (judge type), the Fifth's five county judiciary pages, and the Fifteenth's directory (the chief judge) and judges list filtered to the circuit court (circuit judges; county, senior and retired judges, magistrates and hearing officers are not kept). The Third, Twelfth, Thirteenth and Seventeenth name nobody (FL_UNNAMED)",
     "md": "Article IV, section 14 of the Maryland Constitution on https://msa.maryland.gov/msa/mdmanual/43const/html/04art4.html (circuits and counties), and the Maryland Manual's pages for the Supreme Court of Maryland, https://msa.maryland.gov/msa/mdmanual/29ap/html/ap.html, and the Appellate Court of Maryland, https://msa.maryland.gov/msa/mdmanual/30sp/html/sp.html (each circuit's justice and Appellate Court judge; the eight at-large judges are counted and not kept)",
     "al": "Code of Alabama 12-11-2 and 12-17-20 through https://alison.legislature.state.al.us/graphql, the address the Legislature's code page reads (circuits, counties, judges per circuit), and each county's court site <county>.alacourt.gov, linked from https://www.alacourt.gov/images/Alabama_circuits.svg (judges)",
@@ -1924,6 +2126,8 @@ def read_source(tag):
 
 def tiling(tag, districts):
     cfg = STATES[tag]
+    if tag == "tx":
+        return tx_tiling(cfg, districts)
     rows = [(u, sorted(districts[u]), {}) for u in districts]
     n = sum(len(v) for v in districts.values())
     if n != cfg["counties"]:
@@ -2061,6 +2265,36 @@ def selftest():
                          "Division:", "G. Joseph Curley", "Circuit Civil", "Administrative Judge Circuit Civil",
                          "Division:"]) == [("Glenn Kelley", True), ("Carolyn Bell", False),
                                            ("G. Joseph Curley", False)]
+    assert mo_table("Circuit\n1 Clark Eastern Yes Kahoka No Not Applicable\n"
+                    "22 St. Louis City Eastern Yes St. Louis City Yes St. Louis City\n"
+                    "1 Scotland Eastern No Not Applicable No Not Applicable") == {
+        1: ["Clark", "Scotland"], 22: ["St. Louis city"]}
+    assert mo_judges(["Position - Circuit Judge", "Name", "Contact", "Josh Taylor", "Presiding Judge",
+                      "Lafayette Hall", "Saline County Courthouse", "(660) 886-1930", "Adam L. Caine",
+                      "Circuit Judge", "Kansas City Courthouse", "ext. 2", "Find a Court/Person", "Adair"],
+                     {"Saline": 15, "Lafayette": 15, "Jackson": 16}) == [
+        (15, "Josh Taylor", True), (16, "Adam L. Caine", False)]
+    law = ["(%s) The %s Court of Appeals District is composed of the counties of A, B, and C." % (
+        "bcdefghijklmno"[n], w) for n, w in enumerate(TX_WORDS[:14])] + [
+        "(p) The Fifteenth Court of Appeals District is composed of all counties in this state."] + [
+        "(%s) The Court of Appeals for the %s Court of Appeals District consists of a chief justice and "
+        "of %s justices holding places" % ("abcdefghijklmn"[n], w, "eight" if n == 0 else "12")
+        for n, w in enumerate(TX_WORDS[:14])] + [
+        "(n-1) The Court of Appeals for the Fifteenth Court of Appeals District consists of a chief "
+        "justice and of four justices holding places",
+        "(n-2) Notwithstanding Subsection (n-1), the Court of Appeals for the Fifteenth Court of Appeals "
+        "District consists of a chief justice and of two justices holding places"]
+    counties, seats = tx_statute(law)
+    assert counties[1] == ["A", "B", "C"] and counties[15] == ["statewide"]
+    assert seats[1] == (8, 9) and seats[2] == (12, 13) and seats[15] == (3, 5)
+    assert tx_justices('<a href="/13thcoa/about-the-court/justices/chief-justice-a-b/">Chief Justice A B</a>'
+                       '<a href="/13thcoa/about-the-court/justices/justice-c-pe%C3%B1a/">Justice C Pe&ntilde;a</a>'
+                       '<a href="/13thcoa/about-the-court/justices/justice-c-pena/">Justice C Pe&ntilde;a</a>'
+                       '<a href="/1stcoa/about-the-court/justices/justice-x-y/">Justice X Y</a>', 13) == [
+        ("A B", True), ("C Pe\u00f1a", False)]
+    t = tx_tiling({"counties": 3, "units": 3, "unit_word": "u", "authority": "a"},
+                  {6: ["Gregg", "Bowie"], 12: ["Gregg", "Smith"], 15: ["statewide"]})
+    assert [r[0] for r in t.rows] == ["6", "6-12", "12"] and t.rows[1][1:] == (["Gregg"], {"courts": [6, 12]})
     assert roster("2026-11-27", [3], {}, {3: {"none": "Why."}}) == {
         "3": {"read": "2026-11-27", "judges": [], "none": "Why."}}
     print("%s: selftest OK" % LABEL)
