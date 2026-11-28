@@ -586,6 +586,7 @@
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -1010,6 +1011,7 @@
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -1043,6 +1045,7 @@
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",
@@ -1467,6 +1470,7 @@
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",

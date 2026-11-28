@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 5 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 6 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1238,6 +1238,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">nd-house-members.json, rebuilt weekly by CI from the Legislative Assembly's own pages (ndlegis.gov, the members-by-district page and each member's biography page): both representatives of each district, and the one representative of each of District 4's two subdistricts (4A and 4B), with name, party, e-mail address at ndlegis.gov and page, and the telephone numbers the biography prints under the labels it gives them, which the card keeps. From 1 December the builder reads the 70th Assembly's page and stops if it is not yet published.</td>
                 <td data-label="Where it applies">North Dakota — statewide, all 48 districts and subdistricts.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The Grand Forks city council ward containing the point, and the member for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services5.arcgis.com/tEvkdB384rqq9Ook/arcgis/rest/services/OpenDataLayers/FeatureServer/45" target="_blank" rel="noopener">City of Grand Forks GIS — Wards, layer 45 of its OpenDataLayers service in ArcGIS Online: 7 wards, last edited 21 November 2026, read 2026-11-28, the ward field alone requested.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member or members for each ward, from the same city council roster the City card reads (nd/data/app/nd-city-councils.json), written down from each city's own pages and proved against them by nd/scripts/build_nd_city_councils.py, whose check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.</td>
+                <td data-label="Where it applies">Grand Forks, the one North Dakota city of 25,000 people or more whose wards elect their own members. Fargo, Bismarck, Minot, West Fargo, Williston and Dickinson elect every seat by the whole city. Ground inside the city's Census outline that its map leaves out lies in no ward here.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1377,7 +1388,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 355 records, every one an active city, measured 2026-11-12. MOST OF NORTH DAKOTA IS IN NO INCORPORATED CITY (under 1% of its land, 1,552.3 of 178,694.4 km2, is inside one), and the county, with the civil township where one is organized, is the local government everywhere else, so an empty card says the point is outside every one rather than naming a place. The Census's census-designated places are statistical areas with no government and are not drawn. The state's county subdivisions include its civil townships, 1,305 of which the Census records as active governments (measured 2026-11-12); they are not drawn yet.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">In the 7 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by nd/scripts/build_nd_city_councils.py, which fails when a name is no longer on the page it cites (nd/data/app/nd-city-councils.json, 40 seats read 2026-11-27). Grand Forks's, Williston's and Dickinson's pages, closed to this project's reader, were read once by hand in a browser and are kept as dated excerpts in nd/data/source/councils/. Williston's page names no commissioner, so its five seats name nobody and the card says why. Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. Grand Forks elects by ward and its ward map is not drawn yet, and the card says so. North Dakota's other cities name nobody yet, recorded as gap nd-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 7 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by nd/scripts/build_nd_city_councils.py, which fails when a name is no longer on the page it cites (nd/data/app/nd-city-councils.json, 40 seats read 2026-11-27). Grand Forks's, Williston's and Dickinson's pages, closed to this project's reader, were read once by hand in a browser and are kept as dated excerpts in nd/data/source/councils/. Williston's page names no commissioner, so its five seats name nobody and the card says why. Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. Grand Forks elects by ward, and its wards are drawn on the City Council District layer. North Dakota's other cities name nobody yet, recorded as gap nd-municipal-officeholders.</td>
                 <td data-label="Where it applies">North Dakota — statewide.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1613,7 +1624,7 @@ table.matrix code {
       "@id": "https://districtry.com/nd/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City",
-      "description": "The incorporated city containing the point, or that the point is outside every one. In the 7 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by nd/scripts/build_nd_city_councils.py, which fails when a name is no longer on the page it cites (nd/data/app/nd-city-councils.json, 40 seats read 2026-11-27). Grand Forks's, Williston's and Dickinson's pages, closed to this project's reader, were read once by hand in a browser and are kept as dated excerpts in nd/data/source/councils/. Williston's page names no commissioner, so its five seats name nobody and the card says why. Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. Grand Forks elects by ward and its ward map is not drawn yet, and the card says so. North Dakota's other cities name nobody yet, recorded as gap nd-municipal-officeholders.",
+      "description": "The incorporated city containing the point, or that the point is outside every one. In the 7 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by nd/scripts/build_nd_city_councils.py, which fails when a name is no longer on the page it cites (nd/data/app/nd-city-councils.json, 40 seats read 2026-11-27). Grand Forks's, Williston's and Dickinson's pages, closed to this project's reader, were read once by hand in a browser and are kept as dated excerpts in nd/data/source/councils/. Williston's page names no commissioner, so its five seats name nobody and the card says why. Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. Grand Forks elects by ward, and its wards are drawn on the City Council District layer. North Dakota's other cities name nobody yet, recorded as gap nd-municipal-officeholders.",
       "url": "https://districtry.com/nd/sources.html#layer-municipality",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/nd/sources.html#catalog"
@@ -1628,6 +1639,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "North Dakota — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/nd/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The Grand Forks city council ward containing the point, and the member for it. The member or members for each ward, from the same city council roster the City card reads (nd/data/app/nd-city-councils.json), written down from each city's own pages and proved against them by nd/scripts/build_nd_city_councils.py, whose check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+      "url": "https://districtry.com/nd/sources.html#layer-city-ward",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/nd/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "City of Grand Forks GIS — Wards, layer 45 of its OpenDataLayers service in ArcGIS Online: 7 wards, last edited 21 November 2026, read 2026-11-28, the ward field alone requested.",
+          "url": "https://services5.arcgis.com/tEvkdB384rqq9Ook/arcgis/rest/services/OpenDataLayers/FeatureServer/45"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Grand Forks, the one North Dakota city of 25,000 people or more whose wards elect their own members. Fargo, Bismarck, Minot, West Fargo, Williston and Dickinson elect every seat by the whole city. Ground inside the city's Census outline that its map leaves out lies in no ward here"
       }
     },
     {

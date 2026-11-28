@@ -3,7 +3,7 @@
   "body": "City Council",
   "how": "Two council members are elected by each of four wards, and the mayor by the whole city (the city's own council page, which numbers the wards I to IV).",
   "name": "Derby",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -76,14 +76,13 @@
     "sourceUrl": "https://www.derbyks.gov/113/City-Council",
     "ward": "4"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "2018250": {
   "body": "City Commission",
   "how": "All five commissioners are elected by the whole city, three at each election, and each January the commission chooses one of them as mayor and one as vice-mayor.",
   "name": "Dodge City",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -131,7 +130,7 @@
   "body": "City Commission",
   "how": "All five commissioners are elected by the whole city, and each year the commission chooses one of them as mayor (the city's own commission page).",
   "name": "Garden City",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -229,14 +228,13 @@
     "ward": "Southwest"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  },
  "2036000": {
   "body": "Board of Commissioners",
   "how": "Kansas City and Wyandotte County are governed together by the Unified Government. Eight commissioners are nominated and elected from districts; the two at-large commissioners are nominated from districts and elected at large, and the mayor and chief executive is nominated at large (the Unified Government's own page).",
   "name": "Kansas City",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -335,8 +333,7 @@
     "ward": "8"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  },
  "2038900": {
   "body": "City Commission",
@@ -396,7 +393,7 @@
   "body": "City Commission",
   "how": "All five commissioners are elected by the whole city, and the commission chooses one of them as mayor.",
   "name": "Leavenworth",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -548,7 +545,7 @@
   "body": "City Council",
   "how": "Two council members are elected by the voters of each of four wards, and the mayor by the whole city.",
   "name": "Lenexa",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -645,7 +642,7 @@
   "body": "City Commission",
   "how": "All five commissioners are elected by the whole city, and each year the commission chooses one of them as mayor (the city's own commission page).",
   "name": "Manhattan",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -758,8 +755,7 @@
     "seat": "At large",
     "sourceUrl": "https://www.olatheks.gov/government/city-council"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "2053775": {
   "body": "City Council",
@@ -894,14 +890,13 @@
     "sourceUrl": "https://www.opkansas.gov/city-council",
     "ward": "6"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "2062700": {
   "body": "City Commission",
   "how": "All five commissioners are elected by the whole city, and the commission chooses one of them as mayor (the city's own commission page).",
   "name": "Salina",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -1043,7 +1038,7 @@
   "body": "City Council",
   "how": "Each of nine council members is elected by the voters of one district, and the mayor by the whole city.",
   "name": "Topeka",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -1143,8 +1138,7 @@
     "ward": "9"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  },
  "2079000": {
   "body": "City Council",
@@ -1209,7 +1203,6 @@
     "ward": "6"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  }
 }

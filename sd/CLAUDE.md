@@ -63,11 +63,18 @@ every name is on its page; the builder's docstring says how each city elects and
 city's page, its charter, state law, or election results). The card ships network-first as
 `sd-city-councils.json`, and every seat says whether its ward's own voters or the whole city elect
 it. Every page is read by this project's own reader; Sioux Falls's charter, which says which
-seats are at large, was read once by hand in Adam's Chrome. All three elect members by ward or district, none of their wards is drawn, and the card
-says so. A member's own e-mail address or number ships where the city's page prints it
+seats are at large, was read once by hand in Adam's Chrome. All three elect members by ward or district; Sioux Falls's and Aberdeen's districts are drawn
+on the City Council District layer (below), and for Rapid City the card says why not. A member's own e-mail address or number ships where the city's page prints it
 beside that member alone. The weekly re-read is `.github/workflows/watch-city-council-pages.yml`,
 and the pages it cannot read are a monthly row in `WATCH.md`. Every smaller city and every town names nobody (gap
 `sd-municipal-officeholders`).
+
+**THE CITY COUNCIL DISTRICT LAYER DRAWS 9 DISTRICTS IN SIOUX FALLS AND ABERDEEN** (`city-ward`, since
+2026-11-28), each from the city's own map, built by `sd/scripts/build_sd_city_wards.py` through the fleet
+module `scripts/city_ward_maps.py` (Douglas-Peucker at 4 m), cache-first as `sd-city-wards.json`. Rapid
+City elects by ward and is not drawn (`NOT_DRAWN` in the council builder): no map of its wards that can
+be read as lines was found. The card names the member or members for the district from the council
+file. The quarterly re-read is a row in `WATCH.md`.
 
 **THE SCHOOL LAYER IS ONE TILING.** TIGER holds 147 unified districts for South Dakota and nothing on its
 elementary or secondary layers (measured 2026-11-12), so those two layers are not drawn. No school board
@@ -146,7 +153,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: South Dakota (`southdakota`) — https://districtry.com/sd/
 - Geocoders: address Photon (South Dakota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Dakota-bounded, serial >=1s queue)
 - Ground truth: 44.36706,-100.34604 (South Dakota State Capitol, 500 East Capitol Avenue, Pierre, Hughes County) → county Hughes County; us-house Congressional District (at Large); sd-senate 24; sd-house 24; sd-judicial-circuit Sixth Judicial Circuit. Negative point 46.05000,-100.10000 (Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.).
-- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.SouthDakotaExplorer`.
+- Layers: 14 registered (political 6, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.SouthDakotaExplorer`.
 - Scheduled workflows: `update-sd-congress-roster.yml` (Wed 23:17 UTC); `update-sd-legislature-roster.yml` (Thu 23:17 UTC); `sd-validate-sources.yml` (2nd of month 23:17 UTC).
 - Source registry: `sd/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

@@ -126,7 +126,8 @@
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
       "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court", "nc": "city-ward",
       "ok": "city-ward", "sc": "city-ward", "tn": "city-ward", "ar": "city-ward", "ms": "city-ward",
-      "la": "city-ward", "in": "city-ward", "va": "supervisor-district", "wv": "city-ward"
+      "la": "city-ward", "in": "city-ward", "va": "supervisor-district", "wv": "city-ward",
+      "ks": "city-ward", "ne": "city-ward", "nd": "city-ward", "sd": "city-ward"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",

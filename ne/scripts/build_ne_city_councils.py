@@ -56,10 +56,11 @@ lincoln.ne.gov and Fremont's council page each member's and the mayor's own
 number; the cards carry them. No other city prints a contact beside one
 member alone.
 
-WARDS. Six of the seven cities elect members by ward or district and none of
-their maps is drawn yet; `undrawn` says so city by city, and the City card
-says the ward map is not drawn. The status page counts each as owed a ward
-map. Kearney elects everyone at large.
+WARDS. Six of the seven cities elect members by ward or district, and all
+six are drawn by the City Council District layer since 2026-11-28
+(ne/scripts/build_ne_city_wards.py, from each city's own map or its
+county's), whose --check holds every drawn ward to a seat here. Kearney
+elects everyone at large.
 
 RE-READ. Omaha and Lincoln elect in the spring of odd years and the first
 class cities in November of even years, their members taking office at the
@@ -89,8 +90,6 @@ SEATS = {
     "3121415": 9,    # Hastings: mayor and 2 members from each of 4 wards
 }
 
-NOT_DRAWN = "its wards are not drawn yet; the city publishes them as a map"
-BY_WARD = ("3137000", "3128000", "3103950", "3119595", "3117670", "3121415")
 
 SPEC = cc.Spec(
     tag="ne",
@@ -104,7 +103,7 @@ SPEC = cc.Spec(
     # thirds of each.
     min_emails=5,
     min_phones=6,
-    undrawn={geoid: NOT_DRAWN for geoid in BY_WARD},
+    wards_file="ne-city-wards.json",
     excerpts={
         "https://citycouncil.cityofomaha.org/councilmembers": "councils/omaha-2026-11-27.txt",
         "https://www.cityofomaha.org/": "councils/omaha-2026-11-27.txt",

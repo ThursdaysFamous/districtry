@@ -1,0 +1,132 @@
+{
+ "districts_per_geoid": {
+  "2017800": 4,
+  "2033625": 4,
+  "2036000": 8,
+  "2052575": 4,
+  "2053775": 6,
+  "2071000": 9,
+  "2079000": 6
+ },
+ "fetched": "2026-11-28",
+ "fingerprint": {
+  "districts": 41,
+  "sha256": "95ad6b6909c2ff84a9aed50b4b9d29b1871809b02a7d113f080ecc2960ae86bd"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "096ed15459a700f02b256186d22c4356c8ce1258da85a83be6c2c3de1e7019b5",
+ "sources": {
+  "2017800": {
+   "city": "Derby",
+   "covers_place_pct": 99.4,
+   "field": "CouDistNo",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "06ead5edc4eda3e217e2969a2698d7e1659a5fc8fd8e5bc19dbed1ee1c488185"
+   },
+   "item": "4297ab5d906b421eb28724fcd82ee323",
+   "layer": "https://services7.arcgis.com/McLat6HlPl45bNBv/arcgis/rest/services/Sedgwick_County_Voter_Districts/FeatureServer/20",
+   "layer_edited": "2026-11-20T16:29:54Z",
+   "outside_place_pct": 2.1,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "CityCD='DB'"
+  },
+  "2033625": {
+   "city": "Hutchinson",
+   "covers_place_pct": 96.5,
+   "field": "NAME",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "7d17b634024662bd469e90071a5117b0ddb86de8fdd7987fbbecaf250f2681c9"
+   },
+   "item": "5304868ca2624471aaa2c8060c2f3b5a",
+   "layer": "https://services.arcgis.com/H9W1xrHipXQYSaRp/arcgis/rest/services/City_Council_Districts_2024/FeatureServer/0",
+   "layer_edited": "2025-01-16T17:03:20Z",
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "2036000": {
+   "city": "Kansas City",
+   "covers_place_pct": 99.8,
+   "field": "District",
+   "fingerprint": {
+    "districts": 8,
+    "sha256": "125a803f2ebf3e228c267c5eb5c96e675e1445428ab70fcd76797849781a7dab"
+   },
+   "item": "2c0b1280f582481a9942f26e11a06aaa",
+   "layer": "https://services1.arcgis.com/Qo2HHQp8vgPs2wg3/arcgis/rest/services/Commission_Districts_Aug_2023/FeatureServer/66",
+   "layer_edited": "2023-08-25T17:30:10Z",
+   "outside_place_pct": 17.9,
+   "part_records_joined": 0,
+   "records": 8,
+   "where": "1=1"
+  },
+  "2052575": {
+   "city": "Olathe",
+   "covers_place_pct": 99.8,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "f810cf67284b091e2498291ec36b758d3c0ad266b62777cc09bb9afca72843a5"
+   },
+   "item": null,
+   "layer": "https://arcgis.olatheks.org/arcgis/rest/services/Public/Planning/MapServer/5",
+   "layer_edited": null,
+   "outside_place_pct": 0.2,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "2053775": {
+   "city": "Overland Park",
+   "covers_place_pct": 99.9,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "3647a542d4567cc832fb2b48ee20c59f6e11439055f351c24e3c87c4a3b9eebf"
+   },
+   "item": "66cebf20fd714999b183618c45077cb2",
+   "layer": "https://services1.arcgis.com/YQsWDBr0DjMtoTQo/arcgis/rest/services/Ward_Precincts/FeatureServer/0",
+   "layer_edited": "2026-09-04T19:13:02Z",
+   "outside_place_pct": 0.1,
+   "part_records_joined": 138,
+   "records": 144,
+   "where": "1=1"
+  },
+  "2071000": {
+   "city": "Topeka",
+   "covers_place_pct": 99.7,
+   "field": "DISTNO",
+   "fingerprint": {
+    "districts": 9,
+    "sha256": "eb7edfda062b9286bdfc32f810030901998ceabc1321d7a27e4e45c28b386454"
+   },
+   "item": "eed72c79cf6b4e18bbd9d73803718bab",
+   "layer": "https://services1.arcgis.com/EvtgI3PZ9PyCGJZS/arcgis/rest/services/CityCouncil/FeatureServer/0",
+   "layer_edited": "2025-11-07T19:44:52Z",
+   "outside_place_pct": 0.7,
+   "part_records_joined": 0,
+   "records": 9,
+   "where": "1=1"
+  },
+  "2079000": {
+   "city": "Wichita",
+   "covers_place_pct": 99.5,
+   "field": "COUNCIL",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "e9324e18ca1c236c4ab5ee3d7ec493522963c4f0521dbb9d958e76375901d4f8"
+   },
+   "item": "ea8fd15a8a8d4459aafc1adbdcda0657",
+   "layer": "https://gismaps.wichita.gov/ageweb/rest/services/COWGIS/Districts/MapServer/3",
+   "layer_edited": null,
+   "outside_place_pct": 1.2,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "1=1"
+  }
+ }
+}

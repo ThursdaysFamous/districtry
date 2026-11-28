@@ -190,17 +190,17 @@ prose.
 | or | 0 | 15 |
 | ct | 0 | 13 |
 | ut | 0 | 13 |
-| ks | 0 | 13 |
+| ks | 0 | 14 |
 | nm | 0 | 13 |
-| ne | 0 | 12 |
+| ne | 0 | 13 |
 | id | 0 | 13 |
 | hi | 0 | 10 |
 | me | 0 | 13 |
 | mt | 0 | 15 |
 | ri | 0 | 13 |
 | de | 0 | 11 |
-| sd | 0 | 13 |
-| nd | 0 | 14 |
+| sd | 0 | 14 |
+| nd | 0 | 15 |
 | ak | 0 | 12 |
 | vt | 0 | 12 |
 | wy | 0 | 14 |
@@ -538,23 +538,23 @@ measured until the next run describes it.
 | or | 20 | 15 | 0 |
 | ct | 18 | 12 | 0 |
 | ut | 18 | 15 | 0 |
-| ks | 18 | 16 | 0 |
+| ks | 25 | 17 | 0 |
 | nm | 18 | 15 | 0 |
-| ne | 15 | 14 | 0 |
+| ne | 21 | 15 | 0 |
 | id | 17 | 14 | 0 |
 | hi | 15 | 11 | 0 |
 | me | 18 | 12 | 0 |
 | mt | 20 | 14 | 0 |
 | ri | 18 | 12 | 0 |
 | de | 16 | 11 | 0 |
-| sd | 18 | 16 | 0 |
-| nd | 19 | 15 | 0 |
+| sd | 20 | 17 | 0 |
+| nd | 20 | 16 | 0 |
 | ak | 16 | 12 | 0 |
 | vt | 19 | 12 | 0 |
 | wy | 19 | 14 | 0 |
-| **total** | **1351** | **1584** | **12** |
+| **total** | **1367** | **1588** | **12** |
 
-**289 distinct source hosts** across the six manifests. Each instance's
+**294 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

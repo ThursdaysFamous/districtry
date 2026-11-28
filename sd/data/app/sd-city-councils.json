@@ -3,7 +3,7 @@
   "body": "City Council",
   "how": "Two council members are elected from each of four districts by that district's voters, and the mayor by the whole city.",
   "name": "Aberdeen",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -77,14 +77,13 @@
     "ward": "Southwest"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  },
  "4652980": {
   "body": "City Council",
   "how": "Two council members are elected from each of five wards by that ward's voters (South Dakota law for a city governed by a common council, SDCL 9-8-4), and the mayor by the whole city.",
   "name": "Rapid City",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -180,7 +179,7 @@
   "body": "City Council",
   "how": "Five council members are each elected by the voters of one district, and three council members and the mayor by the whole city (the city charter, section 2.02).",
   "name": "Sioux Falls",
-  "read": "2026-11-27",
+  "read": "2026-11-28",
   "seats": [
    {
     "byWard": false,
@@ -267,7 +266,6 @@
     "sourceUrl": "https://www.siouxfalls.gov/government/council/council-members"
    }
   ],
-  "wardWord": "District",
-  "wardsDrawn": false
+  "wardWord": "District"
  }
 }

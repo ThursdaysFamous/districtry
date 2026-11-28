@@ -149,7 +149,7 @@
     "7855691465",
     "7855801817"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "d1e7bcddee61bdb5a7485dcd1b7438851d6689450de156dde5794a92fa9f5e92"
   },
   "https://topeka.gov/government/mayor/index.php": {
@@ -159,7 +159,7 @@
    "names": [
     "Spencer Duncan"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "08a6392a63dbe81b25b16bc9105f45829583a4b4dd65ef1f82fbf49e2c1994de"
   },
   "https://www.derbyks.gov/113/City-Council": {
@@ -177,7 +177,7 @@
     "Nick Engle",
     "Wayne Molt, Jr."
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "9385f02dd54bfc38c70637b68ca39b0a881a357716441082f75c36c103837e62"
   },
   "https://www.dodgecity.org/54/City-Commission": {
@@ -198,7 +198,7 @@
     "Michael Burns",
     "Rick Sowers"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "fdf1a912be51ccbbcc7531679385f72858816ceb329defcf8ded0afa074c3672"
   },
   "https://www.garden-city.org/402/City-Commission": {
@@ -219,7 +219,7 @@
     "Roy Cessna",
     "Tom Nguyen"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "7ee61ca4bc8312bf801073a362c1ece73d2e2751dd0548157cc10170480ff030"
   },
   "https://www.hutchinsonks.gov/application-for-southwest-district-council-seat-1": {
@@ -284,11 +284,11 @@
     "9136757166",
     "9136839373"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "46a70dcec91109bae2febae86b0f7623ec9ee0f4ce8e01b0e05cbb8d63a42937"
   },
   "https://www.lenexa.com/Government/Mayor-City-Council/Elected-Officials": {
-   "bytes": 160249,
+   "bytes": 160250,
    "client": "token",
    "emails": [
     "abell@lenexa.com",
@@ -323,8 +323,8 @@
     "9135229423",
     "9137067576"
    ],
-   "read": "2026-11-27",
-   "sha256": "fced7e1f7fd57dc2ec085645be1b04713f2b93d48adf0a400bec46bf6dfefb89"
+   "read": "2026-11-28",
+   "sha256": "8631527d4b940ca9104932744db1ce7e0c43a2f0be996b8a21565e7aa669db1c"
   },
   "https://www.manhattanks.gov/202/Meet-the-City-Commission": {
    "bytes": 217116,
@@ -337,7 +337,7 @@
     "Larry Fox",
     "Susan E. Adamchak"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "223efeb806628961e6807ebc54d4fe8ff1275de2c9f428a1560ccbe0eaebf988"
   },
   "https://www.olatheks.gov/government/city-council": {
@@ -432,8 +432,8 @@
    "names": [
     "Curt Skoog"
    ],
-   "read": "2026-11-27",
-   "sha256": "254740df67e66360dd7b958ac42ae0e5aa6e763471dd5540bedd6048ba265bcb"
+   "read": "2026-11-28",
+   "sha256": "81443abf60751090c44af13a1c158ad9567d2fc8dc08e3d185e9eb5850a01765"
   },
   "https://www.salina-ks.gov/salina-city-commission": {
    "bytes": 143551,
@@ -446,8 +446,8 @@
     "Michael L. Hoppock",
     "Trent W. Davis"
    ],
-   "read": "2026-11-27",
-   "sha256": "8b5f7b2072677ba946a27466040fa0ca1da78d398e14b9f8a4333ed6d0ca445e"
+   "read": "2026-11-28",
+   "sha256": "c25f6c366074e313de2283f89f8547edab7121ab520183c962346d657da2f459"
   },
   "https://www.wichita.gov/599/City-Council": {
    "bytes": 569,
@@ -467,7 +467,7 @@
    "sha256": "cbbdfc735d0959d046026d92f368a65bbb12b6ba1e3023ceda2451aa0cc760cd"
   },
   "https://www.wycokck.org/Departments/Board-of-Commissioners/Districts": {
-   "bytes": 188758,
+   "bytes": 188757,
    "client": "token",
    "emails": [
     "adavis@wycokck.org",
@@ -496,8 +496,8 @@
     "Philip J. Lopez",
     "William (Bill) J. Burns, Jr."
    ],
-   "read": "2026-11-27",
-   "sha256": "38645b02ef921256b07b216783c12eb0404fa74090db7001507553e3a0f60809"
+   "read": "2026-11-28",
+   "sha256": "862e797f4f1b5b4078a24969435f6258027b759c5dc30856e7b99fca7730ecc9"
   }
  }
 }

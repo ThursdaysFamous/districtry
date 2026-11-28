@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "sd-senate", "sd-house", "sd-judicial-cir
 const EXPECT_DISTRICT = { "county": "Hughes County", "us-house": "Congressional District (at Large)", "sd-senate": "24", "sd-house": "24", "sd-judicial-circuit": "Sixth Judicial Circuit" };
 const NEGATIVE_POINT = "46.05000,-100.10000"; // Emmons County, North Dakota, north of the South Dakota line — outside South Dakota and inside permalink_gate, so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names North Dakota here (control: the South Dakota State Capitol returns South Dakota), none of the state's shipped boundary files contains it, and of every outline in the fleet only North Dakota's does (North Dakota goes live in the same change as South Dakota). South Dakota borders no water and no other country, and every one of its neighbours (North Dakota, Minnesota, Iowa, Nebraska, Wyoming and Montana) is live once this change lands, so no point this app's gate reaches lies outside every instance: the point stays where it is, as Illinois's sits in Indiana's waters, and a selection the app makes from its own link never leaves for another app.
 const APP_NAME = "districtry South Dakota";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "SouthDakotaExplorer";
@@ -849,15 +849,16 @@ try {
         layer: "municipality", service: PLACES,
         props: { GEOID: "4659020", NAME: "Sioux Falls city", BASENAME: "Sioux Falls", STATE: "46", LSADC: "25", FUNCSTAT: "A" },
         want: [/Christine Erickson/, /Council, Central District/, /elected by Central District/, /Council, At large/,
-          /How the seats are elected/, /Read on November 27, 2026/, /Which district this point is in/],
-        reject: [/Not named here/, /read once by hand/]
+          /How the seats are elected/, /Read on [A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\./, /Which district this point is in/,
+          /The City Council District layer draws Sioux Falls's districts/],
+        reject: [/Not named here/, /read once by hand/, /does not draw/]
       },
       {
         name: "a council elected by ward names two members for each ward",
         layer: "municipality", service: PLACES,
         props: { GEOID: "4652980", NAME: "Rapid City city", BASENAME: "Rapid City", STATE: "46", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Jason Salamun/, /Josh Biberdorf/, /Stephen Tamang/, /elected by Ward 1/, /Which ward this point is in/],
-        reject: [/Not named here/]
+        want: [/Jason Salamun/, /Josh Biberdorf/, /Stephen Tamang/, /elected by Ward 1/, /Which ward this point is in/, /does not draw Rapid City's wards/],
+        reject: [/Not named here/, /City Council District layer draws/]
       },
       {
         name: "a roster that fails to load leaves the city card standing and says so",
@@ -1312,6 +1313,39 @@ try {
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("16 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
     }
+  }
+  // 11. CITY COUNCIL DISTRICT. A point inside each drawn city answers its
+  //     ward from the shipped file and names only the member or members that
+  //     ward's own voters elect, from the council roster the City card reads;
+  //     a point in a city whose wards are not drawn, or that elects every seat
+  //     by the whole city, answers nothing and the card says why. Each inside
+  //     point is the ward builder's own anchor (more than 400 metres inside
+  //     its ward and inside the Census outline of the city, TIGERweb, read
+  //     2026-11-28); each outside point is the Census's internal point of the
+  //     place named.
+  for (const c of [
+    { name: "Sioux Falls's Southwest District", point: "43.49523,-96.78528",
+      want: [/Southwest District/, /Sioux Falls City Council/, /Ryan Spellerberg/, /elected by Southwest District/,
+        /Elected by the whole city/, /the City of Sioux Falls's own map/, /within 4 metres/],
+      reject: [/Christine Erickson/, /Zak Okuwe/, /Miranda Basye/] },
+    { name: "Aberdeen's Southwest District", point: "45.45131,-98.49395",
+      want: [/Southwest District/, /Aberdeen City Council/, /Alan Johnson/, /Talmage Ekanger/,
+        /elected by Southwest District/, /the City of Aberdeen's map of its council districts/],
+      reject: [/Travis Schaunaman/, /Rob Ronayne/] },
+    { name: "Rapid City, whose wards are not drawn", point: "44.07107,-103.21792",
+      want: [/not in a council (?:ward or district|ward|district) this map draws/, /Rapid City's wards are not drawn yet/],
+      reject: [/Rapid City Common Council/, /Rapid City City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
   }
 } finally {
   await browser.close();

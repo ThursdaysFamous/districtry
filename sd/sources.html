@@ -1178,7 +1178,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 5 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 6 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1187,7 +1187,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1238,6 +1238,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">sd-house-members.json, rebuilt weekly by CI from the Legislature's own data service (sdlegislature.gov/api, the members of the regular session with the latest start date on or before the day of the run): both representatives of each district, and the one representative of each of the four subdistricts (26A, 26B, 28A and 28B), with name, party and page. Every contact field was empty on all 105 records on 2026-11-12, so the card links the member's page. The records' home address fields are never read.</td>
                 <td data-label="Where it applies">South Dakota — statewide, all 37 districts and subdistricts.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council district containing the point, in Sioux Falls and Aberdeen, and the member or members for it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5" target="_blank" rel="noopener">City of Sioux Falls — council districts, layer 5 of the city's own Community map service, where each district is named (&quot;Northeast&quot;): 5 districts, read 2026-11-28, the ward field alone requested.</a></li>
+                    <li><a href="https://services5.arcgis.com/H3Xuuu0h4PaTeWwU/arcgis/rest/services/New_Final_Districts/FeatureServer/1" target="_blank" rel="noopener">City of Aberdeen — City Council Districts (2021 Finalized), in an ArcGIS Online organization whose other layers are Aberdeen's own lots, roads and addresses: 4 districts, last edited 30 December 2025, read 2026-11-28, the ward field alone requested. It carries its own population for each district, within 25 people of the 2020 census counts.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The member or members for each ward, from the same city council roster the City card reads (sd/data/app/sd-city-councils.json), written down from each city's own pages and proved against them by sd/scripts/build_sd_city_councils.py, whose check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.</td>
+                <td data-label="Where it applies">Sioux Falls and Aberdeen. Rapid City's five wards each elect two members and are not drawn: no map of them that can be read as lines was found. Ground inside a city's Census outline that its map leaves out lies in no district here.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1366,7 +1378,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 310 records: 157 cities and 153 towns, every one an active government, measured 2026-11-12. MOST OF SOUTH DAKOTA IS IN NO INCORPORATED CITY OR TOWN (under 1% of its land, 1,438.5 of 196,345.1 km2, is inside one), and the county, with the civil township where one is organized, is the local government everywhere else, so an empty card says the point is outside every one rather than naming a place. The Census's census-designated places are statistical areas with no government and are not drawn. The state's county subdivisions include its civil townships, 898 of which the Census records as active governments (measured 2026-11-12); they are not drawn yet.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district and none of their maps is drawn yet, and the card says so. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.</td>
+                <td data-label="Who it names">In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district; Sioux Falls's and Aberdeen's maps are drawn on the City Council District layer, and Rapid City's is not, and the card says why. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.</td>
                 <td data-label="Where it applies">South Dakota — statewide.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1580,7 +1592,7 @@ table.matrix code {
       "@id": "https://districtry.com/sd/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City or Town",
-      "description": "The incorporated city or town containing the point, or that the point is outside every one. In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district and none of their maps is drawn yet, and the card says so. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.",
+      "description": "The incorporated city or town containing the point, or that the point is outside every one. In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district; Sioux Falls's and Aberdeen's maps are drawn on the City Council District layer, and Rapid City's is not, and the card says why. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.",
       "url": "https://districtry.com/sd/sources.html#layer-municipality",
       "includedInDataCatalog": {
         "@id": "https://districtry.com/sd/sources.html#catalog"
@@ -1595,6 +1607,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "South Dakota — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/sd/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council district containing the point, in Sioux Falls and Aberdeen, and the member or members for it. The member or members for each ward, from the same city council roster the City card reads (sd/data/app/sd-city-councils.json), written down from each city's own pages and proved against them by sd/scripts/build_sd_city_councils.py, whose check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+      "url": "https://districtry.com/sd/sources.html#layer-city-ward",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/sd/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "City of Sioux Falls — council districts, layer 5 of the city's own Community map service, where each district is named (\"Northeast\"): 5 districts, read 2026-11-28, the ward field alone requested.",
+          "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "City of Aberdeen — City Council Districts (2021 Finalized), in an ArcGIS Online organization whose other layers are Aberdeen's own lots, roads and addresses: 4 districts, last edited 30 December 2025, read 2026-11-28, the ward field alone requested. It carries its own population for each district, within 25 people of the 2020 census counts.",
+          "url": "https://services5.arcgis.com/H3Xuuu0h4PaTeWwU/arcgis/rest/services/New_Final_Districts/FeatureServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Sioux Falls and Aberdeen. Rapid City's five wards each elect two members and are not drawn: no map of them that can be read as lines was found. Ground inside a city's Census outline that its map leaves out lies in no district here"
       }
     },
     {

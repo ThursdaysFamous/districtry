@@ -3466,8 +3466,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city commission or council is named yet.
-        "local-government": depth(),
+        # The 16 cities of 25,000 or more name their mayor and council or
+        # commission (ks/scripts/build_ks_city_councils.py), and the City Council
+        # District layer draws the wards of seven of the ten that elect by ward or
+        # district (ks/scripts/build_ks_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries Kansas's 285 school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -3713,8 +3716,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The 7 cities of 25,000 or more name their mayor and council
+        # (ne/scripts/build_ne_city_councils.py), and the City Council District
+        # layer draws the wards of all six that elect by ward or district
+        # (ne/scripts/build_ne_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries Nebraska's school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -3976,8 +3982,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The 3 cities of 25,000 or more name their mayor and council
+        # (sd/scripts/build_sd_city_councils.py), and the City Council District
+        # layer draws Sioux Falls's and Aberdeen's districts
+        # (sd/scripts/build_sd_city_wards.py). WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         # TIGER carries South Dakota's school districts as unified districts and
         # nothing on its elementary or secondary layers (measured 2026-11-12).
         "school-district-boundaries": answers("school-district-unified"),
@@ -4019,8 +4028,11 @@ ANSWERS = {
         # the legislature first, Adam's plan of 2026-11-10).
         "county-government": depth(),
         "municipal-boundaries": answers("municipality"),
-        # No city or town council is named yet.
-        "local-government": depth(),
+        # The cities of 25,000 or more name their mayor and council or commission
+        # (nd/scripts/build_nd_city_councils.py), and the City Council District
+        # layer draws Grand Forks's wards (nd/scripts/build_nd_city_wards.py).
+        # WARD_MAPS says which.
+        "local-government": depth("city-ward"),
         "school-district-boundaries": answers(
             "school-district-unified", "school-district-elementary"),
         # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
@@ -4962,23 +4974,31 @@ WARD_MAPS = {
         drawn={"5414600"},
         drawn_file=("wv/data/app/wv-city-wards.json", "geoid")),
     # The cities of 25,000 or more in Kansas, Nebraska, North Dakota and South
-    # Dakota that elect members by ward or district, none drawn yet
-    # (2026-11-27; each state's build_<tag>_city_councils.py says how each
-    # city elects). The others elect every seat by the whole city.
+    # Dakota that elect members by ward or district (each state's
+    # build_<tag>_city_councils.py says how each city elects). The City
+    # Council District layer draws 16 of the 20 (2026-11-28), each state's
+    # build_<tag>_city_wards.py from the map the city or its county
+    # publishes; the four owed are each council builder's NOT_DRAWN (Lenexa,
+    # whose only map this project may not read, Shawnee and Leawood, whose
+    # maps are unequal on the 2020 census, and Rapid City, which publishes its
+    # wards only as a PDF). The others elect every seat by the whole city.
     "ks": dict(
-        owed={"2079000": "Wichita", "2053775": "Overland Park",
-              "2036000": "Kansas City", "2052575": "Olathe",
-              "2071000": "Topeka", "2064500": "Shawnee",
-              "2039350": "Lenexa", "2033625": "Hutchinson",
-              "2039075": "Leawood", "2017800": "Derby"}),
+        drawn={"2079000", "2053775", "2036000", "2052575", "2071000",
+               "2033625", "2017800"},
+        drawn_file=("ks/data/app/ks-city-wards.json", "geoid"),
+        owed={"2064500": "Shawnee", "2039350": "Lenexa",
+              "2039075": "Leawood"}),
     "ne": dict(
-        owed={"3137000": "Omaha", "3128000": "Lincoln",
-              "3103950": "Bellevue", "3119595": "Grand Island",
-              "3117670": "Fremont", "3121415": "Hastings"}),
-    "nd": dict(owed={"3832060": "Grand Forks"}),
+        drawn={"3137000", "3128000", "3103950", "3119595", "3117670",
+               "3121415"},
+        drawn_file=("ne/data/app/ne-city-wards.json", "geoid")),
+    "nd": dict(
+        drawn={"3832060"},
+        drawn_file=("nd/data/app/nd-city-wards.json", "geoid")),
     "sd": dict(
-        owed={"4659020": "Sioux Falls", "4652980": "Rapid City",
-              "4600100": "Aberdeen"}),
+        drawn={"4659020", "4600100"},
+        drawn_file=("sd/data/app/sd-city-wards.json", "geoid"),
+        owed={"4652980": "Rapid City"}),
 }
 
 

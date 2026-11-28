@@ -162,6 +162,12 @@ PROVENANCE = [
         "source_url": "https://www.ndcourts.gov/district-court/district-court-judges",
         "note": "North Dakota's district judges, read from ndcourts.gov's district court judges page by scripts/build_state_courts.py --fetch nd. The monthly re-read is a row in nd/WATCH.md.",
     },
+    {
+        "layer": "city-ward",
+        "app_file": "nd-city-wards.json",
+        "source_url": "https://services5.arcgis.com/tEvkdB384rqq9Ook/arcgis/rest/services/OpenDataLayers/FeatureServer/45",
+        "note": "Grand Forks's 7 council wards, from the city GIS office's map in ArcGIS Online, pre-built by nd/scripts/build_nd_city_wards.py through scripts/city_ward_maps.py, which takes the cities to draw from nd/data/source/nd-city-council-seats.json; the quarterly --watch row in nd/WATCH.md compares the map's fingerprint recorded at the build. The names on the cards come from the city's own pages, and nd/scripts/build_nd_city_councils.py is what notices one of those changing.",
+    },
 ]
 
 # North Dakota's envelope, as index.html writes it for the ZIP layer

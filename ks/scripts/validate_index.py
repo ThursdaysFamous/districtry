@@ -96,8 +96,8 @@ MIN_REGISTER_LAYER = 10
 EXPECT_LAYER_IDS = [
     "us-house", "ks-judicial-district", "ks-senate", "county", "ks-house",
     "school-district-unified", "zip-code", "county-subdivision",
-    "municipality", "tribal-government", "police-station", "fire-station",
-    "post-office",
+    "municipality", "city-ward", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +110,7 @@ GEOMETRY_FILES = {
     "zip-index.json": (704, 704),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
     "tribal-areas.json": (6, 6),  # Kansas's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, three pieces drawn whole into Nebraska, at the Census's own detail (79 KB). The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-13; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
     "ks-judicial-districts.json": (31, 31),  # The 31 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in ks/data/source/courts/ks-courts.txt.
+    "ks-city-wards.json": (41, 41),  # The 41 council wards and districts of the 7 cities whose wards elect their own members and are drawn, pre-built by ks/scripts/build_ks_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 400-point-per-city agreement gate, with no overlap; each map held to its city's Census outline). 194 KB, 48 KB gzipped (measured 2026-11-28), fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

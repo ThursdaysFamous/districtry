@@ -1,0 +1,115 @@
+{
+ "districts_per_geoid": {
+  "3103950": 6,
+  "3117670": 4,
+  "3119595": 5,
+  "3121415": 4,
+  "3128000": 4,
+  "3137000": 7
+ },
+ "fetched": "2026-11-28",
+ "fingerprint": {
+  "districts": 30,
+  "sha256": "6831c3fed4cb18907d600a3fb8e0f2c94a205b5231dbf95d18eaba0ad49c4317"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "723ea53d76d4383f7175d2fd472c6ff1df208610610045aaf8ecdde3b9007c62",
+ "sources": {
+  "3103950": {
+   "city": "Bellevue",
+   "covers_place_pct": 96.9,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 6,
+    "sha256": "21c5e62e0b60dbc45d66100972c3220b14b6500f48a4685add55754d7fe471c5"
+   },
+   "item": "7c6ab3546ab44861851545c4aac7c6dc",
+   "layer": "https://services.arcgis.com/OiG7dbwhQEWoy77N/ArcGIS/rest/services/ElectionAdmin_BV_vw/FeatureServer/8",
+   "layer_edited": "2026-11-27T04:32:11Z",
+   "outside_place_pct": 1.8,
+   "part_records_joined": 0,
+   "records": 6,
+   "where": "CITY='Bellevue'"
+  },
+  "3117670": {
+   "city": "Fremont",
+   "covers_place_pct": 88.9,
+   "field": "WardID",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "0783dca967e8b46d82f620140b5cdebab3aa8e515c967e021e2a3188822fc296"
+   },
+   "item": "77981dec6233474a81a528fa83500f91",
+   "layer": "https://services5.arcgis.com/6VKlIQXg1rgWny7H/arcgis/rest/services/Wards/FeatureServer/1",
+   "layer_edited": "2026-05-21T19:39:08Z",
+   "outside_place_pct": 1.5,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "3119595": {
+   "city": "Grand Island",
+   "covers_place_pct": 99.9,
+   "field": "DISTRICTID",
+   "fingerprint": {
+    "districts": 5,
+    "sha256": "5c2d3c1a44ac64da46c55b03c0c59f2d595a00fae31dc5a04bd46d057b2f684e"
+   },
+   "item": "13e63094ba834f0fa6a9b0dfdca29e7b",
+   "layer": "https://services3.arcgis.com/H1fomogcAqX4720J/ArcGIS/rest/services/PV1_DistrictManagement/FeatureServer/5",
+   "layer_edited": "2026-11-27T09:37:22Z",
+   "outside_place_pct": 0.5,
+   "part_records_joined": 0,
+   "records": 5,
+   "where": "1=1"
+  },
+  "3121415": {
+   "city": "Hastings",
+   "covers_place_pct": 98.6,
+   "field": "WARD",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "2b513e584c9755679694c44541da9561ad23f08724dc20dcf03b20cb9f1ed76b"
+   },
+   "item": "77769b0389b84d338f0b0f63d145e560",
+   "layer": "https://services1.arcgis.com/TYPEVuuXULssEXx8/arcgis/rest/services/Voting_Wards/FeatureServer/0",
+   "layer_edited": "2024-02-19T21:37:29Z",
+   "outside_place_pct": 0.4,
+   "part_records_joined": 0,
+   "records": 4,
+   "where": "1=1"
+  },
+  "3128000": {
+   "city": "Lincoln",
+   "covers_place_pct": 99.9,
+   "field": "CCDIST",
+   "fingerprint": {
+    "districts": 4,
+    "sha256": "bdafad0daf4a8091c291087e93c5b31171452d1d7fa59202b8da8401e03f3ec6"
+   },
+   "item": "ede7bfe4a43049649515a5c5b9c55c36",
+   "layer": "https://gis.lincoln.ne.gov/public/rest/services/Planning/Elections/MapServer/0",
+   "layer_edited": null,
+   "outside_place_pct": 0.6,
+   "part_records_joined": 1,
+   "records": 5,
+   "where": "1=1"
+  },
+  "3137000": {
+   "city": "Omaha",
+   "covers_place_pct": 99.8,
+   "field": "district",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "672a03ed7d9ceba9d6d30ef5747794ba7710e6765afd79dc32ce9dbf3b422be2"
+   },
+   "item": "7cfcd013310942dba79780f2b7499817",
+   "layer": "https://dcgis.org/server/rest/services/Hosted/Omaha_City_Council_Districts_(source)_view/FeatureServer/0",
+   "layer_edited": "2025-07-30T13:53:51Z",
+   "outside_place_pct": 0.3,
+   "part_records_joined": 0,
+   "records": 7,
+   "where": "1=1"
+  }
+ }
+}

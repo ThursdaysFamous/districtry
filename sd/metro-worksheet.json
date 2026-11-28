@@ -337,15 +337,37 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district and none of their maps is drawn yet, and the card says so. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.",
+        "people": "In the 3 cities of 25,000 people or more, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by sd/scripts/build_sd_city_councils.py, which fails when a name is no longer on the page it cites (sd/data/app/sd-city-councils.json, 29 seats read 2026-11-27). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Each seat says whether its ward's own voters or the whole city elect it, read from the city's pages, charter or state law or measured from election results. All three elect members by ward or district; Sioux Falls's and Aberdeen's maps are drawn on the City Council District layer, and Rapid City's is not, and the card says why. South Dakota's other cities and towns name nobody yet, recorded as gap sd-municipal-officeholders.",
         "applies": "South Dakota — statewide."
+      }
+    },
+    {
+      "id": "city-ward",
+      "label": "City Council District",
+      "group": "political",
+      "area_rank": 10,
+      "rank_note": "9 council districts in Sioux Falls and Aberdeen, two of the three cities of 25,000 people or more, ranked just after City or Town, which each one divides, so a district draws on top of its city",
+      "source": {
+        "answers": "The city council district containing the point, in Sioux Falls and Aberdeen, and the member or members for it.",
+        "boundary": [
+          {
+            "label": "City of Sioux Falls — council districts, layer 5 of the city's own Community map service, where each district is named (\"Northeast\"): 5 districts, read 2026-11-28, the ward field alone requested.",
+            "url": "https://gis.siouxfalls.gov/arcgis/rest/services/Data/Community/MapServer/5"
+          },
+          {
+            "label": "City of Aberdeen — City Council Districts (2021 Finalized), in an ArcGIS Online organization whose other layers are Aberdeen's own lots, roads and addresses: 4 districts, last edited 30 December 2025, read 2026-11-28, the ward field alone requested. It carries its own population for each district, within 25 people of the 2020 census counts.",
+            "url": "https://services5.arcgis.com/H3Xuuu0h4PaTeWwU/arcgis/rest/services/New_Final_Districts/FeatureServer/1"
+          }
+        ],
+        "people": "The member or members for each ward, from the same city council roster the City card reads (sd/data/app/sd-city-councils.json), written down from each city's own pages and proved against them by sd/scripts/build_sd_city_councils.py, whose check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward.",
+        "applies": "Sioux Falls and Aberdeen. Rapid City's five wards each elect two members and are not drawn: no map of them that can be read as lines was found. Ground inside a city's Census outline that its map leaves out lies in no district here."
       }
     },
     {
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "Tribal land — South Dakota has 16 pieces, 9 reservations and 7 pieces of off-reservation trust land, held by 12 nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines. The largest are the Cheyenne River Reservation (11,424.8 km², Dewey and Ziebach counties), the Pine Ridge Reservation (11,272.8 km² in South Dakota), the Standing Rock Reservation (6,564.0 km² in South Dakota, 69.2% of it), the Lake Traverse Reservation (3,630.3 km² in South Dakota, 92.9% of it), the Rosebud Indian Reservation (3,602.3 km²) and its trust land (1,825.1 km²); the smallest is the Lake Traverse trust land's South Dakota part (0.048 km², 8.5% of it). Every piece that crosses the state line is drawn whole: the Pine Ridge, Standing Rock and Lake Traverse reservations, the Lake Traverse trust land, and the trust land of three nations seated outside the state, the Shakopee Mdewakanton Sioux Community (Minnesota), the Northern Cheyenne Tribe (Montana) and the Turtle Mountain Band (North Dakota). The Census draws tribal districts on the Rosebud, Pine Ridge, Lake Traverse, Cheyenne River, Standing Rock and Crow Creek land. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — South Dakota has 16 such areas, held by 12 nations: eight seated in South Dakota, the Standing Rock Sioux Tribe and the Turtle Mountain Band of Chippewa Indians, seated in North Dakota, the Northern Cheyenne Tribe, seated in Montana, and the Shakopee Mdewakanton Sioux Community, seated in Minnesota.",
@@ -363,7 +385,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +403,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -399,7 +421,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -500,6 +522,12 @@
         "min_features": 7,
         "max_features": 7,
         "note": "The 7 court districts, dissolved from the county fabric by scripts/build_state_courts.py from the county lists in sd/data/source/courts/sd-courts.txt."
+      },
+      {
+        "file": "sd-city-wards.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "The 9 council wards and districts of the 2 cities whose wards elect their own members and are drawn, pre-built by sd/scripts/build_sd_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 400-point-per-city agreement gate, with no overlap; each map held to its city's Census outline). 55 KB, 15 KB gzipped (measured 2026-11-28), fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [

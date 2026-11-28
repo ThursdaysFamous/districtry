@@ -4675,8 +4675,8 @@ function initKansasExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ks-senate": "kss", "ks-judicial-district": "ksj",
     "county": "co", "ks-house": "ksh", "school-district-unified": "su", "zip-code": "zp",
-    "county-subdivision": "cs", "municipality": "mu", "tribal-government": "tg",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "county-subdivision": "cs", "municipality": "mu", "city-ward": "cw",
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4684,7 +4684,7 @@ function initKansasExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ks-senate"],
     "state-house": ["ks-house"], "trial-court-district": ["ks-judicial-district"],
     "county": ["county"], "county-subdivision": ["county-subdivision"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "municipality": ["municipality"], "city-council": ["city-ward"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
@@ -4707,7 +4707,7 @@ function initKansasExplorer() {
   // these there. Bare names, never paths: see render_boundary_files.
   var BOUNDARY_FILES = [ "metro-outline.json", "state-counties.json", "congress-districts.json",
     "ks-senate-districts.json", "ks-house-districts.json", "zip-index.json",
-    "tribal-areas.json", "ks-judicial-districts.json" ];
+    "tribal-areas.json", "ks-judicial-districts.json", "ks-city-wards.json" ];
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11612,6 +11612,7 @@ function initKansasExplorer() {
     "zip-code",          // 710 ZIP Code Tabulation Areas that reach into Kansas (890 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
     "county-subdivision", // 1,521 records tiling the state, about 139 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "municipality",      // 626 incorporated cities, drawn from a tile archive mirrored from TIGERweb
+    "city-ward",         // 41 council wards and districts in the 7 cities of 25,000 people or more whose wards elect their own members and are drawn, ranked just after City, which each one divides, so a ward draws on top of its city
     "tribal-government", // Tribal land — Kansas has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-13, with the counties measured against this app's own county outlines: the Kickapoo (KS) Reservation (613.4 km², Brown, Jackson and Atchison counties), the Prairie Band of Potawatomi Nation Reservation (316.3 km², Jackson County), the Iowa (KS-NE) Reservation (35.3 km² in Kansas, 69% of it, Brown and Doniphan counties) and its trust land (0.639 km², Brown County), and the Sac and Fox Nation Reservation (19.7 km² in Kansas, 33% of it) and its trust land (1.020 km² in Kansas, 70% of it), both in Brown County. The Iowa and Sac and Fox reservations and the Sac and Fox trust land are drawn whole into Nebraska. The Census draws no tribal district on any of it. Ranked after municipalities and before the point layers, as Nevada's and Arizona's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16817,8 +16818,9 @@ function initKansasExplorer() {
    * network-first). Every seat says whether its ward's own voters or the
    * whole city elect it, read from the city's pages, its charter or state
    * law, or measured from election results; the builder says which for each
-   * city. The wards of the ten that elect by ward are not drawn yet, and the
-   * card says so. Where a city's site is closed to this app's reader its
+   * city. Seven of the ten that elect by ward have their wards drawn on the
+   * City Council District layer (5c below); for the other three the card
+   * says the ward map is not drawn. Where a city's site is closed to this app's reader its
    * page was read once by hand in a browser, and the card says that too.
    *
    * Kansas's other cities name nobody: no statewide list of their mayors
@@ -16900,7 +16902,7 @@ function initKansasExplorer() {
   // Below the names: any seat no page names, how the seats are elected,
   // where the names come from and when they were read (each city's names are
   // dated by the oldest read of its pages), and, for a city that elects by
-  // ward, that its wards are not drawn.
+  // ward, which layer draws its wards or that they are not drawn.
   function ksCouncilAfter(council, seats) {
     var rows = [];
     var read = council.read ? statewideDate(council.read) : null;
@@ -16927,13 +16929,19 @@ function initKansasExplorer() {
           " If a seat has changed hands since, the city's own website or clerk says who holds it now."
       });
     }
+    var word = String(council.wardWord || "Ward").toLowerCase();
     if (council.wardsDrawn === false) {
-      var word = String(council.wardWord || "Ward").toLowerCase();
       rows.push({
         label: "Which " + word + " this point is in",
         value: "This app does not draw " + String(council.name) + "'s " + word +
           "s yet, so it cannot say which " + word + " this point is in. The city's own " +
           word + " map shows it."
+      });
+    } else if (seats.some(function (s) { return s.byWard; })) {
+      rows.push({
+        label: "Which " + word + " this point is in",
+        value: "The City Council District layer draws " + String(council.name) + "'s " + word +
+          "s and names the member for this point's " + word + "."
       });
     }
     return rows;
@@ -17047,6 +17055,163 @@ function initKansasExplorer() {
       var people = ksCouncilPeople(council, seats, special && special.atLarge);
       if (people.length) wrap.appendChild(renderPersonRows(people));
       wrap.appendChild(renderFieldStack(ksCouncilAfter(council, seats)));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? ksCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 5c. City Council District ----------
+   * The 41 council wards and districts of the seven Kansas cities of 25,000
+   * people or more whose wards elect their own members and whose current
+   * maps are drawn here: Topeka 9, Kansas City 8, Wichita and Overland Park
+   * 6 each, and Derby, Olathe and Hutchinson 4 each. Each is read from the
+   * map its city publishes, or for Derby its county's map of voting
+   * districts, because no state office publishes one.
+   * Pre-built by ks/scripts/build_ks_city_wards.py through
+   * scripts/city_ward_maps.py, which holds each map to the Census outline of
+   * its city, so a click is answered in the browser and no point is sent
+   * anywhere. Each ward's card says whose map it is drawn from, and that it
+   * is drawn here to within 4 metres. Ground a city has added since its map
+   * was drawn can be in no ward here.
+   *
+   * KANSAS CITY'S DISTRICTS REACH PAST THE CITY. They are the Unified
+   * Government's commission districts, and it governs all of Wyandotte
+   * County, so the voters of Bonner Springs, Edwardsville and the county's
+   * part of Lake Quivira elect those commissioners too. The map is drawn over
+   * the whole county, and the card says so (KS_WARD_NOTES).
+   *
+   * Not drawn: Lenexa, whose wards are published only on a county map server
+   * that refuses this app's reader, and Shawnee and Leawood, whose maps are
+   * unequal on the 2020 census, so which map is in force is a question for
+   * each city. Their City cards say the ward map is not drawn.
+   *
+   * A GENERIC LABEL: four of the seven elect by WARD and three by DISTRICT,
+   * so the toggle says "City Council District" and each card names the unit
+   * as its city does, off the feature's own `label`. Hutchinson's council
+   * chooses its mayor from its members, so the district that elected that
+   * member names the mayor as its member.
+   *
+   * The members are the council roster the City card reads
+   * (data/app/ks-city-councils.json): the seats each ward's own voters
+   * elect, each proved on the city's own page when the roster was built;
+   * ks/scripts/build_ks_city_councils.py --check holds every drawn ward to
+   * a seat its voters elect.
+   * ---------- */
+  var loadKsCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ks-city-wards.json", {}, 2);
+  });
+  var KS_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+  // A city whose districts reach past it, or whose members elected by more
+  // than a ward are elected by more than the city.
+  var KS_WARD_NOTES = {
+    "2036000": {
+      wholeLabel: "Elected at large",
+      whole: "by all of Wyandotte County",
+      reach: "The Unified Government governs all of Wyandotte County, so its commission " +
+        "districts cover the whole county: the voters of Bonner Springs, Edwardsville and " +
+        "the county's part of Lake Quivira elect these commissioners too."
+    }
+  };
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inKansas,
+    emptyNote: "This point is not in a council ward or district this map draws. It " +
+      "draws the wards of the 7 Kansas cities of 25,000 people or more whose " +
+      "wards elect their own members and whose current maps can be drawn " +
+      "(Wichita, Topeka and Hutchinson call them districts, and Kansas City's " +
+      "are the Unified Government's commission districts, drawn over all of " +
+      "Wyandotte County). Lenexa's, Shawnee's and Leawood's wards are not " +
+      "drawn yet; Lawrence, Manhattan, Salina, Leavenworth, Garden City and " +
+      "Dodge City elect every seat by the whole city. The City card names the " +
+      "mayor and council or commission of all 16. Ground a city has added " +
+      "since its map was drawn can be in no ward here.",
+    overlay: {
+      load: loadKsCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadKsCityWards, point).then(function (feature) {
+        if (!feature) return null;
+        var result = { seq: seq, props: feature.properties || {}, council: null };
+        // the roster failing is not this layer failing: the ward still
+        // answers, and the card says the names did not load
+        return loadKsCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(result.props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var notes = KS_WARD_NOTES[String(p.geoid)] || {};
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The member or members this
+      // ward's own voters elect, a mayor chosen from among them included; the
+      // mayor and members a whole city elects are named on the City card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) {
+        return s.byWard && s.ward != null && String(s.ward) === String(p.ward);
+      });
+      var mayorCitywide = seats.some(function (s) {
+        return s.role === "Mayor" && !s.byWard;
+      });
+      var citywide = seats.filter(function (s) { return !s.byWard && s.role !== "Mayor"; });
+      var people = council ? ksCouncilPeople(council, mine) : [];
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        var unnamed = mine.filter(function (s) { return s.unnamed; });
+        if (unnamed.length) {
+          rows.push({ label: "Seats not named", value: String(unnamed[0].unnamed) });
+        }
+        var n = citywide.length;
+        if (mayorCitywide || n) {
+          var count = KS_SMALL_NUMBERS[n] || String(n);
+          var noun = n === 1 ? "member" : "members";
+          rows.push({
+            label: notes.wholeLabel || "Elected by the whole city",
+            value: (mayorCitywide
+              ? "The mayor" + (n ? " and " + count + " more " + noun : "")
+              : count.charAt(0).toUpperCase() + count.slice(1) + " " + noun) +
+              (notes.whole ? ", " + notes.whole : "") +
+              ". The City card names " + (mayorCitywide && !n ? "the mayor" : "them") + "."
+          });
+        }
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+      }
+      if (notes.reach) rows.push({ label: "Beyond the city", value: notes.reach });
+      rows.push({
+        label: "How this line is drawn",
+        value: "Drawn from " + String(p.drawnFrom || "the map its city publishes") +
+          ". The lines are drawn here to within 4 metres; for a definitive " +
+          "answer, ask the city clerk."
+      });
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
     primaryLink: function (result) {
@@ -19488,7 +19653,7 @@ function initKansasExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "ks-senate", "ks-house", "ks-judicial-district",
     "school-district-unified",
-    "county", "county-subdivision", "municipality", "zip-code", "tribal-government",
+    "county", "county-subdivision", "municipality", "city-ward", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -20014,11 +20179,12 @@ function initKansasExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
-    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
-    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6F6B": "#5DC0BA", "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

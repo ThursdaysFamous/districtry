@@ -9,7 +9,9 @@ is current for every city, each city's districts are read from a map of its
 own, and this module does that builder's work over a list of sources instead
 of one layer. Used on 2026-10-16 by sc/scripts/build_sc_city_wards.py and
 tn/scripts/build_tn_city_wards.py, and by nc/scripts/build_nc_city_wards.py,
-each of which says why its state's are read this way. In order:
+ok/scripts/build_ok_city_wards.py, and (2026-11-28) the Kansas, Nebraska,
+North Dakota and South Dakota builders, each of which says why its state's
+are read this way. In order:
 
   1. WHICH CITIES are drawn is read from the seats file the council roster is
      built from (<tag>/data/source/<tag>-city-council-seats.json, through
@@ -95,11 +97,28 @@ class Source(object):
 
     `pattern`'s first group is the district: a number is read as a number
     ("07" is district 7) and anything else as written, unless `rename` maps it
-    to the seats file's name for it ({"EAST": "East"})."""
+    to the seats file's name for it ({"EAST": "East"}).
+
+    `dissolve` is for a city that publishes its wards only as precincts, one
+    record per precinct carrying the ward (Overland Park's 144): the records of
+    one ward are merged into one shape, so the map draws the ward's outline and
+    not every precinct line inside it. Without it a ward's further records are
+    kept as further polygons, which is right for a ward drawn in a few separate
+    pieces.
+
+    `overlap_max_m` is for a map whose wards overlap one another in thin
+    strips along their shared lines, where two neighbours were drawn a few
+    metres apart (Fremont's, up to 4.5 m wide): each such strip is drawn in the
+    ward that sorts first and cut from the other, so a point there answers one
+    ward. The build stops if any strip is wider than this many metres, because
+    that is no longer a line drawn twice."""
 
     def __init__(self, geoid, layer, field, pattern, records, covers, outside, drawn_from,
-                 where="1=1", parts=0, word=None, wards=None, key=None, rename=None):
+                 where="1=1", parts=0, word=None, wards=None, key=None, rename=None,
+                 dissolve=False, overlap_max_m=None):
         self.geoid = geoid
+        self.dissolve = dissolve
+        self.overlap_max_m = overlap_max_m
         self.key = key or geoid
         self.word = word
         self.rename = dict(rename or {})
@@ -245,6 +264,58 @@ def area_m2(geom):
     return total
 
 
+# About 1 cm: closes the hairline gaps left between a city's precinct shapes
+# where two neighbours do not share their line exactly, and nothing larger.
+DISSOLVE_CLOSE_DEG = 1e-7
+
+
+def dissolved(geom):
+    """One ward's precinct polygons merged into its outline, as GeoJSON."""
+    from shapely.geometry import mapping, shape  # noqa: PLC0415  (build-time only)
+    from shapely.ops import unary_union  # noqa: PLC0415
+
+    merged = unary_union([shape({"type": "Polygon", "coordinates": p}).buffer(0)
+                          for p in sp._polygons(geom)])
+    merged = merged.buffer(DISSOLVE_CLOSE_DEG).buffer(-DISSOLVE_CLOSE_DEG)
+    return json.loads(json.dumps(mapping(merged)))
+
+
+def trim_overlaps(spec, src, feats):
+    """Cut from each ward the thin strips it shares with a ward sorting before
+    it, in place; stop on a strip wider than the source allows."""
+    import shapely  # noqa: PLC0415  (build-time only)
+    from shapely.geometry import mapping, shape  # noqa: PLC0415
+    from shapely.ops import transform  # noqa: PLC0415
+
+    ordered = sorted(feats, key=lambda f: cc.ward_sort_key(f["properties"]["ward"]))
+    shapes = [shape(f["geometry"]).buffer(0) for f in ordered]
+    k = math.cos(math.radians(shapes[0].centroid.y))
+    proj = lambda x, y, z=None: (x * 111320.0 * k, y * 110574.0)  # noqa: E731
+    strips = widest = 0
+    for i in range(1, len(ordered)):
+        for j in range(i):
+            shared = shapes[i].intersection(shapes[j])
+            if shared.is_empty or shared.area == 0:
+                continue
+            for part in getattr(shared, "geoms", [shared]):
+                if part.geom_type != "Polygon" or part.area == 0:
+                    continue
+                width = 2 * shapely.maximum_inscribed_circle(transform(proj, part), 0.05).length
+                if width > src.overlap_max_m:
+                    fail(spec, "%s: wards %s and %s overlap in a strip %.1f m wide at %.5f,%.5f; "
+                         "the builder allows %.1f m" % (
+                             spec.name_of(src), ordered[j]["properties"]["ward"],
+                             ordered[i]["properties"]["ward"], width,
+                             part.representative_point().y, part.representative_point().x,
+                             src.overlap_max_m))
+                strips += 1
+                widest = max(widest, width)
+            shapes[i] = shapes[i].difference(shapes[j]).buffer(0)
+        ordered[i]["geometry"] = json.loads(json.dumps(mapping(shapes[i])))
+    print("  %-28s %d overlapping strips cut, the widest %.1f m"
+          % (spec.name_of(src), strips, widest))
+
+
 def read_source(spec, src, records, with_geometry=True):
     """The city's districts from one layer's records: (features, problems)."""
     city = spec.cities[src.geoid]
@@ -274,6 +345,11 @@ def read_source(spec, src, records, with_geometry=True):
             "label": cc.ward_label(word, n), "drawnFrom": src.drawn_from}}
         by_key[key] = feat
         feats.append(feat)
+    if with_geometry and src.dissolve:
+        for f in feats:
+            f["geometry"] = dissolved(f["geometry"])
+    if with_geometry and src.overlap_max_m:
+        trim_overlaps(spec, src, feats)
     if with_geometry:
         for f in feats:
             f["properties"]["_measure"] = area_m2(f["geometry"]) / 1000.0

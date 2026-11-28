@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ks-senate", "ks-house", "ks-judicial-dis
 const EXPECT_DISTRICT = { "county": "Shawnee County", "us-house": "2", "ks-senate": "19", "ks-house": "57", "ks-judicial-district": "3rd Judicial District" };
 const NEGATIVE_POINT = "40.20000,-98.50000"; // Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Kansas";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "KansasExplorer";
@@ -836,8 +836,8 @@ try {
         props: { GEOID: "2071000", NAME: "Topeka city", BASENAME: "Topeka", STATE: "20", LSADC: "25", FUNCSTAT: "A" },
         want: [/Topeka\ city/, /Incorporated city — a general-purpose local government over this point, alongside the county/,
           /Spencer Duncan/, /Karen Hiller/, /Council, District 1/, /elected by District 1/, /How the seats are elected/,
-          /Read on November 27, 2026/, /Which district this point is in/],
-        reject: [/inactive government/, /Not named here/, /read once by hand/]
+          /Read on [A-Z][a-z]+ [0-9]{1,2}, 20[0-9]{2}\./, /Which district this point is in/, /The City Council District layer draws Topeka's districts/],
+        reject: [/inactive government/, /Not named here/, /read once by hand/, /does not draw/]
       },
       {
         name: "a commission elected at large names every commissioner and says a hand-read page was read by hand",
@@ -1289,6 +1289,61 @@ try {
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("6 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
     }
+  }
+  // 11. CITY COUNCIL DISTRICT. A point inside each drawn city answers its
+  //     ward from the shipped file and names only the member or members that
+  //     ward's own voters elect, from the council roster the City card reads;
+  //     a point in a city whose wards are not drawn, or that elects every seat
+  //     by the whole city, answers nothing and the card says why. Each inside
+  //     point is the ward builder's own anchor (more than 400 metres inside
+  //     its ward and inside the Census outline of the city, TIGERweb, read
+  //     2026-11-28); each outside point is the Census's internal point of the
+  //     place named.
+  for (const c of [
+    { name: "Wichita", point: "37.73976,-97.34684",
+      want: [/District 6\b/, /Wichita City Council/, /Maggie Ballard/, /elected by District 6/,
+        /The mayor\. The City card names the mayor\./, /the City of Wichita's own map/, /within 4 metres/],
+      reject: [/Lily Wu/, /Becky Tuttle/, /elected by Ward/] },
+    { name: "Derby, drawn from Sedgwick County's map", point: "37.53525,-97.25244",
+      want: [/Ward 4\b/, /Derby City Council/, /Jared Brown/, /Jenny Webster/, /elected by Ward 4/,
+        /Sedgwick County's map of voting districts/],
+      reject: [/Mark Staats/, /Kristi Truitt/] },
+    { name: "Overland Park, whose wards are merged from precincts", point: "38.82182,-94.70512",
+      want: [/Ward 6\b/, /Overland Park City Council/, /Christopher Newlin/, /Josh Beck/, /elected by Ward 6/,
+        /map of its ward precincts/],
+      reject: [/Curt Skoog/, /Logan Heley/] },
+    { name: "Kansas City, whose districts reach past the city", point: "39.13209,-94.72689",
+      want: [/District 8\b/, /Kansas City Board of Commissioners/, /Andrew Davis/, /elected by District 8/,
+        /Elected at large/, /by all of Wyandotte County/, /Beyond the city/, /Bonner Springs, Edwardsville/,
+        /the Unified Government's own map of its commission districts/],
+      reject: [/Melissa Bynum/, /Andrew Tyler Kump/, /Elected by the whole city/] },
+    { name: "Olathe, whose map names each ward \"WARD 4\"", point: "38.90531,-94.76989",
+      want: [/Ward 4\b/, /Olathe City Council/, /Kevin Deneault/, /elected by Ward 4/, /the City of Olathe's own map/],
+      reject: [/WARD 4/, /Robyn Essex/, /Dean Vakas/] },
+    { name: "Topeka", point: "39.04775,-95.74755",
+      want: [/District 9\b/, /Topeka City Council/, /Michelle Hoferer/, /elected by District 9/,
+        /the City of Topeka's own map/],
+      reject: [/Spencer Duncan/, /Karen Hiller/] },
+    { name: "Hutchinson's Southwest District, whose seat is vacant", point: "38.04581,-97.93181",
+      want: [/Southwest District/, /Hutchinson City Council/, /Vacant/, /the City of Hutchinson's own map/],
+      reject: [/Scott Meggers/, /Darrin Truan/, /SOUTHWEST/] },
+    { name: "Lenexa, whose wards are not drawn", point: "38.96527,-94.80394",
+      want: [/not in a council (?:ward or district|ward|district) this map draws/, /Lenexa's, Shawnee's and Leawood's wards are not drawn yet/],
+      reject: [/Lenexa City Council/] },
+    { name: "Lawrence, which elects its whole commission by the whole city", point: "38.95955,-95.26547",
+      want: [/not in a council (?:ward or district|ward|district) this map draws/, /elect every seat by the whole city/, /mayor and council or commission of all 16/],
+      reject: [/Lawrence City Commission/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
   }
 } finally {
   await browser.close();

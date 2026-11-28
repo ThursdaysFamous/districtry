@@ -92,10 +92,12 @@ addresses are written in code by Cloudflare's e-mail protection and read
 decoded. Topeka's page prints a street address beside one member; it is
 never carried.
 
-WARDS. Ten of the sixteen cities elect members by ward or district and none
-of their maps is drawn yet; `undrawn` says so city by city, and the City card
-says the ward map is not drawn. The status page counts each as owed a ward
-map.
+WARDS. Ten of the sixteen cities elect members by ward or district. Seven
+are drawn by the City Council District layer since 2026-11-28
+(ks/scripts/build_ks_city_wards.py, from each city's own map or its
+county's), and its --check holds every drawn ward to a seat here. Three are
+not, and `undrawn` says why city by city; their City card says the ward map
+is not drawn, and the status page counts each as owed a ward map.
 
 RE-READ. Kansas's cities elect in November of odd years and seat the winners
 in January; mayors chosen by their commissions change in December (Lawrence)
@@ -134,9 +136,15 @@ SEATS = {
     "2017800": 9,    # Derby: mayor and 2 members from each of 4 wards
 }
 
-NOT_DRAWN = "its wards are not drawn yet; the city publishes them as a map"
-BY_WARD = ("2079000", "2053775", "2036000", "2052575", "2071000", "2064500",
-           "2039350", "2033625", "2039075", "2017800")
+# Measured 2026-11-28; ks/scripts/build_ks_city_wards.py says how.
+UNEQUAL = ("its ward map is %s apart on the 2020 census%s, so which map is in force "
+           "is a question for the city")
+NOT_DRAWN = {
+    "2039350": "it publishes no map of its wards this project may read: Johnson County's "
+               "map server, which draws them, disallows this project's reader",
+    "2064500": UNEQUAL % ("18.8%", " and carries 2010 census figures"),
+    "2039075": UNEQUAL % ("18.7%", ""),
+}
 
 SPEC = cc.Spec(
     tag="ks",
@@ -149,7 +157,8 @@ SPEC = cc.Spec(
     # 2026-11-27; these floors are about two thirds of each.
     min_emails=60,
     min_phones=45,
-    undrawn={geoid: NOT_DRAWN for geoid in BY_WARD},
+    wards_file="ks-city-wards.json",
+    undrawn=NOT_DRAWN,
     excerpts={
         "https://www.wichita.gov/599/City-Council": "councils/wichita-2026-11-27.txt",
         "https://www.olatheks.gov/government/city-council": "councils/olathe-2026-11-27.txt",

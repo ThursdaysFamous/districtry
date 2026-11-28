@@ -1,0 +1,30 @@
+{
+ "districts_per_geoid": {
+  "3832060": 7
+ },
+ "fetched": "2026-11-28",
+ "fingerprint": {
+  "districts": 7,
+  "sha256": "aa57a2765584c84e282ab4011bcda3f7d3562801c7feb973705305986275d1f0"
+ },
+ "places_layer": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "shipped_sha256": "4855e129688244e47d33d6b8d9e76597cbcb0c7b9303f6b8c51453b7b2a0f903",
+ "sources": {
+  "3832060": {
+   "city": "Grand Forks",
+   "covers_place_pct": 99.4,
+   "field": "districtid",
+   "fingerprint": {
+    "districts": 7,
+    "sha256": "aa57a2765584c84e282ab4011bcda3f7d3562801c7feb973705305986275d1f0"
+   },
+   "item": "0479a581578c4336b0710d4373332796",
+   "layer": "https://services5.arcgis.com/tEvkdB384rqq9Ook/arcgis/rest/services/OpenDataLayers/FeatureServer/45",
+   "layer_edited": "2026-11-21T12:00:51Z",
+   "outside_place_pct": 0.5,
+   "part_records_joined": 0,
+   "records": 7,
+   "where": "1=1"
+  }
+ }
+}

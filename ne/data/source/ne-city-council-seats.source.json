@@ -30,8 +30,8 @@
     "Rich Casey",
     "Thomas Burns"
    ],
-   "read": "2026-11-27",
-   "sha256": "e319fae744d50551ee41c1eb0a0cd3a2fd2cfbc486a7950f4afab6d6ace1d18b"
+   "read": "2026-11-28",
+   "sha256": "2f0461df62388383e649ee3c329eaebd1a425fe6e63848313ac1feb023ead2d5"
   },
   "https://www.bellevue.net/490/THE-Mayor": {
    "bytes": 86078,
@@ -40,8 +40,8 @@
    "names": [
     "Rusty Hike"
    ],
-   "read": "2026-11-27",
-   "sha256": "49e9cb6d86dd342e1916b429d66f752026e690b4cbc444ceaf4d2047aa2301ca"
+   "read": "2026-11-28",
+   "sha256": "3a24632305750ca0995650d5b98666539164a5aa2a862cb9b692f529f0bc0658"
   },
   "https://www.cityofhastings.org/government/city-officials/city-council/city-council-1st-ward.html": {
    "bytes": 42623,
@@ -51,8 +51,8 @@
     "Michael Anderson",
     "Steven Huntley"
    ],
-   "read": "2026-11-27",
-   "sha256": "4819ca4e31682dd93f88b5521ea52fe22256832bdf87c3c7a391ec04678e7864"
+   "read": "2026-11-28",
+   "sha256": "70997967502eb423badd398bab49908bf07e05d0bec1ea3d889baa9b1fc908a5"
   },
   "https://www.cityofhastings.org/government/city-officials/city-council/city-council-2nd-ward.html": {
    "bytes": 41747,
@@ -62,8 +62,8 @@
     "Brad Consbruck",
     "Lawrence Consbruck"
    ],
-   "read": "2026-11-27",
-   "sha256": "52906da5c27820de23cf2bb0657b1757b2702b81c84ce2e53666015724ff4eb8"
+   "read": "2026-11-28",
+   "sha256": "3c79595b770d26c4edce82dc61d7f6066072f49d81ca0cf639942b6d047a9734"
   },
   "https://www.cityofhastings.org/government/city-officials/city-council/city-council-3rd-ward.html": {
    "bytes": 42880,
@@ -73,8 +73,8 @@
     "Maggie Esch",
     "Marc Rowan"
    ],
-   "read": "2026-11-27",
-   "sha256": "e45ee783abc7030008c958bfd6f867a2a2a645b77be0f1c6da29ec6fcc4ab2a3"
+   "read": "2026-11-28",
+   "sha256": "82445b52bdde1850a83f65357c72d4851568f3336e83e6f787fbf9ca204c20d3"
   },
   "https://www.cityofhastings.org/government/city-officials/city-council/city-council-4th-ward.html": {
    "bytes": 42572,
@@ -84,8 +84,8 @@
     "Brian Hoffman",
     "Matt Fong"
    ],
-   "read": "2026-11-27",
-   "sha256": "9d04c1272da7c37cf1057d4e356a4484f3dacaa53fb9ebd7d713899da2369905"
+   "read": "2026-11-28",
+   "sha256": "dc15c14f4703d8dbf5f6d62fd184d89a091a55c41a083b8669b5b686ff38f91e"
   },
   "https://www.cityofhastings.org/mayor/": {
    "bytes": 39903,
@@ -94,8 +94,8 @@
    "names": [
     "Jay Beckby"
    ],
-   "read": "2026-11-27",
-   "sha256": "aa54fdaff7d0dab017a1ed0104539550f6779808c566c0c6225b00e82f973821"
+   "read": "2026-11-28",
+   "sha256": "dd1d05259ef18db1bfba8a8aa250a7d0c984e05605f6a459b33a50ccdc948ffa"
   },
   "https://www.cityofkearney.org/706/City-Council-Members": {
    "bytes": 114815,
@@ -108,7 +108,7 @@
     "Randy Buschkoetter",
     "Tami James Moore"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "a0b7399b4e04e94a166cc521a682816b53c731f5b6114922ec9ea67a35dc01b8"
   },
   "https://www.cityofomaha.org/": {
@@ -148,7 +148,7 @@
     "4029365690",
     "4029366140"
    ],
-   "read": "2026-11-27",
+   "read": "2026-11-28",
    "sha256": "08d83cf4452d04ebfa1974e67b23df629fdbbb1232e46c47107aafae65772c5c"
   },
   "https://www.grand-island.com/page/city-council": {
@@ -167,8 +167,8 @@
     "Mitch Nickerson",
     "Ryan O'Neill"
    ],
-   "read": "2026-11-27",
-   "sha256": "1f5412219a8b744d09e99c7881ab258313cda89cc158905c9040174d116d7ede"
+   "read": "2026-11-28",
+   "sha256": "6788bd9e71db4a3f1df7bcc6dcdff72f07808ea38ea86d1116b723d44bc3c646"
   },
   "https://www.grand-island.com/page/mayor-roger-steele": {
    "bytes": 1826085,
@@ -177,11 +177,11 @@
    "names": [
     "Roger Steele"
    ],
-   "read": "2026-11-27",
-   "sha256": "38417ef562d90d53e9c31188ae08a73c64aba176ecd25806bfc1d9f6326c0d80"
+   "read": "2026-11-28",
+   "sha256": "dd5aad11c782faafda579917fa670d9425bb007802abd6d6bc3d2560f7e9ed33"
   },
   "https://www.lincoln.ne.gov/City/City-Council/Council-Members": {
-   "bytes": 111496,
+   "bytes": 111495,
    "client": "token",
    "emails": [
     "bshobe@lincoln.ne.gov",
@@ -202,18 +202,18 @@
     "Tom Beckius",
     "Tom Duden"
    ],
-   "read": "2026-11-27",
-   "sha256": "e00208a67cba35f53a0e4361ebd4f320a73eec87eaed885c9989972da24b19b1"
+   "read": "2026-11-28",
+   "sha256": "7b7bbef8d97ee5e882dc23eabf4632eaf776be48fc15360d4e46e32112a499fe"
   },
   "https://www.lincoln.ne.gov/City/Mayor": {
-   "bytes": 87552,
+   "bytes": 87551,
    "client": "token",
    "final": "https://www.lincoln.ne.gov/City/Mayor",
    "names": [
     "Leirion Gaylor Baird"
    ],
-   "read": "2026-11-27",
-   "sha256": "974d3a43bdf9dc533140102e68675dae708c245ae9e52227e3e7d44646def50a"
+   "read": "2026-11-28",
+   "sha256": "a11c2317d51e73c34b43e39384863d39959e2978c8a50b6b889dc47a36767305"
   }
  }
 }

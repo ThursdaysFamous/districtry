@@ -58,7 +58,7 @@ different thing from one it failed.
 | id | **EAM·** | 44 | 44/44 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,161 | all | 433 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 25 | all | 11 of 14 levels |
-| ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 17 | all | 8 of 14 levels |
+| ks | **EAM·** | 105 | 105/105 § | 0 | 0 | by record | 18 | all | 8 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 22 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 26 | all | 9 of 14 levels |
 | ma | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 13 | all | 8 of 14 levels |
@@ -70,8 +70,8 @@ different thing from one it failed.
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 26 | all | 8 of 14 levels |
 | mt | **EAM·** | 56 | 56/56 § | 0 | 0 | by record | 15 | all | 9 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 23 | all | all 14 levels |
-| nd | **EAM·** | 53 | 53/53 § | 0 | 0 | by record | 16 | all | 8 of 14 levels |
-| ne | **EAM·** | 93 | 93/93 § | 0 | 0 | by record | 15 | all | 8 of 14 levels |
+| nd | **EAM·** | 53 | 53/53 § | 0 | 0 | by record | 17 | all | 8 of 14 levels |
+| ne | **EAM·** | 93 | 93/93 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
 | nh | **EAM·** | 10 | 10/10 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
 | nj | **EAM·** | 21 | 21/21 § | 0 | 0 | by record | 11 | all | 8 of 14 levels |
 | nm | **EAM·** | 33 | 33/33 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
@@ -83,7 +83,7 @@ different thing from one it failed.
 | pa | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 8 of 14 levels |
 | ri | **--M·** | — | — | 0 | 0 | — | 13 | all | 9 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
-| sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 17 | all | 8 of 14 levels |
+| sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 18 | all | 8 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,065 | all | 24 | all | 10 of 14 levels |
 | tx | **EAM·** | 254 | 254/254 § | 948 | 947 | all | 18 | all | 9 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 16 | all | 9 of 14 levels |
@@ -308,10 +308,10 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `ks-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 105 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Watched, not rewritten:** `ks/data/app/ks-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ks-district-judges.json`, `ks-house-districts.json`, `ks-judicial-districts.json`, `ks-senate-districts.json`, `metro-outline.json`, `ks/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ks-city-wards.json`, `ks-district-judges.json`, `ks-house-districts.json`, `ks-judicial-districts.json`, `ks-senate-districts.json`, `metro-outline.json`, `ks/data/app/population/`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 105 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 10 more name a body elected by ward or district whose wards are not drawn; unanswered: Derby city, Hutchinson city, Kansas City city, Leawood city, Lenexa city, Olathe city, Overland Park city, Shawnee city and 2 more
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 13 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 3 more name a body elected by ward or district whose wards are not drawn; unanswered: Leawood city, Lenexa city, Shawnee city
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
@@ -457,10 +457,10 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `nd-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 53 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Watched, not rewritten:** `nd/data/app/nd-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nd-district-judges.json`, `nd-house-districts.json`, `nd-judicial-districts.json`, `nd-senate-districts.json`, `nd/data/app/population/`, `state-counties.json`
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nd-city-wards.json`, `nd-district-judges.json`, `nd-house-districts.json`, `nd-judicial-districts.json`, `nd-senate-districts.json`, `nd/data/app/population/`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 53 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 5 of 7 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Grand Forks city, Williston city
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 7 units at 25,000+ name a governing body; unanswered: Williston city
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
@@ -472,10 +472,9 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `ne-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 93 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Watched, not rewritten:** `ne/data/app/ne-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ne-district-judges.json`, `ne-judicial-districts.json`, `ne-legislature-districts.json`, `ne/data/app/population/`, `state-counties.json`
-- **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ne-city-wards.json`, `ne-district-judges.json`, `ne-judicial-districts.json`, `ne-legislature-districts.json`, `ne/data/app/population/`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 93 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 7 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 6 more name a body elected by ward or district whose wards are not drawn; unanswered: Bellevue city, Fremont city, Grand Island city, Hastings city, Lincoln city, Omaha city
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
@@ -642,10 +641,10 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `sd-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 66 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Watched, not rewritten:** `sd/data/app/sd-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `sd/data/app/population/`, `sd-district-judges.json`, `sd-house-districts.json`, `sd-judicial-districts.json`, `sd-senate-districts.json`, `state-counties.json`
+- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `sd/data/app/population/`, `sd-city-wards.json`, `sd-district-judges.json`, `sd-house-districts.json`, `sd-judicial-districts.json`, `sd-senate-districts.json`, `state-counties.json`
 - **Covered: no.** 6 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 66 counties name a governing body
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 3 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 3 more name a body elected by ward or district whose wards are not drawn; unanswered: Aberdeen city, Rapid City city, Sioux Falls city
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 2 of 3 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Rapid City city
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
   - **10. School boards elected by district** — unsettled (required only where the state has the level)
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.

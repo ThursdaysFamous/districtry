@@ -59,9 +59,10 @@ Dickinson's prints one member's own number and the office's line
 (701.456.7744) beside three others, which `officeLines` records so no seat
 carries it. No other city prints a contact beside one member alone.
 
-WARDS. Grand Forks elects by ward and its ward map is not drawn yet;
-`undrawn` says so, and the City card says the ward map is not drawn. The
-status page counts it as owed a ward map.
+WARDS. Grand Forks elects by ward, and its seven wards are drawn by the City
+Council District layer since 2026-11-28 (nd/scripts/build_nd_city_wards.py,
+from the city's own map), whose --check holds every drawn ward to a seat
+here.
 
 RE-READ. North Dakota's cities elect in June of even years and seat the
 winners by July; nd/WATCH.md carries the re-read after each election.
@@ -103,7 +104,7 @@ SPEC = cc.Spec(
     # thirds.
     min_emails=0,
     min_phones=5,
-    undrawn={GRAND_FORKS: "its wards are not drawn yet; the city publishes them as a map"},
+    wards_file="nd-city-wards.json",
     excerpts={
         "https://www.grandforksgov.com/government/city-leadership/city-council":
             "councils/grand-forks-2026-11-27.txt",
